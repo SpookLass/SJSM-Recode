@@ -21,7 +21,8 @@ object_event_add
 (argument0,ev_step,ev_step_normal,"
     if spr_var == -1 { local.spr = light_wall_obj_spr; }
     else { local.spr = spr_var; }
-    spr_id_var = (spr_id_var+(global.delta_time_var/6)) mod sprite_get_number(local.spr)
+    spr_id_var = (spr_id_var+(global.delta_time_var/6)) mod sprite_get_number(local.spr);
+    if gold_var { visible = !door_var.lock_var; }
 ")
 // Draw Event
 object_event_add

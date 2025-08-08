@@ -18,7 +18,8 @@ object_event_add
     local.light = instance_create(x+lengthdir_x(-1.5,direction+90),y+lengthdir_y(-1.5,direction+90),light_torch_obj);
     local.light.z += z;
     local.light.gold_var = gold_var;
-    local.light.id_var = id_var;
+    if local.light.gold_var 
+    { local.light.door_var = door_var; }
     auto_var = true;
     if auto_var
     {
@@ -36,7 +37,8 @@ object_event_add
                 local.light.direction = direction;
                 local.light.z = other.z;
                 local.light.gold_var = gold_var;
-                local.light.id_var = id_var;
+                if local.light.gold_var 
+                { local.light.door_var = door_var; }
             }
         }
         with floor_par_obj
@@ -52,7 +54,8 @@ object_event_add
                 local.light.direction = direction;
                 local.light.z = z;
                 local.light.gold_var = gold_var;
-                local.light.id_var = id_var;
+                if local.light.gold_var 
+                { local.light.door_var = door_var; }
             }
         }
     }
