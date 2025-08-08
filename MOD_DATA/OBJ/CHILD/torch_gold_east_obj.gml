@@ -12,4 +12,6 @@ object_event_add
     direction = 270;
     gold_var = true;
     event_inherited();
+    stored_tex_var = background_get_texture(torch_gold_bg);
+    tex_var = stored_tex_var;
 ");

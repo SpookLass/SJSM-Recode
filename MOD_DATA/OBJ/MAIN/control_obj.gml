@@ -60,19 +60,6 @@ object_event_add
         action_set_cursor(-1,global.mouse_free_var);
         if !global.mouse_free_var { display_mouse_set(display_get_width()/2,display_get_height()/2); }
     }
-    // Tex control WHATEVER MAN
-    if keyboard_check_pressed(ord('2'))
-    {
-        global.tex_set = get_integer('Tex set',global.tex_set);
-        local.str = string(global.tex_set);
-        if string_length(local.str) == 1 { local.str = '0'+local.str; }
-        if file_exists(vanilla_directory_const+'\TEX\FLOOR_'+local.str+'.png')
-        {
-            background_replace(floor_bg,vanilla_directory_const+'\TEX\FLOOR_'+local.str+'.png',false,false);
-            background_replace(wall_bg,vanilla_directory_const+'\TEX\WALL_'+local.str+'.png',false,false);
-            background_replace(ceil_bg,vanilla_directory_const+'\TEX\ROOF_'+local.str+'.png',false,false);
-        }
-    }
     // Framerate
     global.draw_time_var += global.delta_time_var;
     if global.fps_var < global.tps_var && !global.vsync_var
@@ -85,6 +72,59 @@ object_event_add
             if local.rate { frame_var = frame_var mod local.rate; }
             else {frame_var = 0; }
         }
+    }
+    // Debug commands
+    if keyboard_check_pressed(ord('2'))
+    {
+        local.question = show_menu('Back|Restart Room|Next Room|Previous Room|Go To Room|Create Instance|Set Tex Set|Set Count|Set LV|Set Room|Toggle Invincibility|Toggle Noclip|Hide Debug|Hide Hud|Toggle X-ray',0);
+        switch(local.question)
+        {
+            case 1: { room_restart(); break; }
+            case 2: { room_goto_next(); break; }
+            case 3: { room_goto_previous(); break; }
+            case 4:
+            {
+                local.rm = get_string('Go To Room','');
+                execute_string
+                ('
+                    if room_exists('+local.rm+') && '+local.rm+' != 0
+                    { room_goto('+local.rm+'); }
+                ');
+                break;
+            }
+            case 5:
+            {
+                local.instance = get_string('Create Instance','');
+                execute_string
+                ('
+                    if object_exists('+local.instance+') && '+local.instance+' != 0 
+                    { instance_create(0,0,'+local.instance+'); }
+                ');
+                break;
+            }
+            case 6:
+            {
+                global.tex_set = get_integer('Tex set',global.tex_set);
+                local.str = string(global.tex_set);
+                if string_length(local.str) == 1 { local.str = '0'+local.str; }
+                if file_exists(vanilla_directory_const+'\TEX\FLOOR_'+local.str+'.png')
+                {
+                    background_replace(floor_bg,vanilla_directory_const+'\TEX\FLOOR_'+local.str+'.png',false,false);
+                    background_replace(wall_bg,vanilla_directory_const+'\TEX\WALL_'+local.str+'.png',false,false);
+                    background_replace(ceil_bg,vanilla_directory_const+'\TEX\ROOF_'+local.str+'.png',false,false);
+                }
+                break;
+            }
+            case 7: { global.count_var = get_integer('Set Count', global.count_var); break; }
+            case 8: { global.violence_var = get_integer('Set LOVE', global.violence_var); break; }
+            case 9: { score = get_integer('Set Room Count', score); break; }
+            case 10: { global.invincible = !global.invincible; break; }
+            case 11: { global.noclip = !global.noclip; break; }
+            case 12: { global.hide_debug = !global.hide_debug; break; }
+            case 13: { global.hide_hud = !global.hide_hud; break; }
+            case 14: { global.xray = !global.xray; break; }
+        }
+        display_mouse_set(display_get_width()/2,display_get_height()/2);
     }
 ");
 

@@ -5,6 +5,7 @@ The_Doll_House/
 # I don't want screenshots or saves
 screenshot*.png
 *.ini
+*.log
 # Except these ones
 !save_ex.ini
 !settings.ini

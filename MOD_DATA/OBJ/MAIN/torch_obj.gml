@@ -36,7 +36,7 @@ object_event_add
                 local.light = instance_create(x,y,light_wall_vert_obj);
                 local.light.direction = direction;
                 local.light.z = other.z;
-                local.light.gold_var = gold_var;
+                local.light.gold_var = other.gold_var;
                 if local.light.gold_var 
                 { local.light.door_var = door_var; }
             }
@@ -53,10 +53,16 @@ object_event_add
                 local.light = instance_create(x,y,light_floor_obj);
                 local.light.direction = direction;
                 local.light.z = z;
-                local.light.gold_var = gold_var;
+                local.light.gold_var = other.gold_var;
                 if local.light.gold_var 
                 { local.light.door_var = door_var; }
             }
         }
     }
+");
+// Step
+object_event_add
+(argument0,ev_step,ev_step_normal,"
+    if gold_var && image_blend != c_white
+    { image_blend = c_white; }
 ");
