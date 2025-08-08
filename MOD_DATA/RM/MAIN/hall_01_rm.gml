@@ -86,12 +86,12 @@ room_instance_add(argument0,336,176,ceil_obj);
 room_instance_add(argument0,336,208,ceil_obj);
 room_instance_add(argument0,336,240,ceil_obj);
 // Torches
-room_instance_add(argument0,208,128,torch_gold_north_obj);
-room_instance_add(argument0,272,128,torch_gold_north_obj);
-room_instance_add(argument0,208,160,torch_gold_south_obj);
-room_instance_add(argument0,272,160,torch_gold_south_obj);
-room_instance_add(argument0,324,208,torch_gold_west_obj);
-room_instance_add(argument0,348,208,torch_gold_east_obj);
+room_instance_add(argument0,208,128,torch_north_obj);
+room_instance_add(argument0,272,128,torch_north_obj);
+room_instance_add(argument0,208,160,torch_south_obj);
+room_instance_add(argument0,272,160,torch_south_obj);
+room_instance_add(argument0,324,208,torch_west_obj);
+room_instance_add(argument0,348,208,torch_east_obj);
 /*
 room_instance_add(argument0,208,144,light_floor_obj);
 room_instance_add(argument0,272,144,light_floor_obj);

@@ -22,7 +22,11 @@ object_event_add
     if spr_var == -1 { local.spr = light_floor_obj_spr; }
     else { local.spr = spr_var; }
     spr_id_var = (spr_id_var+(global.delta_time_var/6)) mod sprite_get_number(local.spr);
-    if gold_var { visible = !door_var.lock_var; }
+    if gold_var
+    {
+        visible = !door_var.lock_var;
+        if image_blend != c_white { image_blend = c_white; }
+    }
 ")
 // Draw Event
 object_event_add
