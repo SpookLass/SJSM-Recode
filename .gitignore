@@ -6,6 +6,7 @@ The_Doll_House/
 screenshot*.png
 *.ini
 *.log
+*.gb1
 # Except these ones
 !save_ex.ini
 !settings.ini
