@@ -1,0 +1,125 @@
+// Builtin Variables
+object_set_depth(argument0,100);
+object_set_mask(argument0,noone);
+object_set_parent(argument0,noone);
+object_set_persistent(argument0,true);
+object_set_solid(argument0,false);
+object_set_sprite(argument0,noone);
+object_set_visible(argument0,true);
+// Step
+object_event_add
+(argument0,ev_step,ev_step_normal,"
+    // Delta Time
+    // Goes by frames rather than seconds (at 60 fps)
+    global.delta_time_var = (current_time-global.last_time_var)*global.game_spd_var*milli_frame_rate_const; 
+    global.last_time_var = current_time;
+    // Get inputs
+    // I know this looks bad, but keyboard_check_pressed doesn't persist between rooms
+    global.forward_input_prev_var = global.forward_input_var;
+    global.backward_input_prev_var = global.backward_input_var;
+    global.strafe_left_input_prev_var = global.strafe_left_input_var;
+    global.strafe_right_input_prev_var = global.strafe_right_input_var;
+    global.sprint_input_prev_var = global.sprint_input_var;
+    global.jump_input_prev_var = global.jump_input_var;
+    global.crouch_input_prev_var = global.crouch_input_var;
+    if !global.controller_var
+    {
+        if keyboard_check_pressed(ord('W')) { global.forward_input_var = true; }
+        if keyboard_check_released(ord('W')) { global.forward_input_var = false; }
+        
+        if keyboard_check_pressed(ord('S')) { global.backward_input_var = true; }
+        if keyboard_check_released(ord('S')) { global.backward_input_var = false; }
+        
+        if keyboard_check_pressed(ord('A')) { global.strafe_left_input_var = true; }
+        if keyboard_check_released(ord('A')) { global.strafe_left_input_var = false; }
+        
+        if keyboard_check_pressed(ord('D')) { global.strafe_right_input_var = true; }
+        if keyboard_check_released(ord('D')) { global.strafe_right_input_var = false; }
+
+        if keyboard_check_pressed(vk_shift) { global.sprint_input_var = true; }
+        if keyboard_check_released(vk_shift) { global.sprint_input_var = false; }
+
+        if keyboard_check_pressed(vk_space) { global.jump_input_var = true; }
+        if keyboard_check_released(vk_space) { global.jump_input_var = false; }
+
+        if keyboard_check_pressed(vk_control) { global.crouch_input_var = true; }
+        if keyboard_check_released(vk_control) { global.crouch_input_var = false; }
+    }
+    global.forward_input_press_var = global.forward_input_var-global.forward_input_prev_var;
+    global.backward_input_press_var = global.backward_input_var-global.backward_input_prev_var;
+    global.strafe_left_input_press_var = global.strafe_left_input_var-global.strafe_left_input_prev_var;
+    global.strafe_right_input_press_var = global.strafe_right_input_var-global.strafe_right_input_prev_var;
+    global.sprint_input_press_var = global.sprint_input_var-global.sprint_right_input_prev_var;
+    global.jump_input_press_var = global.jump_input_var-global.jump_input_prev_var;
+    global.crouch_input_press_var = global.crouch_input_var-global.crouch_input_prev_var;
+    
+    // Free da mouse
+    if keyboard_check_pressed(vk_tab) || keyboard_check_pressed(vk_escape)
+    {
+        global.mouse_free_var = !global.mouse_free_var;
+        action_set_cursor(-1,global.mouse_free_var);
+        if !global.mouse_free_var { display_mouse_set(display_get_width()/2,display_get_height()/2); }
+    }
+    // Tex control WHATEVER MAN
+    if keyboard_check_pressed(ord('2'))
+    {
+        global.tex_set = get_integer('Tex set',global.tex_set);
+        local.str = string(global.tex_set);
+        if string_length(local.str) == 1 { local.str = '0'+local.str; }
+        if file_exists(vanilla_directory_const+'\TEX\FLOOR_'+local.str+'.png')
+        {
+            background_replace(floor_bg,vanilla_directory_const+'\TEX\FLOOR_'+local.str+'.png',false,false);
+            background_replace(wall_bg,vanilla_directory_const+'\TEX\WALL_'+local.str+'.png',false,false);
+            background_replace(ceil_bg,vanilla_directory_const+'\TEX\ROOF_'+local.str+'.png',false,false);
+        }
+    }
+    // Framerate
+    global.draw_time_var += global.delta_time_var;
+    if global.fps_var < global.tps_var && !global.vsync_var
+    {
+        local.rate = fps/global.fps_var;
+        frame_var += 1;
+        if frame_var >= local.rate
+        {
+            screen_redraw();
+            if local.rate { frame_var = frame_var mod local.rate; }
+            else {frame_var = 0; }
+        }
+    }
+");
+
+// Draw
+object_event_add
+(argument0,ev_draw,0,"
+    // Reset Drawing
+    draw_set_color(c_white);
+    draw_set_alpha(1);
+    d3d_set_lighting(false);
+    d3d_set_culling(false);
+    if global.draw_3d_var
+    { d3d_set_hidden(true); }
+    else { d3d_set_hidden(false); }
+    // Caption
+    /*
+    if global.draw_time_var > 0 { local.framerate = round(60/global.draw_time_var); }
+    else { local.framerate = 'What'; }
+    local.fps_str = ' | FPS: '+string(local.framerate);
+    */
+    room_caption = 'Spookys Jump Scare Mansion - Project Recode | TPS: '+string(fps)+' | Room: '+string(global.room_var);
+    global.draw_time_var = 0;
+")
+// Room Start
+object_event_add
+(argument0,ev_other,ev_room_start,"
+    // FPS
+    room_speed = global.tps_var;
+    local.autodraw = global.fps_var >= global.tps_var || global.vsync_var;
+    set_automatic_draw(local.autodraw);
+    // Create Collisions
+    rm_to_coll_scr();
+");
+// Game end
+object_event_add
+(argument0,ev_other,ev_game_end,"
+    p3dc_free_scr();
+")

@@ -1,0 +1,334 @@
+// Builtin Variables
+object_set_depth(argument0,100);
+object_set_mask(argument0,noone);
+object_set_parent(argument0,par_3d_obj);
+object_set_persistent(argument0,true);
+object_set_solid(argument0,false);
+object_set_sprite(argument0,noone);
+object_set_visible(argument0,true);
+// Create Event
+object_event_add
+(argument0,ev_create,0,"
+    // Collision
+    coll_var[0] = global.player_coll[0];
+    coll_var[1] = global.player_coll[1];
+    coll_var[2] = global.player_coll[2];
+    coll_h_var = 18;
+    // HP
+    if global.one_hit { hp_max_var = 1; }
+    else { hp_max_var = 100; }
+    hp_var = hp_max_var;
+    heal_rate_var = 1/60;
+    heal_var = true;
+    heal_delay_var = 0;
+    // Speed
+    base_spd_var = 1;
+    spd_mult_var = 1;
+    back_spd_mult_var = 0.6; // Normally 0.5, but I use 0.6 so the run speed is accurate
+    back_var = false; // Whether to reduce speed when walking backwards
+    normal_var = true;
+    // Stamina
+    sprint_var = 0;
+    stam_max_var = 100;
+    stam_var = max_stam_var;
+    stam_rate_var = 0.5;
+    sprint_spd_mult_var = 2.5;
+    // Acceleration
+    friction_var = 0.5;
+    acc_var = 0.8;
+    friction_mult_var = 1;
+    air_friction_mult_var = 0.1;
+    // Crouch
+    crouch_var = false;
+    can_crouch_var = global.can_crouch_var;
+    crouch_toggle_var = global.crouch_toggle_var;
+    crouch_spd_mult_var = 0.6;
+    // Camera
+    base_eye_h_var = 16;
+    crouch_eye_h_var = 10;
+    target_eye_h_var = base_eye_h_var;
+    eye_h_var = base_eye_h_var;
+    eye_rate_var = 0.4;
+    eye_rate_min_var = 0.5;
+    eye_yaw_var = 0;
+    eye_pitch_var = 0;
+    cam_id_var = 0;
+    // Jump
+    jump_var = false;
+    can_jump_var = global.can_jump_var;
+    jump_z_spd_var = 0.7;
+    jump_spd_mult_var = 1.2;
+    jump_stam_var = 30;
+    // Gravity
+    grav_var = true;
+    on_floor_var = true;
+    // Bob
+    bob_rate_var = 3;
+    bob_mult_var = 1.5;
+    bob_var = 0;
+    bob_time_var = 45;
+    // Idle Bob
+    breath_rate_var = 1;
+    breath_mult_var = 0.15;
+    breath_var = 0;
+    breath_time_var = 0;
+    breath_asthma_rate_var = 2;
+    breath_do_var = true;
+    // FOV
+    fov_var = global.fov_var;
+    current_fov_var = fov_var;
+    fov_rate_var = 0.2;
+    fov_rate_min_var = 0.5;
+    // Alarms
+    alarm_len_var = 2;
+    alarm_arr[0,2] = '';
+    alarm_arr[1,2] = '';
+    // Behavior
+    switch(global.player_type)
+    {
+        case 2:
+        {
+            back_var = true;
+            normal_var = false;
+            breath_do_var = false;
+            break;
+        }
+        case 3:
+        {
+            base_spd_var = 5/pf_ms_rate_const;
+            sprint_spd_mult_var = 1.8;
+            break;
+        }
+    }
+");
+// Alarm 0 Event
+object_event_add
+(argument0,ev_alarm,0,"
+    hurt_var = false;
+");
+// Alarm 1 Event
+object_event_add
+(argument0,ev_alarm,1,"
+    heal_var = true;
+");
+// Room Start Event
+object_event_add
+(argument0,ev_other,ev_room_start,"
+    // Position
+    x = global.spawn_arr[0,0];
+    y = global.spawn_arr[0,1];
+    z = global.spawn_arr[0,2]+0.1;
+    eye_yaw_var = global.spawn_arr[0,3];
+    eye_pitch_var = 0;
+    set_motion_scr(0,false,eye_yaw_var,true);
+    // Bob
+    bob_time_var = 45;
+    // Idle Bob
+    idle_bob_time_var = 0;
+    // Camera
+    cam_x_var = x;
+    cam_y_var = y;
+    cam_z_var = z+eye_h_var;
+    cam_yaw_var = eye_yaw_var;
+    cam_pitch_var = eye_pitch_var;
+    // View
+    view_visible[cam_id_var] = true;
+    view_enabled = true;
+");
+// Step
+object_event_add
+(argument0,ev_step,ev_step_normal,"
+    event_inherited();
+    // Mouse
+    if !global.mouse_free_var
+    {
+        eye_yaw_var = (eye_yaw_var-((display_mouse_get_x()-(display_get_width()/2))*global.sens_var/1600)) mod 360;
+        eye_pitch_var = median(-89.9,89.9,eye_pitch_var-((display_mouse_get_y()-(display_get_height()/2))*global.sens_var/1600));
+        display_mouse_set(display_get_width()/2,display_get_height()/2);
+    }
+    // Get inputs
+    local.input_dir_x = global.forward_input_var-global.backward_input_var;
+    local.input_dir_y = global.strafe_right_input_var-global.strafe_left_input_var;
+    local.input_dir = radtodeg(arctan2(-local.input_dir_y,local.input_dir_x));
+    // Jump!
+    if can_jump_var && global.jump_input_press_var && on_floor_var && stam_var > jump_stam_var
+    {
+        stam_var -= jump_stam_var
+        z_spd_var = jump_z_spd_var;
+        jump_var = true;
+        on_floor_var = false;
+        z += z_spd_var;
+    }
+    if jump_var && on_floor_var { jump_var = false; }
+    // Crouch!
+    if (global.crouch_input_press_var && crouch_toggle_var) 
+    || (global.crouch_input_var != crouch_var && !crouch_toggle_var)
+    {
+        local.znext = z;
+        if !on_floor_var
+        {
+            local.coll_diff = global.player_coll[1]-global.player_crouch_coll[1];
+            if !crouch_var { local.znext += local.coll_diff; }
+            else { local.znext -= local.coll_diff; }
+        }
+        if !crouch_var
+        {
+            crouch_var = true;
+            coll_var[0] = global.player_crouch_coll[0];
+            coll_var[1] = global.player_crouch_coll[1];
+            coll_var[2] = global.player_crouch_coll[1];
+            z = local.znext;
+            target_eye_h_var = crouch_eye_h_var;
+        }
+        else if !p3dc_check_split_scr(global.player_coll,x,y,local.znext+0.01)
+        {
+            crouch_var = false;
+            coll_var[0] = global.player_coll[0];
+            coll_var[1] = global.player_coll[1];
+            coll_var[2] = global.player_coll[2];
+            z = local.znext;
+            target_eye_h_var = base_eye_h_var;
+        }
+        else if !on_floor_var
+        {
+            local.zdist = 10000000;
+            for (local.i=0; local.i<4; local.i+=1;)
+            {
+                local.zdist = min
+                (
+                    local.zdist,
+                    p3dc_ray_split_scr
+                    (
+                        x+lengthdir_x(3,local.i*90),
+                        y+lengthdir_y(3,local.i*90),
+                        z+coll_var[1],
+                        0,0,-1
+                    )
+                );
+            }
+            local.zdist -= coll_var[1];
+            local.znext = z-local.zdist;
+            if !p3dc_check_split_scr(global.player_coll,x,y,local.znext+0.01)
+            {
+                crouch_var = false;
+                coll_var[0] = global.player_coll[0];
+                coll_var[1] = global.player_coll[1];
+                coll_var[2] = global.player_coll[2];
+                z = local.znext;
+                z_spd_var = 0;
+                on_floor_var = true;
+                target_eye_h_var = base_eye_h_var;
+            }
+        }
+        if !on_floor_var { eye_h_var = target_eye_h_var }
+    }
+    // Sprint
+    sprint_var = global.sprint_input_var && stam_var;
+    // Calculate speed
+    local.spd = 0;
+    if local.input_dir_x != 0 || local.input_dir_y != 0
+    {
+        local.spd = base_spd_var;
+        if sprint_var { local.spd *= sprint_spd_mult_var; }
+        if crouch_var { local.spd *= crouch_spd_mult_var; }
+        if jump_var { local.spd *= jump_spd_mult_var; }
+        local.spd *= spd_mult_var;
+    }
+    spd_mult_var = 1;
+    // Calculate friction and acceleration
+    local.acc = acc_var;
+    local.frick = friction_var;
+    if !on_floor_var
+    {
+        local.acc *= air_friction_mult_var;
+        local.frick *= air_friction_mult_var;
+    }
+    local.acc *= friction_mult_var;
+    local.frick *= friction_mult_var;
+    friction_mult_var = 1;
+    // Accelerate and move
+    if normal_var
+    {
+        if back_var { local.spd *= lerp_scr(1,back_spd_mult_var,abs(local.input_dir)/180); }
+        acc_scr(local.acc*global.delta_time_var,local.frick*global.delta_time_var,local.input_dir+cam_yaw_var,local.spd);
+    }
+    else
+    {
+        if back_var
+        {
+            if local.input_dir_x { local.forspd = local.spd; }
+            else { local.forspd = local.spd * back_spd_mult_var;}
+            local.sidespd = local.spd*(back_spd_mult_var+1)*0.5;
+        }
+        else
+        {
+            local.forspd = local.spd;
+            local.sidespd = local.spd;
+        }
+        acc_odd_scr(local.acc*global.delta_time_var,local.frick*global.delta_time_var,local.input_dir_x,local.input_dir_y,local.forspd,local.sidespd,cam_yaw_var);
+    }
+");
+// End Step
+object_event_add
+(argument0,ev_step,ev_step_end,"
+    event_inherited();
+    // Get real speed for bobbing and stamina (already delta-timed)
+    local.real_spd = point_distance(xprevious,yprevious,x,y);
+    if on_floor_var
+    {
+        // Calculate stamina
+        if sprint_var { local.stam_rate = (-stam_rate_var*local.real_spd)/(base_spd_var*sprint_spd_mult_var); }
+        else if !global.sprint_input_var { local.stam_rate = stam_rate_var*global.delta_time_var; }
+        // Calculate bobbing
+        if local.real_spd
+        {
+            local.bobprev = bob_time_var;
+            bob_time_var = (bob_time_var+(bob_rate_var*local.real_spd)) mod 180;
+            bob_var = (bob_mult_var*sin(degtorad(bob_time_var)))-(bob_mult_var/2);
+            if local.bobprev > bob_time_var
+            {
+                // Play footsteps
+                // The new sound system isn't set up yet
+            }
+        }
+    }
+    // Clamp stamina
+    stam_var = median(0,stam_max_var,stam_var+local.stam_rate);
+    // As We Breathe
+    local.breath_rate = (breath_rate_var+(breath_asthma_rate_var*sqr(1-(stam_var/stam_max_var))))*global.delta_time_var;
+    breath_time_var = (breath_time_var+local.breath_rate) mod 360;
+    breath_var = breath_mult_var*sin(degtorad(breath_time_var));
+    // Calculate health
+    if !hurt_var && !in_door_var && heal_var
+    {
+        local.heal_rate = heal_rate_var*heal_mult_var*global.delta_time_var;
+        hp_var = median(0,hp_max_var,hp_var+local.heal_rate);
+        heal_mult_var = 1;
+    }
+    // Calculate FOV
+    local.target_fov = fov_var*power(max(0.6,spd_var/base_spd_var),0.25);
+    if current_fov_var != local.target_fov
+    {
+        local.fov_diff = abs(local.target_fov-current_fov_var);
+        local.fov_rate = max(fov_rate_min_var,local.fov_diff*fov_rate_var)*global.delta_time_var;
+        current_fov_var += min(local.fov_diff,local.fov_rate)*sign(local.target_fov-current_fov_var);
+    }
+    // Calculate eye height
+    if target_eye_h_var != eye_h_var
+    {
+        local.eye_diff = abs(target_eye_h_var-eye_h_var);
+        local.eye_rate = max(eye_rate_min_var,local.eye_diff*eye_rate_var)*global.delta_time_var;
+        eye_h_var += min(local.eye_diff,local.eye_rate)*sign(target_eye_h_var-eye_h_var);
+    }
+    // Camera
+    cam_x_var = x;
+    cam_y_var = y;
+    cam_z_var = z+eye_h_var+bob_var+breath_var;
+    cam_yaw_var = eye_yaw_var;
+    cam_pitch_var = eye_pitch_var;
+");
+// Draw Event
+object_event_add
+(argument0,ev_draw,0,"
+    draw_cam_scr(cam_id_var,cam_x_var,cam_y_var,cam_z_var,cam_yaw_var,cam_pitch_var,current_fov_var);
+");

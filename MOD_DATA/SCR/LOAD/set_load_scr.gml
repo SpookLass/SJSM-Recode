@@ -1,0 +1,22 @@
+ini_open("settings.ini");
+global.fov_var = ini_read_real("MAIN","fov",fov_const);
+global.fps_var = ini_read_real("MAIN","fps",fps_const);
+global.tps_var = ini_read_real("MAIN","tps",tps_const);
+global.sens_var = ini_read_real("MAIN","sens",sens_const);
+global.vol_var = ini_read_real("MAIN","vol",vol_const);
+global.reduce_flash_var = ini_read_real("MAIN","reduce_flash",reduce_flash_const);
+global.max_part_var = ini_read_real("MAIN","max_part",max_part_const);
+global.can_crouch_var = ini_read_real("MAIN","crouch",crouch_const);
+global.crouch_toggle_var = ini_read_real("MAIN","crouch_toggle",crouch_toggle_const);
+global.can_jump_var = ini_read_real("MAIN","jump",jump_const);
+global.sub_var = ini_read_real("MAIN","sub",sub_const);
+global.anti_alias_var = ini_read_real("MAIN","anti_alias",anti_alias_const);
+global.vsync_var = ini_read_real("MAIN","vsync",vsync_const);
+global.fullscreen_var = ini_read_real("MAIN","fullscreen",fullscreen_const);
+global.color_var = ini_read_real("MAIN","color",color_const);
+global.coll_prec_var = ini_read_real("MAIN","coll_prec",coll_prec_const);
+global.game_spd_var = ini_read_real("MAIN","game_spd",game_spd_const);
+// Set stuff
+window_set_fullscreen(global.fullscreen_var);
+set_synchronization(global.vsync_var);
+texture_set_interpolation(global.anti_alias_var);

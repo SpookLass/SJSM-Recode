@@ -1,0 +1,10 @@
+# Don't commit piracy
+DATA/
+Karamari_Hospital/
+The_Doll_House/
+# I don't want screenshots or saves
+screenshot*.png
+*.ini
+# Except these ones
+!save_ex.ini
+!settings.ini
