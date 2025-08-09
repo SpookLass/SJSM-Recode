@@ -27,6 +27,8 @@ room_set_code
     local.exitdoor = instance_create(global.spawn_arr[1,0]-lengthdir_x(16,global.spawn_arr[1,3]),global.spawn_arr[1,1]-lengthdir_y(16,global.spawn_arr[1,3]),door_obj);
     local.exitdoor.z = global.spawn_arr[1,2];
     local.exitdoor.direction = global.spawn_arr[1,3]+180;
+    local.exittrig = instance_create(global.spawn_arr[1,0]-lengthdir_x(8,global.spawn_arr[1,3]),global.spawn_arr[1,1]-lengthdir_y(8,global.spawn_arr[1,3]),door_trig_obj);
+    local.exittrig.z = global.spawn_arr[1,2];
     // Objects
     if frac_chance_scr(5,9) { instance_create(0,0,dark_color_obj); }
     if frac_chance_scr(4,9) { with (light_par_obj) { visible = false; }}

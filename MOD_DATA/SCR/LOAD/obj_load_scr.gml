@@ -40,6 +40,14 @@ while (local.file != "")
     file_to_obj_scr(main_directory_const+"\OBJ\MAIN\COLOR\"+local.file,filename_change_ext(local.file,""),argument0);
 }
 file_find_close();
+local.file = file_find_first(main_directory_const+"\OBJ\MAIN\EFF\*.gml",-1);
+file_to_obj_scr(main_directory_const+"\OBJ\MAIN\EFF\"+local.file,filename_change_ext(local.file,""),argument0);
+while (local.file != "")
+{
+    local.file = file_find_next();
+    file_to_obj_scr(main_directory_const+"\OBJ\MAIN\EFF\"+local.file,filename_change_ext(local.file,""),argument0);
+}
+file_find_close();
 // Get the first file in the child directory
 local.file = file_find_first(main_directory_const+"\OBJ\CHILD\*.gml",-1);
 file_to_obj_scr(main_directory_const+"\OBJ\CHILD\"+local.file,filename_change_ext(local.file,""),argument0);

@@ -34,5 +34,6 @@ Backward: '+string(global.backward_input_var)+'
 Left: '+string(global.strafe_left_input_var)+'
 Right: '+string(global.strafe_right_input_var)
         draw_text(0,0,local.str);
+        d3d_set_hidden(true);
     }
 ");

@@ -22,6 +22,7 @@ object_event_add
     global.sprint_input_prev_var = global.sprint_input_var;
     global.jump_input_prev_var = global.jump_input_var;
     global.crouch_input_prev_var = global.crouch_input_var;
+    global.interact_input_prev_var = global.interact_input_var;
     if !global.controller_var
     {
         if keyboard_check_pressed(ord('W')) { global.forward_input_var = true; }
@@ -44,6 +45,9 @@ object_event_add
 
         if keyboard_check_pressed(vk_control) { global.crouch_input_var = true; }
         if keyboard_check_released(vk_control) { global.crouch_input_var = false; }
+
+        if keyboard_check_pressed(ord('E')) { global.interact_input_var = true; }
+        if keyboard_check_released(ord('E')) { global.interact_input_var = false; }
     }
     global.forward_input_press_var = global.forward_input_var-global.forward_input_prev_var;
     global.backward_input_press_var = global.backward_input_var-global.backward_input_prev_var;
@@ -52,6 +56,7 @@ object_event_add
     global.sprint_input_press_var = global.sprint_input_var-global.sprint_right_input_prev_var;
     global.jump_input_press_var = global.jump_input_var-global.jump_input_prev_var;
     global.crouch_input_press_var = global.crouch_input_var-global.crouch_input_prev_var;
+    global.interact_input_press_var = global.interact_input_var-global.interact_input_prev_var;
     
     // Free da mouse
     if keyboard_check_pressed(vk_tab) || keyboard_check_pressed(vk_escape)
@@ -119,7 +124,7 @@ object_event_add
             case 8: { global.violence_var = get_integer('Set LOVE', global.violence_var); break; }
             case 9: { score = get_integer('Set Room Count', score); break; }
             case 10: { global.invincible = !global.invincible; break; }
-            case 11: { global.noclip = !global.noclip; break; }
+            case 11: { player_obj.do_coll_var = !player_obj.do_coll_var; break; }
             case 12: { global.hide_debug = !global.hide_debug; break; }
             case 13: { global.hide_hud = !global.hide_hud; break; }
             case 14: { global.xray = !global.xray; break; }
