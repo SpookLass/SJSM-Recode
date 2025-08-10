@@ -20,7 +20,6 @@ object_event_add
     local.light.z += z;
     local.light.gold_var = gold_var;
     local.light.torch_var = id;
-    
     if auto_var { event_perform(ev_other,ev_user0); }
 ");
 // Step
@@ -35,7 +34,7 @@ object_event_add
 // Draw
 object_event_add
 (argument0,ev_draw,0,"
-    if gold_var
+    if gold_var && on_var
     {
         d3d_set_fog(false,c_black,0,0);
         event_inherited();

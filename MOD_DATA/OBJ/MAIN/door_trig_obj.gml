@@ -19,7 +19,7 @@ object_event_add
     // Function
     score_var = 1;
     delay_var = 20;
-    rm_var = test_01_rm;
+    rm_var = choose(hall_01_rm,hall_13_rm,test_01_rm);
     // Alarm
     alarm_len_var = 1;
     alarm_arr[0,2] = '';

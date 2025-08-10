@@ -35,12 +35,16 @@ room_set_code
         global.spawn_arr[local.i,4] = local.exittrig;
     }
     
+    // Warning torch
+    local.torch = instance_create(160,144,torch_gold_east_obj);
+    // Left
     local.torch = instance_create(144,32,torch_gold_north_obj);
     local.torch.door_var = global.spawn_arr[1,4];
     local.torch = instance_create(208,32,torch_gold_north_obj);
     local.torch.door_var = global.spawn_arr[1,4];
     local.torch = instance_create(208,64,torch_gold_south_obj);
     local.torch.door_var = global.spawn_arr[1,4];
+    // Right
     local.torch = instance_create(144,256,torch_gold_south_obj);
     local.torch.door_var = global.spawn_arr[2,4];
     local.torch = instance_create(208,224,torch_gold_north_obj);
