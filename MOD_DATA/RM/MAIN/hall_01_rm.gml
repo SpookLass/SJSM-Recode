@@ -16,6 +16,7 @@ room_set_code
     global.spawn_arr[1,1] = 240;
     global.spawn_arr[1,2] = 0;
     global.spawn_arr[1,3] = 90;
+    shuffle_spawn_scr(true);
     // 3D Draw
     d3d_start();
     global.draw_3d_var = true;
@@ -31,7 +32,7 @@ room_set_code
     local.exittrig.z = global.spawn_arr[1,2];
     // Objects
     if frac_chance_scr(5,9) { instance_create(0,0,dark_color_obj); }
-    if frac_chance_scr(4,9) { with (light_par_obj) { visible = false; }}
+    if frac_chance_scr(4,9) { with (torch_obj) { on_var = false; } }
     "
 )
 // Room settings

@@ -11,6 +11,7 @@ object_event_add
 (argument0,ev_create,0,"
     direction = 180;
     gold_var = true;
+    auto_var = true;
     event_inherited();
     stored_tex_var = background_get_texture(torch_gold_bg);
     tex_var = stored_tex_var;

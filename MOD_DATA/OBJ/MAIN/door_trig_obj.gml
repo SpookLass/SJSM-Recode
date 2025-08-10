@@ -19,7 +19,7 @@ object_event_add
     // Function
     score_var = 1;
     delay_var = 20;
-    rm_var = hall_01_rm;
+    rm_var = test_01_rm;
     // Alarm
     alarm_len_var = 1;
     alarm_arr[0,2] = '';
@@ -32,13 +32,15 @@ object_event_add
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,"
+    visible = false;
     local.door = id;
     local.indoor = true;
-    visible = false;
+    local.active = false;
     with player_obj
     {
         local.player = id;
-        if p3dc_check_scr(coll_var[0],x,y,z,other.coll_var[0],other.x,other.y,other.z)
+        // p3dc_check_scr(coll_var[0],x,y,z,other.coll_var[0],other.x,other.y,other.z)
+        if box_coll_scr(x,y,z,coll_var[2],coll_var[1],other.x,other.y,other.z,other.coll_var[2],other.coll_var[1])
         {
             other.visible = true;
             other.cam_id_var = cam_id_var
@@ -47,8 +49,8 @@ object_event_add
                 if !other.lock_var
                 {
                     on_var = false;
-                    local.active = true;
                     in_door_var = true;
+                    local.active = true;
                     with instance_create(0,0,fade_eff_obj)
                     {
                         image_blend = c_black; 

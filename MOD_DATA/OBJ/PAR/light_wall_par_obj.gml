@@ -1,5 +1,5 @@
 // Builtin Variables
-object_set_depth(argument0,0);
+object_set_depth(argument0,-1);
 object_set_mask(argument0,noone);
 object_set_parent(argument0,light_par_obj);
 object_set_persistent(argument0,false);
@@ -22,11 +22,8 @@ object_event_add
     if spr_var == -1 { local.spr = light_wall_obj_spr; }
     else { local.spr = spr_var; }
     spr_id_var = (spr_id_var+(global.delta_time_var/6)) mod sprite_get_number(local.spr);
-    if gold_var
-    {
-        visible = !door_var.lock_var;
-        if image_blend != c_white { image_blend = c_white; }
-    }
+    if gold_var && image_blend != c_white { image_blend = c_white; }
+    visible = torch_var.on_var;
 ")
 // Draw Event
 object_event_add
