@@ -12,6 +12,9 @@ object_event_add
     direction = 180;
     gold_var = true;
     auto_var = true;
+    local.light = instance_create(x+lengthdir_x(-1.5,direction+90),y+lengthdir_y(-1.5,direction+90),gold_part_obj);
+    local.light.z += z;
+    local.light.torch_var = id;
     event_inherited();
     stored_tex_var = background_get_texture(torch_gold_bg);
     tex_var = stored_tex_var;

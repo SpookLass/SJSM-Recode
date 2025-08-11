@@ -19,12 +19,25 @@ room_set_code
     global.spawn_arr[2,1] = 240;
     global.spawn_arr[2,2] = 0;
     global.spawn_arr[2,3] = 180;
+    // Mark
+    global.mark_len_var = 3;
+    global.mark_arr[0,0] = 144;
+    global.mark_arr[0,1] = 144;
+    global.mark_arr[0,2] = 0;
+    global.mark_arr[1,0] = 176;
+    global.mark_arr[1,1] = 48;
+    global.mark_arr[1,2] = 0;
+    global.mark_arr[2,0] = 336;
+    global.mark_arr[2,1] = 176;
+    global.mark_arr[2,2] = 0;
     // Doors
     local.entrance = instance_create(global.spawn_arr[0,0]-lengthdir_x(16,global.spawn_arr[0,3]),global.spawn_arr[0,1]-lengthdir_y(16,global.spawn_arr[0,3]),door_entrance_obj);
     local.entrance.z = global.spawn_arr[0,2];
     local.entrance.direction = global.spawn_arr[0,3]+180;
-
+    // Exit
     local.unlock = irandom_range(1,global.spawn_len_var-1);
+    if local.unlock == 1 { global.mark_arr[0,1] = 176; }
+    else { global.mark_arr[0,1] = 112; }
     for (local.i=1; local.i<global.spawn_len_var; local.i+=1;)
     {
         local.exitdoor = instance_create(global.spawn_arr[local.i,0]-lengthdir_x(16,global.spawn_arr[local.i,3]),global.spawn_arr[local.i,1]-lengthdir_y(16,global.spawn_arr[local.i,3]),door_obj);
@@ -34,7 +47,6 @@ room_set_code
         if local.i != local.unlock { local.exittrig.lock_var = true; }
         global.spawn_arr[local.i,4] = local.exittrig;
     }
-    
     // Warning torch
     local.torch = instance_create(160,144,torch_gold_east_obj);
     // Left
@@ -54,7 +66,7 @@ room_set_code
     // 3D Draw
     d3d_start();
     global.draw_3d_var = true;
-")
+");
 // Room settings
 room_set_width(argument0,1280);
 room_set_height(argument0,720);
@@ -83,7 +95,7 @@ room_instance_add(argument0,208,48,floor_obj);
 room_instance_add(argument0,208,240,floor_obj);
 room_instance_add(argument0,240,48,floor_obj);
 room_instance_add(argument0,240,240,floor_obj);
-// Floors
+// Ceils
 room_instance_add(argument0,48,144,ceil_obj);
 room_instance_add(argument0,80,144,ceil_obj);
 room_instance_add(argument0,112,144,ceil_obj);

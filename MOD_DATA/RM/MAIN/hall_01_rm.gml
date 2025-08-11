@@ -16,7 +16,17 @@ room_set_code
     global.spawn_arr[1,1] = 240;
     global.spawn_arr[1,2] = 0;
     global.spawn_arr[1,3] = 90;
-    shuffle_spawn_scr(true);
+    // Mark
+    global.mark_len_var = 3;
+    global.mark_arr[0,0] = 240;
+    global.mark_arr[0,1] = 144;
+    global.mark_arr[0,2] = 0;
+    global.mark_arr[1,0] = 336;
+    global.mark_arr[1,1] = 144;
+    global.mark_arr[1,2] = 0;
+    global.mark_arr[2,0] = 336;
+    global.mark_arr[2,1] = 176;
+    global.mark_arr[2,2] = 0;
     // 3D Draw
     d3d_start();
     global.draw_3d_var = true;
@@ -24,15 +34,13 @@ room_set_code
     local.entrance = instance_create(global.spawn_arr[0,0]-lengthdir_x(16,global.spawn_arr[0,3]),global.spawn_arr[0,1]-lengthdir_y(16,global.spawn_arr[0,3]),door_entrance_obj);
     local.entrance.z = global.spawn_arr[0,2];
     local.entrance.direction = global.spawn_arr[0,3]+180;
-
-    local.exitdoor = instance_create(global.spawn_arr[1,0]-lengthdir_x(16,global.spawn_arr[1,3]),global.spawn_arr[1,1]-lengthdir_y(16,global.spawn_arr[1,3]),door_obj);
-    local.exitdoor.z = global.spawn_arr[1,2];
-    local.exitdoor.direction = global.spawn_arr[1,3]+180;
-    local.exittrig = instance_create(global.spawn_arr[1,0]-lengthdir_x(8,global.spawn_arr[1,3]),global.spawn_arr[1,1]-lengthdir_y(8,global.spawn_arr[1,3]),door_trig_obj);
-    local.exittrig.z = global.spawn_arr[1,2];
-    // Objects
-    if frac_chance_scr(5,9) { instance_create(0,0,dark_color_obj); }
-    if frac_chance_scr(4,9) { with (torch_obj) { on_var = false; } }
+    for (local.i=1; local.i<global.spawn_len_var; local.i+=1;)
+    {
+        local.exitdoor = instance_create(global.spawn_arr[local.i,0]-lengthdir_x(16,global.spawn_arr[local.i,3]),global.spawn_arr[local.i,1]-lengthdir_y(16,global.spawn_arr[local.i,3]),door_obj);
+        local.exitdoor.direction = global.spawn_arr[local.i,3]+180;
+        local.exittrig = instance_create(global.spawn_arr[local.i,0]-lengthdir_x(8,global.spawn_arr[local.i,3]),global.spawn_arr[local.i,1]-lengthdir_y(8,global.spawn_arr[local.i,3]),door_trig_obj);
+        local.exittrig.z = global.spawn_arr[local.i,2];
+    }
     "
 )
 // Room settings
@@ -45,6 +53,7 @@ for (local.i=0; local.i<8; local.i+=1;)
 room_set_view(argument0,0,true,0,0,1280,720,0,0,1280,720,32,32,-1,-1,noone);
 // Effects
 room_instance_add(argument0,0,0,fog_01_obj);
+room_instance_add(argument0,0,0,color_control_02_obj);
 // Walls (Horizontal)
 room_instance_add(argument0,336,128,wall_hor_obj);
 room_instance_add(argument0,304,128,wall_hor_obj);

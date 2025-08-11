@@ -12,4 +12,4 @@ if argument5 { pitch_var = median(-90,90,argument4); }
 // Set x speed, y speed, and z speed to match
 x_spd_var = lengthdir_x(lengthdir_x(spd_var,yaw_var),pitch_var);
 y_spd_var = lengthdir_x(lengthdir_y(spd_var,yaw_var),pitch_var);
-z_spd_var = lengthdir_y(spd_var,pitch_var);
+z_spd_var = -lengthdir_y(spd_var,pitch_var);

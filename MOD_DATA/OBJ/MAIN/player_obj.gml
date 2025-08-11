@@ -174,83 +174,91 @@ object_event_add
         local.input_dir_x = global.forward_input_var-global.backward_input_var;
         local.input_dir_y = global.strafe_right_input_var-global.strafe_left_input_var;
         local.input_dir = radtodeg(arctan2(-local.input_dir_y,local.input_dir_x));
-        // Jump!
-        if can_jump_var && global.jump_input_press_var && on_floor_var && stam_var > jump_stam_var
+        if do_coll_var && grav_var
         {
-            stam_var -= jump_stam_var
-            z_spd_var = jump_z_spd_var;
-            jump_var = true;
-            on_floor_var = false;
-            z += z_spd_var;
-        }
-        if jump_var && on_floor_var { jump_var = false; }
-        // Crouch!
-        if (global.crouch_input_press_var && crouch_toggle_var) 
-        || (global.crouch_input_var != crouch_var && !crouch_toggle_var)
-        {
-            local.znext = z;
-            if !on_floor_var
+            // Jump!
+            if can_jump_var && global.jump_input_press_var && on_floor_var && stam_var > jump_stam_var
             {
-                local.coll_diff = global.player_coll[1]-global.player_crouch_coll[1];
-                if !crouch_var { local.znext += local.coll_diff; }
-                else { local.znext -= local.coll_diff; }
+                stam_var -= jump_stam_var
+                z_spd_var = jump_z_spd_var;
+                jump_var = true;
+                on_floor_var = false;
+                z += z_spd_var;
             }
-            if !crouch_var
+            if jump_var && on_floor_var { jump_var = false; }
+            // Crouch!
+            if (global.crouch_input_press_var && crouch_toggle_var) 
+            || (global.crouch_input_var != crouch_var && !crouch_toggle_var)
             {
-                crouch_var = true;
-                coll_var[0] = global.player_crouch_coll[0];
-                coll_var[1] = global.player_crouch_coll[1];
-                coll_var[2] = global.player_crouch_coll[1];
-                z = local.znext;
-                target_eye_h_var = crouch_eye_h_var;
-            }
-            else if !p3dc_check_split_scr(global.player_coll,x,y,local.znext+0.01)
-            {
-                crouch_var = false;
-                coll_var[0] = global.player_coll[0];
-                coll_var[1] = global.player_coll[1];
-                coll_var[2] = global.player_coll[2];
-                z = local.znext;
-                target_eye_h_var = base_eye_h_var;
-            }
-            else if !on_floor_var
-            {
-                local.zdist = 10000000;
-                for (local.i=0; local.i<4; local.i+=1;)
+                local.znext = z;
+                if !on_floor_var
                 {
-                    local.zdist = min
-                    (
-                        local.zdist,
-                        p3dc_ray_split_scr
-                        (
-                            x+lengthdir_x(3,local.i*90),
-                            y+lengthdir_y(3,local.i*90),
-                            z+coll_var[1],
-                            0,0,-1
-                        )
-                    );
+                    local.coll_diff = global.player_coll[1]-global.player_crouch_coll[1];
+                    if !crouch_var { local.znext += local.coll_diff; }
+                    else { local.znext -= local.coll_diff; }
                 }
-                local.zdist -= coll_var[1];
-                local.znext = z-local.zdist;
-                if !p3dc_check_split_scr(global.player_coll,x,y,local.znext+0.01)
+                if !crouch_var
+                {
+                    crouch_var = true;
+                    coll_var[0] = global.player_crouch_coll[0];
+                    coll_var[1] = global.player_crouch_coll[1];
+                    coll_var[2] = global.player_crouch_coll[1];
+                    z = local.znext;
+                    target_eye_h_var = crouch_eye_h_var;
+                }
+                else if !p3dc_check_split_scr(global.player_coll,x,y,local.znext+0.01)
                 {
                     crouch_var = false;
                     coll_var[0] = global.player_coll[0];
                     coll_var[1] = global.player_coll[1];
                     coll_var[2] = global.player_coll[2];
                     z = local.znext;
-                    z_spd_var = 0;
-                    on_floor_var = true;
                     target_eye_h_var = base_eye_h_var;
                 }
+                else if !on_floor_var
+                {
+                    local.zdist = 10000000;
+                    for (local.i=0; local.i<4; local.i+=1;)
+                    {
+                        local.zdist = min
+                        (
+                            local.zdist,
+                            p3dc_ray_split_scr
+                            (
+                                x+lengthdir_x(3,local.i*90),
+                                y+lengthdir_y(3,local.i*90),
+                                z+coll_var[1],
+                                0,0,-1
+                            )
+                        );
+                    }
+                    local.zdist -= coll_var[1];
+                    local.znext = z-local.zdist;
+                    if !p3dc_check_split_scr(global.player_coll,x,y,local.znext+0.01)
+                    {
+                        crouch_var = false;
+                        coll_var[0] = global.player_coll[0];
+                        coll_var[1] = global.player_coll[1];
+                        coll_var[2] = global.player_coll[2];
+                        z = local.znext;
+                        z_spd_var = 0;
+                        on_floor_var = true;
+                        target_eye_h_var = base_eye_h_var;
+                    }
+                }
+                if !on_floor_var { eye_h_var = target_eye_h_var }
             }
-            if !on_floor_var { eye_h_var = target_eye_h_var }
+        }
+        else
+        {
+            local.input_dir_z = global.jump_input_var-global.crouch_input_var;
+            local.input_dir_pitch = radtodeg(arctan2(local.input_dir_z,sqrt(sqr(local.input_dir_x)+sqr(local.input_dir_y))));
         }
         // Sprint
         sprint_var = global.sprint_input_var && stam_var;
         // Calculate speed
         local.spd = 0;
-        if local.input_dir_x != 0 || local.input_dir_y != 0
+        if local.input_dir_x != 0 || local.input_dir_y != 0 || local.input_dir_z != 0
         {
             local.spd = base_spd_var;
             if sprint_var { local.spd *= sprint_spd_mult_var; }
@@ -271,10 +279,16 @@ object_event_add
         local.frick *= friction_mult_var;
         friction_mult_var = 1;
         // Accelerate and move
-        if normal_var
+        if !do_coll_var || !grav_var
+        {
+            on_floor_var = true;
+            if back_var { local.spd *= lerp_scr(1,back_spd_mult_var,abs(local.input_dir)/180); }
+            acc_3d_scr(local.acc*global.delta_time_var,local.frick*global.delta_time_var,local.input_dir+eye_yaw_var,local.input_dir_pitch+(eye_pitch_var*lengthdir_x(1,local.input_dir)),local.spd);
+        }
+        else if normal_var
         {
             if back_var { local.spd *= lerp_scr(1,back_spd_mult_var,abs(local.input_dir)/180); }
-            acc_scr(local.acc*global.delta_time_var,local.frick*global.delta_time_var,local.input_dir+cam_yaw_var,local.spd);
+            acc_scr(local.acc*global.delta_time_var,local.frick*global.delta_time_var,local.input_dir+eye_yaw_var,local.spd);
         }
         else
         {
@@ -289,7 +303,7 @@ object_event_add
                 local.forspd = local.spd;
                 local.sidespd = local.spd;
             }
-            acc_odd_scr(local.acc*global.delta_time_var,local.frick*global.delta_time_var,local.input_dir_x,local.input_dir_y,local.forspd,local.sidespd,cam_yaw_var);
+            acc_odd_scr(local.acc*global.delta_time_var,local.frick*global.delta_time_var,local.input_dir_x,local.input_dir_y,local.forspd,local.sidespd,eye_yaw_var);
         }
     }
 ");

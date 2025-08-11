@@ -45,6 +45,7 @@ file_to_bg_scr(vanilla_directory_const+"\MAT\SAVE_05.png","save_cross_03_bg",fal
 file_to_bg_scr(vanilla_directory_const+"\MAT\TORCH.png","torch_bg",false,false,argument0);
 file_to_bg_scr(vanilla_directory_const+"\MAT\WOOD_01.png","wood_01_bg",false,false,argument0);
 file_to_bg_scr(vanilla_directory_const+"\MAT\WOOD_02.png","wood_02_bg",false,false,argument0);
+file_to_bg_scr(vanilla_directory_const+"\MAT\WOOD_03.png","table_bg",false,false,argument0);
 // Rare
 file_to_bg_scr(vanilla_directory_const+"\TEX\RARE\BRIDGE_01.png","bridge_bg",false,false,argument0);
 file_to_bg_scr(vanilla_directory_const+"\TEX\RARE\BRIDGE_02.png","bridge_fake_bg",false,false,argument0);
