@@ -13,5 +13,6 @@ object_event_add
     fog_color_var = c_black;
     fog_start_var = 0;
     fog_end_var = 128;
+    fog_dark_var = true;
     event_inherited();
 ");

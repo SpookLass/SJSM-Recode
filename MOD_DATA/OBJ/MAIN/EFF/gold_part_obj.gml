@@ -10,10 +10,14 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,0,"
     z = 21.2;
+    w_var = 3;
+    l_var = 3;
+    h_var = 3;
     part_len_var = 8;
     part_delay_var = 15;
     part_time_var = 90;
-    part_frick_var = 0.001;
+    part_frick_var = 0.002;
+    part_turn_var = 2;
     alarm_len_var = 1;
     alarm_arr[0,2] = '';
     set_alarm_scr(0,part_delay_var);
@@ -24,18 +28,24 @@ object_event_add
 (argument0,ev_alarm,0,"
     if torch_var.on_var
     {
-        part_add_scr
+        local.part = part_add_scr
         (
-            x+random(3)-1.5,
-            y+random(3)-1.5,
-            z+random(3)-1.5,
-            0.1,random(360),random_range(-90,90),
+            x+random(w_var)-(w_var/2),
+            y+random(l_var)-(l_var/2),
+            z+random(h_var)-(h_var/2),
+            0.2,random(360),random_range(-90,90),
             1+random(0.5),1+random(0.5),85+random(10),
             image_blend,image_alpha,
             false,flare_bg_tex,
             0,0,
             part_time_var
         );
+        // Yaw add direction
+        part_arr[local.part,18] = random_range(-part_turn_var,part_turn_var);
+        // Pitch add direction
+        part_arr[local.part,19] = random_range(-part_turn_var,part_turn_var);
+        // Roll add direction
+        part_arr[local.part,20] = random_range(-1,1);
     }
     set_alarm_scr(0,part_delay_var);
 ");
@@ -46,9 +56,15 @@ object_event_add
     {
         if part_arr[local.i,0]
         {
-            if abs(part_arr[local.i,4]) > 0 { part_arr[local.i,4] = max(0,part_arr[local.i,4]-part_frick_var); }
+            if abs(part_arr[local.i,4]) > 0 { part_arr[local.i,4] = max(0,part_arr[local.i,4]-(part_frick_var*global.delta_time_var)); }
             if part_arr[local.i,17] != 0 
-            { part_arr[local.i,11] = part_arr[local.i,17]/part_time_var; }
+            {
+                local.percent = part_arr[local.i,17]/part_time_var;
+                part_arr[local.i,11] = local.percent;
+                part_arr[local.i,5] += part_arr[local.i,18]*global.delta_time_var*local.percent;
+                part_arr[local.i,6] += part_arr[local.i,19]*global.delta_time_var*local.percent;
+                part_arr[local.i,9] += part_arr[local.i,20]*global.delta_time_var*local.percent;
+            }
         }
     }
     event_inherited();
@@ -57,7 +73,11 @@ object_event_add
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,"
-    d3d_set_fog(false,c_black,0,0);
-    event_inherited();
-    d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var);
-")
+    if global.fog_dark_var
+    {
+        d3d_set_fog(false,c_black,0,0);
+        event_inherited();
+        d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var);
+    }
+    else { event_inherited(); }
+");

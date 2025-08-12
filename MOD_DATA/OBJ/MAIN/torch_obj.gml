@@ -34,7 +34,7 @@ object_event_add
 // Draw
 object_event_add
 (argument0,ev_draw,0,"
-    if gold_var && on_var
+    if gold_var && on_var && global.fog_dark_var
     {
         d3d_set_fog(false,c_black,0,0);
         event_inherited();

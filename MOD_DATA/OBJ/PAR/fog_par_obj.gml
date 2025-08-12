@@ -23,5 +23,6 @@ object_event_add
     global.fog_color_var = fog_color_var;
     global.fog_start_var = fog_start_var;
     global.fog_end_var = fog_end_var;
+    global.fog_dark_var = fog_dark_var;
     d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var);
 ");

@@ -32,12 +32,12 @@ object_event_add
     else { local.tex = sprite_get_texture(spr_var,spr_id_var); }
     local.tex_w = tex_w_var*(w_var/32);
     local.tex_h = tex_h_var*(h_var/32);
+    if global.fog_dark_var { d3d_set_fog(false,c_black,0,0); }
     d3d_transform_set_identity();
     d3d_transform_add_translation(x,y,z+0.1);
     draw_set_color(image_blend); draw_set_alpha(image_alpha);
-    d3d_set_fog(false,c_black,0,0);
     d3d_draw_floor(-w_var/2,-h_var/2,0,w_var/2,h_var/2,0,local.tex,local.tex_w,local.tex_h);
     d3d_transform_set_identity();
     draw_set_color(c_white); draw_set_alpha(1);
-    d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var);
+    if global.fog_dark_var { d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var); }
 ");
