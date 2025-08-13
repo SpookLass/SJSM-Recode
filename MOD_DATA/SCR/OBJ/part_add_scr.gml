@@ -27,8 +27,9 @@ for (local.i=0; local.i<part_len_var; local.i+=1;)
         part_arr[local.i,12] = argument11;
         part_arr[local.i,13] = argument12;
         part_arr[local.i,14] = argument13;
-        part_arr[local.i,15] = argument14;
+        part_arr[local.i,16] = argument14;
         part_arr[local.i,17] = argument15;
         return local.i;
     }
 }
+return -1;

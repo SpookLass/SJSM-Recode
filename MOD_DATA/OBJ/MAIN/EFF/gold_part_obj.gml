@@ -40,12 +40,15 @@ object_event_add
             0,0,
             part_time_var
         );
-        // Yaw add direction
-        part_arr[local.part,18] = random_range(-part_turn_var,part_turn_var);
-        // Pitch add direction
-        part_arr[local.part,19] = random_range(-part_turn_var,part_turn_var);
-        // Roll add direction
-        part_arr[local.part,20] = random_range(-1,1);
+        if local.part > 0
+        {
+            // Yaw add direction
+            part_arr[local.part,18] = random_range(-part_turn_var,part_turn_var);
+            // Pitch add direction
+            part_arr[local.part,19] = random_range(-part_turn_var,part_turn_var);
+            // Roll add direction
+            part_arr[local.part,20] = random_range(-1,1);
+        }
     }
     set_alarm_scr(0,part_delay_var);
 ");
@@ -69,7 +72,6 @@ object_event_add
     }
     event_inherited();
 ");
-// Draw
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,"

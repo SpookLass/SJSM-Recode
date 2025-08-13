@@ -16,6 +16,25 @@ global.fullscreen_var = ini_read_real("MAIN","fullscreen",fullscreen_const);
 global.color_var = ini_read_real("MAIN","color",color_const);
 global.coll_prec_var = ini_read_real("MAIN","coll_prec",coll_prec_const);
 global.game_spd_var = ini_read_real("MAIN","game_spd",game_spd_const);
+// Controls
+global.up_key = ini_read_real("CONTROL","up_key_var",87);
+global.down_key_var = ini_read_real("CONTROL","down_key_var",83);
+global.left_key_var = ini_read_real("CONTROL","left_key_var",65);
+global.right_key_var = ini_read_real("CONTROL","right_key_var",68);
+global.confirm_key_var = ini_read_real("CONTROL","confirm_key_var",69);
+global.back_key_var = ini_read_real("CONTROL","back_key_var",27);
+global.forward_key_var = ini_read_real("CONTROL","forward_key_var",87);
+global.backward_key_var = ini_read_real("CONTROL","backward_key_var",83);
+global.strafe_left_key_var = ini_read_real("CONTROL","strafe_left_key_var",65);
+global.strafe_right_key_var = ini_read_real("CONTROL","strafe_right_key_var",68);
+global.interact_key_var = ini_read_real("CONTROL","interact_key_var",69);
+global.sprint_key_var = ini_read_real("CONTROL","sprint_key_var",16);
+global.jump_key_var = ini_read_real("CONTROL","jump_key_var",32);
+global.crouch_key_var = ini_read_real("CONTROL","crouch_key_var",17);
+global.attack_key_var = ini_read_real("CONTROL","attack_key_var",17);
+global.pause_key_var = ini_read_real("CONTROL","pause_key_var",27);
+global.debug_key_var = ini_read_real("CONTROL","debug_key_var",45);
+global.turnaround_key_var = ini_read_real("CONTROL","turnaround_key_var",81);
 // Set stuff
 window_set_fullscreen(global.fullscreen_var);
 set_synchronization(global.vsync_var);

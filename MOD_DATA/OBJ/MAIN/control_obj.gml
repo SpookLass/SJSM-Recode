@@ -6,7 +6,7 @@ object_set_persistent(argument0,true);
 object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
-// Step
+// Step event
 object_event_add
 (argument0,ev_step,ev_step_normal,"
     // Delta Time
@@ -25,29 +25,29 @@ object_event_add
     global.interact_input_prev_var = global.interact_input_var;
     if !global.controller_var
     {
-        if keyboard_check_pressed(ord('W')) { global.forward_input_var = true; }
-        if keyboard_check_released(ord('W')) { global.forward_input_var = false; }
+        if keyboard_check_pressed(global.forward_key_var) { global.forward_input_var = true; }
+        if keyboard_check_released(global.forward_key_var) { global.forward_input_var = false; }
         
-        if keyboard_check_pressed(ord('S')) { global.backward_input_var = true; }
-        if keyboard_check_released(ord('S')) { global.backward_input_var = false; }
+        if keyboard_check_pressed(global.backward_key_var) { global.backward_input_var = true; }
+        if keyboard_check_released(global.backward_key_var) { global.backward_input_var = false; }
         
-        if keyboard_check_pressed(ord('A')) { global.strafe_left_input_var = true; }
-        if keyboard_check_released(ord('A')) { global.strafe_left_input_var = false; }
+        if keyboard_check_pressed(global.strafe_left_key_var) { global.strafe_left_input_var = true; }
+        if keyboard_check_released(global.strafe_left_key_var) { global.strafe_left_input_var = false; }
         
-        if keyboard_check_pressed(ord('D')) { global.strafe_right_input_var = true; }
-        if keyboard_check_released(ord('D')) { global.strafe_right_input_var = false; }
+        if keyboard_check_pressed(global.strafe_right_key_var) { global.strafe_right_input_var = true; }
+        if keyboard_check_released(global.strafe_right_key_var) { global.strafe_right_input_var = false; }
 
-        if keyboard_check_pressed(vk_shift) { global.sprint_input_var = true; }
-        if keyboard_check_released(vk_shift) { global.sprint_input_var = false; }
+        if keyboard_check_pressed(global.sprint_key_var) { global.sprint_input_var = true; }
+        if keyboard_check_released(global.sprint_key_var) { global.sprint_input_var = false; }
 
-        if keyboard_check_pressed(vk_space) { global.jump_input_var = true; }
-        if keyboard_check_released(vk_space) { global.jump_input_var = false; }
+        if keyboard_check_pressed(global.jump_key_var) { global.jump_input_var = true; }
+        if keyboard_check_released(global.jump_key_var) { global.jump_input_var = false; }
 
-        if keyboard_check_pressed(vk_control) { global.crouch_input_var = true; }
-        if keyboard_check_released(vk_control) { global.crouch_input_var = false; }
+        if keyboard_check_pressed(global.crouch_key_var) { global.crouch_input_var = true; }
+        if keyboard_check_released(global.crouch_key_var) { global.crouch_input_var = false; }
 
-        if keyboard_check_pressed(ord('E')) { global.interact_input_var = true; }
-        if keyboard_check_released(ord('E')) { global.interact_input_var = false; }
+        if keyboard_check_pressed(global.interact_key_var) { global.interact_input_var = true; }
+        if keyboard_check_released(global.interact_key_var) { global.interact_input_var = false; }
     }
     global.forward_input_press_var = global.forward_input_var-global.forward_input_prev_var;
     global.backward_input_press_var = global.backward_input_var-global.backward_input_prev_var;

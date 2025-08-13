@@ -30,26 +30,12 @@ object_event_add
 (argument0,ev_draw,0,"
     if global.color_var // HD style
     {
-        d3d_set_projection_ortho
-        (
-            view_xview[view_current],
-            view_yview[view_current],
-            view_xview[view_current]+view_wview[view_current],
-            view_yview[view_current]+view_hview[view_current],
-            0
-        );
+        d3d_set_projection_ortho(0,0,1,1,0);
         d3d_set_hidden(false);
         // draw_set_blend_mode_ext(bm_dest_color,bm_src_color);
         draw_set_blend_mode(bm_subtract);
         draw_set_color(c_white-image_blend);
-        draw_rectangle
-        (
-            view_xview[view_current],
-            view_yview[view_current],
-            view_xview[view_current]+view_wview[view_current],
-            view_yview[view_current]+view_hview[view_current],
-            false
-        );
+        draw_rectangle(0,0,1,1,false);
         draw_set_color(c_white);
         draw_set_blend_mode(bm_normal);
         d3d_set_hidden(true);
