@@ -1,14 +1,15 @@
 /*
-Argument 0: Acceleration
-Argument 1: Friction
-Argument 2: Yaw
-Argument 3: Clamp
+Argument 0: Delta Time (1 if not used)
+Argument 1: Acceleration
+Argument 2: Friction
+Argument 3: Yaw
+Argument 4: Clamp
 */
-if argument3 > 0 && spd_var <= argument3
+if argument4 > 0 && spd_var <= argument4
 {
-    execute_file(global.add_motion_scr,argument0,argument2);
+    execute_file(global.add_motion_scr,argument0,argument1,argument3);
     // If speed is greater than clamp, set it.
-    if spd_var > argument3
-    { execute_file(global.set_motion_scr,argument3,true); }
+    if spd_var > argument4
+    { execute_file(global.set_motion_scr,argument4,true); }
 }
-else if spd_var > 0 { execute_file(global.set_motion_scr,max(spd_var-argument1,0),true); }
+else if spd_var > 0 { execute_file(global.set_motion_scr,max(spd_var-(argument0*argument2),0),true); }

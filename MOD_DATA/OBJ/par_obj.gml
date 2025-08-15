@@ -12,3 +12,9 @@ object_event_add
     // Update alarms
     update_alarm_scr(global.delta_time_var);
 ");
+// Room End 
+object_event_add
+(argument0,ev_other,ev_room_end,"
+    // Reset alarms
+    reset_alarm_scr();
+");

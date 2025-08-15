@@ -23,7 +23,7 @@ object_event_add
     heal_var = true;
     heal_delay_var = 0;
     // Speed
-    base_spd_var = 1;
+    spd_base_var = 1;
     spd_mult_var = 1;
     back_spd_mult_var = 0.6; // Normally 0.5, but I use 0.6 so the run speed is accurate
     back_var = false; // Whether to reduce speed when walking backwards
@@ -45,8 +45,8 @@ object_event_add
     crouch_toggle_var = global.crouch_toggle_var;
     crouch_spd_mult_var = 0.6;
     // Camera
-    base_eye_h_var = 16;
-    crouch_eye_h_var = 10;
+    base_eye_h_var = 16.86; // 16 + 6/7
+    crouch_eye_h_var = 10.86; // 16 - 6 + 6/7
     target_eye_h_var = base_eye_h_var;
     eye_h_var = base_eye_h_var;
     eye_rate_var = 0.4;
@@ -64,12 +64,12 @@ object_event_add
     grav_var = true;
     on_floor_var = true;
     // Bob
-    bob_rate_var = 3;
-    bob_mult_var = 1.5;
+    bob_rate_var = 3.75;
+    bob_mult_var = global.move_bob_var; // 12/7
     bob_var = 0;
     // Idle Bob
     breath_rate_var = 1;
-    breath_mult_var = 0.15;
+    breath_mult_var = global.idle_bob_var;
     breath_var = 0;
     breath_time_var = 0;
     breath_asthma_rate_var = 2;
@@ -98,7 +98,7 @@ object_event_add
         }
         case 3:
         {
-            base_spd_var = 5/pf_ms_rate_const;
+            spd_base_var = 5/pf_ms_rate_const;
             sprint_spd_mult_var = 1.8;
             break;
         }
@@ -121,13 +121,20 @@ object_event_add
 (argument0,ev_alarm,2,"
     in_door_var = false;
 ");
+// Room End Event
+object_event_add
+(argument0,ev_other,ev_room_end,"
+    event_inherited();
+    hurt_var = false;
+    heal_var = true;
+");
 // Room Start Event
 object_event_add
 (argument0,ev_other,ev_room_start,"
     // Position
     x = global.spawn_arr[0,0];
     y = global.spawn_arr[0,1];
-    z = global.spawn_arr[0,2]+0.1;
+    z = global.spawn_arr[0,2];
     eye_yaw_var = global.spawn_arr[0,3];
     eye_pitch_var = 0;
     set_motion_scr(0,false,eye_yaw_var,true);
@@ -260,7 +267,7 @@ object_event_add
         local.spd = 0;
         if local.input_dir_x != 0 || local.input_dir_y != 0 || local.input_dir_z != 0
         {
-            local.spd = base_spd_var;
+            local.spd = spd_base_var;
             if sprint_var { local.spd *= sprint_spd_mult_var; }
             if crouch_var { local.spd *= crouch_spd_mult_var; }
             if jump_var { local.spd *= jump_spd_mult_var; }
@@ -283,12 +290,12 @@ object_event_add
         {
             on_floor_var = true;
             if back_var { local.spd *= lerp_scr(1,back_spd_mult_var,abs(local.input_dir)/180); }
-            acc_3d_scr(local.acc*global.delta_time_var,local.frick*global.delta_time_var,local.input_dir+eye_yaw_var,local.input_dir_pitch+(eye_pitch_var*lengthdir_x(1,local.input_dir)),local.spd);
+            acc_3d_scr(global.delta_time_var,local.acc,local.frick,local.input_dir+eye_yaw_var,local.input_dir_pitch+(eye_pitch_var*lengthdir_x(1,local.input_dir)),local.spd);
         }
         else if normal_var
         {
             if back_var { local.spd *= lerp_scr(1,back_spd_mult_var,abs(local.input_dir)/180); }
-            acc_scr(local.acc*global.delta_time_var,local.frick*global.delta_time_var,local.input_dir+eye_yaw_var,local.spd);
+            acc_scr(global.delta_time_var,local.acc,local.frick,local.input_dir+eye_yaw_var,local.spd);
         }
         else
         {
@@ -303,7 +310,7 @@ object_event_add
                 local.forspd = local.spd;
                 local.sidespd = local.spd;
             }
-            acc_odd_scr(local.acc*global.delta_time_var,local.frick*global.delta_time_var,local.input_dir_x,local.input_dir_y,local.forspd,local.sidespd,eye_yaw_var);
+            acc_odd_scr(global.delta_time_var,local.acc,local.frick,local.input_dir_x,local.input_dir_y,local.forspd,local.sidespd,eye_yaw_var);
         }
     }
 ");
@@ -318,14 +325,14 @@ object_event_add
         if on_floor_var
         {
             // Calculate stamina
-            if sprint_var { local.stam_rate = (-stam_rate_var*local.real_spd)/(base_spd_var*sprint_spd_mult_var); }
+            if sprint_var { local.stam_rate = (-stam_rate_var*local.real_spd)/(spd_base_var*sprint_spd_mult_var); }
             else if !global.sprint_input_var { local.stam_rate = stam_rate_var*global.delta_time_var; }
             // Calculate bobbing
             if local.real_spd
             {
                 local.bobprev = bob_time_var;
                 bob_time_var = (bob_time_var+(bob_rate_var*local.real_spd)) mod 180;
-                bob_var = (bob_mult_var*sin(degtorad(bob_time_var)))-(bob_mult_var/2);
+                bob_var = bob_mult_var*(sin(degtorad(bob_time_var))-0.5);
                 if local.bobprev > bob_time_var
                 {
                     // Play footsteps
@@ -347,7 +354,7 @@ object_event_add
             heal_mult_var = 1;
         }
         // Calculate FOV
-        local.target_fov = fov_var*power(max(0.6,spd_var/base_spd_var),0.25);
+        local.target_fov = fov_var*power(max(0.6,spd_var/spd_base_var),0.25);
         if current_fov_var != local.target_fov
         {
             local.fov_diff = abs(local.target_fov-current_fov_var);
@@ -373,4 +380,9 @@ object_event_add
 object_event_add
 (argument0,ev_draw,0,"
     draw_cam_scr(cam_id_var,cam_x_var,cam_y_var,cam_z_var,cam_yaw_var,cam_pitch_var,current_fov_var);
+");
+// Hurt
+object_event_add
+(argument0,ev_other,ev_user0,"
+    // Play hurt noise, flash red, shake screen, etc
 ");

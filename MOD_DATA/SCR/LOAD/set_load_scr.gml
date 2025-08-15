@@ -16,6 +16,8 @@ global.fullscreen_var = ini_read_real("MAIN","fullscreen",fullscreen_const);
 global.color_var = ini_read_real("MAIN","color",color_const);
 global.coll_prec_var = ini_read_real("MAIN","coll_prec",coll_prec_const);
 global.game_spd_var = ini_read_real("MAIN","game_spd",game_spd_const);
+global.move_bob_var = ini_read_real("MAIN","move_bob",move_bob_const);
+global.idle_bob_var = ini_read_real("MAIN","idle_bob",idle_bob_const);
 // Controls
 global.up_key = ini_read_real("CONTROL","up_key_var",87);
 global.down_key_var = ini_read_real("CONTROL","down_key_var",83);
