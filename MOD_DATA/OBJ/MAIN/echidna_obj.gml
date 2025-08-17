@@ -37,23 +37,40 @@ hurt_var: Whether the specimen is currently hurt
 object_event_add
 (argument0,ev_create,0,"
     // Gotta set type, delay, and duration
-    do_coll_var = type_var;
-    enter_var = type_var;
+    dur_star_var = dur_var;
+    enter_var = type_var > 0;
+    do_move_var = true;
+    do_attack_var = true;
+    do_anim_var = true;
+    // Speed
     spd_base_var = 0.6;
     spd_mult_var = 1;
-    dur_star_var = dur_var;
+    // Delay
     if delay_var != 0 && delay_min_var == 0
     {
         delay_min_var = delay_var;
         delay_max_var = delay_var;
     }
+    // Rendering
     w_var = 10;
     h_var = 20;
+    // Attack
     dmg_var = 45;
     dmg_alarm_var = 120;
-    do_move_var = true;
-    do_attack_var = true;
-    do_anim_var = true;
+    // Collision
+    do_coll_var = type_var > 0;
+    coll_var[0] = global.mon_coll[0];
+    coll_var[1] = global.mon_coll[1];
+    coll_var[2] = global.mon_coll[2];
+    coll_h_var = 18;
+    // Alarms
+    alarm_len_var = 6;
+    alarm_arr[0,2] = '';
+    alarm_arr[1,2] = '';
+    alarm_arr[2,2] = '';
+    alarm_arr[3,2] = '';
+    alarm_arr[4,2] = '';
+    alarm_arr[5,2] = '';
 ");
 // Room End Event
 object_event_add
@@ -82,11 +99,12 @@ object_event_add
     {
         if move_var
         {
-
             event_perform(ev_other,ev_user0); 
+            event_perform(ev_other,ev_user6); 
         }
         if anim_var { event_perform(ev_other,ev_user1); }
         if attack_var { event_perform(ev_other,ev_user2); }
+        if sight_var { event_perform(ev_other,ev_user5); }
     }
 ");
 // Draw Event
@@ -131,8 +149,21 @@ object_event_add
 ");
 // Anim Alarm (Different from plus!!!)
 object_event_add
-(argument0,ev_alarm,4,"
-    spr_id_var = sprite_get_number(spr_var)-1;
+(argument0,ev_alarm,5,"
+    switch(anim_type_var)
+    {
+        case 0: { show_error('Animation type not set before animating.',false); }
+        case 1: // End on last
+        {
+            spr_id_var = sprite_get_number(spr_var)-1;
+            break;
+        }
+        case 2: // End on first
+        {
+            spr_id_var = 0;
+            break;
+        }
+    }
     tex_var = sprite_get_texture(spr_var,spr_id_var);
 ");
 // Movement
@@ -141,7 +172,8 @@ object_event_add
     local.spd = spd_base_var*spd_mult_var;
     if type_var
     {
-        // I'll be honest, I have NO clue how we're gonna do pathfinding with these collision and movement system
+        // I'll be honest, I have NO clue how we're gonna do pathfinding with these collision and movement systems
+        
     }
     else
     {
@@ -167,12 +199,12 @@ object_event_add
         }
         case 1: // End on last
         {
-            spr_id_var = floor(sprite_get_number(spr_var)*(1-(alarm_arr[4,0]/alarm_arr[4,1])));
+            spr_id_var = floor(sprite_get_number(spr_var)*(1-(alarm_arr[5,0]/alarm_arr[5,1])));
             break;
         }
         case 2: // End on first
         {
-            spr_id_var = floor(sprite_get_number(spr_var)*alarm_arr[4,0]/alarm_arr[4,1]);
+            spr_id_var = floor(sprite_get_number(spr_var)*alarm_arr[5,0]/alarm_arr[5,1]);
             break;
         }
     }
@@ -180,7 +212,7 @@ object_event_add
 ");
 // Attack
 object_event_add
-(argument0,ev_other,ev_user3,"
+(argument0,ev_other,ev_user2,"
     local.dead = true;
     with player_obj
     {
@@ -217,13 +249,13 @@ object_event_add
             instance_destroy();
             room_goto(dead_rm_var);
         }
-        else { event_perform(ev_other,ev_user4); }
+        else { event_perform(ev_other,ev_user3); }
     }
 ");
 // Attack Success
 // Uses attack_target_var as an argument, usually the player.
 object_event_add
-(argument0,ev_other,ev_user4,"
+(argument0,ev_other,ev_user3,"
     // Whatever
 ");
 // Hurt
@@ -239,12 +271,12 @@ hurt_type_var
     3: Parry
 */
 object_event_add
-(argument0,ev_other,ev_user5,"
+(argument0,ev_other,ev_user4,"
     hurt_var = true;
     set_alarm_scr(3,hurt_alarm_var);
     if violence_var > 0 { hurt_target_var.violence_var += violence_var; }
     // Reduce duration if very vulnerable
-    if do_hurt_var == 2 || (do_hurt_var == 3 && hurt_type_var == 2)
+    if do_hurt_var == 2 || (do_hurt_var == 3 && hurt_type_var == 1)
     && dur_var > 0 && hurt_dur_var > 0
     {
         dur_var -= hurt_dur_var*hurt_power_var;
@@ -264,7 +296,7 @@ object_event_add
 ");
 // Calculate Seen
 object_event_add
-(argument0,ev_other,ev_user6,"
+(argument0,ev_other,ev_user5,"
     if instance_exists(target_var)
     {
         target_eye_yaw_var = target_var.eye_yaw_var;
@@ -279,7 +311,7 @@ object_event_add
 ");
 // Determine target
 object_event_add
-(argument0,ev_other,ev_user7,"
+(argument0,ev_other,ev_user6,"
     if type_var && enter_var
     {
         target_var = noone;
