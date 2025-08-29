@@ -58,7 +58,6 @@ object_event_add
     dmg_var = 45;
     dmg_alarm_var = 120;
     // Collision
-    do_coll_var = type_var > 0;
     coll_var[0] = global.mon_coll[0];
     coll_var[1] = global.mon_coll[1];
     coll_var[2] = global.mon_coll[2];
@@ -90,7 +89,8 @@ object_event_add
     y = global.spawn_arr[0,1]+lengthdir_y(32,yaw_var);
     z = global.spawn_arr[0,2];
     set_motion_scr(0,true,yaw_var,true);
-    enter_var = type_var;
+    enter_var = type_var > 0;
+    do_coll_var = false;
 ");
 // Step Event
 object_event_add
@@ -147,7 +147,7 @@ object_event_add
 (argument0,ev_alarm,4,"
     attack_var = do_attack_var;
 ");
-// Anim Alarm (Different from plus!!!)
+// Anim Alarm (Different from Plus!!!)
 object_event_add
 (argument0,ev_alarm,5,"
     switch(anim_type_var)
@@ -173,6 +173,29 @@ object_event_add
     if type_var
     {
         // I'll be honest, I have NO clue how we're gonna do pathfinding with these collision and movement systems
+        if enter_var
+        {
+            if point_distance_3d_scr(x,y,z,target_x_var,target_y_var,target_z_var) < local.spd
+            {
+                do_coll_var = true;
+                enter_var = false;
+            }
+        }
+        if enter_var || !mp_grid_path(grid_var,path_var,x,y,target_x_var,target_y_var,true)
+        // or no wall between them and the player
+        { local.yaw = point_direction(x,y,target_x_var,target_y_var); }
+        else
+        {
+            local.yaw = point_direction
+            (
+                path_get_point_x(path_var,0),
+                path_get_point_y(path_var,0),
+                path_get_point_x(path_var,1),
+                path_get_point_y(path_var,1)
+            );
+        }
+        if do_acc_var { acc_scr(global.delta_time_var,acc_var,frick_var,local.yaw,local.spd); }
+        else { set_motion_scr(local.spd,true,local.yaw,true); }
         
     }
     else
@@ -180,11 +203,8 @@ object_event_add
         
         local.yaw = point_direction(x,y,target_x_var,target_y_var);
         local.pitch = point_direction_3d_scr(x,y,z,target_x_var,target_y_var,target_z_var);
-        if do_acc_var
-        {
-            acc_3d_scr(global.delta_time_var,acc_var,frick_var,local.yaw,local.pitch,local.spd);
-            // Gimme a sec
-        }
+        if do_acc_var { acc_3d_scr(global.delta_time_var,acc_var,frick_var,local.yaw,local.pitch,local.spd); }
+        else { set_motion_3d_scr(local.spd,true,local.yaw,true,local.pitch,true); }
     }
 ");
 // Animation
