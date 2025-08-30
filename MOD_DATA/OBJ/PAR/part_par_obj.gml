@@ -65,7 +65,7 @@ object_event_add
             d3d_transform_add_rotation_z(point_direction(part_arr[local.i,1],part_arr[local.i,2],global.cam_x_var[view_current],global.cam_y_var[view_current]));
             d3d_transform_add_translation(part_arr[local.i,1],part_arr[local.i,2],part_arr[local.i,3]);
             draw_set_color(part_arr[local.i,10]); draw_set_alpha(part_arr[local.i,11]);
-            d3d_draw_wall(0,-part_arr[local.i,7]/2,part_arr[local.i,8]/2,0,part_arr[local.i,7]/2,-part_arr[local.i,8]/2,part_arr[local.i,13],1,1);
+            d3d_draw_wall(0,part_arr[local.i,7]/2,part_arr[local.i,8]/2,0,-part_arr[local.i,7]/2,-part_arr[local.i,8]/2,part_arr[local.i,13],1,1);
             d3d_transform_set_identity();
             draw_set_color(c_white); draw_set_alpha(1);
         }
