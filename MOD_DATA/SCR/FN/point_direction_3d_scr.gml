@@ -6,4 +6,4 @@ Argument 3: Target X
 Argument 4: Target Y
 Argument 5: Target Z
 */
-return radtodeg(arctan2(argument2-argument5,point_distance(argument0,argument1,argument3,argument4)));
+return radtodeg(arctan2(argument5-argument2,point_distance(argument0,argument1,argument3,argument4)));

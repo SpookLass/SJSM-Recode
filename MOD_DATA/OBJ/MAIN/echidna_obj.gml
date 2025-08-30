@@ -70,27 +70,33 @@ object_event_add
     alarm_arr[3,2] = '';
     alarm_arr[4,2] = '';
     alarm_arr[5,2] = '';
-");
-// Room End Event
-object_event_add
-(argument0,ev_other,ev_room_end,"
-    event_inherited();
-    move_var = do_move_var;
-    anim_var = do_anim_var;
-    attack_var = do_attack_var;
-    hurt_var = false;
+    // Room start
+    event_perform(ev_other,ev_room_start);
 ");
 // Room Start Event
 object_event_add
 (argument0,ev_other,ev_room_start,"
-    // Position
-    yaw_var = global.spawn_arr[0,3];
-    x = global.spawn_arr[0,0]+lengthdir_x(32,yaw_var);
-    y = global.spawn_arr[0,1]+lengthdir_y(32,yaw_var);
-    z = global.spawn_arr[0,2];
-    set_motion_scr(0,true,yaw_var,true);
+    event_inherited();
+    // Reset Variables
+    move_var = do_move_var;
+    anim_var = do_anim_var;
+    attack_var = do_attack_var;
+    hurt_var = false;
     enter_var = type_var > 0;
     do_coll_var = false;
+    // Reset Position
+    yaw_var = global.spawn_arr[0,3];
+    x = global.spawn_arr[0,0]-lengthdir_x(32,yaw_var);
+    y = global.spawn_arr[0,1]-lengthdir_y(32,yaw_var);
+    z = global.spawn_arr[0,2];
+    set_motion_scr(0,true,yaw_var,true);
+    // Delay
+    if delay_min_var > 0
+    {
+        on_var = false;
+        set_alarm_scr(0,irandom_range(delay_min_var,delay_max_var));
+    }
+    else { on_var = true; }
 ");
 // Step Event
 object_event_add
@@ -99,8 +105,8 @@ object_event_add
     {
         if move_var
         {
-            event_perform(ev_other,ev_user0); 
             event_perform(ev_other,ev_user6); 
+            event_perform(ev_other,ev_user0); 
         }
         if anim_var { event_perform(ev_other,ev_user1); }
         if attack_var { event_perform(ev_other,ev_user2); }
@@ -110,17 +116,16 @@ object_event_add
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,"
-    if global.fog_dark_var { d3d_set_fog(false,c_black,0,0); }
-    d3d_transform_set_identity();
-    d3d_transform_add_rotation_y(-point_direction_3d_scr(x,y,z,global.cam_x_var[view_current],global.cam_y_var[view_current],global.cam_z_var[view_current]));
-    d3d_transform_add_rotation_z(point_direction(x,y,global.cam_x_var[view_current],global.cam_y_var[view_current]));
-    d3d_transform_add_translation(x,y,z);
-    draw_set_color(image_blend); draw_set_alpha(image_alpha);
-    d3d_draw_wall(0,-w_var/2,h_var/2,0,w_var/2,-h_var/2,sprite_get_texture(spr_var,spr_id_var),1,1);
-    d3d_transform_set_identity();
-    draw_set_color(c_white); draw_set_alpha(1);
-    if global.fog_dark_var 
-    { d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var); }
+    if on_var || visible_var
+    {
+        d3d_transform_set_identity();
+        d3d_transform_add_rotation_z(point_direction(x,y,global.cam_x_var[view_current],global.cam_y_var[view_current]));
+        d3d_transform_add_translation(x,y,z);
+        draw_set_color(image_blend); draw_set_alpha(image_alpha);
+        d3d_draw_wall(0,-w_var/2,h_var,0,w_var/2,0,tex_var,1,1);
+        d3d_transform_set_identity();
+        draw_set_color(c_white); draw_set_alpha(1);
+    }
 ");
 // Delay Alarm
 object_event_add
@@ -173,34 +178,39 @@ object_event_add
     if type_var
     {
         // I'll be honest, I have NO clue how we're gonna do pathfinding with these collision and movement systems
-        if enter_var
+        if point_distance_3d_scr(x,y,z,target_x_var,target_y_var,target_z_var) < local.spd
         {
-            if point_distance_3d_scr(x,y,z,target_x_var,target_y_var,target_z_var) < local.spd
+            x = target_x_var;
+            y = target_y_var;
+            z = target_z_var;
+            if enter_var
             {
                 do_coll_var = true;
                 enter_var = false;
             }
+            else { set_motion_scr(0,true); }
         }
-        if enter_var || !mp_grid_path(grid_var,path_var,x,y,target_x_var,target_y_var,true)
-        // or no wall between them and the player
-        { local.yaw = point_direction(x,y,target_x_var,target_y_var); }
         else
         {
-            local.yaw = point_direction
-            (
-                path_get_point_x(path_var,0),
-                path_get_point_y(path_var,0),
-                path_get_point_x(path_var,1),
-                path_get_point_y(path_var,1)
-            );
+            if enter_var || !mp_grid_path(grid_var,path_var,x,y,target_x_var,target_y_var,true)
+            // or no wall between them and the player
+            { local.yaw = point_direction(x,y,target_x_var,target_y_var); }
+            else
+            {
+                local.yaw = point_direction
+                (
+                    path_get_point_x(path_var,0),
+                    path_get_point_y(path_var,0),
+                    path_get_point_x(path_var,1),
+                    path_get_point_y(path_var,1)
+                );
+            }
+            if do_acc_var { acc_scr(global.delta_time_var,acc_var,frick_var,local.yaw,local.spd); }
+            else { set_motion_scr(local.spd,true,local.yaw,true); }
         }
-        if do_acc_var { acc_scr(global.delta_time_var,acc_var,frick_var,local.yaw,local.spd); }
-        else { set_motion_scr(local.spd,true,local.yaw,true); }
-        
     }
     else
     {
-        
         local.yaw = point_direction(x,y,target_x_var,target_y_var);
         local.pitch = point_direction_3d_scr(x,y,z,target_x_var,target_y_var,target_z_var);
         if do_acc_var { acc_3d_scr(global.delta_time_var,acc_var,frick_var,local.yaw,local.pitch,local.spd); }
@@ -244,7 +254,11 @@ object_event_add
                 if hp_var > other.dmg_var
                 {
                     hp_var -= other.dmg_var;
-                    set_alarm_scr(0,other.dmg_alarm_var);
+                    if other.dmg_alarm_var
+                    {
+                        hurt_var = true;
+                        set_alarm_scr(0,other.dmg_alarm_var);
+                    }
                     hurt_target_var = other.id;
                     event_perform(ev_other,ev_user0);
                 }
@@ -263,7 +277,7 @@ object_event_add
     }
     if local.success
     {
-        if local.dead
+        if false//local.dead
         {
             global.dead_mon_var = object_index;
             instance_destroy();
@@ -321,8 +335,8 @@ object_event_add
     {
         target_eye_yaw_var = target_var.eye_yaw_var;
         target_eye_pitch_var = target_var.eye_pitch_var;
-        local.yaw = abs(angle_difference(point_direction(target_x_var,target_y_var,x,y),NPC_TARGET_DIR));
-        local.pitch = abs(angle_difference(-point_direction(0,NPC_TARGET_LOOK_Z,point_distance(NPC_TARGET_X,NPC_TARGET_Y,x,y),NPC_Z+(NPC_H*5)),NPC_TARGET_ZDIR));
+        local.yaw = abs(deg_diff_scr(point_direction(target_x_var,target_y_var,x,y),target_eye_yaw_var));
+        local.pitch = abs(deg_diff_scr(point_direction_3d_scr(target_x_var,target_y_var,target_z_var,x,y,z),target_eye_pitch_var));
         if local.yaw <= seen_yaw_var && local.pitch <= seen_pitch_var
         { seen_var = true; seen_per_var = 1-max(local.yaw/seen_yaw_var,local.pitch/seen_pitch_var); }
         else { seen_var = false; seen_per_var = 0; }
@@ -341,9 +355,29 @@ object_event_add
     }
     else
     {
-        target_var = instance_nearest(x,y,player_obj);
-        target_x_var = target_var.x;
-        target_y_var = target_var.y;
-        target_z_var = target_var.z;
+        target_var = noone;
+        local.bestdist = 0;
+        with (player_obj)
+        {
+            local.dist = point_distance_3d_scr(other.x,other.y,other.z,x,y,z);
+            if !dead_var && (other.target_var == noone || local.dist < local.bestdist)
+            {
+                other.target_var = id;
+                local.bestdist = local.dist;
+            }
+        }
+        if target_var != noone
+        {
+            target_x_var = target_var.x;
+            target_y_var = target_var.y;
+            target_z_var = target_var.z;
+
+        }
+        else
+        {
+            target_x_var = x;
+            target_y_var = y;
+            target_z_var = z;
+        }
     }
 ");

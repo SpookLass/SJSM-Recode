@@ -1,0 +1,24 @@
+// Builtin Variables
+object_set_depth(argument0,0);
+object_set_mask(argument0,noone);
+object_set_parent(argument0,echidna_obj);
+object_set_persistent(argument0,true);
+object_set_solid(argument0,false);
+object_set_sprite(argument0,noone);
+object_set_visible(argument0,true);
+// Create Event
+object_event_add
+(argument0,ev_create,0,"
+    spr_var = sprite_add(vanilla_directory_const+'\TEX\sprites\MS3_01_spr.png',6,false,false,0,0);
+    spd_base_var = 0.8;
+    spr_spd_var = 1/6;
+    dur_var = irandom_range(10,20);
+    delay_var = 173;
+    event_inherited();
+");
+// Destroy Event
+object_event_add
+(argument0,ev_destroy,0,"
+    event_inherited();
+    sprite_delete(spr_var);
+");
