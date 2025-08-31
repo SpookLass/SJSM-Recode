@@ -45,8 +45,8 @@ object_event_add
     crouch_toggle_var = global.crouch_toggle_var;
     crouch_spd_mult_var = 0.6;
     // Camera
-    base_eye_h_var = 16.86; // 16 + 6/7
-    crouch_eye_h_var = 10.86; // 16 - 6 + 6/7
+    base_eye_h_var = 16.29; // 16 + 2/7
+    crouch_eye_h_var = 10.29; // 16 - 6 + 2/7
     target_eye_h_var = base_eye_h_var;
     eye_h_var = base_eye_h_var;
     eye_rate_var = 0.4;
@@ -385,4 +385,10 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user0,"
     // Play hurt noise, flash red, shake screen, etc
+    with instance_create(0,0,flash_eff_obj)
+    {
+        image_blend = c_red; 
+        set_alarm_scr(0,6);
+        cam_id_var = other.cam_id_var;
+    }
 ");

@@ -89,7 +89,7 @@ object_event_add
     x = global.spawn_arr[0,0]-lengthdir_x(32,yaw_var);
     y = global.spawn_arr[0,1]-lengthdir_y(32,yaw_var);
     z = global.spawn_arr[0,2];
-    set_motion_scr(0,true,yaw_var,true);
+    set_motion_3d_scr(0,true,yaw_var,true,0,true);
     // Delay
     if delay_min_var > 0
     {
@@ -120,7 +120,7 @@ object_event_add
     {
         d3d_transform_set_identity();
         d3d_transform_add_rotation_z(point_direction(x,y,global.cam_x_var[view_current],global.cam_y_var[view_current]));
-        d3d_transform_add_translation(x,y,z);
+        d3d_transform_add_translation(x,y,z+z_off_var);
         draw_set_color(image_blend); draw_set_alpha(image_alpha);
         d3d_draw_wall(0,w_var/2,h_var,0,-w_var/2,0,tex_var,1,1);
         d3d_transform_set_identity();
@@ -290,7 +290,11 @@ object_event_add
 // Uses attack_target_var as an argument, usually the player.
 object_event_add
 (argument0,ev_other,ev_user3,"
-    // Whatever
+    with instance_create(0,0,blood_eff_obj)
+    {
+        // Set camera to player
+        cam_id_var = other.attack_target_var.cam_id_var;
+    }
 ");
 // Hurt
 /*Weapons call this function when attacking

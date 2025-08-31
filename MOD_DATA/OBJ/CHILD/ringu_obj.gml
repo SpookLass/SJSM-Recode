@@ -15,6 +15,7 @@ object_event_add
     dur_var = irandom_range(10,20);
     delay_var = 173;
     event_inherited();
+    z_off_var = 2;
 ");
 // Destroy Event
 object_event_add
