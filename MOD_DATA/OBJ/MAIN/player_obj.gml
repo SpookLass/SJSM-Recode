@@ -81,6 +81,10 @@ object_event_add
     fov_rate_min_var = 0.5;
     // Door
     enter_delay_var = 20;
+    // Shake
+    shake_var = 0;
+    shake_angle_base_var = 5;
+    shake_pos_base_var = 1;
     // Alarms
     alarm_len_var = 3;
     alarm_arr[0,2] = '';
@@ -374,6 +378,26 @@ object_event_add
         cam_z_var = z+eye_h_var+bob_var+breath_var;
         cam_yaw_var = eye_yaw_var;
         cam_pitch_var = eye_pitch_var;
+        // Camera shake
+        if shake_var > 0
+        {
+            switch (global.shake_type_var)
+            {
+                case shake_classic_const:
+                {
+                    x += random_range(-shake_var,shake_var);
+                    y += random_range(-shake_var,shake_var);
+                    z += random_range(-shake_var,shake_var);
+                    break;
+                }
+                case shake_modern_const:
+                {
+                    cam_yaw_var += random_range(-shake_var,shake_var);
+                    cam_pitch_var += random_range(-shake_var,shake_var);
+                    break;
+                }
+            }
+        }
     }
 ");
 // Draw Event
@@ -391,4 +415,32 @@ object_event_add
         set_alarm_scr(0,6);
         cam_id_var = other.cam_id_var;
     }
+    switch (global.shake_type_var)
+    {
+        case shake_classic_const:
+        {
+            with instance_create(0,0,shake_eff_obj)
+            {
+                player_var = other.id;
+                mult_var = other.shake_pos_base_var;
+                type_var = 0; // Constant
+            }
+            break;
+        }
+        case shake_modern_const:
+        {
+            with instance_create(0,0,shake_eff_obj)
+            {
+                player_var = other.id;
+                mult_var = other.shake_angle_base_var;
+                type_var = 1; // Fade out
+            }
+            break;
+        }
+    }
+    // if global.dmg_shake_var
+    // {
+        eye_yaw_var = (eye_yaw_var+random_range(-20,20)) mod 360;
+        eye_pitch_var += median(-89.9,89.9,eye_pitch_var+random_range(-20,20));
+    // }
 ");

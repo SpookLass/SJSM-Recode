@@ -15,6 +15,7 @@ object_event_add
         ceil_par_obj.image_blend = image_blend;
         wall_par_obj.image_blend = image_blend;
         prop_par_obj.image_blend = image_blend;
+        echidna_obj.image_blend = image_blend;
         local.light_color = light_color_scr(image_blend);
         light_floor_par_obj.image_blend = local.light_color;
         light_wall_par_obj.image_blend = local.light_color;
