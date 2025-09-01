@@ -19,7 +19,28 @@ object_event_add
     // Function
     score_var = 1;
     delay_var = 20;
-    rm_var = choose(hall_01_rm,hall_02_rm,hall_02_b_rm,hall_03_rm,hall_04_rm,hall_05_rm,hall_13_rm,hall_18_rm,hall_19_rm,hall_20_rm,hall_31_rm,hall_31_b_rm,long_hall_05_rm,test_01_rm,test_02_rm);
+    switch irandom(18)
+    {
+        case 0: { rm_var = hall_01_rm; break; }
+        case 1: { rm_var = hall_02_rm; break; }
+        case 2: { rm_var = hall_02_b_rm; break; }
+        case 3: { rm_var = hall_03_rm; break; }
+        case 4: { rm_var = hall_04_rm; break; }
+        case 5: { rm_var = hall_05_rm; break; }
+        case 6: { rm_var = hall_13_rm; break; }
+        case 7: { rm_var = hall_18_rm; break; }
+        case 8: { rm_var = hall_19_rm; break; }
+        case 9: { rm_var = hall_20_rm; break; }
+        case 10: { rm_var = hall_21_rm; break; }
+        case 11: { rm_var = hall_22_rm; break; }
+        case 12: { rm_var = hall_23_rm; break; }
+        case 13: { rm_var = hall_28_rm; break; }
+        case 14: { rm_var = hall_31_rm; break; }
+        case 15: { rm_var = hall_31_b_rm; break; }
+        case 16: { rm_var = long_hall_05_rm; break; }
+        case 17: { rm_var = test_01_rm; break; }
+        case 18: { rm_var = test_02_rm; break; }
+    }
     // Alarm
     alarm_len_var = 1;
     alarm_arr[0,2] = '';

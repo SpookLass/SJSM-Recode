@@ -172,8 +172,8 @@ room_instance_add(argument0,224,208,wall_vert_obj);
 room_instance_add(argument0,384,336,wall_vert_obj);
 room_instance_add(argument0,96,336,wall_vert_obj);
 // Torches
-room_instance_add(argument0,224,432,torch_west_obj);
-room_instance_add(argument0,256,432,torch_east_obj);
+room_instance_add(argument0,224,432,torch_gold_west_obj);
+room_instance_add(argument0,256,432,torch_gold_east_obj);
 // Not yet
 /*room_instance_add(argument0,192,480,random_scare_mark1);
 room_instance_add(argument0,123,334,webs_obj);
