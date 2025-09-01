@@ -32,9 +32,9 @@ object_event_add
         case 8: { rm_var = hall_19_rm; break; }
         case 9: { rm_var = hall_20_rm; break; }
         case 10: { rm_var = hall_21_rm; break; }
-        case 11: { rm_var = hall_22_rm; break; }
-        case 12: { rm_var = hall_23_rm; break; }
-        case 13: { rm_var = hall_28_rm; break; }
+        case 11: { rm_var = hall_21_b_rm; break; }
+        case 12: { rm_var = hall_22_rm; break; }
+        case 13: { rm_var = hall_23_rm; break; }
         case 14: { rm_var = hall_31_rm; break; }
         case 15: { rm_var = hall_31_b_rm; break; }
         case 16: { rm_var = long_hall_05_rm; break; }
