@@ -34,6 +34,10 @@ object_event_add
     stam_var = stam_max_var;
     stam_rate_var = 0.5;
     sprint_spd_mult_var = 2.5;
+    // Faster stamina drain when pressing sprint
+    start_stam_var = 0;
+    start_stam_base_var = 1;
+    start_stam_rate_var = 1/19; // 19 frames
     // Acceleration
     friction_var = 0.5;
     acc_var = 0.8;
@@ -156,6 +160,7 @@ object_event_add
     view_enabled = true;
     // Start room
     stam_var = stam_max_var;
+    start_stam_var = start_stam_base_var;
     in_door_var = true;
     on_var = true;
     set_alarm_scr(2,enter_delay_var);
@@ -329,8 +334,16 @@ object_event_add
         if on_floor_var
         {
             // Calculate stamina
-            if sprint_var { local.stam_rate = (-stam_rate_var*local.real_spd)/(spd_base_var*sprint_spd_mult_var); }
-            else if !global.sprint_input_var { local.stam_rate = stam_rate_var*global.delta_time_var; }
+            if sprint_var
+            {
+                start_stam_var = max(0,start_stam_var-(start_stam_rate_var*global.delta_time_var));
+                local.stam_rate = (-(stam_rate_var+start_stam_var)*local.real_spd)/(spd_base_var*sprint_spd_mult_var);
+            }
+            else if !global.sprint_input_var 
+            {
+                start_stam_var = start_stam_base_var;
+                local.stam_rate = stam_rate_var*global.delta_time_var;
+            }
             // Calculate bobbing
             if local.real_spd
             {
