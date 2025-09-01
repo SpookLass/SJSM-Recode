@@ -85,26 +85,42 @@ object_event_add
         switch(local.question)
         {
             case 1: { room_restart(); break; }
-            case 2: { room_goto_next(); break; }
-            case 3: { room_goto_previous(); break; }
+            case 2:
+            {
+                if room_exists(room+1)
+                { room_goto(room+1); }
+                break;
+            }
+            case 3:
+            {
+                if room != 1 && room_exists(room-1)
+                { room_goto(room-1); }
+                break;
+            }
             case 4:
             {
                 local.rm = get_string('Go To Room','');
-                execute_string
-                ('
-                    if room_exists('+local.rm+') && '+local.rm+' != 0
-                    { room_goto('+local.rm+'); }
-                ');
+                if local.rm != ''
+                {
+                    execute_string
+                    ('
+                        if room_exists('+local.rm+') && '+local.rm+' != 0
+                        { room_goto('+local.rm+'); }
+                    ');
+                }
                 break;
             }
             case 5:
             {
                 local.instance = get_string('Create Instance','');
-                execute_string
-                ('
-                    if object_exists('+local.instance+') && '+local.instance+' != 0 
-                    { instance_create(0,0,'+local.instance+'); }
-                ');
+                if local.instance != ''
+                {
+                    execute_string
+                    ('
+                        if object_exists('+local.instance+') && '+local.instance+' != 0 
+                        { instance_create(0,0,'+local.instance+'); }
+                    ');
+                }
                 break;
             }
             case 6:
@@ -117,12 +133,14 @@ object_event_add
                     background_replace(floor_bg,vanilla_directory_const+'\TEX\FLOOR_'+local.str+'.png',false,false);
                     background_replace(wall_bg,vanilla_directory_const+'\TEX\WALL_'+local.str+'.png',false,false);
                     background_replace(ceil_bg,vanilla_directory_const+'\TEX\ROOF_'+local.str+'.png',false,false);
+                    sprite_replace(light_floor_spr,vanilla_directory_const+'\TEX\FLOOR_'+local.str+'L0.png',2,false,false,0,0);
+                    sprite_replace(light_wall_spr,vanilla_directory_const+'\TEX\WALL_'+local.str+'L0.png',2,false,false,0,0);
                 }
                 break;
             }
             case 7: { global.count_var = get_integer('Set Count', global.count_var); break; }
             case 8: { global.violence_var = get_integer('Set LOVE', global.violence_var); break; }
-            case 9: { score = get_integer('Set Room Count', score); break; }
+            case 9: { global.rm_count_var = get_integer('Set Room Count', global.rm_count_var); break; }
             case 10: { global.invincible = !global.invincible; break; }
             case 11: { player_obj.do_coll_var = !player_obj.do_coll_var; break; }
             case 12: { player_obj.grav_var = !player_obj.grav_var; break; }
@@ -152,7 +170,7 @@ object_event_add
     else { local.framerate = 'What'; }
     local.fps_str = ' | FPS: '+string(local.framerate);
     */
-    room_caption = 'Spookys Jump Scare Mansion - Project Recode | TPS: '+string(fps)+' | Room: '+string(global.room_var);
+    room_caption = 'Spookys Jump Scare Mansion - Project Recode | TPS: '+string(fps)+' | Room: '+string(global.rm_count_var);
     global.draw_time_var = 0;
 ")
 // Room Start

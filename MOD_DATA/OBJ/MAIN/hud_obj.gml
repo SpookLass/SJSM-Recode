@@ -13,12 +13,21 @@ object_event_add
     {
         d3d_set_projection_ortho(0,0,1280,720,0);
         d3d_set_hidden(false);
+        // Health and Stamina bars
         draw_background(bar_bg,91,57);
         local.width = background_get_width(bar_stam_bg)*player_obj.stam_var/player_obj.stam_max_var;
         draw_background_part(bar_stam_bg,background_get_width(bar_stam_bg)-local.width,0,local.width,20,99,96);
         local.width = background_get_width(bar_hp_bg)*player_obj.hp_var/player_obj.hp_max_var;
         draw_background_part(bar_hp_bg,background_get_width(bar_hp_bg)-local.width,0,local.width,27,99,62);
         draw_background(bar_icon_bg,37,34);
+        // Room Count
+        local.str = 'Room: '+string(score);
+        draw_set_halign(fa_right); draw_set_color(make_color_rgb(30,0,50));
+        draw_text_transformed(1224,56,local.str,3,3,0);
+        draw_set_color(c_yellow);
+        draw_text_transformed(1226,54,local.str,3,3,0);
+        draw_set_color(c_white); draw_set_halign(fa_left);
+        // Debug text
         local.str = '
 Health: '+string(global.player_obj.hp_var)+'
 Stamina: '+string(global.player_obj.stam_var)+'

@@ -1,5 +1,5 @@
 // Builtin Variables
-object_set_depth(argument0,-101);
+object_set_depth(argument0,-100);
 object_set_mask(argument0,noone);
 object_set_parent(argument0,par_obj);
 object_set_persistent(argument0,false);
@@ -14,12 +14,13 @@ object_event_add
     coll_var[1] = global.trig_coll[1];
     coll_var[2] = global.trig_coll[2];
     // Text
+    do_txt_var = true;
     txt_var = 'Open';
     txt_lock_var = 'Locked.';
     // Function
-    score_var = 1;
+    rm_count_var = 1;
     delay_var = 20;
-    switch irandom(18)
+    switch irandom(34)
     {
         case 0: { rm_var = hall_01_rm; break; }
         case 1: { rm_var = hall_02_rm; break; }
@@ -27,19 +28,35 @@ object_event_add
         case 3: { rm_var = hall_03_rm; break; }
         case 4: { rm_var = hall_04_rm; break; }
         case 5: { rm_var = hall_05_rm; break; }
-        case 6: { rm_var = hall_13_rm; break; }
-        case 7: { rm_var = hall_18_rm; break; }
-        case 8: { rm_var = hall_19_rm; break; }
-        case 9: { rm_var = hall_20_rm; break; }
-        case 10: { rm_var = hall_21_rm; break; }
-        case 11: { rm_var = hall_21_b_rm; break; }
-        case 12: { rm_var = hall_22_rm; break; }
-        case 13: { rm_var = hall_23_rm; break; }
-        case 14: { rm_var = hall_31_rm; break; }
-        case 15: { rm_var = hall_31_b_rm; break; }
-        case 16: { rm_var = long_hall_05_rm; break; }
-        case 17: { rm_var = test_01_rm; break; }
-        case 18: { rm_var = test_02_rm; break; }
+        case 6: { rm_var = hall_06_a_rm; break; }
+        case 7: { rm_var = hall_06_b_rm; break; }
+        case 8: { rm_var = hall_07_a_rm; break; }
+        case 9: { rm_var = hall_07_b_rm; break; }
+        case 10: { rm_var = hall_08_rm; break; }
+        case 11: { rm_var = hall_09_a_rm; break; }
+        case 12: { rm_var = hall_09_b_rm; break; }
+        case 13: { rm_var = hall_13_rm; break; }
+        case 14: { rm_var = hall_18_rm; break; }
+        case 15: { rm_var = hall_19_rm; break; }
+        case 16: { rm_var = hall_20_rm; break; }
+        case 17: { rm_var = hall_21_rm; break; }
+        case 18: { rm_var = hall_22_rm; break; }
+        case 19: { rm_var = hall_23_rm; break; }
+        case 20: { rm_var = hall_24_rm; break; }
+        case 21: { rm_var = hall_25_rm; break; }
+        case 22: { rm_var = hall_26_rm; break; }
+        case 23: { rm_var = hall_27_rm; break; }
+        case 24: { rm_var = hall_28_rm; break; }
+        case 25: { rm_var = hall_29_rm; break; }
+        case 26: { rm_var = hall_30_rm; break; }
+        case 27: { rm_var = hall_31_rm; break; }
+        case 28: { rm_var = hall_31_b_rm; break; }
+        case 29: { rm_var = hall_32_rm; break; }
+        case 30: { rm_var = hall_33_rm; break; }
+        case 31: { rm_var = hall_34_rm; break; }
+        case 32: { rm_var = long_hall_05_rm; break; }
+        case 33: { rm_var = test_01_rm; break; }
+        case 34: { rm_var = test_02_rm; break; }
     }
     // Alarm
     alarm_len_var = 1;
@@ -49,6 +66,7 @@ object_event_add
 object_event_add
 (argument0,ev_alarm,0,"
     room_goto(rm_var);
+    global.rm_count_var += rm_count_var;
 ")
 // Step Event
 object_event_add
@@ -63,7 +81,7 @@ object_event_add
         // p3dc_check_scr(coll_var[0],x,y,z,other.coll_var[0],other.x,other.y,other.z)
         if box_coll_scr(x,y,z,coll_var[2],coll_var[1],other.x,other.y,other.z,other.coll_var[2],other.coll_var[1])
         {
-            other.visible = true;
+            other.visible = other.do_txt_var;
             other.cam_id_var = cam_id_var
             if global.interact_input_press_var == 1 && !in_door_var
             {
@@ -92,7 +110,7 @@ object_event_add
         { local.indoor = false; }
     }
     if local.active && local.indoor { set_alarm_scr(0,delay_var); }
-")
+");
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,"
