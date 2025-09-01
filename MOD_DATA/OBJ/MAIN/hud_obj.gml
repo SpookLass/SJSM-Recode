@@ -21,11 +21,11 @@ object_event_add
         draw_background_part(bar_hp_bg,background_get_width(bar_hp_bg)-local.width,0,local.width,27,99,62);
         draw_background(bar_icon_bg,37,34);
         // Room Count
-        local.str = 'Room: '+string(score);
+        local.str = 'ROOM: '+string(global.rm_count_var);
         draw_set_halign(fa_right); draw_set_color(make_color_rgb(30,0,50));
-        draw_text_transformed(1224,56,local.str,3,3,0);
+        draw_text_transformed(1224,56,local.str,0.75,0.75,0);
         draw_set_color(c_yellow);
-        draw_text_transformed(1226,54,local.str,3,3,0);
+        draw_text_transformed(1226,54,local.str,.75,0.75,0);
         draw_set_color(c_white); draw_set_halign(fa_left);
         // Debug text
         local.str = '
@@ -42,7 +42,7 @@ Forward: '+string(global.forward_input_var)+'
 Backward: '+string(global.backward_input_var)+'
 Left: '+string(global.strafe_left_input_var)+'
 Right: '+string(global.strafe_right_input_var)
-        draw_text(0,0,local.str);
+        draw_text_transformed(0,0,local.str,0.25,0.25,0);
         d3d_set_hidden(true);
     }
 ");

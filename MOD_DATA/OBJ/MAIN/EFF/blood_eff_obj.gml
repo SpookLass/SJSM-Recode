@@ -59,6 +59,6 @@ object_event_add
         );
         d3d_set_hidden(false);
         draw_sprite_ext(spr_var,spr_id_var,x,y,image_xscale,image_yscale,image_angle,image_blend,image_alpha);
-        d3d_set_hidden(true);
+        draw_set_color(c_white); draw_set_alpha(1); d3d_set_hidden(true);
     }
 ");

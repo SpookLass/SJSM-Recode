@@ -6,7 +6,7 @@ room_set_code
 (
     argument0,"
     // Spawn
-    global.spawn_len_var = 4;
+    global.spawn_len_var = 2;
     global.spawn_arr[0,0] = 144;
     global.spawn_arr[0,1] = 208;
     global.spawn_arr[0,2] = 0;
@@ -174,16 +174,13 @@ room_instance_add(argument0,128,176,wall_vert_obj);
 room_instance_add(argument0,128,240,wall_vert_obj);
 room_instance_add(argument0,576,176,wall_vert_obj);
 room_instance_add(argument0,576,240,wall_vert_obj);
-// Torches
-
 
 // Not yet
 /*room_instance_add(argument0,512,224,random_scare_mark1);
 room_instance_add(argument0,336,248,webs_obj);
 room_instance_add(argument0,438,187,webs_obj);
 room_instance_add(argument0,459,240,webs_obj);
-room_instance_add(argument0,304,528,chair_random_obj);
-room_instance_add(argument0,304,432,chair_random_obj);
+
 room_instance_add(argument0,144,192,rail_1_horr);
 room_instance_add(argument0,144,224,rail_1_horr);
 room_instance_add(argument0,176,224,rail_1_horr);

@@ -20,7 +20,7 @@ object_event_add
     // Function
     rm_count_var = 1;
     delay_var = 20;
-    switch irandom(34)
+    switch irandom(47)
     {
         case 0: { rm_var = hall_01_rm; break; }
         case 1: { rm_var = hall_02_rm; break; }
@@ -35,28 +35,41 @@ object_event_add
         case 10: { rm_var = hall_08_rm; break; }
         case 11: { rm_var = hall_09_a_rm; break; }
         case 12: { rm_var = hall_09_b_rm; break; }
-        case 13: { rm_var = hall_13_rm; break; }
-        case 14: { rm_var = hall_18_rm; break; }
-        case 15: { rm_var = hall_19_rm; break; }
-        case 16: { rm_var = hall_20_rm; break; }
-        case 17: { rm_var = hall_21_rm; break; }
-        case 18: { rm_var = hall_22_rm; break; }
-        case 19: { rm_var = hall_23_rm; break; }
-        case 20: { rm_var = hall_24_rm; break; }
-        case 21: { rm_var = hall_25_rm; break; }
-        case 22: { rm_var = hall_26_rm; break; }
-        case 23: { rm_var = hall_27_rm; break; }
-        case 24: { rm_var = hall_28_rm; break; }
-        case 25: { rm_var = hall_29_rm; break; }
-        case 26: { rm_var = hall_30_rm; break; }
-        case 27: { rm_var = hall_31_rm; break; }
-        case 28: { rm_var = hall_31_b_rm; break; }
-        case 29: { rm_var = hall_32_rm; break; }
-        case 30: { rm_var = hall_33_rm; break; }
-        case 31: { rm_var = hall_34_rm; break; }
-        case 32: { rm_var = long_hall_05_rm; break; }
-        case 33: { rm_var = test_01_rm; break; }
-        case 34: { rm_var = test_02_rm; break; }
+        case 13: { rm_var = hall_10_a_rm; break; }
+        case 14: { rm_var = hall_10_b_rm; break; }
+        case 15: { rm_var = hall_10_c_rm; break; }
+        case 16: { rm_var = hall_11_a_rm; break; }
+        case 17: { rm_var = hall_11_b_rm; break; }
+        case 18: { rm_var = hall_12_a_rm; break; }
+        case 19: { rm_var = hall_12_b_rm; break; }
+        case 20: { rm_var = hall_13_rm; break; }
+        case 21: { rm_var = hall_14_a_rm; break; }
+        case 22: { rm_var = hall_14_b_rm; break; }
+        case 23: { rm_var = hall_15_a_rm; break; }
+        case 24: { rm_var = hall_15_b_rm; break; }
+        case 25: { rm_var = hall_16_a_rm; break; }
+        case 26: { rm_var = hall_16_b_rm; break; }
+        case 27: { rm_var = hall_18_rm; break; }
+        case 28: { rm_var = hall_19_rm; break; }
+        case 29: { rm_var = hall_20_rm; break; }
+        case 30: { rm_var = hall_21_rm; break; }
+        case 31: { rm_var = hall_22_rm; break; }
+        case 32: { rm_var = hall_23_rm; break; }
+        case 33: { rm_var = hall_24_rm; break; }
+        case 34: { rm_var = hall_25_rm; break; }
+        case 35: { rm_var = hall_26_rm; break; }
+        case 36: { rm_var = hall_27_rm; break; }
+        case 37: { rm_var = hall_28_rm; break; }
+        case 38: { rm_var = hall_29_rm; break; }
+        case 39: { rm_var = hall_30_rm; break; }
+        case 40: { rm_var = hall_31_rm; break; }
+        case 41: { rm_var = hall_31_b_rm; break; }
+        case 42: { rm_var = hall_32_rm; break; }
+        case 43: { rm_var = hall_33_rm; break; }
+        case 44: { rm_var = hall_34_rm; break; }
+        case 45: { rm_var = long_hall_05_rm; break; }
+        case 46: { rm_var = test_01_rm; break; }
+        case 47: { rm_var = test_02_rm; break; }
     }
     // Alarm
     alarm_len_var = 1;
@@ -126,11 +139,11 @@ object_event_add
         draw_set_valign(fa_bottom);
 
         draw_set_color(make_color_rgb(30,0,50));
-        draw_text_transformed(638,650,local.txt,4,4,0);
-        draw_text_transformed(636,652,local.txt,4,4,0);
+        draw_text_transformed(638,650,local.txt,1,1,0);
+        draw_text_transformed(636,652,local.txt,1,1,0);
 
         draw_set_color(c_white);
-        draw_text_transformed(640,648,local.txt,4,4,0);
+        draw_text_transformed(640,648,local.txt,1,1,0);
 
         draw_set_halign(fa_left);
         draw_set_valign(fa_top);
