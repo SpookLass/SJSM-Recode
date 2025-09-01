@@ -32,3 +32,8 @@ local.radius = global.mon_coll[2]/2;
 global.mon_coll[0] = p3dc_begin_mdl_scr();
 p3dc_add_cylinder_scr(-local.radius,-local.radius,global.mon_coll[1]-0.01,local.radius,local.radius,0,true,8);
 p3dc_end_mdl_scr();
+// Grids
+global.rm_size_var = 1280;
+local.grid_snap = 8;
+global.phys_grid = mp_grid_create(0,0,local.max_room_size/local.grid_snap,local.max_room_size/local.grid_snap,local.grid_snap,local.grid_snap);
+global.float_grid = mp_grid_create(0,0,local.max_room_size/local.grid_snap,local.max_room_size/local.grid_snap,local.grid_snap,local.grid_snap);

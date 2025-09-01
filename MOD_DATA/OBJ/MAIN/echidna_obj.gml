@@ -24,6 +24,7 @@ dmg_alarm_var: How much time before something can hit the player again (per play
 spd_base_var: How fast the monster moves in pixels per frame (60fps)
 spd_mult_var: Multiplier for the monster's speed, mostly for monsters that have varied speeds
 acc_var: How fast the monster accelerates in pixels per frame squared (60fps)
+frick_var: How fast the monster decelerates in pixels per frame squared
 do_move_var: Whether the specimen should move
 do_anim_var: Whether the specimen should animate
 do_attack_var: Whether the specimen should attack
@@ -62,6 +63,19 @@ object_event_add
     coll_var[1] = global.mon_coll[1];
     coll_var[2] = global.mon_coll[2];
     coll_h_var = 18;
+    // Pathfinding
+    if type_var > 0
+    {
+        path_var = path_add();
+        switch type_var
+        {
+            case 1: { grid_var = global.phys_grid; break; }
+            case 2: { grid_var = global.float_grid; break; }
+        }
+    }
+    else
+    {
+    }
     // Alarms
     alarm_len_var = 6;
     alarm_arr[0,2] = '';
@@ -72,6 +86,13 @@ object_event_add
     alarm_arr[5,2] = '';
     // Room start
     event_perform(ev_other,ev_room_start);
+");
+// Destroy Event
+object_event_add
+(argument0,ev_destroy,0,"
+    event_inherited();
+    if type_var > 0 && path_exists(path_var)
+    { path_delete(path_var); }
 ");
 // Room Start Event
 object_event_add
@@ -175,39 +196,42 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user0,"
     local.spd = spd_base_var*spd_mult_var;
-    if type_var
+    if point_distance_3d_scr(x,y,z,target_x_var,target_y_var,target_z_var) < local.spd
     {
-        // I'll be honest, I have NO clue how we're gonna do pathfinding with these collision and movement systems
-        if point_distance_3d_scr(x,y,z,target_x_var,target_y_var,target_z_var) < local.spd
+        if enter_var
         {
             x = target_x_var;
             y = target_y_var;
             z = target_z_var;
-            if enter_var
-            {
-                do_coll_var = true;
-                enter_var = false;
-            }
-            else { set_motion_scr(0,true); }
+            do_coll_var = true;
+            enter_var = false;
         }
         else
         {
-            if enter_var || !mp_grid_path(grid_var,path_var,x,y,target_x_var,target_y_var,true)
-            // or no wall between them and the player
-            { local.yaw = point_direction(x,y,target_x_var,target_y_var); }
-            else
-            {
-                local.yaw = point_direction
-                (
-                    path_get_point_x(path_var,0),
-                    path_get_point_y(path_var,0),
-                    path_get_point_x(path_var,1),
-                    path_get_point_y(path_var,1)
-                );
-            }
-            if do_acc_var { acc_scr(global.delta_time_var,acc_var,frick_var,local.yaw,local.spd); }
-            else { set_motion_scr(local.spd,true,local.yaw,true); }
+            x = target_x_var;
+            y = target_y_var;
+            z = target_z_var;
+            set_motion_3d_scr(0,true);
         }
+    }
+    else if type_var > 0
+    {
+        // I'll be honest, I have NO clue how we're gonna do pathfinding with these collision and movement systems
+        if enter_var || !mp_grid_path(grid_var,path_var,x,y,target_x_var,target_y_var,true)
+        // or no wall between them and the player
+        { local.yaw = point_direction(x,y,target_x_var,target_y_var); }
+        else
+        {
+            local.yaw = point_direction
+            (
+                path_get_point_x(path_var,0),
+                path_get_point_y(path_var,0),
+                path_get_point_x(path_var,1),
+                path_get_point_y(path_var,1)
+            );
+        }
+        if do_acc_var { acc_scr(global.delta_time_var,acc_var,frick_var,local.yaw,local.spd); }
+        else { set_motion_scr(local.spd,true,local.yaw,true); }
     }
     else
     {
