@@ -27,7 +27,7 @@ object_event_add
 (argument0,ev_draw,0,"
     if global.fog_dark_var { d3d_set_fog(false,c_black,0,0); }
     d3d_transform_set_identity();
-    d3d_transform_add_rotation_y(-point_direction_3d_scr(x,y,z,global.cam_x_var[view_current],global.cam_y_var[view_current],global.cam_z_var[view_current]));
+    d3d_transform_add_rotation_y(point_direction_3d_scr(x,y,z,global.cam_x_var[view_current],global.cam_y_var[view_current],global.cam_z_var[view_current]));
     d3d_transform_add_rotation_z(point_direction(x,y,global.cam_x_var[view_current],global.cam_y_var[view_current]));
     d3d_transform_add_translation(x,y,z);
     draw_set_color(image_blend); draw_set_alpha(image_alpha);

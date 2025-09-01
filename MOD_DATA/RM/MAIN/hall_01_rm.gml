@@ -6,24 +6,29 @@ room_set_code
 (
     argument0,
     "
-    // Spawn
+    // Spawns
     global.spawn_len_var = 2;
-    global.spawn_arr[0,0] = 176;
-    global.spawn_arr[0,1] = 144;
-    global.spawn_arr[0,2] = 0;
-    global.spawn_arr[0,3] = 0;
+    // Spawn 0 (entrance)
+    global.spawn_arr[0,0] = 176;    // X
+    global.spawn_arr[0,1] = 144;    // Y
+    global.spawn_arr[0,2] = 0;      // Z
+    global.spawn_arr[0,3] = 0;      // Angle (0 is right, 90 is up, etc)
+    // Spawn 1 (exit)
     global.spawn_arr[1,0] = 336;
     global.spawn_arr[1,1] = 240;
     global.spawn_arr[1,2] = 0;
     global.spawn_arr[1,3] = 90;
-    // Mark
+    // Marks (Slime spawners)
     global.mark_len_var = 3;
-    global.mark_arr[0,0] = 240;
-    global.mark_arr[0,1] = 144;
-    global.mark_arr[0,2] = 0;
+    // Mark 0
+    global.mark_arr[0,0] = 240;     // X
+    global.mark_arr[0,1] = 144;     // Y
+    global.mark_arr[0,2] = 0;       // Z
+    // Mark 1
     global.mark_arr[1,0] = 336;
     global.mark_arr[1,1] = 144;
     global.mark_arr[1,2] = 0;
+    // Mark 2
     global.mark_arr[2,0] = 336;
     global.mark_arr[2,1] = 176;
     global.mark_arr[2,2] = 0;

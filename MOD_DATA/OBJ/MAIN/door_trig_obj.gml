@@ -19,7 +19,7 @@ object_event_add
     // Function
     score_var = 1;
     delay_var = 20;
-    rm_var = choose(hall_01_rm,hall_02_rm,hall_02_b_rm,hall_03_rm,hall_04_rm,hall_13_rm,long_hall_05_rm,test_01_rm,test_02_rm);
+    rm_var = choose(hall_01_rm,hall_02_rm,hall_02_b_rm,hall_03_rm,hall_04_rm,hall_05_rm,hall_13_rm,hall_18_rm,hall_19_rm,hall_20_rm,hall_31_rm,hall_31_b_rm,long_hall_05_rm,test_01_rm,test_02_rm);
     // Alarm
     alarm_len_var = 1;
     alarm_arr[0,2] = '';

@@ -1,4 +1,3 @@
-
 /*
 Argument 0: Room Variable (same for all rooms)
 */
@@ -18,10 +17,10 @@ room_set_code
     global.spawn_arr[1,3] = 180;
     // Mark
     global.mark_len_var = 3;
-    global.mark_arr[0,0] = 272;
+    global.mark_arr[0,0] = 336;
     global.mark_arr[0,1] = 304;
     global.mark_arr[0,2] = 0;
-    global.mark_arr[1,0] = 336;
+    global.mark_arr[1,0] = 400;
     global.mark_arr[1,1] = 304;
     global.mark_arr[1,2] = 0;
     global.mark_arr[2,0] = 464;
@@ -119,8 +118,7 @@ room_instance_add(argument0,240,316,torch_south_obj);
 room_instance_add(argument0,368,316,torch_south_obj);
 room_instance_add(argument0,496,316,torch_south_obj);
 // Not yet
-/*room_instance_add(argument0,544,316,random_scare_mark1);
-room_instance_add(argument0,212,309,webs_obj);
-room_instance_add(argument0,396,297,webs_obj);
-room_instance_add(argument0,435,310,webs_obj);*/
-
+/*room_instance_add(argument0,320,316,random_scare_mark1);
+room_instance_add(argument0,282,309,webs_obj);
+room_instance_add(argument0,529,297,webs_obj);
+room_instance_add(argument0,431,300,webs_obj);*/

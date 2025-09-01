@@ -61,7 +61,7 @@ object_event_add
         {
             d3d_transform_set_identity();
             d3d_transform_add_rotation_x(part_arr[local.i,9]);
-            d3d_transform_add_rotation_y(-point_direction_3d_scr(part_arr[local.i,1],part_arr[local.i,2],part_arr[local.i,3],global.cam_x_var[view_current],global.cam_y_var[view_current],global.cam_z_var[view_current]));
+            d3d_transform_add_rotation_y(point_direction_3d_scr(part_arr[local.i,1],part_arr[local.i,2],part_arr[local.i,3],global.cam_x_var[view_current],global.cam_y_var[view_current],global.cam_z_var[view_current]));
             d3d_transform_add_rotation_z(point_direction(part_arr[local.i,1],part_arr[local.i,2],global.cam_x_var[view_current],global.cam_y_var[view_current]));
             d3d_transform_add_translation(part_arr[local.i,1],part_arr[local.i,2],part_arr[local.i,3]);
             draw_set_color(part_arr[local.i,10]); draw_set_alpha(part_arr[local.i,11]);
