@@ -5,6 +5,8 @@ Argument 0: Room Variable (same for all rooms)
 room_set_code
 (
     argument0,"
+    // Name
+    global.rm_name_var = 'Hall 25 / Hall 5 C'
     // Spawn
     global.spawn_len_var = 2;
     global.spawn_arr[0,0] = 176;

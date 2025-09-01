@@ -6,6 +6,8 @@ room_set_code
 (
     argument0,
     "
+    // Name
+    global.rm_name_var = 'Hall 3'
     // Spawn
     global.spawn_len_var = 2;
     global.spawn_arr[0,0] = 96;

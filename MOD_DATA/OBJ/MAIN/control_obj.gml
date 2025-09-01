@@ -170,7 +170,7 @@ object_event_add
     else { local.framerate = 'What'; }
     local.fps_str = ' | FPS: '+string(local.framerate);
     */
-    room_caption = 'Spookys Jump Scare Mansion - Project Recode | TPS: '+string(fps)+' | Room: '+string(global.rm_count_var);
+    room_caption = 'Spookys Jump Scare Mansion - Project Recode | TPS: '+string(fps)+' | Room: '+string(global.rm_count_var)+' ('+global.rm_name_var+')';
     global.draw_time_var = 0;
 ")
 // Room Start

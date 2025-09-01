@@ -105,6 +105,9 @@ object_event_add
     hurt_var = false;
     enter_var = type_var > 0;
     do_coll_var = false;
+    // Color
+    if !instance_exists(color_par_obj) 
+    { image_blend = c_white; }
     // Reset Position
     yaw_var = global.spawn_arr[0,3];
     x = global.spawn_arr[0,0]-lengthdir_x(32,yaw_var);
