@@ -1,4 +1,3 @@
-
 /*
 Argument 0: Room Variable (same for all rooms)
 */
@@ -7,7 +6,7 @@ room_set_code
 (
     argument0,"
     // Name
-    global.rm_name_var = 'Hall 5'
+    global.rm_name_var = 'Hall 5 C / 25'
     // Spawn
     global.spawn_len_var = 2;
     global.spawn_arr[0,0] = 176;
@@ -122,7 +121,6 @@ room_instance_add(argument0,368,316,torch_south_obj);
 room_instance_add(argument0,496,316,torch_south_obj);
 // Not yet
 /*room_instance_add(argument0,544,316,random_scare_mark1);
-room_instance_add(argument0,212,309,webs_obj);
-room_instance_add(argument0,396,297,webs_obj);
-room_instance_add(argument0,435,310,webs_obj);*/
-
+room_instance_add(argument0,409,309,webs_obj);
+room_instance_add(argument0,441,298,webs_obj);
+room_instance_add(argument0,214,296,webs_obj);*/

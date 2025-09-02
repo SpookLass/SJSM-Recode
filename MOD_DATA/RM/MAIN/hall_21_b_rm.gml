@@ -6,17 +6,17 @@ room_set_code
 (
     argument0,"
     // Name
-    global.rm_name_var = 'Hall 21'
+    global.rm_name_var = 'Hall 21 B / 28'
     // Spawn
     global.spawn_len_var = 2;
     global.spawn_arr[0,0] = 112;
     global.spawn_arr[0,1] = 576;
     global.spawn_arr[0,2] = 0;
     global.spawn_arr[0,3] = 0;
-    global.spawn_arr[1,0] = 592;
-    global.spawn_arr[1,1] = 480;
+    global.spawn_arr[1,0] = 528;
+    global.spawn_arr[1,1] = 672;
     global.spawn_arr[1,2] = 0;
-    global.spawn_arr[1,3] = 270;
+    global.spawn_arr[1,3] = 90;
     // Mark
     global.mark_len_var = 3;
     global.mark_arr[0,0] = 304;
@@ -186,7 +186,7 @@ room_instance_add(argument0,368,592,torch_south_obj);
 room_instance_add(argument0,464,592,torch_south_obj);
 room_instance_add(argument0,560,592,torch_south_obj);
 // Not yet
-/*room_instance_add(argument0,416,592,random_scare_mark1);
+/*room_instance_add(argument0,576,592,random_scare_mark1);
 room_instance_add(argument0,428,566,webs_obj);
 room_instance_add(argument0,468,683,webs_obj);
 room_instance_add(argument0,581,620,webs_obj);*/
