@@ -116,11 +116,11 @@ execute_string
                     {
                         p3dc_add_block_scr
                         (
-                            x-radius_var-lengthdir_y(w_var/2,direction),
-                            y-radius_var-lengthdir_x(w_var/2,direction),
+                            x-lengthdir_y((w_var/2)+radius_var,direction),
+                            y-lengthdir_x((w_var/2)+radius_var,direction),
                             z+h_var,
-                            x+radius_var+lengthdir_y(w_var/2,direction),
-                            y+radius_var+lengthdir_x(w_var/2,direction),
+                            x+lengthdir_y((w_var/2)+radius_var,direction),
+                            y+lengthdir_x((w_var/2)+radius_var,direction),
                             z
                         );
                         break;
