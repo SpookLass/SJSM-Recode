@@ -54,8 +54,8 @@ file_to_bg_scr(vanilla_directory_const+"\TEX\RARE\ELE_02.png","ele_frame_bg",fal
 file_to_bg_scr(vanilla_directory_const+"\TEX\RARE\ELE_03.png","ele_window_bg",false,false,argument0);
 file_to_bg_scr(vanilla_directory_const+"\TEX\RARE\ELE_04.png","ele_ceil_bg",false,false,argument0);
 file_to_bg_scr(vanilla_directory_const+"\TEX\RARE\ELE_05.png","ele_floor_bg",false,false,argument0);
-file_to_bg_scr(vanilla_directory_const+"\TEX\RARE\RAIL_01.png","metal_rail_bg",false,false,argument0);
-file_to_bg_scr(vanilla_directory_const+"\TEX\RARE\RAIL_02.png","wood_rail_bg",false,false,argument0);
+file_to_bg_scr(vanilla_directory_const+"\TEX\RARE\RAIL_01.png","rail_metal_bg",false,false,argument0);
+file_to_bg_scr(vanilla_directory_const+"\TEX\RARE\RAIL_02.png","rail_wood_bg",false,false,argument0);
 file_to_bg_scr(vanilla_directory_const+"\TEX\RARE\ROCK_01.png","rock_bg",false,false,argument0); // We don't need the others... I think
 file_to_bg_scr(vanilla_directory_const+"\TEX\RARE\TILE_01.png","tile_floor_bg",false,false,argument0);
 file_to_bg_scr(vanilla_directory_const+"\TEX\RARE\TILE_02.png","tile_ceil_bg",false,false,argument0); // Worry about wallpaper later

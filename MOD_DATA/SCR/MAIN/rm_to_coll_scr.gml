@@ -102,8 +102,31 @@ execute_string
         // Add props
         with (prop_par_obj)
         {
-            if solid_var && file_exists(string(mdl_path_var))
-            { p3dc_add_mdl_scr(mdl_path_var,x,y,z); }
+            if solid_var
+            {
+                switch type_var
+                {
+                    case 0:
+                    {
+                        if file_exists(string(mdl_path_var))
+                        { p3dc_add_mdl_scr(mdl_path_var,x,y,z); }
+                        break;
+                    }
+                    case 1:
+                    {
+                        p3dc_add_block_scr
+                        (
+                            x-radius_var-lengthdir_y(w_var/2,direction),
+                            y-radius_var-lengthdir_x(w_var/2,direction),
+                            z+h_var,
+                            x+radius_var+lengthdir_y(w_var/2,direction),
+                            y+radius_var+lengthdir_x(w_var/2,direction),
+                            z
+                        );
+                        break;
+                    }
+                }
+            }
         }
         // Failsafe box
         /*

@@ -139,7 +139,8 @@ room_instance_add(argument0,416,336,torch_gold_north_obj);
 room_instance_add(argument0,416,368,torch_gold_south_obj);
 room_instance_add(argument0,352,368,torch_gold_south_obj);
 room_instance_add(argument0,496,352,torch_gold_east_obj);
+// Webs
+room_instance_add(argument0,489,383,web_rand_obj);
+room_instance_add(argument0,524,299,web_rand_obj);
 // Not yet
-/*room_instance_add(argument0,464,368,random_scare_mark1);
-room_instance_add(argument0,489,383,webs_obj);
-room_instance_add(argument0,524,299,webs_obj);*/
+/*room_instance_add(argument0,464,368,random_scare_mark1);*/

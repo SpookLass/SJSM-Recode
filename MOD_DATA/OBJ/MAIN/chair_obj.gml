@@ -9,9 +9,8 @@ object_set_visible(argument0,true);
 // Create event
 object_event_add
 (argument0,ev_create,0,"
+    stored_tex_var = table_bg_tex;
     event_inherited();
     mdl_var = chair_mdl;
     mdl_path_var = chair_mdl_path;
-    stored_tex_var = table_bg_tex;
-    tex_var = stored_tex_var;
 ");

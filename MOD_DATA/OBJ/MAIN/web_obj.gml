@@ -9,8 +9,11 @@ object_set_visible(argument0,true);
 // Create event
 object_event_add
 (argument0,ev_create,0,"
-    stored_tex_var = table_bg_tex;
+    snap_var = 2; // Snap to ceiling
+    stored_tex_var = sprite_get_texture(web_spr,irandom(sprite_get_number(web_spr)-1));
     event_inherited();
-    mdl_var = table_mdl;
-    mdl_path_var = table_mdl_path;
+    type_var = 1;
+    w_var = 12;
+    h_var = -16; // Hang down
+    solid_var = false;
 ");

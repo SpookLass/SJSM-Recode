@@ -185,8 +185,9 @@ room_instance_add(argument0,272,592,torch_south_obj);
 room_instance_add(argument0,368,592,torch_south_obj);
 room_instance_add(argument0,464,592,torch_south_obj);
 room_instance_add(argument0,560,592,torch_south_obj);
+// Props
+room_instance_add(argument0,428,566,web_rand_obj);
+room_instance_add(argument0,468,683,web_rand_obj);
+room_instance_add(argument0,581,620,web_rand_obj);
 // Not yet
-/*room_instance_add(argument0,416,592,random_scare_mark1);
-room_instance_add(argument0,428,566,webs_obj);
-room_instance_add(argument0,468,683,webs_obj);
-room_instance_add(argument0,581,620,webs_obj);*/
+/*room_instance_add(argument0,416,592,random_scare_mark1);*/

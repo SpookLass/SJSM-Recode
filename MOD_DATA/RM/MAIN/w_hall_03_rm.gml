@@ -135,5 +135,4 @@ room_instance_add(argument0,480,144,wall_vert_obj);
 // Torches
 room_instance_add(argument0,432,128,torch_north_obj);
 room_instance_add(argument0,432,160,torch_south_obj);
-// Not yet
-/*room_instance_add(argument0,384,144,rail_1_vert);*/
+room_instance_add(argument0,384,144,rail_metal_vert_obj);

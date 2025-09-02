@@ -128,26 +128,24 @@ room_instance_add(argument0,128,176,wall_vert_obj);
 room_instance_add(argument0,128,240,wall_vert_obj);
 room_instance_add(argument0,384,176,wall_vert_obj);
 room_instance_add(argument0,384,240,wall_vert_obj);
-// Torches
-
-
+// Props
+room_instance_add(argument0,144,192,rail_metal_hor_obj);
+room_instance_add(argument0,176,192,rail_metal_hor_obj);
+room_instance_add(argument0,208,192,rail_metal_hor_obj);
+room_instance_add(argument0,240,192,rail_metal_hor_obj);
+room_instance_add(argument0,272,192,rail_metal_hor_obj);
+room_instance_add(argument0,304,192,rail_metal_hor_obj);
+room_instance_add(argument0,336,192,rail_metal_hor_obj);
+room_instance_add(argument0,368,192,rail_metal_hor_obj);
+room_instance_add(argument0,368,224,rail_metal_hor_obj);
+room_instance_add(argument0,336,224,rail_metal_hor_obj);
+room_instance_add(argument0,304,224,rail_metal_hor_obj);
+room_instance_add(argument0,272,224,rail_metal_hor_obj);
+room_instance_add(argument0,240,224,rail_metal_hor_obj);
+room_instance_add(argument0,208,224,rail_metal_hor_obj);
+room_instance_add(argument0,176,224,rail_metal_hor_obj);
+room_instance_add(argument0,144,224,rail_metal_hor_obj);
+room_instance_add(argument0,270,241,web_rand_obj);
+room_instance_add(argument0,344,179,web_rand_obj);
 // Not yet
-/*room_instance_add(argument0,320,224,random_scare_mark1);
-room_instance_add(argument0,270,241,webs_obj);
-room_instance_add(argument0,344,179,webs_obj);
-room_instance_add(argument0,144,192,rail_1_horr);
-room_instance_add(argument0,176,192,rail_1_horr);
-room_instance_add(argument0,208,192,rail_1_horr);
-room_instance_add(argument0,240,192,rail_1_horr);
-room_instance_add(argument0,272,192,rail_1_horr);
-room_instance_add(argument0,304,192,rail_1_horr);
-room_instance_add(argument0,336,192,rail_1_horr);
-room_instance_add(argument0,368,192,rail_1_horr);
-room_instance_add(argument0,368,224,rail_1_horr);
-room_instance_add(argument0,336,224,rail_1_horr);
-room_instance_add(argument0,304,224,rail_1_horr);
-room_instance_add(argument0,272,224,rail_1_horr);
-room_instance_add(argument0,240,224,rail_1_horr);
-room_instance_add(argument0,208,224,rail_1_horr);
-room_instance_add(argument0,176,224,rail_1_horr);
-room_instance_add(argument0,144,224,rail_1_horr);*/
+/*room_instance_add(argument0,320,224,random_scare_mark1);*/

@@ -136,14 +136,12 @@ room_instance_add(argument0,272,464,wall_vert_obj);
 room_instance_add(argument0,368,464,wall_vert_obj);
 room_instance_add(argument0,368,400,wall_vert_obj);
 room_instance_add(argument0,432,432,wall_vert_obj);
-// Torches
-
-
+// Props
+room_instance_add(argument0,230,391,web_rand_obj);
+room_instance_add(argument0,279,406,web_rand_obj);
+room_instance_add(argument0,366,470,web_rand_obj);
+room_instance_add(argument0,305,309,web_rand_obj);
 // Not yet
 /*room_instance_add(argument0,400,448,random_scare_mark1);
-room_instance_add(argument0,230,391,webs_obj);
-room_instance_add(argument0,279,406,webs_obj);
-room_instance_add(argument0,366,470,webs_obj);
-room_instance_add(argument0,305,309,webs_obj);
 room_instance_add(argument0,192,432,rug_obj);
 room_instance_add(argument0,320,432,rug_obj);*/

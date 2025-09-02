@@ -162,9 +162,10 @@ room_instance_add(argument0,160,192,wall_vert_obj);
 room_instance_add(argument0,160,256,wall_vert_obj);
 room_instance_add(argument0,160,288,wall_vert_obj);
 room_instance_add(argument0,192,288,wall_vert_obj);
+// Props
+room_instance_add(argument0,250,397,web_rand_obj);
+room_instance_add(argument0,206,263,web_rand_obj);
+room_instance_add(argument0,275,181,web_rand_obj);
+room_instance_add(argument0,342,266,web_rand_obj);
 // Not yet
-/*room_instance_add(argument0,352,208,random_scare_mark1);
-room_instance_add(argument0,250,397,webs_obj);
-room_instance_add(argument0,206,263,webs_obj);
-room_instance_add(argument0,275,181,webs_obj);
-room_instance_add(argument0,342,266,webs_obj);*/
+/*room_instance_add(argument0,352,208,random_scare_mark1);*/

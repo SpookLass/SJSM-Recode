@@ -121,6 +121,6 @@ room_instance_add(argument0,272,128,light_wall_hor_obj);
 room_instance_add(argument0,208,128,light_wall_hor_obj);
 room_instance_add(argument0,212,160,light_wall_hor_obj);
 */
-/* Not ready yet
+/* Not yet
 room_instance_add(argument0,324,160,global.js_obj);
 */

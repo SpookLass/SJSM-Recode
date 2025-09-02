@@ -9,8 +9,10 @@ object_set_visible(argument0,true);
 // Create event
 object_event_add
 (argument0,ev_create,0,"
-    stored_tex_var = table_bg_tex;
-    event_inherited();
-    mdl_var = table_mdl;
-    mdl_path_var = table_mdl_path;
+    if !irandom(2) // && global.rm_count_var >= 200
+    {
+        direction = random(360);
+        event_inherited();
+    }
+    else { instance_destroy(); }
 ");
