@@ -21,6 +21,8 @@ object_event_add
     local.light.gold_var = gold_var;
     local.light.torch_var = id;
     if auto_var { event_perform(ev_other,ev_user0); }
+    // Gold
+    door_var = noone;
 ");
 // Step
 object_event_add
@@ -28,7 +30,7 @@ object_event_add
     if gold_var
     {
         if image_blend != c_white { image_blend = c_white; }
-        on_var = !door_var.lock_var;
+        if instance_exists(door_var) { on_var = !door_var.lock_var; }
     }
 ");
 // Draw

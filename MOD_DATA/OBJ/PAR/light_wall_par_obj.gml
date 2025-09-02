@@ -23,7 +23,7 @@ object_event_add
     else { local.spr = spr_var; }
     spr_id_var = (spr_id_var+(global.delta_time_var/6)) mod sprite_get_number(local.spr);
     if gold_var && image_blend != c_white { image_blend = c_white; }
-    visible = torch_var.on_var;
+    if instance_exists(torch_var) { visible = torch_var.on_var; }
 ")
 // Draw Event
 object_event_add
