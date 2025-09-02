@@ -213,10 +213,7 @@ room_instance_add(argument0,640,464,wall_vert_obj);
 room_instance_add(argument0,224,336,wall_vert_obj);
 room_instance_add(argument0,224,368,wall_vert_obj);
 room_instance_add(argument0,224,400,wall_vert_obj);
-// Torches
-// Furniture
-// Paintings
-// Not yet
-/*room_instance_add(argument0,299,402,webs_obj);
-room_instance_add(argument0,374,336,webs_obj);
-room_instance_add(argument0,452,328,webs_obj);*/
+// Props
+room_instance_add(argument0,299,402,web_rand_obj);
+room_instance_add(argument0,374,336,web_rand_obj);
+room_instance_add(argument0,452,328,web_rand_obj);

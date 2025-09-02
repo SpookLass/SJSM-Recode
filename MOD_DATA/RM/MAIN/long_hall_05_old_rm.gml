@@ -179,8 +179,3 @@ room_instance_add(argument0,160,336,wall_vert_obj);
 room_instance_add(argument0,160,368,wall_vert_obj);
 room_instance_add(argument0,160,400,wall_vert_obj);
 room_instance_add(argument0,160,432,wall_vert_obj);
-// Torches
-// Furniture
-// Paintings
-// Not yet
-/**/

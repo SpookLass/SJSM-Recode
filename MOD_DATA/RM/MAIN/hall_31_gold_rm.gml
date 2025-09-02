@@ -182,6 +182,6 @@ room_instance_add(argument0,224,265,web_rand_obj);
 room_instance_add(argument0,235,336,web_rand_obj);
 room_instance_add(argument0,245,457,web_rand_obj);
 room_instance_add(argument0,143,457,web_rand_obj);
-room_instance_add(argument0,307,326,web_rand_obj);*
+room_instance_add(argument0,307,326,web_rand_obj);
 // Not yet
 /*room_instance_add(argument0,192,480,random_scare_mark1);/
