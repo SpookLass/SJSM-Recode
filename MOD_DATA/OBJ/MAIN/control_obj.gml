@@ -152,7 +152,6 @@ object_event_add
         display_mouse_set(display_get_width()/2,display_get_height()/2);
     }
 ");
-
 // Draw
 object_event_add
 (argument0,ev_draw,0,"

@@ -59,7 +59,7 @@ room_set_code
     local.torch.door_var = global.spawn_arr[2,4];
     local.torch = instance_create(464,416,torch_gold_west_obj);
     local.torch.door_var = global.spawn_arr[2,4];
-")
+");
 // Room settings
 room_set_width(argument0,1280);
 room_set_height(argument0,720);

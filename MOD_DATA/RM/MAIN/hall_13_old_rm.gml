@@ -47,7 +47,6 @@ room_set_code
         local.exittrig = instance_create(global.spawn_arr[local.i,0]-lengthdir_x(8,global.spawn_arr[local.i,3]),global.spawn_arr[local.i,1]-lengthdir_y(8,global.spawn_arr[local.i,3]),door_trig_obj);
         local.exittrig.z = global.spawn_arr[local.i,2];
         if local.i != local.unlock { local.exittrig.lock_var = true; }
-        global.spawn_arr[local.i,4] = local.exittrig;
     }
     // 3D Draw
     d3d_start();

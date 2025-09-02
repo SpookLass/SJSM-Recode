@@ -45,7 +45,7 @@ room_set_code
         local.exittrig = instance_create(global.spawn_arr[local.i,0]-lengthdir_x(8,global.spawn_arr[local.i,3]),global.spawn_arr[local.i,1]-lengthdir_y(8,global.spawn_arr[local.i,3]),door_trig_obj);
         local.exittrig.z = global.spawn_arr[local.i,2];
     }
-")
+");
 // Room settings
 room_set_width(argument0,1280);
 room_set_height(argument0,720);

@@ -60,7 +60,7 @@ room_set_code
     global.draw_3d_var = true;
     // Objects
     // if frac_chance_scr(5,9) { instance_create(0,0,dark_color_obj); }
-")
+");
 // Room settings
 room_set_width(argument0,1280);
 room_set_height(argument0,720);
