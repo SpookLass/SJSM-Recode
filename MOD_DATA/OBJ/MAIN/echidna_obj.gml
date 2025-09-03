@@ -221,9 +221,31 @@ object_event_add
     else if type_var > 0
     {
         local.can_path = mp_grid_path(grid_var,path_var,x,y,target_x_var,target_y_var,true);
-        // It's working? Grah?
-        local.dist = p3dc_ray_still_scr(global.room_coll,x,y,z+(coll_var[1]/2),(target_x_var-x)/target_dist_var,(target_y_var-y)/target_dist_var,(target_z_var-z)/target_dist_var);
-        if enter_var || !local.can_path || local.dist >= target_dist_var
+        // V3
+        local.dist = 10000000;
+        local.radius = coll_var[2]/2;
+        local.ztmp = z+(coll_var[1]/2);
+        local.xvec = (target_x_var-x)/target_dist_var;
+        local.yvec = (target_y_var-y)/target_dist_var;
+        local.zvec = (target_z_var-z)/target_dist_var;
+        for (local.i=0; local.i<4; local.i+=1;)
+        {
+            local.xtmp = x+lengthdir_x(local.radius,local.i*90);
+            local.ytmp = y+lengthdir_y(local.radius,local.i*90);
+            /*local.xvec = (target_x_var-local.xtmp)/target_dist_var;
+            local.yvec = (target_y_var-local.ytmp)/target_dist_var;*/
+            local.dist = min
+            (
+                local.dist,
+                p3dc_ray_still_scr
+                (
+                    global.room_coll,
+                    local.xtmp,local.ytmp,local.ztmp,
+                    local.xvec,local.yvec,local.zvec
+                )
+            );
+        }
+        if enter_var || !local.can_path || local.dist+local.radius >= target_dist_var
         { local.yaw = point_direction(x,y,target_x_var,target_y_var); }
         else
         {

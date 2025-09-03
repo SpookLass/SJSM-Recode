@@ -234,6 +234,7 @@ object_event_add
                 else if !on_floor_var
                 {
                     local.zdist = 10000000;
+                    local.radius = coll_var[2]/2;
                     for (local.i=0; local.i<4; local.i+=1;)
                     {
                         local.zdist = min
@@ -241,8 +242,8 @@ object_event_add
                             local.zdist,
                             p3dc_ray_split_scr
                             (
-                                x+lengthdir_x(3,local.i*90),
-                                y+lengthdir_y(3,local.i*90),
+                                x+lengthdir_x(local.radius,local.i*90),
+                                y+lengthdir_y(local.radius,local.i*90),
                                 z+coll_var[1],
                                 0,0,-1
                             )
