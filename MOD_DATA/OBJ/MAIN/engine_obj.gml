@@ -12,8 +12,8 @@ object_event_add
     stored_tex_var = machine_02_bg_tex;
     event_inherited();
     type_var = 3;
-    w_var = 8;
-    l_var = 8;
+    w_var = 16;
+    l_var = 16;
     h_var = 24;
     tex_w_var = 4;
     step_var = 8;

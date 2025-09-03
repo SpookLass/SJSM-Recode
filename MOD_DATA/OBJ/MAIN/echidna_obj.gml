@@ -221,8 +221,8 @@ object_event_add
     else if type_var > 0
     {
         local.can_path = mp_grid_path(grid_var,path_var,x,y,target_x_var,target_y_var,true);
-        // IT'S NOT WORKING!!!!! GRAHHHH!!!!
-        local.dist = p3dc_ray_still_scr(global.room_coll,x,y,z+(coll_var[1]/2),target_x_var-x,target_y_var-y,target_z_var-z);
+        // It's working? Grah?
+        local.dist = p3dc_ray_still_scr(global.room_coll,x,y,z+(coll_var[1]/2),(target_x_var-x)/target_dist_var,(target_y_var-y)/target_dist_var,(target_z_var-z)/target_dist_var);
         if enter_var || !local.can_path || local.dist >= target_dist_var
         { local.yaw = point_direction(x,y,target_x_var,target_y_var); }
         else

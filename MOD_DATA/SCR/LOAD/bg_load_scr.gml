@@ -35,7 +35,7 @@ file_to_bg_scr(vanilla_directory_const+"\MAT\MACHINE_05.png","cat_01_bg",false,f
 file_to_bg_scr(vanilla_directory_const+"\MAT\MACHINE_06.png","cat_02_bg",false,false,argument0);
 file_to_bg_scr(vanilla_directory_const+"\MAT\METAL_01.png","metal_01_bg",false,false,argument0); // No clue tbh
 file_to_bg_scr(vanilla_directory_const+"\MAT\METAL_03.png","metal_02_bg",false,false,argument0);
-file_to_bg_scr(vanilla_directory_const+"\MAT\METAL_02.png","metal_pole_bg",false,false,argument0);
+file_to_bg_scr(vanilla_directory_const+"\MAT\METAL_02.png","pole_metal_bg",false,false,argument0);
 file_to_bg_scr(vanilla_directory_const+"\MAT\RUG.png","rug_bg",false,false,argument0);
 file_to_bg_scr(vanilla_directory_const+"\MAT\SAVE_01.png","save_ped_01_bg",false,false,argument0);
 file_to_bg_scr(vanilla_directory_const+"\MAT\SAVE_02.png","save_ped_02_bg",false,false,argument0);

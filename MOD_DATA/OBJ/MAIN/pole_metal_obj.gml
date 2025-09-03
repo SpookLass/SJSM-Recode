@@ -9,7 +9,7 @@ object_set_visible(argument0,true);
 // Create event
 object_event_add
 (argument0,ev_create,0,"
-    stored_tex_var = machine_02_bg_tex;
+    stored_tex_var = pole_metal_bg_tex;
     event_inherited();
     type_var = 2;
     w_var = 2;
