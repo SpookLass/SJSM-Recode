@@ -1,7 +1,7 @@
 local.rm_name = room_get_name(room);
 mp_grid_add_rectangle(global.phys_grid,0,0,global.rm_size_var,global.rm_size_var);
 mp_grid_add_rectangle(global.float_grid,0,0,global.rm_size_var,global.rm_size_var);
-local.radius = global.mon_coll[2]/2;
+local.radius = (global.mon_coll[2]/2)-1;
 with (floor_par_obj)
 {
     if solid_var
@@ -28,21 +28,24 @@ with (wall_par_obj)
 {
     if solid_var
     {
+        local.width = w_var/2;
+        local.xtmp = local.radius+abs(lengthdir_y(local.width,direction));
+        local.ytmp = local.radius+abs(lengthdir_x(local.width,direction));
         mp_grid_add_rectangle
         (
             global.phys_grid,
-            x-local.radius-lengthdir_y(w_var/2,direction),
-            y-local.radius-lengthdir_x(w_var/2,direction),
-            x+local.radius+lengthdir_y(w_var/2,direction),
-            y+local.radius+lengthdir_x(w_var/2,direction)
+            x-local.xtmp,
+            y-local.ytmp,
+            x+local.xtmp,
+            y+local.ytmp
         );
         mp_grid_add_rectangle
         (
             global.float_grid,
-            x-local.radius-lengthdir_y(w_var/2,direction),
-            y-local.radius-lengthdir_x(w_var/2,direction),
-            x+local.radius+lengthdir_y(w_var/2,direction),
-            y+local.radius+lengthdir_x(w_var/2,direction)
+            x-local.xtmp,
+            y-local.ytmp,
+            x+local.xtmp,
+            y+local.ytmp
         );
     }
 }
@@ -114,14 +117,49 @@ execute_string
                     }
                     case 1:
                     {
+                        local.width = w_var/2;
+                        local.xtmp = radius_var+abs(lengthdir_y(local.width,direction));
+                        local.ytmp = radius_var+abs(lengthdir_x(local.width,direction));
                         p3dc_add_block_scr
                         (
-                            x-lengthdir_y((w_var/2)+radius_var,direction),
-                            y-lengthdir_x((w_var/2)+radius_var,direction),
+                            x-local.xtmp,
+                            y-local.ytmp,
                             z+h_var,
-                            x+lengthdir_y((w_var/2)+radius_var,direction),
-                            y+lengthdir_x((w_var/2)+radius_var,direction),
+                            x+local.xtmp,
+                            y+local.ytmp,
                             z
+                        );
+                        break;
+                    }
+                    case 2:
+                    {
+                        local.width = w_var/2;
+                        local.length = l_var/2;
+                        p3dc_add_block_scr
+                        (
+                            x-local.width,
+                            y-local.length,
+                            z+h_var,
+                            x+local.width,
+                            y+local.length,
+                            z
+                        );
+                        break;
+                    }
+                    case 3:
+                    {
+                        local.width = w_var/2;
+                        local.length = l_var/2;
+                        p3dc_add_cylinder_scr
+                        (
+                            x-local.width,
+                            y-local.length,
+                            z+h_var,
+                            x+local.width,
+                            y+local.length,
+                            z,
+                            close_var,
+                            step_var
                         );
                         break;
                     }

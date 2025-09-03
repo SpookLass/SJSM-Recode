@@ -9,7 +9,9 @@ object_set_visible(argument0,true);
 /*
 type_var
     0: Model. Uses model and model string to do rendering and collisions.
-    1: Plane. Renders like a wall, but uses block collisions.
+    1: Plane. Uses w_var, h_var, tex_w_var, tex_h_var, and radius var. Renders like a wall, but uses block collisions.
+    2: Block. Uses w_var, l_var, h_var, tex_w_var, and tex_h_var.
+    3: Cylinder. Uses w_var, l_var, h_var, tex_w_var, tex_h_var, close_var, and step_var.
 snap_var
     0: No snap
     1: Snap to floor
@@ -20,6 +22,8 @@ object_event_add
 (argument0,ev_create,0,"
     solid_var = true;
     tex_var = stored_tex_var;
+    tex_w_var = 1;
+    tex_h_var = 1;
     if snap_var > 0
     {
         switch snap_var
@@ -39,7 +43,9 @@ object_event_add
     switch type_var
     {
         case 0: { d3d_model_draw(mdl_var,0,0,0,tex_var); break; }
-        case 1: { d3d_draw_wall(0,-w_var/2,h_var,0,w_var/2,0,tex_var,1,sign(h_var)); break; }
+        case 1: { d3d_draw_wall(0,-w_var/2,h_var,0,w_var/2,0,tex_var,tex_w_var,tex_h_var*sign(h_var)); break; }
+        case 2: { d3d_draw_block(-l_var/2,-w_var/2,h_var,l_var/2,w_var/2,0,tex_var,tex_w_var,tex_h_var*sign(h_var)); break; }
+        case 3: { d3d_draw_cylinder(-l_var/2,-w_var/2,h_var,l_var/2,w_var/2,0,tex_var,tex_w_var,tex_h_var*sign(h_var),close_var,step_var); break; }
     }
     d3d_transform_set_identity();
     draw_set_color(c_white); draw_set_alpha(1);

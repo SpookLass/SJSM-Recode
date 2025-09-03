@@ -6,14 +6,14 @@ p3dc_end_mdl_scr();
 p3dc_split_mdl_scr(global.room_coll,1280,736,40,23,6);
 // Player
 global.player_coll[1] = 18;
-global.player_coll[2] = 6;
+global.player_coll[2] = 8;
 local.radius = global.player_coll[2]/2;
 global.player_coll[0] = p3dc_begin_mdl_scr();
 p3dc_add_cylinder_scr(-local.radius,-local.radius,global.player_coll[1]-0.01,local.radius,local.radius,0,true,8);
 p3dc_end_mdl_scr();
 // Crouch
 global.player_crouch_coll[1] = 12;
-global.player_crouch_coll[2] = 6;
+global.player_crouch_coll[2] = 8;
 local.radius = global.player_crouch_coll[2]/2;
 global.player_crouch_coll[0] = p3dc_begin_mdl_scr();
 p3dc_add_cylinder_scr(-local.radius,-local.radius,global.player_crouch_coll[1]-0.01,local.radius,local.radius,0,true,8);
@@ -27,13 +27,13 @@ p3dc_add_block_scr(-local.radius,-local.radius,global.trig_coll[1],local.radius,
 p3dc_end_mdl_scr();
 // Monster
 global.mon_coll[1] = 18;
-global.mon_coll[2] = 6;
+global.mon_coll[2] = 8;
 local.radius = global.mon_coll[2]/2;
 global.mon_coll[0] = p3dc_begin_mdl_scr();
 p3dc_add_cylinder_scr(-local.radius,-local.radius,global.mon_coll[1]-0.01,local.radius,local.radius,0,true,8);
 p3dc_end_mdl_scr();
 // Grids
 global.rm_size_var = 1280;
-local.grid_snap = 8;
-global.phys_grid = mp_grid_create(0,0,local.max_room_size/local.grid_snap,local.max_room_size/local.grid_snap,local.grid_snap,local.grid_snap);
-global.float_grid = mp_grid_create(0,0,local.max_room_size/local.grid_snap,local.max_room_size/local.grid_snap,local.grid_snap,local.grid_snap);
+local.grid_snap = 4;
+global.phys_grid = mp_grid_create(0,0,global.rm_size_var/local.grid_snap,global.rm_size_var/local.grid_snap,local.grid_snap,local.grid_snap);
+global.float_grid = mp_grid_create(0,0,global.rm_size_var/local.grid_snap,global.rm_size_var/local.grid_snap,local.grid_snap,local.grid_snap);
