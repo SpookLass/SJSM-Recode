@@ -63,8 +63,8 @@ file_to_bg_scr(vanilla_directory_const+"\TEX\RARE\WINDOW_01.png","window_bg",fal
 file_to_bg_scr(vanilla_directory_const+"\TEX\RARE\WINDOW_02.png","lp_window_bg",false,false,argument0);
 file_to_bg_scr(vanilla_directory_const+"\TEX\RARE\WINDOW_03.png","lab_window_bg",false,false,argument0);
 file_to_bg_scr(vanilla_directory_const+"\TEX\RARE\WIRE_01.png","wire_01_bg",false,false,argument0);
-file_to_bg_scr(vanilla_directory_const+"\TEX\RARE\WIRE_02.png","wire_01_bg",false,false,argument0);
-file_to_bg_scr(vanilla_directory_const+"\TEX\RARE\WIRE_03.png","wire_01_bg",false,false,argument0);
+file_to_bg_scr(vanilla_directory_const+"\TEX\RARE\WIRE_02.png","wire_02_bg",false,false,argument0);
+file_to_bg_scr(vanilla_directory_const+"\TEX\RARE\WIRE_03.png","wire_03_bg",false,false,argument0);
 // Mobile
 file_to_bg_scr(vanilla_directory_const+"\TEX\mobile\MID_02_tex.png","fan_blade_bg",false,false,argument0);
 file_to_bg_scr(vanilla_directory_const+"\TEX\mobile\MID_03_tex.png","fan_bg",false,false,argument0);

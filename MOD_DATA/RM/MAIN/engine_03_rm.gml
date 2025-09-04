@@ -161,7 +161,7 @@ room_instance_add(argument0,304,368,wall_hor_obj);
 room_instance_add(argument0,336,368,wall_hor_obj);
 room_instance_add(argument0,304,400,wall_hor_obj);
 room_instance_add(argument0,336,400,wall_hor_obj);
-// Engineering
+// Prop
 room_instance_add(argument0,176,384,engine_rand_obj);
 room_instance_add(argument0,240,384,engine_rand_obj);
 room_instance_add(argument0,240,320,engine_rand_obj);
@@ -192,5 +192,7 @@ room_instance_add(argument0,240,320,runner_obj);
 room_instance_add(argument0,240,288,runner_obj);
 room_instance_add(argument0,240,256,runner_obj);
 room_instance_add(argument0,240,224,runner_obj);
-room_instance_add(argument0,240,208,wire_hor_obj);
-// Not yet
+room_instance_add(argument0,176,208,wire_hor_rand_obj);
+room_instance_add(argument0,240,208,wire_hor_rand_obj);
+room_instance_add(argument0,176,432,wire_hor_rand_obj);
+room_instance_add(argument0,240,432,wire_hor_rand_obj);

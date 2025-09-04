@@ -12,6 +12,9 @@ type_var
     1: Plane. Uses w_var, h_var, tex_w_var, tex_h_var, and radius var. Renders like a wall, but uses block collisions.
     2: Block. Uses w_var, l_var, h_var, tex_w_var, and tex_h_var.
     3: Cylinder. Uses w_var, l_var, h_var, tex_w_var, tex_h_var, close_var, and step_var.
+    4: Floor. Uses w_var, l_var, tex_w_var, and tex_h_var
+    5: Billboard. Uses w_var, h_var, tex_w_var, tex_h_var, and step_var. Has a cylinder collision
+    6: Double Plane. Uses w_var, h_var, tex_w_var, and tex_h_var. For wall decor
 snap_var
     0: No snap
     1: Snap to floor
@@ -37,15 +40,23 @@ object_event_add
 object_event_add
 (argument0,ev_draw,0,"
     d3d_transform_set_identity();
-    d3d_transform_add_rotation_z(direction);
+    if type_var == 5 { d3d_transform_add_rotation_z(point_direction(x,y,global.cam_x_var[view_current],global.cam_y_var[view_current])); }
+    else { d3d_transform_add_rotation_z(direction); }
     d3d_transform_add_translation(x,y,z);
     draw_set_color(image_blend); draw_set_alpha(image_alpha);
     switch type_var
     {
         case 0: { d3d_model_draw(mdl_var,0,0,0,tex_var); break; }
         case 1: { d3d_draw_wall(0,-w_var/2,h_var,0,w_var/2,0,tex_var,tex_w_var,tex_h_var*sign(h_var)); break; }
-        case 2: { d3d_draw_block(-l_var/2,-w_var/2,h_var,l_var/2,w_var/2,0,tex_var,tex_w_var,tex_h_var*sign(h_var)); break; }
-        case 3: { d3d_draw_cylinder(-l_var/2,-w_var/2,h_var,l_var/2,w_var/2,0,tex_var,tex_w_var,tex_h_var*sign(h_var),close_var,step_var); break; }
+        case 2: { d3d_draw_block(-w_var/2,-l_var/2,h_var,w_var/2,l_var/2,0,tex_var,tex_w_var,tex_h_var*sign(h_var)); break; }
+        case 3: { d3d_draw_cylinder(-w_var/2,-l_var/2,h_var,w_var/2,l_var/2,0,tex_var,tex_w_var,tex_h_var*sign(h_var),close_var,step_var); break; }
+        case 4: { d3d_draw_floor(-w_var/2,-l_var/2,0,w_var/2,l_var/2,0,tex_var,tex_w_var,tex_h_var); break; }
+        case 5: { d3d_draw_wall(0,-w_var/2,h_var,0,w_var/2,0,tex_var,tex_w_var,tex_h_var*sign(h_var)); break; }
+        case 6:
+        {
+            d3d_draw_wall(0.1,-w_var/2,h_var,0.1,w_var/2,0,tex_var,tex_w_var,tex_h_var*sign(h_var));
+            d3d_draw_wall(-0.1,-w_var/2,h_var,-0.1,w_var/2,0,tex_var,tex_w_var,tex_h_var*sign(h_var));
+        }
     }
     d3d_transform_set_identity();
     draw_set_color(c_white); draw_set_alpha(1);

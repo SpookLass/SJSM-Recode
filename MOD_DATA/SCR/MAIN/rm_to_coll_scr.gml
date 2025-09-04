@@ -163,6 +163,53 @@ execute_string
                         );
                         break;
                     }
+                    case 4:
+                    {
+                        local.width = w_var/2;
+                        local.length = l_var/2;
+                        p3dc_add_floor_scr
+                        (
+                            x-local.width,
+                            y-local.length,
+                            z,
+                            x+local.width,
+                            y+local.length,
+                            z
+                        );
+                        break;
+                    }
+                    case 5:
+                    {
+                        local.width = w_var/2;
+                        p3dc_add_cylinder_scr
+                        (
+                            x-local.width,
+                            y-local.width,
+                            z+h_var,
+                            x+local.width,
+                            y+local.width,
+                            z,
+                            true,
+                            step_var
+                        );
+                        break;
+                    }
+                    case 6:
+                    {
+                        local.width = w_var/2;
+                        local.xtmp = lengthdir_y(local.width,direction);
+                        local.ytmp = lengthdir_x(local.width,direction);
+                        p3dc_add_wall_scr
+                        (
+                            x-local.xtmp,
+                            y-local.ytmp,
+                            z+h_var,
+                            x+local.xtmp,
+                            y+local.ytmp,
+                            z
+                        );
+                        break;
+                    }
                 }
             }
         }
