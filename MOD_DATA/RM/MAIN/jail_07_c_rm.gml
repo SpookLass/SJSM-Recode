@@ -151,8 +151,6 @@ room_instance_add(argument0,256,176,bar_vert_obj);
 room_instance_add(argument0,256,240,bar_vert_obj);
 room_instance_add(argument0,208,240,chair_rand_obj);
 room_instance_add(argument0,208,176,chair_rand_obj);
-room_instance_add(argument0,312,304,bone_rand_obj);
-room_instance_add(argument0,312,176,bone_rand_obj);
 room_instance_add(argument0,232,176,bone_rand_obj);
 room_instance_add(argument0,180,294,web_rand_obj);
 room_instance_add(argument0,265,232,web_rand_obj);
@@ -160,5 +158,7 @@ room_instance_add(argument0,275,169,web_rand_obj);
 // Doors
 room_instance_add(argument0,352,176,door_east_obj);
 room_instance_add(argument0,344,176,door_trig_obj);
+room_instance_add(argument0,312,176,bone_rand_obj);
 room_instance_add(argument0,352,240,door_east_obj);
 room_instance_add(argument0,344,240,door_trig_obj);
+room_instance_add(argument0,312,240,bone_rand_obj);
