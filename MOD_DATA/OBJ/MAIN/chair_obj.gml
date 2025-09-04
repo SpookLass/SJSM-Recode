@@ -6,11 +6,16 @@ object_set_persistent(argument0,false);
 object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
+// Prop collisions
+execute_string("global.chair_coll[0] = prop_to_coll_scr(0,chair_mdl_path);");
 // Create event
 object_event_add
 (argument0,ev_create,0,"
     stored_tex_var = table_bg_tex;
     event_inherited();
+    solid_var = true;
     mdl_var = chair_mdl;
     mdl_path_var = chair_mdl_path;
+    // Collisions
+    coll_var[0] = global.chair_coll[0];
 ");

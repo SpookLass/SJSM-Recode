@@ -103,6 +103,7 @@ execute_string
             }
         }
         // Add props
+        /*
         with (prop_par_obj)
         {
             if solid_var
@@ -131,6 +132,7 @@ execute_string
                         );
                         break;
                     }
+                    case 7:
                     case 2:
                     {
                         local.width = w_var/2;
@@ -213,6 +215,7 @@ execute_string
                 }
             }
         }
+        */
         // Failsafe box
         /*
         p3dc_add_floor_scr(0,0,-128,room_width,room_height,-128);

@@ -18,6 +18,6 @@ if argument0 != "" && file_exists(argument0)
         else if "+string(argument2)+"
         { show_error('Variable "+argument1+" already in use!',false); }
     ");
-    execute_file(argument0,local.obj);
+    execute_file(argument0,local.obj,argument1);
 }
 else if argument2 { show_error("File "+argument1+" doesn't exist at path "+argument0,false); }

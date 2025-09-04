@@ -5,16 +5,74 @@ Set delta time to 1 if you aren't using it.
 // Movement add
 local.xspd = x_spd_var*argument0;
 local.yspd = y_spd_var*argument0;
-if grav_var > 0
+// Always check split
+local.coll_arr[0,0] = -1;
+local.coll_arr_len = 1;
+// If moving or gravity, check stuff to collide with
+if local.xspd != 0 || local.yspd != 0 || (grav_var > 0 && do_coll_var)
+{
+    // Props, needed here since rotation lol
+    with prop_par_obj
+    {
+        // Equivalent to split size
+        if solid_var && point_distance_3d_scr(other.x,other.y,other.z,x,y,z) < 36+other.spd_var && coll_var[0] > 0
+        {
+            local.coll_arr[local.coll_arr_len,0] = coll_var[0];
+            local.coll_arr[local.coll_arr_len,1] = x;
+            local.coll_arr[local.coll_arr_len,2] = y;
+            local.coll_arr[local.coll_arr_len,3] = z;
+            local.coll_arr[local.coll_arr_len,4] = degtorad(direction)
+            local.coll_arr_len += 1;
+        }
+    }
+}
+if do_coll_var && grav_var > 0
 {
     // Do a pseudo circle cast
     local.zdist = 10000000;
     local.zdist_max = 0;
-    for (local.i=0; local.i<4; local.i+=1;)
+    for (local.c=0; local.c<local.coll_arr_len; local.c+=1;)
     {
-        local.zdist_new = execute_file(global.p3dc_ray_split_scr,x+lengthdir_x(3,local.i*90),y+lengthdir_y(3,local.i*90),z+coll_var[1],0,0,-1);
-        local.zdist = min(local.zdist,local.zdist_new);
-        local.zdist_max = max(local.zdist_max,local.zdist_new)
+        for (local.i=0; local.i<4; local.i+=1;)
+        {
+            if local.coll_arr[local.c,0] == -1
+            { local.zdist_new = p3dc_ray_split_scr(x+lengthdir_x(3,local.i*90),y+lengthdir_y(3,local.i*90),z+coll_var[1],0,0,-1); }
+            else if local.coll_arr[local.c,4] != 0
+            {
+                // Seems to set variables for use in next function? So weird.
+                p3dc_set_modrot_scr(0,0,local.coll_arr[local.c,4]);
+                // I kid you not, THE EXAMPLE CODE IS OUTDATED
+                local.zdist_new = 
+                p3dc_ray_rot_scr
+                (
+                    local.coll_arr[local.c,0],
+                    local.coll_arr[local.c,1],
+                    local.coll_arr[local.c,2],
+                    local.coll_arr[local.c,3],
+                    x+lengthdir_x(3,local.i*90),
+                    y+lengthdir_y(3,local.i*90),
+                    z+coll_var[1],
+                    0,0,-1
+                );
+            }
+            else
+            {
+                local.zdist_new = 
+                p3dc_ray_scr
+                (
+                    local.coll_arr[local.c,0],
+                    local.coll_arr[local.c,1],
+                    local.coll_arr[local.c,2],
+                    local.coll_arr[local.c,3],
+                    x+lengthdir_x(3,local.i*90),
+                    y+lengthdir_y(3,local.i*90),
+                    z+coll_var[1],
+                    0,0,-1
+                );
+            }
+            local.zdist = min(local.zdist,local.zdist_new);
+            local.zdist_max = max(local.zdist_max,local.zdist_new)
+        }
     }
     local.zdist -= coll_var[1];
     // Add gravity
@@ -37,65 +95,299 @@ if local.xspd != 0 || local.yspd != 0 || local.zspd != 0
     yprevious = y;
     zprevious = z;
     // If the object has collisions, check
-    if coll_var[0]
+    if do_coll_var
     {
-        
         // Move and slide
-        if local.xspd < 0 { local.xdir = -1; } else { local.xdir = 1; }
-        if local.yspd < 0 { local.ydir = -1; } else { local.ydir = 1; }
-        if local.zspd < 0 { local.zdir = -1; } else { local.zdir = 1; }
+        local.xdir = sign(local.xspd);
+        local.ydir = sign(local.yspd);
+        local.zdir = sign(local.zspd);
+        local.xspd2 = local.xspd;
+        local.yspd2 = local.yspd;
+        local.zspd2 = local.zspd;
         local.radius = 1+(coll_var[2]/2);
-        if global.coll_prec_var 
+        // Loop through collisions
+        for (local.c=0; local.c<local.coll_arr_len; local.c+=1;)
         {
-            local.dist = execute_file(global.p3dc_ray_still_scr,global.room_coll,x,y,z+(coll_var[1]/2),local.xspd,local.yspd,local.zspd);
-            local.ray_coll = local.dist < local.radius+(spd_var*2) || local.dist >= 10000000;
-        }
-        else { local.ray_coll = false; }
-        if execute_file(global.p3dc_check_split_scr,coll_var[0],x+local.xspd,y+local.yspd,z+local.zspd+0.01) || local.ray_coll
-        {
-            if !execute_file(global.p3dc_check_split_scr,coll_var[0],x+local.xspd,y,z+0.01)
+            local.ray_coll = false;
+            // Check Split / Room collision
+            if local.coll_arr[local.c,0] == -1
             {
                 if global.coll_prec_var
                 {
-                    local.xdist = execute_file(global.p3dc_ray_still_scr,global.room_coll,x,y,z+(coll_var[1]/2),local.xdir,0,0);
-                    if local.xdist < 10000000
-                    { x += local.xdir*min(abs(local.xspd),abs(local.xdist-local.radius)); }
+                    local.dist = p3dc_ray_still_scr(global.room_coll,x,y,z+(coll_var[1]/2),local.xspd,local.yspd,local.zspd);
+                    local.ray_coll = local.dist < local.radius+(spd_var*2) || local.dist >= 10000000;
                 }
-                else { x += local.xspd; }
+                // If collided, slide
+                if p3dc_check_split_scr(coll_var[0],x+local.xspd,y+local.yspd,z+local.zspd+0.01) || local.ray_coll
+                {
+                    // X Speed
+                    if local.xspd != 0
+                    {
+                        if !p3dc_check_split_scr(coll_var[0],x+local.xspd,y,z+0.01)
+                        {
+                            if global.coll_prec_var
+                            {
+                                local.xdist = p3dc_ray_still_scr(global.room_coll,x,y,z+(coll_var[1]/2),local.xdir,0,0);
+                                if local.xdist < 10000000
+                                { local.xspd = local.xdir*min(abs(local.xspd),abs(local.xdist-local.radius)); }
+                            }
+                        }
+                        else { local.xspd = 0; }
+                    }
+                    // Y Speed
+                    if local.yspd != 0
+                    {
+                        if !p3dc_check_split_scr(coll_var[0],x,y+local.yspd,z+0.01)
+                        {
+                            if global.coll_prec_var
+                            {
+                                local.ydist = p3dc_ray_still_scr(global.room_coll,x,y,z+(coll_var[1]/2),0,local.ydir,0);
+                                if local.ydist < 10000000
+                                { local.yspd = local.ydir*min(abs(local.yspd),abs(local.ydist-local.radius)); }
+                            }
+                        }
+                        else { local.yspd = 0; }
+                    }
+                    // Z Speed
+                    if local.zspd != 0
+                    {
+                        if !p3dc_check_split_scr(coll_var[0],x,y,z+local.zspd+0.01)
+                        {
+                            if global.coll_prec_var
+                            {
+                                local.zdist = p3dc_ray_split_scr(x,y,z+(coll_var[1]/2),0,0,local.zdir);
+                                if local.zdist < 10000000
+                                { local.zspd = local.zdir*min(abs(local.zspd),abs(local.zdist-(coll_var[1]/2))); }
+                            }
+                        }
+                        else { local.zspd = 0; }
+                    }
+                }
             }
-            if !execute_file(global.p3dc_check_split_scr,coll_var[0],x,y+local.yspd,z+0.01)
+            // Check rotated prop collision
+            else if local.coll_arr[local.c,4] != 0
+            {
+                // Seems to set variables for use in next function? So weird.
+                p3dc_set_modrot_scr(0,0,local.coll_arr[local.c,4]);
+                if global.coll_prec_var
+                {
+                    // I kid you not, THE EXAMPLE CODE IS OUTDATED
+                    local.dist = 
+                    p3dc_ray_rot_scr
+                    (
+                        local.coll_arr[local.c,0],
+                        local.coll_arr[local.c,1],
+                        local.coll_arr[local.c,2],
+                        local.coll_arr[local.c,3],
+                        x,y,z+(coll_var[1]/2),
+                        local.xspd,local.yspd,local.zspd
+                    );
+                    local.ray_coll = local.dist < local.radius+(spd_var*2) || local.dist >= 10000000;
+                }
+                // If collided, slide
+                if local.ray_coll || p3dc_check_rot_scr
+                (
+                    coll_var[0],x+local.xspd,y+local.yspd,z+local.zspd+0.01,
+                    local.coll_arr[local.c,0],local.coll_arr[local.c,1],local.coll_arr[local.c,2],local.coll_arr[local.c,3],
+                    0,0,0
+                )
+                {
+                    // X Speed
+                    if local.xspd != 0
+                    {
+                        if !p3dc_check_rot_scr
+                        (
+                            coll_var[0],x+local.xspd,y,z+0.01,
+                            local.coll_arr[local.c,0],local.coll_arr[local.c,1],local.coll_arr[local.c,2],local.coll_arr[local.c,3],
+                            0,0,0
+                        )
+                        {
+                            if global.coll_prec_var
+                            {
+                                local.xdist = p3dc_ray_rot_scr
+                                (
+                                    local.coll_arr[local.c,0],
+                                    local.coll_arr[local.c,1],
+                                    local.coll_arr[local.c,2],
+                                    local.coll_arr[local.c,3],
+                                    x,y,z+(coll_var[1]/2),
+                                    local.xdir,0,0
+                                );
+                                if local.xdist < 10000000
+                                { local.xspd = local.xdir*min(abs(local.xspd),abs(local.xdist-local.radius)); }
+                            }
+                        }
+                        else { local.xspd = 0; }
+                    }
+                    // Y Speed
+                    if local.yspd != 0
+                    {
+                        if !p3dc_check_rot_scr
+                        (
+                            coll_var[0],x,y+local.yspd,z,
+                            local.coll_arr[local.c,0],local.coll_arr[local.c,1],local.coll_arr[local.c,2],local.coll_arr[local.c,3],
+                            0,0,0
+                        )
+                        {
+                            if global.coll_prec_var
+                            {
+                                local.ydist = p3dc_ray_rot_scr
+                                (
+                                    local.coll_arr[local.c,0],
+                                    local.coll_arr[local.c,1],
+                                    local.coll_arr[local.c,2],
+                                    local.coll_arr[local.c,3],
+                                    x,y,z+(coll_var[1]/2),
+                                    0,local.ydir,0
+                                );
+                                if local.ydist < 10000000
+                                { local.yspd = local.ydir*min(abs(local.yspd),abs(local.ydist-local.radius)); }
+                            }
+                        }
+                        else { local.yspd = 0; }
+                    }
+                    // Z Speed
+                    if local.zspd != 0
+                    {
+                        if !p3dc_check_rot_scr
+                        (
+                            coll_var[0],x,y,z+local.zspd+0.01,
+                            local.coll_arr[local.c,0],local.coll_arr[local.c,1],local.coll_arr[local.c,2],local.coll_arr[local.c,3],
+                            0,0,0
+                        )
+                        {
+                            if global.coll_prec_var
+                            {
+                                local.zdist = p3dc_ray_rot_scr
+                                (
+                                    local.coll_arr[local.c,0],
+                                    local.coll_arr[local.c,1],
+                                    local.coll_arr[local.c,2],
+                                    local.coll_arr[local.c,3],
+                                    x,y,z+(coll_var[1]/2),
+                                    0,0,local.zdir
+                                );
+                                if local.zdist < 10000000
+                                { local.zspd = local.zdir*min(abs(local.zspd),abs(local.zdist-(coll_var[1]/2))); }
+                            }
+                        }
+                        else { local.zspd = 0; }
+                    }
+                }
+            }
+            // Check static prop collision
+            else
             {
                 if global.coll_prec_var
                 {
-                    local.ydist = execute_file(global.p3dc_ray_still_scr,global.room_coll,x,y,z+(coll_var[1]/2),0,local.ydir,0);
-                    if local.ydist < 10000000
-                    { y += local.ydir*min(abs(local.yspd),abs(local.ydist-local.radius)); }
+                    local.dist =
+                    p3dc_ray_scr
+                    (
+                        local.coll_arr[local.c,0],
+                        local.coll_arr[local.c,1],
+                        local.coll_arr[local.c,2],
+                        local.coll_arr[local.c,3],
+                        x,y,z+(coll_var[1]/2),
+                        local.xspd,local.yspd,local.zspd
+                    );
+                    local.ray_coll = local.dist < local.radius+(spd_var*2) || local.dist >= 10000000;
                 }
-                else { y += local.yspd; }
-            }
-            if !execute_file(global.p3dc_check_split_scr,coll_var[0],x,y,z+local.zspd+0.01)
-            {
-                if global.coll_prec_var
+                // If collided, slide
+                if local.ray_coll || p3dc_check_scr
+                (
+                    coll_var[0],x+local.xspd,y+local.yspd,z+local.zspd+0.01,
+                    local.coll_arr[local.c,0],local.coll_arr[local.c,1],local.coll_arr[local.c,2],local.coll_arr[local.c,3]
+                )
                 {
-                    local.zdist = execute_file(global.p3dc_ray_split_scr,x,y,z+(coll_var[1]/2),0,0,local.zdir);
-                    if local.zdist < 10000000
-                    { z += local.zdir*min(abs(local.zspd),abs(local.zdist-(coll_var[1]/2))); }
+                    // X Speed
+                    if local.xspd != 0
+                    {
+                        if !p3dc_check_scr
+                        (
+                            coll_var[0],x+local.xspd,y,z+0.01,
+                            local.coll_arr[local.c,0],local.coll_arr[local.c,1],local.coll_arr[local.c,2],local.coll_arr[local.c,3],
+                        )
+                        {
+                            if global.coll_prec_var
+                            {
+                                local.xdist = p3dc_ray_scr
+                                (
+                                    local.coll_arr[local.c,0],
+                                    local.coll_arr[local.c,1],
+                                    local.coll_arr[local.c,2],
+                                    local.coll_arr[local.c,3],
+                                    x,y,z+(coll_var[1]/2),
+                                    local.xdir,0,0
+                                );
+                                if local.xdist < 10000000
+                                { local.xspd = local.xdir*min(abs(local.xspd),abs(local.xdist-local.radius)); }
+                            }
+                        }
+                        else { local.xspd = 0; }
+                    }
+                    // Y Speed
+                    if local.yspd != 0
+                    {
+                        if !p3dc_check_scr
+                        (
+                            coll_var[0],x,y+local.yspd,z,
+                            local.coll_arr[local.c,0],local.coll_arr[local.c,1],local.coll_arr[local.c,2],local.coll_arr[local.c,3],
+                        )
+                        {
+                            if global.coll_prec_var
+                            {
+                                local.ydist = p3dc_ray_scr
+                                (
+                                    local.coll_arr[local.c,0],
+                                    local.coll_arr[local.c,1],
+                                    local.coll_arr[local.c,2],
+                                    local.coll_arr[local.c,3],
+                                    x,y,z+(coll_var[1]/2),
+                                    0,local.ydir,0
+                                );
+                                if local.ydist < 10000000
+                                { local.yspd = local.ydir*min(abs(local.yspd),abs(local.ydist-local.radius)); }
+                            }
+                        }
+                        else { local.yspd = 0; }
+                    }
+                    // Z Speed
+                    if local.zspd != 0
+                    {
+                        if !p3dc_check_scr
+                        (
+                            coll_var[0],x,y,z+local.zspd+0.01,
+                            local.coll_arr[local.c,0],local.coll_arr[local.c,1],local.coll_arr[local.c,2],local.coll_arr[local.c,3],
+                        )
+                        {
+                            if global.coll_prec_var
+                            {
+                                local.zdist = p3dc_ray_scr
+                                (
+                                    local.coll_arr[local.c,0],
+                                    local.coll_arr[local.c,1],
+                                    local.coll_arr[local.c,2],
+                                    local.coll_arr[local.c,3],
+                                    x,y,z+(coll_var[1]/2),
+                                    0,0,local.zdir
+                                );
+                                if local.zdist < 10000000
+                                { local.zspd = local.zdir*min(abs(local.zspd),abs(local.zdist-(coll_var[1]/2))); }
+                            }
+                        }
+                        else { local.zspd = 0; }
+                    }
                 }
-                else { z += local.zspd; }
             }
-        }
-        else
-        {
-            x += local.xspd;
-            y += local.yspd;
-            z += local.zspd;
+            // If the object is still moving, continue to check.
+            if local.xspd != 0 || local.yspd != 0 || local.zspd != 0
+            { continue; }
+            // Otherwise, GET OUT
+            break;
         }
     }
-    else
-    {
-        // Add motion without checking anything
-        x += local.xspd;
-        y += local.yspd;
-        z += local.zspd;
-    }
+    // Add motion
+    x += local.xspd;
+    y += local.yspd;
+    z += local.zspd;
 }

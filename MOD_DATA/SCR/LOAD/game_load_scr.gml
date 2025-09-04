@@ -19,4 +19,5 @@ draw_set_font(main_font);
 instance_create(0,0,global.control_obj);
 instance_create(0,0,global.player_obj);
 instance_create(0,0,global.hud_obj);
+show_message("game has loaded");
 room_goto(global.hall_01_rm);

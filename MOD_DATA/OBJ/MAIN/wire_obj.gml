@@ -16,6 +16,7 @@ object_event_add
         case 2: { stored_tex_var = wire_03_bg_tex; break; }
     }
     event_inherited();
+    solid_var = false;
     type_var = 6; // Double Plane
     w_var = 32;
     h_var = 32;

@@ -15,6 +15,7 @@ type_var
     4: Floor. Uses w_var, l_var, tex_w_var, and tex_h_var
     5: Billboard. Uses w_var, h_var, tex_w_var, tex_h_var, and step_var. Has a cylinder collision
     6: Double Plane. Uses w_var, h_var, tex_w_var, and tex_h_var. For wall decor
+    7: Better Block. Uses w_var, l_var, h_var, tex_w_var, tex_l_var, and tex_h_var. 
 snap_var
     0: No snap
     1: Snap to floor
@@ -23,9 +24,9 @@ snap_var
 // Create event
 object_event_add
 (argument0,ev_create,0,"
-    solid_var = true;
     tex_var = stored_tex_var;
     tex_w_var = 1;
+    tex_l_var = 1;
     tex_h_var = 1;
     if snap_var > 0
     {
@@ -56,6 +57,20 @@ object_event_add
         {
             d3d_draw_wall(0.1,-w_var/2,h_var,0.1,w_var/2,0,tex_var,tex_w_var,tex_h_var*sign(h_var));
             d3d_draw_wall(-0.1,-w_var/2,h_var,-0.1,w_var/2,0,tex_var,tex_w_var,tex_h_var*sign(h_var));
+            break;
+        }
+        case 7:
+        {
+            local.width = w_var/2;
+            local.length = l_var/2;
+            local.tex_height = tex_h_var*sign(h_var);
+            d3d_draw_wall(-local.width,-local.length,h_var,local.width,-local.length,0,tex_var,tex_w_var,local.tex_height);
+            d3d_draw_wall(-local.width,local.length,h_var,local.width,local.length,0,tex_var,tex_w_var,local.tex_height);
+            d3d_draw_wall(-local.width,-local.length,h_var,-local.width,local.length,0,tex_var,tex_l_var,local.tex_height);
+            d3d_draw_wall(local.width,-local.length,h_var,local.width,local.length,0,tex_var,tex_l_var,local.tex_height);
+            d3d_draw_floor(-local.width,-local.length,0,local.width,local.length,0,tex_var,tex_w_var,tex_l_var);
+            d3d_draw_floor(-local.width,-local.length,h_var,local.width,local.length,h_var,tex_var,tex_w_var,tex_l_var);
+            break;
         }
     }
     d3d_transform_set_identity();

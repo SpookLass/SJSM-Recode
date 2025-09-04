@@ -6,6 +6,13 @@ object_set_persistent(argument0,false);
 object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
+// Prop collisions
+execute_string
+("
+    global.bone_coll[1] = 6.5;
+    global.bone_coll[2] = 12.1;
+    global.bone_coll[0] = prop_to_coll_scr(5,'',global.bone_coll[2],0,global.bone_coll[1],true,8);
+");
 // Create event
 object_event_add
 (argument0,ev_create,0,"
@@ -16,5 +23,8 @@ object_event_add
     w_var = 12.1;
     h_var = 6.5;
     step_var = 8;
-    
+    // Collisions
+    coll_var[0] = global.bone_coll[0];
+    coll_var[1] = global.bone_coll[1];
+    coll_var[2] = global.bone_coll[2];
 ");
