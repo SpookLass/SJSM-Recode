@@ -7,23 +7,15 @@ room_set_code
     argument0,"
     global.rm_name_var = 'Jail Room 7 B'
     // Spawn
-    global.spawn_len_var = 4;
+    global.spawn_len_var = 2;
     global.spawn_arr[0,0] = 112;
     global.spawn_arr[0,1] = 304;
     global.spawn_arr[0,2] = 0;
     global.spawn_arr[0,3] = 0;
     global.spawn_arr[1,0] = 336;
-    global.spawn_arr[1,1] = 240;
+    global.spawn_arr[1,1] = 176;
     global.spawn_arr[1,2] = 0;
     global.spawn_arr[1,3] = 180;
-    global.spawn_arr[2,0] = 336;
-    global.spawn_arr[2,1] = 176;
-    global.spawn_arr[2,2] = 0;
-    global.spawn_arr[2,3] = 180;
-    global.spawn_arr[3,0] = 336;
-    global.spawn_arr[3,1] = 304;
-    global.spawn_arr[3,2] = 0;
-    global.spawn_arr[3,3] = 180;
     // Mark
     global.mark_len_var = 3;
     global.mark_arr[0,0] = 242;
@@ -165,4 +157,8 @@ room_instance_add(argument0,232,176,bone_rand_obj);
 room_instance_add(argument0,180,294,web_rand_obj);
 room_instance_add(argument0,265,232,web_rand_obj);
 room_instance_add(argument0,275,169,web_rand_obj);
-// Not yet
+// Doors
+room_instance_add(argument0,352,240,door_east_obj);
+room_instance_add(argument0,344,240,door_trig_obj);
+room_instance_add(argument0,352,304,door_east_obj);
+room_instance_add(argument0,344,304,door_trig_obj);

@@ -7,7 +7,7 @@ room_set_code
     argument0,"
     global.rm_name_var = 'Jail Room 6 A'
     // Spawn
-    global.spawn_len_var = 4;
+    global.spawn_len_var = 2;
     global.spawn_arr[0,0] = 112;
     global.spawn_arr[0,1] = 304;
     global.spawn_arr[0,2] = 0;
@@ -16,14 +16,6 @@ room_set_code
     global.spawn_arr[1,1] = 304;
     global.spawn_arr[1,2] = 0;
     global.spawn_arr[1,3] = 180;
-    /*global.spawn_arr[2,0] = 48;
-    global.spawn_arr[2,1] = 368;
-    global.spawn_arr[2,2] = 0;
-    global.spawn_arr[2,3] = 0;
-    global.spawn_arr[3,0] = 272;
-    global.spawn_arr[3,1] = 432;
-    global.spawn_arr[3,2] = 0;
-    global.spawn_arr[3,3] = 90;*/
     // Mark
     global.mark_len_var = 3;
     global.mark_arr[0,0] = 175;
@@ -123,7 +115,6 @@ room_instance_add(argument0,288,432,wall_vert_obj);
 room_instance_add(argument0,256,400,wall_vert_obj);
 room_instance_add(argument0,256,432,wall_vert_obj);
 room_instance_add(argument0,32,368,wall_vert_obj);
-
 // Torches
 room_instance_add(argument0,112,384,torch_south_obj);
 room_instance_add(argument0,176,384,torch_south_obj);
@@ -136,4 +127,8 @@ room_instance_add(argument0,121,340,bone_rand_obj);
 room_instance_add(argument0,103,338,web_rand_obj);
 room_instance_add(argument0,186,322,web_rand_obj);
 room_instance_add(argument0,263,370,web_rand_obj);
-// Not yet
+// Doors
+room_instance_add(argument0,32,368,door_west_obj);
+room_instance_add(argument0,40,368,door_trig_obj);
+room_instance_add(argument0,272,448,door_south_obj);
+room_instance_add(argument0,272,440,door_trig_obj);

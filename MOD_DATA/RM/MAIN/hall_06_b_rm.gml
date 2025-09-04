@@ -8,23 +8,15 @@ room_set_code
     // Name
     global.rm_name_var = 'Hall 6 B'
     // Spawn
-    global.spawn_len_var = 4;
+    global.spawn_len_var = 2;
     global.spawn_arr[0,0] = 144;
     global.spawn_arr[0,1] = 400;
     global.spawn_arr[0,2] = 0;
     global.spawn_arr[0,3] = 0;
-    global.spawn_arr[1,0] = 304;
-    global.spawn_arr[1,1] = 400;
+    global.spawn_arr[1,0] = 272;
+    global.spawn_arr[1,1] = 592;
     global.spawn_arr[1,2] = 0;
-    global.spawn_arr[1,3] = 180;
-    global.spawn_arr[2,0] = 304;
-    global.spawn_arr[2,1] = 560;
-    global.spawn_arr[2,2] = 0;
-    global.spawn_arr[2,3] = 180;
-    global.spawn_arr[3,0] = 272;
-    global.spawn_arr[3,1] = 592;
-    global.spawn_arr[3,2] = 0;
-    global.spawn_arr[3,3] = 90;
+    global.spawn_arr[1,3] = 90;
     // Mark
     global.mark_len_var = 3;
     global.mark_arr[0,0] = 192;
@@ -188,5 +180,10 @@ room_instance_add(argument0,288,464,rail_metal_vert_obj);
 room_instance_add(argument0,247,452,web_rand_obj);
 room_instance_add(argument0,310,504,web_rand_obj);
 room_instance_add(argument0,253,569,web_rand_obj);
+// Doors
+room_instance_add(argument0,320,400,door_east_obj);
+room_instance_add(argument0,312,400,door_trig_obj);
+room_instance_add(argument0,320,560,door_east_obj);
+room_instance_add(argument0,312,560,door_trig_obj);
 // Not yet
 /*room_instance_add(argument0,256,416,random_scare_mark1);*/

@@ -6,7 +6,7 @@ room_set_code
 (
     argument0,"
     // Name
-    global.rm_name_var = 'Long Hall 5 / Long Hall 6'
+    global.rm_name_var = 'Long Hall 5 / 6'
     // Spawn
     global.spawn_len_var = 3;
     global.spawn_arr[0,0] = 112;
