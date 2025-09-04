@@ -90,6 +90,7 @@ object_event_add
             delay_var = 60;
             state_spd_var[0] = 0.8;
             state_chance_var[0] = 1;
+            state_spr_spd_var[0] = 1/6;
             state_spd_var[1] = 0.5;
             state_chance_var[1] = 1;
             state_spd_var[2] = 1.8;
@@ -137,6 +138,15 @@ object_event_add
             break;
         }
     }
+    // Delay calculation
+    if delay_calc_var
+    { delay_var = max(0,32-(32/state_spd_var[0])); }
+    // Alarms
+    alarm_len_var = 8;
+    alarm_arr[6,2] = '';
+    alarm_arr[7,2] = '';
+    // Inherit
+    event_inherited();
     // Defaults
     spd_base_var = state_spd_var[0];
     spr_var = state_spr_var[0]
@@ -146,15 +156,6 @@ object_event_add
     w_var = state_w_var[0];
     h_var = state_h_var[0];
     do_acc_var = state_acc_var[0];
-    // Delay calculation
-    if delay_calc_var
-    { delay_var = max(0,32-(32/spd_base_var)); }
-    // Alarms
-    alarm_len_var = 8;
-    alarm_arr[6,2] = '';
-    alarm_arr[7,2] = '';
-    // Inherit
-    event_inherited();
 ");
 // Destroy Event
 object_event_add

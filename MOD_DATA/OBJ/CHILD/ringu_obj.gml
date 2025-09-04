@@ -9,13 +9,28 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,0,"
-    type_var = 1;
-    spr_var = sprite_add(vanilla_directory_const+'\TEX\sprites\MS3_01_spr.png',6,false,false,0,0);
+    type_var = 0;
     spd_base_var = 0.8;
+    spr_var = sprite_add(vanilla_directory_const+'\TEX\sprites\MS3_01_spr.png',6,false,false,0,0);
     spr_spd_var = 1/6;
     dur_var = irandom_range(10,20);
     delay_var = 173;
     event_inherited();
+    switch global.ringu_type_var
+    {
+        case 3: // Old HD
+        {
+            spd_base_var = 44/45; // 0.9r7
+        }
+        case 2: // HD
+        {
+            dur_var = irandom_range(10,15);
+            dmg_alarm_var = 180;
+            delay_min_var = 90;
+            delay_max_var = 180;
+            break;
+        }
+    }
     z_off_var = 2;
 ");
 // Destroy Event
