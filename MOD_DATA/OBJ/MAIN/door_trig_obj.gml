@@ -20,7 +20,7 @@ object_event_add
     // Function
     rm_count_var = 1;
     delay_var = 20;
-    switch irandom(83)
+    switch irandom(105)
     {
         case 0: { rm_var = hall_01_rm; break; }
         case 1: { rm_var = hall_02_a_rm; break; }
@@ -91,21 +91,43 @@ object_event_add
         case 66: { rm_var = w_hall_10_rm; break; }
         case 67: { rm_var = w_hall_11_a_rm; break; }
         case 68: { rm_var = w_hall_11_b_rm; break; }
-        case 69: { rm_var = w_hall_12_rm; break; }
-        case 70: { rm_var = w_hall_13_rm; break; }
-        case 71: { rm_var = w_hall_14_rm; break; }
-        case 72: { rm_var = w_hall_15_rm; break; }
-        case 73: { rm_var = long_hall_01_rm; break; }
-        case 74: { rm_var = long_hall_02_rm; break; }
-        case 75: { rm_var = long_hall_03_rm; break; }
-        case 76: { rm_var = long_hall_04_rm; break; }
-        case 77: { rm_var = long_hall_05_rm; break; }
-        case 78: { rm_var = long_hall_05_ungold_rm; break; }
-        case 79: { rm_var = long_hall_05_old_rm; break; }
-        case 80: { rm_var = long_hall_07_rm; break; }
-        case 81: { rm_var = long_hall_08_rm; break; }
-        case 82: { rm_var = test_01_rm; break; }
-        case 83: { rm_var = test_02_rm; break; }
+        case 69: { rm_var = w_hall_11_b_old_rm; break; }
+        case 70: { rm_var = w_hall_12_rm; break; }
+        case 71: { rm_var = w_hall_13_rm; break; }
+        case 72: { rm_var = w_hall_14_rm; break; }
+        case 73: { rm_var = w_hall_15_rm; break; }
+        case 74: { rm_var = long_hall_01_rm; break; }
+        case 75: { rm_var = long_hall_02_rm; break; }
+        case 76: { rm_var = long_hall_03_rm; break; }
+        case 77: { rm_var = long_hall_04_rm; break; }
+        case 78: { rm_var = long_hall_05_rm; break; }
+        case 79: { rm_var = long_hall_05_ungold_rm; break; }
+        case 80: { rm_var = long_hall_05_old_rm; break; }
+        case 81: { rm_var = long_hall_07_rm; break; }
+        case 82: { rm_var = long_hall_08_rm; break; }
+        case 83: { rm_var = long_hall_09_rm; break; }
+        case 84: { rm_var = long_hall_10_rm; break; }
+        case 85: { rm_var = long_hall_11_rm; break; }
+        case 86: { rm_var = long_hall_12_rm; break; }
+        case 87: { rm_var = engine_01_rm; break; }
+        case 88: { rm_var = engine_02_rm; break; }
+        case 89: { rm_var = engine_03_rm; break; }
+        case 90: { rm_var = engine_04_rm; break; }
+        case 91: { rm_var = engine_05_rm; break; }
+        case 92: { rm_var = engine_06_rm; break; }
+        case 93: { rm_var = engine_07_rm; break; }
+        case 94: { rm_var = engine_08_rm; break; }
+        case 95: { rm_var = engine_09_rm; break; }
+        case 96: { rm_var = engine_10_rm; break; }
+        case 97: { rm_var = engine_10_old_rm; break; }
+        case 98: { rm_var = engine_11_rm; break; }
+        case 99: { rm_var = engine_12_rm; break; }
+        case 100: { rm_var = engine_13_rm; break; }
+        case 101: { rm_var = engine_14_rm; break; }
+        case 102: { rm_var = engine_15_rm; break; }
+        case 103: { rm_var = engine_16_rm; break; }
+        case 104: { rm_var = test_01_rm; break; }
+        case 105: { rm_var = test_02_rm; break; }
     }
     // Alarm
     alarm_len_var = 1;

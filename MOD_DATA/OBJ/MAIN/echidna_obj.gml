@@ -72,11 +72,9 @@ object_event_add
             case 2: { grid_var = global.float_grid; break; }
         }
     }
-    else
-    {
-    }
     // Alarms
-    alarm_len_var = 6;
+    if alarm_len_var == 0
+    { alarm_len_var = 6; }
     alarm_arr[0,2] = '';
     alarm_arr[1,2] = '';
     alarm_arr[2,2] = '';
@@ -119,7 +117,7 @@ object_event_add
         on_var = false;
         set_alarm_scr(0,irandom_range(delay_min_var,delay_max_var));
     }
-    else { on_var = true; }
+    else { event_perform(ev_alarm,0); }
 ");
 // Step Event
 object_event_add
@@ -148,7 +146,7 @@ object_event_add
         d3d_draw_wall(0,w_var/2,h_var,0,-w_var/2,0,tex_var,1,1);
         d3d_transform_set_identity();
         draw_set_color(c_white); draw_set_alpha(1);
-        // draw_path(path_var,x,y,false);
+        draw_path(path_var,x,y,false);
         // mp_grid_draw(grid_var);
     }
 ");
@@ -361,8 +359,11 @@ hurt_type_var
 */
 object_event_add
 (argument0,ev_other,ev_user4,"
-    hurt_var = true;
-    set_alarm_scr(3,hurt_alarm_var);
+    if hurt_alarm_var
+    {
+        hurt_var = true;
+        set_alarm_scr(3,hurt_alarm_var);
+    }
     if violence_var > 0 { hurt_target_var.violence_var += violence_var; }
     // Reduce duration if very vulnerable
     if do_hurt_var == 2 || (do_hurt_var == 3 && hurt_type_var == 1)
@@ -378,9 +379,12 @@ object_event_add
         move_var = false;
         anim_var = false;
         attack_var = false;
-        set_alarm_scr(1,hurt_alarm_var);
-        set_alarm_scr(2,hurt_alarm_var);
-        set_alarm_scr(4,hurt_alarm_var);
+        if hurt_alarm_var
+        {
+            set_alarm_scr(1,hurt_alarm_var);
+            set_alarm_scr(2,hurt_alarm_var);
+            set_alarm_scr(4,hurt_alarm_var);
+        }
     }
 ");
 // Calculate Seen
