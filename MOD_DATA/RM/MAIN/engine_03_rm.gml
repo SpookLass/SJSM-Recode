@@ -8,11 +8,11 @@ room_set_code
     global.rm_name_var = 'Engine Room 3'
     // Spawn
     global.spawn_len_var = 2;
-    global.spawn_arr[0,0] = 144;
+    global.spawn_arr[0,0] = 80;
     global.spawn_arr[0,1] = 256;
     global.spawn_arr[0,2] = 0;
     global.spawn_arr[0,3] = 0;
-    global.spawn_arr[1,0] = 272;
+    global.spawn_arr[1,0] = 336;
     global.spawn_arr[1,1] = 384;
     global.spawn_arr[1,2] = 0;
     global.spawn_arr[1,3] = 180;
@@ -80,6 +80,11 @@ room_instance_add(argument0,240,416,floor_obj);
 room_instance_add(argument0,240,384,floor_obj);
 room_instance_add(argument0,272,384,floor_obj);
 room_instance_add(argument0,272,416,floor_obj);
+// Unslam
+room_instance_add(argument0,112,256,floor_obj);
+room_instance_add(argument0,80,256,floor_obj);
+room_instance_add(argument0,304,384,floor_obj);
+room_instance_add(argument0,336,384,floor_obj);
 // Ceilings
 room_instance_add(argument0,144,256,ceil_obj);
 room_instance_add(argument0,144,224,ceil_obj);
@@ -116,6 +121,11 @@ room_instance_add(argument0,240,416,ceil_obj);
 room_instance_add(argument0,240,384,ceil_obj);
 room_instance_add(argument0,272,384,ceil_obj);
 room_instance_add(argument0,272,416,ceil_obj);
+// Unslam
+room_instance_add(argument0,112,256,ceil_obj);
+room_instance_add(argument0,80,256,ceil_obj);
+room_instance_add(argument0,304,384,ceil_obj);
+room_instance_add(argument0,336,384,ceil_obj);
 // Walls (Horizontal)
 room_instance_add(argument0,144,208,wall_hor_obj);
 room_instance_add(argument0,176,208,wall_hor_obj);
@@ -128,7 +138,6 @@ room_instance_add(argument0,208,432,wall_hor_obj);
 room_instance_add(argument0,176,432,wall_hor_obj);
 room_instance_add(argument0,144,432,wall_hor_obj);
 // Walls (Vertical)
-room_instance_add(argument0,128,256,wall_vert_obj);
 room_instance_add(argument0,128,224,wall_vert_obj);
 room_instance_add(argument0,128,288,wall_vert_obj);
 room_instance_add(argument0,128,320,wall_vert_obj);
@@ -136,12 +145,22 @@ room_instance_add(argument0,128,352,wall_vert_obj);
 room_instance_add(argument0,128,384,wall_vert_obj);
 room_instance_add(argument0,128,416,wall_vert_obj);
 room_instance_add(argument0,288,416,wall_vert_obj);
-room_instance_add(argument0,288,384,wall_vert_obj);
 room_instance_add(argument0,288,352,wall_vert_obj);
 room_instance_add(argument0,288,320,wall_vert_obj);
 room_instance_add(argument0,288,288,wall_vert_obj);
 room_instance_add(argument0,288,256,wall_vert_obj);
 room_instance_add(argument0,288,224,wall_vert_obj);
+// Unslam
+room_instance_add(argument0,64,256,wall_vert_obj);
+room_instance_add(argument0,80,240,wall_hor_obj);
+room_instance_add(argument0,112,240,wall_hor_obj);
+room_instance_add(argument0,80,272,wall_hor_obj);
+room_instance_add(argument0,112,272,wall_hor_obj);
+room_instance_add(argument0,352,384,wall_vert_obj);
+room_instance_add(argument0,304,368,wall_hor_obj);
+room_instance_add(argument0,336,368,wall_hor_obj);
+room_instance_add(argument0,304,400,wall_hor_obj);
+room_instance_add(argument0,336,400,wall_hor_obj);
 // Engineering
 room_instance_add(argument0,176,384,engine_rand_obj);
 room_instance_add(argument0,240,384,engine_rand_obj);

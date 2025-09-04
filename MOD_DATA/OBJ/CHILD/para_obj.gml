@@ -95,6 +95,7 @@ object_event_add
             state_spd_var[2] = 1.8;
             state_chance_var[2] = 1;
             state_acc_var[2] = true;
+            state_dmg_alarm_var[2] = 60;
             state_rm_var = true;
             state_dur_var = 8;
             acc_var = 0.1;

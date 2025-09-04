@@ -5,14 +5,14 @@ Argument 0: Room Variable (same for all rooms)
 room_set_code
 (
     argument0,"
-    global.rm_name_var = 'Engine Room 4'
+    global.rm_name_var = 'Engine Room 4 Old'
     // Spawn
     global.spawn_len_var = 2;
-    global.spawn_arr[0,0] = 80;
+    global.spawn_arr[0,0] = 144;
     global.spawn_arr[0,1] = 256;
     global.spawn_arr[0,2] = 0;
     global.spawn_arr[0,3] = 0;
-    global.spawn_arr[1,0] = 272;
+    global.spawn_arr[1,0] = 208;
     global.spawn_arr[1,1] = 384;
     global.spawn_arr[1,2] = 0;
     global.spawn_arr[1,3] = 180;
@@ -66,11 +66,6 @@ room_instance_add(argument0,208,384,floor_obj);
 room_instance_add(argument0,208,416,floor_obj);
 room_instance_add(argument0,176,416,floor_obj);
 room_instance_add(argument0,144,416,floor_obj);
-// Unslam
-room_instance_add(argument0,112,256,floor_obj);
-room_instance_add(argument0,80,256,floor_obj);
-room_instance_add(argument0,240,384,floor_obj);
-room_instance_add(argument0,272,384,floor_obj);
 // Ceilings
 room_instance_add(argument0,144,256,ceil_obj);
 room_instance_add(argument0,176,256,ceil_obj);
@@ -93,11 +88,6 @@ room_instance_add(argument0,208,384,ceil_obj);
 room_instance_add(argument0,208,416,ceil_obj);
 room_instance_add(argument0,176,416,ceil_obj);
 room_instance_add(argument0,144,416,ceil_obj);
-// Unslam
-room_instance_add(argument0,112,256,ceil_obj);
-room_instance_add(argument0,80,256,ceil_obj);
-room_instance_add(argument0,240,384,ceil_obj);
-room_instance_add(argument0,272,384,ceil_obj);
 // Walls (Horizontal)
 room_instance_add(argument0,144,208,wall_hor_obj);
 room_instance_add(argument0,176,208,wall_hor_obj);
@@ -107,28 +97,19 @@ room_instance_add(argument0,176,432,wall_hor_obj);
 room_instance_add(argument0,144,432,wall_hor_obj);
 // Walls (Vertical)
 room_instance_add(argument0,128,224,wall_vert_obj);
+room_instance_add(argument0,128,256,wall_vert_obj);
 room_instance_add(argument0,128,288,wall_vert_obj);
 room_instance_add(argument0,128,320,wall_vert_obj);
 room_instance_add(argument0,128,352,wall_vert_obj);
 room_instance_add(argument0,128,384,wall_vert_obj);
 room_instance_add(argument0,128,416,wall_vert_obj);
 room_instance_add(argument0,224,416,wall_vert_obj);
+room_instance_add(argument0,224,384,wall_vert_obj);
 room_instance_add(argument0,224,352,wall_vert_obj);
 room_instance_add(argument0,224,320,wall_vert_obj);
 room_instance_add(argument0,224,288,wall_vert_obj);
 room_instance_add(argument0,224,256,wall_vert_obj);
 room_instance_add(argument0,224,224,wall_vert_obj);
-// Unslam
-room_instance_add(argument0,64,256,wall_vert_obj);
-room_instance_add(argument0,80,240,wall_hor_obj);
-room_instance_add(argument0,112,240,wall_hor_obj);
-room_instance_add(argument0,80,272,wall_hor_obj);
-room_instance_add(argument0,112,272,wall_hor_obj);
-room_instance_add(argument0,288,384,wall_vert_obj);
-room_instance_add(argument0,240,368,wall_hor_obj);
-room_instance_add(argument0,272,368,wall_hor_obj);
-room_instance_add(argument0,240,400,wall_hor_obj);
-room_instance_add(argument0,272,400,wall_hor_obj);
 // Engineering
 room_instance_add(argument0,176,256,engine_rand_obj);
 room_instance_add(argument0,176,320,engine_rand_obj);
