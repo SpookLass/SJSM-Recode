@@ -83,7 +83,7 @@ if do_coll_var && grav_var > 0
     }
     local.zdist -= coll_var[1];
     // Add gravity
-    z_spd_var -= grav_const*argument0;
+    z_spd_var -= grav_var*argument0;
     local.zspd = z_spd_var*argument0;
     // If the floor distance is shorter than gravity, snap to floor
     if -local.zdist >= local.zspd

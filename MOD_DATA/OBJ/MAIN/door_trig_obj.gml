@@ -20,7 +20,7 @@ object_event_add
     // Function
     rm_count_var = 1;
     delay_var = 20;
-    switch irandom(119)
+    switch irandom(127)
     {
         case 0: { rm_var = hall_01_rm; break; }
         case 1: { rm_var = hall_02_a_rm; break; }
@@ -140,8 +140,16 @@ object_event_add
         case 115: { rm_var = jail_07_c_rm; break; }
         case 116: { rm_var = jail_08_rm; break; }
         case 117: { rm_var = jail_09_rm; break; }
-        case 118: { rm_var = test_01_rm; break; }
-        case 119: { rm_var = test_02_rm; break; }
+        case 118: { rm_var = big_01_rm; break; }
+        case 119: { rm_var = big_02_rm; break; }
+        case 120: { rm_var = big_03_rm; break; }
+        case 121: { rm_var = big_04_rm; break; }
+        case 122: { rm_var = big_05_rm; break; }
+        case 123: { rm_var = big_06_rm; break; }
+        case 124: { rm_var = big_07_rm; break; }
+        case 125: { rm_var = big_08_rm; break; }
+        case 126: { rm_var = test_01_rm; break; }
+        case 127: { rm_var = test_02_rm; break; }
     }
     // Alarm
     alarm_len_var = 1;

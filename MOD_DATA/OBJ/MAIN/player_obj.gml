@@ -60,12 +60,15 @@ object_event_add
     cam_id_var = 0;
     // Jump
     jump_var = false;
+    jump_hold_var = false;
     can_jump_var = global.can_jump_var;
     jump_z_spd_var = 0.7;
     jump_spd_mult_var = 1.2;
     jump_stam_var = 30;
+    jump_grav_var = 2;
     // Gravity
-    grav_var = true;
+    grav_base_var = grav_const;
+    grav_var = grav_base_var;
     on_floor_var = true;
     // Bob
     bob_rate_var = 3.75;
@@ -146,6 +149,11 @@ object_event_add
     eye_yaw_var = global.spawn_arr[0,3];
     eye_pitch_var = 0;
     set_motion_scr(0,false,eye_yaw_var,true);
+    // Reset variables
+    jump_var = false;
+    on_floor_var = true;
+    jump_hold_var = false;
+    grav_var = grav_base_var;
     // Bob
     bob_time_var = 45;
     breath_time_var = 0;
@@ -190,7 +198,7 @@ object_event_add
         local.input_dir_x = global.forward_input_var-global.backward_input_var;
         local.input_dir_y = global.strafe_right_input_var-global.strafe_left_input_var;
         local.input_dir = radtodeg(arctan2(-local.input_dir_y,local.input_dir_x));
-        if do_coll_var && grav_var
+        if do_coll_var && grav_var > 0
         {
             // Jump!
             if can_jump_var && global.jump_input_press_var && on_floor_var && stam_var > jump_stam_var
@@ -198,11 +206,27 @@ object_event_add
                 stam_var -= jump_stam_var
                 z_spd_var = jump_z_spd_var;
                 jump_var = true;
+                jump_hold_var = true;
                 on_floor_var = false;
                 float_temp_var = true; // For big rooms
                 z += z_spd_var;
             }
-            if jump_var && on_floor_var { jump_var = false; }
+            if jump_var
+            {
+                if on_floor_var
+                {
+                    jump_var = false;
+                    grav_var = grav_base_var;
+                }
+                else
+                {
+                    if jump_hold_var && global.jump_input_press_var == -1
+                    { jump_hold_var = false; }
+                    if jump_hold_var || z_spd_var <= 0
+                    { grav_var = grav_base_var; }
+                    else { grav_var = grav_base_var*jump_grav_var; }
+                }
+            }
             // Crouch!
             if (global.crouch_input_press_var && crouch_toggle_var) 
             || (global.crouch_input_var != crouch_var && !crouch_toggle_var)
@@ -297,7 +321,7 @@ object_event_add
         local.frick *= friction_mult_var;
         friction_mult_var = 1;
         // Accelerate and move
-        if !do_coll_var || !grav_var
+        if !do_coll_var || grav_var <= 0
         {
             on_floor_var = true;
             if back_var { local.spd *= lerp_scr(1,back_spd_mult_var,abs(local.input_dir)/180); }
