@@ -16,6 +16,9 @@ object_event_add
     solid_var = true;
     mdl_var = bar_mdl;
     mdl_path_var = bar_mdl_path;
+    // For grid
+    w_var = 32;
+    l_var = 4;
     // Collisions
     coll_var[0] = global.bar_hor_coll[0];
 ");

@@ -16,6 +16,9 @@ object_event_add
     solid_var = true;
     mdl_var = table_mdl;
     mdl_path_var = table_mdl_path;
+    // For grid (I don't really know how wide it is)
+    w_var = 16;
+    l_var = w_var;
     // Collisions
     coll_var[0] = global.table_coll[0];
 ");

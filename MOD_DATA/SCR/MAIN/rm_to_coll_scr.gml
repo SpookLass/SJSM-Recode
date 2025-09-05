@@ -1,11 +1,11 @@
 local.rm_name = room_get_name(room);
 // Grid
 mp_grid_add_rectangle(global.phys_grid,0,0,global.rm_size_var,global.rm_size_var);
-mp_grid_add_rectangle(global.float_grid,0,0,global.rm_size_var,global.rm_size_var);
+mp_grid_clear_rectangle(global.float_grid,0,0,global.rm_size_var,global.rm_size_var);
 local.radius = (global.mon_coll[2]/2)-1;
 with (floor_par_obj)
 {
-    if solid_var
+    if (solid_var == 1 || solid_var == mon_solid_const || solid_var == float_solid_const)  && !no_grid_var
     {
         mp_grid_clear_rectangle
         (
@@ -15,19 +15,22 @@ with (floor_par_obj)
             x+(w_var/2),
             y+(h_var/2)
         );
-        mp_grid_clear_rectangle
-        (
-            global.float_grid,
-            x-(w_var/2),
-            y-(h_var/2),
-            x+(w_var/2),
-            y+(h_var/2)
-        );
+        if solid_var != float_solid_const
+        {
+            mp_grid_clear_rectangle
+            (
+                global.float_grid,
+                x-(w_var/2),
+                y-(h_var/2),
+                x+(w_var/2),
+                y+(h_var/2)
+            );
+        }
     }
 }
 with (wall_par_obj)
 {
-    if solid_var
+    if (solid_var == 1 || solid_var == mon_solid_const || solid_var == float_solid_const)  && !no_grid_var
     {
         local.width = w_var/2;
         local.xtmp = local.radius+abs(lengthdir_y(local.width,direction));
@@ -40,14 +43,108 @@ with (wall_par_obj)
             x+local.xtmp,
             y+local.ytmp
         );
-        mp_grid_add_rectangle
-        (
-            global.float_grid,
-            x-local.xtmp,
-            y-local.ytmp,
-            x+local.xtmp,
-            y+local.ytmp
-        );
+        if solid_var != float_solid_const
+        {
+            mp_grid_add_rectangle
+            (
+                global.float_grid,
+                x-local.xtmp,
+                y-local.ytmp,
+                x+local.xtmp,
+                y+local.ytmp
+            );
+        }
+    }
+}
+with (prop_par_obj)
+{
+    if (solid_var == 1 || solid_var == mon_solid_const || solid_var == float_solid_const)  && !no_grid_var
+    {
+        switch type_var
+        {
+            case 6:
+            case 1:
+            {
+                local.width = w_var/2;
+                local.xtmp = radius_var+abs(lengthdir_y(local.width,direction));
+                local.ytmp = radius_var+abs(lengthdir_x(local.width,direction));
+                
+                mp_grid_add_rectangle
+                (
+                    global.phys_grid,
+                    x-local.xtmp,
+                    y-local.ytmp,
+                    x+local.xtmp,
+                    y+local.ytmp
+                );
+                if solid_var != float_solid_const
+                {
+                    mp_grid_add_rectangle
+                    (
+                        global.float_grid,
+                        x-local.xtmp,
+                        y-local.ytmp,
+                        x+local.xtmp,
+                        y+local.ytmp
+                    );
+                }
+                break;
+            }
+            case 7:
+            case 3: // No circle :(
+            case 2:
+            case 0: // No model either
+            {
+                local.width = w_var/2;
+                local.length = l_var/2;
+                mp_grid_add_rectangle
+                (
+                    global.phys_grid,
+                    x-local.width,
+                    y-local.length,
+                    x+local.width,
+                    y+local.length
+                );
+                if solid_var != float_solid_const
+                {
+                    mp_grid_add_rectangle
+                    (
+                        global.float_grid,
+                        x-local.width,
+                        y-local.length,
+                        x+local.width,
+                        y+local.length
+                    );
+                }
+                break;
+            }
+            // Floor is not needed
+            // case 4: { break; }
+            case 5:
+            {
+                local.width = w_var/2;
+                mp_grid_add_rectangle // No circle :(
+                (
+                    global.phys_grid,
+                    x-local.width,
+                    y-local.width,
+                    x+local.width,
+                    y+local.width
+                );
+                if solid_var != float_solid_const
+                {
+                    mp_grid_add_rectangle
+                    (
+                        global.float_grid,
+                        x-local.width,
+                        y-local.width,
+                        x+local.width,
+                        y+local.width
+                    );
+                }
+                break;
+            }
+        }
     }
 }
 // Main

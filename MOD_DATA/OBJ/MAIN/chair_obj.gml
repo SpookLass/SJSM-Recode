@@ -16,6 +16,9 @@ object_event_add
     solid_var = true;
     mdl_var = chair_mdl;
     mdl_path_var = chair_mdl_path;
+    // For grid
+    w_var = 8;
+    l_var = w_var;
     // Collisions
     coll_var[0] = global.chair_coll[0];
 ");

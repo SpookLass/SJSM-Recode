@@ -18,6 +18,7 @@ object_event_add
 (argument0,ev_create,0,"
     stored_tex_var = pole_metal_bg_tex;
     event_inherited();
+    solid_var = true;
     type_var = 2;
     w_var = 2;
     l_var = 2;
