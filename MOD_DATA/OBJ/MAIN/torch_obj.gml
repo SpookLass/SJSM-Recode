@@ -52,7 +52,8 @@ object_event_add
     local.ztmp = z+16;
     with wall_par_obj
     {
-        if abs(x-local.xtmp) <= 16
+        if visible && tex_var == -1
+        && abs(x-local.xtmp) <= 16
         && abs(y-local.ytmp) <= 16
         && local.ztmp > z && local.ztmp < z+h_var
         && !instance_position(x,y,light_wall_vert_obj)
@@ -68,7 +69,8 @@ object_event_add
     {
         local.wtmp = w_var/2;
         local.htmp = h_var/2;
-        if local.xtmp > x-16 && local.xtmp < x+16
+        if visible && tex_var == -1
+        && local.xtmp > x-16 && local.xtmp < x+16
         && local.ytmp > y-16 && local.ytmp < y+16
         && abs(z-local.ztmp) <= 16
         && !instance_position(x,y,light_floor_obj)

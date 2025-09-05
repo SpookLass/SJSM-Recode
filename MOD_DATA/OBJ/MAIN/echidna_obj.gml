@@ -139,7 +139,7 @@ object_event_add
         d3d_draw_wall(0,w_var/2,h_var,0,-w_var/2,0,tex_var,1,1);
         d3d_transform_set_identity();
         draw_set_color(c_white); draw_set_alpha(1);
-        if path_exists(path_var) && path_var != 0
+        if path_exists(path_var)
         { draw_path(path_var,x,y,false); }
         // mp_grid_draw(grid_var);
     }

@@ -199,6 +199,7 @@ object_event_add
                 z_spd_var = jump_z_spd_var;
                 jump_var = true;
                 on_floor_var = false;
+                float_temp_var = true; // For big rooms
                 z += z_spd_var;
             }
             if jump_var && on_floor_var { jump_var = false; }

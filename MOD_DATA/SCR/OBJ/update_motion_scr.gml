@@ -8,6 +8,12 @@ local.yspd = y_spd_var*argument0;
 // Always check split
 local.coll_arr[0,0] = -1;
 local.coll_arr_len = 1;
+// Check float if it exists
+if !float_var && on_floor_var && global.room_float_coll != -1
+{
+    local.coll_arr[local.coll_arr_len,0] = -2;
+    local.coll_arr_len += 1;
+}
 // If moving or gravity, check stuff to collide with
 if local.xspd != 0 || local.yspd != 0 || (grav_var > 0 && do_coll_var)
 {
@@ -36,11 +42,11 @@ if do_coll_var && grav_var > 0
         for (local.i=0; local.i<4; local.i+=1;)
         {
             if local.coll_arr[local.c,0] == -1
-            { local.zdist_new = p3dc_ray_split_scr(x+lengthdir_x(3,local.i*90),y+lengthdir_y(3,local.i*90),z+coll_var[1],0,0,-1); }
+            { local.zdist_new = p3dc_ray_still_scr(global.room_coll,x+lengthdir_x(3,local.i*90),y+lengthdir_y(3,local.i*90),z+coll_var[1],0,0,-1); } // p3dc_ray_split_scr
             else if local.coll_arr[local.c,4] != 0
             {
                 // Seems to set variables for use in next function? So weird.
-                p3dc_set_modrot_scr(0,0,degtorad(local.coll_arr[local.c,4]));
+                p3dc_set_modrot_scr(0,0,local.coll_arr[local.c,4]);
                 // I kid you not, THE EXAMPLE CODE IS OUTDATED
                 local.zdist_new = 
                 p3dc_ray_rot_scr
@@ -52,10 +58,11 @@ if do_coll_var && grav_var > 0
                     x+lengthdir_x(3,local.i*90),
                     y+lengthdir_y(3,local.i*90),
                     z+coll_var[1],
-                    0,0,-1
+                    0,0,-1,0,0,local.coll_arr[local.c,4]
                 );
             }
-            else
+            // Don't check float walls
+            else if local.coll_arr[local.c,0] != -2
             {
                 local.zdist_new = 
                 p3dc_ray_scr
@@ -155,7 +162,65 @@ if local.xspd != 0 || local.yspd != 0 || local.zspd != 0
                         {
                             if global.coll_prec_var
                             {
-                                local.zdist = p3dc_ray_split_scr(x,y,z+(coll_var[1]/2),0,0,local.zdir);
+                                local.zdist = p3dc_ray_still_scr(global.room_coll,x,y,z+(coll_var[1]/2),0,0,local.zdir); // p3dc_ray_split_scr
+                                if local.zdist < 10000000
+                                { local.zspd = local.zdir*min(abs(local.zspd),abs(local.zdist-(coll_var[1]/2))); }
+                            }
+                        }
+                        else { local.zspd = 0; }
+                    }
+                }
+            }
+            // Check float
+            else if local.coll_arr[local.c,0] == -2
+            {
+                if global.coll_prec_var
+                {
+                    local.dist = p3dc_ray_still_scr(global.room_float_coll,x,y,z+(coll_var[1]/2),local.xspd,local.yspd,local.zspd);
+                    local.ray_coll = local.dist < local.radius+(spd_var*2) || local.dist >= 10000000;
+                }
+                // If not collided, turn off float temp
+                if !p3dc_check_still_scr(coll_var[0],x+local.xspd,y+local.yspd,z+local.zspd+0.01,global.room_float_coll) && !local.ray_coll
+                { float_temp_var = false; }
+                // If collided and not inside, slide
+                else if !float_temp_var
+                {
+                    // X Speed
+                    if local.xspd != 0
+                    {
+                        if !p3dc_check_still_scr(coll_var[0],x+local.xspd,y,z+0.01,global.room_float_coll)
+                        {
+                            if global.coll_prec_var
+                            {
+                                local.xdist = p3dc_ray_still_scr(global.room_float_coll,x,y,z+(coll_var[1]/2),local.xdir,0,0);
+                                if local.xdist < 10000000
+                                { local.xspd = local.xdir*min(abs(local.xspd),abs(local.xdist-local.radius)); }
+                            }
+                        }
+                        else { local.xspd = 0; }
+                    }
+                    // Y Speed
+                    if local.yspd != 0
+                    {
+                        if !p3dc_check_still_scr(coll_var[0],x,y+local.yspd,z+0.01,global.room_float_coll)
+                        {
+                            if global.coll_prec_var
+                            {
+                                local.ydist = p3dc_ray_still_scr(global.room_float_coll,x,y,z+(coll_var[1]/2),0,local.ydir,0);
+                                if local.ydist < 10000000
+                                { local.yspd = local.ydir*min(abs(local.yspd),abs(local.ydist-local.radius)); }
+                            }
+                        }
+                        else { local.yspd = 0; }
+                    }
+                    // Z Speed
+                    if local.zspd != 0
+                    {
+                        if !p3dc_check_still_scr(coll_var[0],x,y,z+local.zspd+0.01,global.room_float_coll)
+                        {
+                            if global.coll_prec_var
+                            {
+                                local.zdist = p3dc_ray_still_scr(global.room_float_coll,x,y,z+(coll_var[1]/2),0,0,local.zdir);
                                 if local.zdist < 10000000
                                 { local.zspd = local.zdir*min(abs(local.zspd),abs(local.zdist-(coll_var[1]/2))); }
                             }
@@ -168,7 +233,7 @@ if local.xspd != 0 || local.yspd != 0 || local.zspd != 0
             else if local.coll_arr[local.c,4] != 0
             {
                 // Seems to set variables for use in next function? So weird.
-                p3dc_set_modrot_scr(0,0,degtorad(local.coll_arr[local.c,4]));
+                p3dc_set_modrot_scr(0,0,local.coll_arr[local.c,4]);
                 if global.coll_prec_var
                 {
                     // I kid you not, THE EXAMPLE CODE IS OUTDATED
@@ -180,7 +245,8 @@ if local.xspd != 0 || local.yspd != 0 || local.zspd != 0
                         local.coll_arr[local.c,2],
                         local.coll_arr[local.c,3],
                         x,y,z+(coll_var[1]/2),
-                        local.xspd,local.yspd,local.zspd
+                        local.xspd,local.yspd,local.zspd,
+                        0,0,local.coll_arr[local.c,4]
                     );
                     local.ray_coll = local.dist < local.radius+(spd_var*2) || local.dist >= 10000000;
                 }
@@ -189,7 +255,7 @@ if local.xspd != 0 || local.yspd != 0 || local.zspd != 0
                 (
                     coll_var[0],x+local.xspd,y+local.yspd,z+local.zspd+0.01,
                     local.coll_arr[local.c,0],local.coll_arr[local.c,1],local.coll_arr[local.c,2],local.coll_arr[local.c,3],
-                    0,0,0
+                    0,0,0,0,0,local.coll_arr[local.c,4]
                 )
                 {
                     // X Speed
@@ -199,7 +265,7 @@ if local.xspd != 0 || local.yspd != 0 || local.zspd != 0
                         (
                             coll_var[0],x+local.xspd,y,z+0.01,
                             local.coll_arr[local.c,0],local.coll_arr[local.c,1],local.coll_arr[local.c,2],local.coll_arr[local.c,3],
-                            0,0,0
+                            0,0,0,0,0,local.coll_arr[local.c,4]
                         )
                         {
                             if global.coll_prec_var
@@ -211,7 +277,8 @@ if local.xspd != 0 || local.yspd != 0 || local.zspd != 0
                                     local.coll_arr[local.c,2],
                                     local.coll_arr[local.c,3],
                                     x,y,z+(coll_var[1]/2),
-                                    local.xdir,0,0
+                                    local.xdir,0,0,
+                                    0,0,local.coll_arr[local.c,4]
                                 );
                                 if local.xdist < 10000000
                                 { local.xspd = local.xdir*min(abs(local.xspd),abs(local.xdist-local.radius)); }
@@ -224,9 +291,9 @@ if local.xspd != 0 || local.yspd != 0 || local.zspd != 0
                     {
                         if !p3dc_check_rot_scr
                         (
-                            coll_var[0],x,y+local.yspd,z,
+                            coll_var[0],x,y+local.yspd,z+0.01,
                             local.coll_arr[local.c,0],local.coll_arr[local.c,1],local.coll_arr[local.c,2],local.coll_arr[local.c,3],
-                            0,0,0
+                            0,0,0,0,0,local.coll_arr[local.c,4]
                         )
                         {
                             if global.coll_prec_var
@@ -238,7 +305,8 @@ if local.xspd != 0 || local.yspd != 0 || local.zspd != 0
                                     local.coll_arr[local.c,2],
                                     local.coll_arr[local.c,3],
                                     x,y,z+(coll_var[1]/2),
-                                    0,local.ydir,0
+                                    0,local.ydir,0,
+                                    0,0,local.coll_arr[local.c,4]
                                 );
                                 if local.ydist < 10000000
                                 { local.yspd = local.ydir*min(abs(local.yspd),abs(local.ydist-local.radius)); }
@@ -253,7 +321,7 @@ if local.xspd != 0 || local.yspd != 0 || local.zspd != 0
                         (
                             coll_var[0],x,y,z+local.zspd+0.01,
                             local.coll_arr[local.c,0],local.coll_arr[local.c,1],local.coll_arr[local.c,2],local.coll_arr[local.c,3],
-                            0,0,0
+                            0,0,0,0,0,local.coll_arr[local.c,4]
                         )
                         {
                             if global.coll_prec_var
@@ -265,7 +333,8 @@ if local.xspd != 0 || local.yspd != 0 || local.zspd != 0
                                     local.coll_arr[local.c,2],
                                     local.coll_arr[local.c,3],
                                     x,y,z+(coll_var[1]/2),
-                                    0,0,local.zdir
+                                    0,0,local.zdir,
+                                    0,0,local.coll_arr[local.c,4]
                                 );
                                 if local.zdist < 10000000
                                 { local.zspd = local.zdir*min(abs(local.zspd),abs(local.zdist-(coll_var[1]/2))); }
@@ -276,7 +345,7 @@ if local.xspd != 0 || local.yspd != 0 || local.zspd != 0
                 }
             }
             // Check static prop collision
-            else
+            else if local.coll_arr[local.c,0] != -2
             {
                 if global.coll_prec_var
                 {
@@ -330,7 +399,7 @@ if local.xspd != 0 || local.yspd != 0 || local.zspd != 0
                     {
                         if !p3dc_check_scr
                         (
-                            coll_var[0],x,y+local.yspd,z,
+                            coll_var[0],x,y+local.yspd,z+0.01,
                             local.coll_arr[local.c,0],local.coll_arr[local.c,1],local.coll_arr[local.c,2],local.coll_arr[local.c,3],
                         )
                         {

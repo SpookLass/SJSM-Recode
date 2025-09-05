@@ -11,7 +11,7 @@ object_event_add
 (argument0,ev_create,0,"
     type_var = 1;
     spd_base_var = 1/6; // 0.1r6
-    spr_var = sprite_add(vanilla_directory_const+'\DATA\TEX\sprites\MS26_01_spr.png',3,false,false,0,0);
+    spr_var = sprite_add(vanilla_directory_const+'\TEX\sprites\MS26_01_spr.png',3,false,false,0,0);
     spr_spd_var = 1/6;
     dur_var = 20;
     delay_var = -96;
@@ -20,8 +20,16 @@ object_event_add
     atk_stun_var = 30;
     w_var = 11;
     h_var = 24;
+    spr_num_var = 4;
+    anim_type_var = 3;
     switch global.otto_type_var
     {
+        case 1:
+        {
+            griddy_var = !irandom(1);
+            
+            break;
+        }
         case 3: // Old HD
         {
             dmg_var = 60;
@@ -60,6 +68,21 @@ object_event_add
 (argument0,ev_destroy,0,"
     event_inherited();
     sprite_delete(spr_var);
+");
+// Animation
+object_event_add
+(argument0,ev_other,ev_user1,"
+    if anim_type_var == 3
+    {
+        spr_prog_var = (spr_prog_var+(spr_spd_var*global.delta_time_var)) mod spr_num_var;
+        switch floor(spr_prog_var)
+        {
+            case 1: { spr_id_var = 1; break; }
+            case 3: { spr_id_var = 2; break; }
+            default: { spr_id_var = 0; break; }
+        }
+    }
+    event_inherited();
 ");
 // Attack Success
 object_event_add

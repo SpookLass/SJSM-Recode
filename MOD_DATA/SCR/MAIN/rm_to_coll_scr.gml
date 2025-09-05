@@ -1,4 +1,5 @@
 local.rm_name = room_get_name(room);
+// Grid
 mp_grid_add_rectangle(global.phys_grid,0,0,global.rm_size_var,global.rm_size_var);
 mp_grid_add_rectangle(global.float_grid,0,0,global.rm_size_var,global.rm_size_var);
 local.radius = (global.mon_coll[2]/2)-1;
@@ -49,6 +50,8 @@ with (wall_par_obj)
         );
     }
 }
+// Main
+local.addextra = false;
 execute_string
 ("
     if global."+local.rm_name+"_coll == 0
@@ -89,7 +92,7 @@ execute_string
         // Add walls
         with (wall_par_obj)
         {
-            if solid_var
+            if solid_var == 1
             {
                 p3dc_add_wall_scr
                 (
@@ -101,6 +104,7 @@ execute_string
                     z
                 );
             }
+            else if solid_var == float_solid_const { local.addextra = true; }
         }
         // Add props
         /*
@@ -216,18 +220,73 @@ execute_string
             }
         }
         */
-        // Failsafe box
-        /*
-        p3dc_add_floor_scr(0,0,-128,room_width,room_height,-128);
-        p3dc_add_floor_scr(0,0,128,room_width,room_height,128);
-        p3dc_add_wall_scr(0,0,-128,room_width,0,128);
-        p3dc_add_wall_scr(0,room_height,-128,room_width,room_height,128);
-        p3dc_add_wall_scr(0,0,-128,0,room_height,128);
-        p3dc_add_wall_scr(room_width,0,-128,room_width,room_height,128);
-        */
         // End
         p3dc_end_mdl_scr();
+        // Add extra
+        if local.addextra
+        {
+            global."+local.rm_name+"_player_coll = p3dc_begin_mdl_scr();
+            with (wall_par_obj)
+            {
+                if solid_var == player_solid_const
+                {
+                    p3dc_add_wall_scr
+                    (
+                        x-lengthdir_y(w_var/2,direction),
+                        y-lengthdir_x(w_var/2,direction),
+                        z+h_var,
+                        x+lengthdir_y(w_var/2,direction),
+                        y+lengthdir_x(w_var/2,direction),
+                        z
+                    );
+                }
+            }
+            p3dc_end_mdl_scr();
+            global."+local.rm_name+"_mon_coll = p3dc_begin_mdl_scr();
+            with (wall_par_obj)
+            {
+                if solid_var == mon_solid_const
+                {
+                    p3dc_add_wall_scr
+                    (
+                        x-lengthdir_y(w_var/2,direction),
+                        y-lengthdir_x(w_var/2,direction),
+                        z+h_var,
+                        x+lengthdir_y(w_var/2,direction),
+                        y+lengthdir_x(w_var/2,direction),
+                        z
+                    );
+                }
+            }
+            p3dc_end_mdl_scr();
+            global."+local.rm_name+"_float_coll = p3dc_begin_mdl_scr();
+            with (wall_par_obj)
+            {
+                if solid_var == float_solid_const
+                {
+                    p3dc_add_wall_scr
+                    (
+                        x-lengthdir_y(w_var/2,direction),
+                        y-lengthdir_x(w_var/2,direction),
+                        z+h_var,
+                        x+lengthdir_y(w_var/2,direction),
+                        y+lengthdir_x(w_var/2,direction),
+                        z
+                    );
+                }
+            }
+            p3dc_end_mdl_scr();
+        }
+        else
+        {
+            global."+local.rm_name+"_player_coll = -1;
+            global."+local.rm_name+"_mon_coll = -1;
+            global."+local.rm_name+"_float_coll = -1;
+        }
     }
     global.room_coll = global."+local.rm_name+"_coll;
+    global.room_player_coll = global."+local.rm_name+"_player_coll;
+    global.room_mon_coll = global."+local.rm_name+"_mon_coll;
+    global.room_float_coll = global."+local.rm_name+"_float_coll;
 ");
 p3dc_split_mdl_scr(global.room_coll,ceil(room_width/32)*32,ceil(room_height/32)*32,ceil(room_width/32),ceil(room_height/32),6);

@@ -4,6 +4,9 @@ p3dc_ini_scr();
 global.room_coll = p3dc_begin_mdl_scr();
 p3dc_end_mdl_scr();
 p3dc_split_mdl_scr(global.room_coll,1280,736,40,23,6);
+global.room_player_coll = -1;
+global.room_mon_coll = -1;
+global.room_float_coll = -1;
 // Player
 global.player_coll[1] = 18;
 global.player_coll[2] = 8;
