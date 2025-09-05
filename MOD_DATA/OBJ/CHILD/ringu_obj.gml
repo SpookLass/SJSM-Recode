@@ -15,7 +15,10 @@ object_event_add
     spr_spd_var = 1/6;
     dur_var = irandom_range(10,20);
     delay_var = 173;
-    event_inherited();
+    dmg_var = 45;
+    dmg_alarm_var = 120;
+    w_var = 10;
+    h_var = 20;
     switch global.ringu_type_var
     {
         case 3: // Old HD
@@ -31,6 +34,7 @@ object_event_add
             break;
         }
     }
+    event_inherited();
     z_off_var = 2;
 ");
 // Destroy Event

@@ -44,7 +44,6 @@ object_event_add
     do_attack_var = true;
     do_anim_var = true;
     // Speed
-    spd_base_var = 0.6;
     spd_mult_var = 1;
     // Delay
     if delay_var != 0 && delay_min_var == 0
@@ -52,12 +51,6 @@ object_event_add
         delay_min_var = delay_var;
         delay_max_var = delay_var;
     }
-    // Rendering
-    w_var = 10;
-    h_var = 20;
-    // Attack
-    dmg_var = 45;
-    dmg_alarm_var = 120;
     // Collision
     coll_var[0] = global.mon_coll[0];
     coll_var[1] = global.mon_coll[1];

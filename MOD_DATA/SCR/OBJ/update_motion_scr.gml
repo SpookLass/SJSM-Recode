@@ -40,7 +40,7 @@ if do_coll_var && grav_var > 0
             else if local.coll_arr[local.c,4] != 0
             {
                 // Seems to set variables for use in next function? So weird.
-                p3dc_set_modrot_scr(0,0,local.coll_arr[local.c,4]);
+                p3dc_set_modrot_scr(0,0,degtorad(local.coll_arr[local.c,4]));
                 // I kid you not, THE EXAMPLE CODE IS OUTDATED
                 local.zdist_new = 
                 p3dc_ray_rot_scr
@@ -168,7 +168,7 @@ if local.xspd != 0 || local.yspd != 0 || local.zspd != 0
             else if local.coll_arr[local.c,4] != 0
             {
                 // Seems to set variables for use in next function? So weird.
-                p3dc_set_modrot_scr(0,0,local.coll_arr[local.c,4]);
+                p3dc_set_modrot_scr(0,0,degtorad(local.coll_arr[local.c,4]));
                 if global.coll_prec_var
                 {
                     // I kid you not, THE EXAMPLE CODE IS OUTDATED
