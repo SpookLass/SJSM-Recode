@@ -20,8 +20,7 @@ object_event_add
     h_var = 10;
     spd_var = 8/15;
     target_spd_mult_var = 0.6;
-    // evil_var = global.mode_var == 0 || global.behavior_type_var == 2;
-    if evil_var
+    if global.mode_var == 0 || global.behavior_type_var == 2
     {
         spd_var = 8/9;
         // Originally 8/15
