@@ -61,7 +61,11 @@ object_event_add
         path_var = path_add();
         switch type_var
         {
-            case 1: { grid_var = global.phys_grid; break; }
+            case 1:
+            {
+                grid_var = global.phys_grid; break;
+                grav_var = grav_const;
+            }
             case 2: { grid_var = global.float_grid; break; }
         }
     }

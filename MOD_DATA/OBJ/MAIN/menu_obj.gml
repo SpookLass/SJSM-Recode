@@ -20,8 +20,8 @@ Menu and button States
         4: Config
         5: Exit
     3: Save creation
-        0: Mode (Story, Endless, Modded?)
-        1: Difficulty (Easy?, Normal, Hard, Harder, Hardest)
+        0: Mode (Story, Endless, Sandbox, Modded?)
+        1: Difficulty (Easiest?, Easy, Normal, Hard, Hardest)
         2: Behavior (Recode, OG, HD, Modded?)
         3: Custom
         4: Customize (Grayed out if not custom)

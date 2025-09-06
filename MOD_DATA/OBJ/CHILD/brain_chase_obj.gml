@@ -39,10 +39,13 @@ object_event_add
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,"
-    with (player_obj)
+    if instance_number(monster_par) < 2
     {
-        if spd_mult_var > other.target_spd_mult_var
-        { spd_mult_var = other.target_spd_mult_var; }
+        with (player_obj)
+        {
+            if spd_mult_var > other.target_spd_mult_var
+            { spd_mult_var = other.target_spd_mult_var; }
+        }
     }
     event_inherited();
 ");

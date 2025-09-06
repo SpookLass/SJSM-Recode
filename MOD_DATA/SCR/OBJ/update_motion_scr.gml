@@ -39,10 +39,17 @@ if do_coll_var && grav_var > 0
     local.zdist_max = 0;
     for (local.c=0; local.c<local.coll_arr_len; local.c+=1;)
     {
-        for (local.i=0; local.i<4; local.i+=1;)
+        for (local.i=-1; local.i<4; local.i+=1;)
         {
+            local.xtmp = x;
+            local.ytmp = y;
+            if local.i >= 0
+            {
+                local.xtmp += lengthdir_x(3,local.i*90);
+                local.ytmp += lengthdir_y(3,local.i*90);
+            }
             if local.coll_arr[local.c,0] == -1
-            { local.zdist_new = p3dc_ray_still_scr(global.room_coll,x+lengthdir_x(3,local.i*90),y+lengthdir_y(3,local.i*90),z+coll_var[1],0,0,-1); } // p3dc_ray_split_scr
+            { local.zdist_new = p3dc_ray_still_scr(global.room_coll,local.xtmp,local.ytmp,z+coll_var[1],0,0,-1); } // p3dc_ray_split_scr
             else if local.coll_arr[local.c,4] != 0
             {
                 // Seems to set variables for use in next function? So weird.
@@ -55,8 +62,7 @@ if do_coll_var && grav_var > 0
                     local.coll_arr[local.c,1],
                     local.coll_arr[local.c,2],
                     local.coll_arr[local.c,3],
-                    x+lengthdir_x(3,local.i*90),
-                    y+lengthdir_y(3,local.i*90),
+                    local.xtmp,local.ytmp,
                     z+coll_var[1],
                     0,0,-1,0,0,local.coll_arr[local.c,4]
                 );
@@ -71,8 +77,7 @@ if do_coll_var && grav_var > 0
                     local.coll_arr[local.c,1],
                     local.coll_arr[local.c,2],
                     local.coll_arr[local.c,3],
-                    x+lengthdir_x(3,local.i*90),
-                    y+lengthdir_y(3,local.i*90),
+                    local.xtmp,local.ytmp,
                     z+coll_var[1],
                     0,0,-1
                 );
