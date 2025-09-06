@@ -75,6 +75,7 @@ object_event_add
     alarm_arr[4,2] = '';
     alarm_arr[5,2] = '';
     // Room start
+    dur_var += 1;
     event_perform(ev_other,ev_room_start);
 ");
 // Destroy Event
@@ -237,7 +238,8 @@ object_event_add
                 )
             );
         }
-        if enter_var || !local.can_path || local.dist+local.radius >= target_dist_var
+        target_visible_var = local.dist+local.radius >= target_dist_var;
+        if enter_var || !local.can_path || target_visible_var
         { local.yaw = point_direction(x,y,target_x_var,target_y_var); }
         else
         {
@@ -272,16 +274,16 @@ object_event_add
         }
         case 1: // End on last
         {
-            spr_id_var = floor(sprite_get_number(spr_var)*(1-(alarm_arr[5,0]/alarm_arr[5,1])));
+            spr_id_var = sprite_get_number(spr_var)*(1-(alarm_arr[5,0]/alarm_arr[5,1]));
             break;
         }
         case 2: // End on first
         {
-            spr_id_var = floor(sprite_get_number(spr_var)*alarm_arr[5,0]/alarm_arr[5,1]);
+            spr_id_var = sprite_get_number(spr_var)*alarm_arr[5,0]/alarm_arr[5,1];
             break;
         }
     }
-    tex_var = sprite_get_texture(spr_var,spr_id_var);
+    tex_var = sprite_get_texture(spr_var,floor(spr_id_var));
 ");
 // Attack
 object_event_add
