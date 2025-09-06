@@ -14,7 +14,7 @@ charge_var
 */
 // Create Event
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_other,ev_user7,"
     type_var = 0;
     spd_base_var = 0.8;
     spr_var = sprite_add(main_directory_const+'\SPR\MON\gurgle_spr.png',5,false,false,0,0);

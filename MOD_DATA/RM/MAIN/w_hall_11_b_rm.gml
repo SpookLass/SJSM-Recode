@@ -142,10 +142,10 @@ room_instance_add(argument0,304,128,wall_hor_obj);
 room_instance_add(argument0,208,128,wall_hor_obj);
 room_instance_add(argument0,240,128,wall_hor_obj);
 room_instance_add(argument0,208,160,wall_hor_obj);
-room_instance_add(argument0,304,128,wall_pit_horr_obj);
-room_instance_add(argument0,336,128,wall_pit_horr_obj);
-room_instance_add(argument0,336,160,wall_pit_horr_obj);
-room_instance_add(argument0,304,160,wall_pit_horr_obj);
+room_instance_add(argument0,304,128,wall_pit_hor_obj);
+room_instance_add(argument0,336,128,wall_pit_hor_obj);
+room_instance_add(argument0,336,160,wall_pit_hor_obj);
+room_instance_add(argument0,304,160,wall_pit_hor_obj);
 // Walls (Vertical)
 room_instance_add(argument0,160,144,wall_vert_obj);
 room_instance_add(argument0,96,176,wall_vert_obj);

@@ -26,9 +26,9 @@ do_warn_var: Whether to use a warning hallucination
 warn_var: Whether the warning has been sent
 warn_dist_var: Distance to warn at
 */
-// Create Event
+// Create Event Begin
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_other,ev_user7,"
     type_var = 1;
     dur_var = irandom_range(10,20);
     hurt_dur_var = 1;
@@ -81,6 +81,12 @@ object_event_add
     state_chance_var[2] = 2;
     state_alarm_var[2] = 60;
     state_acc_var[2] = false;
+    // Effect
+    spr_eff_var = sprite_add(main_directory_const+'\SPR\MON\para_eff_spr.png',19,false,false,0,0);
+    eff_min_var = 30;
+    eff_max_var = 60;
+    state_eff_min_var = 30;
+    state_eff_max_var = 60;
     // Type
     switch global.para_type_var
     {
@@ -99,6 +105,8 @@ object_event_add
             state_dmg_alarm_var[2] = 60;
             state_rm_var = true;
             state_dur_var = 8;
+            state_eff_min_var = 6;
+            state_eff_max_var = 6;
             acc_var = 0.1;
             frick_var = acc_var;
             break;
@@ -132,6 +140,8 @@ object_event_add
             state_acc_var[2] = true;
             state_close_var = false;
             state_check_var = true;
+            state_eff_min_var = 6;
+            state_eff_max_var = 6;
             // Rough estimate based on old man
             acc_var = 8/135;
             frick_var = acc_var;
@@ -161,6 +171,7 @@ object_event_add
 object_event_add
 (argument0,ev_destroy,0,"
     event_inherited();
+    sprite_delete(spr_eff_var);
     sprite_delete(state_spr_var[0]);
     sprite_delete(state_spr_var[1]);
     sprite_delete(state_spr_var[2]);
@@ -206,7 +217,16 @@ object_event_add
         if do_warn_var && !warn_var && target_dist_var >= warn_dist_var
         {
             warn_var = true;
-            // Create hallucination
+            with instance_create(0,0,spr_flash_eff_obj)
+            {
+                spr_var = other.spr_eff_var;
+                spr_id_var = irandom(sprite_get_number(spr_var)-1);
+                spr_spd_var = 1;
+                rand_rate_var = 15;
+                set_alarm_scr(0,irandom_range(other.eff_min_var,other.eff_max_var));
+                // Set camera to player
+                cam_id_var = other.attack_target_var.cam_id_var;
+            }
         }
     }
     event_inherited();
@@ -226,6 +246,16 @@ object_event_add
             if local.bool && frac_chance_scr(1,state_chance_var[local.check])
             {
                 state_var = local.check;
+                with instance_create(0,0,spr_flash_eff_obj)
+                {
+                    spr_var = other.spr_eff_var;
+                    spr_id_var = irandom(sprite_get_number(spr_var)-1);
+                    spr_spd_var = 1;
+                    rand_rate_var = 15;
+                    set_alarm_scr(0,irandom_range(other.state_eff_min_var,other.state_eff_max_var));
+                    // Set camera to player
+                    cam_id_var = other.attack_target_var.cam_id_var;
+                }
                 event_perform(ev_other,ev_user15);
             }
         }
@@ -244,6 +274,16 @@ object_event_add
             if target_dist_var >= state_dist_var[2] && frac_chance_scr(1,state_chance_var[2])
             {
                 state_var = 2;
+                with instance_create(0,0,spr_flash_eff_obj)
+                {
+                    spr_var = other.spr_eff_var;
+                    spr_id_var = irandom(sprite_get_number(spr_var)-1);
+                    spr_spd_var = 1;
+                    rand_rate_var = 15;
+                    set_alarm_scr(0,irandom_range(other.state_eff_min_var,other.state_eff_max_var));
+                    // Set camera to player
+                    cam_id_var = other.attack_target_var.cam_id_var;
+                }
                 event_perform(ev_other,ev_user15);
                 if state_dur_var > 0 && dur_var > state_dur_var
                 {
@@ -261,6 +301,16 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user3,"
     event_inherited();
+    with instance_create(0,0,spr_flash_eff_obj)
+    {
+        spr_var = other.spr_eff_var;
+        spr_id_var = irandom(sprite_get_number(spr_var)-1);
+        spr_spd_var = 1;
+        rand_rate_var = 15;
+        set_alarm_scr(0,irandom_range(other.eff_min_var,other.eff_max_var));
+        // Set camera to player
+        cam_id_var = other.attack_target_var.cam_id_var;
+    }
     if state_var >= 2 && !state_atk_var
     {
         state_var = 0;

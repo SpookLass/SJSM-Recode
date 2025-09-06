@@ -10,4 +10,5 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,0,"
     direction = 90;
+    event_inherited();
 ");

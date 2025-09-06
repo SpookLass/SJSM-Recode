@@ -34,9 +34,9 @@ anim_var: Whether the specimen can currently animate
 attack_var: Whether the specimen can currently attack
 hurt_var: Whether the specimen is currently hurt
 */
-// Create Event
+// Create Event Begin
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_other,ev_user7,"
     // Gotta set type, delay, and duration
     dur_star_var = dur_var;
     enter_var = type_var > 0;
@@ -74,6 +74,12 @@ object_event_add
     alarm_arr[3,2] = '';
     alarm_arr[4,2] = '';
     alarm_arr[5,2] = '';
+");
+// Create Event
+object_event_add
+(argument0,ev_create,0,"
+    // Begin
+    event_perform(ev_other,ev_user7);
     // Room start
     dur_var += 1;
     event_perform(ev_other,ev_room_start);

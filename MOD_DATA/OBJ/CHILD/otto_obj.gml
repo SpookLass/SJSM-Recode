@@ -8,7 +8,7 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create Event
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_other,ev_user7,"
     type_var = 1;
     spd_base_var = 1/6; // 0.1r6
     spr_var = sprite_add(vanilla_directory_const+'\TEX\sprites\MS26_01_spr.png',3,false,false,0,0);
