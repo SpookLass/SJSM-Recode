@@ -41,6 +41,8 @@ global.turnaround_key_var = ini_read_real("CONTROL","turnaround_key_var",81);
 ini_close();
 // This should happen when a game starts, but we don't have a menu right now
 ini_open("save_ex.ini");
+// Main
+// Settings
 global.stam_per_var = ini_read_real("SETTING","stam_per",false);
 global.fall_var = ini_read_real("SETTING","fall",false);
 global.lock_var = ini_read_real("SETTING","lock",1);
@@ -55,6 +57,7 @@ global.count_min_var = ini_read_real("SETTING","count_min",0);
 global.count_max_var = ini_read_real("SETTING","count_max",20);
 global.count_start_var = ini_read_real("SETTING","count_start",1000);
 global.count_end_var = ini_read_real("SETTING","count_end",2000);
+global.mode_var = ini_read_real("SETTING","mode",1);
 // Behavior stuff
 global.default_type_var = ini_read_real("BEHAVIOR","type",0);
 global.player_type_var = ini_read_real("BEHAVIOR","player_type",global.default_type_var);

@@ -13,17 +13,18 @@ object_event_add
     spd_base_var = 0.8;
     tex_var = brain_bg_tex;
     dur_var = irandom_range(10,15);
-    delay_var = 173;
+    delay_var = 180;
     dmg_var = 60;
     dmg_alarm_var = 180;
     w_var = 10;
     h_var = 10;
-    spd_var = 8/9;
+    spd_var = 8/15;
     target_spd_mult_var = 0.6;
-    evil_var = true;
+    // evil_var = global.mode_var == 0 || global.behavior_type_var == 2;
     if evil_var
     {
         spd_var = 8/9;
+        // Originally 8/15
         dur_var = 1;
         dmg_var = 99999;
         target_spd_mult_var = 0.3;
