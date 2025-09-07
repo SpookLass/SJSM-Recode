@@ -270,11 +270,11 @@ object_event_add
                 {
                     local.zdist = 10000000;
                     local.radius = coll_var[2]/2;
-                    for (local.i=-1; local.i<4; local.i+=1;)
+                    for (local.i=0; local.i<5; local.i+=1;)
                     {
                         local.xtmp = x;
                         local.ytmp = y;
-                        if local.i != -1
+                        if local.i != 0
                         {
                             local.xtmp += lengthdir_x(local.radius,local.i*90);
                             local.ytmp += lengthdir_y(local.radius,local.i*90);

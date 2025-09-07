@@ -65,22 +65,26 @@ object_event_add
 (argument0,ev_step,ev_step_normal,"
     if on_var && charge_var == false 
     && instance_exists(target_var) && target_dist_var < charge_dist_var
-    // and on floor? Target visible? something like that
     {
-        // Charge!
-        local.yaw = point_direction(x,y,target_x_var,target_y_var);
-        local.pitch = point_direction_3d_scr(x,y,z,target_x_var,target_y_var,target_z_var);
-        set_motion_3d_scr(charge_spd_var,true,local.yaw,true,local.pitch,true);
-        spr_id_var = 0;
-        tex_var = sprite_get_texture(spr_var,sprite_get_number(spr_var)-1);
-        charge_var = true;
-        move_var = false;
-        attack_var = true;
-        anim_var = false;
-        set_alarm_scr(1,charge_alarm_var);
-        set_alarm_scr(2,charge_alarm_var);
-        set_alarm_scr(4,charge_alarm_var);
-        set_alarm_scr(6,charge_alarm_var);
+        sight_type_var = 1; // Only center
+        event_perform(ev_other,ev_user8);
+        if target_visible_var
+        {
+            // Charge!
+            local.yaw = point_direction(x,y,target_x_var,target_y_var);
+            local.pitch = point_direction_3d_scr(x,y,z,target_x_var,target_y_var,target_z_var);
+            set_motion_3d_scr(charge_spd_var,true,local.yaw,true,local.pitch,true);
+            spr_id_var = 0;
+            tex_var = sprite_get_texture(spr_var,sprite_get_number(spr_var)-1);
+            charge_var = true;
+            move_var = false;
+            attack_var = true;
+            anim_var = false;
+            set_alarm_scr(1,charge_alarm_var);
+            set_alarm_scr(2,charge_alarm_var);
+            set_alarm_scr(4,charge_alarm_var);
+            set_alarm_scr(6,charge_alarm_var);
+        }
     }
     event_inherited();
 ");

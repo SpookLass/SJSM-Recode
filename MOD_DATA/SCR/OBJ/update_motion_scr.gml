@@ -40,11 +40,11 @@ if do_coll_var && grav_var > 0
     local.radius = coll_var[2]/2;
     for (local.c=0; local.c<local.coll_arr_len; local.c+=1;)
     {
-        for (local.i=-1; local.i<4; local.i+=1;)
+        for (local.i=0; local.i<5; local.i+=1;)
         {
             local.xtmp = x;
             local.ytmp = y;
-            if local.i != -1
+            if local.i != 0
             {
                 local.xtmp += lengthdir_x(local.radius,local.i*90);
                 local.ytmp += lengthdir_y(local.radius,local.i*90);

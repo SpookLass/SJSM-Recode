@@ -12,6 +12,10 @@ type_var
     0: Ignores walls
     1: Pathfinds normally
     2: Floats over pits
+sight_type_var
+    0: Default
+    1: Only center
+    2: No Blocking
 enter_var: Whether a physical monster is entering the room
 dur_var: The chase duration
 dur_start_var: How much duration a monster starts with, used for scripted events and boss bars
@@ -226,29 +230,8 @@ object_event_add
     {
         local.can_path = mp_grid_path(grid_var,path_var,x,y,target_x_var,target_y_var,true);
         // V3
-        local.dist = 10000000;
-        local.radius = coll_var[2]/2;
-        local.ztmp = z+(coll_var[1]/2);
-        local.xvec = (target_x_var-x)/target_dist_var;
-        local.yvec = (target_y_var-y)/target_dist_var;
-        local.zvec = (target_z_var-z)/target_dist_var;
-        for (local.i=0; local.i<4; local.i+=1;)
-        {
-            local.xtmp = x+lengthdir_x(local.radius,local.i*90);
-            local.ytmp = y+lengthdir_y(local.radius,local.i*90);
-            /*local.xvec = (target_x_var-local.xtmp)/target_dist_var;
-            local.yvec = (target_y_var-local.ytmp)/target_dist_var;*/
-            local.dist = min
-            (
-                local.dist,
-                check_ray_scr
-                (
-                    local.xtmp,local.ytmp,local.ztmp,
-                    local.xvec,local.yvec,local.zvec
-                )
-            );
-        }
-        target_visible_var = local.dist+local.radius >= target_dist_var;
+        sight_type_var = 2;
+        event_perform(ev_other,ev_user8);
         if enter_var || !local.can_path || target_visible_var
         { local.yaw = point_direction(x,y,target_x_var,target_y_var); }
         else
@@ -445,4 +428,38 @@ object_event_add
             target_z_var = z;
         }
     }
+");
+// Check sight
+object_event_add
+(argument0,ev_other,ev_user8,"
+    if sight_type_var == 1 { local.check = 1; }
+    else { local.check = 5; }
+    if sight_type_var == 2 { local.dist = 10000000; }
+    else { local.dist = 0; }
+    local.radius = coll_var[2]/2;
+    local.ztmp = z+(coll_var[1]/2);
+    local.xvec = (target_x_var-x)/target_dist_var;
+    local.yvec = (target_y_var-y)/target_dist_var;
+    local.zvec = (target_z_var-z)/target_dist_var;
+    for (local.i=0; local.i<local.check; local.i+=1;)
+    {
+        local.xtmp = x;
+        local.ytmp = y;
+        if local.i != 0
+        {
+            local.xtmp += lengthdir_x(local.radius,local.i*90);
+            local.ytmp += lengthdir_y(local.radius,local.i*90);
+        }
+        /*local.xvec = (target_x_var-local.xtmp)/target_dist_var;
+        local.yvec = (target_y_var-local.ytmp)/target_dist_var;*/
+        local.newdist = check_ray_scr
+        (
+            local.xtmp,local.ytmp,local.ztmp,
+            local.xvec,local.yvec,local.zvec
+        )
+        if sight_type_var == 2
+        { local.dist = min(local.dist,local.newdist); }
+        else { local.dist = max(local.dist,local.newdist); }
+    }
+    target_visible_var = local.dist+local.radius >= target_dist_var;
 ");

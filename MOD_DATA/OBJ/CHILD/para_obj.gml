@@ -271,7 +271,9 @@ object_event_add
         // Technically doesn't check for if they entered in OG, but I'm lazy
         if !enter_var
         {
-            if target_dist_var >= state_dist_var[2] && frac_chance_scr(1,state_chance_var[2])
+            local.target_dist = target_dist_var;
+            with (echidna_obj) { if target_dist_var < local.target_dist && target_dist_var > 0 { local.target_dist = target_dist_var; }}
+            if local.target_dist >= state_dist_var[2] && frac_chance_scr(1,state_chance_var[2])
             {
                 state_var = 2;
                 with instance_create(0,0,spr_flash_eff_obj)
@@ -307,7 +309,7 @@ object_event_add
         spr_id_var = irandom(sprite_get_number(spr_var)-1);
         spr_spd_var = 1;
         rand_rate_var = 15;
-        set_alarm_scr(0,irandom_range(other.eff_min_var,other.eff_max_var));
+        set_alarm_scr(0,min(dmg_alarm_var/2,irandom_range(other.eff_min_var,other.eff_max_var)));
         // Set camera to player
         cam_id_var = other.attack_target_var.cam_id_var;
     }
