@@ -64,7 +64,8 @@ object_event_add
     can_jump_var = global.can_jump_var;
     jump_z_spd_var = 0.7;
     jump_spd_mult_var = 1.2;
-    jump_stam_var = 1.25; // About 30 (30 times gravity over jump velocity)
+    jump_stam_var = 15;
+    jump_stam_rate_var = 0.625; // About 15 (15 times gravity over jump velocity)
     jump_grav_var = 2;
     // Fall
     fall_dmg_var = 15;
@@ -207,7 +208,7 @@ object_event_add
             // Jump!
             if can_jump_var && global.jump_input_press_var && on_floor_var && stam_var > jump_stam_var
             {
-                // stam_var -= jump_stam_var;
+                stam_var -= jump_stam_var;
                 z_spd_var = jump_z_spd_var;
                 jump_var = true;
                 jump_hold_var = true;
@@ -229,7 +230,7 @@ object_event_add
                     {
                         if global.jump_input_press_var == -1 || z_spd_var <= 0
                         { jump_hold_var = false; }
-                        else { stam_var -= jump_stam_var*global.delta_time_var; }
+                        else { stam_var -= jump_stam_rate_var*global.delta_time_var; }
                     }
                     if jump_hold_var || z_spd_var <= 0
                     { grav_var = grav_base_var; }
