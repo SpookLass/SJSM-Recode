@@ -42,6 +42,9 @@ ini_close();
 // This should happen when a game starts, but we don't have a menu right now
 ini_open("save_ex.ini");
 // Main
+global.rm_count_var = ini_read_real("SETTING","rm_count",0);
+global.violence_var = ini_read_real("SETTING","violence",0);
+global.note_var = ini_read_real("SETTING","note",0);
 // Settings
 global.stam_per_var = ini_read_real("SETTING","stam_per",false);
 global.fall_var = ini_read_real("SETTING","fall",false);

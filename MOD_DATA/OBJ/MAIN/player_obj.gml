@@ -64,7 +64,7 @@ object_event_add
     can_jump_var = global.can_jump_var;
     jump_z_spd_var = 0.7;
     jump_spd_mult_var = 1.2;
-    jump_stam_var = 30;
+    jump_stam_var = 1.25; // About 30 (30 times gravity over jump velocity)
     jump_grav_var = 2;
     // Fall
     fall_dmg_var = 15;
@@ -152,7 +152,7 @@ object_event_add
     z = global.spawn_arr[0,2];
     eye_yaw_var = global.spawn_arr[0,3];
     eye_pitch_var = 0;
-    set_motion_scr(0,false,eye_yaw_var,true);
+    set_motion_3d_scr(0,false,eye_yaw_var,true);
     // Reset variables
     jump_var = false;
     on_floor_var = true;
@@ -207,25 +207,30 @@ object_event_add
             // Jump!
             if can_jump_var && global.jump_input_press_var && on_floor_var && stam_var > jump_stam_var
             {
-                stam_var -= jump_stam_var
+                // stam_var -= jump_stam_var;
                 z_spd_var = jump_z_spd_var;
                 jump_var = true;
                 jump_hold_var = true;
                 on_floor_var = false;
                 fall_temp_var = true; // For big rooms
-                z += z_spd_var;
+                z += grav_var;
             }
             if jump_var
             {
                 if on_floor_var
                 {
                     jump_var = false;
+                    jump_hold_var = false;
                     grav_var = grav_base_var;
                 }
                 else
                 {
-                    if jump_hold_var && global.jump_input_press_var == -1
-                    { jump_hold_var = false; }
+                    if jump_hold_var
+                    {
+                        if global.jump_input_press_var == -1 || z_spd_var <= 0
+                        { jump_hold_var = false; }
+                        else { stam_var -= jump_stam_var*global.delta_time_var; }
+                    }
                     if jump_hold_var || z_spd_var <= 0
                     { grav_var = grav_base_var; }
                     else { grav_var = grav_base_var*jump_grav_var; }
