@@ -153,7 +153,7 @@ object_event_add
     z = global.spawn_arr[0,2];
     eye_yaw_var = global.spawn_arr[0,3];
     eye_pitch_var = 0;
-    set_motion_3d_scr(0,false,eye_yaw_var,true);
+    set_motion_3d_scr(0,false,eye_yaw_var,true,eye_pitch_var,true);
     // Reset variables
     jump_var = false;
     on_floor_var = true;

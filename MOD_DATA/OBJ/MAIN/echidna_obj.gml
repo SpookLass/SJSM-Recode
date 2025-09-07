@@ -140,7 +140,7 @@ object_event_add
         }
         if anim_var { event_perform(ev_other,ev_user1); }
         if attack_var { event_perform(ev_other,ev_user2); }
-        if sight_var { event_perform(ev_other,ev_user5); }
+        if do_seen_var { event_perform(ev_other,ev_user5); }
     }
 ");
 // Draw Event
@@ -383,6 +383,11 @@ object_event_add
     {
         target_eye_yaw_var = target_var.eye_yaw_var;
         target_eye_pitch_var = target_var.eye_pitch_var;
+        /*
+        local.len = (sin(degtorad(90-seen_yaw_var))*w_var)/(2*sin(degtorad(seen_yaw_var)));
+        local.xtmp = target_x_var-lengthdir_x(local.len,target_eye_yaw_var);
+        local.ytmp = target_y_var-lengthdir_y(local.len,target_eye_yaw_var);
+        */
         local.yaw = abs(deg_diff_scr(point_direction(target_x_var,target_y_var,x,y),target_eye_yaw_var));
         local.pitch = abs(deg_diff_scr(point_direction_3d_scr(target_x_var,target_y_var,target_z_var,x,y,z),target_eye_pitch_var));
         if local.yaw <= seen_yaw_var && local.pitch <= seen_pitch_var

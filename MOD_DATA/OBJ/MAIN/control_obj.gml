@@ -81,7 +81,7 @@ object_event_add
     // Debug commands
     if keyboard_check_pressed(ord('2'))
     {
-        local.question = show_menu('Back|Restart Room|Next Room|Previous Room|Go To Room|Create Instance|Set Tex Set|Set Count|Set LV|Set Room|Toggle Invincibility|Toggle Noclip|Toggle Flight|Revive|Hide Debug|Hide Hud|Toggle X-ray',0);
+        local.question = show_menu('Back|Restart Room|Next Room|Previous Room|Go To Room|Create Instance|Destroy Instance|Set Tex Set|Set Count|Set LV|Set Room|Toggle Invincibility|Toggle Noclip|Toggle Flight|Revive|Hide Debug|Hide Hud|Toggle X-ray|Execute Code',0);
         switch(local.question)
         {
             case 1: { room_restart(); break; }
@@ -125,6 +125,22 @@ object_event_add
             }
             case 6:
             {
+                local.instance = get_string('Destroy Instance','');
+                if local.instance != ''
+                {
+                    execute_string
+                    ('
+                        if object_exists('+local.instance+') && '+local.instance+' != 0 
+                        {
+                            with '+local.instance+'
+                            { instance_destroy(); }
+                        }
+                    ');
+                }
+                break;
+            }
+            case 7:
+            {
                 global.tex_set = get_integer('Tex set',global.tex_set);
                 local.str = string(global.tex_set);
                 if string_length(local.str) == 1 { local.str = '0'+local.str; }
@@ -138,16 +154,23 @@ object_event_add
                 }
                 break;
             }
-            case 7: { global.count_var = get_integer('Set Count', global.count_var); break; }
-            case 8: { global.violence_var = get_integer('Set LOVE', global.violence_var); break; }
-            case 9: { global.rm_count_var = get_integer('Set Room Count', global.rm_count_var); break; }
-            case 10: { global.invincible = !global.invincible; break; }
-            case 11: { player_obj.do_coll_var = !player_obj.do_coll_var; break; }
-            case 12: { player_obj.grav_var = !player_obj.grav_var; break; }
-            case 13: { player_obj.dead_var = false; player_obj.do_coll_var = true; break; }
-            case 14: { global.hide_debug = !global.hide_debug; break; }
-            case 15: { global.hide_hud = !global.hide_hud; break; }
-            case 16: { global.xray = !global.xray; break; }
+            case 8: { global.count_var = get_integer('Set Count', global.count_var); break; }
+            case 9: { global.violence_var = get_integer('Set LOVE', global.violence_var); break; }
+            case 10: { global.rm_count_var = get_integer('Set Room Count', global.rm_count_var); break; }
+            case 11: { global.invincible = !global.invincible; break; }
+            case 12: { player_obj.do_coll_var = !player_obj.do_coll_var; break; }
+            case 13: { player_obj.grav_var = !player_obj.grav_var; break; }
+            case 14: { player_obj.dead_var = false; player_obj.do_coll_var = true; break; }
+            case 15: { global.hide_debug = !global.hide_debug; break; }
+            case 16: { global.hide_hud = !global.hide_hud; break; }
+            case 17: { global.xray = !global.xray; break; }
+            case 18:
+            {
+                local.code = get_string('Execute Code','');
+                if local.code != ''
+                { execute_string(local.code); }
+                break;
+            }
         }
         global.last_time_var = current_time;
         display_mouse_set(display_get_width()/2,display_get_height()/2);

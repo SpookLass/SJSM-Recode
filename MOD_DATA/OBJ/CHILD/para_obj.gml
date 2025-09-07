@@ -309,7 +309,7 @@ object_event_add
         spr_id_var = irandom(sprite_get_number(spr_var)-1);
         spr_spd_var = 1;
         rand_rate_var = 15;
-        set_alarm_scr(0,min(dmg_alarm_var/2,irandom_range(other.eff_min_var,other.eff_max_var)));
+        set_alarm_scr(0,min(other.dmg_alarm_var/2,irandom_range(other.eff_min_var,other.eff_max_var)));
         // Set camera to player
         cam_id_var = other.attack_target_var.cam_id_var;
     }
