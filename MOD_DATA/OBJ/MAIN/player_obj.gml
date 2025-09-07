@@ -69,6 +69,7 @@ object_event_add
     // Fall
     fall_dmg_var = 15;
     fall_dmg_alarm_var = 120;
+    fall_var = global.fall_var; // Brutal!
     // Gravity
     grav_base_var = grav_const;
     grav_var = grav_base_var;
@@ -211,7 +212,7 @@ object_event_add
                 jump_var = true;
                 jump_hold_var = true;
                 on_floor_var = false;
-                float_temp_var = true; // For big rooms
+                fall_temp_var = true; // For big rooms
                 z += z_spd_var;
             }
             if jump_var
@@ -250,7 +251,7 @@ object_event_add
                     z = local.znext;
                     target_eye_h_var = crouch_eye_h_var;
                 }
-                else if !p3dc_check_split_scr(global.player_coll,x,y,local.znext+0.01)
+                else if !check_coll_scr(-1,global.player_coll[0],global.player_coll[1],global.player_coll[2],x,y,local.znext+0.01)
                 {
                     crouch_var = false;
                     coll_var[0] = global.player_coll[0];
@@ -263,23 +264,28 @@ object_event_add
                 {
                     local.zdist = 10000000;
                     local.radius = coll_var[2]/2;
-                    for (local.i=0; local.i<4; local.i+=1;)
+                    for (local.i=-1; local.i<4; local.i+=1;)
                     {
+                        local.xtmp = x;
+                        local.ytmp = y;
+                        if local.i != -1
+                        {
+                            local.xtmp += lengthdir_x(local.radius,local.i*90);
+                            local.ytmp += lengthdir_y(local.radius,local.i*90);
+                        }
                         local.zdist = min
                         (
                             local.zdist,
-                            p3dc_ray_split_scr
+                            check_ray_scr
                             (
-                                x+lengthdir_x(local.radius,local.i*90),
-                                y+lengthdir_y(local.radius,local.i*90),
-                                z+coll_var[1],
+                                local.xtmp,local.ytmp,z+coll_var[1],
                                 0,0,-1
                             )
                         );
                     }
                     local.zdist -= coll_var[1];
                     local.znext = z-local.zdist;
-                    if !p3dc_check_split_scr(global.player_coll,x,y,local.znext+0.01)
+                    if !check_coll_scr(-1,global.player_coll[0],global.player_coll[1],global.player_coll[2],x,y,local.znext+0.01)
                     {
                         crouch_var = false;
                         coll_var[0] = global.player_coll[0];
@@ -335,7 +341,7 @@ object_event_add
             x = floor_x_var;
             y = floor_y_var;
             z = floor_z_var;
-            float_temp_var = true;
+            fall_temp_var = true;
             set_motion_scr(0,false,eye_yaw_var,true);
             event_perform(ev_other,ev_user0);
             if hp_var > fall_dmg_var

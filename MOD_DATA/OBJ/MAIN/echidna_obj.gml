@@ -241,9 +241,8 @@ object_event_add
             local.dist = min
             (
                 local.dist,
-                p3dc_ray_still_scr
+                check_ray_scr
                 (
-                    global.room_coll,
                     local.xtmp,local.ytmp,local.ztmp,
                     local.xvec,local.yvec,local.zvec
                 )

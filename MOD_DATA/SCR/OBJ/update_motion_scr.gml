@@ -5,18 +5,18 @@ Set delta time to 1 if you aren't using it.
 // Movement add
 local.xspd = x_spd_var*argument0;
 local.yspd = y_spd_var*argument0;
-// Always check split
-local.coll_arr[0,0] = -1;
-local.coll_arr_len = 1;
-// Check float if it exists
-if !float_var && on_floor_var && global.room_float_coll != -1
-{
-    local.coll_arr[local.coll_arr_len,0] = -2;
-    local.coll_arr_len += 1;
-}
 // If moving or gravity, check stuff to collide with
 if local.xspd != 0 || local.yspd != 0 || (grav_var > 0 && do_coll_var)
 {
+    // Always check split
+    local.coll_arr[0,0] = -1;
+    local.coll_arr_len = 1;
+    // Check float if it exists
+    if !fall_var && on_floor_var && global.room_float_coll != -1
+    {
+        local.coll_arr[local.coll_arr_len,0] = -2;
+        local.coll_arr_len += 1;
+    }
     // Props, needed here since rotation lol
     with prop_par_obj
     {
@@ -190,9 +190,9 @@ if local.xspd != 0 || local.yspd != 0 || local.zspd != 0
                 }
                 // If not collided, turn off float temp
                 if !p3dc_check_still_scr(coll_var[0],x+local.xspd,y+local.yspd,z+local.zspd+0.01,global.room_float_coll) && !local.ray_coll
-                { float_temp_var = false; }
+                { fall_temp_var = false; }
                 // If collided and not inside, slide
-                else if !float_temp_var
+                else if !fall_temp_var
                 {
                     // X Speed
                     if local.xspd != 0
