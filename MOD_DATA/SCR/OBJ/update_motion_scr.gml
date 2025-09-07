@@ -37,16 +37,17 @@ if do_coll_var && grav_var > 0
     // Do a pseudo circle cast
     local.zdist = 10000000;
     local.zdist_max = 0;
+    local.radius = coll_var[2]/2;
     for (local.c=0; local.c<local.coll_arr_len; local.c+=1;)
     {
         for (local.i=-1; local.i<4; local.i+=1;)
         {
             local.xtmp = x;
             local.ytmp = y;
-            if local.i >= 0
+            if local.i != -1
             {
-                local.xtmp += lengthdir_x(3,local.i*90);
-                local.ytmp += lengthdir_y(3,local.i*90);
+                local.xtmp += lengthdir_x(local.radius,local.i*90);
+                local.ytmp += lengthdir_y(local.radius,local.i*90);
             }
             if local.coll_arr[local.c,0] == -1
             { local.zdist_new = p3dc_ray_still_scr(global.room_coll,local.xtmp,local.ytmp,z+coll_var[1],0,0,-1); } // p3dc_ray_split_scr
@@ -96,6 +97,9 @@ if do_coll_var && grav_var > 0
         z_spd_var = 0;
         local.zspd = -local.zdist;
         on_floor_var = true;
+        floor_x_var = x;
+        floor_y_var = y;
+        floor_z_var = z;
     }
     else { on_floor_var = false; }
 }

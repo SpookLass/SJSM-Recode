@@ -10,9 +10,6 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,0,"
     if !irandom(2)
-    {
-        event_inherited();
-        direction = random(360);
-    }
+    { event_inherited(); }
     else { instance_destroy(); }
 ");

@@ -66,6 +66,9 @@ object_event_add
     jump_spd_mult_var = 1.2;
     jump_stam_var = 30;
     jump_grav_var = 2;
+    // Fall
+    fall_dmg_var = 15;
+    fall_dmg_alarm_var = 120;
     // Gravity
     grav_base_var = grav_const;
     grav_var = grav_base_var;
@@ -326,6 +329,33 @@ object_event_add
             on_floor_var = true;
             if back_var { local.spd *= lerp_scr(1,back_spd_mult_var,abs(local.input_dir)/180); }
             acc_3d_scr(global.delta_time_var,local.acc,local.frick,local.input_dir+eye_yaw_var,local.input_dir_pitch+(eye_pitch_var*lengthdir_x(1,local.input_dir)),local.spd);
+        }
+        else if z <= -256 // Maybe add deathplane later?
+        {
+            x = floor_x_var;
+            y = floor_y_var;
+            z = floor_z_var;
+            float_temp_var = true;
+            set_motion_scr(0,false,eye_yaw_var,true);
+            event_perform(ev_other,ev_user0);
+            if hp_var > fall_dmg_var
+            {
+                hp_var -= fall_dmg_var;
+                if fall_dmg_alarm_var
+                {
+                    hurt_var = true;
+                    set_alarm_scr(0,fall_dmg_alarm_var);
+                }
+                hurt_target_var = id;
+                event_perform(ev_other,ev_user0);
+            }
+            else
+            {
+                hp_var = 0;
+                dead_var = true;
+                do_coll_var = false;
+                grav_var = false;
+            }
         }
         else if normal_var
         {

@@ -81,7 +81,7 @@ object_event_add
     // Debug commands
     if keyboard_check_pressed(ord('2'))
     {
-        local.question = show_menu('Back|Restart Room|Next Room|Previous Room|Go To Room|Create Instance|Set Tex Set|Set Count|Set LV|Set Room|Toggle Invincibility|Toggle Noclip|Toggle Flight|Hide Debug|Hide Hud|Toggle X-ray',0);
+        local.question = show_menu('Back|Restart Room|Next Room|Previous Room|Go To Room|Create Instance|Set Tex Set|Set Count|Set LV|Set Room|Toggle Invincibility|Toggle Noclip|Toggle Flight|Revive|Hide Debug|Hide Hud|Toggle X-ray',0);
         switch(local.question)
         {
             case 1: { room_restart(); break; }
@@ -144,9 +144,10 @@ object_event_add
             case 10: { global.invincible = !global.invincible; break; }
             case 11: { player_obj.do_coll_var = !player_obj.do_coll_var; break; }
             case 12: { player_obj.grav_var = !player_obj.grav_var; break; }
-            case 13: { global.hide_debug = !global.hide_debug; break; }
-            case 14: { global.hide_hud = !global.hide_hud; break; }
-            case 15: { global.xray = !global.xray; break; }
+            case 13: { player_obj.dead_var = false; player_obj.do_coll_var = true; break; }
+            case 14: { global.hide_debug = !global.hide_debug; break; }
+            case 15: { global.hide_hud = !global.hide_hud; break; }
+            case 16: { global.xray = !global.xray; break; }
         }
         global.last_time_var = current_time;
         display_mouse_set(display_get_width()/2,display_get_height()/2);

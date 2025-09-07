@@ -1,7 +1,7 @@
 // Builtin Variables
-object_set_depth(argument0,-2);
+object_set_depth(argument0,-1);
 object_set_mask(argument0,noone);
-object_set_parent(argument0,bone_obj);
+object_set_parent(argument0,rug_obj);
 object_set_persistent(argument0,false);
 object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
@@ -9,7 +9,10 @@ object_set_visible(argument0,true);
 // Create event
 object_event_add
 (argument0,ev_create,0,"
-    if !irandom(2) // && (global.rm_count_var >= 250 || global.em)
-    { event_inherited(); }
+    if !irandom(2)
+    {
+        event_inherited();
+        direction = random(360);
+    }
     else { instance_destroy(); }
 ");

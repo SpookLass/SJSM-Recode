@@ -63,8 +63,9 @@ object_event_add
         {
             case 1:
             {
-                grid_var = global.phys_grid; break;
+                grid_var = global.phys_grid;
                 grav_var = grav_const;
+                break;
             }
             case 2: { grid_var = global.float_grid; break; }
         }
@@ -324,7 +325,7 @@ object_event_add
                     do_coll_var = false;
                     grav_var = false;
                 }
-                attack_target_var = id;
+                other.attack_target_var = id;
                 local.success = true;
             }
         }

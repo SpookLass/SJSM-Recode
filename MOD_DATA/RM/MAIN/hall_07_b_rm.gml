@@ -137,8 +137,6 @@ room_instance_add(argument0,128,464,wall_vert_obj);
 room_instance_add(argument0,128,496,wall_vert_obj);
 room_instance_add(argument0,128,528,wall_vert_obj);
 // Props
-room_instance_add(argument0,304,528,chair_rand_obj);
-room_instance_add(argument0,304,432,chair_rand_obj);
 room_instance_add(argument0,144,384,rail_metal_hor_obj);
 room_instance_add(argument0,176,384,rail_metal_hor_obj);
 room_instance_add(argument0,144,416,rail_metal_hor_obj);

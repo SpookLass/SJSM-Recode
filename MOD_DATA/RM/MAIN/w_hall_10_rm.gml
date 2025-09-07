@@ -150,7 +150,7 @@ room_instance_add(argument0,336,64,torch_south_obj);
 room_instance_add(argument0,336,256,torch_south_obj);
 // Furniture
 room_instance_add(argument0,336,144,table_rand_obj);
-room_instance_add(argument0,208,112,chair_obj);
-room_instance_add(argument0,208,176,chair_obj);
-room_instance_add(argument0,272,112,chair_obj);
-room_instance_add(argument0,272,176,chair_obj);
+room_instance_add(argument0,208,112,chair_east_obj);
+room_instance_add(argument0,208,176,chair_east_obj);
+room_instance_add(argument0,272,112,chair_east_obj);
+room_instance_add(argument0,272,176,chair_east_obj);
