@@ -8,10 +8,15 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Room Start Event
 object_event_add
-(argument0,ev_other,ev_room_start,"
+(argument0,ev_other,ev_room_end,"
     if dur_var > 0
     {
         dur_var -= 1;
-        if dur_var <= 0 { instance_destroy(); exit; }
+        if dur_var <= 0
+        {
+            instance_destroy();
+            exit;
+        }
     }
+    event_inherited();
 ");

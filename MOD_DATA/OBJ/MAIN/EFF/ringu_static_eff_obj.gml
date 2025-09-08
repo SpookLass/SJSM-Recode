@@ -2,7 +2,7 @@
 object_set_depth(argument0,-99); // Under hud
 object_set_mask(argument0,noone);
 object_set_parent(argument0,par_obj);
-object_set_persistent(argument0,false);
+object_set_persistent(argument0,true);
 object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
@@ -10,32 +10,77 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,0,"
     //Defaults
-    alarm_var = 250;
+    alarm_var = 250; // 420 for HD
     spr_var = static_01_spr;
     spr_spd_var = 0.25;
     y_spd_var = 0.5;
     alpha_02_var = 0.4;
     alpha_03_var = 0.2;
     color_02_var = c_black;
+    // HD-ify
+    fog_var = true;
+    fog_color_var = c_dkgray;
+    fog_dark_var = false;
+    fog_max_start_var = 128; // 186.r6
+    fog_max_end_var = 256; // 373.r3
     // Alarm
     alarm_len_var = 1;
     alarm_arr[0,2] = '';
-    set_alarm_scr(0,250);
+    // Set
+    set_alarm_scr(0,alarm_var);
+    image_alpha = 0;
+    // Fog
+    if fog_var
+    {
+        fog_start_var = fog_max_start_var;
+        fog_end_var = fog_max_end_var;
+        event_perform(ev_other,ev_user0);
+        depth = 99;
+    }
+    // Room start
+    event_perform(ev_other,ev_room_start);
+");
+// Room End Event
+object_event_add
+(argument0,ev_other,ev_room_end,"
+    // Nothin
 ");
 // Room Start Event
 object_event_add
 (argument0,ev_other,ev_room_start,"
-    event_inherited();
-    if !instance_exists(ringu_real_obj)
-    { instance_destroy(); } // Failsafe
-    set_alarm_scr(0,250);
-    image_alpha = 0;
+    if !instance_exists(real_ringu_obj)
+    { instance_destroy(); exit; } // Failsafe
+    if !per_var
+    {
+        set_alarm_scr(0,alarm_var);
+        image_alpha = 0;
+        // Fog
+        if fog_var
+        {
+            fog_start_var = fog_max_start_var;
+            fog_end_var = fog_max_end_var;
+            event_perform(ev_other,ev_user0);
+        }
+    }
+    if alarm_arr[0,0] <= 0
+    { set_alarm_scr(0,alarm_var); }
+");
+// Set fog
+object_event_add
+(argument0,ev_other,ev_user0,"
+    global.fog_var = fog_var;
+    global.fog_color_var = fog_color_var;
+    global.fog_start_var = fog_start_var;
+    global.fog_end_var = fog_end_var;
+    global.fog_dark_var = fog_dark_var;
+    background_color = global.fog_color_var;
+    d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var);
 ");
 // Alarm 0 Event
 object_event_add
 (argument0,ev_alarm,0,"
     with (ringu_real_obj)
-    { event_perform(ev_other,ev_user14); }
+    { event_perform(ev_other,ev_user15); }
     set_alarm_scr(0,250);
 ");
 // Step Event
@@ -44,41 +89,60 @@ object_event_add
     event_inherited();
     y = (y+(y_spd_var*global.delta_time_var)) mod sprite_get_height(spr_var);
     spr_id_var = (spr_id_var+(spr_spd_var*global.delta_time_var)) mod sprite_get_number(spr_var);
-    local.per = 1-(alarm_arr[0,0]/alarm_arr[0,1]);
-    image_alpha = 1.25*local.per;
+    local.per = alarm_arr[0,0]/alarm_arr[0,1];
+    if fog_var 
+    {
+        fog_start_var = fog_max_start_var*local.per;
+        fog_end_var = fog_max_end_var*local.per;
+        event_perform(ev_other,ev_user0);
+    }
+    else { image_alpha = 1.25*(1-local.per); }
 ");
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,"
-    d3d_set_projection_ortho
-    (
-        view_xview[view_current],
-        view_yview[view_current],
-        view_xview[view_current]+view_wview[view_current],
-        view_yview[view_current]+view_hview[view_current],
-        0
-    );
-    d3d_set_hidden(false);
-    draw_set_color(color_02_var); draw_set_alpha(image_alpha);
-    draw_rectangle
-    (
-        view_xview[view_current],
-        view_yview[view_current],
-        view_xview[view_current]+view_wview[view_current],
-        view_yview[view_current]+view_hview[view_current],
-        false
-    );
-    draw_set_alpha(random(alpha_03_var));
-    draw_rectangle
-    (
-        view_xview[view_current],
-        view_yview[view_current],
-        view_xview[view_current]+view_wview[view_current],
-        view_yview[view_current]+view_hview[view_current],
-        false
-    );
-    draw_set_color(image_blend); draw_set_alpha(alpha_02_var);
-    draw_sprite_tiled(spr_var,spr_id_var,0,y);
-    draw_set_color(c_white); draw_set_alpha(1);
-    d3d_set_hidden(true);
+    if fog_var
+    {
+        d3d_set_fog(false,c_black,0,0);
+        d3d_transform_set_identity();
+        d3d_transform_set_translation(global.cam_x_var[view_current],global.cam_y_var[view_current],global.cam_z_var[view_current]);
+        d3d_draw_ellipsoid(-fog_end_var,-fog_end_var,-fog_end_var,fog_end_var,fog_end_var,fog_end_var,sprite_get_texture(spr_var,spr_id_var),1,1,10);
+        d3d_transform_set_identity();
+        d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var);
+        break;
+    }
+    else
+    {
+        d3d_set_projection_ortho
+        (
+            view_xview[view_current],
+            view_yview[view_current],
+            view_xview[view_current]+view_wview[view_current],
+            view_yview[view_current]+view_hview[view_current],
+            0
+        );
+        d3d_set_hidden(false);
+        draw_set_color(color_02_var); draw_set_alpha(image_alpha);
+        draw_rectangle
+        (
+            view_xview[view_current],
+            view_yview[view_current],
+            view_xview[view_current]+view_wview[view_current],
+            view_yview[view_current]+view_hview[view_current],
+            false
+        );
+        draw_set_alpha(random(alpha_03_var));
+        draw_rectangle
+        (
+            view_xview[view_current],
+            view_yview[view_current],
+            view_xview[view_current]+view_wview[view_current],
+            view_yview[view_current]+view_hview[view_current],
+            false
+        );
+        draw_set_color(image_blend); draw_set_alpha(alpha_02_var);
+        draw_sprite_tiled(spr_var,spr_id_var,0,y);
+        draw_set_color(c_white); draw_set_alpha(1);
+        d3d_set_hidden(true);
+    }
 ");

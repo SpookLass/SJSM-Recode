@@ -90,7 +90,7 @@ object_event_add
     // Begin
     event_perform(ev_other,ev_user7);
     // Room start
-    dur_var += 1;
+    // dur_var += 1;
     event_perform(ev_other,ev_room_start);
 ");
 // Destroy Event
