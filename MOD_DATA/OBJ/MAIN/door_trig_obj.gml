@@ -20,7 +20,7 @@ object_event_add
     // Function
     rm_count_var = 1;
     delay_var = 20;
-    switch irandom(134)
+    switch irandom(156)
     {
         case 0: { rm_var = hall_01_rm; break; }
         case 1: { rm_var = hall_02_a_rm; break; }
@@ -140,23 +140,44 @@ object_event_add
         case 115: { rm_var = jail_07_c_rm; break; }
         case 116: { rm_var = jail_08_rm; break; }
         case 117: { rm_var = jail_09_rm; break; }
-        case 118: { rm_var = big_01_rm; break; }
-        case 119: { rm_var = big_02_rm; break; }
-        case 120: { rm_var = big_03_rm; break; }
-        case 121: { rm_var = big_04_rm; break; }
-        case 122: { rm_var = big_05_rm; break; }
-        case 123: { rm_var = big_06_rm; break; }
-        case 124: { rm_var = big_07_rm; break; }
-        case 125: { rm_var = big_08_rm; break; }
-        case 126: { rm_var = sm_01_rm; break; }
-        case 127: { rm_var = sm_02_rm; break; }
-        case 128: { rm_var = sm_03_rm; break; }
-        case 129: { rm_var = sm_04_rm; break; }
-        case 130: { rm_var = sm_05_rm; break; }
-        case 131: { rm_var = sm_06_rm; break; }
-        case 132: { rm_var = sm_07_rm; break; }
-        case 133: { rm_var = test_01_rm; break; }
-        case 134: { rm_var = test_02_rm; break; }
+        case 118: { rm_var = jail_10_a_rm; break; }
+        case 119: { rm_var = jail_10_b_rm; break; }
+        case 120: { rm_var = jail_11_rm; break; }
+        case 121: { rm_var = jail_12_rm; break; }
+        case 122: { rm_var = jail_13_rm; break; }
+        case 123: { rm_var = jail_14_rm; break; }
+        case 124: { rm_var = jail_15_rm; break; }
+        case 125: { rm_var = jail_16_rm; break; }
+        case 126: { rm_var = big_01_rm; break; }
+        case 127: { rm_var = big_02_rm; break; }
+        case 128: { rm_var = big_03_rm; break; }
+        case 129: { rm_var = big_04_rm; break; }
+        case 130: { rm_var = big_05_rm; break; }
+        case 131: { rm_var = big_06_rm; break; }
+        case 132: { rm_var = big_07_rm; break; }
+        case 133: { rm_var = big_08_rm; break; }
+        case 134: { rm_var = sm_01_rm; break; }
+        case 135: { rm_var = sm_02_rm; break; }
+        case 136: { rm_var = sm_03_rm; break; }
+        case 137: { rm_var = sm_04_rm; break; }
+        case 138: { rm_var = sm_05_rm; break; }
+        case 139: { rm_var = sm_06_rm; break; }
+        case 140: { rm_var = sm_07_rm; break; }
+        case 141: { rm_var = sm_08_rm; break; }
+        case 142: { rm_var = sm_09_rm; break; }
+        case 143: { rm_var = sm_10_rm; break; }
+        case 144: { rm_var = sm_11_rm; break; }
+        case 145: { rm_var = sm_12_rm; break; }
+        case 146: { rm_var = sm_13_rm; break; }
+        case 147: { rm_var = sm_14_rm; break; }
+        case 148: { rm_var = sm_15_rm; break; }
+        case 149: { rm_var = sm_16_rm; break; }
+        case 150: { rm_var = sm_17_rm; break; }
+        case 151: { rm_var = sm_18_rm; break; }
+        case 152: { rm_var = sm_19_rm; break; }
+        case 153: { rm_var = sm_20_rm; break; }
+        case 154: { rm_var = test_01_rm; break; }
+        case 155: { rm_var = test_02_rm; break; }
     }
     // Alarm
     alarm_len_var = 1;

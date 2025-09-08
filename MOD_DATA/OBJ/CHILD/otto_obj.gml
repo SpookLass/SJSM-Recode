@@ -21,7 +21,7 @@ object_event_add
     w_var = 11;
     h_var = 24;
     spr_num_var = 4;
-    anim_type_var = 3;
+    anim_type_var = 4;
     switch global.otto_type_var
     {
         case 1:
@@ -72,7 +72,7 @@ object_event_add
 // Animation
 object_event_add
 (argument0,ev_other,ev_user1,"
-    if anim_type_var == 3
+    if anim_type_var == 4
     {
         spr_prog_var = (spr_prog_var+(spr_spd_var*global.delta_time_var)) mod spr_num_var;
         switch floor(spr_prog_var)

@@ -167,8 +167,8 @@ room_instance_add(argument0,400,368,wall_vert_obj);
 room_instance_add(argument0,448,192,torch_north_obj);
 room_instance_add(argument0,320,352,torch_south_obj);
 // Props
-room_instance_add(argument0,320,208,rug_rand_obj);
-room_instance_add(argument0,448,336,rug_rand_obj);
+room_instance_add(argument0,320,208,rug_rand_rot_obj);
+room_instance_add(argument0,448,336,rug_rand_rot_obj);
 // Not yet
 
 

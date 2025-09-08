@@ -275,6 +275,16 @@ object_event_add
             spr_id_var = sprite_get_number(spr_var)*alarm_arr[5,0]/alarm_arr[5,1];
             break;
         }
+        case 3: // Random (scuffed)
+        {
+            spr_prog_var -= spr_spd_var*global.delta_time_var;
+            if spr_prog_var <= 0 
+            {
+                spr_prog_var = 1;
+                spr_id_var = irandom(sprite_get_number(spr_var)-1);
+            }
+            break;
+        }
     }
     tex_var = sprite_get_texture(spr_var,floor(spr_id_var));
 ");
@@ -284,7 +294,7 @@ object_event_add
     local.dead = true;
     with player_obj
     {
-        if !dead_var && !hurt_var && !in_door_var && on_var
+        if !dead_var && !hurt_var && !in_door_var && !invuln_var && on_var
         {
             // p3dc_check_scr(coll_var[0],x,y,z,other.coll_var[0],other.x,other.y,other.z)
             if cyl_coll_scr(x,y,z,coll_var[2],coll_var[1],other.x,other.y,other.z,other.coll_var[2],other.coll_var[1])

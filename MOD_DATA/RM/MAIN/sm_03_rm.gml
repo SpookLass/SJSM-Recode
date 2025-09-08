@@ -145,7 +145,7 @@ room_instance_add(argument0,288,304,torch_south_obj);
 // Props
 room_instance_add(argument0,256,160,table_rand_obj);
 room_instance_add(argument0,192,160,chair_rand_obj);
-room_instance_add(argument0,224,224,rug_obj);
+room_instance_add(argument0,224,224,rug_rand_rot_obj);
 room_instance_add(argument0,192,144,painting_hor_obj);
 room_instance_add(argument0,256,144,painting_hor_obj);
 room_instance_add(argument0,256,304,painting_hor_obj);

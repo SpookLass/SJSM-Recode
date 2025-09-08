@@ -157,10 +157,31 @@ object_event_add
             case 8: { global.count_var = get_integer('Set Count', global.count_var); break; }
             case 9: { global.violence_var = get_integer('Set LOVE', global.violence_var); break; }
             case 10: { global.rm_count_var = get_integer('Set Room Count', global.rm_count_var); break; }
-            case 11: { global.invincible = !global.invincible; break; }
-            case 12: { player_obj.do_coll_var = !player_obj.do_coll_var; break; }
-            case 13: { player_obj.grav_var = !player_obj.grav_var; break; }
-            case 14: { player_obj.dead_var = false; player_obj.do_coll_var = true; break; }
+            case 11: { with player_obj { invuln_var = !invuln_var; } break; }
+            case 12: { with player_obj { do_coll_var = !do_coll_var; } break; }
+            case 13:
+            {
+                with player_obj
+                {
+                    if grav_var > 0 { grav_var = 0; }
+                    else { grav_var = grav_const; }
+                } 
+                break; 
+            }
+            case 14:
+            {
+                with (player_obj)
+                {
+                    if dead_var
+                    {
+                        dead_var = false;
+                        do_coll_var = true;
+                        grav_var = grav_const;
+                        hp_var = hp_max_var;
+                    }
+                }
+                break;
+            }
             case 15: { global.hide_debug = !global.hide_debug; break; }
             case 16: { global.hide_hud = !global.hide_hud; break; }
             case 17: { global.xray = !global.xray; break; }

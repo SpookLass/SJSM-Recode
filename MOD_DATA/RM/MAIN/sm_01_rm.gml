@@ -146,7 +146,7 @@ room_instance_add(argument0,368,192,torch_east_obj);
 room_instance_add(argument0,256,196,chair_rand_obj);
 room_instance_add(argument0,256,320,chair_rand_obj);
 room_instance_add(argument0,288,324,table_rand_obj);
-room_instance_add(argument0,336,256,rug_rand_obj);
+room_instance_add(argument0,336,256,rug_rand_rot_obj);
 room_instance_add(argument0,349,291,bone_rand_obj);
 room_instance_add(argument0,368,256,painting_vert_obj);
 room_instance_add(argument0,288,336,painting_hor_obj);

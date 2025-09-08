@@ -55,6 +55,8 @@ object_event_add
             state_seen_spd_var[0] = 0.4;
             state_spd_var[1] = state_spd_var[0];
             state_seen_spd_var[1] = 1.1;
+            state_chance_num_var = 2;
+            state_chance_den_var = 3;
             break;
         }
         case 3: // Old HD

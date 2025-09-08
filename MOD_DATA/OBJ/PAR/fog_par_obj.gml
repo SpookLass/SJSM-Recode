@@ -17,12 +17,10 @@ object_event_add
     event_perform(ev_other,ev_user0);
 ");
 // Step event (not really needed)
-/*
-object_event_add
+/*object_event_add
 (argument0,ev_step,ev_step_begin,"
     event_perform(ev_other,ev_user0);
-");
-*/
+");*/
 // Set fog
 object_event_add
 (argument0,ev_other,ev_user0,"
