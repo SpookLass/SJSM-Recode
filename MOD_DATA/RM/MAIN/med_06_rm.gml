@@ -1,0 +1,218 @@
+/*
+Argument 0: Room Variable (same for all rooms)
+*/
+// Spawn spots// Name
+room_set_code
+(
+    argument0,"
+    global.rm_name_var = 'Med Room 6'
+    // Spawn
+    global.spawn_len_var = 2;
+    global.spawn_arr[0,0] = 192;
+    global.spawn_arr[0,1] = 464;
+    global.spawn_arr[0,2] = 0;
+    global.spawn_arr[0,3] = 0;
+    global.spawn_arr[1,0] = 512;
+    global.spawn_arr[1,1] = 464;
+    global.spawn_arr[1,2] = 0;
+    global.spawn_arr[1,3] = 180;
+    // Mark
+    global.mark_len_var = 0;
+    /*global.mark_arr[0,0] = 155;
+    global.mark_arr[0,1] = 258;
+    global.mark_arr[0,2] = 0;*/
+    // 3D Draw
+    d3d_start();
+    global.draw_3d_var = true;
+    // Doors
+    local.entrance = instance_create(global.spawn_arr[0,0]-lengthdir_x(16,global.spawn_arr[0,3]),global.spawn_arr[0,1]-lengthdir_y(16,global.spawn_arr[0,3]),door_entrance_obj);
+    local.entrance.z = global.spawn_arr[0,2];
+    local.entrance.direction = global.spawn_arr[0,3]+180;
+    for (local.i=1; local.i<global.spawn_len_var; local.i+=1;)
+    {
+        local.exitdoor = instance_create(global.spawn_arr[local.i,0]-lengthdir_x(16,global.spawn_arr[local.i,3]),global.spawn_arr[local.i,1]-lengthdir_y(16,global.spawn_arr[local.i,3]),door_obj);
+        local.exitdoor.direction = global.spawn_arr[local.i,3]+180;
+        local.exittrig = instance_create(global.spawn_arr[local.i,0]-lengthdir_x(8,global.spawn_arr[local.i,3]),global.spawn_arr[local.i,1]-lengthdir_y(8,global.spawn_arr[local.i,3]),door_trig_obj);
+        local.exittrig.z = global.spawn_arr[local.i,2];
+    }
+");
+// Room settings
+room_set_width(argument0,1280);
+room_set_height(argument0,720);
+room_set_background_color(argument0,c_black,true);
+room_set_view_enabled(argument0,true);
+for (local.i=0; local.i<8; local.i+=1;)
+{ room_set_view(argument0,local.i,false,0,0,1280,720,0,0,1280,720,32,32,-1,-1,noone); }
+room_set_view(argument0,0,true,0,0,1280,720,0,0,1280,720,32,32,-1,-1,noone);
+// Effects
+room_instance_add(argument0,0,0,fog_01_obj);
+room_instance_add(argument0,0,0,med_color_obj);
+room_instance_add(argument0,0,0,water_obj);
+// Floors
+room_instance_add(argument0,256,464,floor_obj);
+room_instance_add(argument0,256,432,floor_obj);
+room_instance_add(argument0,288,432,floor_obj);
+room_instance_add(argument0,320,432,floor_obj);
+room_instance_add(argument0,320,464,floor_obj);
+room_instance_add(argument0,320,496,floor_obj);
+room_instance_add(argument0,352,496,floor_obj);
+room_instance_add(argument0,384,496,floor_obj);
+room_instance_add(argument0,384,464,floor_obj);
+room_instance_add(argument0,416,464,floor_obj);
+room_instance_add(argument0,416,432,floor_obj);
+room_instance_add(argument0,448,432,floor_obj);
+room_instance_add(argument0,480,432,floor_obj);
+room_instance_add(argument0,480,464,floor_obj);
+room_instance_add(argument0,512,464,floor_obj);
+room_instance_add(argument0,224,464,floor_obj);
+room_instance_add(argument0,192,464,floor_obj);
+// Ceilings
+room_instance_add(argument0,256,464,ceil_obj);
+room_instance_add(argument0,256,432,ceil_obj);
+room_instance_add(argument0,288,432,ceil_obj);
+room_instance_add(argument0,320,432,ceil_obj);
+room_instance_add(argument0,320,464,ceil_obj);
+room_instance_add(argument0,320,496,ceil_obj);
+room_instance_add(argument0,352,496,ceil_obj);
+room_instance_add(argument0,384,496,ceil_obj);
+room_instance_add(argument0,384,464,ceil_obj);
+room_instance_add(argument0,416,464,ceil_obj);
+room_instance_add(argument0,416,432,ceil_obj);
+room_instance_add(argument0,448,432,ceil_obj);
+room_instance_add(argument0,480,432,ceil_obj);
+room_instance_add(argument0,480,464,ceil_obj);
+room_instance_add(argument0,512,464,ceil_obj);
+room_instance_add(argument0,224,464,ceil_obj);
+room_instance_add(argument0,192,464,ceil_obj);
+room_instance_add(argument0,224,432,ceil_obj);
+room_instance_add(argument0,192,432,ceil_obj);
+room_instance_add(argument0,192,496,ceil_obj);
+room_instance_add(argument0,224,496,ceil_obj);
+room_instance_add(argument0,256,496,ceil_obj);
+room_instance_add(argument0,288,464,ceil_obj);
+room_instance_add(argument0,288,496,ceil_obj);
+room_instance_add(argument0,352,464,ceil_obj);
+room_instance_add(argument0,384,432,ceil_obj);
+room_instance_add(argument0,352,432,ceil_obj);
+room_instance_add(argument0,448,464,ceil_obj);
+room_instance_add(argument0,512,432,ceil_obj);
+room_instance_add(argument0,512,496,ceil_obj);
+room_instance_add(argument0,480,496,ceil_obj);
+room_instance_add(argument0,448,496,ceil_obj);
+room_instance_add(argument0,416,496,ceil_obj);
+// Walls (Horizontal)
+room_instance_add(argument0,192,416,wall_hor_obj);
+room_instance_add(argument0,224,416,wall_hor_obj);
+room_instance_add(argument0,256,416,wall_hor_obj);
+room_instance_add(argument0,288,416,wall_hor_obj);
+room_instance_add(argument0,320,416,wall_hor_obj);
+room_instance_add(argument0,352,416,wall_hor_obj);
+room_instance_add(argument0,384,416,wall_hor_obj);
+room_instance_add(argument0,416,416,wall_hor_obj);
+room_instance_add(argument0,448,416,wall_hor_obj);
+room_instance_add(argument0,480,416,wall_hor_obj);
+room_instance_add(argument0,512,416,wall_hor_obj);
+room_instance_add(argument0,512,512,wall_hor_obj);
+room_instance_add(argument0,480,512,wall_hor_obj);
+room_instance_add(argument0,448,512,wall_hor_obj);
+room_instance_add(argument0,416,512,wall_hor_obj);
+room_instance_add(argument0,384,512,wall_hor_obj);
+room_instance_add(argument0,352,512,wall_hor_obj);
+room_instance_add(argument0,320,512,wall_hor_obj);
+room_instance_add(argument0,288,512,wall_hor_obj);
+room_instance_add(argument0,256,512,wall_hor_obj);
+room_instance_add(argument0,224,512,wall_hor_obj);
+room_instance_add(argument0,192,512,wall_hor_obj);
+room_instance_add(argument0,192,448,wall_pit_hor_obj);
+room_instance_add(argument0,224,448,wall_pit_hor_obj);
+room_instance_add(argument0,192,480,wall_pit_hor_obj);
+room_instance_add(argument0,224,480,wall_pit_hor_obj);
+room_instance_add(argument0,256,480,wall_pit_hor_obj);
+room_instance_add(argument0,288,448,wall_pit_hor_obj);
+room_instance_add(argument0,352,480,wall_pit_hor_obj);
+room_instance_add(argument0,384,448,wall_pit_hor_obj);
+room_instance_add(argument0,416,480,wall_pit_hor_obj);
+room_instance_add(argument0,448,448,wall_pit_hor_obj);
+room_instance_add(argument0,512,448,wall_pit_hor_obj);
+room_instance_add(argument0,512,480,wall_pit_hor_obj);
+room_instance_add(argument0,480,480,wall_pit_hor_obj);
+room_instance_add(argument0,192,416,wall_pit_hor_obj);
+room_instance_add(argument0,224,416,wall_pit_hor_obj);
+room_instance_add(argument0,192,512,wall_pit_hor_obj);
+room_instance_add(argument0,224,512,wall_pit_hor_obj);
+room_instance_add(argument0,256,512,wall_pit_hor_obj);
+room_instance_add(argument0,288,512,wall_pit_hor_obj);
+room_instance_add(argument0,352,416,wall_pit_hor_obj);
+room_instance_add(argument0,384,416,wall_pit_hor_obj);
+room_instance_add(argument0,512,416,wall_pit_hor_obj);
+room_instance_add(argument0,512,512,wall_pit_hor_obj);
+room_instance_add(argument0,480,512,wall_pit_hor_obj);
+room_instance_add(argument0,448,512,wall_pit_hor_obj);
+room_instance_add(argument0,416,512,wall_pit_hor_obj);
+room_instance_add(argument0,192,448,wall_float_hor_obj);
+room_instance_add(argument0,224,448,wall_float_hor_obj);
+room_instance_add(argument0,192,480,wall_float_hor_obj);
+room_instance_add(argument0,224,480,wall_float_hor_obj);
+room_instance_add(argument0,256,480,wall_float_hor_obj);
+room_instance_add(argument0,288,448,wall_float_hor_obj);
+room_instance_add(argument0,352,480,wall_float_hor_obj);
+room_instance_add(argument0,384,448,wall_float_hor_obj);
+room_instance_add(argument0,416,480,wall_float_hor_obj);
+room_instance_add(argument0,448,448,wall_float_hor_obj);
+room_instance_add(argument0,512,448,wall_float_hor_obj);
+room_instance_add(argument0,512,480,wall_float_hor_obj);
+room_instance_add(argument0,480,480,wall_float_hor_obj);
+room_instance_add(argument0,192,416,wall_float_hor_obj);
+room_instance_add(argument0,224,416,wall_float_hor_obj);
+room_instance_add(argument0,192,512,wall_float_hor_obj);
+room_instance_add(argument0,224,512,wall_float_hor_obj);
+room_instance_add(argument0,256,512,wall_float_hor_obj);
+room_instance_add(argument0,288,512,wall_float_hor_obj);
+room_instance_add(argument0,352,416,wall_float_hor_obj);
+room_instance_add(argument0,384,416,wall_float_hor_obj);
+room_instance_add(argument0,512,416,wall_float_hor_obj);
+room_instance_add(argument0,512,512,wall_float_hor_obj);
+room_instance_add(argument0,480,512,wall_float_hor_obj);
+room_instance_add(argument0,448,512,wall_float_hor_obj);
+room_instance_add(argument0,416,512,wall_float_hor_obj);
+// Walls (Vertical)
+room_instance_add(argument0,176,464,wall_vert_obj);
+room_instance_add(argument0,528,464,wall_vert_obj);
+room_instance_add(argument0,528,432,wall_vert_obj);
+room_instance_add(argument0,528,496,wall_vert_obj);
+room_instance_add(argument0,176,496,wall_vert_obj);
+room_instance_add(argument0,176,432,wall_vert_obj);
+room_instance_add(argument0,272,464,wall_pit_vert_obj);
+room_instance_add(argument0,240,432,wall_pit_vert_obj);
+room_instance_add(argument0,304,464,wall_pit_vert_obj);
+room_instance_add(argument0,304,496,wall_pit_vert_obj);
+room_instance_add(argument0,336,464,wall_pit_vert_obj);
+room_instance_add(argument0,336,432,wall_pit_vert_obj);
+room_instance_add(argument0,368,464,wall_pit_vert_obj);
+room_instance_add(argument0,400,432,wall_pit_vert_obj);
+room_instance_add(argument0,432,464,wall_pit_vert_obj);
+room_instance_add(argument0,464,464,wall_pit_vert_obj);
+room_instance_add(argument0,400,496,wall_pit_vert_obj);
+room_instance_add(argument0,496,432,wall_pit_vert_obj);
+room_instance_add(argument0,528,432,wall_pit_vert_obj);
+room_instance_add(argument0,528,496,wall_pit_vert_obj);
+room_instance_add(argument0,176,496,wall_pit_vert_obj);
+room_instance_add(argument0,176,432,wall_pit_vert_obj);
+room_instance_add(argument0,272,464,wall_float_vert_obj);
+room_instance_add(argument0,240,432,wall_float_vert_obj);
+room_instance_add(argument0,304,464,wall_float_vert_obj);
+room_instance_add(argument0,304,496,wall_float_vert_obj);
+room_instance_add(argument0,336,464,wall_float_vert_obj);
+room_instance_add(argument0,336,432,wall_float_vert_obj);
+room_instance_add(argument0,368,464,wall_float_vert_obj);
+room_instance_add(argument0,400,432,wall_float_vert_obj);
+room_instance_add(argument0,432,464,wall_float_vert_obj);
+room_instance_add(argument0,464,464,wall_float_vert_obj);
+room_instance_add(argument0,400,496,wall_float_vert_obj);
+room_instance_add(argument0,496,432,wall_float_vert_obj);
+room_instance_add(argument0,528,432,wall_float_vert_obj);
+room_instance_add(argument0,528,496,wall_float_vert_obj);
+room_instance_add(argument0,176,496,wall_float_vert_obj);
+room_instance_add(argument0,176,432,wall_float_vert_obj);
+// Torches
+// Not yet

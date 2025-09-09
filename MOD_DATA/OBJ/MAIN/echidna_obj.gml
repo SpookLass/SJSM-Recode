@@ -91,6 +91,25 @@ object_event_add
 (argument0,ev_create,0,"
     // Begin
     event_perform(ev_other,ev_user7);
+    // Play wake (or random sound if it doesn't exist)
+    if do_snd_var
+    {
+        if snd_dist_var { snd_vol_var = global.vol_var*(1-(target_dist/snd_dist_var)); }
+        else { snd_vol_var = global.vol_var; }
+        if wake_snd_var[0]
+        {
+            /*snd_var = */
+            caster_play(wake_snd_var[1],snd_vol_var,1);
+            sub_var = wake_snd_var[2];
+        }
+        else
+        {
+            local.snd = irandom(snd_len_var-1);
+            /*snd_var = */
+            caster_play(snd_arr[local.snd,0],snd_vol_var,1);
+            sub_var = snd_arr[local.snd,1];
+        }
+    }
     // Room start
     // dur_var += 1;
     event_perform(ev_other,ev_room_start);
@@ -103,6 +122,7 @@ object_event_add
     { path_delete(path_var); }
     for (local.i=0; local.i<snd_len_var; local.i+=1;)
     { caster_free(snd_arr[local.i,0]); }
+    if wake_snd_var[0] { caster_free(wake_snd_var[1]); }
 ");
 // Room Start Event
 object_event_add
@@ -145,8 +165,8 @@ object_event_add
         if anim_var { event_user(1); }
         if attack_var { event_user(2); }
         if do_seen_var { event_user(5); }
-        if do_snd_var { event_user(9); }
     }
+    if do_snd_var { event_user(9); }
 ");
 // Draw Event
 object_event_add
@@ -172,12 +192,7 @@ object_event_add
     if do_snd_var
     {
         // Screw it, play a sound when they wake!
-        local.snd = irandom(snd_len_var-1);
-        if snd_dist_var { snd_vol_var = global.vol_var*(1-(target_dist/snd_dist_var)); }
-        else { snd_vol_var = global.vol_var; }
-        snd_var = caster_play(snd_arr[local.snd,0],snd_vol_var,1);
-        sub_var = snd_arr[local.snd,1];
-        set_alarm_scr(6,irandom_range(snd_alarm_min_var,snd_alarm_max_var))
+        event_perform(ev_alarm,6);
     }
 ");
 // Unstun Alarm
@@ -475,36 +490,41 @@ object_event_add
 // Check sight
 object_event_add
 (argument0,ev_other,ev_user8,"
-    if sight_type_var == 1 { local.check = 1; }
-    else { local.check = 5; }
-    if sight_type_var == 2 { local.dist = 10000000; }
-    else { local.dist = 0; }
-    local.radius = coll_var[2]/2;
-    local.ztmp = z+(coll_var[1]/2);
-    local.xvec = (target_x_var-x)/target_dist_var;
-    local.yvec = (target_y_var-y)/target_dist_var;
-    local.zvec = (target_z_var-z)/target_dist_var;
-    for (local.i=0; local.i<local.check; local.i+=1;)
+    if target_dist_var == 0
+    { target_visible_var = true; }
+    else
     {
-        local.xtmp = x;
-        local.ytmp = y;
-        if local.i != 0
+        if sight_type_var == 1 { local.check = 1; }
+        else { local.check = 5; }
+        if sight_type_var == 2 { local.dist = 10000000; }
+        else { local.dist = 0; }
+        local.radius = coll_var[2]/2;
+        local.ztmp = z+(coll_var[1]/2);
+        local.xvec = (target_x_var-x)/target_dist_var;
+        local.yvec = (target_y_var-y)/target_dist_var;
+        local.zvec = (target_z_var-z)/target_dist_var;
+        for (local.i=0; local.i<local.check; local.i+=1;)
         {
-            local.xtmp += lengthdir_x(local.radius,local.i*90);
-            local.ytmp += lengthdir_y(local.radius,local.i*90);
+            local.xtmp = x;
+            local.ytmp = y;
+            if local.i != 0
+            {
+                local.xtmp += lengthdir_x(local.radius,local.i*90);
+                local.ytmp += lengthdir_y(local.radius,local.i*90);
+            }
+            /*local.xvec = (target_x_var-local.xtmp)/target_dist_var;
+            local.yvec = (target_y_var-local.ytmp)/target_dist_var;*/
+            local.newdist = check_ray_scr
+            (
+                local.xtmp,local.ytmp,local.ztmp,
+                local.xvec,local.yvec,local.zvec
+            )
+            if sight_type_var == 2
+            { local.dist = min(local.dist,local.newdist); }
+            else { local.dist = max(local.dist,local.newdist); }
         }
-        /*local.xvec = (target_x_var-local.xtmp)/target_dist_var;
-        local.yvec = (target_y_var-local.ytmp)/target_dist_var;*/
-        local.newdist = check_ray_scr
-        (
-            local.xtmp,local.ytmp,local.ztmp,
-            local.xvec,local.yvec,local.zvec
-        )
-        if sight_type_var == 2
-        { local.dist = min(local.dist,local.newdist); }
-        else { local.dist = max(local.dist,local.newdist); }
+        target_visible_var = local.dist+local.radius >= target_dist_var;
     }
-    target_visible_var = local.dist+local.radius >= target_dist_var;
 ");
 // Sound update
 object_event_add
