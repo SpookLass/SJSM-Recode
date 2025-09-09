@@ -19,6 +19,18 @@ object_event_add
     dmg_alarm_var = 120;
     w_var = 10;
     h_var = 20;
+    // Sounds
+    snd_len_var = 4;
+    snd_arr[0,0] = caster_load(main_directory_const+'\SND\MON\ringu_01_snd.wav');
+    snd_arr[1,0] = caster_load(main_directory_const+'\SND\MON\ringu_02_snd.wav');
+    snd_arr[2,0] = caster_load(main_directory_const+'\SND\MON\ringu_03_snd.wav');
+    snd_arr[3,0] = caster_load(main_directory_const+'\SND\MON\ringu_04_snd.wav');
+    snd_num_var = 1;
+    snd_den_var = 2;
+    snd_alarm_min_var = 80;
+    snd_alarm_max_var = 240;
+    snd_dist_var = 600;
+    // Behavior
     switch global.ringu_type_var
     {
         case 3: // Old HD

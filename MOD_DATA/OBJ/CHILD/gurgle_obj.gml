@@ -27,10 +27,21 @@ object_event_add
     dmg_alarm_var = 120;
     w_var = 16;
     h_var = 23;
+    // Sounds
+    snd_len_var = 4;
+    snd_arr[0,0] = caster_load(main_directory_const+'\SND\MON\gurgle_01_snd.wav');
+    snd_arr[1,0] = caster_load(main_directory_const+'\SND\MON\gurgle_02_snd.wav');
+    snd_arr[2,0] = caster_load(main_directory_const+'\SND\MON\gurgle_03_snd.wav');
+    snd_arr[3,0] = caster_load(main_directory_const+'\SND\MON\gurgle_04_snd.wav');
+    snd_num_var = 1;
+    snd_den_var = 2;
+    snd_alarm_min_var = 80;
+    snd_alarm_max_var = 240;
+    snd_dist_var = 600;
     // Alarms
-    alarm_len_var = 8;
-    alarm_arr[6,2] = '';
+    alarm_len_var = 9;
     alarm_arr[7,2] = '';
+    alarm_arr[8,2] = '';
     // Inherit
     event_inherited();
     // Charge
@@ -58,7 +69,7 @@ object_event_add
 object_event_add
 (argument0,ev_alarm,0,"
     event_inherited();
-    set_alarm_scr(7,charge_start_var);
+    set_alarm_scr(8,charge_start_var);
 ");
 // Step Event
 object_event_add
@@ -83,20 +94,20 @@ object_event_add
             set_alarm_scr(1,charge_alarm_var);
             set_alarm_scr(2,charge_alarm_var);
             set_alarm_scr(4,charge_alarm_var);
-            set_alarm_scr(6,charge_alarm_var);
+            set_alarm_scr(7,charge_alarm_var);
         }
     }
     event_inherited();
 ");
 // Stop charging
 object_event_add
-(argument0,ev_alarm,6,"
+(argument0,ev_alarm,7,"
     charge_var = -1;
-    set_alarm_scr(7,charge_delay_var);
+    set_alarm_scr(8,charge_delay_var);
 ");
 // Ready charge
 object_event_add
-(argument0,ev_alarm,7,"
+(argument0,ev_alarm,8,"
     charge_var = false;
 ");
 // Animation

@@ -152,9 +152,9 @@ object_event_add
     if delay_calc_var
     { delay_var = max(0,32-(32/state_spd_var[0])); }
     // Alarms
-    alarm_len_var = 8;
-    alarm_arr[6,2] = '';
+    alarm_len_var = 9;
     alarm_arr[7,2] = '';
+    alarm_arr[8,2] = '';
     // Inherit
     event_inherited();
     // Defaults
@@ -198,8 +198,8 @@ object_event_add
 (argument0,ev_alarm,0,"
     if !state_check_var && state_var < 2
     {
-        set_alarm_scr(6,state_alarm_var[!state_var]);
-        set_alarm_scr(7,state_alarm_var[2]);
+        set_alarm_scr(7,state_alarm_var[!state_var]);
+        set_alarm_scr(8,state_alarm_var[2]);
     }
     // Inherit
     event_inherited();
@@ -211,8 +211,8 @@ object_event_add
     {
         if state_check_var && state_var < 2
         {
-            event_perform(ev_alarm,6);
             event_perform(ev_alarm,7);
+            event_perform(ev_alarm,8);
         }
         if do_warn_var && !warn_var && target_dist_var >= warn_dist_var
         {
@@ -233,7 +233,7 @@ object_event_add
 ");
 // Check State 1
 object_event_add
-(argument0,ev_alarm,6,"
+(argument0,ev_alarm,7,"
     if state_close_var { local.maxstate = 2; }
     else { local.maxstate = 1; }
     if state_var < local.maxstate
@@ -260,12 +260,12 @@ object_event_add
             }
         }
         if !state_check_var
-        { set_alarm_scr(6,state_alarm_var[local.check]); }
+        { set_alarm_scr(7,state_alarm_var[local.check]); }
     }
 ");
 // Check State 2
 object_event_add
-(argument0,ev_alarm,7,"
+(argument0,ev_alarm,8,"
     if state_var < 2
     {
         // Technically doesn't check for if they entered in OG, but I'm lazy
@@ -296,7 +296,7 @@ object_event_add
             }
         }
         if !state_check_var
-        { set_alarm_scr(7,state_alarm_var[2]); }
+        { set_alarm_scr(8,state_alarm_var[2]); }
     }
 ");
 // Attack Success

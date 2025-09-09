@@ -196,6 +196,8 @@ object_event_add
         global.last_time_var = current_time;
         display_mouse_set(display_get_width()/2,display_get_height()/2);
     }
+    // Check for Gaster errors
+    if caster_error_occurred() { show_error(caster_error_message(),false);}
 ");
 // Draw
 object_event_add

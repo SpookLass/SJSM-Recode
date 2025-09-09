@@ -4,6 +4,7 @@ global.fps_var = ini_read_real("MAIN","fps",fps_const);
 global.tps_var = ini_read_real("MAIN","tps",tps_const);
 global.sens_var = ini_read_real("MAIN","sens",sens_const);
 global.vol_var = ini_read_real("MAIN","vol",vol_const);
+global.vol_var /= 100;
 global.reduce_flash_var = ini_read_real("MAIN","reduce_flash",reduce_flash_const);
 global.max_part_var = ini_read_real("MAIN","max_part",max_part_const);
 global.can_crouch_var = ini_read_real("MAIN","crouch",crouch_const);

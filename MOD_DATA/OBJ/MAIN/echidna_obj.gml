@@ -47,6 +47,7 @@ object_event_add
     do_move_var = true;
     do_attack_var = true;
     do_anim_var = true;
+    do_snd_var = true;
     // Speed
     spd_mult_var = 1;
     // Delay
@@ -76,13 +77,14 @@ object_event_add
     }
     // Alarms
     if alarm_len_var == 0
-    { alarm_len_var = 6; }
+    { alarm_len_var = 7; }
     alarm_arr[0,2] = '';
     alarm_arr[1,2] = '';
     alarm_arr[2,2] = '';
     alarm_arr[3,2] = '';
     alarm_arr[4,2] = '';
     alarm_arr[5,2] = '';
+    alarm_arr[6,2] = '';
 ");
 // Create Event
 object_event_add
@@ -99,6 +101,8 @@ object_event_add
     event_inherited();
     if type_var > 0 && path_exists(path_var)
     { path_delete(path_var); }
+    for (local.i=0; local.i<snd_len_var; local.i+=1;)
+    { caster_free(snd_arr[local.i]); }
 ");
 // Room Start Event
 object_event_add
@@ -135,12 +139,13 @@ object_event_add
     {
         if move_var
         {
-            event_perform(ev_other,ev_user6); 
-            event_perform(ev_other,ev_user0); 
+            event_user(6);
+            event_user(0);
         }
-        if anim_var { event_perform(ev_other,ev_user1); }
-        if attack_var { event_perform(ev_other,ev_user2); }
-        if do_seen_var { event_perform(ev_other,ev_user5); }
+        if anim_var { event_user(1); }
+        if attack_var { event_user(2); }
+        if do_seen_var { event_user(5); }
+        if do_snd_var { event_user(9); }
     }
 ");
 // Draw Event
@@ -164,6 +169,16 @@ object_event_add
 object_event_add
 (argument0,ev_alarm,0,"
     on_var = true;
+    if do_snd_var
+    {
+        // Screw it, play a sound when they wake!
+        local.snd = irandom(snd_len_var-1);
+        if snd_dist_var { snd_vol_var = global.vol_var*(1-(target_dist/snd_dist_var)); }
+        else { snd_vol_var = global.vol_var; }
+        snd_var = caster_play(snd_arr[local.snd,0],snd_vol_var,1);
+        sub_var = snd_arr[local.snd,1];
+        set_alarm_scr(6,irandom_range(snd_alarm_min_var,snd_alarm_max_var))
+    }
 ");
 // Unstun Alarm
 object_event_add
@@ -203,6 +218,19 @@ object_event_add
         }
     }
     tex_var = sprite_get_texture(spr_var,spr_id_var);
+");
+// Sound alarm
+object_event_add
+(argument0,ev_alarm,6,"
+    if do_snd_var && frac_chance_scr(snd_num_var,snd_den_var)
+    {
+        local.snd = irandom(snd_len_var-1);
+        if snd_dist_var { snd_vol_var = global.vol_var*(1-(target_dist/snd_dist_var)); }
+        else { snd_vol_var = global.vol_var; }
+        snd_var = caster_play(snd_arr[local.snd,0],snd_vol_var,1);
+        sub_var = snd_arr[local.snd,1];
+    }
+    set_alarm_scr(6,irandom_range(snd_alarm_min_var,snd_alarm_max_var))
 ");
 // Movement
 object_event_add
@@ -477,4 +505,17 @@ object_event_add
         else { local.dist = max(local.dist,local.newdist); }
     }
     target_visible_var = local.dist+local.radius >= target_dist_var;
+");
+// Sound update
+object_event_add
+(argument0,ev_other,ev_user9,"
+    if true//caster_is_playing(snd_var)
+    {
+        if snd_dist_var { snd_vol_var = global.vol_var*(1-(target_dist/snd_dist_var)); }
+        else { snd_vol_var = global.vol_var; }
+        local.dir = global.cam_yaw_var[0]-point_direction(x,y,global.cam_x_var[0],global.cam_y_var[0]);
+        snd_pan_var = -sin(degtorad(local.dir));
+        caster_set_volume(snd_var,snd_vol_var);
+        caster_set_panning(snd_var,snd_pan_var);
+    }
 ");

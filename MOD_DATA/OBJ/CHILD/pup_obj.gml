@@ -19,6 +19,17 @@ object_event_add
     dmg_alarm_var = 120;
     w_var = 10;
     h_var = 20;
+    // Sounds
+    snd_len_var = 4;
+    snd_arr[0,0] = caster_load(main_directory_const+'\SND\MON\pup_01_snd.wav');
+    snd_arr[1,0] = caster_load(main_directory_const+'\SND\MON\pup_02_snd.wav');
+    snd_arr[2,0] = caster_load(main_directory_const+'\SND\MON\pup_03_snd.wav');
+    snd_arr[3,0] = caster_load(main_directory_const+'\SND\MON\pup_04_snd.wav');
+    snd_num_var = 1;
+    snd_den_var = 3;
+    snd_alarm_min_var = 30;
+    snd_alarm_max_var = 30;
+    snd_dist_var = 600;
     // Anim
     anim_type_var = 3; // Random
     // Seen
@@ -59,8 +70,8 @@ object_event_add
         }
     }
     // Alarms
-    alarm_len_var = 7;
-    alarm_arr[6,2] = '';
+    alarm_len_var = 8;
+    alarm_arr[7,2] = '';
     // Inherit
     event_inherited();
 ");
@@ -87,6 +98,7 @@ object_event_add
     {
         set_alarm_scr(1,seen_start_delay_var);
         set_alarm_scr(2,seen_start_delay_var);
+        set_alarm_scr(6,seen_start_delay_var);
     }
     else
     {
@@ -99,7 +111,7 @@ object_event_add
 (argument0,ev_step,ev_step_normal,"
     // Based on speed until I can find a better solution
     if seen_var != 1 || target_var.spd_var > 0
-    { set_alarm_scr(6,tp_alarm_var); }
+    { set_alarm_scr(7,tp_alarm_var); }
     if seen_var != 0
     {
         if spd_var > 0 { set_motion_3d_scr(0,true); }
@@ -119,14 +131,15 @@ object_event_add
     anim_var = false;
     set_alarm_scr(1,seen_delay_var);
     set_alarm_scr(2,seen_delay_var);
-    set_alarm_scr(6,tp_alarm_var);
+    set_alarm_scr(6,seen_delay_var);
+    set_alarm_scr(7,tp_alarm_var);
 ");
 
 // Teleport alarm
 object_event_add
-(argument0,ev_alarm,6,"
+(argument0,ev_alarm,7,"
     event_perform(ev_other,ev_user15);
-    set_alarm_scr(6,tp_alarm_var);
+    set_alarm_scr(7,tp_alarm_var);
 ");
 // Teleport
 object_event_add
