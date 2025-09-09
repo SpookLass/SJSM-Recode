@@ -37,6 +37,17 @@ object_event_add
     do_warn_var = false;
     warn_var = false;
     warn_dist_var = 320/3;
+    // Sounds
+    snd_len_var = 4;
+    snd_arr[0,0] = caster_load(main_directory_const+'\SND\MON\para_01_snd.ogg');
+    snd_arr[1,0] = caster_load(main_directory_const+'\SND\MON\para_02_snd.ogg');
+    snd_arr[2,0] = caster_load(main_directory_const+'\SND\MON\para_03_snd.ogg');
+    snd_arr[3,0] = caster_load(main_directory_const+'\SND\MON\para_04_snd.ogg');
+    snd_num_var = 1;
+    snd_den_var = 2;
+    snd_alarm_min_var = 80;
+    snd_alarm_max_var = 240;
+    snd_dist_var = 600;
     // State
     state_var = 0;
     state_rm_var = false;

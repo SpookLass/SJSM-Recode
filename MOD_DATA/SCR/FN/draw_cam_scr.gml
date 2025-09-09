@@ -12,6 +12,8 @@ if view_current == argument0
     global.cam_x_var[argument0] = argument1;
     global.cam_y_var[argument0] = argument2;
     global.cam_z_var[argument0] = argument3;
+    global.cam_yaw_var[argument0] = argument4;
+    global.cam_pitch_var[argument0] = argument5;
     local.xturn = (cos(degtorad(argument5))*cos(degtorad(argument4)));
     local.yturn = (cos(degtorad(argument5))*-sin(degtorad(argument4)));
     local.zturn = sin(degtorad(argument5));

@@ -102,7 +102,7 @@ object_event_add
     if type_var > 0 && path_exists(path_var)
     { path_delete(path_var); }
     for (local.i=0; local.i<snd_len_var; local.i+=1;)
-    { caster_free(snd_arr[local.i]); }
+    { caster_free(snd_arr[local.i,0]); }
 ");
 // Room Start Event
 object_event_add

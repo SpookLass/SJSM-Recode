@@ -21,10 +21,10 @@ object_event_add
     h_var = 20;
     // Sounds
     snd_len_var = 4;
-    snd_arr[0,0] = caster_load(main_directory_const+'\SND\MON\pup_01_snd.wav');
-    snd_arr[1,0] = caster_load(main_directory_const+'\SND\MON\pup_02_snd.wav');
-    snd_arr[2,0] = caster_load(main_directory_const+'\SND\MON\pup_03_snd.wav');
-    snd_arr[3,0] = caster_load(main_directory_const+'\SND\MON\pup_04_snd.wav');
+    snd_arr[0,0] = caster_load(main_directory_const+'\SND\MON\pup_01_snd.ogg');
+    snd_arr[1,0] = caster_load(main_directory_const+'\SND\MON\pup_02_snd.ogg');
+    snd_arr[2,0] = caster_load(main_directory_const+'\SND\MON\pup_03_snd.ogg');
+    snd_arr[3,0] = caster_load(main_directory_const+'\SND\MON\pup_04_snd.ogg');
     snd_num_var = 1;
     snd_den_var = 3;
     snd_alarm_min_var = 30;
