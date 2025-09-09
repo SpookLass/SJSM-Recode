@@ -64,9 +64,11 @@ object_event_add
     can_jump_var = global.can_jump_var;
     jump_z_spd_var = 0.7;
     jump_spd_mult_var = 1.2;
-    jump_stam_var = 15;
-    jump_stam_rate_var = 0.625; // About 15 (15 times gravity over jump velocity)
     jump_grav_var = 2;
+    jump_stam_var = 20;
+    // About 20 (20 times gravity over jump velocity)
+    // 0.625 for 15
+    jump_stam_rate_var = 0.83;
     // Fall
     fall_dmg_var = 15;
     fall_dmg_alarm_var = 120;
@@ -253,7 +255,7 @@ object_event_add
                     crouch_var = true;
                     coll_var[0] = global.player_crouch_coll[0];
                     coll_var[1] = global.player_crouch_coll[1];
-                    coll_var[2] = global.player_crouch_coll[1];
+                    coll_var[2] = global.player_crouch_coll[2];
                     z = local.znext;
                     target_eye_h_var = crouch_eye_h_var;
                 }
