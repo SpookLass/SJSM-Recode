@@ -166,7 +166,7 @@ object_event_add
 ");
 // Random anim
 object_event_add
-(argument0,ev_alarm,6,"
+(argument0,ev_alarm,7,"
     if state_var == 1 && frac_chance_scr(1,rand_chance_var)
     { spr_id_var = irandom(sprite_get_number(spr_var)-1); }
     set_alarm_scr(7,rand_alarm_var);

@@ -144,6 +144,8 @@ object_event_add
     y = global.spawn_arr[0,1]-lengthdir_y(32,yaw_var);
     z = global.spawn_arr[0,2];
     set_motion_3d_scr(0,true,yaw_var,true,0,true);
+    // Set target
+    event_user(6);
     // Delay
     if delay_min_var > 0
     {
@@ -173,11 +175,21 @@ object_event_add
 (argument0,ev_draw,0,"
     if on_var || visible_var
     {
-        d3d_transform_set_identity();
-        d3d_transform_add_rotation_z(point_direction(x,y,global.cam_x_var[view_current],global.cam_y_var[view_current]));
-        d3d_transform_add_translation(x,y,z+z_off_var);
         draw_set_color(image_blend); draw_set_alpha(image_alpha);
-        d3d_draw_wall(0,w_var/2,h_var,0,-w_var/2,0,tex_var,1,1);
+        d3d_transform_set_identity();
+        if do_mdl_var
+        {
+            // d3d_transform_add_rotation_y(pitch_var);
+            d3d_transform_add_rotation_z(yaw_var);
+            d3d_transform_add_translation(x+x_off_var,y+y_off_var,z+z_off_var);
+            d3d_model_draw(mdl_var,0,0,0,tex_var);
+        }
+        else
+        {
+            d3d_transform_add_rotation_z(point_direction(x,y,global.cam_x_var[view_current],global.cam_y_var[view_current]));
+            d3d_transform_add_translation(x+x_off_var,y+y_off_var,z+z_off_var);
+            d3d_draw_wall(0,w_var/2,h_var,0,-w_var/2,0,tex_var,1,1);
+        }
         d3d_transform_set_identity();
         draw_set_color(c_white); draw_set_alpha(1);
         if path_exists(path_var)
@@ -191,8 +203,8 @@ object_event_add
     on_var = true;
     if do_snd_var
     {
-        // Screw it, play a sound when they wake!
-        event_perform(ev_alarm,6);
+        // event_perform(ev_alarm,6); // Don't play on room start, that was a stupid idea
+        set_alarm_scr(6,irandom_range(snd_alarm_min_var,snd_alarm_max_var));
     }
 ");
 // Unstun Alarm
@@ -245,7 +257,7 @@ object_event_add
         snd_var = caster_play(snd_arr[local.snd,0],snd_vol_var,1);
         sub_var = snd_arr[local.snd,1];
     }
-    set_alarm_scr(6,irandom_range(snd_alarm_min_var,snd_alarm_max_var))
+    set_alarm_scr(6,irandom_range(snd_alarm_min_var,snd_alarm_max_var));
 ");
 // Movement
 object_event_add
@@ -297,6 +309,7 @@ object_event_add
         if do_acc_var { acc_3d_scr(global.delta_time_var,acc_var,frick_var,local.yaw,local.pitch,local.spd); }
         else { set_motion_3d_scr(local.spd,true,local.yaw,true,local.pitch,true); }
     }
+    spd_mult_var = 1;
 ");
 // Animation
 object_event_add
