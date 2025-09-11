@@ -73,14 +73,28 @@ object_event_add
     // Behavior
     switch global.stem_type_var
     {
-        case 5: // Drift Baby
+        case 6: // Drift Baby
         { boost_var = true; }
         case 0: // Mod
         {
             move_type_var = 0;
             break;
         }
-        case 4: // Old HD
+        case 4: // Karamari HD
+        {
+            dmg_var = 20;
+            dmg_alarm_var = 60;
+            do_acc_var = false;
+            move_type_var = 2;
+            spd_base_var = 16/45; // 0.3r5
+            turn_rate_var = 0.025;
+            snd_alarm_min_var = 300;
+            snd_alarm_max_var = 600;
+            inv_chance_var = 5;
+            tp_dist_max_var = 640/3; // 213.r3
+            break;
+        }
+        case 5: // Old HD
         {
             delay_min_var = 90;
             delay_max_var = 180;
@@ -174,7 +188,12 @@ object_event_add
     {
         case 0: // Mod
         {
-            if do_acc_var { acc_3d_scr(global.delta_time_var,acc_var*acc_mult_var,frick_var*acc_mult_var,local.yaw,local.pitch,local.spd); }
+
+            if do_acc_var
+            {
+                if autobrake_var && target_dist_var <= autobrake_dist_var { local.spd = 0; }
+                acc_3d_scr(global.delta_time_var,acc_var*acc_mult_var,frick_var*acc_mult_var,local.yaw,local.pitch,local.spd);
+            }
             else { set_motion_3d_scr(local.spd,true,local.yaw,true,local.pitch,true); }
             mdl_yaw_var = yaw_var;
             mdl_pitch_var = pitch_var;
@@ -229,10 +248,6 @@ object_event_add
 (argument0,ev_other,ev_user1,"
     z_off_time_var = (z_off_time_var+global.delta_time_var) mod z_off_rate_var;
     z_off_var = sin(2*z_off_time_var*pi/z_off_rate_var)*z_off_mult_var;
-");
-// Draw Event
-object_event_add
-(argument0,ev_draw,0,"
     if !irandom(3)
     {
         x_off_var = random_range(-3,3);
@@ -244,6 +259,10 @@ object_event_add
         x_off_var = 0;
         y_off_var = 0;
     }
+");
+// Draw Event
+object_event_add
+(argument0,ev_draw,0,"
     if on_var || visible_var
     {
         draw_set_color(image_blend); draw_set_alpha(image_alpha);

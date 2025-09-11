@@ -36,10 +36,9 @@ object_event_add
     // Behavior
     switch global.otto_type_var
     {
-        case 1:
+        case 0:
         {
-            griddy_var = !irandom(1);
-            
+            griddy_var = frac_chance_scr(1,1987);
             break;
         }
         case 3: // Old HD
@@ -52,8 +51,7 @@ object_event_add
             do_acc_var = true;
             dmg_alarm_var = 180;
             atk_stun_var = 0;
-            // Rough estimate based on old man
-            acc_var = 8/135;
+            acc_var = 16/675; // 0.02r370
             frick_var = acc_var;
             break;
         }
@@ -67,8 +65,7 @@ object_event_add
             do_acc_var = true;
             dmg_alarm_var = 180;
             atk_stun_var = 0;
-            // Rough estimate based on old man
-            acc_var = 8/135;
+            acc_var = 16/675; // 0.02r370
             frick_var = acc_var;
             break;
         }

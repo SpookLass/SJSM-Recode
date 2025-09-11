@@ -191,9 +191,10 @@ object_event_add
             d3d_draw_wall(0,w_var/2,h_var,0,-w_var/2,0,tex_var,1,1);
         }
         d3d_transform_set_identity();
-        draw_set_color(c_white); draw_set_alpha(1);
+        draw_set_color(c_white); draw_set_alpha(1); d3d_set_hidden(false);
         if path_exists(path_var)
         { draw_path(path_var,x,y,false); }
+        d3d_set_hidden(true);
         // mp_grid_draw(grid_var);
     }
 ");
@@ -299,14 +300,42 @@ object_event_add
                 path_get_point_y(path_var,1)
             );
         }
-        if do_acc_var { acc_scr(global.delta_time_var,acc_var,frick_var,local.yaw,local.spd); }
+        if do_acc_var
+        {
+            // Tried to add autobrake support, but it's difficult without Unity source code
+            if autobrake_var && target_visible_var && spd_var > autobrake_spd_var
+            && (target_dist_var <= autobrake_dist_var || autobrake_dist_var <= 0) 
+            {
+                if autobrake_dir_var > 0
+                {
+                    if abs(deg_diff_scr(local.yaw,yaw_var)) > autobrake_dir_var
+                    { local.spd = autobrake_spd_var; }
+                }
+                else { local.spd = autobrake_spd_var; }
+            }
+            acc_scr(global.delta_time_var,acc_var,frick_var,local.yaw,local.spd);
+        }
         else { set_motion_scr(local.spd,true,local.yaw,true); }
     }
     else
     {
         local.yaw = point_direction(x,y,target_x_var,target_y_var);
         local.pitch = point_direction_3d_scr(x,y,z,target_x_var,target_y_var,target_z_var);
-        if do_acc_var { acc_3d_scr(global.delta_time_var,acc_var,frick_var,local.yaw,local.pitch,local.spd); }
+        if do_acc_var
+        {
+            if autobrake_var && target_visible_var && spd_var > autobrake_spd_var
+            && (target_dist_var <= autobrake_dist_var || autobrake_dist_var <= 0) 
+            {
+                if autobrake_dir_var > 0
+                {
+                    if abs(deg_diff_scr(local.yaw,yaw_var)) > autobrake_dir_var
+                    || abs(deg_diff_scr(local.pitch,pitch_var)) > autobrake_dir_var
+                    { local.spd = autobrake_spd_var; }
+                }
+                else { local.spd = autobrake_spd_var; }
+            }
+            acc_3d_scr(global.delta_time_var,acc_var,frick_var,local.yaw,local.pitch,local.spd);
+        }
         else { set_motion_3d_scr(local.spd,true,local.yaw,true,local.pitch,true); }
     }
     spd_mult_var = 1;

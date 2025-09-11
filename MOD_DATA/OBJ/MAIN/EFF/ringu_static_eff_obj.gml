@@ -140,9 +140,8 @@ object_event_add
             view_yview[view_current]+view_hview[view_current],
             false
         );
-        draw_set_color(image_blend); draw_set_alpha(alpha_02_var);
-        draw_sprite_tiled(spr_var,spr_id_var,0,y);
         draw_set_color(c_white); draw_set_alpha(1);
+        draw_sprite_tiled_ext(spr_var,spr_id_var,0,y,1,1,image_blend,image_alpha);
         d3d_set_hidden(true);
     }
 ");

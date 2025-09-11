@@ -20,7 +20,7 @@ object_event_add
     spr_var = sprite_add(main_directory_const+'\SPR\MON\gurgle_spr.png',5,false,false,0,0);
     spr_spd_var = 1/6;
     spr_num_var = 4;
-    anim_type_var = 3;
+    anim_type_var = 4;
     dur_var = irandom_range(10,20);
     delay_var = 80;
     dmg_var = 45;
@@ -124,7 +124,7 @@ object_event_add
 // Animation
 object_event_add
 (argument0,ev_other,ev_user1,"
-    if anim_type_var == 3
+    if anim_type_var == 4
     { spr_id_var = (spr_id_var+(spr_spd_var*global.delta_time_var)) mod spr_num_var; }
     event_inherited();
 ");

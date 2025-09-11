@@ -32,6 +32,11 @@ object_event_add
     {
         spr_id_var = (spr_id_var+(spr_spd_var*global.delta_time_var)) mod sprite_get_number(spr_var);
     }
+    if fade_var > 0
+    {
+        image_alpha = alarm_arr[0,0]/alarm_arr[0,1];
+        if fade_var == 2 { image_alpha=1-image_alpha; }
+    }
 ");
 // Alarm 0 Event
 object_event_add
@@ -48,15 +53,6 @@ object_event_add
         set_alarm_scr(1,rand_rate_var);
     }
 ");
-// Step Event
-object_event_add
-(argument0,ev_step,ev_step_normal,"
-    if fade_var
-    {
-        image_alpha = alarm_arr[0,0]/alarm_arr[0,1];
-        if fade_var == 2 { image_alpha=1-image_alpha; }
-    }
-");
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,"
@@ -71,16 +67,15 @@ object_event_add
             0
         );
         d3d_set_hidden(false);
-        draw_set_color(image_blend); draw_set_alpha(image_alpha);
-        draw_sprite_stretched
+        draw_sprite_stretched_ext
         (
             spr_var,floor(spr_id_var),
             view_xview[view_current],
             view_yview[view_current],
             view_wview[view_current],
-            view_hview[view_current]
+            view_hview[view_current],
+            image_blend,image_alpha
         );
-        draw_set_color(c_white); draw_set_alpha(1);
         d3d_set_hidden(true);
     }
 ");

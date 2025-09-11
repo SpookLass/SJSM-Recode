@@ -153,8 +153,7 @@ object_event_add
             state_check_var = true;
             state_eff_min_var = 6;
             state_eff_max_var = 6;
-            // Rough estimate based on old man
-            acc_var = 8/135;
+            acc_var = 8/225; // 0.03r5
             frick_var = acc_var;
             break;
         }

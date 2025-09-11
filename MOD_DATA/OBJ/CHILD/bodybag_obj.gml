@@ -1,0 +1,195 @@
+// Builtin Variables
+object_set_depth(argument0,0);
+object_set_mask(argument0,noone);
+object_set_parent(argument0,echidna_obj);
+object_set_persistent(argument0,true);
+object_set_solid(argument0,false);
+object_set_sprite(argument0,noone);
+object_set_visible(argument0,true);
+// Create Begin Event
+object_event_add
+(argument0,ev_other,ev_user7,"
+    type_var = 1;
+    spd_base_var = 0.8;
+    mdl_var = d3d_model_create();
+    d3d_model_load(mdl_var,main_directory_const+'\MDL\MON\bodybag_mon_mdl.gmmod');
+    bg_var = background_add(main_directory_const+'\BG\MON\bodybag_bg.png',false,false);
+    tex_var = background_get_texture(bg_var);
+    dur_var = irandom_range(10,15);
+    delay_var = 180;
+    dmg_var = 20;
+    dmg_alarm_var = 60;
+    w_var = 10;
+    h_var = 20;
+    // Sounds
+    snd_len_var = -1;
+    // Special
+    mdl_pitch_var = 90;
+    shake_var = 0.1;
+    inf_stam_var = true;
+    spin_rate_var = 5;
+    // Effects
+    spr_overlay_var = sprite_add(kh_directory_const+'\TEX\sprites\HOS_ex6.png',4,false,false,0,0);
+    spr_eff_var = sprite_add(kh_directory_const+'\TEX\sprites\HOS_ex7.png',8,false,false,0,0);
+    eff_fade_var = false;
+    eff_delay_var = 60;
+    strobe_var = true;
+    // Behavior
+    switch global.body_type_var
+    {
+        case 4: // Speen!!!
+        { spin_var = true; }
+        case 0: // Mod
+        {
+            spd_base_var = 1.875; // 1.25*2.5/1.66
+            do_acc_var = true;
+            acc_var = 0.1;
+            frick_var = 0.05;
+            atk_delay_var = 90;
+            shake_var = 0.32;
+            eff_fade_var = true;
+            strobe_var = false;
+            // Autobrake
+            autobrake_var = true;
+            autobrake_spd_var = 1;
+            autobrake_dir_var = 60;
+            break;
+        }
+        case 2: // HD
+        {
+            inf_stam_var = false;
+            atk_delay_var = 90;
+        }
+        case 3: // KH HD
+        {
+            spd_base_var = 56/45; // 1.2r4
+            do_acc_var = true;
+            acc_var = 16/675; // 0.02r370
+            frick_var = acc_var;
+            dmg_var = 45;
+            delay_min_var = 90;
+            delay_max_var = 180;
+            shake_var = 0.32;
+            eff_delay_var = 0;
+            strobe_var = false;
+            // Autobrake (close enough)
+            autobrake_var = true;
+            autobrake_spd_var = 0;
+            autobrake_dir_var = 60;
+            break;
+        }
+    }
+    // Alarms
+    alarm_len_var = 8;
+    alarm_arr[7,2] = '';
+    // Inherit
+    event_inherited();
+    do_mdl_var = true;
+    do_snd_var = false;
+");
+// Create Event
+object_event_add
+(argument0,ev_create,0,"
+    event_inherited();
+    if eff_delay_var > 0 { set_alarm_scr(7,eff_delay_var); }
+");
+// Effect alarm
+// Create Event
+object_event_add
+(argument0,ev_alarm,7,"
+    with instance_create(0,0,spr_flash_eff_obj)
+    {
+        spr_var = other.spr_eff_var;
+        spr_id_var = irandom(sprite_get_number(spr_var)-1);
+        spr_spd_var = 0.5;
+        rand_rate_var = 2;
+        rand_chance_var = 2;
+        fade_var = other.eff_fade_var;
+        set_alarm_scr(0,60);
+        // Set camera to player
+        cam_id_var = other.attack_target_var.cam_id_var;
+    }
+");
+// Room Start Event
+object_event_add
+(argument0,ev_other,ev_room_start,"
+    event_inherited();
+    if inf_stam_var
+    { with player_obj { do_stam_var = false; }}
+    if !instance_exists(body_eff_obj)
+    {
+        with instance_create(0,0,body_eff_obj)
+        {
+            spr_var = other.spr_overlay_var;
+            strobe_var = other.strobe_var;
+        }
+    }
+");
+// Animation
+object_event_add
+(argument0,ev_other,ev_user1,"
+    if spin_var { mdl_yaw_var += spin_rate_var; }
+    else { mdl_yaw_var = yaw_var+180; }
+    x_off_var = random_range(-shake_var,shake_var);
+    y_off_var = random_range(-shake_var,shake_var);
+    z_off_var = random_range(-shake_var,shake_var);
+");
+// Destroy Event
+object_event_add
+(argument0,ev_destroy,0,"
+    event_inherited();
+    background_delete(bg_var);
+    d3d_model_destroy(mdl_var);
+    if inf_stam_var
+    { with player_obj { do_stam_var = true; }}
+");
+// Attack Success
+object_event_add
+(argument0,ev_other,ev_user3,"
+    event_inherited();
+    if atk_delay_var > 0
+    {
+        on_var = false;
+        // Reset Position
+        yaw_var = global.spawn_arr[0,3];
+        x = global.spawn_arr[0,0];
+        y = global.spawn_arr[0,1];
+        z = global.spawn_arr[0,2];
+        set_motion_3d_scr(0,true,yaw_var,true,0,true);
+        // Set target
+        event_user(6);
+        // Delay
+        set_alarm_scr(0,atk_delay_var);
+        // Effect
+        with instance_create(0,0,spr_flash_eff_obj)
+        {
+            spr_var = other.spr_eff_var;
+            spr_id_var = irandom(sprite_get_number(spr_var)-1);
+            spr_spd_var = 0.5;
+            rand_rate_var = 2;
+            rand_chance_var = 2;
+            fade_var = other.eff_fade_var;
+            set_alarm_scr(0,60);
+            // Set camera to player
+            cam_id_var = other.attack_target_var.cam_id_var;
+        }
+    }
+");
+// Draw Event
+object_event_add
+(argument0,ev_draw,0,"
+    if on_var || visible_var
+    {
+        draw_set_color(image_blend); draw_set_alpha(image_alpha);
+        d3d_transform_set_identity();
+        d3d_transform_add_rotation_y(mdl_pitch_var);
+        d3d_transform_add_rotation_z(mdl_yaw_var);
+        d3d_transform_add_translation(x+x_off_var,y+y_off_var,z+z_off_var);
+        d3d_model_draw(mdl_var,0,0,0,tex_var);
+        d3d_transform_set_identity();
+        draw_set_color(c_white); draw_set_alpha(1); d3d_set_hidden(false);
+        if path_exists(path_var)
+        { draw_path(path_var,x,y,false); }
+        d3d_set_hidden(true);
+    }
+");

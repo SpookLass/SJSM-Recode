@@ -29,6 +29,7 @@ object_event_add
     back_var = false; // Whether to reduce speed when walking backwards
     normal_var = true;
     // Stamina
+    do_sprint_var = true; // Uhh yeah I sure it does
     sprint_var = 0;
     stam_max_var = 100;
     stam_var = stam_max_var;
@@ -161,6 +162,9 @@ object_event_add
     on_floor_var = true;
     jump_hold_var = false;
     grav_var = grav_base_var;
+    // Maybe reset?
+    do_sprint_var = true;
+    do_stam_var = true;
     // Bob
     bob_time_var = 45;
     breath_time_var = 0;
@@ -208,9 +212,10 @@ object_event_add
         if do_coll_var && grav_var > 0
         {
             // Jump!
-            if can_jump_var && global.jump_input_press_var && on_floor_var && stam_var > jump_stam_var
+            if can_jump_var && global.jump_input_press_var && on_floor_var && (stam_var > jump_stam_var || !do_stam_var)
             {
-                stam_var -= jump_stam_var;
+                if do_stam_var
+                { stam_var -= jump_stam_var; }
                 z_spd_var = jump_z_spd_var;
                 jump_var = true;
                 jump_hold_var = true;
@@ -232,7 +237,7 @@ object_event_add
                     {
                         if global.jump_input_press_var == -1 || z_spd_var <= 0
                         { jump_hold_var = false; }
-                        else { stam_var -= jump_stam_rate_var*global.delta_time_var; }
+                        else if do_stam_var { stam_var -= jump_stam_rate_var*global.delta_time_var; }
                     }
                     if jump_hold_var || z_spd_var <= 0
                     { grav_var = grav_base_var; }
@@ -314,7 +319,7 @@ object_event_add
             local.input_dir_pitch = radtodeg(arctan2(local.input_dir_z,sqrt(sqr(local.input_dir_x)+sqr(local.input_dir_y))));
         }
         // Sprint
-        sprint_var = global.sprint_input_var && stam_var;
+        sprint_var = do_sprint_var && global.sprint_input_var && (stam_var > 0 || !do_stam_var);
         // Calculate speed
         local.spd = 0;
         if local.input_dir_x != 0 || local.input_dir_y != 0 || local.input_dir_z != 0
@@ -401,7 +406,7 @@ object_event_add
         event_inherited();
         // Get real speed for bobbing and stamina (already delta-timed)
         local.real_spd = point_distance(xprevious,yprevious,x,y);
-        if on_floor_var
+        if on_floor_var && do_stam_var
         {
             // Calculate stamina
             if sprint_var
