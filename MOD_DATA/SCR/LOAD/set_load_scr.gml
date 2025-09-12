@@ -21,7 +21,7 @@ global.move_bob_var = ini_read_real("MAIN","move_bob",move_bob_const);
 global.idle_bob_var = ini_read_real("MAIN","idle_bob",idle_bob_const);
 global.shake_type_var = ini_read_real("MAIN","shake_type",shake_modern_const);
 // Controls
-global.up_key = ini_read_real("CONTROL","up_key_var",87);
+global.up_key_var = ini_read_real("CONTROL","up_key_var",87);
 global.down_key_var = ini_read_real("CONTROL","down_key_var",83);
 global.left_key_var = ini_read_real("CONTROL","left_key_var",65);
 global.right_key_var = ini_read_real("CONTROL","right_key_var",68);
@@ -89,13 +89,12 @@ global.wc_type_var = ini_read_real("BEHAVIOR","wc_type",global.default_type_var)
 global.clown_type_var = ini_read_real("BEHAVIOR","clown_type",global.default_type_var);
 global.hd_type_var = ini_read_real("BEHAVIOR","hd_type",global.default_type_var);
 global.frenzy_type_var = ini_read_real("BEHAVIOR","frenzy_type",global.default_type_var);
-global.nm_type_var = ini_read_real("BEHAVIOR","nm_type",global.default_type_var);
+global.real_ringu_type_var = ini_read_real("BEHAVIOR","real_ringu_type",global.default_type_var);
 global.tiri_type_var = ini_read_real("BEHAVIOR","tiri_type",global.default_type_var);
 global.lisa_type_var = ini_read_real("BEHAVIOR","lisa_type",global.default_type_var);
 global.otto_type_var = ini_read_real("BEHAVIOR","otto_type",global.default_type_var);
 global.spooper_type_var = ini_read_real("BEHAVIOR","spooper_type",global.default_type_var);
 global.wf_type_var = ini_read_real("BEHAVIOR","wf_type",global.default_type_var);
-global.real_ringu_type_var = ini_read_real("BEHAVIOR","real_ringu_type",global.default_type_var);
 // Set stuff
 window_set_fullscreen(global.fullscreen_var);
 set_synchronization(global.vsync_var);

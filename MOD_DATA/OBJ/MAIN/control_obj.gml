@@ -23,6 +23,11 @@ object_event_add
     global.jump_input_prev_var = global.jump_input_var;
     global.crouch_input_prev_var = global.crouch_input_var;
     global.interact_input_prev_var = global.interact_input_var;
+    global.up_input_prev_var = global.up_input_var;
+    global.down_input_prev_var = global.down_input_var;
+    global.left_input_prev_var = global.left_input_var;
+    global.right_input_prev_var = global.right_input_var;
+    global.confirm_input_prev_var = global.confirm_input_var;
     if !global.controller_var
     {
         if keyboard_check_pressed(global.forward_key_var) { global.forward_input_var = true; }
@@ -48,6 +53,21 @@ object_event_add
 
         if keyboard_check_pressed(global.interact_key_var) { global.interact_input_var = true; }
         if keyboard_check_released(global.interact_key_var) { global.interact_input_var = false; }
+
+        if keyboard_check_pressed(global.up_key_var) { global.up_input_var = true; }
+        if keyboard_check_released(global.up_key_var) { global.up_input_var = false; }
+
+        if keyboard_check_pressed(global.down_key_var) { global.down_input_var = true; }
+        if keyboard_check_released(global.down_key_var) { global.down_input_var = false; }
+
+        if keyboard_check_pressed(global.left_key_var) { global.left_input_var = true; }
+        if keyboard_check_released(global.left_key_var) { global.left_input_var = false; }
+
+        if keyboard_check_pressed(global.right_key_var) { global.right_input_var = true; }
+        if keyboard_check_released(global.right_key_var) { global.right_input_var = false; }
+
+        if keyboard_check_pressed(global.confirm_key_var) { global.confirm_input_var = true; }
+        if keyboard_check_released(global.confirm_key_var) { global.confirm_input_var = false; }
     }
     global.forward_input_press_var = global.forward_input_var-global.forward_input_prev_var;
     global.backward_input_press_var = global.backward_input_var-global.backward_input_prev_var;
@@ -57,6 +77,11 @@ object_event_add
     global.jump_input_press_var = global.jump_input_var-global.jump_input_prev_var;
     global.crouch_input_press_var = global.crouch_input_var-global.crouch_input_prev_var;
     global.interact_input_press_var = global.interact_input_var-global.interact_input_prev_var;
+    global.up_input_press_var = global.up_input_var-global.up_input_prev_var;
+    global.down_input_press_var = global.down_input_var-global.down_input_prev_var;
+    global.left_input_press_var = global.left_input_var-global.left_input_prev_var;
+    global.right_input_press_var = global.right_input_var-global.right_input_prev_var;
+    global.confirm_input_press_var = global.confirm_input_var-global.confirm_input_prev_var;
     
     // Free da mouse
     if keyboard_check_pressed(vk_tab) || keyboard_check_pressed(vk_escape)
@@ -222,12 +247,19 @@ object_event_add
 // Room Start
 object_event_add
 (argument0,ev_other,ev_room_start,"
+    // Fix Delta
+    global.delta_time_var = 0;
+    global.last_time_var = current_time;
     // FPS
     room_speed = global.tps_var;
     local.autodraw = global.fps_var >= global.tps_var || global.vsync_var;
     set_automatic_draw(local.autodraw);
     // Create Collisions
     rm_to_coll_scr();
+    // MAKE SURE
+    if sprite_exists(global.make_sure_this_is_gone_please)
+    && global.make_sure_this_is_gone_please != 0
+    { show_error('what the hell',true); }
 ");
 // Game end
 object_event_add
