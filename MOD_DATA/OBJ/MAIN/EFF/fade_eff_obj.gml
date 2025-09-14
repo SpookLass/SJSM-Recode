@@ -34,7 +34,7 @@ object_event_add
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,"
-    if view_current == cam_id_var 
+    if view_current == cam_id_var || cam_id_var == -1
     {
         d3d_set_projection_ortho
         (

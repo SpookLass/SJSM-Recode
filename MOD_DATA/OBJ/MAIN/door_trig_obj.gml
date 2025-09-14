@@ -20,7 +20,7 @@ object_event_add
     // Function
     rm_count_var = 1;
     delay_var = 20;
-    switch irandom(183)
+    switch irandom(214)
     {
         case 0: { rm_var = hall_01_rm; break; }
         case 1: { rm_var = hall_02_a_rm; break; }
@@ -204,8 +204,39 @@ object_event_add
         case 179: { rm_var = thin_hall_14_rm; break; }
         case 180: { rm_var = thin_hall_15_rm; break; }
         case 181: { rm_var = thin_hall_16_rm; break; }
-        case 182: { rm_var = test_01_rm; break; }
-        case 183: { rm_var = test_02_rm; break; }
+        case 182: { rm_var = fish_01_rm; break; }
+        case 183: { rm_var = fish_02_rm; break; }
+        case 184: { rm_var = fish_03_rm; break; }
+        case 185: { rm_var = fish_04_rm; break; }
+        case 186: { rm_var = fish_05_rm; break; }
+        case 187: { rm_var = fish_06_rm; break; }
+        case 188: { rm_var = fish_07_rm; break; }
+        case 189: { rm_var = fish_08_rm; break; }
+        case 190: { rm_var = fish_09_rm; break; }
+        case 191: { rm_var = fish_10_rm; break; }
+        case 192: { rm_var = fish_11_rm; break; }
+        case 193: { rm_var = fish_12_rm; break; }
+        case 194: { rm_var = fish_13_old_rm; break; }
+        case 195: { rm_var = fish_13_rm; break; }
+        case 196: { rm_var = fish_14_rm; break; }
+        case 197: { rm_var = fish_15_old_rm; break; }
+        case 198: { rm_var = fish_15_rm; break; }
+        case 199: { rm_var = fish_16_rm; break; }
+        case 200: { rm_var = med_s_01_rm; break; }
+        case 201: { rm_var = med_s_02_rm; break; }
+        case 202: { rm_var = med_s_03_rm; break; }
+        case 203: { rm_var = med_s_04_rm; break; }
+        case 204: { rm_var = med_s_05_rm; break; }
+        case 205: { rm_var = med_s_06_rm; break; }
+        case 206: { rm_var = med_s_07_a_rm; break; }
+        case 207: { rm_var = med_s_07_b_rm; break; }
+        case 208: { rm_var = med_s_08_rm; break; }
+        case 209: { rm_var = med_s_09_rm; break; }
+        case 210: { rm_var = med_s_10_rm; break; }
+        case 211: { rm_var = med_s_11_rm; break; }
+        case 212: { rm_var = med_s_12_rm; break; }
+        case 213: { rm_var = test_01_rm; break; }
+        case 214: { rm_var = test_02_rm; break; }
     }
     // Alarm
     alarm_len_var = 1;
