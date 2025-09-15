@@ -29,20 +29,31 @@ object_event_add
         draw_set_color(c_white); draw_set_halign(fa_left);
         // Debug text
         local.str = '
-Health: '+string(global.player_obj.hp_var)+'
-Stamina: '+string(global.player_obj.stam_var)+'
-X: '+string(global.player_obj.x)+'
-Y: '+string(global.player_obj.y)+'
-Z: '+string(global.player_obj.z)+'
-X speed: '+string(global.player_obj.x_spd_var)+'
-Y speed: '+string(global.player_obj.y_spd_var)+'
-Z speed: '+string(global.player_obj.z_spd_var)+'
-On Floor: '+string(global.player_obj.on_floor_var)+'
-Forward: '+string(global.forward_input_var)+'
-Backward: '+string(global.backward_input_var)+'
-Left: '+string(global.strafe_left_input_var)+'
-Right: '+string(global.strafe_right_input_var)
-        draw_text_transformed(0,0,local.str,0.25,0.25,0);
+Player Stats
+    Health: '+string(player_obj.hp_var)+'
+    Stamina: '+string(player_obj.stam_var)+'
+Position
+    X: '+string(player_obj.x)+'
+    Y: '+string(player_obj.y)+'
+    Z: '+string(player_obj.z)+'
+Movement
+    X speed: '+string(player_obj.x_spd_var)+'
+    Y speed: '+string(player_obj.y_spd_var)+'
+    Z speed: '+string(player_obj.z_spd_var)+'
+    Yaw: '+string(player_obj.yaw_var)+'
+    Pitch: '+string(player_obj.pitch_var)+'
+    On Floor: '+string(player_obj.on_floor_var)+'
+Looking
+    Eye Yaw: '+string(player_obj.eye_yaw_var)+'
+    Eye Pitch: '+string(player_obj.eye_pitch_var)+'
+Input
+    Forward: '+string(global.forward_input_var)+'
+    Backward: '+string(global.backward_input_var)+'
+    Left: '+string(global.strafe_left_input_var)+'
+    Right: '+string(global.strafe_right_input_var)+'
+Taker
+    Taker: '+string(player_obj.alarm_arr[3,0]/player_obj.alarm_arr[3,1])
+        draw_text_transformed(0,96,local.str,0.25,0.25,0);
         d3d_set_hidden(true);
     }
 ");

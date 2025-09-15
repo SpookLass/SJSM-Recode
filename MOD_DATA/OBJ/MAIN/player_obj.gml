@@ -101,27 +101,37 @@ object_event_add
     shake_angle_base_var = 5;
     shake_pos_base_var = 1;
     // Alarms
-    alarm_len_var = 3;
+    alarm_len_var = 4;
     alarm_arr[0,2] = '';
     alarm_arr[1,2] = '';
     alarm_arr[2,2] = '';
+    alarm_arr[3,2] = '';
     // Behavior
-    switch(global.player_type)
+    switch global.player_type_var
     {
-        case 2:
+        case 1:
         {
             back_var = true;
             normal_var = false;
             breath_do_var = false;
             break;
         }
-        case 3:
+        case 2:
         {
             spd_base_var = 5/pf_ms_rate_const;
             sprint_spd_mult_var = 1.8;
             break;
         }
     }
+    // Taker Behavior
+    taker_alarm_var = 7200;
+    switch global.taker_type_var
+    {
+        // Gotta take the wiki's word, can't find it
+        case 2: { taker_alarm_var = 4200; break; } // HD
+        case 3: { taker_alarm_var = 2760; break; } // DH
+    }
+    set_alarm_scr(3,taker_alarm_var);
     // Stuff
     event_perform(ev_other,ev_room_start);
 ");
@@ -139,6 +149,19 @@ object_event_add
 object_event_add
 (argument0,ev_alarm,2,"
     in_door_var = false;
+");
+// Alarm 3 Event
+object_event_add
+(argument0,ev_alarm,3,"
+    if on_var && !dead_var && !active_var && !taker_spawn_var
+    {
+        taker_spawn_var = true;
+        with instance_create(0,0,taker_obj)
+        {
+            target_var = other.id;
+            cam_id_var = other.cam_id_var;
+        }
+    }
 ");
 // Room End Event
 object_event_add
@@ -178,6 +201,7 @@ object_event_add
     view_visible[cam_id_var] = true;
     view_enabled = true;
     // Start room
+    taker_spawn_var = false;
     stam_var = stam_max_var;
     start_stam_var = start_stam_base_var;
     in_door_var = true;
@@ -318,6 +342,11 @@ object_event_add
             local.input_dir_z = global.jump_input_var-global.crouch_input_var;
             local.input_dir_pitch = radtodeg(arctan2(local.input_dir_z,sqrt(sqr(local.input_dir_x)+sqr(local.input_dir_y))));
         }
+        // Is the player active?
+        active_var = abs(local.input_dir_x) || abs(local.input_dir_y) || abs(local.input_dir_z)
+        || global.sprint_input_var || global.jump_input_var || global.crouch_input_var;
+        if active_var && !dead_var && !taker_spawn_var
+        { set_alarm_scr(3,taker_alarm_var); }
         // Sprint
         sprint_var = do_sprint_var && global.sprint_input_var && (stam_var > 0 || !do_stam_var);
         // Calculate speed
