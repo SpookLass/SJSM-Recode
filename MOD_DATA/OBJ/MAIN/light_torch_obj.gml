@@ -14,13 +14,13 @@ object_event_add
     w_var = 3;
     spr_var = torch_spr;
     torch_var = noone;
+    color_var = true;
     event_inherited();
 ");
 // Step event
 object_event_add
 (argument0,ev_step,ev_step_normal,"
     spr_id_var = (spr_id_var+(global.delta_time_var/4)) mod sprite_get_number(spr_var);
-    if gold_var && image_blend != c_white { image_blend = c_white; }
     if instance_exists(torch_var) { visible = torch_var.on_var; }
 ")
 // Draw Event

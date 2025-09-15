@@ -11,7 +11,7 @@ execute_string("global.chair_coll[0] = prop_to_coll_scr(0,chair_mdl_path);");
 // Create event
 object_event_add
 (argument0,ev_create,0,"
-    stored_tex_var = table_bg_tex;
+    stored_tex_var = wood_03_bg_tex;
     event_inherited();
     solid_var = true;
     mdl_var = chair_mdl;

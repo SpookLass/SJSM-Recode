@@ -433,27 +433,36 @@ object_event_add
         }
         case 3: // Save Creation
         {
-            // Temporary, I just need to be able to see. This is where you come in, Bird
+            // Center text vertically
+            draw_set_valign(fa_middle);
             for (local.i=0; local.i<7; local.i+=1)
             {
                 if local.i != button_state_var
                 {
-                    local.ytmp = 96+(96*local.i);
+                    // Determine position. Uses current selected button and current drawing button for offset
+                    local.xtmp = 96;
+                    local.ytmp = 360+(96*(local.i-button_state_var));
+                    // Draw text background
                     draw_set_color(str_bg_color_var);
-                    draw_text_transformed(92,local.ytmp+4,button_str_arr[state_var,local.i],0.75,0.75,0);
-                    draw_text_transformed(94,local.ytmp+2,button_str_arr[state_var,local.i],0.75,0.75,0);
+                    draw_text_transformed(local.xtmp-4,local.ytmp+4,button_str_arr[state_var,local.i],0.75,0.75,0);
+                    draw_text_transformed(local.xtmp-2,local.ytmp+2,button_str_arr[state_var,local.i],0.75,0.75,0);
+                    // Draw text
                     draw_set_color(c_yellow);
-                    draw_text_transformed(96,local.ytmp,button_str_arr[state_var,local.i],0.75,0.75,0);
+                    draw_text_transformed(local.xtmp,local.ytmp,button_str_arr[state_var,local.i],0.75,0.75,0);
                 }
             }
+            // Determine position. X is modified so the text can go boing properly
             local.xtmp = 96+(string_width(button_str_arr[state_var,button_state_var])*0.375);
-            local.ytmp = 96+(96*button_state_var);
+            local.ytmp = 360;
+            // Draw text background
             draw_set_halign(fa_center); draw_set_color(str_bg_select_color_var);
             draw_text_transformed(local.xtmp-4,local.ytmp+4,button_str_arr[state_var,button_state_var],str_scale_var,0.75,0);
             draw_text_transformed(local.xtmp-2,local.ytmp+2,button_str_arr[state_var,button_state_var],str_scale_var,0.75,0);
+            // Draw text
             draw_set_color(c_white);
             draw_text_transformed(local.xtmp,local.ytmp,button_str_arr[state_var,button_state_var],str_scale_var,0.75,0);
-            draw_set_halign(fa_left); 
+            // Reset variables
+            draw_set_valign(fa_left); draw_set_halign(fa_left); 
         }
     }
 ");

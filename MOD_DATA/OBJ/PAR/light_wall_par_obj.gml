@@ -15,6 +15,7 @@ object_event_add
     tex_h_var = 1;
     store_spr_var = -1;
     spr_var = store_spr_var;
+    color_var = true;
 ");
 // Step event
 object_event_add
@@ -22,7 +23,6 @@ object_event_add
     if spr_var == -1 { local.spr = light_wall_obj_spr; }
     else { local.spr = spr_var; }
     spr_id_var = (spr_id_var+(global.delta_time_var/6)) mod sprite_get_number(local.spr);
-    if gold_var && image_blend != c_white { image_blend = c_white; }
     if instance_exists(torch_var) { visible = torch_var.on_var; }
 ")
 // Draw Event

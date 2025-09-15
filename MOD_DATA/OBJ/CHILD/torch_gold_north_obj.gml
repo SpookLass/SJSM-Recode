@@ -11,6 +11,7 @@ object_event_add
 (argument0,ev_create,0,"
     gold_var = true;
     auto_var = true;
+    color_var = false;
     local.light = instance_create(x+lengthdir_x(-1.5,direction+90),y+lengthdir_y(-1.5,direction+90),gold_part_obj);
     local.light.z += z;
     local.light.torch_var = id;

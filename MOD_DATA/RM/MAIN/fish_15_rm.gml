@@ -139,10 +139,10 @@ room_instance_add(argument0,400,480,wall_vert_obj);
 room_instance_add(argument0,192,240,torch_north_obj);
 room_instance_add(argument0,192,272,torch_south_obj);
 // Props
-room_instance_add(argument0,288,288,fish_tank_obj);
-room_instance_add(argument0,288,320,fish_tank_obj);
-room_instance_add(argument0,288,352,fish_tank_obj);
-room_instance_add(argument0,288,384,fish_tank_obj);
-room_instance_add(argument0,288,416,fish_tank_obj);
-room_instance_add(argument0,288,448,fish_tank_obj);
+room_instance_add(argument0,288,288,tank_rand_obj);
+room_instance_add(argument0,288,320,tank_rand_obj);
+room_instance_add(argument0,288,352,tank_rand_obj);
+room_instance_add(argument0,288,384,tank_rand_obj);
+room_instance_add(argument0,288,416,tank_rand_obj);
+room_instance_add(argument0,288,448,tank_rand_obj);
 // Not yet

@@ -48,6 +48,7 @@ object_event_add
     do_attack_var = true;
     do_anim_var = true;
     do_snd_var = true;
+    color_var = true;
     // Speed
     spd_mult_var = 1;
     // Delay
@@ -136,7 +137,7 @@ object_event_add
     enter_var = type_var > 0;
     do_coll_var = false;
     // Color
-    if !instance_exists(color_par_obj) 
+    if !color_var || !instance_exists(color_par_obj) || global.color_var == 1
     { image_blend = c_white; }
     // Reset Position
     yaw_var = global.spawn_arr[0,3];

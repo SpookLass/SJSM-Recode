@@ -20,7 +20,7 @@ object_event_add
     // Function
     rm_count_var = 1;
     delay_var = 20;
-    switch irandom(214)
+    switch irandom(226)
     {
         case 0: { rm_var = hall_01_rm; break; }
         case 1: { rm_var = hall_02_a_rm; break; }
@@ -235,8 +235,20 @@ object_event_add
         case 210: { rm_var = med_s_10_rm; break; }
         case 211: { rm_var = med_s_11_rm; break; }
         case 212: { rm_var = med_s_12_rm; break; }
-        case 213: { rm_var = test_01_rm; break; }
-        case 214: { rm_var = test_02_rm; break; }
+        case 213: { rm_var = tt_hall_01_rm; break; }
+        case 214: { rm_var = tt_hall_02_rm; break; }
+        case 215: { rm_var = tt_hall_03_rm; break; }
+        case 216: { rm_var = tt_hall_04_rm; break; }
+        case 217: { rm_var = tt_hall_05_rm; break; }
+        case 218: { rm_var = tt_hall_06_rm; break; }
+        case 219: { rm_var = tt_hall_07_rm; break; }
+        case 220: { rm_var = tt_hall_08_rm; break; }
+        case 221: { rm_var = tt_hall_09_rm; break; }
+        case 222: { rm_var = tt_hall_10_rm; break; }
+        case 223: { rm_var = tt_hall_11_rm; break; }
+        case 224: { rm_var = tt_hall_12_rm; break; }
+        case 225: { rm_var = test_01_rm; break; }
+        case 226: { rm_var = test_02_rm; break; }
     }
     // Alarm
     alarm_len_var = 1;

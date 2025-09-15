@@ -129,6 +129,7 @@ object_event_add
     // Bools
     do_anim_var = false;
     do_snd_var = false;
+    if bright_var { color_var = false; }
 ");
 // Destroy Event
 object_event_add
@@ -172,7 +173,6 @@ object_event_add
             event_user(0);
         }
     }
-    if bright_var { image_blend = c_white; }
     // Spawn at exit
     state_var = 0;
     if exit_spawn_var
@@ -340,6 +340,15 @@ object_event_add
         cam_id_var = -1;
     }
     set_alarm_scr(9,scare_alarm_var);
+");
+// Attack Success
+object_event_add
+(argument0,ev_other,ev_user3,"
+    if state_var == 2
+    {
+        event_perform(ev_alarm,8);
+        set_alarm_scr(8,-1);
+    }
 ");
 // Draw
 object_event_add

@@ -8,24 +8,30 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create event
 object_event_add
-(argument0,ev_create,0,"
-    if !global.color_var // OG style
+(argument0,ev_create,0,"event_user(0);");
+object_event_add
+(argument0,ev_other,ev_user0,"
+    if global.color_var < 2
     {
-        floor_par_obj.image_blend = image_blend;
-        ceil_par_obj.image_blend = image_blend;
-        wall_par_obj.image_blend = image_blend;
-        prop_par_obj.image_blend = image_blend;
-        echidna_obj.image_blend = image_blend;
-        local.light_color = light_color_scr(image_blend);
-        light_floor_par_obj.image_blend = local.light_color;
-        light_wall_par_obj.image_blend = local.light_color;
-        light_torch_obj.image_blend = local.light_color;
+        with floor_par_obj { if color_var { image_blend = other.image_blend; }}
+        with ceil_par_obj { if color_var { image_blend = other.image_blend; }}
+        with wall_par_obj { if color_var { image_blend = other.image_blend; }}
+        // Recode
+        if global.color_var != 1
+        {
+            with prop_par_obj { if color_var { image_blend = other.image_blend; }}
+            with echidna_obj { if color_var { image_blend = other.image_blend; }}
+            local.light_color = light_color_scr(image_blend);
+            with light_floor_par_obj { if color_var { image_blend = local.light_color; }}
+            with light_wall_par_obj { if color_var { image_blend = local.light_color; }}
+            with light_torch_obj { if color_var { image_blend = local.light_color; }}
+        }
         visible = false;
     }
 ");
 // Room Start event
 object_event_add
-(argument0,ev_other,ev_room_start,"event_perform(ev_create,0);");
+(argument0,ev_other,ev_room_start,"event_user(0);");
 // Draw event
 object_event_add
 (argument0,ev_draw,0,"

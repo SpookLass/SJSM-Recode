@@ -17,6 +17,7 @@ object_event_add
     store_tex_var = -1;
     tex_var = store_tex_var;
     solid_var = true;
+    color_var = true;
 ");
 // Draw Event
 object_event_add

@@ -19,6 +19,7 @@ object_event_add
     local.light = instance_create(x+lengthdir_x(-1.5,direction+90),y+lengthdir_y(-1.5,direction+90),light_torch_obj);
     local.light.z += z;
     local.light.gold_var = gold_var;
+    local.light.color_var = !gold_var;
     local.light.torch_var = id;
     if auto_var { event_perform(ev_other,ev_user0); }
     // Gold
@@ -29,8 +30,8 @@ object_event_add
 (argument0,ev_step,ev_step_normal,"
     if gold_var
     {
-        if image_blend != c_white { image_blend = c_white; }
-        if instance_exists(door_var) { on_var = !door_var.lock_var; }
+        if instance_exists(door_var) 
+        { on_var = !door_var.lock_var; }
     }
 ");
 // Draw
@@ -62,6 +63,7 @@ object_event_add
             local.light.direction = direction;
             local.light.z = other.z;
             local.light.gold_var = other.gold_var;
+            local.light.color_var = !gold_var;
             local.light.torch_var = other.id;
         }
     }
@@ -79,6 +81,7 @@ object_event_add
             local.light.direction = direction;
             local.light.z = z;
             local.light.gold_var = other.gold_var;
+            local.light.color_var = !gold_var;
             local.light.torch_var = other.id;
         }
     }
