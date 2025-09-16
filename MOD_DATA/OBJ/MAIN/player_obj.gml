@@ -206,7 +206,9 @@ object_event_add
     start_stam_var = start_stam_base_var;
     in_door_var = true;
     on_var = true;
+    fall_temp_var = false;
     set_alarm_scr(2,enter_delay_var);
+    set_alarm_scr(3,taker_alarm_var);
     with instance_create(0,0,fade_eff_obj)
     {
         image_blend = c_black; 
@@ -468,7 +470,7 @@ object_event_add
         breath_time_var = (breath_time_var+local.breath_rate) mod 360;
         breath_var = breath_mult_var*sin(degtorad(breath_time_var));
         // Calculate health
-        if !hurt_var && !in_door_var && heal_var
+        if !hurt_var && !in_door_var && heal_var && !dead_var
         {
             local.heal_rate = heal_rate_var*heal_mult_var*global.delta_time_var;
             hp_var = median(0,hp_max_var,hp_var+local.heal_rate);

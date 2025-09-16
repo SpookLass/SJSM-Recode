@@ -9,11 +9,10 @@ object_set_visible(argument0,true);
 // Create
 object_event_add
 (argument0,ev_create,0,"
+    stored_tex_var = torch_bg_tex;
+    event_inherited();
     mdl_var = torch_mdl;
     mdl_path_var = torch_mdl_path;
-    stored_tex_var = torch_bg_tex;
-    tex_var = stored_tex_var;
-    solid_var = false;
     on_var = true;
     // Light stuff
     local.light = instance_create(x+lengthdir_x(-1.5,direction+90),y+lengthdir_y(-1.5,direction+90),light_torch_obj);
