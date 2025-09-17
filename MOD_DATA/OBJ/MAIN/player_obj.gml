@@ -473,9 +473,13 @@ object_event_add
         if !hurt_var && !in_door_var && heal_var && !dead_var
         {
             local.heal_rate = heal_rate_var*heal_mult_var*global.delta_time_var;
-            hp_var = median(0,hp_max_var,hp_var+local.heal_rate);
+            hp_var += local.heal_rate;
+            hp_infect_var -= local.heal_rate;
             heal_mult_var = 1;
         }
+        // Clamp Health
+        hp_var = median(0,hp_max_var,hp_var);
+        hp_infect_var = median(0,hp_max_var-hp_var,hp_infect_var);
         // Calculate FOV
         local.target_fov = fov_var*power(max(0.6,spd_var/spd_base_var),0.25);
         if current_fov_var != local.target_fov

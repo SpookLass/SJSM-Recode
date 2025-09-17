@@ -98,6 +98,7 @@ object_event_add
     eff_max_var = 60;
     state_eff_min_var = 30;
     state_eff_max_var = 60;
+    spr_overlay_var = sprite_add(main_directory_const+'\SPR\MON\para_overlay_spr.png',3,false,false,0,0);
     // Type
     switch global.para_type_var
     {
@@ -189,16 +190,34 @@ object_event_add
 // Room Start Event
 object_event_add
 (argument0,ev_other,ev_room_start,"
+    // Chance forms
     if state_var < 2 || !state_rm_var
     {
         state_var = 0;
         event_perform(ev_other,ev_user15); 
     }
+    // Recalculate delay
     else if delay_calc_var // Delay calculation
     {
         delay_min_var = max(0,32-(32/(spd_base_var*spd_mult_var)));
         delay_max_var = delay_min_var;
     }
+    // Create overlay
+    if !instance_exists(para_eff_obj)
+    {
+        local.para = id;
+        with player_obj
+        {
+            local.play = id;
+            with instance_create(0,0,para_eff_obj)
+            {
+                spr_var = local.para.spr_overlay_var;
+                play_var = local.play;
+                cam_id_var = local.play.cam_id_var;
+            }
+        }
+    }
+    // Reset variables
     warn_var = false;
     // Inherit
     event_inherited();
@@ -313,6 +332,10 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user3,"
     event_inherited();
+    with attack_target_var
+    {
+        hp_infect_var = median(0,hp_max_var-hp_var,hp_infect_var+other.dmg_var);
+    }
     with instance_create(0,0,spr_flash_eff_obj)
     {
         spr_var = other.spr_eff_var;
