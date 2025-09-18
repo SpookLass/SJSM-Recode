@@ -7,6 +7,7 @@ execute_file(main_directory_const+"\SCR\LOAD\mdl_load_scr.gml");
 execute_file(main_directory_const+"\SCR\LOAD\coll_load_scr.gml");
 execute_file(main_directory_const+"\SCR\LOAD\obj_load_scr.gml");
 execute_file(main_directory_const+"\SCR\LOAD\rm_load_scr.gml");
+execute_file(main_directory_const+"\SCR\LOAD\zone_load_scr.gml");
 // Set variables
 texture_set_repeat(true);
 action_set_cursor(-1,false);
@@ -16,9 +17,6 @@ d3d_set_lighting(false);
 d3d_set_culling(false);
 d3d_set_hidden(false);
 draw_set_font(main_font);
-// Load in the STUFF
+// Load
 instance_create(0,0,global.control_obj);
-/*instance_create(0,0,global.player_obj);
-instance_create(0,0,global.hud_obj);
-caster_loop(choose(amb_01_snd,amb_02_snd,amb_03_snd,amb_04_snd,amb_05_snd,amb_06_snd,amb_07_snd,amb_08_snd,amb_09_snd,amb_10_snd,amb_11_snd,amb_12_snd),global.vol_var,1);*/
 room_goto(menu_rm);

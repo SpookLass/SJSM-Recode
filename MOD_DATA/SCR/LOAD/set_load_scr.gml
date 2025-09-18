@@ -95,6 +95,7 @@ global.lisa_type_var = ini_read_real("BEHAVIOR","lisa_type",global.default_type_
 global.otto_type_var = ini_read_real("BEHAVIOR","otto_type",global.default_type_var);
 global.spooper_type_var = ini_read_real("BEHAVIOR","spooper_type",global.default_type_var);
 global.wf_type_var = ini_read_real("BEHAVIOR","wf_type",global.default_type_var);
+ini_close();
 // Set stuff
 window_set_fullscreen(global.fullscreen_var);
 set_synchronization(global.vsync_var);
