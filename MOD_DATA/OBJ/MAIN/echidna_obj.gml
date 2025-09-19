@@ -160,11 +160,8 @@ object_event_add
 (argument0,ev_step,ev_step_normal,"
     if on_var
     {
-        if move_var
-        {
-            event_user(6);
-            event_user(0);
-        }
+        if move_var || do_seen_var { event_user(6); }
+        if move_var { event_user(0); }
         if anim_var { event_user(1); }
         if attack_var { event_user(2); }
         if do_seen_var { event_user(5); }

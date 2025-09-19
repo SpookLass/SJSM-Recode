@@ -38,6 +38,7 @@ object_event_add
     // Effect
     bg_overlay_var = background_add(vanilla_directory_const+'\TEX\sprites\fog_spr.png',false,false);
     overlay_color_var = c_black;
+    overlay_alpha_var = 0.5;
     dark_var = true;
     dark_color_var = make_color_rgb(38,38,42);
     bright_var = false;
@@ -95,6 +96,7 @@ object_event_add
             dmg_alarm_var = 180;
             bekka_type_var = 2;
             overlay_color_var = c_white;
+            overlay_alpha_var = 0.1;
             dark_var = false;
             break;
         }
@@ -149,6 +151,7 @@ object_event_add
         with instance_create(0,0,kh_overlay_obj) do
         {
             image_blend = other.overlay_color_var;
+            image_alpha = other.overlay_alpha_var;
             bg_var = other.bg_overlay_var;
         }
     }
@@ -239,7 +242,7 @@ object_event_add
                 {
                     with player_obj
                     {
-                        if box_coll_scr(x,y,z,coll_var[2],coll_var[1],other.x,other.y,other.z,other.trig_h_var,other.trig_w_var)
+                        if box_coll_scr(x,y,z,coll_var[2],coll_var[1],other.x,other.y,other.z,other.trig_w_var,other.trig_h_var)
                         {
                             local.active = true;
                             break;

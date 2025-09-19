@@ -6,6 +6,13 @@ object_set_persistent(argument0,true);
 object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
+/*
+state_var
+    0: Down
+    1: Going down
+    2: Up
+    3: Going up
+*/
 // Create Event
 object_event_add
 (argument0,ev_other,ev_user7,"
@@ -32,6 +39,7 @@ object_event_add
     snd_dist_var = 600;
     // Anim
     anim_type_var = 3; // Random
+    visible_var = true;
     // Seen
     do_seen_var = true;
     seen_yaw_var = 30;
@@ -47,6 +55,7 @@ object_event_add
     {
         case 0: // Mod
         {
+            // type_var = 1;
             delay_var = 90;
             break;
         }
@@ -70,7 +79,7 @@ object_event_add
         }
     }
     // Alarms
-    alarm_len_var = 8;
+    alarm_len_var = 10;
     alarm_arr[7,2] = '';
     // Inherit
     event_inherited();
@@ -83,6 +92,7 @@ object_event_add
     y = global.spawn_arr[0,1];
     move_var = false;
     anim_var = false;
+    state_var = 2;
 ");
 // Destroy Event
 object_event_add
@@ -94,11 +104,13 @@ object_event_add
 object_event_add
 (argument0,ev_alarm,0,"
     event_inherited();
-    if seen_start_delay_var
+    if seen_start_delay_var > 0
     {
+        state_var = 1;
         set_alarm_scr(1,seen_start_delay_var);
         set_alarm_scr(2,seen_start_delay_var);
         set_alarm_scr(6,seen_start_delay_var);
+        set_alarm_scr(8,seen_start_delay_var);
     }
     else
     {
@@ -109,16 +121,44 @@ object_event_add
 // Step event
 object_event_add
 (argument0,ev_step,ev_step_normal,"
-    // Based on speed until I can find a better solution
-    if seen_var != 1 || target_var.spd_var > 0
-    { set_alarm_scr(7,tp_alarm_var); }
+    if seen_var == 1 && target_var != noone && !target_var.active_var
+    { if alarm_arr[7,0] <= 0 { set_alarm_scr(7,tp_alarm_var); }}
+    else if alarm_arr[7,0] > 0 { set_alarm_scr(7,-1); }
+    // Seem stuff
     if seen_var != 0
     {
         if spd_var > 0 { set_motion_3d_scr(0,true); }
         move_var = false;
         anim_var = false;
+        if state_var > 1
+        {
+            state_var = 1;
+            set_alarm_scr(1,-1);
+            set_alarm_scr(2,-1);
+            set_alarm_scr(6,-1);
+            set_alarm_scr(8,seen_delay_var);
+            // Somewhat jank way to keep the current position
+            alarm_arr[8,0] -= alarm_arr[9,0];
+            set_alarm_scr(9,-1);
+        }
+    }
+    else if state_var < 2
+    {
+        state_var = 3;
         set_alarm_scr(1,seen_delay_var);
         set_alarm_scr(2,seen_delay_var);
+        set_alarm_scr(6,seen_delay_var);
+        set_alarm_scr(9,seen_delay_var);
+        // Somewhat jank way to keep the current position
+        alarm_arr[9,0] -= alarm_arr[8,0];
+        set_alarm_scr(8,-1);
+    }
+    switch state_var
+    {
+        case 0: { z_off_var = 0; break; }
+        case 1: { z_off_var = 256*alarm_arr[8,0]/alarm_arr[8,1]; break; }
+        case 2: { z_off_var = 256; break; }
+        case 3: { z_off_var = 256*(1-(alarm_arr[9,0]/alarm_arr[9,1])); break; }
     }
     event_inherited();
 ");
@@ -127,12 +167,20 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user3,"
     event_inherited();
+    if spd_var > 0 { set_motion_3d_scr(0,true); }
     move_var = false;
     anim_var = false;
-    set_alarm_scr(1,seen_delay_var);
-    set_alarm_scr(2,seen_delay_var);
-    set_alarm_scr(6,seen_delay_var);
-    set_alarm_scr(7,tp_alarm_var);
+    set_alarm_scr(7,-1);
+    if state_var > 1
+    {
+        state_var = 0;
+        set_alarm_scr(1,-1);
+        set_alarm_scr(2,-1);
+        set_alarm_scr(6,-1);
+        // set_alarm_scr(8,seen_delay_var);
+        set_alarm_scr(8,-1);
+        set_alarm_scr(9,-1);
+    }
 ");
 
 // Teleport alarm
@@ -149,4 +197,14 @@ object_event_add
     local.dist = random_range(tp_dist_min_var,tp_dist_max_var);
     x = target_x_var+lengthdir_x(local.dist,local.dir);
     y = target_y_var+lengthdir_x(local.dist,local.dir);
+");
+// Going down
+object_event_add
+(argument0,ev_alarm,8,"
+    state_var = 0;
+");
+// Going up
+object_event_add
+(argument0,ev_alarm,9,"
+    state_var = 2;
 ");
