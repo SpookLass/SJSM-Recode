@@ -47,6 +47,7 @@ object_event_add
     seen_delay_var = 60;
     seen_start_delay_var = 0;
     // TP
+    tp_sight_var = false;
     tp_alarm_var = 480;
     tp_dist_min_var = 128;
     tp_dist_max_var = 512;
@@ -55,8 +56,10 @@ object_event_add
     {
         case 0: // Mod
         {
-            // type_var = 1;
+            tp_sight_var = true;
+            type_var = 2;
             delay_var = 90;
+            dmg_var = 30;
             break;
         }
         case 3: // Hellgate
@@ -88,8 +91,10 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_room_start,"
     event_inherited();
+    enter_var = false;
     x = global.spawn_arr[0,0];
     y = global.spawn_arr[0,1];
+    z = global.spawn_arr[0,2];
     move_var = false;
     anim_var = false;
     state_var = 2;
@@ -193,7 +198,8 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user15,"
     // Originally anywhere in the room (0-1280 x 0-720 y)
-    local.dir = random_range(target_eye_yaw_var+seen_yaw_var,target_eye_yaw_var+360-seen_yaw_var);
+    if tp_sight_var { local.dir = random_range(target_eye_yaw_var+seen_yaw_var,target_eye_yaw_var+360-seen_yaw_var); }
+    else { local.dir = random(360); }
     local.dist = random_range(tp_dist_min_var,tp_dist_max_var);
     x = target_x_var+lengthdir_x(local.dist,local.dir);
     y = target_y_var+lengthdir_x(local.dist,local.dir);

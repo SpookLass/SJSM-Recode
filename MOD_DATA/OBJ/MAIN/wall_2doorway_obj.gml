@@ -11,5 +11,6 @@ object_event_add
 (argument0,ev_create,0,"
     event_inherited();
     z = 32;
+    h_var = 64;
     no_grid_var = true;
 ");

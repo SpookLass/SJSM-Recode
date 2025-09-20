@@ -156,8 +156,8 @@ room_instance_add(argument0,464,256,wall_3high_hor_obj);
 room_instance_add(argument0,464,352,wall_3high_hor_obj);
 room_instance_add(argument0,432,352,wall_3high_hor_obj);
 room_instance_add(argument0,400,352,wall_3high_hor_obj);
-room_instance_add(argument0,304,352,wall_doorway_hor_obj);
-room_instance_add(argument0,304,384,wall_doorway_hor_obj);
+room_instance_add(argument0,304,352,wall_2doorway_hor_obj);
+room_instance_add(argument0,304,384,wall_2doorway_hor_obj);
 // Walls (Vertical)
 room_instance_add(argument0,96,432,wall_vert_obj);
 room_instance_add(argument0,288,368,wall_vert_obj);
@@ -177,10 +177,10 @@ room_instance_add(argument0,352,336,wall_3high_vert_obj);
 room_instance_add(argument0,256,336,wall_3high_vert_obj);
 room_instance_add(argument0,256,304,wall_3high_vert_obj);
 room_instance_add(argument0,256,272,wall_3high_vert_obj);
-room_instance_add(argument0,256,432,wall_doorway_vert_obj);
-room_instance_add(argument0,352,304,wall_doorway_vert_obj);
-room_instance_add(argument0,384,304,wall_doorway_vert_obj);
-room_instance_add(argument0,480,304,wall_doorway_vert_obj);
+room_instance_add(argument0,256,432,wall_2doorway_vert_obj);
+room_instance_add(argument0,352,304,wall_2doorway_vert_obj);
+room_instance_add(argument0,384,304,wall_2doorway_vert_obj);
+room_instance_add(argument0,480,304,wall_2doorway_vert_obj);
 // Torches
 room_instance_add(argument0,176,416,torch_north_obj);
 room_instance_add(argument0,304,256,torch_north_obj);

@@ -159,7 +159,7 @@ object_event_add
 // Step event
 object_event_add
 (argument0,ev_step,ev_step_normal,"
-    if seen_var { spd_base_var = state_seen_spd_var[state_var]; }
+    if seen_var == 1 { spd_base_var = state_seen_spd_var[state_var]; }
     else { spd_base_var = state_spd_var[state_var]; }
     if state_var == 1 { image_alpha = random_range(0.2,1); }
     event_inherited();

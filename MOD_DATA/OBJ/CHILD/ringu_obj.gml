@@ -33,6 +33,11 @@ object_event_add
     // Behavior
     switch global.ringu_type_var
     {
+        case 0:
+        {
+            dmg_var = 30;
+            break;
+        }
         case 3: // Old HD
         {
             spd_base_var = 44/45; // 0.9r7

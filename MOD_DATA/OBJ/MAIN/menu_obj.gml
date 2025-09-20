@@ -344,7 +344,7 @@ object_event_add
                         instance_create(0,0,global.player_obj);
                         instance_create(0,0,global.hud_obj);
                         caster_loop(choose(amb_01_snd,amb_02_snd,amb_03_snd,amb_04_snd,amb_05_snd,amb_06_snd,amb_07_snd,amb_08_snd,amb_09_snd,amb_10_snd,amb_11_snd,amb_12_snd),global.vol_var,1);
-                        global.zone_var = zone_arr[irandom(zone_len_var-1)];
+                        global.zone_var = global.zone_arr[irandom(global.zone_len_var-1)];
                         room_goto(hall_01_rm);
                     }
                     // Back

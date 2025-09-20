@@ -30,8 +30,8 @@ object_event_add
     snd_len_var = -1;
     // Rand
     draw_chance_var = 2;
-    rand_alarm_var = 6;
-    rand_alarm_var = 30;
+    rand_alarm_min_var = 6;
+    rand_alarm_max_var = 30;
     rand_chance_var = 3;
     alpha_min_var = 0.3;
     alpha_max_var = 1;
