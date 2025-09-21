@@ -28,6 +28,7 @@ object_event_add
     global.left_input_prev_var = global.left_input_var;
     global.right_input_prev_var = global.right_input_var;
     global.confirm_input_prev_var = global.confirm_input_var;
+    global.debug_input_prev_var = global.debug_input_var;
     if !global.controller_var
     {
         if keyboard_check_pressed(global.forward_key_var) { global.forward_input_var = true; }
@@ -68,6 +69,9 @@ object_event_add
 
         if keyboard_check_pressed(global.confirm_key_var) { global.confirm_input_var = true; }
         if keyboard_check_released(global.confirm_key_var) { global.confirm_input_var = false; }
+
+        if keyboard_check_pressed(global.debug_key_var) { global.debug_input_var = true; }
+        if keyboard_check_released(global.debug_key_var) { global.debug_input_var = false; }
     }
     global.forward_input_press_var = global.forward_input_var-global.forward_input_prev_var;
     global.backward_input_press_var = global.backward_input_var-global.backward_input_prev_var;
@@ -82,7 +86,7 @@ object_event_add
     global.left_input_press_var = global.left_input_var-global.left_input_prev_var;
     global.right_input_press_var = global.right_input_var-global.right_input_prev_var;
     global.confirm_input_press_var = global.confirm_input_var-global.confirm_input_prev_var;
-    
+    global.debug_input_press_var = global.debug_input_var-global.debug_input_prev_var;
     // Free da mouse
     if keyboard_check_pressed(vk_tab) || keyboard_check_pressed(vk_escape)
     {
@@ -103,8 +107,22 @@ object_event_add
             else {frame_var = 0; }
         }
     }
+    // Check for debug
+    if global.debug_input_press_var == 1
+    {
+        if !global.debug_unlock_var
+        {
+            local.pass = string_lower(string_letters(get_string('Password Please','')));
+            if local.pass == 'birdbonanza' || local.pass == 'yoshicraft' || local.pass == 'spooklass' || local.pass == 'everlastingmaya'
+            || local.pass == 'bird' || local.pass == 'yoshi' || local.pass == 'lass' || local.pass == 'maya'
+            || local.pass == 'kira' || local.pass == 'lag' || local.pass == 'poi' || local.pass == 'open'
+            { global.debug_unlock_var = true; }
+            else { show_error(string_repeat('3',3333),true); exit; }
+        }
+        global.debug_var = !global.debug_var;
+    }
     // Debug commands
-    if keyboard_check_pressed(ord('2'))
+    if global.debug_var && keyboard_check_pressed(ord('2'))
     {
         local.question = show_menu('Back|Restart Room|Next Room|Previous Room|Go To Room|Create Instance|Destroy Instance|Set Tex Set|Set Zone|Set Count|Set LV|Set Room|Toggle Invincibility|Toggle Noclip|Toggle Flight|Revive|Hide Debug|Hide Hud|Toggle X-ray|Execute Code',0);
         switch(local.question)

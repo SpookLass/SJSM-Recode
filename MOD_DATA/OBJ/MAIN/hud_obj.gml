@@ -28,7 +28,9 @@ object_event_add
         draw_text_transformed(1226,54,local.str,.75,0.75,0);
         draw_set_color(c_white); draw_set_halign(fa_left);
         // Debug text
-        local.str = '
+        if global.debug_var
+        {
+            local.str = '
 Player Stats
     Health: '+string(player_obj.hp_var)+'
     Stamina: '+string(player_obj.stam_var)+'
@@ -52,8 +54,9 @@ Input
     Left: '+string(global.strafe_left_input_var)+'
     Right: '+string(global.strafe_right_input_var)+'
 Taker
-    Taker: '+string(player_obj.alarm_arr[3,0]/player_obj.alarm_arr[3,1])
-        draw_text_transformed(0,96,local.str,0.25,0.25,0);
-        d3d_set_hidden(true);
+    Taker: '+string(player_obj.alarm_arr[3,0])+' / '+string(player_obj.alarm_arr[3,1])
+            draw_text_transformed(0,96,local.str,0.25,0.25,0);
+            d3d_set_hidden(true);
+        }
     }
 ");
