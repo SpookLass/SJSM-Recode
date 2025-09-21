@@ -106,7 +106,7 @@ object_event_add
     // Debug commands
     if keyboard_check_pressed(ord('2'))
     {
-        local.question = show_menu('Back|Restart Room|Next Room|Previous Room|Go To Room|Create Instance|Destroy Instance|Set Tex Set|Set Count|Set LV|Set Room|Toggle Invincibility|Toggle Noclip|Toggle Flight|Revive|Hide Debug|Hide Hud|Toggle X-ray|Execute Code',0);
+        local.question = show_menu('Back|Restart Room|Next Room|Previous Room|Go To Room|Create Instance|Destroy Instance|Set Tex Set|Set Zone|Set Count|Set LV|Set Room|Toggle Invincibility|Toggle Noclip|Toggle Flight|Revive|Hide Debug|Hide Hud|Toggle X-ray|Execute Code',0);
         switch(local.question)
         {
             case 1: { room_restart(); break; }
@@ -179,12 +179,18 @@ object_event_add
                 }
                 break;
             }
-            case 8: { global.count_var = get_integer('Set Count', global.count_var); break; }
-            case 9: { global.violence_var = get_integer('Set LOVE', global.violence_var); break; }
-            case 10: { global.rm_count_var = get_integer('Set Room Count', global.rm_count_var); break; }
-            case 11: { with player_obj { invuln_var = !invuln_var; } break; }
-            case 12: { with player_obj { do_coll_var = !do_coll_var; } break; }
-            case 13:
+            case 8:
+            {
+                global.zone_var = median(0,global.zone_len_var-1,get_integer('Zone',global.zone_var));
+                ds_list_clear(global.rm_list_var);
+                break;
+            }
+            case 9: { global.count_var = get_integer('Set Count', global.count_var); break; }
+            case 10: { global.violence_var = get_integer('Set LOVE', global.violence_var); break; }
+            case 11: { global.rm_count_var = get_integer('Set Room Count', global.rm_count_var); break; }
+            case 12: { with player_obj { invuln_var = !invuln_var; } break; }
+            case 13: { with player_obj { do_coll_var = !do_coll_var; } break; }
+            case 14:
             {
                 with player_obj
                 {
@@ -193,7 +199,7 @@ object_event_add
                 } 
                 break; 
             }
-            case 14:
+            case 15:
             {
                 with (player_obj)
                 {
@@ -207,10 +213,10 @@ object_event_add
                 }
                 break;
             }
-            case 15: { global.hide_debug = !global.hide_debug; break; }
-            case 16: { global.hide_hud = !global.hide_hud; break; }
-            case 17: { global.xray = !global.xray; break; }
-            case 18:
+            case 16: { global.hide_debug = !global.hide_debug; break; }
+            case 17: { global.hide_hud = !global.hide_hud; break; }
+            case 18: { global.xray = !global.xray; break; }
+            case 19:
             {
                 local.code = get_string('Execute Code','');
                 if local.code != ''

@@ -380,7 +380,7 @@ object_event_add
             if back_var { local.spd *= lerp_scr(1,back_spd_mult_var,abs(local.input_dir)/180); }
             acc_3d_scr(global.delta_time_var,local.acc,local.frick,local.input_dir+eye_yaw_var,local.input_dir_pitch+(eye_pitch_var*lengthdir_x(1,local.input_dir)),local.spd);
         }
-        else if z <= -256 // Maybe add deathplane later?
+        else if z <= -320 // Maybe add deathplane later?
         {
             x = floor_x_var;
             y = floor_y_var;

@@ -11,6 +11,6 @@ object_event_add
 (argument0,ev_create,0,"
     store_tex_var = rock_bg_tex;
     event_inherited();
-    z = -256;
-    h_var = 256;
+    z = -320;
+    h_var = 320;
 ");

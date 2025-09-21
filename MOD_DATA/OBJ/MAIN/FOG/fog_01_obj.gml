@@ -11,8 +11,8 @@ object_event_add
 (argument0,ev_create,0,"
     fog_var = true;
     fog_color_var = c_black;
-    fog_start_var = 32;
-    fog_end_var = 200;
+    fog_start_var = 32; // OG: 32, HD: 106.r6
+    fog_end_var = 200; // OG: 200, HD: 266.r6
     fog_dark_var = true;
     event_inherited();
 ");
