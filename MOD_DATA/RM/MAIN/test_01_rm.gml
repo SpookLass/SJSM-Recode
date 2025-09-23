@@ -29,7 +29,7 @@ room_set_code
     local.entrance = instance_create(global.spawn_arr[0,0]-lengthdir_x(16,global.spawn_arr[0,3]),global.spawn_arr[0,1]-lengthdir_y(16,global.spawn_arr[0,3]),door_entrance_obj);
     local.entrance.z = global.spawn_arr[0,2];
     local.entrance.direction = global.spawn_arr[0,3]+180;
-
+    // Exit
     local.unlock = irandom_range(1,global.spawn_len_var-1);
     for (local.i=1; local.i<global.spawn_len_var; local.i+=1;)
     {

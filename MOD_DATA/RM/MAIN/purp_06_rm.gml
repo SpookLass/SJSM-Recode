@@ -95,8 +95,3 @@ room_instance_add(argument0,160,352,wall_vert_obj);
 room_instance_add(argument0,160,384,wall_vert_obj);
 room_instance_add(argument0,160,416,wall_vert_obj);
 room_instance_add(argument0,160,448,wall_vert_obj);
-// Torches
-room_instance_add(argument0,240,112,torch_north_obj);
-room_instance_add(argument0,368,112,torch_north_obj);
-room_instance_add(argument0,240,208,torch_south_obj);
-room_instance_add(argument0,368,464,torch_south_obj);
