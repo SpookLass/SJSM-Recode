@@ -413,8 +413,7 @@ ds_list_add(global.zone_arr[5],sm_17_rm);
 ds_list_add(global.zone_arr[5],sm_18_rm);
 ds_list_add(global.zone_arr[5],sm_19_rm);
 ds_list_add(global.zone_arr[5],sm_20_rm);
-/*
-ds_list_add(global.zone_arr[5],bed_01_rm);
+/*ds_list_add(global.zone_arr[5],bed_01_rm);
 ds_list_add(global.zone_arr[5],bed_02_rm);
 ds_list_add(global.zone_arr[5],bed_03_rm);
 ds_list_add(global.zone_arr[5],bed_04_rm);
@@ -445,8 +444,7 @@ ds_list_add(global.zone_arr[5],sm_lab_12_rm);
 ds_list_add(global.zone_arr[5],sm_lab_13_rm);
 ds_list_add(global.zone_arr[5],sm_lab_14_rm);
 ds_list_add(global.zone_arr[5],sm_lab_15_rm);
-ds_list_add(global.zone_arr[5],sm_lab_16_rm);
-*/
+ds_list_add(global.zone_arr[5],sm_lab_16_rm);*/
 ds_list_add(global.zone_arr[5],jail_01_rm);
 ds_list_add(global.zone_arr[5],jail_02_rm);
 ds_list_add(global.zone_arr[5],jail_03_rm);

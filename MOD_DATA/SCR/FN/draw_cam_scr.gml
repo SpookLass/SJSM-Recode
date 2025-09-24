@@ -17,5 +17,5 @@ if view_current == argument0
     local.xturn = (cos(degtorad(argument5))*cos(degtorad(argument4)));
     local.yturn = (cos(degtorad(argument5))*-sin(degtorad(argument4)));
     local.zturn = sin(degtorad(argument5));
-    d3d_set_projection_ext(argument1,argument2,argument3,argument1+local.xturn,argument2+local.yturn,argument3+local.zturn,0,0,1,median(1,179,argument6),view_wport[argument0]/view_hport[argument0],1,800);
+    d3d_set_projection_ext(argument1,argument2,argument3,argument1+local.xturn,argument2+local.yturn,argument3+local.zturn,0,0,1,median(1,179,argument6),view_wport[argument0]/view_hport[argument0],1,1280); // 800
 }

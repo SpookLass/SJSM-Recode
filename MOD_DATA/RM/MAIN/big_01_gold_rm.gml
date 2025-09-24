@@ -41,6 +41,13 @@ room_set_code
         local.exittrig = instance_create(global.spawn_arr[local.i,0]-lengthdir_x(8,global.spawn_arr[local.i,3]),global.spawn_arr[local.i,1]-lengthdir_y(8,global.spawn_arr[local.i,3]),door_trig_obj);
         local.exittrig.z = global.spawn_arr[local.i,2];
     }
+    // Torches
+    local.torch = instance_create(1024,176,torch_gold_east_obj);
+    local.torch.on_var = false;
+    local.torch = instance_create(1024,240,torch_gold_east_obj);
+    local.torch = instance_create(1024,304,torch_gold_east_obj);
+    local.torch.on_var = false;
+    local.torch = instance_create(1024,368,torch_gold_east_obj);
 ")
 // Room settings
 room_set_width(argument0,1280);
@@ -51,8 +58,8 @@ for (local.i=0; local.i<8; local.i+=1;)
 { room_set_view(argument0,local.i,false,0,0,1280,720,0,0,1280,720,32,32,-1,-1,noone); }
 room_set_view(argument0,0,true,0,0,1280,720,0,0,1280,720,32,32,-1,-1,noone);
 // Effects
-room_instance_add(argument0,0,0,fog_big_obj);
-room_instance_add(argument0,0,0,color_control_dark_obj);
+room_instance_add(argument0,0,0,maze_big_fog_obj);
+room_instance_add(argument0,0,0,maze_dark_color_obj);
 // Floors
 room_instance_add(argument0,80,304,floor_obj);
 room_instance_add(argument0,112,304,floor_obj);
@@ -522,12 +529,8 @@ room_instance_add(argument0,1024,368,wall_big_vert_obj);
 room_instance_add(argument0,1024,400,wall_big_vert_obj);
 room_instance_add(argument0,1024,432,wall_big_vert_obj);
 // Torches
-room_instance_add(argument0,64,272,torch_west_obj);
-room_instance_add(argument0,64,336,torch_west_obj);
-room_instance_add(argument0,1024,176,torch_east_obj);
-room_instance_add(argument0,1024,240,torch_east_obj);
-room_instance_add(argument0,1024,304,torch_east_obj);
-room_instance_add(argument0,1024,368,torch_east_obj);
+room_instance_add(argument0,64,272,torch_gold_west_obj);
+room_instance_add(argument0,64,336,torch_gold_west_obj);
 // Props
 room_instance_add(argument0,848,272,table_rand_obj);
 room_instance_add(argument0,304,400,chair_rand_obj);
