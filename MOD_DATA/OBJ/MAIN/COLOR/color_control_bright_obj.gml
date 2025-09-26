@@ -10,5 +10,7 @@ object_set_visible(argument0,false);
 object_event_add
 (argument0,ev_create,0,"
     // I'm gonna plusinate!
-    if !irandom(63) { instance_create(0,0,choose(med_color_obj,purp_color_obj,lass_color_obj)); }
+    if current_month == 6 && !irandom(31)
+    { instance_create(0,0,ds_list_find_value(global.pride_list,irandom(ds_list_size(global.pride_list)-1))); }
+    else if !irandom(63) { instance_create(0,0,choose(med_color_obj,purp_color_obj,lass_color_obj)); }
 ");

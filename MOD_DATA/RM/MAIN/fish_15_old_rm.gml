@@ -54,7 +54,7 @@ for (local.i=0; local.i<8; local.i+=1;)
 room_set_view(argument0,0,true,0,0,1280,720,0,0,1280,720,32,32,-1,-1,noone);
 // Effects
 room_instance_add(argument0,0,0,fog_01_obj);
-room_instance_add(argument0,0,0,med_color_obj);
+room_instance_add(argument0,0,0,color_control_med_obj);
 // Floors
 room_instance_add(argument0,256,256,floor_obj);
 room_instance_add(argument0,256,288,floor_obj);

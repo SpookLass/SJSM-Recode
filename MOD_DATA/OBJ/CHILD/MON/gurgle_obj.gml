@@ -33,7 +33,7 @@ object_event_add
     snd_arr[1,0] = caster_load(main_directory_const+'\SND\MON\gurgle_02_snd.wav');
     snd_arr[2,0] = caster_load(main_directory_const+'\SND\MON\gurgle_03_snd.wav');
     snd_arr[3,0] = caster_load(main_directory_const+'\SND\MON\gurgle_04_snd.wav');
-    wake_snd_var[0] = true; // Has a wake sound, otherwise it'll 
+    wake_snd_var[0] = true; // Has a wake sound, otherwise it'll use a normal sound
     wake_snd_var[1] = caster_load(main_directory_const+'\SND\MON\gurgle_wake_snd.wav');
     snd_num_var = 1;
     snd_den_var = 2;

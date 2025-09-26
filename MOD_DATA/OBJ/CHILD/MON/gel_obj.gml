@@ -26,6 +26,8 @@ object_event_add
     snd_arr[1,0] = caster_load(main_directory_const+'\SND\MON\gel_02_snd.ogg');
     snd_arr[2,0] = caster_load(main_directory_const+'\SND\MON\gel_03_snd.ogg');
     snd_arr[3,0] = caster_load(main_directory_const+'\SND\MON\gel_04_snd.ogg');
+    wake_snd_var[0] = true; // Has a wake sound, otherwise it'll use a normal sound
+    wake_snd_var[1] = caster_load(main_directory_const+'\SND\MON\gel_wake_snd.ogg');
     snd_num_var = 1;
     snd_den_var = 2;
     snd_alarm_min_var = 80;
@@ -33,7 +35,8 @@ object_event_add
     snd_dist_var = 600;
     // Coward
     coward_var = true;
-    coward_spd_mult_var = 4/3; // 1.r3x
+    coward_spd_var = 4/3; // 1.r3x
+    hurt_alarm_scr = 180;
     // Slime
     slime_var = true;
     do_slime_spawn_var = false;
@@ -59,9 +62,9 @@ object_event_add
             dmg_var = 40;
             z_off_start_var = 0;
             slime_anim_var = 2;
-            slime_spd_mult_var = 0.6;
+            slime_spd_mult_var = 0.5;
             // Move slower dangit
-            slime_spawn_spd_mult_var = 8/15; // 0.5r3 for accuracy
+            slime_spawn_spd_mult_var = 0.5; // 0.5r3 for full accuracy
             delay_var = 0;
             // Bools
             coward_var = false;
@@ -70,13 +73,17 @@ object_event_add
         }
         case 2: // HD
         {
-            type_var = 2;
-            spd_base_var = 8/9; // 0.r8
             dur_var = irandom_range(10,15);
             dmg_alarm_var = 180;
             delay_min_var = 60;
             delay_max_var = 180;
             slime_spd_mult_var = 0.3;
+            // Movement
+            type_var = 2;
+            spd_base_var = 8/9; // 0.r8
+            do_acc_var = true;
+            acc_var = 16/675; // 0.02r370
+            frick_var = acc_var;
             // Attack (I Hope)
             atk_delay_var = 30;
             atk_range_var = 32; // 16 radius
@@ -166,7 +173,6 @@ object_event_add
             break;
         }
     }
-    
 ");
 // Movement
 object_event_add
@@ -185,6 +191,7 @@ object_event_add
         set_motion_scr(0,true);
         exit;
     }
+    if coward_var && hurt_var { spd_mult_var *= -coward_spd_var; }
     event_inherited();
 ");
 // Draw
@@ -202,4 +209,4 @@ object_event_add
         d3d_transform_set_identity();
         draw_set_color(c_white); draw_set_alpha(1);
     }
-")
+");

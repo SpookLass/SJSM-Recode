@@ -51,3 +51,17 @@ while (local.file != "")
     local.file = file_find_next();
 }
 file_find_close();
+local.file = file_find_first(main_directory_const+"\OBJ\CHILD\COLOR\*.gml",-1);
+while (local.file != "")
+{
+    file_to_obj_scr(main_directory_const+"\OBJ\CHILD\COLOR\"+local.file,filename_change_ext(local.file,""),argument0);
+    local.file = file_find_next();
+}
+file_find_close();
+local.file = file_find_first(main_directory_const+"\OBJ\CHILD\MON\*.gml",-1);
+while (local.file != "")
+{
+    file_to_obj_scr(main_directory_const+"\OBJ\CHILD\MON\"+local.file,filename_change_ext(local.file,""),argument0);
+    local.file = file_find_next();
+}
+file_find_close();
