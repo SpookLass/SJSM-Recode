@@ -8,6 +8,9 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 /*
 Variables
+
+Enums
+
 type_var
     0: Ignores walls
     1: Pathfinds normally
@@ -16,19 +19,37 @@ sight_type_var
     0: Default
     1: Only center
     2: No Blocking
-enter_var: Whether a physical monster is entering the room
+
+Main
+
 dur_var: The chase duration
 dur_start_var: How much duration a monster starts with, used for scripted events and boss bars
 delay_var: How much time before a monster starts acting
+
+Draw
+
 w_var: How many pixels wide the monster is
 h_var: How many pixels tall the monster is
-z_off_var: How many pixels off the ground the monster is
+x_off_var,y_off_var,z_off_var: How many pixels offset the monster draws
+
+Attack
+
 dmg_var: How much damage a monster deals per hit
 dmg_alarm_var: How much time before something can hit the player again (per player)
+atk_range_var: How far the specimen can reach while attacking
+atk_dist_var: How close the target should be before attempting to attack (If applicable)
+atk_delay_var: How long before the monster can start attacking
+
+Movement
+
 spd_base_var: How fast the monster moves in pixels per frame (60fps)
 spd_mult_var: Multiplier for the monster's speed, mostly for monsters that have varied speeds
 acc_var: How fast the monster accelerates in pixels per frame squared (60fps)
 frick_var: How fast the monster decelerates in pixels per frame squared
+enter_var: Whether a physical monster is entering the room
+
+Booleans
+
 do_move_var: Whether the specimen should move
 do_anim_var: Whether the specimen should animate
 do_attack_var: Whether the specimen should attack
@@ -42,7 +63,7 @@ hurt_var: Whether the specimen is currently hurt
 object_event_add
 (argument0,ev_other,ev_user7,"
     // Gotta set type, delay, and duration
-    dur_star_var = dur_var;
+    dur_start_var = dur_var;
     enter_var = type_var > 0;
     do_move_var = true;
     do_attack_var = true;
@@ -61,6 +82,9 @@ object_event_add
     coll_var[0] = global.mon_coll[0];
     coll_var[1] = global.mon_coll[1];
     coll_var[2] = global.mon_coll[2];
+    // Attack variables
+    if atk_range_var == 0
+    { atk_range_var = coll_var[2]; }
     // Pathfinding
     if type_var > 0
     {
@@ -78,7 +102,7 @@ object_event_add
     }
     // Alarms
     if alarm_len_var == 0
-    { alarm_len_var = 7; }
+    { alarm_len_var = 8; }
     alarm_arr[0,2] = '';
     alarm_arr[1,2] = '';
     alarm_arr[2,2] = '';
@@ -86,6 +110,7 @@ object_event_add
     alarm_arr[4,2] = '';
     alarm_arr[5,2] = '';
     alarm_arr[6,2] = '';
+    alarm_arr[7,2] = '';
 ");
 // Create Event
 object_event_add
@@ -163,8 +188,21 @@ object_event_add
         if move_var || do_seen_var { event_user(6); }
         if move_var { event_user(0); }
         if anim_var { event_user(1); }
-        if attack_var { event_user(2); }
         if do_seen_var { event_user(5); }
+        if attack_var
+        {
+            if atk_delay_var > 0
+            {
+                if alarm_arr[7,0] <= 0 && instance_exists(target_var) && target_dist_var < atk_dist_var
+                {
+                    set_alarm_scr(7,atk_delay_var);
+                    set_alarm_scr(1,atk_delay_var);
+                    move_var = false;
+                    set_motion_3d_scr(0,true);
+                }
+            }
+            else { event_user(2); }
+        }
     }
     if do_snd_var { event_user(9); }
 ");
@@ -257,6 +295,11 @@ object_event_add
         sub_var = snd_arr[local.snd,1];
     }
     set_alarm_scr(6,irandom_range(snd_alarm_min_var,snd_alarm_max_var));
+");
+// Attack alarm
+object_event_add
+(argument0,ev_alarm,7,"
+    event_user(2);
 ");
 // Movement
 object_event_add
@@ -380,7 +423,7 @@ object_event_add
         if !dead_var && !hurt_var && !in_door_var && !invuln_var && on_var
         {
             // p3dc_check_scr(coll_var[0],x,y,z,other.coll_var[0],other.x,other.y,other.z)
-            if cyl_coll_scr(x,y,z,coll_var[2],coll_var[1],other.x,other.y,other.z,other.coll_var[2],other.coll_var[1])
+            if cyl_coll_scr(x,y,z,coll_var[2],coll_var[1],other.x,other.y,other.z,other.atk_range_var,other.coll_var[1])
             {
                 if hp_var > other.dmg_var
                 {
@@ -421,6 +464,13 @@ object_event_add
 // Uses attack_target_var as an argument, usually the player.
 object_event_add
 (argument0,ev_other,ev_user3,"
+    if atk_delay_var > 0
+    {
+        set_alarm_scr(7,dmg_alarm_var);
+        set_alarm_scr(1,dmg_alarm_var);
+        move_var = false;
+        set_motion_3d_scr(0,true);
+    }
     with instance_create(0,0,blood_eff_obj)
     {
         // Set camera to player

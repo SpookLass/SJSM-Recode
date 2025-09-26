@@ -548,7 +548,7 @@ ds_list_add(global.zone_arr[7],hall_01_rm); ds_list_add(global.zone_arr[7],hall_
 ds_list_add(global.zone_arr[7],hall_02_a_rm);
 ds_list_add(global.zone_arr[7],hall_03_rm);
 ds_list_add(global.zone_arr[7],hall_04_rm);
-ds_list_add(global.zone_arr[7],hall_05_rm);
+ds_list_add(global.zone_arr[7],hall_05_a_rm);
 ds_list_add(global.zone_arr[7],sm_01_rm);
 ds_list_add(global.zone_arr[7],sm_02_rm);
 ds_list_add(global.zone_arr[7],sm_03_rm);
@@ -557,18 +557,18 @@ ds_list_add(global.zone_arr[7],sm_05_rm);
 ds_list_add(global.zone_arr[7],sm_06_rm);
 ds_list_add(global.zone_arr[7],sm_07_rm);
 ds_list_add(global.zone_arr[7],sm_08_rm);
-ds_list_add(global.zone_arr[7],purp_01_rm);
-ds_list_add(global.zone_arr[7],purp_02_rm);
-ds_list_add(global.zone_arr[7],purp_03_rm);
-ds_list_add(global.zone_arr[7],purp_04_rm);
-ds_list_add(global.zone_arr[7],purp_05_rm);
-ds_list_add(global.zone_arr[7],purp_06_rm);
 ds_list_add(global.zone_arr[7],sm_15_rm);
 ds_list_add(global.zone_arr[7],sm_16_rm);
 ds_list_add(global.zone_arr[7],sm_17_rm);
 ds_list_add(global.zone_arr[7],sm_18_rm);
 ds_list_add(global.zone_arr[7],sm_19_rm);
 ds_list_add(global.zone_arr[7],sm_20_rm);
+ds_list_add(global.zone_arr[7],purp_01_rm);
+ds_list_add(global.zone_arr[7],purp_02_rm);
+ds_list_add(global.zone_arr[7],purp_03_rm);
+ds_list_add(global.zone_arr[7],purp_04_rm);
+ds_list_add(global.zone_arr[7],purp_05_rm);
+ds_list_add(global.zone_arr[7],purp_06_rm);
 ds_list_add(global.zone_arr[7],stor_01_rm);
 ds_list_add(global.zone_arr[7],stor_02_rm);
 ds_list_add(global.zone_arr[7],stor_03_rm);
@@ -1433,8 +1433,7 @@ ds_list_add(global.story_zone_arr[7],long_hall_01_rm); ds_list_add(global.story_
 ds_list_add(global.story_zone_arr[7],long_hall_02_rm); ds_list_add(global.story_zone_arr[7],long_hall_02_rm); ds_list_add(global.story_zone_arr[7],long_hall_02_rm); ds_list_add(global.story_zone_arr[7],long_hall_02_rm);
 ds_list_add(global.story_zone_arr[7],long_hall_03_rm); ds_list_add(global.story_zone_arr[7],long_hall_03_rm); ds_list_add(global.story_zone_arr[7],long_hall_03_rm); ds_list_add(global.story_zone_arr[7],long_hall_03_rm);
 ds_list_add(global.story_zone_arr[7],long_hall_04_rm); ds_list_add(global.story_zone_arr[7],long_hall_04_rm); ds_list_add(global.story_zone_arr[7],long_hall_04_rm); ds_list_add(global.story_zone_arr[7],long_hall_04_rm);
-ds_list_add(global.story_zone_arr[7],long_hall_05_rm); ds_list_add(global.story_zone_arr[7],long_hall_05_rm);
-ds_list_add(global.story_zone_arr[7],long_hall_06_rm); ds_list_add(global.story_zone_arr[7],long_hall_06_rm);
+ds_list_add(global.story_zone_arr[7],long_hall_05_rm); ds_list_add(global.story_zone_arr[7],long_hall_05_rm); ds_list_add(global.story_zone_arr[7],long_hall_05_rm); ds_list_add(global.story_zone_arr[7],long_hall_05_rm);
 ds_list_add(global.story_zone_arr[7],long_hall_07_rm); ds_list_add(global.story_zone_arr[7],long_hall_07_rm);
 ds_list_add(global.story_zone_arr[7],long_hall_08_rm); ds_list_add(global.story_zone_arr[7],long_hall_08_rm);
 ds_list_add(global.story_zone_arr[7],long_hall_09_rm); ds_list_add(global.story_zone_arr[7],long_hall_09_rm);
@@ -1461,6 +1460,7 @@ ds_list_add(global.story_zone_arr[7],med_03_rm); ds_list_add(global.story_zone_a
 ds_list_add(global.story_zone_arr[7],med_04_rm); ds_list_add(global.story_zone_arr[7],med_04_rm);
 ds_list_add(global.story_zone_arr[7],med_05_rm); ds_list_add(global.story_zone_arr[7],med_05_rm);
 ds_list_add(global.story_zone_arr[7],med_06_rm); ds_list_add(global.story_zone_arr[7],med_06_rm);
+ds_list_add(global.story_zone_arr[7],hall_05_c_rm); ds_list_add(global.story_zone_arr[7],hall_05_c_rm);
 ds_list_add(global.story_zone_arr[7],hall_17_a_rm); // WHYYYYY
 ds_list_add(global.story_zone_arr[7],hall_17_b_rm);
 ds_list_add(global.story_zone_arr[7],hall_19_rm); ds_list_add(global.story_zone_arr[7],hall_19_rm);
@@ -1655,7 +1655,6 @@ ds_list_add(global.story_zone_arr[10],chasm_04_rm); ds_list_add(global.story_zon
 ds_list_add(global.story_zone_arr[10],chasm_05_rm); ds_list_add(global.story_zone_arr[10],chasm_05_rm);
 ds_list_add(global.story_zone_arr[10],chasm_06_rm); ds_list_add(global.story_zone_arr[10],chasm_06_rm);
 ds_list_add(global.story_zone_arr[10],chasm_07_rm); ds_list_add(global.story_zone_arr[10],chasm_07_rm);
-
 ds_list_add(global.story_zone_arr[10],dun_01_rm); ds_list_add(global.story_zone_arr[10],dun_01_rm);
 ds_list_add(global.story_zone_arr[10],dun_02_rm); ds_list_add(global.story_zone_arr[10],dun_02_rm);
 ds_list_add(global.story_zone_arr[10],dun_03_rm); ds_list_add(global.story_zone_arr[10],dun_03_rm);

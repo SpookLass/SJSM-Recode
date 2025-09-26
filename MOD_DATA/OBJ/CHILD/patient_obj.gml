@@ -59,9 +59,9 @@ object_event_add
         }
     }
     // Alarms
-    alarm_len_var = 9;
-    alarm_arr[7,2] = '';
+    alarm_len_var = 10;
     alarm_arr[8,2] = '';
+    alarm_arr[9,2] = '';
     // Inherit
     event_inherited();
     do_mdl_var = true;
@@ -85,12 +85,12 @@ object_event_add
 // Delay
 object_event_add
 (argument0,ev_alarm,0,"
-    event_perform(ev_alarm,7);
+    event_perform(ev_alarm,8);
     event_inherited();
 ");
 // Random anim
 object_event_add
-(argument0,ev_alarm,7,"
+(argument0,ev_alarm,8,"
     if frac_chance_scr(1,rand_chance_var)
     { image_alpha = 0; }
     else
@@ -130,7 +130,7 @@ object_event_add
         }
         image_alpha = 1;
     }
-    set_alarm_scr(7,irandom_range(rand_alarm_min_var,rand_alarm_max_var));
+    set_alarm_scr(8,irandom_range(rand_alarm_min_var,rand_alarm_max_var));
 ");
 // Step event
 object_event_add
@@ -138,9 +138,9 @@ object_event_add
     if seen_var == 1
     {
         spd_mult_var = seen_spd_mult_var;
-        if alarm_arr[8,0] <= 0 { set_alarm_scr(8,tp_alarm_var); }
+        if alarm_arr[9,0] <= 0 { set_alarm_scr(9,tp_alarm_var); }
     }
-    else if alarm_arr[8,0] > 0 { set_alarm_scr(8,-1); }
+    else if alarm_arr[9,0] > 0 { set_alarm_scr(9,-1); }
     event_inherited();
 ");
 // Teleport

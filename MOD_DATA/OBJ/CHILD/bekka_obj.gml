@@ -122,10 +122,10 @@ object_event_add
         }
     }
     // Alarms
-    alarm_len_var = 10;
-    alarm_arr[7,2] = '';
+    alarm_len_var = 11;
     alarm_arr[8,2] = '';
     alarm_arr[9,2] = '';
+    alarm_arr[10,2] = '';
     // Inherit
     event_inherited();
     // Bools
@@ -181,7 +181,7 @@ object_event_add
     if exit_spawn_var
     {
         // Maya's idea
-        if derand_var { local.active = dur_var mod exit_chance_var; }
+        if derand_var { local.active = (dur_start_var-dur_var) mod exit_chance_var; }
         else { local.active = frac_chance_scr(1,exit_chance_var); }
         if local.active && !instance_exists(maze_dark_color_obj)
         {
@@ -210,17 +210,17 @@ object_event_add
 // Delay
 object_event_add
 (argument0,ev_alarm,0,"
-    event_perform(ev_alarm,7);
-    if scare_var { event_perform(ev_alarm,9); }
+    event_perform(ev_alarm,8); // Random anim
+    if scare_var { event_perform(ev_alarm,10); } // Scare
     event_inherited();
 ");
 // Random anim
 object_event_add
-(argument0,ev_alarm,7,"
+(argument0,ev_alarm,8,"
     if frac_chance_scr(1,rand_chance_var)
     { image_alpha = 1; }
     else { image_alpha = random_range(alpha_min_var,alpha_max_var); }
-    set_alarm_scr(7,irandom_range(rand_alarm_min_var,rand_alarm_max_var));
+    set_alarm_scr(8,irandom_range(rand_alarm_min_var,rand_alarm_max_var)); // Self
 ");
 // Step Event
 object_event_add
@@ -253,7 +253,7 @@ object_event_add
                 {
                     state_var = 2;
                     move_var = do_move_var;
-                    set_alarm_scr(8,irandom_range(exit_alarm_min_var,exit_alarm_max_var));
+                    set_alarm_scr(9,irandom_range(exit_alarm_min_var,exit_alarm_max_var)); // Vanish
                 }
                 break;
             }
@@ -268,7 +268,7 @@ object_event_add
 ");
 // Vanish
 object_event_add
-(argument0,ev_alarm,8,"
+(argument0,ev_alarm,9,"
     with instance_create(0,0,fade_eff_obj)
     {
         image_blend = c_black; 
@@ -326,7 +326,7 @@ object_event_add
 ");
 // Rouge
 object_event_add
-(argument0,ev_alarm,9,"
+(argument0,ev_alarm,10,"
     event_user(6);
     if instance_exists(target_var)
     {
@@ -342,15 +342,15 @@ object_event_add
         stay_var = false;
         cam_id_var = -1;
     }
-    set_alarm_scr(9,scare_alarm_var);
+    set_alarm_scr(10,scare_alarm_var);
 ");
 // Attack Success
 object_event_add
 (argument0,ev_other,ev_user3,"
     if state_var == 2
     {
-        event_perform(ev_alarm,8);
-        set_alarm_scr(8,-1);
+        event_perform(ev_alarm,9);
+        set_alarm_scr(9,-1);
     }
 ");
 // Draw

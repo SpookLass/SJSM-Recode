@@ -125,8 +125,8 @@ object_event_add
         }
     }
     // Alarms
-    alarm_len_var = 8;
-    alarm_arr[7,2] = '';
+    alarm_len_var = 9;
+    alarm_arr[8,2] = '';
     // Inherit
     event_inherited();
     // sine
@@ -156,17 +156,17 @@ object_event_add
 object_event_add
 (argument0,ev_alarm,0,"
     event_inherited();
-    set_alarm_scr(7,rand_alarm_var);
+    set_alarm_scr(8,rand_alarm_var);
 ");
 
 // Random anim
 object_event_add
-(argument0,ev_alarm,7,"
+(argument0,ev_alarm,8,"
     if !irandom(inv_chance_var-1) { image_alpha = 0; }
     else { image_alpha = choose(1,random_range(0.5,1)); }
     if !irandom(3) { mdl_var = mdl_02_var; }
     else { mdl_var = mdl_01_var; }
-    set_alarm_scr(7,rand_alarm_var);
+    set_alarm_scr(8,rand_alarm_var);
 ");
 // Movement
 object_event_add

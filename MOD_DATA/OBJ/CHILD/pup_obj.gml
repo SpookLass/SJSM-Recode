@@ -82,8 +82,10 @@ object_event_add
         }
     }
     // Alarms
-    alarm_len_var = 10;
-    alarm_arr[7,2] = '';
+    alarm_len_var = 11;
+    alarm_arr[8,2] = '';
+    alarm_arr[9,2] = '';
+    alarm_arr[10,2] = '';
     // Inherit
     event_inherited();
 ");
@@ -115,7 +117,7 @@ object_event_add
         set_alarm_scr(1,seen_start_delay_var);
         set_alarm_scr(2,seen_start_delay_var);
         set_alarm_scr(6,seen_start_delay_var);
-        set_alarm_scr(8,seen_start_delay_var);
+        set_alarm_scr(9,seen_start_delay_var);
     }
     else
     {
@@ -127,8 +129,8 @@ object_event_add
 object_event_add
 (argument0,ev_step,ev_step_normal,"
     if seen_var == 1 && target_var != noone && !target_var.active_var
-    { if alarm_arr[7,0] <= 0 { set_alarm_scr(7,tp_alarm_var); }}
-    else if alarm_arr[7,0] > 0 { set_alarm_scr(7,-1); }
+    { if alarm_arr[8,0] <= 0 { set_alarm_scr(8,tp_alarm_var); }}
+    else if alarm_arr[8,0] > 0 { set_alarm_scr(8,-1); }
     // Seem stuff
     if seen_var != 0
     {
@@ -141,10 +143,10 @@ object_event_add
             set_alarm_scr(1,-1);
             set_alarm_scr(2,-1);
             set_alarm_scr(6,-1);
-            set_alarm_scr(8,seen_delay_var);
+            set_alarm_scr(9,seen_delay_var);
             // Somewhat jank way to keep the current position
-            alarm_arr[8,0] -= alarm_arr[9,0];
-            set_alarm_scr(9,-1);
+            alarm_arr[9,0] -= alarm_arr[10,0];
+            set_alarm_scr(10,-1);
         }
     }
     else if state_var < 2
@@ -153,17 +155,17 @@ object_event_add
         set_alarm_scr(1,seen_delay_var);
         set_alarm_scr(2,seen_delay_var);
         set_alarm_scr(6,seen_delay_var);
-        set_alarm_scr(9,seen_delay_var);
+        set_alarm_scr(10,seen_delay_var);
         // Somewhat jank way to keep the current position
-        alarm_arr[9,0] -= alarm_arr[8,0];
-        set_alarm_scr(8,-1);
+        alarm_arr[10,0] -= alarm_arr[9,0];
+        set_alarm_scr(9,-1);
     }
     switch state_var
     {
         case 0: { z_off_var = 0; break; }
-        case 1: { z_off_var = 256*alarm_arr[8,0]/alarm_arr[8,1]; break; }
+        case 1: { z_off_var = 256*alarm_arr[9,0]/alarm_arr[9,1]; break; }
         case 2: { z_off_var = 256; break; }
-        case 3: { z_off_var = 256*(1-(alarm_arr[9,0]/alarm_arr[9,1])); break; }
+        case 3: { z_off_var = 256*(1-(alarm_arr[10,0]/alarm_arr[10,1])); break; }
     }
     event_inherited();
 ");
@@ -175,24 +177,24 @@ object_event_add
     if spd_var > 0 { set_motion_3d_scr(0,true); }
     move_var = false;
     anim_var = false;
-    set_alarm_scr(7,-1);
+    set_alarm_scr(8,-1);
     if state_var > 1
     {
         state_var = 0;
         set_alarm_scr(1,-1);
         set_alarm_scr(2,-1);
         set_alarm_scr(6,-1);
-        // set_alarm_scr(8,seen_delay_var);
-        set_alarm_scr(8,-1);
+        // set_alarm_scr(9,seen_delay_var);
         set_alarm_scr(9,-1);
+        set_alarm_scr(10,-1);
     }
 ");
 
 // Teleport alarm
 object_event_add
-(argument0,ev_alarm,7,"
+(argument0,ev_alarm,8,"
     event_perform(ev_other,ev_user15);
-    set_alarm_scr(7,tp_alarm_var);
+    set_alarm_scr(8,tp_alarm_var);
 ");
 // Teleport
 object_event_add
@@ -206,11 +208,11 @@ object_event_add
 ");
 // Going down
 object_event_add
-(argument0,ev_alarm,8,"
+(argument0,ev_alarm,9,"
     state_var = 0;
 ");
 // Going up
 object_event_add
-(argument0,ev_alarm,9,"
+(argument0,ev_alarm,10,"
     state_var = 2;
 ");

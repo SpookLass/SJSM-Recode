@@ -59,6 +59,7 @@ object_event_add
     {
         case 0: // Mod
         {
+            dmg_var = 40;
             eff_fog_var = true;
             eff_alarm_var = 256;
             eff_per_var = false;
@@ -110,8 +111,8 @@ object_event_add
         }
     }
     // Alarms
-    alarm_len_var = 8;
-    alarm_arr[7,2] = '';
+    alarm_len_var = 9;
+    alarm_arr[8,2] = '';
     // Stuff
     event_perform(ev_other,ev_user14);
     event_inherited();
@@ -153,7 +154,7 @@ object_event_add
 // Delay
 object_event_add
 (argument0,ev_alarm,0,"
-    set_alarm_scr(7,rand_alarm_var);
+    set_alarm_scr(8,rand_alarm_var);
     event_inherited();
 ");
 // Step event
@@ -166,10 +167,10 @@ object_event_add
 ");
 // Random anim
 object_event_add
-(argument0,ev_alarm,7,"
+(argument0,ev_alarm,8,"
     if state_var == 1 && frac_chance_scr(1,rand_chance_var)
     { spr_id_var = irandom(sprite_get_number(spr_var)-1); }
-    set_alarm_scr(7,rand_alarm_var);
+    set_alarm_scr(8,rand_alarm_var);
 ");
 // Change form event
 object_event_add

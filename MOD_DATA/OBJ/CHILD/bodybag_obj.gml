@@ -80,8 +80,8 @@ object_event_add
         }
     }
     // Alarms
-    alarm_len_var = 8;
-    alarm_arr[7,2] = '';
+    alarm_len_var = 9;
+    alarm_arr[8,2] = '';
     // Inherit
     event_inherited();
     do_mdl_var = true;
@@ -91,12 +91,12 @@ object_event_add
 object_event_add
 (argument0,ev_create,0,"
     event_inherited();
-    if eff_delay_var > 0 { set_alarm_scr(7,eff_delay_var); }
+    if eff_delay_var > 0 { set_alarm_scr(8,eff_delay_var); }
 ");
 // Effect alarm
 // Create Event
 object_event_add
-(argument0,ev_alarm,7,"
+(argument0,ev_alarm,8,"
     with instance_create(0,0,spr_flash_eff_obj)
     {
         spr_var = other.spr_eff_var;

@@ -41,9 +41,9 @@ object_event_add
     snd_alarm_max_var = 240;
     snd_dist_var = 600;
     // Alarms
-    alarm_len_var = 9;
-    alarm_arr[7,2] = '';
+    alarm_len_var = 10;
     alarm_arr[8,2] = '';
+    alarm_arr[9,2] = '';
     // Inherit
     event_inherited();
     // Charge
@@ -73,7 +73,7 @@ object_event_add
 object_event_add
 (argument0,ev_alarm,0,"
     event_inherited();
-    set_alarm_scr(8,charge_start_var);
+    set_alarm_scr(9,charge_start_var);
 ");
 // Step Event
 object_event_add
@@ -98,7 +98,7 @@ object_event_add
             set_alarm_scr(1,charge_alarm_var);
             set_alarm_scr(2,charge_alarm_var);
             set_alarm_scr(4,charge_alarm_var);
-            set_alarm_scr(7,charge_alarm_var);
+            set_alarm_scr(8,charge_alarm_var);
             // Sound
             caster_stop(snd_var);
             if snd_dist_var { snd_vol_var = global.vol_var*(1-(target_dist/snd_dist_var)); }
@@ -112,13 +112,13 @@ object_event_add
 ");
 // Stop charging
 object_event_add
-(argument0,ev_alarm,7,"
+(argument0,ev_alarm,8,"
     charge_var = -1;
-    set_alarm_scr(8,charge_delay_var);
+    set_alarm_scr(9,charge_delay_var);
 ");
 // Ready charge
 object_event_add
-(argument0,ev_alarm,8,"
+(argument0,ev_alarm,9,"
     charge_var = false;
 ");
 // Animation

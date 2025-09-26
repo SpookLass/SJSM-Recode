@@ -118,6 +118,8 @@ object_event_add
             || local.pass == 'kira' || local.pass == 'lag' || local.pass == 'poi' || local.pass == 'open'
             { global.debug_unlock_var = true; }
             else { show_error(string_repeat('3',3333),true); exit; }
+            global.last_time_var = current_time;
+            display_mouse_set(display_get_width()/2,display_get_height()/2);
         }
         global.debug_var = !global.debug_var;
     }
@@ -246,7 +248,12 @@ object_event_add
         display_mouse_set(display_get_width()/2,display_get_height()/2);
     }
     // Check for Gaster errors
-    if caster_error_occurred() { show_error(caster_error_message(),false);}
+    if caster_error_occurred()
+    {
+        show_error(caster_error_message(),false);
+        global.last_time_var = current_time;
+        display_mouse_set(display_get_width()/2,display_get_height()/2);
+    }
 ");
 // Draw
 object_event_add

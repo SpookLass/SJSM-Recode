@@ -35,6 +35,13 @@ local.radius = global.mon_coll[2]/2;
 global.mon_coll[0] = p3dc_begin_mdl_scr();
 p3dc_add_cylinder_scr(-local.radius,-local.radius,global.mon_coll[1]-0.01,local.radius,local.radius,0,true,8);
 p3dc_end_mdl_scr();
+// Slime Trigger
+global.slime_trig_coll[1] = 4;
+global.slime_trig_coll[2] = 24;
+local.radius = global.slime_trig_coll[2]/2;
+global.slime_trig_coll[0] = p3dc_begin_mdl_scr();
+p3dc_add_cylinder_scr(-local.radius,-local.radius,global.slime_trig_coll[1],local.radius,local.radius,0,true,8);
+p3dc_end_mdl_scr();
 // Grids
 global.rm_size_var = 1280;
 local.grid_snap = 4;
