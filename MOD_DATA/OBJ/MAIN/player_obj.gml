@@ -202,8 +202,11 @@ object_event_add
     view_enabled = true;
     // Start room
     taker_spawn_var = false;
-    stam_var = stam_max_var;
-    start_stam_var = start_stam_base_var;
+    if !global.stam_per_var
+    {
+        stam_var = stam_max_var;
+        start_stam_var = start_stam_base_var;
+    }
     in_door_var = true;
     on_var = true;
     fall_temp_var = false;
