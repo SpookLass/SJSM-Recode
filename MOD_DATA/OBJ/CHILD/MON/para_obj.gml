@@ -111,7 +111,7 @@ object_event_add
             state_spr_spd_var[0] = 1/6;
             state_spd_var[1] = 0.5;
             state_chance_var[1] = 1;
-            state_spd_var[2] = 1.8;
+            state_spd_var[2] = 1.6; // 1.8
             state_chance_var[2] = 1;
             state_acc_var[2] = true;
             state_dmg_alarm_var[2] = 60;
@@ -121,6 +121,10 @@ object_event_add
             state_eff_max_var = 6;
             acc_var = 0.1;
             frick_var = acc_var;
+            // Autobrake
+            autobrake_var = true;
+            autobrake_spd_var = 1;
+            autobrake_dir_var = 60;
             break;
         }
         case 2: // HD
@@ -156,6 +160,10 @@ object_event_add
             state_eff_max_var = 6;
             acc_var = 8/225; // 0.03r5
             frick_var = acc_var;
+            // Autobrake (close enough)
+            autobrake_var = true;
+            autobrake_spd_var = 0;
+            autobrake_dir_var = 60;
             break;
         }
     }

@@ -45,7 +45,7 @@ object_event_add
             do_acc_var = true;
             acc_var = 0.1;
             frick_var = 0.05;
-            atk_delay_var = 90;
+            atk_spawn_delay_var = 90;
             shake_var = 0.32;
             eff_fade_var = true;
             strobe_var = false;
@@ -58,7 +58,7 @@ object_event_add
         case 2: // HD
         {
             inf_stam_var = false;
-            atk_delay_var = 90;
+            atk_spawn_delay_var = 90;
         }
         case 3: // KH HD
         {
@@ -94,7 +94,6 @@ object_event_add
     if eff_delay_var > 0 { set_alarm_scr(8,eff_delay_var); }
 ");
 // Effect alarm
-// Create Event
 object_event_add
 (argument0,ev_alarm,8,"
     with instance_create(0,0,spr_flash_eff_obj)
@@ -147,7 +146,7 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user3,"
     event_inherited();
-    if atk_delay_var > 0
+    if atk_spawn_delay_var > 0
     {
         on_var = false;
         // Reset Position
@@ -159,7 +158,7 @@ object_event_add
         // Set target
         event_user(6);
         // Delay
-        set_alarm_scr(0,atk_delay_var);
+        set_alarm_scr(0,atk_spawn_delay_var);
         // Effect
         with instance_create(0,0,spr_flash_eff_obj)
         {

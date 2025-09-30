@@ -158,11 +158,10 @@ object_event_add
     event_inherited();
     set_alarm_scr(8,rand_alarm_var);
 ");
-
 // Random anim
 object_event_add
 (argument0,ev_alarm,8,"
-    if !irandom(inv_chance_var-1) { image_alpha = 0; }
+    if !irandom(inv_chance_var-1) && image_alpha != 0 { image_alpha = 0; }
     else { image_alpha = choose(1,random_range(0.5,1)); }
     if !irandom(3) { mdl_var = mdl_02_var; }
     else { mdl_var = mdl_01_var; }
@@ -171,7 +170,6 @@ object_event_add
 // Movement
 object_event_add
 (argument0,ev_other,ev_user0,"
-    
     // If second face, move faster
     if boost_var && mdl_var == mdl_02_var
     {
@@ -188,13 +186,22 @@ object_event_add
     {
         case 0: // Mod
         {
-
             if do_acc_var
             {
-                if autobrake_var && target_dist_var <= autobrake_dist_var { local.spd = 0; }
-                acc_3d_scr(global.delta_time_var,acc_var*acc_mult_var,frick_var*acc_mult_var,local.yaw,local.pitch,local.spd);
+                // Tried to add autobrake support, but it's difficult without Unity source code
+                if autobrake_var && target_visible_var && spd_var > autobrake_spd_var
+                && (target_dist_var <= autobrake_dist_var || autobrake_dist_var <= 0) 
+                {
+                    if autobrake_dir_var > 0
+                    {
+                        if abs(deg_diff_scr(local.yaw,yaw_var)) > autobrake_dir_var
+                        { local.spd = autobrake_spd_var; }
+                    }
+                    else { local.spd = autobrake_spd_var; }
+                }
+                acc_scr(global.delta_time_var,acc_var*acc_mult_var,frick_var*acc_mult_var,local.yaw,local.spd);
             }
-            else { set_motion_3d_scr(local.spd,true,local.yaw,true,local.pitch,true); }
+            else { set_motion_scr(local.spd,true,local.yaw,true); }
             mdl_yaw_var = yaw_var;
             mdl_pitch_var = pitch_var;
             break;
@@ -204,13 +211,13 @@ object_event_add
             // Turning
             local.yawdiff = deg_diff_scr(local.yaw,mdl_yaw_var);
             local.pitchdiff = deg_diff_scr(local.pitch,mdl_pitch_var);
-            mdl_yaw_var += min(local.yawdiff,sign(local.yawdiff)*local.turn*global.delta_time_var);
-            mdl_pitch_var += min(local.pitchdiff,sign(local.pitchdiff)*local.turn*global.delta_time_var);
+            mdl_yaw_var += sign(local.yawdiff)*min(abs(local.yawdiff),turn_rate_var*global.delta_time_var);
+            mdl_pitch_var += sign(local.pitchdiff)*min(abs(local.pitchdiff),turn_rate_var*global.delta_time_var); 
             // Movement
-            if target_dist < 4 { local.newspd = 0; }
-            else if target_dist < 16 { local.newspd = spd_var-frick_var; }
+            if target_dist_var < 4 { local.newspd = 0; }
+            else if target_dist_var < 16 { local.newspd = spd_var-frick_var; }
             else { local.newspd = spd_var+acc_var; }
-            local.newspd = median(0,local.spd,local.newspd)
+            local.spd = median(0,local.spd,local.newspd);
             set_motion_3d_scr(local.spd,true,local.yaw,true,local.pitch,true);
             break;
         }
@@ -275,13 +282,6 @@ object_event_add
         draw_set_color(c_white); draw_set_alpha(1);
     }
 ");
-// Teleport
-object_event_add
-(argument0,ev_other,ev_user15,"
-    z_off_time_var = (z_off_time_var+global.delta_time_var) mod z_off_rate_var;
-    z_off_var = sin(2*z_off_time_var*pi/z_off_rate_var)*z_off_mult_var;
-");
-
 // Teleport
 object_event_add
 (argument0,ev_other,ev_user15,"

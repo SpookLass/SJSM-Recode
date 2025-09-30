@@ -29,7 +29,16 @@ object_event_add
 object_event_add
 (argument0,ev_step,ev_step_normal,"
     image_alpha = alarm_arr[0,0]/alarm_arr[0,1];
-    if invert_var { image_alpha=1-image_alpha; }
+    switch invert_var
+    {
+        case 1: { image_alpha = 1-image_alpha; break; }
+        case 2:
+        {
+            image_alpha = image_alpha*2;
+            if image_alpha > 1 { image_alpha = 2-image_alpha; }
+            break;
+        }
+    }
 ");
 // Draw Event
 object_event_add
