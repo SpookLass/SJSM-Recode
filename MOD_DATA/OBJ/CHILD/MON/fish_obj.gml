@@ -65,6 +65,11 @@ object_event_add
             bod_form_var = true;
             break;
         }
+        case 3:
+        {
+            spd_base_var = 2;
+            break;
+        }
     }
     if bod_form_var
     {

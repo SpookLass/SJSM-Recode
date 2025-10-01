@@ -44,6 +44,6 @@ p3dc_add_cylinder_scr(-local.radius,-local.radius,global.slime_trig_coll[1],loca
 p3dc_end_mdl_scr();
 // Grids
 global.rm_size_var = 1280;
-local.grid_snap = 4;
-global.phys_grid = mp_grid_create(0,0,global.rm_size_var/local.grid_snap,global.rm_size_var/local.grid_snap,local.grid_snap,local.grid_snap);
-global.float_grid = mp_grid_create(0,0,global.rm_size_var/local.grid_snap,global.rm_size_var/local.grid_snap,local.grid_snap,local.grid_snap);
+global.grid_snap_var = 4;
+global.phys_grid = mp_grid_create(0,0,global.rm_size_var/global.grid_snap_var,global.rm_size_var/global.grid_snap_var,global.grid_snap_var,global.grid_snap_var);
+global.float_grid = mp_grid_create(0,0,global.rm_size_var/global.grid_snap_var,global.rm_size_var/global.grid_snap_var,global.grid_snap_var,global.grid_snap_var);

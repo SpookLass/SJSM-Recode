@@ -27,9 +27,11 @@ object_event_add
     acc_var = 0.05;
     frick_var = acc_var;
     move_type_var = 1;
+    move_alarm_var = 6;
     // Animation
     turn_rate_var = 5/3;
     turn_max_var = 30;
+    inv_chance_var = 3;
     vis_num_var = 2;
     vis_den_var = 3;
     rand_alarm_min_var = 6;
@@ -50,20 +52,73 @@ object_event_add
     seen_spd_var = true;
     // Spawn
     spawn_dist_var = 200;
+    // Funny
+    upside_var = false;
     // Behavior
-    global.gc_type_var = 2;
-    switch global.gc_type_var
+    if global.gc_type_var == -1 { local.type = irandom(6); }
+    else { local.type = global.gc_type_var; }
+    switch local.type
     {
-        case 0:
+        case 0: // Recode
         {
             move_type_var = 0;
             break;
+        }
+        case 6: // KH Recode
+        {
+            type_var = 2;
+            delay_var = 94;
+            spd_base_var = 1.5;
+            move_type_var = 2;
+            do_acc_var = true;
+            acc_var = 0.1;
+            frick_var = acc_var;
+            // Other
+            dmg_var = 20;
+            dmg_alarm_var = 120;
+            rand_alarm_max_var = 6;
+            // Autobrake
+            autobrake_var = true;
+            autobrake_spd_var = 1;
+            autobrake_dir_var = 60;
+            // Yes fun
+            seen_flash_var = false;
+            seen_spd_var = false;
+            spawn_dist_var = 0;
+            local.dontanim = true;
+            break;
+        }
+        case 3: // KH
+        {
+            delay_var = 94; // (128/2.5) + (64/1.5)
+            spd_base_var = 1.5;
+            inv_chance_var = 4;
+            type_var = 2;
+            move_type_var = 3;
+            dmg_var = 20;
+            dmg_alarm_var = 120;
+            move_type_var = 3;
+            rand_alarm_max_var = 6;
+            // Yes fun
+            seen_flash_var = false;
+            seen_spd_var = false;
+            spawn_dist_var = 0;
+            local.dontanim = true;
+            break;
+        }
+        case 5: // Cow
+        { upside_var = true; }
+        case 4: // HD KH
+        {
+            spd_base_var = 152/225; // 0.67r5
+            local.spd_set = true;
         }
         case 2: // HD
         {
             type_var = 2;
             move_type_var = 2;
-            spd_base_var = 44/45; // 0.9r7
+            if !local.spd_set
+            { spd_base_var = 44/45; } // 0.9r7
             do_acc_var = true;
             acc_var = 16/675; // 0.02r370
             frick_var = acc_var;
@@ -71,23 +126,29 @@ object_event_add
             delay_max_var = 180;
             dmg_var = 20;
             dmg_alarm_var = 120;
-            // No more fun
+            // Autobrake (close enough)
+            autobrake_var = true;
+            autobrake_spd_var = 0;
+            autobrake_dir_var = 60;
+            // No fun
             seen_flash_var = false;
             seen_spd_var = false;
             spawn_dist_var = 0;
             local.dontanim = true;
             rand_alarm_min_var = -1;
             rand_alarm_max_var = -1;
+            dur_var = irandom_range(10,15);
             break;
         }
     }
     // Alarms
-    alarm_len_var = 11;
+    alarm_len_var = 12;
     alarm_arr[8,2] = '';
     alarm_arr[9,2] = '';
     alarm_arr[10,2] = '';
+    alarm_arr[11,2] = '';
     event_inherited();
-    z_off_var = 2;
+    if upside_var { z_off_var = 24.5; } // 21.3
     do_snd_var = false;
     if local.dontanim
     { do_anim_var = false; }
@@ -102,12 +163,19 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_room_start,"
     event_inherited();
-    if spawn_dist_var != 0
+    if move_type_var == 3
+    {
+        x = global.spawn_arr[0,0];
+        y = global.spawn_arr[0,1];
+    }
+    else if spawn_dist_var != 0
     {
         local.dist = random_range(-spawn_dist_var,spawn_dist_var);
         x += lengthdir_x(local.dist,yaw_var+90);
         y += lengthdir_y(local.dist,yaw_var+90);
     }
+    mdl_yaw_var = yaw_var;
+    mdl_pitch_var = pitch_var;
     do_seen_var = true;
     spd_per_var = 1;
     visible = true;
@@ -118,6 +186,8 @@ object_event_add
     event_inherited();
     if rand_alarm_min_var > 0
     { set_alarm_scr(8,irandom_range(rand_alarm_min_var,rand_alarm_max_var)); }
+    if move_type_var == 3
+    { set_alarm_scr(11,move_alarm_var); }
 ");
 // Movement
 object_event_add
@@ -162,6 +232,8 @@ object_event_add
             set_motion_3d_scr(local.newspd,true,local.yaw,true,local.pitch,true);
             break;
         }
+        case 3: // KH OG
+        { exit; }
         default:
         {
             event_inherited();
@@ -179,14 +251,6 @@ object_event_add
     else { image_alpha = choose(1,random_range(0.5,1)); }
     set_alarm_scr(8,irandom_range(rand_alarm_min_var,rand_alarm_max_var));
 ");
-// Animation
-object_event_add
-(argument0,ev_other,ev_user1,"
-    x_off_var = random_range(-0.5,0.5);
-    y_off_var = random_range(-0.5,0.5);
-    z_off_var = random_range(-0.5,0.5);
-    visible = frac_chance_scr(vis_num_var,vis_den_var);
-");
 // Seen Alarm
 object_event_add
 (argument0,ev_alarm,9,"
@@ -200,6 +264,78 @@ object_event_add
     spd_per_var = 1;
     if spd_var > spd_base_var
     { set_motion_3d_scr(spd_base_var,true); }
+");
+// Move alarm (move type 3 only)
+object_event_add
+(argument0,ev_alarm,11,"
+    if move_var
+    {
+        local.spd = spd_base_var*spd_mult_var*move_alarm_var;
+        if target_dist_var <= local.spd
+        {
+            if enter_var
+            {
+                x = target_x_var;
+                y = target_y_var;
+                z = target_z_var;
+                do_coll_var = true;
+                enter_var = false;
+            }
+            else
+            {
+                x = target_x_var;
+                y = target_y_var;
+                z = target_z_var;
+            }
+        }
+        else if type_var > 0
+        {
+            local.can_path = mp_grid_path(grid_var,path_var,x,y,target_x_var,target_y_var,true);
+            sight_type_var = 2;
+            event_perform(ev_other,ev_user8);
+            if enter_var || target_visible_var || !local.can_path
+            {
+                yaw_var = point_direction(x,y,target_x_var,target_y_var);
+                x += lengthdir_x(local.spd,yaw_var);
+                y += lengthdir_y(local.spd,yaw_var);
+            }
+            else
+            {
+                // I think it's based on grid snap?
+                local.xnext = path_get_point_x(path_var,local.spd/global.grid_snap_var);
+                local.ynext = path_get_point_y(path_var,local.spd/global.grid_snap_var);
+                if local.xnext != 0 || local.ynext != 0
+                {
+                    // if keyboard_check(ord('P')) { show_message(string(point_distance(x,y,local.xnext,local.ynext)/local.spd)); }
+                    yaw_var = point_direction(x,y,local.xnext,local.ynext)
+                    x = local.xnext;
+                    y = local.ynext;
+                }
+            }
+        }
+        else
+        {
+            yaw_var = point_direction(x,y,target_x_var,target_y_var);
+            pitch_var = point_direction_3d_scr(x,y,z,target_x_var,target_y_var,target_z_var);
+            x += lengthdir_x(lengthdir_x(local.spd,yaw_var),pitch_var);
+            y += lengthdir_x(lengthdir_y(local.spd,yaw_var),pitch_var);
+            z -= lengthdir_y(local.spd,pitch_var);
+            pitch_var = pitch_var;
+        }
+        spd_mult_var = 1;
+        mdl_yaw_var = yaw_var;
+        mdl_pitch_var = pitch_var;
+    }
+    set_alarm_scr(11,move_alarm_var);
+");
+// Animation
+object_event_add
+(argument0,ev_other,ev_user1,"
+    x_off_var = random_range(-0.5,0.5);
+    y_off_var = random_range(-0.5,0.5);
+    z_off_var = random_range(-0.5,0.5);
+    if upside_var { z_off_var += 24.5; }
+    visible = frac_chance_scr(vis_num_var,vis_den_var);
 ");
 // Calculate Seen
 object_event_add
@@ -246,7 +382,7 @@ object_event_add
     {
         draw_set_color(image_blend); draw_set_alpha(image_alpha);
         d3d_transform_set_identity();
-        // d3d_transform_add_rotation_x(180);
+        if upside_var { d3d_transform_add_rotation_x(180); } 
         d3d_transform_add_rotation_y(mdl_pitch_var);
         d3d_transform_add_rotation_z(mdl_yaw_var);
         d3d_transform_add_translation(x+x_off_var,y+y_off_var,z+z_off_var);
