@@ -31,7 +31,7 @@ object_event_add
     snd_alarm_max_var = 240;
     snd_dist_var = 600;
     // Behavior
-    if global.ringu_type_var == -1 { local.type = irandom(3)); }
+    if global.ringu_type_var == -1 { local.type = irandom(3); }
     else { local.type = global.ringu_type_var; }
     switch local.type
     {
