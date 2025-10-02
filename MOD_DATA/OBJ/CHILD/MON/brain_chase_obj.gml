@@ -29,6 +29,7 @@ object_event_add
         target_spd_mult_var = 0.3;
     }
     event_inherited();
+    do_snd_var = false;
     // sine
     z_off_time_var=0;
     z_off_mult_var=2;

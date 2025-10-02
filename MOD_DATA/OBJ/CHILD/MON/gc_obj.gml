@@ -157,7 +157,8 @@ object_event_add
 object_event_add
 (argument0,ev_destroy,0,"
     event_inherited();
-    sprite_delete(spr_var);
+    background_delete(bg_var);
+    d3d_model_destroy(mdl_var);
 ");
 // Room Start Event
 object_event_add

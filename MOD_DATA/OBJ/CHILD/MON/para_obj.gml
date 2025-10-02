@@ -121,7 +121,7 @@ object_event_add
             state_dur_var = 8;
             state_eff_min_var = 6;
             state_eff_max_var = 6;
-            acc_var = 0.1;
+            acc_var = 0.16;
             frick_var = acc_var;
             // Autobrake
             autobrake_var = true;
@@ -196,6 +196,7 @@ object_event_add
     sprite_delete(state_spr_var[0]);
     sprite_delete(state_spr_var[1]);
     sprite_delete(state_spr_var[2]);
+    sprite_delete(spr_overlay_var);
 ");
 // Room Start Event
 object_event_add

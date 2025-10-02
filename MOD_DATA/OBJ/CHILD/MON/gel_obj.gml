@@ -141,6 +141,7 @@ object_event_add
 (argument0,ev_destroy,0,"
     event_inherited();
     sprite_delete(spr_var);
+    background_delete(slime_bg_var);
 ");
 // Slime alarm
 object_event_add

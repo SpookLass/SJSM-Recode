@@ -68,12 +68,15 @@ object_event_add
     event_inherited();
     do_mdl_var = true;
     do_anim_var = false;
+    do_snd_var = false;
 ");
 // Destroy Event
 object_event_add
 (argument0,ev_destroy,0,"
     event_inherited();
     sprite_delete(spr_var);
+    d3d_model_destroy(mdl_01_var);
+    d3d_model_destroy(mdl_02_var);
 ");
 // Room start
 object_event_add
@@ -83,6 +86,11 @@ object_event_add
     x = global.spawn_arr[0,0];
     y = global.spawn_arr[0,1];
     z = global.spawn_arr[0,2];
+    draw_x_var = x;
+    draw_y_var = y;
+    draw_z_var = z;
+    draw_yaw_var = yaw_var;
+    image_alpha = 1;
 ");
 // Delay
 object_event_add
@@ -145,6 +153,17 @@ object_event_add
     else if alarm_arr[9,0] > 0 { set_alarm_scr(9,-1); }
     event_inherited();
 ");
+// Attack Success
+// Uses attack_target_var as an argument, usually the player.
+object_event_add
+(argument0,ev_other,ev_user3,"
+    event_inherited();
+    image_alpha = 1;
+    draw_x_var = x;
+    draw_y_var = y;
+    draw_z_var = z;
+    draw_yaw_var = yaw_var;
+");
 // Teleport
 object_event_add
 (argument0,ev_other,ev_user15,"
@@ -154,6 +173,12 @@ object_event_add
     local.dist = random_range(tp_dist_min_var,tp_dist_max_var);
     x = target_x_var+lengthdir_x(local.dist,local.dir);
     y = target_y_var+lengthdir_x(local.dist,local.dir);
+    z = target_z_var;
+    image_alpha = 1;
+    draw_x_var = x;
+    draw_y_var = y;
+    draw_z_var = z;
+    draw_yaw_var = yaw_var;
 ");
 // Draw Event
 object_event_add
