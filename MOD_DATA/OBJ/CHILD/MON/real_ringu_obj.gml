@@ -55,7 +55,9 @@ object_event_add
     rand_alarm_var = 3;
     rand_chance_var = 2;
     // Behavior
-    switch global.real_ringu_type_var
+    if global.real_ringu_type_var == -1 { local.type = irandom(3); }
+    else { local.type = global.real_ringu_type_var; }
+    switch local.type
     {
         case 0: // Mod
         {

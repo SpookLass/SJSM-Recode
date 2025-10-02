@@ -54,7 +54,9 @@ object_event_add
     z_off_base_var = 2;
     z_off_start_var = -h_base_var;
     // Behavior
-    switch global.gel_type_var
+    if global.gel_type_var == -1 { local.type = irandom(2); }
+    else { local.type = global.gel_type_var; }
+    switch local.type
     {
         case 0:
         {

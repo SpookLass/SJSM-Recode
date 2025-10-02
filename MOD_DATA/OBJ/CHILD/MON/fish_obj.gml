@@ -58,7 +58,9 @@ object_event_add
     bod_h_var[5] = 10;
     bod_z_off_var[5] = 2;
     // Behavior
-    switch global.fish_type_var
+    if global.fish_type_var == -1 { local.type = irandom(3); }
+    else { local.type = global.fish_type_var; }
+    switch local.type
     {
         case 0: // Recode
         {

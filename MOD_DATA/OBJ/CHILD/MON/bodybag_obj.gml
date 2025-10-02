@@ -35,7 +35,9 @@ object_event_add
     eff_delay_var = 60;
     strobe_var = true;
     // Behavior
-    switch global.body_type_var
+    if global.body_type_var == -1 { local.type = irandom(4); }
+    else { local.type = global.body_type_var; }
+    switch local.type
     {
         case 4: // Speen!!!
         { spin_var = true; }

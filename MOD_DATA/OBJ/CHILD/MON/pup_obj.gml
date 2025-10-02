@@ -52,7 +52,9 @@ object_event_add
     tp_dist_min_var = 128;
     tp_dist_max_var = 512;
     // Behavior
-    switch global.pup_type_var
+    if global.pup_type_var == -1 { local.type = irandom(4); }
+    else { local.type = global.pup_type_var; }
+    switch local.type
     {
         case 0: // Mod
         {

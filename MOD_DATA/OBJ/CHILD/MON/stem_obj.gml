@@ -71,7 +71,9 @@ object_event_add
     snd_alarm_max_var = 400;
     snd_dist_var = 600;
     // Behavior
-    switch global.stem_type_var
+    if global.stem_type_var == -1 { local.type = irandom(3)); }
+    else { local.type = global.stem_type_var; }
+    switch local.type
     {
         case 6: // Drift Baby
         { boost_var = true; }

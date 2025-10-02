@@ -35,7 +35,9 @@ object_event_add
     rand_alarm_min_var = 3;
     rand_alarm_max_var = 9;
     // Behavior
-    switch global.patient_type_var
+    if global.patient_type_var == -1 { local.type = irandom(2); }
+    else { local.type = global.patient_type_var; }
+    switch local.type
     {
         case 0:
         {

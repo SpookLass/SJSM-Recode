@@ -100,7 +100,9 @@ object_event_add
     state_eff_max_var = 60;
     spr_overlay_var = sprite_add(main_directory_const+'\SPR\MON\para_overlay_spr.png',3,false,false,0,0);
     // Type
-    switch global.para_type_var
+    if global.para_type_var == -1 { local.type = irandom(2); }
+    else { local.type = global.para_type_var; }
+    switch local.type
     {
         case 0: // Mod
         {

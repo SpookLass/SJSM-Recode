@@ -70,7 +70,9 @@ object_event_add
     scare_dist_var = 48;
     scare_alarm_var = 480;
     // Behavior
-    switch global.bekka_type_var
+    if global.bekka_type_var == -1 { local.type = irandom(5); }
+    else { local.type = global.bekka_type_var; }
+    switch local.type
     {
         case 5: // Maya's Idea
         {

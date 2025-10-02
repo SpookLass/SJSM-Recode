@@ -34,7 +34,9 @@ object_event_add
     snd_alarm_max_var = 480;
     snd_dist_var = 600;
     // Behavior
-    switch global.otto_type_var
+    if global.otto_type_var == -1 { local.type = irandom(3); }
+    else { local.type = global.otto_type_var; }
+    switch local.type
     {
         case 0:
         {
