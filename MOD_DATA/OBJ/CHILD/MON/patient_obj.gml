@@ -124,7 +124,7 @@ object_event_add
                 else
                 {
                     mdl_var = mdl_01_var;
-                    tex_var = sprite_get_texture(spr_var,2);
+                    tex_var = sprite_get_texture(spr_var,0);
                 }
             }
         }
