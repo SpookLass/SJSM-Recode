@@ -7,18 +7,16 @@ object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Prop collisions
-global.table_coll[0] = prop_to_coll_scr(0,table_mdl_path);
+global.doorframe_02_coll[0] = prop_to_coll_scr(0,doorframe_02_mdl_path);
 // Create event
 object_event_add
 (argument0,ev_create,0,"
-    stored_tex_var = wood_03_bg_tex;
+    stored_tex_var = wall_bg_tex;
     event_inherited();
     solid_var = true;
-    mdl_var = table_mdl;
-    mdl_path_var = table_mdl_path;
-    // For grid (I don't really know how wide it is)
-    w_var = 16;
-    l_var = w_var;
+    mdl_var = doorframe_02_mdl;
+    mdl_path_var = doorframe_02_mdl_path;
+    no_grid_var = true;
     // Collisions
-    coll_var[0] = global.table_coll[0];
+    coll_var[0] = global.doorframe_02_coll[0];
 ");

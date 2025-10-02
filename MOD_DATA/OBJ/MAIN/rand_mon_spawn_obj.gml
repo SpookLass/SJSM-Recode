@@ -12,29 +12,32 @@ object_event_add
     ds_list_clear(global.mon_curr_list);
     local.mons = 0;
     with mon_par_obj { ds_list_add(global.mon_curr_list,object_index); local.mons += 1; }
-    if global.count_var <= 0
+    if local.mons < get_mult_scr()
     {
-        if !irandom(7) && local.mons < get_mult_scr() 
+        if global.count_var <= 0
         {
-            ds_list_clear(global.mon_spawn_list);
-            ds_list_copy(global.mon_spawn_list,global.mon_list);
-            for (local.i=0; local.i<ds_list_size(global.mon_curr_list); local.i+=1;)
+            if !irandom(7-global.mon_fail_var)
             {
-                local.index = ds_list_find_index(global.mon_spawn_list,ds_list_find_value(global.mon_curr_list,local.i));
-                if local.index != -1 { ds_list_delete(global.mon_spawn_list,local.index); }
+                ds_list_clear(global.mon_spawn_list);
+                ds_list_copy(global.mon_spawn_list,global.mon_list);
+                for (local.i=0; local.i<ds_list_size(global.mon_curr_list); local.i+=1;)
+                {
+                    local.index = ds_list_find_index(global.mon_spawn_list,ds_list_find_value(global.mon_curr_list,local.i));
+                    if local.index != -1 { ds_list_delete(global.mon_spawn_list,local.index); }
+                }
+                local.size = ds_list_size(global.mon_spawn_list);
+                if local.size > 0
+                {
+                    local.mon = ds_list_find_value(global.mon_spawn_list,irandom(local.size-1));
+                    ds_list_add(global.mon_curr_list,local.mon);
+                    instance_create(0,0,local.mon);
+                    global.count_var = get_count_scr();
+                    global.mon_fail_var = 0;
+                }
             }
-            local.size = ds_list_size(global.mon_spawn_list);
-            if local.size > 0
-            {
-                instance_create
-                (
-                    0,0
-                    ds_list_find_value(global.mon_spawn_list,irandom(local.size-1))
-                );
-            }
+            else { global.mon_fail_var += 1; }
         }
+        else { global.count_var = max(0,global.count_var-1); }
     }
-    else if local.mons <= 0
-    { global.count_var = max(0,global.count_var-1); }
-
+    
 ");
