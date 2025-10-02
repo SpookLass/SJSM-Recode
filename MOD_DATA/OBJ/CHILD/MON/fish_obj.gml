@@ -65,8 +65,9 @@ object_event_add
             bod_form_var = true;
             break;
         }
-        case 3:
+        case 3: // Remodeled
         {
+            delay_var = 112;
             spd_base_var = 2;
             break;
         }

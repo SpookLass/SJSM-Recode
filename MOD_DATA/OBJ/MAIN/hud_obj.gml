@@ -25,7 +25,17 @@ object_event_add
         draw_set_halign(fa_right); draw_set_color(make_color_rgb(30,0,50));
         draw_text_transformed(1224,56,local.str,0.75,0.75,0);
         draw_set_color(c_yellow);
-        draw_text_transformed(1226,54,local.str,.75,0.75,0);
+        draw_text_transformed(1226,54,local.str,0.75,0.75,0);
+        // Speed
+        if global.game_spd_var != 1
+        {
+            local.str = 'SPEED: '+string(global.game_spd_var);
+            draw_set_valign(fa_bottom); draw_set_color(make_color_rgb(100,0,0));
+            draw_text_transformed(1224,668,local.str,0.75,0.75,0);
+            draw_set_color(c_white);
+            draw_text_transformed(1226,666,local.str,0.75,0.75,0);
+            draw_set_valign(fa_top);
+        }
         draw_set_color(c_white); draw_set_halign(fa_left);
         // Debug text
         if global.debug_var

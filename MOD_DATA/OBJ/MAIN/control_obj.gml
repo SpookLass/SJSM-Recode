@@ -9,10 +9,6 @@ object_set_visible(argument0,true);
 // Step event
 object_event_add
 (argument0,ev_step,ev_step_normal,"
-    // Delta Time
-    // Goes by frames rather than seconds (at 60 fps)
-    global.delta_time_var = (current_time-global.last_time_var)*global.game_spd_var*milli_frame_rate_const; 
-    global.last_time_var = current_time;
     // Get inputs
     // I know this looks bad, but keyboard_check_pressed doesn't persist between rooms
     global.forward_input_prev_var = global.forward_input_var;
@@ -29,6 +25,8 @@ object_event_add
     global.right_input_prev_var = global.right_input_var;
     global.confirm_input_prev_var = global.confirm_input_var;
     global.debug_input_prev_var = global.debug_input_var;
+    global.ff_input_prev_var = global.ff_input_var;
+    global.slow_input_prev_var = global.slow_input_var;
     if !global.controller_var
     {
         if keyboard_check_pressed(global.forward_key_var) { global.forward_input_var = true; }
@@ -72,6 +70,12 @@ object_event_add
 
         if keyboard_check_pressed(global.debug_key_var) { global.debug_input_var = true; }
         if keyboard_check_released(global.debug_key_var) { global.debug_input_var = false; }
+
+        if keyboard_check_pressed(global.ff_key_var) { global.ff_input_var = true; }
+        if keyboard_check_released(global.ff_key_var) { global.ff_input_var = false; }
+
+        if keyboard_check_pressed(global.slow_key_var) { global.slow_input_var = true; }
+        if keyboard_check_released(global.slow_key_var) { global.slow_input_var = false; }
     }
     global.forward_input_press_var = global.forward_input_var-global.forward_input_prev_var;
     global.backward_input_press_var = global.backward_input_var-global.backward_input_prev_var;
@@ -87,6 +91,8 @@ object_event_add
     global.right_input_press_var = global.right_input_var-global.right_input_prev_var;
     global.confirm_input_press_var = global.confirm_input_var-global.confirm_input_prev_var;
     global.debug_input_press_var = global.debug_input_var-global.debug_input_prev_var;
+    global.ff_input_press_var = global.ff_input_var-global.ff_input_prev_var;
+    global.slow_input_press_var = global.slow_input_var-global.slow_input_prev_var;
     // Free da mouse
     if keyboard_check_pressed(vk_tab) || keyboard_check_pressed(vk_escape)
     {
@@ -107,6 +113,17 @@ object_event_add
             else {frame_var = 0; }
         }
     }
+    // Speed!
+    if global.draw_3d_var
+    {
+        if global.ff_input_press_var == 1 { global.game_spd_var = min(3,global.game_spd_var+0.25); }
+        if global.slow_input_press_var == 1 { global.game_spd_var = max(1,global.game_spd_var-0.25); }
+    }
+    else if global.game_spd_var != 1 { global.game_spd_var = 1; }
+    // Delta Time
+    // Goes by frames rather than seconds (at 60 fps)
+    global.delta_time_var = (current_time-global.last_time_var)*global.game_spd_var*milli_frame_rate_const; 
+    global.last_time_var = current_time;
     // Check for debug
     if global.debug_input_press_var == 1
     {

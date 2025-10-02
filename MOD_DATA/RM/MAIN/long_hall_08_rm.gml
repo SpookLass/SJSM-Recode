@@ -56,6 +56,7 @@ room_set_view(argument0,0,true,0,0,1280,720,0,0,1280,720,32,32,-1,-1,noone);
 // Effects
 room_instance_add(argument0,0,0,fog_01_obj);
 room_instance_add(argument0,0,0,color_control_02_obj);
+room_instance_add(argument0,0,0,rand_mon_spawn_obj);
 // Floors
 room_instance_add(argument0,112,464,floor_obj);
 room_instance_add(argument0,144,464,floor_obj);
