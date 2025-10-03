@@ -484,7 +484,7 @@ object_event_add
         hp_var = median(0,hp_max_var,hp_var);
         hp_infect_var = median(0,hp_max_var-hp_var,hp_infect_var);
         // Calculate FOV
-        local.target_fov = fov_var*power(max(0.6,spd_var/spd_base_var),0.25);
+        local.target_fov = fov_var*power(max(1,spd_var/spd_base_var),0.25); // 0.6
         if current_fov_var != local.target_fov
         {
             local.fov_diff = abs(local.target_fov-current_fov_var);

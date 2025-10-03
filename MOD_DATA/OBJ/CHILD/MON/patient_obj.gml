@@ -142,6 +142,11 @@ object_event_add
     }
     set_alarm_scr(8,irandom_range(rand_alarm_min_var,rand_alarm_max_var));
 ");
+// Teleport Alarm
+object_event_add
+(argument0,ev_alarm,9,"
+    event_user(15);
+");
 // Step event
 object_event_add
 (argument0,ev_step,ev_step_normal,"

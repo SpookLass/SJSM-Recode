@@ -53,6 +53,9 @@ object_event_add
     // Effects
     wall_bg_var = background_add(vanilla_directory_const+'\TEX\HOS_21.png',false,false);
     floor_bg_var = background_add(vanilla_directory_const+'\TEX\HOS_14.png',false,false);
+    eff_bg_var = background_add(vanilla_directory_const+'\TEX\sprites\EX_13_spr.png',false,false);
+    eff_old_var = true;
+    eff_var = true;
     // Spawn
     spawn_dist_var = 200;
     // Funny
@@ -65,6 +68,7 @@ object_event_add
         case 0: // Recode
         {
             move_type_var = 0;
+            eff_old_var = false;
             break;
         }
         case 6: // KH Recode
@@ -85,6 +89,7 @@ object_event_add
             autobrake_spd_var = 1;
             autobrake_dir_var = 60;
             // Yes fun
+            eff_var = false;
             seen_flash_var = false;
             seen_spd_var = false;
             spawn_dist_var = 0;
@@ -103,6 +108,7 @@ object_event_add
             move_type_var = 3;
             rand_alarm_max_var = 6;
             // Yes fun
+            eff_var = false;
             seen_flash_var = false;
             seen_spd_var = false;
             spawn_dist_var = 0;
@@ -115,6 +121,7 @@ object_event_add
         {
             spd_base_var = 152/225; // 0.67r5
             local.spd_set = true;
+            eff_var = false;
         }
         case 2: // HD
         {
@@ -129,6 +136,7 @@ object_event_add
             delay_max_var = 180;
             dmg_var = 20;
             dmg_alarm_var = 120;
+            eff_old_var = false;
             // Autobrake (close enough)
             autobrake_var = true;
             autobrake_spd_var = 0;
@@ -165,7 +173,12 @@ object_event_add
     background_delete(bg_var);
     background_delete(wall_bg_var);
     background_delete(floor_bg_var);
+    background_delete(eff_bg_var);
     d3d_model_destroy(mdl_var);
+    with player_obj
+    { fov_var = global.fov_var; }
+    with gc_eff_obj
+    { instance_destroy(); }
 ");
 // Room Start Event
 object_event_add
@@ -187,12 +200,23 @@ object_event_add
     do_seen_var = true;
     spd_per_var = 1;
     visible = true;
+    // Effects
     global.wall_bg_tex = background_get_texture(wall_bg_var);
     global.floor_bg_tex = background_get_texture(floor_bg_var);
     with ceil_par_obj
     { visible = false; }
     with wall_par_obj
     { h_var = ceil(global.fog_end_var/32)*32; }
+    with player_obj
+    { if fov_var > 40 { fov_var = 40; }}
+    if !instance_exists(gc_eff_obj)
+    {
+        with instance_create(0,0,gc_eff_obj)
+        {
+            bg_var = other.eff_bg_var;
+            old_var = other.eff_old_var;
+        }
+    }
 ");
 // Delay
 object_event_add
