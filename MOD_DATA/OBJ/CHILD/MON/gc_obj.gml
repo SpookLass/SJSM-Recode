@@ -50,6 +50,9 @@ object_event_add
     seen_pitch_var = 30;
     seen_flash_var = true;
     seen_spd_var = true;
+    // Effects
+    wall_bg_var = background_add(vanilla_directory_const+'\TEX\HOS_21.png',false,false);
+    floor_bg_var = background_add(vanilla_directory_const+'\TEX\HOS_14.png',false,false);
     // Spawn
     spawn_dist_var = 200;
     // Funny
@@ -157,7 +160,11 @@ object_event_add
 object_event_add
 (argument0,ev_destroy,0,"
     event_inherited();
+    global.wall_bg_tex = background_get_texture(global.wall_bg);
+    global.floor_bg_tex = background_get_texture(global.floor_bg);
     background_delete(bg_var);
+    background_delete(wall_bg_var);
+    background_delete(floor_bg_var);
     d3d_model_destroy(mdl_var);
 ");
 // Room Start Event
@@ -180,6 +187,12 @@ object_event_add
     do_seen_var = true;
     spd_per_var = 1;
     visible = true;
+    global.wall_bg_tex = background_get_texture(wall_bg_var);
+    global.floor_bg_tex = background_get_texture(floor_bg_var);
+    with ceil_par_obj
+    { visible = false; }
+    with wall_par_obj
+    { h_var = ceil(global.fog_end_var/32)*32; }
 ");
 // Delay
 object_event_add

@@ -136,6 +136,7 @@ object_event_add
             per_var = other.eff_per_var;
             set_alarm_scr(0,alarm_var);
             if fog_var { depth = 99; }
+            else { depth = -99; }
             event_perform(ev_other,ev_room_start);
         } 
     }

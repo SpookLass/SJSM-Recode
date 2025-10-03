@@ -106,7 +106,7 @@ object_event_add
         d3d_set_fog(false,c_black,0,0);
         d3d_transform_set_identity();
         d3d_transform_set_translation(global.cam_x_var[view_current],global.cam_y_var[view_current],global.cam_z_var[view_current]);
-        d3d_draw_ellipsoid(-fog_end_var,-fog_end_var,-fog_end_var,fog_end_var,fog_end_var,fog_end_var,sprite_get_texture(spr_var,spr_id_var),1,1,10);
+        d3d_draw_ellipsoid(-fog_end_var,-fog_end_var,-fog_end_var,fog_end_var,fog_end_var,fog_end_var,sprite_get_texture(spr_var,spr_id_var),2,2,10);
         d3d_transform_set_identity();
         d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var);
         break;

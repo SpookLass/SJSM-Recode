@@ -384,9 +384,9 @@ object_event_add
         case 0: // Story
         {
             draw_background_stretched(path_bg_var,0,path_y_var,1280,720);
-            draw_background_stretched(path_cloud_bg_var,path_cloud_x_var,path_cloud_y_var,720,720);
-            draw_background_stretched(path_cloud_bg_var,path_cloud_x_var+720,path_cloud_y_var,720,720);
-            draw_background_stretched(path_cloud_bg_var,path_cloud_x_var-720,path_cloud_y_var,720,720);
+            draw_background_stretched_ext(path_cloud_bg_var,path_cloud_x_var,path_cloud_y_var,720,720,c_white,0.5);
+            draw_background_stretched_ext(path_cloud_bg_var,path_cloud_x_var+720,path_cloud_y_var,720,720,c_white,0.5);
+            draw_background_stretched_ext(path_cloud_bg_var,path_cloud_x_var-720,path_cloud_y_var,720,720,c_white,0.5);
             // Text
             draw_text_transformed(64,64,skip_str_var,0.3,0.3,0);
             draw_set_halign(fa_center); draw_set_color(c_red);
