@@ -77,8 +77,7 @@ with ceil_editor_obj
         for (local.j=0; local.j<h_var; local.j+=1;)
         {
             local.str += "
-room_instance_add(argument0,"+string(x+16+(local.i*32))+","+string(y+16+(local.j*32))+","+other.type_arr[type_var,(sub_type_var*2)+4]+");
-            ";
+room_instance_add(argument0,"+string(x+16+(local.i*32))+","+string(y+16+(local.j*32))+","+other.type_arr[type_var,(sub_type_var*2)+4]+");";
         }
     }
 }
