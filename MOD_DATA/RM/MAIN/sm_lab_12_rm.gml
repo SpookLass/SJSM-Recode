@@ -133,8 +133,7 @@ room_instance_add(argument0,400,272,wall_2high_vert_obj);
 room_instance_add(argument0,400,304,wall_2high_vert_obj);
 room_instance_add(argument0,304,272,wall_2high_vert_obj);
 room_instance_add(argument0,208,272,wall_2high_vert_obj);
-room_instance_add(argument0,240,304,wall_1up_vert_obj);
-room_instance_add(argument0,272,304,wall_1up_vert_obj);
-// Windows
+room_instance_add(argument0,240,304,wall_doorway_vert_obj);
+room_instance_add(argument0,272,304,wall_doorway_vert_obj);
+// Prop
 room_instance_add(argument0,288,256,lab_window_hor_obj);
-// Not Yet

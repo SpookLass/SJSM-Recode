@@ -29,6 +29,7 @@ warn_dist_var: Distance to warn at
 // Create Event Begin
 object_event_add
 (argument0,ev_other,ev_user7,"
+    name_var = 'Parasite';
     type_var = 1;
     dur_var = irandom_range(10,20);
     hurt_dur_var = 1;

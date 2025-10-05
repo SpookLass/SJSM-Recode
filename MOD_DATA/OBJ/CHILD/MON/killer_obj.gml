@@ -9,15 +9,15 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_other,ev_user7,"
-    name_var = 'Ringu';
-    type_var = 0;
-    spd_base_var = 0.8;
-    spr_var = sprite_add(vanilla_directory_const+'\TEX\sprites\MS3_01_spr.png',6,false,false,0,0);
+    name_var = 'Killer';
+    type_var = 1;
+    spd_base_var = 1/3; // 0.r3
+    spr_var = sprite_add(vanilla_directory_const+'\TEX\sprites\MS10_05_spr.png',12,false,false,0,0);
     spr_spd_var = 1/6;
-    dur_var = irandom_range(10,20);
-    delay_var = 173;
+    dur_var = irandom_range(15,30);
+    delay_var = 117;
     dmg_var = 45;
-    dmg_alarm_var = 120;
+    dmg_alarm_var = 30;
     w_var = 10;
     h_var = 20;
     // Sounds
@@ -32,18 +32,14 @@ object_event_add
     snd_alarm_max_var = 240;
     snd_dist_var = 600;
     // Behavior
-    if global.ringu_type_var == -1 { local.type = irandom(3); }
-    else { local.type = global.ringu_type_var; }
+    if global.killer_type_var == -1 { local.type = irandom(2); }
+    else { local.type = global.killer_type_var; }
     switch local.type
     {
         case 0:
         {
             dmg_var = 30;
             break;
-        }
-        case 3: // Old HD
-        {
-            spd_base_var = 44/45; // 0.9r7
         }
         case 2: // HD
         {
@@ -55,7 +51,6 @@ object_event_add
         }
     }
     event_inherited();
-    z_off_var = 2;
 ");
 // Destroy Event
 object_event_add

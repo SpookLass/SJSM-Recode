@@ -45,12 +45,28 @@ object_event_add
         draw_text_transformed(107,76,local.hp_str,0.25,0.25,0);
         draw_text_transformed(107,106,local.stam_str,0.25,0.25,0);
         //draw_set_blend_mode(bm_normal);
+        // Monster list
+        draw_set_valign(fa_bottom);
+        if instance_exists(mon_par_obj)
+        {
+            local.offset = 720-(instance_number(mon_par_obj)*54);
+            with mon_par_obj
+            {
+                if string(name_var) != '0'
+                {
+                    draw_set_color(make_color_rgb(100,0,0));
+                    draw_text_transformed(52,local.offset+2,name_var,0.75,0.75,0);
+                    draw_set_color(c_white);
+                    draw_text_transformed(54,local.offset,name_var,0.75,0.75,0);
+                    local.offset += 54;
+                }
+            }
+        }
         // Speed Count
         draw_set_halign(fa_right);
         if global.game_spd_var != 1
         {
             local.str = 'SPEED: '+string(global.game_spd_var);
-            draw_set_valign(fa_bottom);
             draw_set_color(make_color_rgb(100,0,0));
             draw_text_transformed(1224,668,local.str,0.75,0.75,0);
             draw_set_color(c_white);

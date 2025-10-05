@@ -143,8 +143,8 @@ room_instance_add(argument0,272,176,wall_2high_vert_obj);
 room_instance_add(argument0,272,208,wall_2high_vert_obj);
 room_instance_add(argument0,368,272,wall_2high_vert_obj);
 room_instance_add(argument0,368,240,wall_2high_vert_obj);
-// Windows
+// Props
 room_instance_add(argument0,288,224,lab_window_hor_obj);
 room_instance_add(argument0,288,320,lab_window_hor_obj);
 // Not Yet
-room_instance_add(argument0,232,448,js_obj);
+// room_instance_add(argument0,232,448,js_obj);

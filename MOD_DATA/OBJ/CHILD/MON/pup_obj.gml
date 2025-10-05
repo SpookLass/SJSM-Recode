@@ -16,6 +16,7 @@ state_var
 // Create Event
 object_event_add
 (argument0,ev_other,ev_user7,"
+    name_var = 'Puppet';
     type_var = 0;
     spd_base_var = 5;
     spr_var = sprite_add(vanilla_directory_const+'\TEX\sprites\MS5_01_spr.png',4,false,false,0,0);

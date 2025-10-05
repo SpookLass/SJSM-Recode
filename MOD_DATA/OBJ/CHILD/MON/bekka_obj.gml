@@ -15,6 +15,7 @@ state_var
 // Create Event
 object_event_add
 (argument0,ev_other,ev_user7,"
+    name_var = 'Bekka';
     type_var = 0;
     spd_base_var = 0.75;
     bg_var = background_add(vanilla_directory_const+'\TEX\sprites\MS23_01_spr.png',false,false);
@@ -70,7 +71,11 @@ object_event_add
     scare_dist_var = 48;
     scare_alarm_var = 480;
     // Behavior
-    if global.bekka_type_var == -1 { local.type = irandom(5); }
+    if global.bekka_type_var == -1
+    {
+        local.type = irandom(5);
+        local.setname = true;
+    }
     else { local.type = global.bekka_type_var; }
     switch local.type
     {
@@ -141,7 +146,8 @@ object_event_add
     event_inherited();
     background_delete(bg_var);
     background_delete(bg_overlay_var);
-    with kh_overlay_obj { instance_destroy(); }
+    with kh_overlay_obj
+    { if par_var == other.id { instance_destroy(); }}
 ");
 // Room Start Event
 object_event_add
@@ -152,6 +158,7 @@ object_event_add
     {
         with instance_create(0,0,kh_overlay_obj) do
         {
+            par_var = other.id;
             image_blend = other.overlay_color_var;
             image_alpha = other.overlay_alpha_var;
             bg_var = other.bg_overlay_var;

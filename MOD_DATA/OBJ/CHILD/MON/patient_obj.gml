@@ -9,6 +9,7 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_other,ev_user7,"
+    name_var = 'Patient';
     type_var = 0;
     spd_base_var = 2;
     dur_var = irandom_range(20,33);
@@ -17,8 +18,6 @@ object_event_add
     dmg_alarm_var = 30;
     // Seen
     do_seen_var = true;
-    seen_yaw_var = 30;
-    seen_pitch_var = 30;
     seen_spd_mult_var = 0.02;
     tp_alarm_var = 220;
     tp_sight_var = false;
@@ -36,6 +35,16 @@ object_event_add
     rand_chance_var = 3;
     rand_alarm_min_var = 3;
     rand_alarm_max_var = 9;
+    // Hang
+    hang_var = true;
+    seen_yaw_01_var = 3.434; // 3.r43
+    seen_pitch_01_var = 30; // 3.r43
+    seen_yaw_02_var = 30;
+    seen_pitch_02_var = 30;
+    // Overlay
+    overlay_var = true;
+    overlay_color_var = c_white;
+    overlay_alpha_var = 0.1;
     // Behavior
     if global.patient_type_var == -1 { local.type = irandom(2); }
     else { local.type = global.patient_type_var; }
@@ -51,6 +60,7 @@ object_event_add
         }
         case 2:
         {
+            hang_var = false;
             type_var = 2;
             spd_base_var = 8/9; // 0.r8
             do_acc_var = true;
@@ -61,6 +71,18 @@ object_event_add
             draw_pos_var = true;
             break;
         }
+    }
+    if overlay_var
+    { bg_overlay_var = background_add(vanilla_directory_const+'\TEX\sprites\fog_spr.png',false,false); }
+    if hang_var
+    {
+        seen_yaw_var = seen_yaw_01_var;
+        seen_pitch_var = seen_pitch_01_var;
+    }
+    else
+    {
+        seen_yaw_var = seen_yaw_02_var;
+        seen_pitch_var = seen_pitch_02_var;
     }
     // Alarms
     alarm_len_var = 10;
@@ -77,6 +99,12 @@ object_event_add
 (argument0,ev_destroy,0,"
     event_inherited();
     sprite_delete(spr_var);
+    if overlay_var
+    {
+        background_delete(bg_overlay_var);
+        with kh_overlay_obj
+        { if par_var == other.id { instance_destroy(); }}
+    }
     d3d_model_destroy(mdl_01_var);
     d3d_model_destroy(mdl_02_var);
 ");
@@ -84,15 +112,56 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_room_start,"
     event_inherited();
+    draw_yaw_var = yaw_var;
+    if hang_var
+    {
+        on_var = true;
+        set_alarm_scr(0,-1);
+        move_var = false;
+        attack_var = false;
+        anim_var = false;
+        local.spawn = irandom_range(1,global.spawn_len_var-1);
+        x = global.spawn_arr[local.spawn,0];
+        y = global.spawn_arr[local.spawn,1];
+        z = global.spawn_arr[local.spawn,2];
+        yaw_var = global.spawn_arr[local.spawn,3];
+        mdl_var = mdl_02_var;
+        tex_var = sprite_get_texture(spr_var,1);
+        draw_yaw_var = yaw_var+180;
+    }
+    else
+    {
+        x = global.spawn_arr[0,0];
+        y = global.spawn_arr[0,1];
+        z = global.spawn_arr[0,2];
+        if overlay_var && !instance_exists(kh_overlay_obj)
+        {
+            with instance_create(0,0,kh_overlay_obj) do
+            {
+                par_var = other.id;
+                image_blend = other.overlay_color_var;
+                image_alpha = other.overlay_alpha_var;
+                bg_var = other.bg_overlay_var;
+            }
+        }
+    }
     enter_var = false;
-    x = global.spawn_arr[0,0];
-    y = global.spawn_arr[0,1];
-    z = global.spawn_arr[0,2];
     draw_x_var = x;
     draw_y_var = y;
     draw_z_var = z;
-    draw_yaw_var = yaw_var;
     image_alpha = 1;
+");
+// Room End
+object_event_add
+(argument0,ev_other,ev_room_end,"
+    event_inherited();
+    if hang_var
+    {
+        hang_var = false;
+        visible = true;
+        seen_yaw_var = seen_yaw_02_var;
+        seen_pitch_var = seen_pitch_02_var;
+    }
 ");
 // Delay
 object_event_add
@@ -152,12 +221,27 @@ object_event_add
 // Step event
 object_event_add
 (argument0,ev_step,ev_step_normal,"
-    if seen_var == 1
+    if hang_var
     {
-        spd_mult_var = seen_spd_mult_var;
-        if alarm_arr[9,0] <= 0 { set_alarm_scr(9,tp_alarm_var); }
+        if seen_var == 1 && target_dist_var <= 200 // Look target is so weird
+        {
+            hang_var = false;
+            visible = true;
+            seen_yaw_var = seen_yaw_02_var;
+            seen_pitch_var = seen_pitch_02_var;
+            event_perform(ev_other,ev_room_start);
+        }
+        else { visible = !irandom(1); }
     }
-    else if alarm_arr[9,0] > 0 { set_alarm_scr(9,-1); }
+    else
+    {
+        if seen_var == 1
+        {
+            spd_mult_var = seen_spd_mult_var;
+            if alarm_arr[9,0] <= 0 { set_alarm_scr(9,tp_alarm_var); }
+        }
+        else if alarm_arr[9,0] > 0 { set_alarm_scr(9,-1); }
+    }
     event_inherited();
 ");
 // Attack Success
@@ -209,10 +293,14 @@ object_event_add
             d3d_draw_wall(0,w_var/2,h_var,0,-w_var/2,0,tex_var,1,1);
         }
         d3d_transform_set_identity();
-        draw_set_color(c_white); draw_set_alpha(1); d3d_set_hidden(false);
-        if path_exists(path_var)
-        { draw_path(path_var,x,y,false); }
-        d3d_set_hidden(true);
-        // mp_grid_draw(grid_var);
+        draw_set_color(c_white); draw_set_alpha(1);
+        if global.debug_var
+        {
+            d3d_set_hidden(false);
+            if path_exists(path_var)
+            { draw_path(path_var,x,y,false); }
+            d3d_set_hidden(true);
+            // mp_grid_draw(grid_var);
+        }
     }
 ");

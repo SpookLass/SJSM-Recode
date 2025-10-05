@@ -9,6 +9,7 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_other,ev_user7,"
+    name_var = 'Real Ringu';
     type_var = 0;
     dur_var = 25;
     delay_var = 173;

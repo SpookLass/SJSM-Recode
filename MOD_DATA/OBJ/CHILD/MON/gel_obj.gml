@@ -9,6 +9,7 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_other,ev_user7,"
+    name_var = 'Gel';
     type_var = 0;
     spd_base_var = 0.6;
     spr_var = sprite_add(vanilla_directory_const+'\TEX\sprites\MS_01_spr.png',5,false,false,0,0);

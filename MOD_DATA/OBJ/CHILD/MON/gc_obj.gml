@@ -9,6 +9,7 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_other,ev_user7,"
+    name_var = 'Ghost Cow';
     type_var = 0;
     spd_base_var = 0.7;
     bg_var = background_add(vanilla_directory_const+'\3D\npc_7_tex.png',false,false);

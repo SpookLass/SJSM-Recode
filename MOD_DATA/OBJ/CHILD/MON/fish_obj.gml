@@ -9,6 +9,7 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_other,ev_user7,"
+    name_var = 'Fish';
     type_var = 1;
     spd_base_var = 17/30; // 0.5r6
     spr_var = sprite_add(main_directory_const+'\SPR\MON\fish_spr.png',9,false,false,0,0);

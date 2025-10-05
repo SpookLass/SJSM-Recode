@@ -15,6 +15,7 @@ move_type_var
 // Create Event
 object_event_add
 (argument0,ev_other,ev_user7,"
+    name_var = 'Stem';
     type_var = 0;
     spd_base_var = 0.4;
     dur_var = irandom_range(15,30);

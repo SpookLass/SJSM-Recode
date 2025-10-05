@@ -62,6 +62,7 @@ hurt_var: Whether the specimen is currently hurt
 // Create Event Begin
 object_event_add
 (argument0,ev_other,ev_user7,"
+    if string(name_var) == '0' { name_var = 'Unknown'; }
     // Gotta set type, delay, and duration
     dur_start_var = dur_var;
     enter_var = type_var > 0;
@@ -246,6 +247,19 @@ object_event_add
     {
         // event_perform(ev_alarm,6); // Don't play on room start, that was a stupid idea
         set_alarm_scr(6,irandom_range(snd_alarm_min_var,snd_alarm_max_var));
+    }
+    if type_var == 1 && enter_var
+    {
+        with door_entrance_obj
+        {
+            if !open_var && point_distance_3d_scr(x,y,z,other.x,other.y,other.z) < 32
+            {
+                mdl_var = door_broke_mdl;
+                mdl_path_var = door_broke_mdl_path;
+                direction += 180;
+                open_var = true;
+            }
+        }
     }
 ");
 // Unstun Alarm

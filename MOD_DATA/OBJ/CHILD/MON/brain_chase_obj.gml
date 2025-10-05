@@ -9,6 +9,7 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_other,ev_user7,"
+    name_var = 'Brain';
     type_var = 0;
     spd_base_var = 0.8;
     tex_var = brain_bg_tex;
