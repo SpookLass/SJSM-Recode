@@ -188,9 +188,14 @@ object_event_add
         d3d_transform_add_translation(x+x_off_var,y+y_off_var,z+z_off_var);
         d3d_model_draw(mdl_var,0,0,0,tex_var);
         d3d_transform_set_identity();
-        draw_set_color(c_white); draw_set_alpha(1); d3d_set_hidden(false);
-        if path_exists(path_var)
-        { draw_path(path_var,x,y,false); }
-        d3d_set_hidden(true);
+        draw_set_color(c_white); draw_set_alpha(1);
+        if global.debug_var
+        {
+            d3d_set_hidden(false);
+            if path_exists(path_var)
+            { draw_path(path_var,x,y,false); }
+            d3d_set_hidden(true);
+            // mp_grid_draw(grid_var);
+        }
     }
 ");

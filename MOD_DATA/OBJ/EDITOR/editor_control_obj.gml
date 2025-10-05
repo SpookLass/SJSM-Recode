@@ -28,17 +28,17 @@ object_event_add
     type_arr[0,5] = 'High Floor';
     type_arr[0,6] = 'floor_high_obj';
     // Ceilings
-    type_arr[0,0] = ceil_editor_obj;
-    type_arr[0,1] = ceil_editor_spr;
-    type_arr[0,2] = 4;
-    type_arr[0,3] = 'Ceiling';
-    type_arr[0,4] = 'ceil_obj';
-    type_arr[0,5] = 'High Ceiling';
-    type_arr[0,6] = 'ceil_2high_obj';
-    type_arr[0,7] = '3 High Ceiling';
-    type_arr[0,8] = 'ceil_3high_obj';
-    type_arr[0,9] = 'Low Ceiling';
-    type_arr[0,10] = 'ceil_low_obj';
+    type_arr[1,0] = ceil_editor_obj;
+    type_arr[1,1] = ceil_editor_spr;
+    type_arr[1,2] = 4;
+    type_arr[1,3] = 'Ceiling';
+    type_arr[1,4] = 'ceil_obj';
+    type_arr[1,5] = 'High Ceiling';
+    type_arr[1,6] = 'ceil_2high_obj';
+    type_arr[1,7] = '3 High Ceiling';
+    type_arr[1,8] = 'ceil_3high_obj';
+    type_arr[1,9] = 'Low Ceiling';
+    type_arr[1,10] = 'ceil_low_obj';
     // Vertical Walls
     type_arr[2,0] = wall_vert_editor_obj;
     type_arr[2,1] = wall_vert_editor_spr;
@@ -69,24 +69,24 @@ object_event_add
     type_arr[3,2] = 10;
     type_arr[3,3] = 'Horizontal Wall';
     type_arr[3,4] = 'wall_hor_obj';
-    type_arr[2,5] = 'High Horizontal Wall';
-    type_arr[2,6] = 'wall_2high_hor_obj';
-    type_arr[2,7] = '3 High Horizontal Wall';
-    type_arr[2,8] = 'wall_3high_hor_obj';
-    type_arr[2,9] = 'Big Horizontal Wall';
-    type_arr[2,10] = 'wall_big_hor_obj';
-    type_arr[2,11] = 'Horizontal Pit Wall';
-    type_arr[2,12] = 'wall_pit_hor_obj';
-    type_arr[2,13] = 'Vertical Two-Tone Wall';
-    type_arr[2,14] = 'wall_tt_vert_obj';
-    type_arr[2,15] = 'Horizontal Floating Wall';
-    type_arr[2,16] = 'wall_float_hor_obj';
-    type_arr[2,17] = 'Horizontal Floating Pit Wall';
-    type_arr[2,18] = 'wall_pit_float_hor_obj';
-    type_arr[2,19] = 'Horizontal Doorway';
-    type_arr[2,20] = 'wall_doorway_hor_obj';
-    type_arr[2,21] = 'Big Horizontal Doorway';
-    type_arr[2,22] = 'wall_doorway_big_hor_obj';
+    type_arr[3,5] = 'High Horizontal Wall';
+    type_arr[3,6] = 'wall_2high_hor_obj';
+    type_arr[3,7] = '3 High Horizontal Wall';
+    type_arr[3,8] = 'wall_3high_hor_obj';
+    type_arr[3,9] = 'Big Horizontal Wall';
+    type_arr[3,10] = 'wall_big_hor_obj';
+    type_arr[3,11] = 'Horizontal Pit Wall';
+    type_arr[3,12] = 'wall_pit_hor_obj';
+    type_arr[3,13] = 'Vertical Two-Tone Wall';
+    type_arr[3,14] = 'wall_tt_vert_obj';
+    type_arr[3,15] = 'Horizontal Floating Wall';
+    type_arr[3,16] = 'wall_float_hor_obj';
+    type_arr[3,17] = 'Horizontal Floating Pit Wall';
+    type_arr[3,18] = 'wall_pit_float_hor_obj';
+    type_arr[3,19] = 'Horizontal Doorway';
+    type_arr[3,20] = 'wall_doorway_hor_obj';
+    type_arr[3,21] = 'Big Horizontal Doorway';
+    type_arr[3,22] = 'wall_doorway_big_hor_obj';
     // Props
     type_arr[4,0] = prop_editor_obj;
     type_arr[4,1] = prop_editor_spr;
@@ -122,7 +122,7 @@ object_event_add
     type_arr[4,29] = 'Vertical Metal Railing';
     type_arr[4,30] = 'rail_metal_hor_obj';
     type_arr[4,31] = 'Horizontal Metal Railing';
-    type_arr[4,32] = 'rail_metal_vert_obj';
+    type_arr[4,32] = 'rail_metal_hor_obj';
     type_arr[4,33] = 'Rug';
     type_arr[4,34] = 'rug_obj';
     type_arr[4,35] = 'Random Rug';
@@ -200,13 +200,13 @@ object_event_add
     // Spawns
     type_arr[5,0] = spawn_editor_obj;   // Spawns and marks are special
     type_arr[5,1] = spawn_editor_spr;   // They're stored as an array in the create event rather than as objects
-    type_arr[5,2] = 1;
+    type_arr[5,2] = -1;
     type_arr[5,3] = 'Spawn';
     type_arr[5,4] = '';
     // Marks
     type_arr[6,0] = mark_editor_obj;
     type_arr[6,1] = mark_editor_spr;
-    type_arr[6,2] = 1;
+    type_arr[6,2] = -1;
     type_arr[6,3] = 'Mark';
     type_arr[6,4] = '';
 ");
@@ -307,7 +307,8 @@ object_event_add
                 if !collision_point(mouse_x_snap_var,mouse_y_snap_var,type_arr[type_var,0],true,true)
                 {
                     local.thing = instance_create(mouse_x_snap_var,mouse_y_snap_var,type_arr[type_var,0]);
-                    local.thing.sub_type = sub_type;
+                    local.thing.type_var = type_var;
+                    local.thing.sub_type_var = sub_type_var;
                 }
                 break;
             }
@@ -315,7 +316,7 @@ object_event_add
             {
                 if instance_exists(select_var)
                 {
-                    if !collision_point(mouse_x_snap_var,mouse_y_snap_var,select_var.object_index,true,true);
+                    if !collision_point(mouse_x_snap_var,mouse_y_snap_var,select_var.object_index,true,true)
                     { select_var = noone; }
                 }
                 break;
