@@ -206,7 +206,7 @@ object_event_add
     with ceil_par_obj
     { visible = false; }
     with wall_par_obj
-    { h_var = ceil(global.fog_end_var/32)*32; }
+    { h_var = max(h_var,ceil(global.fog_end_var/32)*32); }
     with player_obj
     { if fov_var > 40 { fov_var = 40; }}
     if !instance_exists(gc_eff_obj)

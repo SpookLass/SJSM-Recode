@@ -22,6 +22,8 @@ object_event_add
     seen_spd_mult_var = 0.02;
     tp_alarm_var = 220;
     tp_sight_var = false;
+    tp_dist_min_var = 128;
+    tp_dist_max_var = 512;
     // Render
     spr_var = sprite_add(main_directory_const+'\SPR\MON\patient_spr.png',3,false,false,0,0); // vanilla_directory_const+'\3D\npc_6_tex.png'
     tex_var = sprite_get_texture(spr_var,0);

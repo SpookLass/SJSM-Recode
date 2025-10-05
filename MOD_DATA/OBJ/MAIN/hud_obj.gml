@@ -20,30 +20,54 @@ object_event_add
         local.width = background_get_width(bar_hp_bg)*player_obj.hp_var/player_obj.hp_max_var;
         draw_background_part(bar_hp_bg,background_get_width(bar_hp_bg)-local.width,0,local.width,27,99,62);
         draw_background(bar_icon_bg,37,34);
-        // Room Count
-        local.str = 'ROOM: '+string(global.rm_count_var);
-        draw_set_halign(fa_right); draw_set_color(make_color_rgb(30,0,50));
-        draw_text_transformed(1224,56,local.str,0.75,0.75,0);
+        // Health counter
+        //draw_set_blend_mode_ext(bm_inv_dest_color,bm_zero);
+        local.hp_str = string(round(player_obj.hp_var))+' / '+string(player_obj.hp_max_var);
+        local.stam_str = string(round(player_obj.stam_var))+' / '+string(player_obj.stam_max_var);
+        draw_set_valign(fa_middle);
+        draw_set_color(make_color_rgb(30,0,50));
+        for (local.i=0; local.i<4; local.i+=1;)
+        {
+            local.xtmp = lengthdir_x(1,local.i*90);
+            local.ytmp = lengthdir_y(1,local.i*90);
+            draw_text_transformed(107+local.xtmp,76+local.ytmp,local.hp_str,0.25,0.25,0);
+            draw_text_transformed(107+local.xtmp,106+local.ytmp,local.stam_str,0.25,0.25,0);
+        }
+        
+        draw_text_transformed(108,75,local.hp_str,0.25,0.25,0);
+        draw_text_transformed(106,75,local.hp_str,0.25,0.25,0);
+        draw_text_transformed(108,77,local.hp_str,0.25,0.25,0);
+        
+        draw_text_transformed(108,105,local.stam_str,0.25,0.25,0);
+        draw_text_transformed(106,105,local.stam_str,0.25,0.25,0);
+        draw_text_transformed(108,107,local.stam_str,0.25,0.25,0);
         draw_set_color(c_yellow);
-        draw_text_transformed(1226,54,local.str,0.75,0.75,0);
-        // Speed
+        draw_text_transformed(107,76,local.hp_str,0.25,0.25,0);
+        draw_text_transformed(107,106,local.stam_str,0.25,0.25,0);
+        //draw_set_blend_mode(bm_normal);
+        // Speed Count
+        draw_set_halign(fa_right);
         if global.game_spd_var != 1
         {
             local.str = 'SPEED: '+string(global.game_spd_var);
-            draw_set_valign(fa_bottom); draw_set_color(make_color_rgb(100,0,0));
+            draw_set_valign(fa_bottom);
+            draw_set_color(make_color_rgb(100,0,0));
             draw_text_transformed(1224,668,local.str,0.75,0.75,0);
             draw_set_color(c_white);
             draw_text_transformed(1226,666,local.str,0.75,0.75,0);
-            draw_set_valign(fa_top);
         }
+        draw_set_valign(fa_top);
+        // Room Count
+        local.str = 'ROOM: '+string(global.rm_count_var);
+        draw_set_color(make_color_rgb(30,0,50));
+        draw_text_transformed(1224,56,local.str,0.75,0.75,0);
+        draw_set_color(c_yellow);
+        draw_text_transformed(1226,54,local.str,0.75,0.75,0);
         draw_set_color(c_white); draw_set_halign(fa_left);
         // Debug text
         if global.debug_var
         {
             local.str = '
-Player Stats
-    Health: '+string(player_obj.hp_var)+'
-    Stamina: '+string(player_obj.stam_var)+'
 Position
     X: '+string(player_obj.x)+'
     Y: '+string(player_obj.y)+'
@@ -65,7 +89,7 @@ Input
     Right: '+string(global.strafe_right_input_var)+'
 Taker
     Taker: '+string(player_obj.alarm_arr[3,0])+' / '+string(player_obj.alarm_arr[3,1])
-            draw_text_transformed(0,96,local.str,0.25,0.25,0);
+            draw_text_transformed(0,128,local.str,0.25,0.25,0);
             d3d_set_hidden(true);
         }
     }

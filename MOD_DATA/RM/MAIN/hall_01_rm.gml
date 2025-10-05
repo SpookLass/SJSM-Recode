@@ -111,17 +111,6 @@ room_instance_add(argument0,208,160,torch_south_obj);
 room_instance_add(argument0,272,160,torch_south_obj);
 room_instance_add(argument0,324,208,torch_west_obj);
 room_instance_add(argument0,348,208,torch_east_obj);
-/*
-room_instance_add(argument0,208,144,light_floor_obj);
-room_instance_add(argument0,272,144,light_floor_obj);
-room_instance_add(argument0,336,208,light_floor_obj);
-room_instance_add(argument0,348,208,light_wall_vert_obj);
-room_instance_add(argument0,324,208,light_wall_vert_obj);
-room_instance_add(argument0,276,160,light_wall_hor_obj);
-room_instance_add(argument0,272,128,light_wall_hor_obj);
-room_instance_add(argument0,208,128,light_wall_hor_obj);
-room_instance_add(argument0,212,160,light_wall_hor_obj);
-*/
 /* Not yet
 room_instance_add(argument0,324,160,global.js_obj);
 */
