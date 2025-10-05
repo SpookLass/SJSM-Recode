@@ -139,7 +139,7 @@ room_instance_add(argument0,550,446,bone_rand_obj);
 room_instance_add(argument0,652,496,rug_rand_obj);
 room_instance_add(argument0,576,456,rug_rand_rot_obj);
 room_instance_add(argument0,576,536,rug_rand_rot_obj);
-room_instance_add(argument0,576,432,painting_hor_obj);
-room_instance_add(argument0,576,560,painting_hor_obj);
-room_instance_add(argument0,672,496,painting_vert_obj);
+room_instance_add(argument0,576,432,frame_hor_rand_obj);
+room_instance_add(argument0,576,560,frame_hor_rand_obj);
+room_instance_add(argument0,672,496,frame_vert_rand_obj);
 // Not yet

@@ -109,5 +109,5 @@ room_instance_add(argument0,240,352,wall_vert_obj);
 room_instance_add(argument0,320,304,doorframe_01_hor_obj);
 room_instance_add(argument0,320,304,doorframe_02_hor_obj);
 room_instance_add(argument0,256,352,bed_rand_obj);
-room_instance_add(argument0,288,240,painting_hor_rand_obj);
+room_instance_add(argument0,288,240,frame_hor_rand_obj);
 // Not Yet

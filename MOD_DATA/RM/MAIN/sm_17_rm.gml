@@ -99,5 +99,5 @@ room_instance_add(argument0,576,448,torch_east_obj);
 room_instance_add(argument0,560,544,table_rand_obj);
 room_instance_add(argument0,528,464,rug_rand_rot_obj);
 room_instance_add(argument0,561,480,bone_rand_obj);
-room_instance_add(argument0,576,496,painting_vert_obj);
-room_instance_add(argument0,480,496,painting_vert_obj);
+room_instance_add(argument0,576,496,frame_vert_rand_obj);
+room_instance_add(argument0,480,496,frame_vert_rand_obj);

@@ -135,4 +135,4 @@ room_instance_add(argument0,384,208,doorframe_01_hor_obj);
 room_instance_add(argument0,384,208,doorframe_02_hor_obj);
 room_instance_add(argument0,256,224,bed_rand_obj);
 room_instance_add(argument0,448,160,chair_rand_obj);
-room_instance_add(argument0,416,144,painting_hor_rand_obj);
+room_instance_add(argument0,416,144,frame_hor_rand_obj);

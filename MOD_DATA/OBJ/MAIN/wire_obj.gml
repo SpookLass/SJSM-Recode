@@ -9,15 +9,11 @@ object_set_visible(argument0,true);
 // Create event
 object_event_add
 (argument0,ev_create,0,"
-    switch irandom(2)
-    {
-        case 0: { stored_tex_var = wire_01_bg_tex; break; }
-        case 1: { stored_tex_var = wire_02_bg_tex; break; }
-        case 2: { stored_tex_var = wire_03_bg_tex; break; }
-    }
+    stored_tex_var = choose(wire_01_bg_tex,wire_02_bg_tex,wire_03_bg_tex);
     event_inherited();
     solid_var = false;
     type_var = 6; // Double Plane
     w_var = 32;
     h_var = 32;
+    dist_var = 0.1;
 ");

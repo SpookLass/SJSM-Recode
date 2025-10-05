@@ -9,11 +9,12 @@ object_set_visible(argument0,true);
 // Create event
 object_event_add
 (argument0,ev_create,0,"
-    stored_tex_var = sprite_get_texture(chain_spr,irandom(sprite_get_number(chain_spr)-1));
+    stored_tex_var = frame_bg_tex
     event_inherited();
     solid_var = false;
     type_var = 6; // Double Plane
-    w_var = 6.6;
-    h_var = 32;
-    dist_var = 0.1;
+    w_var = 19;
+    h_var = 12;
+    z = 14;
+    dist_var = 0.2;
 ");

@@ -5,7 +5,7 @@ Argument 0: Room Variable (same for all rooms)
 room_set_code
 (
     argument0,"
-    global.rm_name_var = 'Winding Hall 14'
+    global.rm_name_var = 'Winding Hall 15'
     // Spawn
     global.spawn_len_var = 2;
     global.spawn_arr[0,0] = 176;
@@ -137,9 +137,8 @@ room_instance_add(argument0,416,176,wall_vert_obj);
 room_instance_add(argument0,448,176,wall_vert_obj);
 room_instance_add(argument0,512,144,wall_vert_obj);
 // Props
-// Paintings
-/*room_instance_add(argument0,272,96,painting_horr_obj);
-room_instance_add(argument0,400,96,painting_horr_obj);
-room_instance_add(argument0,336,192,painting_horr_obj);*/
+room_instance_add(argument0,272,96,frame_hor_rand_obj);
+room_instance_add(argument0,400,96,frame_hor_rand_obj);
+room_instance_add(argument0,336,192,frame_hor_rand_obj);
 // Not yet
 /*room_instance_add(argument0,472,160,random_scare_mark1);*/

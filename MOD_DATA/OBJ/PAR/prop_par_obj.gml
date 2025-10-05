@@ -14,7 +14,7 @@ type_var
     3: Cylinder. Uses w_var, l_var, h_var, tex_w_var, tex_h_var, close_var, and step_var.
     4: Floor. Uses w_var, l_var, tex_w_var, and tex_h_var
     5: Billboard. Uses w_var, h_var, tex_w_var, tex_h_var, and step_var. Has a cylinder collision
-    6: Double Plane. Uses w_var, h_var, tex_w_var, and tex_h_var. For wall decor
+    6: Double Plane. Uses w_var, h_var, dist_var, tex_w_var, and tex_h_var. For wall decor
     7: Better Block. Uses w_var, l_var, h_var, tex_w_var, tex_l_var, and tex_h_var. 
 snap_var
     0: No snap
@@ -56,8 +56,8 @@ object_event_add
         case 5: { d3d_draw_wall(0,w_var/2,h_var,0,-w_var/2,0,tex_var,tex_w_var,tex_h_var*sign(h_var)); break; }
         case 6:
         {
-            d3d_draw_wall(0.1,-w_var/2,h_var,0.1,w_var/2,0,tex_var,tex_w_var,tex_h_var*sign(h_var));
-            d3d_draw_wall(-0.1,-w_var/2,h_var,-0.1,w_var/2,0,tex_var,tex_w_var,tex_h_var*sign(h_var));
+            d3d_draw_wall(dist_var,-w_var/2,h_var,dist_var,w_var/2,0,tex_var,tex_w_var,tex_h_var*sign(h_var));
+            d3d_draw_wall(-dist_var,-w_var/2,h_var,-dist_var,w_var/2,0,tex_var,tex_w_var,tex_h_var*sign(h_var));
             break;
         }
         case 7:

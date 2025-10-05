@@ -239,16 +239,15 @@ room_instance_add(argument0,417,464,web_rand_obj);
 room_instance_add(argument0,319,471,web_rand_obj);
 room_instance_add(argument0,559,466,web_rand_obj);
 room_instance_add(argument0,627,579,web_rand_obj);
-// Paintings
-/*room_instance_add(argument0,272,448,painting_horr_obj);
-room_instance_add(argument0,336,448,painting_horr_obj);
-room_instance_add(argument0,400,448,painting_horr_obj);
-room_instance_add(argument0,208,448,painting_horr_obj);
-room_instance_add(argument0,208,480,painting_horr_obj);
-room_instance_add(argument0,272,480,painting_horr_obj);
-room_instance_add(argument0,336,480,painting_horr_obj);
-room_instance_add(argument0,400,480,painting_horr_obj);
-room_instance_add(argument0,464,480,painting_horr_obj);
-room_instance_add(argument0,464,448,painting_horr_obj);*/
+room_instance_add(argument0,272,448,frame_hor_rand_obj);
+room_instance_add(argument0,336,448,frame_hor_rand_obj);
+room_instance_add(argument0,400,448,frame_hor_rand_obj);
+room_instance_add(argument0,208,448,frame_hor_rand_obj);
+room_instance_add(argument0,208,480,frame_hor_rand_obj);
+room_instance_add(argument0,272,480,frame_hor_rand_obj);
+room_instance_add(argument0,336,480,frame_hor_rand_obj);
+room_instance_add(argument0,400,480,frame_hor_rand_obj);
+room_instance_add(argument0,464,480,frame_hor_rand_obj);
+room_instance_add(argument0,464,448,frame_hor_rand_obj);
 // Not yet
 /*room_instance_add(argument0,672,672,random_scare_mark1);*/

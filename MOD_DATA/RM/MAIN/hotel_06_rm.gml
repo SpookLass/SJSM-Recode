@@ -156,7 +156,7 @@ room_instance_add(argument0,352,304,doorframe_01_hor_obj);
 room_instance_add(argument0,352,208,doorframe_01_hor_obj);
 room_instance_add(argument0,352,208,doorframe_02_hor_obj);
 room_instance_add(argument0,352,304,doorframe_02_hor_obj);
-room_instance_add(argument0,336,144,painting_hor_rand_obj);
-room_instance_add(argument0,384,144,painting_hor_rand_obj);
-room_instance_add(argument0,368,368,painting_hor_rand_obj);
+room_instance_add(argument0,336,144,frame_hor_rand_obj);
+room_instance_add(argument0,384,144,frame_hor_rand_obj);
+room_instance_add(argument0,368,368,frame_hor_rand_obj);
 // Not Yet
