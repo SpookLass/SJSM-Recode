@@ -17,6 +17,7 @@ object_event_add
     file_name_var = 'hall_01_rm';
     fog_var = 'fog_01_obj'
     color_var = 'color_control_02_obj'
+    select_var = noone;
     // Objects
     type_len_var = 7;
     // Floors

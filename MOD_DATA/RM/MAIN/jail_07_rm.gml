@@ -5,17 +5,25 @@ Argument 0: Room Variable (same for all rooms)
 room_set_code
 (
     argument0,"
-    global.rm_name_var = 'Jail Room 7 C'
+    global.rm_name_var = 'Jail Room 7'
     // Spawn
-    global.spawn_len_var = 2;
+    global.spawn_len_var = 4;
     global.spawn_arr[0,0] = 112;
     global.spawn_arr[0,1] = 304;
     global.spawn_arr[0,2] = 0;
     global.spawn_arr[0,3] = 0;
     global.spawn_arr[1,0] = 336;
-    global.spawn_arr[1,1] = 304;
+    global.spawn_arr[1,1] = 176;
     global.spawn_arr[1,2] = 0;
     global.spawn_arr[1,3] = 180;
+    global.spawn_arr[2,0] = 336;
+    global.spawn_arr[2,1] = 240;
+    global.spawn_arr[2,2] = 0;
+    global.spawn_arr[2,3] = 180;
+    global.spawn_arr[3,0] = 336;
+    global.spawn_arr[3,1] = 304;
+    global.spawn_arr[3,2] = 0;
+    global.spawn_arr[3,3] = 180;
     // Mark
     global.mark_len_var = 3;
     global.mark_arr[0,0] = 242;
@@ -34,12 +42,21 @@ room_set_code
     local.entrance = instance_create(global.spawn_arr[0,0]-lengthdir_x(16,global.spawn_arr[0,3]),global.spawn_arr[0,1]-lengthdir_y(16,global.spawn_arr[0,3]),door_entrance_obj);
     local.entrance.z = global.spawn_arr[0,2];
     local.entrance.direction = global.spawn_arr[0,3]+180;
+    // Exit
+    local.unlock = irandom_range(1,global.spawn_len_var-1);
     for (local.i=1; local.i<global.spawn_len_var; local.i+=1;)
     {
         local.exitdoor = instance_create(global.spawn_arr[local.i,0]-lengthdir_x(16,global.spawn_arr[local.i,3]),global.spawn_arr[local.i,1]-lengthdir_y(16,global.spawn_arr[local.i,3]),door_obj);
         local.exitdoor.direction = global.spawn_arr[local.i,3]+180;
         local.exittrig = instance_create(global.spawn_arr[local.i,0]-lengthdir_x(8,global.spawn_arr[local.i,3]),global.spawn_arr[local.i,1]-lengthdir_y(8,global.spawn_arr[local.i,3]),door_trig_obj);
         local.exittrig.z = global.spawn_arr[local.i,2];
+        if local.i != local.unlock
+        {
+            local.exittrig.lock_var = true;
+            instance_create(global.spawn_arr[local.i,0]-24,global.spawn_arr[local.i,1],bone_rand_obj);
+            instance_create(global.spawn_arr[local.i,0]-48,global.spawn_arr[local.i,1],bar_vert_obj);
+        }
+        global.spawn_arr[local.i,4] = local.exittrig;
     }
 ")
 // Room settings
@@ -146,8 +163,6 @@ room_instance_add(argument0,144,288,torch_north_obj);
 room_instance_add(argument0,144,320,torch_south_obj);
 room_instance_add(argument0,208,320,torch_south_obj);
 // Props
-room_instance_add(argument0,288,176,bar_vert_obj);
-room_instance_add(argument0,288,240,bar_vert_obj);
 room_instance_add(argument0,256,176,bar_vert_obj);
 room_instance_add(argument0,256,240,bar_vert_obj);
 room_instance_add(argument0,208,240,chair_rand_obj);
@@ -156,10 +171,3 @@ room_instance_add(argument0,232,176,bone_rand_obj);
 room_instance_add(argument0,180,294,web_rand_obj);
 room_instance_add(argument0,265,232,web_rand_obj);
 room_instance_add(argument0,275,169,web_rand_obj);
-// Doors
-room_instance_add(argument0,352,176,door_east_obj);
-room_instance_add(argument0,344,176,door_trig_obj);
-room_instance_add(argument0,312,176,bone_rand_obj);
-room_instance_add(argument0,352,240,door_east_obj);
-room_instance_add(argument0,344,240,door_trig_obj);
-room_instance_add(argument0,312,240,bone_rand_obj);

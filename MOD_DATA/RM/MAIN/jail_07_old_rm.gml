@@ -5,7 +5,7 @@ Argument 0: Room Variable (same for all rooms)
 room_set_code
 (
     argument0,"
-    global.rm_name_var = 'Jail Room 7 A'
+    global.rm_name_var = 'Jail Room 7 Old'
     // Spawn
     global.spawn_len_var = 2;
     global.spawn_arr[0,0] = 112;
@@ -146,8 +146,6 @@ room_instance_add(argument0,144,288,torch_north_obj);
 room_instance_add(argument0,144,320,torch_south_obj);
 room_instance_add(argument0,208,320,torch_south_obj);
 // Props
-room_instance_add(argument0,288,304,bar_vert_obj);
-room_instance_add(argument0,288,176,bar_vert_obj);
 room_instance_add(argument0,256,176,bar_vert_obj);
 room_instance_add(argument0,256,240,bar_vert_obj);
 room_instance_add(argument0,208,240,chair_rand_obj);
@@ -160,6 +158,8 @@ room_instance_add(argument0,275,169,web_rand_obj);
 room_instance_add(argument0,352,176,door_east_obj);
 room_instance_add(argument0,344,176,door_trig_obj);
 room_instance_add(argument0,312,176,bone_rand_obj);
+room_instance_add(argument0,288,176,bar_vert_obj);
 room_instance_add(argument0,352,304,door_east_obj);
 room_instance_add(argument0,344,304,door_trig_obj);
 room_instance_add(argument0,312,304,bone_rand_obj);
+room_instance_add(argument0,288,304,bar_vert_obj);
