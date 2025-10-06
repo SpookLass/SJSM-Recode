@@ -181,10 +181,12 @@ object_event_add
     eye_pitch_var = 0;
     set_motion_3d_scr(0,false,eye_yaw_var,true,eye_pitch_var,true);
     // Reset variables
+    shake_var = 0;
     jump_var = false;
     on_floor_var = true;
     jump_hold_var = false;
     grav_var = grav_base_var;
+    fall_temp_var = false;
     // Maybe reset?
     do_sprint_var = true;
     do_stam_var = true;
@@ -209,7 +211,6 @@ object_event_add
     }
     in_door_var = true;
     on_var = true;
-    fall_temp_var = false;
     set_alarm_scr(2,enter_delay_var);
     set_alarm_scr(3,taker_alarm_var);
     with instance_create(0,0,fade_eff_obj)
@@ -440,18 +441,21 @@ object_event_add
         event_inherited();
         // Get real speed for bobbing and stamina (already delta-timed)
         local.real_spd = point_distance(xprevious,yprevious,x,y);
-        if on_floor_var && do_stam_var
+        if on_floor_var
         {
             // Calculate stamina
-            if sprint_var
+            if do_stam_var
             {
-                start_stam_var = max(0,start_stam_var-(start_stam_rate_var*global.delta_time_var));
-                local.stam_rate = (-(stam_rate_var+start_stam_var)*local.real_spd)/(spd_base_var*sprint_spd_mult_var);
-            }
-            else if !global.sprint_input_var 
-            {
-                start_stam_var = start_stam_base_var;
-                local.stam_rate = stam_rate_var*global.delta_time_var;
+                if sprint_var
+                {
+                    start_stam_var = max(0,start_stam_var-(start_stam_rate_var*global.delta_time_var));
+                    local.stam_rate = (-(stam_rate_var+start_stam_var)*local.real_spd)/(spd_base_var*sprint_spd_mult_var);
+                }
+                else if !global.sprint_input_var 
+                {
+                    start_stam_var = start_stam_base_var;
+                    local.stam_rate = stam_rate_var*global.delta_time_var;
+                }
             }
             // Calculate bobbing
             if local.real_spd

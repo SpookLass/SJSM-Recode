@@ -14,51 +14,74 @@ object_event_add
         d3d_set_projection_ortho(0,0,1280,720,0);
         d3d_set_hidden(false);
         // Health and Stamina bars
-        draw_background(bar_bg,91,57);
-        local.width = background_get_width(bar_stam_bg)*player_obj.stam_var/player_obj.stam_max_var;
-        draw_background_part(bar_stam_bg,background_get_width(bar_stam_bg)-local.width,0,local.width,20,99,96);
-        local.width = background_get_width(bar_hp_bg)*player_obj.hp_var/player_obj.hp_max_var;
-        draw_background_part(bar_hp_bg,background_get_width(bar_hp_bg)-local.width,0,local.width,27,99,62);
-        draw_background(bar_icon_bg,37,34);
-        // Health counter
-        //draw_set_blend_mode_ext(bm_inv_dest_color,bm_zero);
-        local.hp_str = string(round(player_obj.hp_var))+' / '+string(player_obj.hp_max_var);
-        local.stam_str = string(round(player_obj.stam_var))+' / '+string(player_obj.stam_max_var);
-        draw_set_valign(fa_middle);
-        draw_set_color(make_color_rgb(30,0,50));
-        for (local.i=0; local.i<4; local.i+=1;)
+        if global.bar_hud_var != bar_hud_old_const
         {
-            local.xtmp = lengthdir_x(1,local.i*90);
-            local.ytmp = lengthdir_y(1,local.i*90);
-            draw_text_transformed(107+local.xtmp,76+local.ytmp,local.hp_str,0.25,0.25,0);
-            draw_text_transformed(107+local.xtmp,106+local.ytmp,local.stam_str,0.25,0.25,0);
+            draw_background(bar_bg,91,57);
+            local.width = background_get_width(bar_stam_bg)*player_obj.stam_var/player_obj.stam_max_var;
+            draw_background_part(bar_stam_bg,background_get_width(bar_stam_bg)-local.width,0,local.width,20,99,96);
+            local.width = background_get_width(bar_hp_bg)*player_obj.hp_var/player_obj.hp_max_var;
+            draw_background_part(bar_hp_bg,background_get_width(bar_hp_bg)-local.width,0,local.width,27,99,62);
+            draw_background(bar_icon_bg,37,34);
         }
-        
-        draw_text_transformed(108,75,local.hp_str,0.25,0.25,0);
-        draw_text_transformed(106,75,local.hp_str,0.25,0.25,0);
-        draw_text_transformed(108,77,local.hp_str,0.25,0.25,0);
-        
-        draw_text_transformed(108,105,local.stam_str,0.25,0.25,0);
-        draw_text_transformed(106,105,local.stam_str,0.25,0.25,0);
-        draw_text_transformed(108,107,local.stam_str,0.25,0.25,0);
-        draw_set_color(c_yellow);
-        draw_text_transformed(107,76,local.hp_str,0.25,0.25,0);
-        draw_text_transformed(107,106,local.stam_str,0.25,0.25,0);
-        //draw_set_blend_mode(bm_normal);
+        // TPS
+        if global.tps_hud_var
+        {
+            local.str = 'TPS: '+string(fps)+' | FPS: '+string(global.fps_curr_var);
+            draw_set_color(make_color_rgb(30,0,50));
+            draw_text_transformed(0,1,local.str,0.25,0.25,0); // 106 138
+            draw_set_color(c_yellow);
+            draw_text_transformed(1,0,local.str,0.25,0.25,0); // 107 137
+        }
+        // Health counter
+        switch (global.bar_hud_var)
+        {
+            case bar_hud_num_const:
+            {
+                //draw_set_blend_mode_ext(bm_inv_dest_color,bm_zero);
+                local.hp_str = 'HP: '+string(round(player_obj.hp_var))+' / '+string(player_obj.hp_max_var);
+                local.stam_str = 'STAM: '+string(round(player_obj.stam_var))+' / '+string(player_obj.stam_max_var);
+                draw_set_valign(fa_middle);
+                draw_set_color(make_color_rgb(100,0,0));
+                for (local.i=0; local.i<4; local.i+=1;)
+                {
+                    local.xtmp = lengthdir_x(1,local.i*90);
+                    local.ytmp = lengthdir_y(1,local.i*90);
+                    draw_text_transformed(107+local.xtmp,77+local.ytmp,local.hp_str,0.25,0.25,0);
+                    draw_text_transformed(107+local.xtmp,107+local.ytmp,local.stam_str,0.25,0.25,0);
+                }
+                draw_set_color(c_white);
+                draw_text_transformed(107,77,local.hp_str,0.25,0.25,0);
+                draw_text_transformed(107,107,local.stam_str,0.25,0.25,0);
+                //draw_set_blend_mode(bm_normal);
+                break;
+            }
+            case bar_hud_old_const:
+            {
+                local.hp_str = 'HEALTH: '+string(round(player_obj.hp_var));
+                local.stam_str = 'STAMINA: '+string(round(player_obj.stam_var));
+                draw_set_color(make_color_rgb(30,0,50));
+                draw_text_transformed(53,56,local.hp_str,0.75,0.75,0);
+                draw_text_transformed(53,110,local.stam_str,0.75,0.75,0);
+                draw_set_color(c_yellow);
+                draw_text_transformed(54,54,local.hp_str,0.75,0.75,0);
+                draw_text_transformed(54,108,local.stam_str,0.75,0.75,0);
+                break;
+            }
+        }
         // Monster list
         draw_set_valign(fa_bottom);
-        if instance_exists(mon_par_obj)
+        if global.mon_hud_var && instance_exists(mon_par_obj)
         {
-            local.offset = 720-(instance_number(mon_par_obj)*54);
+            local.offset = 720-54-((instance_number(mon_par_obj)-1)*36);
             with mon_par_obj
             {
                 if string(name_var) != '0'
                 {
-                    draw_set_color(make_color_rgb(100,0,0));
-                    draw_text_transformed(52,local.offset+2,name_var,0.75,0.75,0);
-                    draw_set_color(c_white);
-                    draw_text_transformed(54,local.offset,name_var,0.75,0.75,0);
-                    local.offset += 54;
+                    draw_set_color(make_color_rgb(30,0,50));
+                    draw_text_transformed(52,local.offset+2,name_var,0.5,0.5,0);
+                    draw_set_color(c_yellow);
+                    draw_text_transformed(54,local.offset,name_var,0.5,0.5,0);
+                    local.offset += 36;
                 }
             }
         }
@@ -68,17 +91,21 @@ object_event_add
         {
             local.str = 'SPEED: '+string(global.game_spd_var);
             draw_set_color(make_color_rgb(100,0,0));
-            draw_text_transformed(1224,668,local.str,0.75,0.75,0);
+            draw_text_transformed(1224,668,local.str,0.5,0.5,0);
             draw_set_color(c_white);
-            draw_text_transformed(1226,666,local.str,0.75,0.75,0);
+            draw_text_transformed(1226,666,local.str,0.5,0.5,0);
         }
         draw_set_valign(fa_top);
         // Room Count
         local.str = 'ROOM: '+string(global.rm_count_var);
         draw_set_color(make_color_rgb(30,0,50));
         draw_text_transformed(1224,56,local.str,0.75,0.75,0);
+        if global.rm_hud_var
+        { draw_text_transformed(1224,110,global.rm_name_var,0.5,0.5,0); }
         draw_set_color(c_yellow);
         draw_text_transformed(1226,54,local.str,0.75,0.75,0);
+        if global.rm_hud_var
+        { draw_text_transformed(1226,108,global.rm_name_var,0.5,0.5,0); }
         draw_set_color(c_white); draw_set_halign(fa_left);
         // Debug text
         if global.debug_var

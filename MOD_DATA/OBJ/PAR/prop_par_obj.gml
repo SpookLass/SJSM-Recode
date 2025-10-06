@@ -56,7 +56,7 @@ object_event_add
         case 5: { d3d_draw_wall(0,w_var/2,h_var,0,-w_var/2,0,tex_var,tex_w_var,tex_h_var*sign(h_var)); break; }
         case 6:
         {
-            d3d_draw_wall(dist_var,-w_var/2,h_var,dist_var,w_var/2,0,tex_var,tex_w_var,tex_h_var*sign(h_var));
+            d3d_draw_wall(dist_var,w_var/2,h_var,dist_var,-w_var/2,0,tex_var,tex_w_var,tex_h_var*sign(h_var));
             d3d_draw_wall(-dist_var,-w_var/2,h_var,-dist_var,w_var/2,0,tex_var,tex_w_var,tex_h_var*sign(h_var));
             break;
         }

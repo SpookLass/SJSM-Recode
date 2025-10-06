@@ -1,6 +1,7 @@
 ini_open("settings.ini");
 global.fov_var = ini_read_real("MAIN","fov",fov_const);
 global.fps_var = ini_read_real("MAIN","fps",fps_const);
+global.fps_update_var = ini_read_real("MAIN","fps_update",fps_update_const);
 global.tps_var = ini_read_real("MAIN","tps",tps_const);
 global.sens_var = ini_read_real("MAIN","sens",sens_const);
 global.vol_var = ini_read_real("MAIN","vol",vol_const);
@@ -20,6 +21,11 @@ global.game_spd_var = ini_read_real("MAIN","game_spd",game_spd_const);
 global.move_bob_var = ini_read_real("MAIN","move_bob",move_bob_const);
 global.idle_bob_var = ini_read_real("MAIN","idle_bob",idle_bob_const);
 global.shake_type_var = ini_read_real("MAIN","shake_type",shake_modern_const);
+// Hud
+global.mon_hud_var = ini_read_real("MAIN","mon_hud",mon_hud_const);
+global.rm_hud_var = ini_read_real("MAIN","rm_hud",rm_hud_const);
+global.bar_hud_var = ini_read_real("MAIN","bar_hud",bar_hud_const);
+global.tps_hud_var = ini_read_real("MAIN","tps_hud",tps_hud_const);
 // Controls
 global.up_key_var = ini_read_real("CONTROL","up_key",87);
 global.down_key_var = ini_read_real("CONTROL","down_key",83);
@@ -39,8 +45,8 @@ global.attack_key_var = ini_read_real("CONTROL","attack_key",17);
 global.pause_key_var = ini_read_real("CONTROL","pause_key",27);
 global.debug_key_var = ini_read_real("CONTROL","debug_key",45);
 global.turnaround_key_var = ini_read_real("CONTROL","turnaround_key",81);
-global.ff_key_var = ini_read_real("CONTROL","ff_key",71); // 190
-global.slow_key_var = ini_read_real("CONTROL","slow_key",70); // 188
+global.ff_key_var = ini_read_real("CONTROL","ff_key",70); // 190 or 71
+global.slow_key_var = ini_read_real("CONTROL","slow_key",82); // 188 or 70
 ini_close();
 // This should happen when a game starts, but we don't have a menu right now
 ini_open("save_ex.ini");

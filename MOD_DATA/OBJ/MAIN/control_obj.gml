@@ -1,11 +1,18 @@
 // Builtin Variables
 object_set_depth(argument0,100);
 object_set_mask(argument0,noone);
-object_set_parent(argument0,noone);
+object_set_parent(argument0,par_obj);
 object_set_persistent(argument0,true);
 object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
+// Create
+object_event_add
+(argument0,ev_create,0,"
+    alarm_len_var = 1;
+    alarm_arr[0,2] = '';
+    event_perform(ev_other,ev_room_start);
+");
 // Step event
 object_event_add
 (argument0,ev_step,ev_step_normal,"
@@ -100,9 +107,21 @@ object_event_add
         action_set_cursor(-1,global.mouse_free_var);
         if !global.mouse_free_var { display_mouse_set(display_get_width()/2,display_get_height()/2); }
     }
+    // Speed!
+    if global.draw_3d_var
+    {
+        if global.ff_input_press_var == 1 { global.game_spd_var = min(3,global.game_spd_var+0.25); }
+        if global.slow_input_press_var == 1 { global.game_spd_var = max(1,global.game_spd_var-0.25); }
+    }
+    else if global.game_spd_var != 1 { global.game_spd_var = 1; }
+    // Delta Time
+    // Goes by frames rather than seconds (at 60 fps)
+    global.true_delta_time_var = (current_time-global.last_time_var)*global.game_spd_var*milli_frame_rate_const;
+    global.delta_time_var = global.true_delta_time_var*global.game_spd_var;
+    global.last_time_var = current_time;
     // Framerate
-    global.draw_time_var += global.delta_time_var;
-    if global.fps_var < global.tps_var && !global.vsync_var
+    global.draw_time_var += global.true_delta_time_var;
+    if !global.autodraw_var
     {
         local.rate = fps/global.fps_var;
         frame_var += 1;
@@ -113,17 +132,6 @@ object_event_add
             else {frame_var = 0; }
         }
     }
-    // Speed!
-    if global.draw_3d_var
-    {
-        if global.ff_input_press_var == 1 { global.game_spd_var = min(3,global.game_spd_var+0.25); }
-        if global.slow_input_press_var == 1 { global.game_spd_var = max(1,global.game_spd_var-0.25); }
-    }
-    else if global.game_spd_var != 1 { global.game_spd_var = 1; }
-    // Delta Time
-    // Goes by frames rather than seconds (at 60 fps)
-    global.delta_time_var = (current_time-global.last_time_var)*global.game_spd_var*milli_frame_rate_const; 
-    global.last_time_var = current_time;
     // Check for debug
     if global.debug_input_press_var == 1
     {
@@ -143,7 +151,7 @@ object_event_add
     // Debug commands
     if global.debug_var && keyboard_check_pressed(ord('2'))
     {
-        local.question = show_menu('Back|Restart Room|Next Room|Previous Room|Go To Room|Create Instance|Destroy Instance|Set Tex Set|Set Zone|Set Count|Set LV|Set Room|Toggle Invincibility|Toggle Noclip|Toggle Flight|Revive|Hide Debug|Hide Hud|Toggle X-ray|Execute Code',0);
+        local.question = show_menu('Back|Restart Room|Next Room|Previous Room|Go To Room|Create Instance|Destroy Instance|Set Tex Set|Set Zone|Set Count|Set LV|Set Room|Toggle Invincibility|Toggle Noclip|Toggle Flight|Toggle Monster Spawn|Revive|Hide Debug|Hide Hud|Toggle X-ray|Execute Code',0);
         switch(local.question)
         {
             case 1: { room_restart(); break; }
@@ -236,7 +244,8 @@ object_event_add
                 } 
                 break; 
             }
-            case 15:
+            case 15: { global.no_mon_var = !global.no_mon_var; break; }
+            case 16:
             {
                 with (player_obj)
                 {
@@ -250,10 +259,10 @@ object_event_add
                 }
                 break;
             }
-            case 16: { global.hide_debug = !global.hide_debug; break; }
-            case 17: { global.hide_hud = !global.hide_hud; break; }
-            case 18: { global.xray = !global.xray; break; }
-            case 19:
+            case 17: { global.hide_debug = !global.hide_debug; break; }
+            case 18: { global.hide_hud = !global.hide_hud; break; }
+            case 19: { global.xray = !global.xray; break; }
+            case 20:
             {
                 local.code = get_string('Execute Code','');
                 if local.code != ''
@@ -284,12 +293,18 @@ object_event_add
     { d3d_set_hidden(true); }
     else { d3d_set_hidden(false); }
     // Caption
-    /*
-    if global.draw_time_var > 0 { local.framerate = round(60/global.draw_time_var); }
-    else { local.framerate = 'What'; }
-    local.fps_str = ' | FPS: '+string(local.framerate);
-    */
-    room_caption = 'Spookys Jump Scare Mansion - Project Recode | TPS: '+string(fps)+' | Room: '+string(global.rm_count_var)+' ('+global.rm_name_var+')';
+    if update_fps_var
+    {
+        if global.autodraw_var { global.fps_curr_var = fps; }
+        else
+        {
+            if global.draw_time_var != 0 { global.fps_curr_var = floor(global.fps_var/global.draw_time_var); }
+            // else { global.fps_curr_var = 0; } // I still don't know what causes this
+        }
+        if global.fps_update_var > 0 { update_fps_var = false; }
+    }
+    local.fps_str = ' | FPS: '+string(global.fps_curr_var);
+    room_caption = 'Spookys Jump Scare Mansion - Project Recode | Room: '+string(global.rm_count_var)+' ('+global.rm_name_var+') | TPS: '+string(fps)+local.fps_str;
     global.draw_time_var = 0;
 ")
 // Room Start
@@ -300,14 +315,19 @@ object_event_add
     global.last_time_var = current_time;
     // FPS
     room_speed = global.tps_var;
-    local.autodraw = global.fps_var >= global.tps_var || global.vsync_var;
-    set_automatic_draw(local.autodraw);
+    global.autodraw_var = global.fps_var >= global.tps_var || global.vsync_var
+    set_automatic_draw(global.autodraw_var);
+    // Update
+    if global.fps_update_var > 0 { set_alarm_scr(0,global.fps_update_var); }
+    update_fps_var = true;
     // Create Collisions
     rm_to_coll_scr();
-    // MAKE SURE
-    if sprite_exists(global.make_sure_this_is_gone_please)
-    && global.make_sure_this_is_gone_please != 0
-    { show_error('what the hell',true); }
+");
+// Update FPS
+object_event_add
+(argument0,ev_alarm,0,"
+    update_fps_var = true;
+    set_alarm_scr(0,global.fps_update_var);
 ");
 // Game end
 object_event_add

@@ -348,6 +348,7 @@ object_event_add
                         if local.zone >= global.zone_len_var
                         { global.zone_var = global.story_zone_arr[local.zone-global.zone_len_var]; }
                         else { global.zone_var = global.zone_arr[local.zone]; }
+                        global.count_var = get_count_scr();
                         room_goto(hall_01_rm);
                     }
                     // Back

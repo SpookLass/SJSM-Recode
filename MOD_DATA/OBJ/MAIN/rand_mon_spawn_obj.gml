@@ -12,7 +12,7 @@ object_event_add
     ds_list_clear(global.mon_curr_list);
     local.mons = 0;
     with mon_par_obj { ds_list_add(global.mon_curr_list,object_index); local.mons += 1; }
-    if local.mons < get_mult_scr()
+    if local.mons < get_mult_scr() && !global.no_mon_var
     {
         if global.count_var <= 0
         {
