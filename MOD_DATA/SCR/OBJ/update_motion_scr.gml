@@ -97,9 +97,12 @@ if do_coll_var && grav_var > 0
         z_spd_var = 0;
         local.zspd = -local.zdist;
         on_floor_var = true;
-        floor_x_var = x;
-        floor_y_var = y;
-        floor_z_var = z;
+        if !fall_temp_var
+        {
+            floor_x_var = x;
+            floor_y_var = y;
+            floor_z_var = z;
+        }
     }
     else { on_floor_var = false; }
 }

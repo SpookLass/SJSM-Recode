@@ -344,10 +344,17 @@ object_event_add
     else if type_var > 0
     {
         local.can_path = mp_grid_path(grid_var,path_var,x,y,target_x_var,target_y_var,true);
+        // Backup plan (I hope this work)
+        if local.can_path
+        {
+            path_x_var = x;
+            path_y_var = y;
+        }
+        else { mp_grid_path(grid_var,path_var,path_x_var,path_y_var,target_x_var,target_y_var,true); }
         // V3
         sight_type_var = 2;
         event_perform(ev_other,ev_user8);
-        if enter_var || !local.can_path || target_visible_var
+        if enter_var || target_visible_var // || !local.can_path
         { local.yaw = point_direction(x,y,target_x_var,target_y_var); }
         else
         {
