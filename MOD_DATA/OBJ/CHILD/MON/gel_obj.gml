@@ -191,8 +191,10 @@ object_event_add
         enter_var = false;
         slime_spawn_var = 1;
         move_var = false;
+        attack_var = false;
         set_alarm_scr(8,slime_alarm_var);
         set_alarm_scr(1,slime_alarm_var);
+        set_alarm_scr(4,slime_alarm_var);
         set_motion_scr(0,true);
         exit;
     }

@@ -180,6 +180,7 @@ object_event_add
     eye_yaw_var = global.spawn_arr[0,3];
     eye_pitch_var = 0;
     set_motion_3d_scr(0,false,eye_yaw_var,true,eye_pitch_var,true);
+    display_mouse_set(display_get_width()/2,display_get_height()/2);
     // Reset variables
     shake_var = 0;
     jump_var = false;

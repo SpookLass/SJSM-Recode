@@ -81,6 +81,7 @@ object_event_add
         { boost_var = true; }
         case 0: // Mod
         {
+            tp_dist_min_var = 64;
             move_type_var = 0;
             break;
         }
