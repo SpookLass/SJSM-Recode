@@ -11,8 +11,14 @@ object_event_add
 (argument0,ev_create,0,"
     ds_list_clear(global.mon_curr_list);
     local.mons = 0;
-    with mon_par_obj { ds_list_add(global.mon_curr_list,object_index); local.mons += 1; }
-    if local.mons < get_mult_scr() && !global.no_mon_var
+    with mon_par_obj
+    {
+        ds_list_add(global.mon_curr_list,object_index); 
+        local.mons += 1;
+        if intro_var || boss_var
+        { local.nospawn = true; }
+    }
+    if local.mons < get_mult_scr() && !global.no_mon_var && !local.nospawn
     {
         if global.count_var <= 0
         {
