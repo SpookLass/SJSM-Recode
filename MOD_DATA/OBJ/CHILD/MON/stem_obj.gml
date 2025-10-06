@@ -27,6 +27,7 @@ object_event_add
     frick_var = acc_var;
     w_var = 10;
     h_var = 10;
+    dupe_var = dupe_canon_const;
     // Movement
     move_type_var = 1;
     stop_dist_var = 4; // OG only
@@ -257,7 +258,7 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user1,"
     z_off_time_var = (z_off_time_var+global.delta_time_var) mod z_off_rate_var;
-    z_off_var = sin(2*z_off_time_var*pi/z_off_rate_var)*z_off_mult_var;
+    z_off_var = sin(2*z_off_time_var*pi/z_off_rate_var)*z_off_mult_var/2;
     if !irandom(3)
     {
         x_off_var = random_range(-3,3);

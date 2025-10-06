@@ -21,6 +21,7 @@ object_event_add
     w_var = 16;
     h_var = 12;
     z_off_var = 4;
+    dupe_var = dupe_canon_const;
     // Sounds
     snd_len_var = 4;
     snd_arr[0,0] = caster_load(main_directory_const+'\SND\MON\ringu_01_snd.ogg');

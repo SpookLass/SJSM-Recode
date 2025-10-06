@@ -70,6 +70,8 @@ global.count_max_var = ini_read_real("SETTING","count_max",20);
 global.count_start_var = ini_read_real("SETTING","count_start",1000);
 global.count_end_var = ini_read_real("SETTING","count_end",2000);
 global.mode_var = ini_read_real("SETTING","mode",1);
+global.dupe_var = ini_read_real("SETTING","dupe",dupe_canon_const);
+global.mon_chance_var = ini_read_real("SETTING","mon_chance_var",8);
 // Behavior stuff
 global.default_type_var = ini_read_real("BEHAVIOR","type",0);
 global.player_type_var = ini_read_real("BEHAVIOR","player_type",global.default_type_var);

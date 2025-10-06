@@ -1,6 +1,10 @@
-switch (global.mult_type)
+switch (global.mult_type_var)
 {
-    case 0: // Plus
+    
+    case 1: { return global.mult_min_var; break; } // Min, OG
+    case 3: // HARDEST
+    case 0: { return global.mult_max_var; break; } // Max, Recode & HD
+    case 2: // Taper, Plus
     {
         return lerp_scr
         (
@@ -15,7 +19,4 @@ switch (global.mult_type)
         ); 
         break;
     }
-    case 1: { return global.mult_min_var; break; } // OG
-    case 3: // HARDEST
-    case 2: { return global.mult_max_var; break; } // HD
 }

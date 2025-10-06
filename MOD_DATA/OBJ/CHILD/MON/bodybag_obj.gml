@@ -22,6 +22,7 @@ object_event_add
     dmg_alarm_var = 60;
     w_var = 10;
     h_var = 20;
+    dupe_var = dupe_canon_const;
     // Sounds
     snd_len_var = -1;
     // Special
