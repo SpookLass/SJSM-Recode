@@ -390,7 +390,7 @@ object_event_add
             x = floor_x_var;
             y = floor_y_var;
             z = floor_z_var;
-            fall_temp_var = true;
+            fall_temp_var = false;
             set_motion_scr(0,false,eye_yaw_var,true);
             event_perform(ev_other,ev_user0);
             if hp_var > fall_dmg_var
