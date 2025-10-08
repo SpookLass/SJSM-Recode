@@ -9,7 +9,7 @@ object_set_visible(argument0,true);
 // Create event
 object_event_add
 (argument0,ev_create,0,"
-    stored_tex_var = bridge_bg_tex;
+    store_tex_var = bridge_bg_tex;
     event_inherited();
-    z_var = -56;
+    z = -56;
 ");

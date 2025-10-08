@@ -12,5 +12,5 @@ object_event_add
     stored_tex_var = rail_wood_bg_tex;
     event_inherited();
     no_grid_var = true;
-    z_var = 96;
+    z = 96;
 ");

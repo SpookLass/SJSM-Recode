@@ -12,5 +12,5 @@ object_event_add
     direction = 90;
     stored_tex_var = rail_wood_bg_tex;
     event_inherited();
-    z_var = 60;
+    z = 60;
 ");
