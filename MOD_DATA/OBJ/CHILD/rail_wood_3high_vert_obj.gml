@@ -9,6 +9,7 @@ object_set_visible(argument0,true);
 // Create event
 object_event_add
 (argument0,ev_create,0,"
-    stored_tex_var = rail_metal_bg_tex;
+    stored_tex_var = rail_wood_bg_tex;
     event_inherited();
+    z_var = 96;
 ");
