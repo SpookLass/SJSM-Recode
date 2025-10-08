@@ -26,6 +26,7 @@ object_event_add
     local.tex_w = tex_w_var*(w_var/32);
     local.tex_h = tex_h_var*(h_var/32);
     d3d_transform_set_identity();
+    d3d_transform_add_rotation_z(direction);
     d3d_transform_add_translation(x,y,z);
     draw_set_color(image_blend); draw_set_alpha(image_alpha);
     d3d_draw_floor(-w_var/2,-h_var/2,0,w_var/2,h_var/2,0,local.tex,local.tex_w,local.tex_h);
