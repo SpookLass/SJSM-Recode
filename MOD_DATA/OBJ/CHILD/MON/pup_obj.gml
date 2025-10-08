@@ -19,7 +19,6 @@ object_event_add
     name_var = 'Puppet';
     type_var = 0;
     spd_base_var = 5;
-    spr_var = sprite_add(vanilla_directory_const+'\TEX\sprites\MS5_01_spr.png',4,false,false,0,0);
     spr_spd_var = 1/30;
     dur_var = irandom_range(15,25);
     delay_var = 240;
@@ -27,6 +26,22 @@ object_event_add
     dmg_alarm_var = 120;
     w_var = 10;
     h_var = 20;
+    // Assets
+        // Search for existing assets to save memory
+    with object_index
+    {
+        if id != other.id
+        {
+            other.spr_var = spr_var;
+            local.loaded = true;
+            break;
+        }
+    }
+        // If no existing assets were found, load them
+    if !local.loaded
+    {
+        spr_var = sprite_add(vanilla_directory_const+'\TEX\sprites\MS5_01_spr.png',4,false,false,0,0);
+    }
     // Sounds
     snd_len_var = 4;
     snd_arr[0,0] = caster_load(main_directory_const+'\SND\MON\pup_01_snd.ogg');
@@ -108,7 +123,8 @@ object_event_add
 object_event_add
 (argument0,ev_destroy,0,"
     event_inherited();
-    sprite_delete(spr_var);
+    if instance_number(object_index) <= 1
+    { sprite_delete(spr_var); }
 ");
 // Delay Alarm
 object_event_add

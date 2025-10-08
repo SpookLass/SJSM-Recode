@@ -16,6 +16,30 @@ object_event_add
     delay_var = 60;
     dmg_var = 10;
     dmg_alarm_var = 30;
+    // Assets
+        // Search for existing assets to save memory
+    with object_index
+    {
+        if id != other.id
+        {
+            other.spr_var = spr_var;
+            other.mdl_01_var = mdl_01_var;
+            other.mdl_02_var = mdl_02_var;
+            other.bg_overlay_var = bg_overlay_var;
+            local.loaded = true;
+            break;
+        }
+    }
+        // If no existing assets were found, load them
+    if !local.loaded
+    {
+        spr_var = sprite_add(main_directory_const+'\SPR\MON\patient_spr.png',3,false,false,0,0); // vanilla_directory_const+'\3D\npc_6_tex.png'
+        mdl_01_var = d3d_model_create();
+        mdl_02_var = d3d_model_create();
+        d3d_model_load(mdl_01_var,main_directory_const+'\MDL\MON\patient_01_mdl.gmmod');
+        d3d_model_load(mdl_02_var,main_directory_const+'\MDL\MON\patient_02_mdl.gmmod');
+        bg_overlay_var = background_add(vanilla_directory_const+'\TEX\sprites\fog_spr.png',false,false);
+    }
     // Seen
     do_seen_var = true;
     seen_spd_mult_var = 0.02;
@@ -24,12 +48,7 @@ object_event_add
     tp_dist_min_var = 128;
     tp_dist_max_var = 512;
     // Render
-    spr_var = sprite_add(main_directory_const+'\SPR\MON\patient_spr.png',3,false,false,0,0); // vanilla_directory_const+'\3D\npc_6_tex.png'
     tex_var = sprite_get_texture(spr_var,0);
-    mdl_01_var = d3d_model_create();
-    mdl_02_var = d3d_model_create();
-    d3d_model_load(mdl_01_var,main_directory_const+'\MDL\MON\patient_01_mdl.gmmod');
-    d3d_model_load(mdl_02_var,main_directory_const+'\MDL\MON\patient_02_mdl.gmmod');
     mdl_var = mdl_01_var;
     // Rand
     rand_chance_var = 3;
@@ -72,8 +91,6 @@ object_event_add
             break;
         }
     }
-    if overlay_var
-    { bg_overlay_var = background_add(vanilla_directory_const+'\TEX\sprites\fog_spr.png',false,false); }
     if hang_var
     {
         seen_yaw_var = seen_yaw_01_var;
@@ -98,15 +115,16 @@ object_event_add
 object_event_add
 (argument0,ev_destroy,0,"
     event_inherited();
-    sprite_delete(spr_var);
-    if overlay_var
+    if instance_number(object_index) <= 1
     {
+        sprite_delete(spr_var);
         background_delete(bg_overlay_var);
-        with kh_overlay_obj
-        { if par_var == other.id { instance_destroy(); }}
+        d3d_model_destroy(mdl_01_var);
+        d3d_model_destroy(mdl_02_var);
     }
-    d3d_model_destroy(mdl_01_var);
-    d3d_model_destroy(mdl_02_var);
+    with kh_overlay_obj
+    { if par_var == other.id { instance_destroy(); }}
+    
 ");
 // Room start
 object_event_add

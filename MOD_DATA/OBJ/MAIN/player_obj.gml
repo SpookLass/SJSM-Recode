@@ -29,6 +29,7 @@ object_event_add
     back_var = false; // Whether to reduce speed when walking backwards
     normal_var = true;
     // Stamina
+    do_stam_var = true;
     do_sprint_var = true; // Uhh yeah I sure it does
     sprint_var = 0;
     stam_max_var = 100;

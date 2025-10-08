@@ -18,7 +18,6 @@ object_event_add
     name_var = 'Gurgle';
     type_var = 0;
     spd_base_var = 0.8;
-    spr_var = sprite_add(main_directory_const+'\SPR\MON\gurgle_spr.png',5,false,false,0,0);
     spr_spd_var = 1/6;
     spr_num_var = 4;
     anim_type_var = 4;
@@ -28,6 +27,22 @@ object_event_add
     dmg_alarm_var = 120;
     w_var = 16;
     h_var = 23;
+    // Assets
+        // Search for existing assets to save memory
+    with object_index
+    {
+        if id != other.id
+        {
+            other.spr_var = spr_var;
+            local.loaded = true;
+            break;
+        }
+    }
+        // If no existing assets were found, load them
+    if !local.loaded
+    {
+        spr_var = sprite_add(main_directory_const+'\SPR\MON\gurgle_spr.png',5,false,false,0,0);
+    }
     // Sounds
     snd_len_var = 4;
     snd_arr[0,0] = caster_load(main_directory_const+'\SND\MON\gurgle_01_snd.wav');
@@ -61,7 +76,8 @@ object_event_add
 object_event_add
 (argument0,ev_destroy,0,"
     event_inherited();
-    sprite_delete(spr_var);
+    if instance_number(object_index) <= 1
+    { sprite_delete(spr_var); }
     caster_free(charge_snd_var[0]);
 ");
 // Room Start Event

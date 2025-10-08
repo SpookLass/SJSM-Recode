@@ -22,6 +22,24 @@ object_event_add
     h_var = 12;
     z_off_var = 4;
     dupe_var = dupe_canon_const;
+    // Assets
+        // Search for existing assets to save memory
+    with object_index
+    {
+        if id != other.id
+        {
+            other.spr_var = spr_var;
+            other.bod_spr_var = bod_spr_var;
+            local.loaded = true;
+            break;
+        }
+    }
+        // If no existing assets were found, load them
+    if !local.loaded
+    {
+        spr_var = sprite_add(vanilla_directory_const+'\TEX\sprites\MS9_01_spr.png',12,false,false,0,0);
+        bod_spr_var = sprite_add(main_directory_const+'\SPR\MON\fish_bod_spr.png',4,false,false,0,0);
+    }
     // Sounds
     snd_len_var = 4;
     snd_arr[0,0] = caster_load(main_directory_const+'\SND\MON\ringu_01_snd.ogg');
@@ -40,7 +58,6 @@ object_event_add
     bod_scale_var = 0.875;
     bod_form_var = false;
     bod_spr_spd_var = 1/6; // 0.1r6
-    bod_spr_var = sprite_add(main_directory_const+'\SPR\MON\fish_bod_spr.png',4,false,false,0,0);
     bod_w_var[0] = 16;
     bod_h_var[0] = 12;
     bod_z_off_var[0] = 4;
@@ -143,8 +160,11 @@ object_event_add
 object_event_add
 (argument0,ev_destroy,0,"
     event_inherited();
-    sprite_delete(spr_var);
-    sprite_delete(bod_spr_var);
+    if instance_number(object_index) <= 1
+    {
+        sprite_delete(spr_var);
+        sprite_delete(bod_spr_var);
+    }
     with fish_bod_obj
     {
         if par_var == other.id

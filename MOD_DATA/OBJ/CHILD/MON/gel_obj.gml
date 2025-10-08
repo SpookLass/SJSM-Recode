@@ -12,7 +12,6 @@ object_event_add
     name_var = 'Gel';
     type_var = 0;
     spd_base_var = 0.6;
-    spr_var = sprite_add(vanilla_directory_const+'\TEX\sprites\MS_01_spr.png',5,false,false,0,0);
     spr_spd_var = 1/6;
     dur_var = irandom_range(10,20);
     delay_var = 160;
@@ -22,6 +21,24 @@ object_event_add
     h_var = 20;
     z_off_var = 2;
     dupe_var = dupe_canon_const;
+    // Assets
+        // Search for existing assets to save memory
+    with object_index
+    {
+        if id != other.id
+        {
+            other.spr_var = spr_var;
+            other.slime_bg_var = slime_bg_var;
+            local.loaded = true;
+            break;
+        }
+    }
+        // If no existing assets were found, load them
+    if !local.loaded
+    {
+        spr_var = sprite_add(vanilla_directory_const+'\TEX\sprites\MS_01_spr.png',5,false,false,0,0);
+        slime_bg_var = background_add(main_directory_const+'\BG\MON\gel_puddle_bg.png',false,false);
+    }
     // Sounds
     snd_len_var = 4;
     snd_arr[0,0] = caster_load(main_directory_const+'\SND\MON\gel_01_snd.ogg');
@@ -43,7 +60,6 @@ object_event_add
     slime_var = true;
     do_slime_spawn_var = false;
     slime_alarm_var = 60;
-    slime_bg_var = background_add(main_directory_const+'\BG\MON\gel_puddle_bg.png',false,false);
     slime_tex_var = background_get_texture(slime_bg_var);
     slime_anim_var = 0;
     slime_angle_var = random(360);
@@ -142,8 +158,11 @@ object_event_add
 object_event_add
 (argument0,ev_destroy,0,"
     event_inherited();
-    sprite_delete(spr_var);
-    background_delete(slime_bg_var);
+    if instance_number(object_index) <= 1
+    {
+        sprite_delete(spr_var);
+        background_delete(slime_bg_var);
+    }
 ");
 // Slime alarm
 object_event_add

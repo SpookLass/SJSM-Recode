@@ -18,8 +18,6 @@ object_event_add
     name_var = 'Bekka';
     type_var = 0;
     spd_base_var = 0.75;
-    bg_var = background_add(vanilla_directory_const+'\TEX\sprites\MS23_01_spr.png',false,false);
-    tex_var = background_get_texture(bg_var);
     spr_spd_var = 1/6;
     dur_var = irandom_range(17,25);
     delay_var = 256/3; // 85.r3
@@ -27,6 +25,25 @@ object_event_add
     dmg_alarm_var = 30;
     w_var = 14;
     h_var = 21;
+    // Assets
+    // Search for existing assets to save memory
+    with object_index
+    {
+        if id != other.id
+        {
+            other.bg_var = bg_var;
+            other.bg_overlay_var = bg_overlay_var;
+            local.loaded = true;
+            break;
+        }
+    }
+    // If no existing assets were found, load them
+    if !local.loaded
+    {
+        bg_var = background_add(vanilla_directory_const+'\TEX\sprites\MS23_01_spr.png',false,false);
+        bg_overlay_var = background_add(vanilla_directory_const+'\TEX\sprites\fog_spr.png',false,false);
+    }
+    tex_var = background_get_texture(bg_var);
     // Sounds
     snd_len_var = -1;
     // Rand
@@ -37,7 +54,6 @@ object_event_add
     alpha_min_var = 0.3;
     alpha_max_var = 1;
     // Effect
-    bg_overlay_var = background_add(vanilla_directory_const+'\TEX\sprites\fog_spr.png',false,false);
     overlay_color_var = c_black;
     overlay_alpha_var = 0.5;
     dark_var = true;
@@ -144,8 +160,11 @@ object_event_add
 object_event_add
 (argument0,ev_destroy,0,"
     event_inherited();
-    background_delete(bg_var);
-    background_delete(bg_overlay_var);
+    if instance_number(object_index) <= 1
+    {
+        background_delete(bg_var);
+        background_delete(bg_overlay_var);
+    }
     with kh_overlay_obj
     { if par_var == other.id { instance_destroy(); }}
 ");

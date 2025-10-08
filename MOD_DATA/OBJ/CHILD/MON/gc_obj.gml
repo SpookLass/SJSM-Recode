@@ -12,17 +12,38 @@ object_event_add
     name_var = 'Ghost Cow';
     type_var = 0;
     spd_base_var = 0.7;
-    bg_var = background_add(vanilla_directory_const+'\3D\npc_7_tex.png',false,false);
-    tex_var = background_get_texture(bg_var);
-    mdl_var = d3d_model_create();
-    d3d_model_load(mdl_var,main_directory_const+'\MDL\MON\gc_mdl.gmmod');
-    spr_spd_var = 1/6;
     dur_var = irandom_range(15,30);
-    delay_var = 173;
+    delay_var = 91;
     dmg_var = 30;
     dmg_alarm_var = 30;
     w_var = 10;
     h_var = 20;
+    // Assets
+        // Search for existing assets to save memory
+    with object_index
+    {
+        if id != other.id
+        {
+            other.bg_var = bg_var;
+            other.mdl_var = mdl_var;
+            other.wall_bg_var = wall_bg_var;
+            other.floor_bg_var = floor_bg_var;
+            other.eff_bg_var = eff_bg_var;
+            local.loaded = true;
+            break;
+        }
+    }
+        // If no existing assets were found, load them
+    if !local.loaded
+    {
+        bg_var = background_add(vanilla_directory_const+'\3D\npc_7_tex.png',false,false);
+        mdl_var = d3d_model_create();
+        d3d_model_load(mdl_var,main_directory_const+'\MDL\MON\gc_mdl.gmmod');
+        wall_bg_var = background_add(vanilla_directory_const+'\TEX\HOS_21.png',false,false);
+        floor_bg_var = background_add(vanilla_directory_const+'\TEX\HOS_14.png',false,false);
+        eff_bg_var = background_add(vanilla_directory_const+'\TEX\sprites\EX_13_spr.png',false,false);
+    }
+    tex_var = background_get_texture(bg_var);
     // Movement
     do_acc_var = true;
     acc_var = 0.05;
@@ -52,9 +73,6 @@ object_event_add
     seen_flash_var = true;
     seen_spd_var = true;
     // Effects
-    wall_bg_var = background_add(vanilla_directory_const+'\TEX\HOS_21.png',false,false);
-    floor_bg_var = background_add(vanilla_directory_const+'\TEX\HOS_14.png',false,false);
-    eff_bg_var = background_add(vanilla_directory_const+'\TEX\sprites\EX_13_spr.png',false,false);
     eff_old_var = true;
     eff_var = true;
     // Spawn
@@ -171,11 +189,14 @@ object_event_add
     event_inherited();
     global.wall_bg_tex = background_get_texture(global.wall_bg);
     global.floor_bg_tex = background_get_texture(global.floor_bg);
-    background_delete(bg_var);
-    background_delete(wall_bg_var);
-    background_delete(floor_bg_var);
-    background_delete(eff_bg_var);
-    d3d_model_destroy(mdl_var);
+    if instance_number(object_index) <= 1
+    {
+        background_delete(bg_var);
+        background_delete(wall_bg_var);
+        background_delete(floor_bg_var);
+        background_delete(eff_bg_var);
+        d3d_model_destroy(mdl_var);
+    }
     with player_obj
     { fov_var = global.fov_var; }
     with gc_eff_obj

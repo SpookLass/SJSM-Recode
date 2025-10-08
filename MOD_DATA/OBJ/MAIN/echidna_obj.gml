@@ -83,6 +83,7 @@ object_event_add
     coll_var[0] = global.mon_coll[0];
     coll_var[1] = global.mon_coll[1];
     coll_var[2] = global.mon_coll[2];
+    mon_coll_var = true;
     // Attack variables
     if atk_range_var == 0
     { atk_range_var = coll_var[2]; }
@@ -206,6 +207,13 @@ object_event_add
         }
     }
     if do_snd_var { event_user(9); }
+");
+// Step End Event
+object_event_add
+(argument0,ev_step,ev_step_end,"
+    event_inherited();
+    if on_var && do_coll_var && mon_coll_var
+    { event_user(10); }
 ");
 // Draw Event
 object_event_add
@@ -650,5 +658,33 @@ object_event_add
         snd_pan_var = -sin(degtorad(local.dir));
         caster_set_volume(snd_var,snd_vol_var);
         caster_set_panning(snd_var,snd_pan_var);
+    }
+");
+// Monster Collision
+object_event_add
+(argument0,ev_other,ev_user10,"
+    local.xtmp = x;
+    local.ytmp = y;
+    with echidna_obj
+    {
+        if id != other.id && (type_var > 0) == (other.type_var > 0) && do_coll_var && mon_coll_var
+        {
+            if cyl_coll_scr(x,y,z,coll_var[2],coll_var[1],local.xtmp,local.ytmp,other.z,other.coll_var[2],other.coll_var[1])
+            {
+                local.dist = (coll_var[2]+other.coll_var[2])/2;
+                local.dir = point_direction(x,y,local.xtmp,local.ytmp);
+                local.xtmp = x+lengthdir_x(local.dist,local.dir);
+                local.ytmp = y+lengthdir_y(local.dist,local.dir);
+                local.collided = true;
+            }
+        }
+    }
+    if local.collided
+    {
+        if !check_coll_scr(0,0,0,0,local.xtmp,local.ytmp,z)
+        {
+            x = local.xtmp;
+            y = local.ytmp;
+        }
     }
 ");

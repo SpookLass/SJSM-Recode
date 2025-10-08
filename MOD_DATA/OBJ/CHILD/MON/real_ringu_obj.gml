@@ -17,6 +17,24 @@ object_event_add
     dmg_alarm_var = 120;
     h_var = 20;
     z_off_var = 2;
+    // Assets
+        // Search for existing assets to save memory
+    with object_index
+    {
+        if id != other.id
+        {
+            other.state_spr_var[0] = state_spr_var[0];
+            other.state_spr_var[1] = state_spr_var[1];
+            local.loaded = true;
+            break;
+        }
+    }
+        // If no existing assets were found, load them
+    if !local.loaded
+    {
+        state_spr_var[0] = sprite_add(vanilla_directory_const+'\TEX\sprites\MS3_03_spr.png',6,false,false,0,0);
+        state_spr_var[1] = sprite_add(vanilla_directory_const+'\TEX\sprites\MS3_04_spr.png',6,false,false,0,0);
+    }
     // Sounds
     snd_len_var = 4;
     snd_arr[0,0] = caster_load(main_directory_const+'\SND\MON\ringu_01_snd.ogg');
@@ -38,12 +56,10 @@ object_event_add
     state_chance_den_var = 256;
     state_spd_var[0] = 0.8;
     state_seen_spd_var[0] = 0.4;
-    state_spr_var[0] = sprite_add(vanilla_directory_const+'\TEX\sprites\MS3_03_spr.png',6,false,false,0,0);
     state_spr_spd_var[0] = 1/6;
     state_w_var[0] = 11.2;
     state_spd_var[1] = 1.1;
     state_seen_spd_var[1] = 0.4;
-    state_spr_var[1] = sprite_add(vanilla_directory_const+'\TEX\sprites\MS3_04_spr.png',6,false,false,0,0);
     state_spr_spd_var[1] = 1/3;
     state_w_var[1] = 13.6;
     // Effect
@@ -129,6 +145,7 @@ object_event_add
     {
         with instance_create(0,0,ringu_static_eff_obj) 
         {
+            par_var = other.id;
             fog_var = other.eff_fog_var;
             fog_max_start_var = other.eff_fog_start_var;
             fog_max_end_var = other.eff_fog_end_var;
@@ -150,10 +167,13 @@ object_event_add
 object_event_add
 (argument0,ev_destroy,0,"
     event_inherited();
-    sprite_delete(state_spr_var[0]);
-    sprite_delete(state_spr_var[1]);
+    if instance_number(object_index) <= 1
+    {
+        sprite_delete(state_spr_var[0]);
+        sprite_delete(state_spr_var[1]);
+    }
     with ringu_static_eff_obj
-    { instance_destroy(); }
+    { if par_var == other.id { instance_destroy(); }}
 ");
 // Delay
 object_event_add

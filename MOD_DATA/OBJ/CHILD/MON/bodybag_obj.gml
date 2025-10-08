@@ -12,9 +12,6 @@ object_event_add
     name_var = 'Body Bag';
     type_var = 1;
     spd_base_var = 0.8;
-    mdl_var = d3d_model_create();
-    d3d_model_load(mdl_var,main_directory_const+'\MDL\MON\bodybag_mon_mdl.gmmod');
-    bg_var = background_add(main_directory_const+'\BG\MON\bodybag_bg.png',false,false);
     tex_var = background_get_texture(bg_var);
     dur_var = irandom_range(10,15);
     delay_var = 180;
@@ -23,6 +20,26 @@ object_event_add
     w_var = 10;
     h_var = 20;
     dupe_var = dupe_canon_const;
+    // Assets
+    // Search for existing assets to save memory
+    with object_index
+    {
+        if id != other.id
+        {
+            other.mdl_var = mdl_var;
+            other.bg_var = bg_var;
+            local.loaded = true;
+            break;
+        }
+    }
+    // If no existing assets were found, load them
+    if !local.loaded
+    {
+        mdl_var = d3d_model_create();
+        d3d_model_load(mdl_var,main_directory_const+'\MDL\MON\bodybag_mon_mdl.gmmod');
+        bg_var = background_add(main_directory_const+'\BG\MON\bodybag_bg.png',false,false);
+    }
+    tex_var = background_get_texture(bg_var);
     // Sounds
     snd_len_var = -1;
     // Special
@@ -91,6 +108,18 @@ object_event_add
     do_mdl_var = true;
     do_snd_var = false;
 ");
+// Destroy Event
+object_event_add
+(argument0,ev_destroy,0,"
+    event_inherited();
+    if instance_number(object_index) <= 1
+    {
+        background_delete(bg_var);
+        d3d_model_destroy(mdl_var);
+    }
+    if inf_stam_var
+    { with player_obj { do_stam_var = true; }}
+");
 // Create Event
 object_event_add
 (argument0,ev_create,0,"
@@ -136,15 +165,6 @@ object_event_add
     x_off_var = random_range(-shake_var,shake_var);
     y_off_var = random_range(-shake_var,shake_var);
     z_off_var = random_range(-shake_var,shake_var);
-");
-// Destroy Event
-object_event_add
-(argument0,ev_destroy,0,"
-    event_inherited();
-    background_delete(bg_var);
-    d3d_model_destroy(mdl_var);
-    if inf_stam_var
-    { with player_obj { do_stam_var = true; }}
 ");
 // Attack Success
 object_event_add

@@ -38,6 +38,30 @@ object_event_add
     do_warn_var = false;
     warn_var = false;
     warn_dist_var = 320/3;
+    // Assets
+        // Search for existing assets to save memory
+    with object_index
+    {
+        if id != other.id
+        {
+            other.state_spr_var[0] = state_spr_var[0];
+            other.state_spr_var[1] = state_spr_var[1];
+            other.state_spr_var[2] = state_spr_var[2];
+            other.spr_eff_var = spr_eff_var;
+            other.spr_overlay_var = spr_overlay_var;
+            local.loaded = true;
+            break;
+        }
+    }
+        // If no existing assets were found, load them
+    if !local.loaded
+    {
+        state_spr_var[0] = sprite_add(vanilla_directory_const+'\TEX\sprites\MS8_01_spr.png',6,false,false,0,0);
+        state_spr_var[1] = sprite_add(vanilla_directory_const+'\TEX\sprites\MS8_02_spr.png',6,false,false,0,0);
+        state_spr_var[2] = sprite_add(vanilla_directory_const+'\TEX\sprites\MS8_03_spr.png',7,false,false,0,0);
+        spr_eff_var = sprite_add(main_directory_const+'\SPR\MON\para_eff_spr.png',19,false,false,0,0);
+        spr_overlay_var = sprite_add(main_directory_const+'\SPR\MON\para_overlay_spr.png',3,false,false,0,0);
+    }
     // Sounds
     snd_len_var = 4;
     snd_arr[0,0] = caster_load(main_directory_const+'\SND\MON\para_01_snd.ogg');
@@ -59,7 +83,6 @@ object_event_add
     state_dur_var = 0;
     // Closed
     state_spd_var[0] = 1/3;
-    state_spr_var[0] = sprite_add(vanilla_directory_const+'\TEX\sprites\MS8_01_spr.png',6,false,false,0,0);
     state_spr_spd_var[0] = 1/12;
     state_dmg_var[0] = 40;
     state_dmg_alarm_var[0] = 120;
@@ -71,7 +94,6 @@ object_event_add
     state_acc_var[2] = false;
     // Open
     state_spd_var[1] = 1/3;
-    state_spr_var[1] = sprite_add(vanilla_directory_const+'\TEX\sprites\MS8_02_spr.png',6,false,false,0,0);
     state_spr_spd_var[1] = 1/12;
     state_dmg_var[1] = 40;
     state_dmg_alarm_var[1] = 120;
@@ -83,7 +105,6 @@ object_event_add
     state_acc_var[2] = false;
     // Leech
     state_spd_var[2] = 7/3;
-    state_spr_var[2] = sprite_add(vanilla_directory_const+'\TEX\sprites\MS8_03_spr.png',7,false,false,0,0);
     state_spr_spd_var[2] = 1/3;
     state_dmg_var[2] = 15;
     state_dmg_alarm_var[2] = 120;
@@ -94,12 +115,10 @@ object_event_add
     state_alarm_var[2] = 60;
     state_acc_var[2] = false;
     // Effect
-    spr_eff_var = sprite_add(main_directory_const+'\SPR\MON\para_eff_spr.png',19,false,false,0,0);
     eff_min_var = 30;
     eff_max_var = 60;
     state_eff_min_var = 30;
     state_eff_max_var = 60;
-    spr_overlay_var = sprite_add(main_directory_const+'\SPR\MON\para_overlay_spr.png',3,false,false,0,0);
     // Type
     if global.para_type_var == -1 { local.type = irandom(2); }
     else { local.type = global.para_type_var; }
@@ -172,7 +191,7 @@ object_event_add
     }
     // Delay calculation
     if delay_calc_var
-    { delay_var = max(0,32-(32/state_spd_var[0])); }
+    { delay_var = max(0,64-(32/state_spd_var[0])); }
     // Alarms
     alarm_len_var = 10;
     alarm_arr[8,2] = '';
@@ -193,11 +212,14 @@ object_event_add
 object_event_add
 (argument0,ev_destroy,0,"
     event_inherited();
-    sprite_delete(spr_eff_var);
-    sprite_delete(state_spr_var[0]);
-    sprite_delete(state_spr_var[1]);
-    sprite_delete(state_spr_var[2]);
-    sprite_delete(spr_overlay_var);
+    if instance_number(object_index) <= 1
+    {
+        sprite_delete(spr_eff_var);
+        sprite_delete(state_spr_var[0]);
+        sprite_delete(state_spr_var[1]);
+        sprite_delete(state_spr_var[2]);
+        sprite_delete(spr_overlay_var);
+    }
 ");
 // Room Start Event
 object_event_add

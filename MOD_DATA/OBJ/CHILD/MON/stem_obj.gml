@@ -28,6 +28,28 @@ object_event_add
     w_var = 10;
     h_var = 10;
     dupe_var = dupe_canon_const;
+    // Assets
+        // Search for existing assets to save memory
+    with object_index
+    {
+        if id != other.id
+        {
+            other.bg_var = bg_var;
+            other.mdl_01_var = mdl_01_var;
+            other.mdl_02_var = mdl_02_var;
+            local.loaded = true;
+            break;
+        }
+    }
+        // If no existing assets were found, load them
+    if !local.loaded
+    {
+        bg_var = background_add(vanilla_directory_const+'\3D\npc_5_tex.png',false,false);
+        mdl_01_var = d3d_model_create();
+        mdl_02_var = d3d_model_create();
+        d3d_model_load(mdl_01_var,main_directory_const+'\MDL\MON\stem_01_mdl.gmmod');
+        d3d_model_load(mdl_02_var,main_directory_const+'\MDL\MON\stem_02_mdl.gmmod');
+    }
     // Movement
     move_type_var = 1;
     stop_dist_var = 4; // OG only
@@ -48,12 +70,7 @@ object_event_add
     tp_dist_min_var = 32;
     tp_dist_max_var = 300;
     // Model
-    bg_var = background_add(vanilla_directory_const+'\3D\npc_5_tex.png',false,false);
     tex_var = background_get_texture(bg_var);
-    mdl_01_var = d3d_model_create();
-    mdl_02_var = d3d_model_create();
-    d3d_model_load(mdl_01_var,main_directory_const+'\MDL\MON\stem_01_mdl.gmmod');
-    d3d_model_load(mdl_02_var,main_directory_const+'\MDL\MON\stem_02_mdl.gmmod');
     mdl_var = mdl_01_var;
     mdl_yaw_var = yaw_var;
     mdl_pitch_var = pitch_var;
@@ -143,9 +160,12 @@ object_event_add
 object_event_add
 (argument0,ev_destroy,0,"
     event_inherited();
-    background_delete(bg_var);
-    d3d_model_destroy(mdl_01_var);
-    d3d_model_destroy(mdl_02_var);
+    if instance_number(object_index) <= 1
+    { 
+        background_delete(bg_var);
+        d3d_model_destroy(mdl_01_var);
+        d3d_model_destroy(mdl_02_var);
+    }
 ");
 // Room Start Event
 object_event_add

@@ -11,8 +11,33 @@ object_event_add
 (argument0,ev_draw,0,"
     if view_current == cam_id_var 
     {
-        d3d_set_projection_ortho(0,0,1280,720,0);
+        d3d_set_projection_ortho
+        (
+            view_xview[view_current],
+            view_yview[view_current],
+            view_xview[view_current]+view_wview[view_current],
+            view_yview[view_current]+view_hview[view_current],
+            0
+        );
         d3d_set_hidden(false);
+        // Taker!
+        if player_obj.alarm_arr[3,0] < player_obj.alarm_arr[3,1]/2
+        {
+            draw_set_blend_mode(bm_subtract);
+            if player_obj.alarm_arr[3,0] <= 0 { local.value = 255; }
+            else { local.value = lerp_scr(255,0,median(0,1,2*player_obj.alarm_arr[3,0]/player_obj.alarm_arr[3,1])); }
+            draw_set_color(make_color_rgb(0,local.value,local.value));
+            draw_rectangle
+            (
+                view_xview[view_current],
+                view_yview[view_current],
+                view_xview[view_current]+view_wview[view_current],
+                view_yview[view_current]+view_hview[view_current],
+                false
+            );
+            draw_set_color(c_white);
+            draw_set_blend_mode(bm_normal);
+        }
         // Health and Stamina bars
         if global.bar_hud_var != bar_hud_old_const
         {
