@@ -37,7 +37,7 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
-        spr_var = sprite_add(vanilla_directory_const+'\TEX\sprites\MS9_01_spr.png',12,false,false,0,0);
+        spr_var = sprite_add(main_directory_const+'\SPR\MON\fish_spr.png',9,false,false,0,0);
         bod_spr_var = sprite_add(main_directory_const+'\SPR\MON\fish_bod_spr.png',4,false,false,0,0);
     }
     // Sounds

@@ -220,6 +220,8 @@ object_event_add
         sprite_delete(state_spr_var[2]);
         sprite_delete(spr_overlay_var);
     }
+    with spr_flash_eff_obj
+    { if par_var == other.id { instance_destroy(); }}
 ");
 // Room Start Event
 object_event_add
@@ -282,6 +284,7 @@ object_event_add
             warn_var = true;
             with instance_create(0,0,spr_flash_eff_obj)
             {
+                par_var= other.id;
                 spr_var = other.spr_eff_var;
                 spr_id_var = irandom(sprite_get_number(spr_var)-1);
                 spr_spd_var = 1;
@@ -311,6 +314,7 @@ object_event_add
                 state_var = local.check;
                 with instance_create(0,0,spr_flash_eff_obj)
                 {
+                    par_var= other.id;
                     spr_var = other.spr_eff_var;
                     spr_id_var = irandom(sprite_get_number(spr_var)-1);
                     spr_spd_var = 1;
@@ -341,6 +345,7 @@ object_event_add
                 state_var = 2;
                 with instance_create(0,0,spr_flash_eff_obj)
                 {
+                    par_var= other.id;
                     spr_var = other.spr_eff_var;
                     spr_id_var = irandom(sprite_get_number(spr_var)-1);
                     spr_spd_var = 1;
@@ -372,6 +377,7 @@ object_event_add
     }
     with instance_create(0,0,spr_flash_eff_obj)
     {
+        par_var= other.id;
         spr_var = other.spr_eff_var;
         spr_id_var = irandom(sprite_get_number(spr_var)-1);
         spr_spd_var = 1;

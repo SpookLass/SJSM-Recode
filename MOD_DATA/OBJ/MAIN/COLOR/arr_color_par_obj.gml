@@ -12,6 +12,7 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user0,"
     image_blend = color_arr[0];
+    light_color_var = light_color_scr(color_arr[0]);
     if global.color_var < 2
     {
         with floor_par_obj { if color_var { image_blend = other.color_arr[mod_scr(floor(x/other.dist_var),other.color_len_var)]; }}

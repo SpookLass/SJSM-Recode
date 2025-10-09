@@ -212,7 +212,7 @@ object_event_add
 object_event_add
 (argument0,ev_step,ev_step_end,"
     event_inherited();
-    if on_var && do_coll_var && mon_coll_var
+    if on_var && (do_coll_var || type_var <= 0) && mon_coll_var
     { event_user(10); }
 ");
 // Draw Event
@@ -667,7 +667,7 @@ object_event_add
     local.ytmp = y;
     with echidna_obj
     {
-        if id != other.id && (type_var > 0) == (other.type_var > 0) && do_coll_var && mon_coll_var
+        if id != other.id && (type_var > 0) == (other.type_var > 0) && (do_coll_var || type_var <= 0) && mon_coll_var
         {
             if cyl_coll_scr(x,y,z,coll_var[2],coll_var[1],local.xtmp,local.ytmp,other.z,other.coll_var[2],other.coll_var[1])
             {

@@ -11,6 +11,7 @@ object_event_add
 (argument0,ev_create,0,"event_user(0);");
 object_event_add
 (argument0,ev_other,ev_user0,"
+    light_color_var = light_color_scr(image_blend);
     if global.color_var < 2
     {
         with floor_par_obj { if color_var { image_blend = other.image_blend; }}
@@ -21,10 +22,9 @@ object_event_add
         {
             with prop_par_obj { if color_var { image_blend = other.image_blend; }}
             with echidna_obj { if color_var { image_blend = other.image_blend; }}
-            local.light_color = light_color_scr(image_blend);
-            with light_floor_par_obj { if color_var { image_blend = local.light_color; }}
-            with light_wall_par_obj { if color_var { image_blend = local.light_color; }}
-            with light_torch_obj { if color_var { image_blend = local.light_color; }}
+            with light_floor_par_obj { if color_var { image_blend = other.light_color_var; }}
+            with light_wall_par_obj { if color_var { image_blend = other.light_color_var; }}
+            with light_torch_obj { if color_var { image_blend = other.light_color_var; }}
         }
         visible = false;
     }

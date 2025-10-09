@@ -68,6 +68,17 @@ object_event_add
     // Effect
     eff_dist_var = 32;
     eff_chance_var = 5;
+    // Flame
+    flame_var = false;
+    flame_spr_var = torch_spr;
+    flame_spr_spd_var = 0.25;
+    flame_h_var = 4.8;
+    flame_w_var = 3;
+    flame_z_off_var = 19.2; // Gone Rouge
+    flame_off_var = 105/330; // Maybe 90/330
+    flame_tex_var = sprite_get_texture(flame_spr_var,0);
+    flame_alpha_var = 1;
+    flame_color_var = c_white;
     // Behavior
     if global.fd_type_var == -1 { local.type = irandom(3); }
     else { local.type = global.fd_type_var; }
@@ -75,13 +86,21 @@ object_event_add
     {
         case 0:
         {
+            flame_var = true;
             dmg_var = 30;
             break;
         }
-        case 2:
+        case 2: // HD
         {
+            flame_var = true;
+            spd_base_var = 8/9; // 0.r8
             do_seen_var = false;
             hide_trig_var = false;
+            hide_alarm_min_var = 156;
+            hide_alarm_max_var = 318;
+            delay_min_var = 90;
+            delay_max_var = 180;
+            dmg_alarm_var = 180;
             break;
         }
     }
@@ -97,12 +116,17 @@ object_event_add
         sprite_delete(eff_spr_01_var);
         sprite_delete(eff_spr_02_var);
     }
+    with spr_flash_eff_obj
+    { if par_var == other.id { instance_destroy(); }}
 ");
 // Room Start
 // Room Start Event
 object_event_add
 (argument0,ev_other,ev_room_start,"
     event_inherited();
+    if global.color_var < 2 && instance_exists(color_par_obj)
+    { flame_color_var = color_par_obj.light_color_var; }
+    else { flame_color_var = c_white; }
     if hide_per_var
     {
         with door_obj { visible = !other.hide_var; }
@@ -142,6 +166,7 @@ object_event_add
     {
         with instance_create(0,0,spr_flash_eff_obj)
         {
+            par_var = other.id;
             if !irandom(2)
             {
                 spr_var = other.eff_spr_01_var;
@@ -181,3 +206,29 @@ object_event_add
     }
     set_alarm_scr(8,irandom_range(hide_alarm_min_var,hide_alarm_max_var));
 ");
+// Animation
+object_event_add
+(argument0,ev_other,ev_user1,"
+    event_inherited();
+    flame_spr_id_var = (flame_spr_id_var+(flame_spr_spd_var*global.delta_time_var)) mod sprite_get_number(flame_spr_var);
+    flame_tex_var = sprite_get_texture(flame_spr_var,floor(flame_spr_id_var))
+");
+// Draw
+object_event_add
+(argument0,ev_draw,0,"
+    event_inherited();
+    if flame_var && (on_var || visible_var)
+    {
+        if global.fog_dark_var { d3d_set_fog(false,c_black,0,0); }
+        d3d_transform_set_identity();
+        d3d_transform_add_rotation_y(point_direction_3d_scr(x,y,z+z_off_var+flame_z_off_var,global.cam_x_var[view_current],global.cam_y_var[view_current],global.cam_z_var[view_current]));
+        d3d_transform_add_rotation_z(point_direction(x,y,global.cam_x_var[view_current],global.cam_y_var[view_current]));
+        d3d_transform_add_translation(x,y,z+z_off_var+flame_z_off_var);
+        draw_set_color(flame_color_var); draw_set_alpha(flame_alpha_var);
+        d3d_draw_wall(0,(flame_w_var/2)+flame_off_var,flame_h_var/2,0,(-flame_w_var/2)+flame_off_var,-flame_h_var/2,flame_tex_var,1,1);
+        d3d_transform_set_identity();
+        draw_set_color(c_white); draw_set_alpha(1);
+        if global.fog_dark_var 
+        { d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var); }
+    }
+")

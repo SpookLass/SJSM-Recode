@@ -28,6 +28,8 @@ object_event_add
         {
             other.mdl_var = mdl_var;
             other.bg_var = bg_var;
+            other.spr_overlay_var = spr_overlay_var;
+            other.spr_eff_var = spr_eff_var;
             local.loaded = true;
             break;
         }
@@ -35,6 +37,8 @@ object_event_add
     // If no existing assets were found, load them
     if !local.loaded
     {
+        spr_overlay_var = sprite_add(kh_directory_const+'\TEX\sprites\HOS_ex6.png',4,false,false,0,0);
+        spr_eff_var = sprite_add(kh_directory_const+'\TEX\sprites\HOS_ex7.png',8,false,false,0,0);
         mdl_var = d3d_model_create();
         d3d_model_load(mdl_var,main_directory_const+'\MDL\MON\bodybag_mon_mdl.gmmod');
         bg_var = background_add(main_directory_const+'\BG\MON\bodybag_bg.png',false,false);
@@ -48,8 +52,6 @@ object_event_add
     inf_stam_var = true;
     spin_rate_var = 5;
     // Effects
-    spr_overlay_var = sprite_add(kh_directory_const+'\TEX\sprites\HOS_ex6.png',4,false,false,0,0);
-    spr_eff_var = sprite_add(kh_directory_const+'\TEX\sprites\HOS_ex7.png',8,false,false,0,0);
     eff_fade_var = false;
     eff_delay_var = 60;
     strobe_var = true;
@@ -116,9 +118,15 @@ object_event_add
     {
         background_delete(bg_var);
         d3d_model_destroy(mdl_var);
+        sprite_delete(spr_eff_var);
+        sprite_delete(spr_overlay_var);
     }
     if inf_stam_var
     { with player_obj { do_stam_var = true; }}
+    with spr_flash_eff_obj
+    { if par_var == other.id { instance_destroy(); }}
+    with body_eff_obj
+    { if par_var == other.id { instance_destroy(); }}
 ");
 // Create Event
 object_event_add
@@ -131,6 +139,7 @@ object_event_add
 (argument0,ev_alarm,8,"
     with instance_create(0,0,spr_flash_eff_obj)
     {
+        par_var = other.id;
         spr_var = other.spr_eff_var;
         spr_id_var = irandom(sprite_get_number(spr_var)-1);
         spr_spd_var = 0.5;
@@ -152,6 +161,7 @@ object_event_add
     {
         with instance_create(0,0,body_eff_obj)
         {
+            par_var = other.id;
             spr_var = other.spr_overlay_var;
             strobe_var = other.strobe_var;
         }
