@@ -14,7 +14,7 @@ state_var
 */
 // Create Event
 object_event_add
-(argument0,ev_other,ev_user7,"
+(argument0,ev_create,1,"
     name_var = 'Bekka';
     type_var = 0;
     spd_base_var = 0.75;
@@ -149,12 +149,10 @@ object_event_add
     alarm_arr[8,2] = '';
     alarm_arr[9,2] = '';
     alarm_arr[10,2] = '';
-    // Inherit
-    event_inherited();
     // Bools
-    do_anim_var = false;
-    do_snd_var = false;
-    if bright_var { color_var = false; }
+    do_anim_var = -1;
+    do_snd_var = -1;
+    if bright_var { color_var = -1; }
 ");
 // Destroy Event
 object_event_add

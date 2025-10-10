@@ -8,7 +8,7 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create Event
 object_event_add
-(argument0,ev_other,ev_user7,"
+(argument0,ev_create,1,"
     name_var = 'Fish';
     type_var = 1;
     spd_base_var = 17/30; // 0.5r6
@@ -129,7 +129,6 @@ object_event_add
             local.follow = id;
         }
     }
-    event_inherited();
 ");
 // Room Start Event
 object_event_add

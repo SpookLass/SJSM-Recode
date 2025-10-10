@@ -22,6 +22,8 @@ global.move_bob_var = ini_read_real("MAIN","move_bob",move_bob_const);
 global.idle_bob_var = ini_read_real("MAIN","idle_bob",idle_bob_const);
 global.shake_type_var = ini_read_real("MAIN","shake_type",shake_modern_const);
 global.mem_save_var = ini_read_real("MAIN","mem_save",mem_save_const);
+global.res_w_var = ini_read_real("MAIN","res_w",res_w_const);
+global.res_h_var = ini_read_real("MAIN","res_h",res_h_const);
 // Hud
 global.mon_hud_var = ini_read_real("MAIN","mon_hud",mon_hud_const);
 global.rm_hud_var = ini_read_real("MAIN","rm_hud",rm_hud_const);

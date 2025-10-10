@@ -14,7 +14,7 @@ charge_var
 */
 // Create Event
 object_event_add
-(argument0,ev_other,ev_user7,"
+(argument0,ev_create,1,"
     name_var = 'Gurgle';
     type_var = 0;
     spd_base_var = 0.8;
@@ -60,10 +60,8 @@ object_event_add
     alarm_len_var = 10;
     alarm_arr[8,2] = '';
     alarm_arr[9,2] = '';
-    // Inherit
-    event_inherited();
     // Charge
-    do_attack_var = false;
+    do_attack_var = -1;
     charge_var = -1;
     charge_spd_var = 3;
     charge_alarm_var = 30;

@@ -8,7 +8,7 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create Event
 object_event_add
-(argument0,ev_other,ev_user7,"
+(argument0,ev_create,1,"
     name_var = 'Killer';
     type_var = 1;
     spd_base_var = 1/3; // 0.r3
@@ -126,20 +126,17 @@ object_event_add
     stam_drain_var = 1.25;
     stam_spawn_min_var = 0;
     stam_spawn_max_var = 75;
+    stam_per_var = false;
     sprint_mult_var = 5;
     sprint_acc_var = 8/135;  // 0.0r592
     acc_base_var = 4/225; // 0.01r7
-    acc_var = acc_base_var;
     // Sprint animation
     spr_spd_base_var = 1/6;
     sprint_spr_spd_var = 5/6; // Don't look at me, stealing this from Gone Rouge
-    spr_spd_var = spr_spd_base_var;
     h_base_var = 22;
     sprint_h_var = 25;
-    h_var = h_base_var;
     z_off_base_var = 0;
     sprint_z_off_var = -1;
-    z_off_var = z_off_base_var;
     // Behavior
     if global.killer_type_var == -1 { local.type = irandom(2); }
     else { local.type = global.killer_type_var; }
@@ -188,8 +185,46 @@ object_event_add
             autobrake_dir_var = 60;
             break;
         }
+        case 4: // Remodeled
+        {
+            do_sprint_var = true;
+            do_stam_var = true;
+            sprint_mult_var = 9;
+            stam_rate_var = 1/6;
+            stam_drain_var = 0.5;
+            stam_per_var = true;
+            break;
+        }
+        case 5: // Gone Rouge
+        {
+            do_sprint_var = true;
+            do_stam_var = true;
+            stam_rate_var = 5/12;
+            stam_drain_var = 0.5;
+            spr_spd_base_var = 0.2;
+            sprint_spr_spd_var = 1;
+            spd_base_var = 0.5;
+            sprint_acc_var = -1;
+            stam_spawn_max_var = 0;
+            // Acceleration
+            do_acc_var = true;
+            acc_var = 0.1;
+            frick_var = 0.05;
+            // Autobrake (close enough)
+            autobrake_var = true;
+            autobrake_spd_var = 0;
+            autobrake_dir_var = 60;
+            break;
+        }
     }
-    event_inherited();
+    if sprint_acc_var
+    {
+        acc_var = acc_base_var;
+        frick_var = acc_base_var;
+    }
+    spr_spd_var = spr_spd_base_var;
+    z_off_var = z_off_base_var;
+    h_var = h_base_var;
 ");
 // Destroy Event
 object_event_add
@@ -215,12 +250,20 @@ object_event_add
     event_inherited();
     if do_stam_var
     {
-        stam_var = random_range(stam_spawn_min_var,stam_spawn_max_var);
-        sprint_var = false;
-        acc_var = acc_base_var;
-        spr_spd_var = spr_spd_base_var;
-        h_var = h_base_var;
-        z_off_var = z_off_base_var;
+        if !stam_per_var
+        {
+            stam_var = random_range(stam_spawn_min_var,stam_spawn_max_var);
+            sprint_var = false;
+            
+            spr_spd_var = spr_spd_base_var;
+            h_var = h_base_var;
+            z_off_var = z_off_base_var;
+            if sprint_acc_var > 0 
+            {
+                acc_var = acc_base_var;
+                frick_var = acc_base_var;
+            }
+        }
     }
     else if do_sprint_var
     {
@@ -230,7 +273,11 @@ object_event_add
         spr_spd_var = sprint_spr_spd_var;
         h_var = sprint_h_var;
         z_off_var = sprint_z_off_var;
-        acc_var = sprint_acc_var;
+        if sprint_acc_var > 0 
+        {
+            acc_var = sprint_acc_var;
+            frick_var = sprint_acc_var;
+        }
     }      
 ");
 // Movement
@@ -245,10 +292,14 @@ object_event_add
             {
                 stam_var = 0;
                 sprint_var = false;
-                acc_var = acc_base_var;
                 spr_spd_var = spr_spd_base_var;
                 h_var = h_base_var;
                 z_off_var = z_off_base_var;
+                if sprint_acc_var > 0 
+                {
+                    acc_var = acc_base_var;
+                    frick_var = acc_base_var;
+                }
             }
             else { spd_mult_var *= sprint_mult_var; }
         }
@@ -263,7 +314,11 @@ object_event_add
                 spr_spd_var = sprint_spr_spd_var;
                 h_var = sprint_h_var;
                 z_off_var = sprint_z_off_var;
-                acc_var = sprint_acc_var;
+                if sprint_acc_var > 0 
+                {
+                    acc_var = sprint_acc_var;
+                    frick_var = sprint_acc_var;
+                }
             }
         }
     }
@@ -274,7 +329,6 @@ object_event_add
 (argument0,ev_draw,0,"
     if on_var || visible_var
     {
-        
         draw_set_color(image_blend); draw_set_alpha(image_alpha);
         d3d_transform_set_identity();
         if do_mdl_var

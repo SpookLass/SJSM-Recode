@@ -14,7 +14,7 @@ move_type_var
 */
 // Create Event
 object_event_add
-(argument0,ev_other,ev_user7,"
+(argument0,ev_create,1,"
     name_var = 'Stem';
     type_var = 0;
     spd_base_var = 0.4;
@@ -149,8 +149,6 @@ object_event_add
     // Alarms
     alarm_len_var = 9;
     alarm_arr[8,2] = '';
-    // Inherit
-    event_inherited();
     // sine
     z_off_time_var=0;
     z_off_mult_var=6;

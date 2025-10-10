@@ -59,18 +59,23 @@ anim_var: Whether the specimen can currently animate
 attack_var: Whether the specimen can currently attack
 hurt_var: Whether the specimen is currently hurt
 */
-// Create Event Begin
+// Create Start
+    // Loading specimen specific settings
 object_event_add
-(argument0,ev_other,ev_user7,"
+(argument0,ev_create,1,"");
+// Create Normal Event
+    // Default settings
+object_event_add
+(argument0,ev_create,2,"
     if string(name_var) == '0' { name_var = 'Unknown'; }
     // Gotta set type, delay, and duration
     dur_start_var = dur_var;
     enter_var = type_var > 0;
-    do_move_var = true;
-    do_attack_var = true;
-    do_anim_var = true;
-    do_snd_var = true;
-    color_var = true;
+    if do_move_var == 0 { do_move_var = true; }
+    if do_attack_var == 0 { do_attack_var = true; }
+    if do_anim_var == 0 { do_anim_var = true; }
+    if do_snd_var == 0 { do_snd_var = true; }
+    if color_var == 0 { color_var = true; }
     // Speed
     spd_mult_var = 1;
     // Delay
@@ -114,11 +119,10 @@ object_event_add
     alarm_arr[6,2] = '';
     alarm_arr[7,2] = '';
 ");
-// Create Event
+// Create End Event
+    // Startup
 object_event_add
-(argument0,ev_create,0,"
-    // Begin
-    event_perform(ev_other,ev_user7);
+(argument0,ev_create,3,"
     // Play wake (or random sound if it doesn't exist)
     if do_snd_var
     {
@@ -139,8 +143,14 @@ object_event_add
         }
     }
     // Room start
-    // dur_var += 1;
     event_perform(ev_other,ev_room_start);
+");
+// Create Event
+object_event_add
+(argument0,ev_create,0,"
+    event_perform(ev_create,1);
+    event_perform(ev_create,2);
+    event_perform(ev_create,3);
 ");
 // Destroy Event
 object_event_add

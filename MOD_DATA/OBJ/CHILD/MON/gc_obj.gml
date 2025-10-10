@@ -8,7 +8,7 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create Event
 object_event_add
-(argument0,ev_other,ev_user7,"
+(argument0,ev_create,1,"
     name_var = 'Ghost Cow';
     type_var = 0;
     spd_base_var = 0.7;
@@ -112,7 +112,7 @@ object_event_add
             seen_flash_var = false;
             seen_spd_var = false;
             spawn_dist_var = 0;
-            local.dontanim = true;
+            do_anim_var = -1;
             break;
         }
         case 3: // KH
@@ -131,7 +131,7 @@ object_event_add
             seen_flash_var = false;
             seen_spd_var = false;
             spawn_dist_var = 0;
-            local.dontanim = true;
+            do_anim_var = -1;
             break;
         }
         case 5: // Cow
@@ -164,7 +164,7 @@ object_event_add
             seen_flash_var = false;
             seen_spd_var = false;
             spawn_dist_var = 0;
-            local.dontanim = true;
+            do_anim_var = -1;
             rand_alarm_min_var = -1;
             rand_alarm_max_var = -1;
             dur_var = irandom_range(10,15);
@@ -180,8 +180,6 @@ object_event_add
     event_inherited();
     if upside_var { z_off_var = 24.5; } // 21.3
     do_snd_var = false;
-    if local.dontanim
-    { do_anim_var = false; }
 ");
 // Destroy Event
 object_event_add

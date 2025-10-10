@@ -28,7 +28,7 @@ warn_dist_var: Distance to warn at
 */
 // Create Event Begin
 object_event_add
-(argument0,ev_other,ev_user7,"
+(argument0,ev_create,1,"
     name_var = 'Parasite';
     type_var = 1;
     dur_var = irandom_range(10,20);
@@ -196,8 +196,6 @@ object_event_add
     alarm_len_var = 10;
     alarm_arr[8,2] = '';
     alarm_arr[9,2] = '';
-    // Inherit
-    event_inherited();
     // Defaults
     spd_base_var = state_spd_var[0];
     spr_var = state_spr_var[0]

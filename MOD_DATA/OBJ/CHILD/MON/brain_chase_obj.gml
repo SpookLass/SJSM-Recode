@@ -8,7 +8,7 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create Event
 object_event_add
-(argument0,ev_other,ev_user7,"
+(argument0,ev_create,1,"
     name_var = 'Brain';
     type_var = 0;
     spd_base_var = 0.8;
@@ -29,8 +29,7 @@ object_event_add
         dmg_var = 99999;
         target_spd_mult_var = 0.3;
     }
-    event_inherited();
-    do_snd_var = false;
+    do_snd_var = -1;
     // sine
     z_off_time_var=0;
     z_off_mult_var=2;

@@ -8,7 +8,7 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create Begin Event
 object_event_add
-(argument0,ev_other,ev_user7,"
+(argument0,ev_create,1,"
     name_var = 'Body Bag';
     type_var = 1;
     spd_base_var = 0.8;
@@ -105,10 +105,15 @@ object_event_add
     // Alarms
     alarm_len_var = 9;
     alarm_arr[8,2] = '';
-    // Inherit
-    event_inherited();
+    // Bools
     do_mdl_var = true;
-    do_snd_var = false;
+    do_snd_var = -1;
+");
+// Create End Event
+object_event_add
+(argument0,ev_create,2,"
+    event_inherited();
+    if eff_delay_var > 0 { set_alarm_scr(8,eff_delay_var); }
 ");
 // Destroy Event
 object_event_add
@@ -127,12 +132,6 @@ object_event_add
     { if par_var == other.id { instance_destroy(); }}
     with body_eff_obj
     { if par_var == other.id { instance_destroy(); }}
-");
-// Create Event
-object_event_add
-(argument0,ev_create,0,"
-    event_inherited();
-    if eff_delay_var > 0 { set_alarm_scr(8,eff_delay_var); }
 ");
 // Effect alarm
 object_event_add

@@ -8,7 +8,7 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create Event
 object_event_add
-(argument0,ev_other,ev_user7,"
+(argument0,ev_create,1,"
     name_var = 'Gel';
     type_var = 0;
     spd_base_var = 0.6;
@@ -120,7 +120,6 @@ object_event_add
     }
     alarm_len_var = 9;
     alarm_arr[8,2] = '';
-    event_inherited();
 ");
 // Room Start Event
 object_event_add

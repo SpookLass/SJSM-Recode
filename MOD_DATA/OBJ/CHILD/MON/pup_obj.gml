@@ -15,7 +15,7 @@ state_var
 */
 // Create Event
 object_event_add
-(argument0,ev_other,ev_user7,"
+(argument0,ev_create,1,"
     name_var = 'Puppet';
     type_var = 0;
     spd_base_var = 5;
@@ -104,8 +104,6 @@ object_event_add
     alarm_arr[8,2] = '';
     alarm_arr[9,2] = '';
     alarm_arr[10,2] = '';
-    // Inherit
-    event_inherited();
 ");
 // Room start
 object_event_add

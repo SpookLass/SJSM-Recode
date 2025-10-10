@@ -8,7 +8,7 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create Event
 object_event_add
-(argument0,ev_other,ev_user7,"
+(argument0,ev_create,1,"
     name_var = 'Patient';
     type_var = 0;
     spd_base_var = 2;
@@ -105,11 +105,10 @@ object_event_add
     alarm_len_var = 10;
     alarm_arr[8,2] = '';
     alarm_arr[9,2] = '';
-    // Inherit
-    event_inherited();
+    // Bools
     do_mdl_var = true;
-    do_anim_var = false;
-    do_snd_var = false;
+    do_anim_var = -1;
+    do_snd_var = -1;
 ");
 // Destroy Event
 object_event_add

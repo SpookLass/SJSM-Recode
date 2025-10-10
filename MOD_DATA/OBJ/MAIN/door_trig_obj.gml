@@ -37,8 +37,8 @@ object_event_add
 // Alarm 0 Event
 object_event_add
 (argument0,ev_alarm,0,"
-    if room_exists(rm_var) && rm_var != 0 { room_goto(rm_var); }
-    else { show_error('Room '+string(rm_var)+' does not exist!',false); room_goto(hall_01_rm); }
+    if room_exists(rm_var) && rm_var != 0 { room_goto_scr(rm_var); }
+    else { show_error('Room '+string(rm_var)+' does not exist!',false); room_goto_scr(hall_01_rm); }
     global.rm_count_var += rm_count_var;
 ")
 // Step Event
