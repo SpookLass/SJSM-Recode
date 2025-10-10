@@ -150,6 +150,7 @@ object_event_add
             fog_start_var = fog_max_start_var;
             fog_end_var = fog_max_end_var;
             per_var = other.eff_per_var;
+            alarm_var = other.eff_alarm_var;
             set_alarm_scr(0,alarm_var);
             if fog_var { depth = 99; }
             else { depth = -99; }
@@ -182,9 +183,12 @@ object_event_add
 // Step event
 object_event_add
 (argument0,ev_step,ev_step_normal,"
-    if seen_var == 1 { spd_base_var = state_seen_spd_var[state_var]; }
-    else { spd_base_var = state_spd_var[state_var]; }
-    if state_var == 1 { image_alpha = random_range(0.2,1); }
+    if on_var
+    {
+        if seen_var == 1 { spd_base_var = state_seen_spd_var[state_var]; }
+        else { spd_base_var = state_spd_var[state_var]; }
+        if state_var == 1 { image_alpha = random_range(0.2,1); }
+    }
     event_inherited();
 ");
 // Random anim

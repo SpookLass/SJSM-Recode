@@ -30,6 +30,11 @@ object_event_add
             other.spr_var = spr_var;
             other.bg_var = bg_var;
             other.tex_spr_var = tex_spr_var;
+            other.door_bg_var = door_bg_var;
+            other.eff_spr_var = eff_spr_var;
+            other.web_bg_var = web_bg_var;
+            other.web_mdl_var = web_mdl_var;
+            other.zone_list_var = zone_list_var;
             local.loaded = true;
             break;
         }
@@ -40,8 +45,24 @@ object_event_add
         spr_var = sprite_add(vanilla_directory_const+'\TEX\sprites\MS28_01_spr.png',8,false,false,0,0);
         bg_var = background_add(vanilla_directory_const+'\TEX\sprites\MS28_02_spr.png',false,false);
         tex_spr_var = sprite_add(vanilla_directory_const+'\TEX\sprites\MS28_03_spr.png',3,false,false,0,0);
+        door_bg_var = background_add(vanilla_directory_const+'\TEX\sprites\MS28_04_spr.png',false,false);
+        web_bg_var = background_add(vanilla_directory_const+'\TEX\sprites\MS28_05_spr.png',false,false);
+        eff_spr_var = sprite_add(main_directory_const+'\SPR\DEAD\killer_static_02_spr.png',6,false,false,0,0);
+        web_mdl_var = d3d_model_create();
+        d3d_model_load(web_mdl_var,main_directory_const+'\MDL\MON\wf_web_mdl.gmmod');
+        zone_list_var = ds_list_create();
+        ds_list_clear(zone_list_var);
+        ds_list_add(zone_list_var,long_hall_01_rm);
+        ds_list_add(zone_list_var,long_hall_02_rm);
+        ds_list_add(zone_list_var,long_hall_04_rm);
+        ds_list_add(zone_list_var,long_hall_05_ungold_rm);
+        ds_list_add(zone_list_var,long_hall_07_rm);
+        ds_list_add(zone_list_var,long_hall_08_rm);
+        ds_list_add(zone_list_var,long_hall_10_rm);
+        ds_list_add(zone_list_var,long_hall_11_rm);
     }
     tex_02_var = background_get_texture(bg_var);
+    web_tex_var = background_get_texture(web_bg_var);
     // Sounds
     do_snd_var = -1; // At least for now
     // White Face Specific
@@ -55,18 +76,23 @@ object_event_add
     seen_flash_var = true;
     // Teleport
     tp_spawn_var = 2;
+    tp_spawn_chance_var = 3;
     tp_spd_var = 30;
     tp_chance_var = 4;
     tp_seen_delay_var = 60;
     tp_dist_min_var = 160;
     tp_dist_max_var = 400;
     tp_dist_var = 400;
-    tp_sight_var = false;
+    tp_type_var = 0;
     // Effect
     eff_01_alarm_var = 6;
     eff_02_alarm_var = 20;
     eff_03_alarm_min_var = 6;
     eff_03_alarm_max_var = 40;
+    res_var = true;
+    res_w_var = 640;
+    res_h_var = 360;
+    no_fun_var = true;
     // Movement
     spd_per_var = 1;
     spd_delay_min_var = 1;
@@ -82,8 +108,12 @@ object_event_add
     anim_type_var = 4;
     face_dist_var = 48;
     // other
+    start_var = 6;
+    zone_start_var = 25;
+    web_start_var = 22;
+    loop_var = true;
     attack_stun_var = true;
-    door_spawn_var = true;
+    exit_spawn_var = true;
     // Behavior
     if global.wf_type_var == -1 { local.type = irandom(3); }
     else { local.type = global.wf_type_var; }
@@ -92,48 +122,118 @@ object_event_add
         case 0: // Recode
         {
             dur_var = 30;
-            spawn_weird_var = true;
             tp_spawn_var = 1;
+            tp_type_var = 1; // Check sight
             break;
+        }
+        case 4: // Old HD
+        {
+            dmg_var = 60;
+            dmg_alarm_var = 180;
+            local.setdmg = true;
         }
         case 2: // HD
         {
-            dmg_var = 30;
-            dmg_alarm_var = 60;
+            if !local.setdmg
+            {
+                dmg_var = 30;
+                dmg_alarm_var = 60;
+            }
             delay_min_var = 90;
             delay_max_var = 180;
+            spr_spd_var = 1/6; // 0.1r6 I think
+            move_type_var = 2;
+            // Teleport
             tp_dist_min_var = 320/3; // 106.r6
             tp_dist_max_var = 2560/3; // 853.r3
             tp_dist_var = 1184/3; // 394.r6
+            tp_spd_var = 16/15; // 1.0r6
+            tp_chance_var = 1;
+            // Seen
             seen_acc_var = 2/45; // 0.0r4
             seen_yaw_var = 60;
             seen_pitch_var = 60;
             seen_spd_chance_var = 4;
-            eff_02_alarm_var = 12;
-            tp_spd_var = 16/15; // 1.0r6
-            tp_chance_var = 1;
-            attack_stun_var = false;
-            seen_anim_var = true;
+            // Animation
             anim_off_var = 16/15;
+            seen_anim_var = true;
             anim_type_var = 0;
+            // Effects
+            eff_02_alarm_var = 12;
             face_dist_var = 0;
-            spr_spd_var = 1/6; // 0.1r6 I think
+            // Don't set stuff
+            loop_var = false;
+            res_var = false;
+            attack_stun_var = false;
+            // Teleport delay
+            tp_spawn_var = 3;
+            exit_spawn_var = 2;
             // Estimates
             w_var = 8;
             h_var = 11;
             z_off_base_var = 12;
             break;
         }
-        case 3: // Old HD
+        case 3: // OBJ
         {
-            dmg_var = 60;
-            dmg_alarm_var = 180;
+            break;
+        }
+        case 5: // Imscared
+        {
+            // Remove EVERYTHING from SJSM White Face
+            tp_spawn_var = false;
+            exit_spawn_var = false;
+            tp_dist_var = -1;
+            do_seen_var = -1;
+            tp_dist_min_var = 500;
+            tp_dist_max_var = 500;
+            spd_base_var = 1.5;
+            do_anim_var = -1;
+            face_dist_var = 0;
+            attack_stun_var = false;
+            // Smaller Resolution
+            res_w_var = 180;
+            res_h_var = 180;
+            // Special Imscared stuff
+            tp_type_var = 2;
+            delay_var = 500;
+            tp_alarm_var = 400;
+            vanish_alarm_var = 1000;
+            dmg_var = 100;
+            // Draw
+            w_var = 10; // 16 x 40 / 64
+            h_var = 10.3125; // 12 x 55 / 64
+            z_off_base_var = 16;
+            tex_var = sprite_get_texture(spr_var,0);
+            break;
+        }
+        case 6: // Imscared (SJSM Edition)
+        {
+            // Remove some stuff from SJSM White Face
+            tp_spawn_var = false;
+            exit_spawn_var = false;
+            tp_dist_var = -1;
+            do_seen_var = -1;
+            attack_stun_var = false;
+            // Smaller Resolution
+            res_w_var = 640;
+            res_h_var = 480;
+            // Special Imscared stuff
+            delay_var = 60;
+            tp_alarm_var = 120;
+            vanish_alarm_var = 600;
+            // Draw
+            w_var = 12;
+            h_var = 16.4;
+            z_off_base_var = 8;
+            tex_var = sprite_get_texture(spr_var,0);
             break;
         }
     }
-    alarm_len_var = 10;
+    alarm_len_var = 11;
     alarm_arr[8,2] = '';
     alarm_arr[9,2] = '';
+    alarm_arr[10,2] = '';
 ");
 // Destroy Event
 object_event_add
@@ -142,60 +242,172 @@ object_event_add
     global.wall_bg_tex = background_get_texture(global.wall_bg);
     global.floor_bg_tex = background_get_texture(global.floor_bg);
     global.ceil_bg_tex = background_get_texture(global.ceil_bg);
+    if res_var
+    {
+        global.res_override_var = false;
+        global.res_override_w_var = global.res_w_var;
+        global.res_override_h_var = global.res_h_var;
+    }
     if instance_number(object_index) <= 1
     {
         sprite_delete(spr_var);
         background_delete(bg_var);
         sprite_delete(tex_spr_var);
+        background_delete(door_bg_var);
+        sprite_delete(eff_spr_var);
+        background_delete(web_bg_var);
+        d3d_model_destroy(web_mdl_var);
+        ds_list_destroy(zone_list_var);
     }
+    if zone_start_var > 0
+    {
+        ds_list_clear(global.rm_list_var);
+        global.zone_var = global.zone_arr[global.zone_num_var];
+    }
+    with wf_eff_obj
+    { if par_var == other.id { instance_destroy(); }}
 ");
 // Room Start Event
 object_event_add
 (argument0,ev_other,ev_room_start,"
     event_inherited();
-    do_seen_var = true;
-    spd_per_var = 1;
-    visible = true;
-    if door_spawn_var && !irandom(5)
+    if start_var <= 0 || dur_start_var-dur_var >= start_var
     {
-        // Reset Position
-        local.spawn = irandom_range(1,global.spawn_len_var-1);
-        yaw_var = global.spawn_arr[local.spawn,3];
-        x = global.spawn_arr[local.spawn,0]-lengthdir_x(exit_dist_var,yaw_var);
-        y = global.spawn_arr[local.spawn,1]-lengthdir_y(exit_dist_var,yaw_var);
-        z = global.spawn_arr[local.spawn,2];
-        set_motion_3d_scr(0,true,yaw_var,true,0,true);
-        // Reset
-        event_user(6);
-        event_perform(ev_alarm,0);
-        set_alarm_scr(0,-1);
-    }
-    else if tp_spawn_var && !irandom(2)
-    {
-        if tp_spawn_var == 2
+        if do_seen_var == 0 
+        { do_seen_var = true; }
+        spd_per_var = 1;
+        visible = true;
+        if exit_spawn_var && !irandom(5)
         {
-            local.dist1 = 32+random_range(160,400);
-            local.dist2 = random_range(-400,400);
-            x += lengthdir_x(local.dist1,yaw_var)+lengthdir_y(local.dist2,yaw_var);
-            y += lengthdir_y(local.dist1,yaw_var)+lengthdir_x(local.dist2,yaw_var);
+            // Reset Position
+            local.spawn = irandom_range(1,global.spawn_len_var-1);
+            yaw_var = global.spawn_arr[local.spawn,3];
+            x = global.spawn_arr[local.spawn,0]-lengthdir_x(32,yaw_var);
+            y = global.spawn_arr[local.spawn,1]-lengthdir_y(32,yaw_var);
+            z = global.spawn_arr[local.spawn,2];
+            set_motion_3d_scr(0,true,yaw_var,true,0,true);
+            if exit_spawn_var != 2
+            {
+                // Reset
+                event_user(6);
+                event_perform(ev_alarm,0);
+                set_alarm_scr(0,-1);
+            }
+            
         }
-        else { event_user(15); }
-        // Reset
-        event_user(6);
-        event_perform(ev_alarm,0);
-        set_alarm_scr(0,-1);
+        else if tp_spawn_var && frac_chance_scr(1,tp_spawn_chance_var)
+        {
+            if tp_spawn_var == 2
+            {
+                local.dist1 = 32+random_range(160,400);
+                local.dist2 = random_range(-400,400);
+                x += lengthdir_x(local.dist1,yaw_var)+lengthdir_y(local.dist2,yaw_var);
+                y += lengthdir_y(local.dist1,yaw_var)+lengthdir_x(local.dist2,yaw_var);
+            }
+            else { event_user(15); }
+            if tp_spawn_var != 3
+            {
+                // Reset
+                event_user(6);
+                event_perform(ev_alarm,0);
+                set_alarm_scr(0,-1);
+            }
+        }
+    }
+    else { on_var = false; set_alarm_scr(0,-1); }
+    // Zone
+    if zone_start_var > 0 && dur_start_var-dur_var >= zone_start_var-1
+    {
+        if dur_start_var-dur_var == zone_start_var-1
+        {
+            ds_list_clear(global.rm_list_var);
+            global.zone_var = zone_list_var;
+        }
+        if loop_var { door_trig_obj.rm_count_var = 0; }
+        global.rm_name_var = string_replace(global.rm_name_var,'Long','My');
+    }
+    // Webs
+    if web_start_var > 0 && dur_start_var-dur_var >= web_start_var
+    {
+        for (local.i=0; local.i<global.mark_len_var; local.i+=1;)
+        {
+            if frac_chance_scr(2,3)
+            {
+                with instance_create(global.mark_arr[local.i,0]+random_range(-4,4),global.mark_arr[local.i,1]+random_range(-4,4),wf_web_obj)
+                {
+                    tex_var = other.web_tex_var;
+                    mdl_var = other.web_mdl_var;
+                }
+            }
+        }
     }
     // Effects
+    if res_var
+    {
+        global.res_override_var = res_var;
+        global.res_override_w_var = res_w_var; // 180
+        global.res_override_h_var = res_h_var; // 180
+    }
     global.wall_bg_tex = sprite_get_texture(tex_spr_var,0);
     global.floor_bg_tex = sprite_get_texture(tex_spr_var,1);
     global.ceil_bg_tex = sprite_get_texture(tex_spr_var,2);
+    with door_obj { tex_var = background_get_texture(other.door_bg_var); }
+    with door_entrance_obj { tex_var = background_get_texture(other.door_bg_var); }
+    if !instance_exists(wf_eff_obj)
+    {
+        with instance_create(0,0,wf_eff_obj)
+        {
+            par_var = other.id;
+            spr_var = other.eff_spr_var;
+        }
+    }
+    if !instance_exists(maze_dark_color_obj)
+    {
+        with (fog_par_obj) { instance_destroy(); }
+        with color_par_obj { instance_destroy(); }
+        with torch_obj
+        {
+            if other.no_fun_var { on_var = false; }
+            visible = false;
+        }
+        with instance_create(0,0,fog_par_obj)
+        {
+            fog_var = true;
+            fog_color_var = c_black;
+            fog_start_var = 0;
+            fog_end_var = 96;
+            fog_dark_var = true;
+            event_user(0);
+        }
+        instance_create(0,0,bright_color_obj); 
+    }
+    if no_fun_var
+    {
+        
+        with frame_obj { instance_destroy(); }
+        with art_obj { instance_destroy(); }
+        with web_obj { instance_destroy(); }
+    }
+");
+// Delay Alarm
+object_event_add
+(argument0,ev_alarm,0,"
+    event_inherited();
+    if tp_alarm_var > 0
+    {
+        event_user(15);
+        set_alarm_scr(10,vanish_alarm_var);
+    }
 ");
 // Seen Alarm
 object_event_add
 (argument0,ev_alarm,8,"
     do_seen_var = true;
-    event_perform(ev_alarm,9);
-    set_alarm_scr(9,-1);
+    if alarm_arr[9,0] > 0
+    {
+        event_perform(ev_alarm,9);
+        set_alarm_scr(9,-1);
+    }
 ");
 // Speed Reset
 object_event_add
@@ -243,6 +455,7 @@ object_event_add
     if seen_var == true
     {
         do_seen_var = false;
+        // Increase speed
         if seen_spd_var
         {
             if frac_chance_scr(1,seen_spd_chance_var)
@@ -251,30 +464,33 @@ object_event_add
                 local.pitch = point_direction_3d_scr(x,y,z,target_x_var,target_y_var,target_z_var);
                 switch move_type_var
                 {
+                    // OG Style. Intense speed increase that resets
                     case 0:
                     {
                         spd_per_var += seen_acc_var;
                         local.yaw = point_direction(x,y,target_x_var,target_y_var);
                         local.pitch = point_direction_3d_scr(x,y,z,target_x_var,target_y_var,target_z_var);
                         set_motion_3d_scr(spd_base_var*spd_per_var,true,local.yaw,true,local.pitch,true);
+                        set_alarm_scr(9,irandom_range(seen_delay_min_var,seen_delay_max_var));
                         break;
                     }
+                    // HD Style. Gradual speed increase that never goes down
                     case 2:
                     {
                         set_motion_3d_scr(spd_var+seen_acc_var,true,local.yaw,true,local.pitch,true);
                         break;
                     }
                 }
-                
             }
-            set_alarm_scr(9,irandom_range(seen_delay_min_var,seen_delay_max_var));
         }
+        // HD only, kinda bobbles around when looked at
         if seen_anim_var
         {
             x_off_var = random_range(-anim_off_var,anim_off_var);
             y_off_var = random_range(-anim_off_var,anim_off_var);
             z_off_var = z_off_base_var+random_range(-anim_off_var,anim_off_var);
         }
+        // Flashing effects
         if !irandom(3) && seen_flash_var
         {
             // Make sure not to blind the player
@@ -321,16 +537,14 @@ object_event_add
                 }
             }
         }
-        if spd_var >= tp_spd_var && frac_chance_scr(1,tp_chance_var)
+        // Teleport if moving too fast
+        if tp_spd_var > 0 && spd_var >= tp_spd_var && frac_chance_scr(1,tp_chance_var)
         {
             // Teleport
             event_user(15);
             set_alarm_scr(8,tp_seen_delay_var);
         }
-        else
-        {
-            set_alarm_scr(8,irandom_range(spd_delay_min_var,spd_delay_max_var));
-        }
+        else { set_alarm_scr(8,irandom_range(spd_delay_min_var,spd_delay_max_var)); }
     }
 ");
 // Attack Success
@@ -338,6 +552,7 @@ object_event_add
 (argument0,ev_other,ev_user3,"
     event_inherited();
     event_user(15);
+    // OG only, gets stopped in place briefly
     if attack_stun_var
     {
         do_seen_var = false;
@@ -351,11 +566,34 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user15,"
     // Originally anywhere in the room (0-1280 x 0-720 y)
-    if tp_sight_var { local.dir = random_range(target_eye_yaw_var+seen_yaw_var,target_eye_yaw_var+360-seen_yaw_var); }
-    else { local.dir = random(360); }
-    local.dist = random_range(tp_dist_min_var,tp_dist_max_var);
-    x = target_x_var+lengthdir_x(local.dist,local.dir);
-    y = target_y_var+lengthdir_x(local.dist,local.dir);
+    switch tp_type_var
+    {
+        // Type 1 makes sure White Face spawns behind the player to prevent instant damage
+        case 0:
+        case 1:
+        {
+            if tp_type_var == 1 { local.dir = random_range(target_eye_yaw_var+seen_yaw_var,target_eye_yaw_var+360-seen_yaw_var); }
+            else { local.dir = random(360); }
+            local.dist = random_range(tp_dist_min_var,tp_dist_max_var);
+            x = target_x_var+lengthdir_x(local.dist,local.dir);
+            y = target_y_var+lengthdir_x(local.dist,local.dir);
+            break;
+        }
+        case 2:
+        {
+            // They bugged it lol
+            x = target_x_var-500;
+            y = target_y_var-500;
+            break;
+        }
+    }
+");
+// Teleport Alarm
+object_event_add
+(argument0,ev_alarm,10,"
+    on_var = false;
+    set_motion_3d_scr(0,true);
+    set_alarm_scr(0,tp_alarm_var);
 ");
 // Draw Event
 object_event_add

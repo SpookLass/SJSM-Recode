@@ -11,12 +11,20 @@ object_event_add
 (argument0,ev_draw,0,"
     if view_current == cam_id_var 
     {
-        d3d_set_projection_ortho
+        /*d3d_set_projection_ortho
         (
             view_xview[view_current],
             view_yview[view_current],
             view_xview[view_current]+view_wview[view_current],
             view_yview[view_current]+view_hview[view_current],
+            0
+        );*/
+        d3d_set_projection_ortho
+        (
+            0,
+            0,
+            1280,
+            720,
             0
         );
         d3d_set_hidden(false);

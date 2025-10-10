@@ -14,7 +14,7 @@ object_event_add
     spd_base_var = 0.8;
     spr_spd_var = 1/6;
     dur_var = irandom_range(10,20);
-    delay_var = 173;
+    delay_var = 120;
     dmg_var = 45;
     dmg_alarm_var = 120;
     w_var = 10;

@@ -344,10 +344,10 @@ object_event_add
                         instance_create(0,0,global.player_obj);
                         instance_create(0,0,global.hud_obj);
                         caster_loop(choose(amb_01_snd,amb_02_snd,amb_03_snd,amb_04_snd,amb_05_snd,amb_06_snd,amb_07_snd,amb_08_snd,amb_09_snd,amb_10_snd,amb_11_snd,amb_12_snd),global.vol_var,1);
-                        local.zone = irandom(global.zone_len_var+global.story_zone_len_var-1);
-                        if local.zone >= global.zone_len_var
-                        { global.zone_var = global.story_zone_arr[local.zone-global.zone_len_var]; }
-                        else { global.zone_var = global.zone_arr[local.zone]; }
+                        global.zone_num_var = irandom(global.zone_len_var+global.story_zone_len_var-1);
+                        if global.zone_num_var >= global.zone_len_var
+                        { global.zone_var = global.story_zone_arr[global.zone_num_var-global.zone_len_var]; }
+                        else { global.zone_var = global.zone_arr[global.zone_num_var]; }
                         global.count_var = get_count_scr();
                         room_goto(hall_01_rm);
                     }

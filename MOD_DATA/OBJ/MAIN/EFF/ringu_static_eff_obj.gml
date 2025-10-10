@@ -48,8 +48,6 @@ object_event_add
 // Room Start Event
 object_event_add
 (argument0,ev_other,ev_room_start,"
-    if !instance_exists(real_ringu_obj)
-    { instance_destroy(); exit; } // Failsafe
     if !per_var
     {
         set_alarm_scr(0,alarm_var);
@@ -81,7 +79,7 @@ object_event_add
 (argument0,ev_alarm,0,"
     with (ringu_real_obj)
     { event_perform(ev_other,ev_user15); }
-    set_alarm_scr(0,250);
+    set_alarm_scr(0,alarm_var);
 ");
 // Step Event
 object_event_add
