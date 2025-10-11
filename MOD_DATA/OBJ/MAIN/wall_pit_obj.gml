@@ -13,4 +13,5 @@ object_event_add
     event_inherited();
     z = -320;
     h_var = 320;
+    no_grid_var = true;
 ");

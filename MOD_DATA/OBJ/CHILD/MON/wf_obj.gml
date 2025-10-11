@@ -11,7 +11,6 @@ object_event_add
 (argument0,ev_create,1,"
     name_var = 'White Face';
     type_var = 0;
-    spd_base_var = 0.9;
     spr_spd_var = 1;
     dur_var = 40;
     delay_var = 640/9; // 71.r1
@@ -86,6 +85,7 @@ object_event_add
     tp_dist_var = 400;
     tp_type_var = 0;
     // Effect
+    flash_chance_var = 4;
     eff_01_alarm_var = 6;
     eff_02_alarm_var = 20;
     eff_03_alarm_min_var = 6;
@@ -95,7 +95,7 @@ object_event_add
     res_h_var = 360;
     no_fun_var = true;
     // Movement
-    spd_per_var = 1;
+    spd_base_real_var = 0.9;
     spd_delay_min_var = 1;
     spd_delay_max_var = 6;
     seen_acc_var = 100/6; // GOOD GOD
@@ -192,6 +192,18 @@ object_event_add
         }
         case 3: // OBJ
         {
+            tp_dist_var = -1;
+            spd_base_real_var = 1.7;
+            seen_acc_var = -0.05;
+            spd_min_var = 0.7;
+            seen_flash_var = 2;
+            do_seen_agg_var = true;
+            flash_agg_var = 350;
+            tp_agg_var = 400;
+            spd_agg_var = 500;
+            flash_chance_var = 8;
+            spd_delay_min_var = 6;
+            spd_delay_max_var = 6;
             break;
         }
         case 5: // Imscared
@@ -203,7 +215,7 @@ object_event_add
             do_seen_var = -1;
             tp_dist_min_var = 500;
             tp_dist_max_var = 500;
-            spd_base_var = 1.5;
+            spd_base_real_var = 1.5;
             do_anim_var = -1;
             face_dist_var = 0;
             attack_stun_var = false;
@@ -254,6 +266,7 @@ object_event_add
             break;
         }
     }
+    spd_base_var = spd_base_real_var;
     alarm_len_var = 11;
     alarm_arr[8,2] = '';
     alarm_arr[9,2] = '';
@@ -295,11 +308,15 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_room_start,"
     event_inherited();
+    // Reset
+    spd_base_var = spd_base_real_var;
+    if do_seen_agg_var { seen_agg_var = 0; }
+    // Spawn
     if start_var <= 0 || dur_start_var-dur_var >= start_var
     {
         if do_seen_var == 0 
         { do_seen_var = true; }
-        spd_per_var = 1;
+        
         visible = true;
         if exit_spawn_var && !irandom(5)
         {
@@ -426,7 +443,9 @@ object_event_add
 // Seen Alarm
 object_event_add
 (argument0,ev_alarm,8,"
-    do_seen_var = true;
+    if do_seen_agg_var
+    { seen_agg_var = 0; }
+    else { do_seen_var = true; }
     if alarm_arr[9,0] > 0
     {
         event_perform(ev_alarm,9);
@@ -436,7 +455,7 @@ object_event_add
 // Speed Reset
 object_event_add
 (argument0,ev_alarm,9,"
-    spd_per_var = 1;
+    spd_base_var = spd_base_real_var;
     if spd_var > spd_base_var
     { set_motion_3d_scr(spd_base_var,true); }
 ");
@@ -458,7 +477,6 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user0,"
     if tp_dist_var > 0 && target_dist_var > tp_dist_var { event_user(15); }
-    if spd_per_var != 1 { spd_mult_var *= spd_per_var; }
     switch move_type_var
     {
         case 0: { event_inherited(); break; }
@@ -467,7 +485,7 @@ object_event_add
             local.spd = spd_base_var*spd_mult_var;
             local.yaw = point_direction(x,y,target_x_var,target_y_var);
             local.pitch = point_direction_3d_scr(x,y,z,target_x_var,target_y_var,target_z_var);
-            if spd_per_var != 1 { local.yaw += 90; }
+            if spd_base_var > spd_base_real_var { local.yaw += 90; }
             set_motion_3d_scr(local.spd,true,local.yaw,true,local.pitch,true);
             break;
         }
@@ -487,9 +505,10 @@ object_event_add
     event_inherited();
     if seen_var == true && (seen_dist_var <= 0 || target_dist_var >= seen_dist_var)
     {
-        do_seen_var = false;
+        if !do_seen_agg_var { do_seen_var = false; }
+        else { seen_agg_var += global.delta_time_var; }
         // Increase speed
-        if seen_spd_var
+        if seen_spd_var && (spd_agg_var <= 0 || seen_agg_var < spd_agg_var)
         {
             if frac_chance_scr(1,seen_spd_chance_var)
             {
@@ -501,12 +520,12 @@ object_event_add
                     case 0:
                     case 1:
                     {
-                        spd_per_var += seen_acc_var;
+                        spd_base_var = max(spd_min_var,spd_base_var+seen_acc_var);
                         local.yaw = point_direction(x,y,target_x_var,target_y_var);
                         local.pitch = point_direction_3d_scr(x,y,z,target_x_var,target_y_var,target_z_var);
                         if move_type_var == 1 { local.yaw += 90; }
-                        set_motion_3d_scr(spd_base_var*spd_per_var,true,local.yaw,true,local.pitch,true);
-                        set_alarm_scr(9,irandom_range(seen_delay_min_var,seen_delay_max_var));
+                        set_motion_3d_scr(spd_base_var*spd_mult_var,true,local.yaw,true,local.pitch,true);
+                        set_alarm_scr(9,irandom_range(spd_delay_min_var,spd_delay_max_var));
                         break;
                     }
                     // HD Style. Gradual speed increase that never goes down
@@ -526,7 +545,7 @@ object_event_add
             z_off_var = z_off_base_var+random_range(-anim_off_var,anim_off_var);
         }
         // Flashing effects
-        if !irandom(3) && seen_flash_var
+        if frac_chance_scr(1,flash_chance_var) && seen_flash_var && (flash_agg_var <= 0 || seen_agg_var > flash_agg_var)
         {
             // Make sure not to blind the player
             if !instance_exists(color_par_obj)
@@ -573,13 +592,14 @@ object_event_add
             }
         }
         // Teleport if moving too fast
-        if tp_spd_var > 0 && spd_var >= tp_spd_var && frac_chance_scr(1,tp_chance_var)
+        if (tp_spd_var > 0 && spd_var >= tp_spd_var && frac_chance_scr(1,tp_chance_var))
+        || (tp_agg_var > 0 && seen_agg_var > tp_agg_var)
         {
             // Teleport
             event_user(15);
             set_alarm_scr(8,tp_seen_delay_var);
         }
-        else { set_alarm_scr(8,irandom_range(spd_delay_min_var,spd_delay_max_var)); }
+        else { set_alarm_scr(8,irandom_range(seen_delay_min_var,seen_delay_max_var)); }
     }
 ");
 // Attack Success
