@@ -140,6 +140,9 @@ object_event_add
             w_var = 12;
             h_var = 16.4;
             z_off_base_var = 10;
+            // Smaller Resolution
+            res_w_var = 640;
+            res_h_var = 480;
             break;
         }
         case 4: // Old HD
@@ -204,6 +207,7 @@ object_event_add
             flash_chance_var = 8;
             spd_delay_min_var = 6;
             spd_delay_max_var = 6;
+            tp_dist_min_var = 260;
             break;
         }
         case 5: // Imscared
@@ -245,15 +249,14 @@ object_event_add
             start_var = -1;
             web_start_var = 15;
             zone_start_var = -1;
+            res_w_var = 640;
+            res_h_var = 480;
             // Remove some stuff from SJSM White Face
             tp_spawn_var = false;
             exit_spawn_var = false;
             tp_dist_var = -1;
             do_seen_var = -1;
             attack_stun_var = false;
-            // Smaller Resolution
-            res_w_var = 640;
-            res_h_var = 480;
             // Special Imscared stuff
             delay_var = 60;
             tp_alarm_var = 120;
