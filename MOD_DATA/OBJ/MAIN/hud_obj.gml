@@ -11,22 +11,17 @@ object_event_add
 (argument0,ev_draw,0,"
     if view_current == cam_id_var 
     {
-        /*d3d_set_projection_ortho
+        d3d_set_projection_ortho
         (
             view_xview[view_current],
             view_yview[view_current],
             view_xview[view_current]+view_wview[view_current],
             view_yview[view_current]+view_hview[view_current],
             0
-        );*/
-        d3d_set_projection_ortho
-        (
-            0,
-            0,
-            1280,
-            720,
-            0
         );
+        if view_wview[view_current] > view_hview[view_current]
+        { local.scale = view_hview[view_current]/720; }
+        else { local.scale = view_wview[view_current]/1280; }
         d3d_set_hidden(false);
         // Taker!
         if player_obj.alarm_arr[3,0] < player_obj.alarm_arr[3,1]/2
@@ -49,12 +44,12 @@ object_event_add
         // Health and Stamina bars
         if global.bar_hud_var != bar_hud_old_const
         {
-            draw_background(bar_bg,91,57);
+            draw_background_ext(bar_bg,91*local.scale,57*local.scale,local.scale,local.scale,0,c_white,1);
             local.width = background_get_width(bar_stam_bg)*player_obj.stam_var/player_obj.stam_max_var;
-            draw_background_part(bar_stam_bg,background_get_width(bar_stam_bg)-local.width,0,local.width,20,99,96);
+            draw_background_part_ext(bar_stam_bg,background_get_width(bar_stam_bg)-local.width,0,local.width,20,99*local.scale,96*local.scale,local.scale,local.scale,c_white,1);
             local.width = background_get_width(bar_hp_bg)*player_obj.hp_var/player_obj.hp_max_var;
-            draw_background_part(bar_hp_bg,background_get_width(bar_hp_bg)-local.width,0,local.width,27,99,62);
-            draw_background(bar_icon_bg,37,34);
+            draw_background_part_ext(bar_hp_bg,background_get_width(bar_hp_bg)-local.width,0,local.width,27,99*local.scale,62*local.scale,local.scale,local.scale,c_white,1);
+            draw_background_ext(bar_icon_bg,37*local.scale,34*local.scale,local.scale,local.scale,0,c_white,1);
         }
         // TPS
         if global.tps_hud_var

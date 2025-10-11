@@ -74,6 +74,7 @@ object_event_add
     seen_yaw_var = 30;
     seen_pitch_var = 30;
     seen_flash_var = true;
+    seen_dist_var = -1;
     // Teleport
     tp_spawn_var = 2;
     tp_spawn_chance_var = 3;
@@ -115,15 +116,30 @@ object_event_add
     attack_stun_var = true;
     exit_spawn_var = true;
     // Behavior
-    if global.wf_type_var == -1 { local.type = irandom(3); }
+    if global.wf_type_var == -1 { local.type = irandom(7); }
     else { local.type = global.wf_type_var; }
     switch local.type
     {
+        case 6:
+        {
+            // Maya's Idea
+            move_type_var = 1;
+            local.maya = true;
+        }
         case 0: // Recode
         {
+            if !local.maya { seen_dist_var = 160; }
             dur_var = 30;
+            start_var = -1;
+            web_start_var = 15;
+            zone_start_var = -1;
+            exit_spawn_var = false;
             tp_spawn_var = 1;
             tp_type_var = 1; // Check sight
+            // Draw
+            w_var = 12;
+            h_var = 16.4;
+            z_off_base_var = 10;
             break;
         }
         case 4: // Old HD
@@ -191,6 +207,9 @@ object_event_add
             do_anim_var = -1;
             face_dist_var = 0;
             attack_stun_var = false;
+            zone_start_var = -1;
+            start_var = -1;
+            web_start_var = -1;
             // Smaller Resolution
             res_w_var = 180;
             res_h_var = 180;
@@ -207,8 +226,13 @@ object_event_add
             tex_var = sprite_get_texture(spr_var,0);
             break;
         }
-        case 6: // Imscared (SJSM Edition)
+        case 7: // Imscared Recode
         {
+            // Recode
+            dur_var = 30;
+            start_var = -1;
+            web_start_var = 15;
+            zone_start_var = -1;
             // Remove some stuff from SJSM White Face
             tp_spawn_var = false;
             exit_spawn_var = false;
@@ -225,7 +249,7 @@ object_event_add
             // Draw
             w_var = 12;
             h_var = 16.4;
-            z_off_base_var = 8;
+            z_off_base_var = 10;
             tex_var = sprite_get_texture(spr_var,0);
             break;
         }
@@ -438,6 +462,15 @@ object_event_add
     switch move_type_var
     {
         case 0: { event_inherited(); break; }
+        case 1: // Circling
+        {
+            local.spd = spd_base_var*spd_mult_var;
+            local.yaw = point_direction(x,y,target_x_var,target_y_var);
+            local.pitch = point_direction_3d_scr(x,y,z,target_x_var,target_y_var,target_z_var);
+            if spd_per_var != 1 { local.yaw += 90; }
+            set_motion_3d_scr(local.spd,true,local.yaw,true,local.pitch,true);
+            break;
+        }
         case 2:
         {
             local.yaw = point_direction(x,y,target_x_var,target_y_var);
@@ -446,13 +479,13 @@ object_event_add
             break;
         }
     }
-    
+    spd_mult_var = 1;
 ");
 // Calculate Seen
 object_event_add
 (argument0,ev_other,ev_user5,"
     event_inherited();
-    if seen_var == true
+    if seen_var == true && (seen_dist_var <= 0 || target_dist_var >= seen_dist_var)
     {
         do_seen_var = false;
         // Increase speed
@@ -466,10 +499,12 @@ object_event_add
                 {
                     // OG Style. Intense speed increase that resets
                     case 0:
+                    case 1:
                     {
                         spd_per_var += seen_acc_var;
                         local.yaw = point_direction(x,y,target_x_var,target_y_var);
                         local.pitch = point_direction_3d_scr(x,y,z,target_x_var,target_y_var,target_z_var);
+                        if move_type_var == 1 { local.yaw += 90; }
                         set_motion_3d_scr(spd_base_var*spd_per_var,true,local.yaw,true,local.pitch,true);
                         set_alarm_scr(9,irandom_range(seen_delay_min_var,seen_delay_max_var));
                         break;
@@ -551,7 +586,10 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user3,"
     event_inherited();
-    event_user(15);
+    // Tp
+    if tp_alarm_var > 0
+    { event_perform(ev_alarm,10); }
+    else { event_user(15); }
     // OG only, gets stopped in place briefly
     if attack_stun_var
     {
