@@ -18,6 +18,7 @@ object_event_add
     dmg_alarm_var = 30;
     w_var = 10;
     h_var = 20;
+    spr_spd_var = 1;
     // Assets
         // Search for existing assets to save memory
     with object_index
@@ -389,11 +390,16 @@ object_event_add
 // Animation
 object_event_add
 (argument0,ev_other,ev_user1,"
-    x_off_var = random_range(-0.5,0.5);
-    y_off_var = random_range(-0.5,0.5);
-    z_off_var = random_range(-0.5,0.5);
-    if upside_var { z_off_var += 24.5; }
-    visible = frac_chance_scr(vis_num_var,vis_den_var);
+    spr_prog_var -= spr_spd_var*global.delta_time_var;
+    if spr_prog_var <= 0
+    {
+        spr_prog_var = 1;
+        x_off_var = random_range(-0.5,0.5);
+        y_off_var = random_range(-0.5,0.5);
+        z_off_var = random_range(-0.5,0.5);
+        if upside_var { z_off_var += 24.5; }
+        visible = frac_chance_scr(vis_num_var,vis_den_var);
+    }
 ");
 // Calculate Seen
 object_event_add

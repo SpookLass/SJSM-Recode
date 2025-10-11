@@ -467,12 +467,18 @@ object_event_add
 (argument0,ev_other,ev_user1,"
     if anim_type_var == 4
     {
-        if !irandom(2) { spr_id_var = irandom(sprite_get_number(spr_var)-1); }
-        x_off_var = random_range(-anim_off_var,anim_off_var);
-        y_off_var = random_range(-anim_off_var,anim_off_var);
-        z_off_var = z_off_base_var+random_range(-anim_off_var,anim_off_var);
-        visible = frac_chance_scr(vis_num_var,vis_den_var);
-        tex_var = sprite_get_texture(spr_var,floor(spr_id_var));
+        spr_prog_var -= spr_spd_var*global.delta_time_var;
+        if spr_prog_var <= 0
+        {
+            spr_prog_var = 1;
+            if !irandom(2) { spr_id_var = irandom(sprite_get_number(spr_var)-1); }
+            x_off_var = random_range(-anim_off_var,anim_off_var);
+            y_off_var = random_range(-anim_off_var,anim_off_var);
+            z_off_var = z_off_base_var+random_range(-anim_off_var,anim_off_var);
+            visible = frac_chance_scr(vis_num_var,vis_den_var);
+            tex_var = sprite_get_texture(spr_var,floor(spr_id_var));
+            if face_dist_var > 0 { face_var = !irandom(1); }
+        }
     }
     event_inherited();
 ");
@@ -664,7 +670,7 @@ object_event_add
         local.tex = tex_var;
         if face_dist_var > 0
         {
-            if !irandom(1) && point_distance_3d_scr(x,y,z,global.cam_x_var[view_current],global.cam_y_var[view_current],global.cam_z_var[view_current]) <= face_dist_var
+            if face_var && point_distance_3d_scr(x,y,z,global.cam_x_var[view_current],global.cam_y_var[view_current],global.cam_z_var[view_current]) <= face_dist_var
             { tex_var = tex_02_var; }
         }
         d3d_set_fog(true,c_black,0,256);

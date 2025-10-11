@@ -28,6 +28,7 @@ object_event_add
     w_var = 10;
     h_var = 10;
     dupe_var = dupe_canon_const;
+    spr_spd_var = 1;
     // Assets
         // Search for existing assets to save memory
     with object_index
@@ -277,17 +278,23 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user1,"
     z_off_time_var = (z_off_time_var+global.delta_time_var) mod z_off_rate_var;
-    z_off_var = sin(2*z_off_time_var*pi/z_off_rate_var)*z_off_mult_var/2;
-    if !irandom(3)
+    z_off_var = (sin(2*z_off_time_var*pi/z_off_rate_var)*z_off_mult_var/2)+z_off_rand_var;
+    spr_prog_var -= spr_spd_var*global.delta_time_var;
+    if spr_prog_var <= 0
     {
-        x_off_var = random_range(-3,3);
-        y_off_var = random_range(-3,3);
-        z_off_var += random_range(-3,3);
-    }
-    else
-    {
-        x_off_var = 0;
-        y_off_var = 0;
+        spr_prog_var = 1;
+        if !irandom(3)
+        {
+            x_off_var = random_range(-3,3);
+            y_off_var = random_range(-3,3);
+            z_off_rand_var = random_range(-3,3);
+        }
+        else
+        {
+            x_off_var = 0;
+            y_off_var = 0;
+            z_off_rand_var = 0;
+        }
     }
 ");
 // Draw Event

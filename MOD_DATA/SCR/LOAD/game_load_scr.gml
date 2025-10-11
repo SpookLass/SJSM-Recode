@@ -63,6 +63,10 @@ if file_exists(working_directory+"\Karamari_Hospital\KH.exe")
 {
     ds_list_add(global.mon_list,bodybag_obj);
 }
+if file_exists(working_directory+"\The_Doll_House\SDH.exe")
+{
+    ds_list_add(global.mon_list,clown_obj);
+}
 global.mon_spawn_list = ds_list_create();
 ds_list_clear(global.mon_spawn_list);
 global.mon_curr_list = ds_list_create();

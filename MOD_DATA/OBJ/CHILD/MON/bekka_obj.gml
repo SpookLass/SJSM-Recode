@@ -18,7 +18,7 @@ object_event_add
     name_var = 'Bekka';
     type_var = 0;
     spd_base_var = 0.75;
-    spr_spd_var = 1/6;
+    spr_spd_var = 1;
     dur_var = irandom_range(17,25);
     delay_var = 256/3; // 85.r3
     dmg_var = 30;
@@ -150,7 +150,6 @@ object_event_add
     alarm_arr[9,2] = '';
     alarm_arr[10,2] = '';
     // Bools
-    do_anim_var = -1;
     do_snd_var = -1;
     if bright_var { color_var = -1; }
 ");
@@ -170,6 +169,7 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_room_start,"
     event_inherited();
+    visible = true;
     // Effects
     if !instance_exists(kh_overlay_obj)
     {
@@ -247,6 +247,16 @@ object_event_add
     { image_alpha = 1; }
     else { image_alpha = random_range(alpha_min_var,alpha_max_var); }
     set_alarm_scr(8,irandom_range(rand_alarm_min_var,rand_alarm_max_var)); // Self
+");
+// Animation
+object_event_add
+(argument0,ev_other,ev_user1,"
+    spr_prog_var -= spr_spd_var*global.delta_time_var;
+    if spr_prog_var <= 0
+    {
+        spr_prog_var = 1;
+        visible = frac_chance_scr(1,draw_chance_var);
+    }
 ");
 // Step Event
 object_event_add
@@ -382,7 +392,7 @@ object_event_add
 // Draw
 object_event_add
 (argument0,ev_draw,0,"
-    if !frac_chance_scr(1,draw_chance_var) && state_var != 1
+    if state_var != 1
     {
         if bright_var && global.fog_dark_var 
         {

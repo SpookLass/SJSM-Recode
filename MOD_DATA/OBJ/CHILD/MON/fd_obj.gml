@@ -12,7 +12,6 @@ object_event_add
     name_var = 'Food Demon';
     type_var = 0;
     spd_base_var = 0.8;
-    spr_spd_var = 0.25;
     dur_var = irandom_range(15,25);
     delay_var = 120;
     dmg_var = 45;
@@ -57,6 +56,9 @@ object_event_add
     seen_pitch_var = 5.856;
     seen_dist_var = 120;
     seen_spd_mult_var = 2;
+    spr_spd_seen_var = 1;
+    spr_spd_base_var = 0.25;
+    spr_spd_var = spr_spd_base_var;
     // Door vanish
     hide_alarm_min_var = 160;
     hide_alarm_max_var = 320;
@@ -123,6 +125,8 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_room_start,"
     event_inherited();
+    spr_spd_var = spr_spd_base_var;
+    anim_type_var = 0;
     if global.color_var < 2 && instance_exists(color_par_obj)
     { flame_color_var = color_par_obj.light_color_var; }
     else { flame_color_var = c_white; }
@@ -152,7 +156,13 @@ object_event_add
     if seen_var == 1 && target_dist_var < seen_dist_var
     {
         spd_mult_var = seen_spd_mult_var;
-        spr_id_var = irandom(sprite_get_number(spr_var)-1);
+        spr_spd_var = spr_spd_seen_var;
+        anim_type_var = 3;
+    }
+    else if anim_type_var == 3
+    {
+        spr_spd_var = spr_spd_base_var;
+        anim_type_var = 0;
     }
     event_inherited();
 ");

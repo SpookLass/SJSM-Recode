@@ -12,6 +12,7 @@ object_event_add
     name_var = 'Body Bag';
     type_var = 1;
     spd_base_var = 0.8;
+    spr_spd_var = 1;
     tex_var = background_get_texture(bg_var);
     dur_var = irandom_range(10,15);
     delay_var = 180;
@@ -169,11 +170,16 @@ object_event_add
 // Animation
 object_event_add
 (argument0,ev_other,ev_user1,"
-    if spin_var { mdl_yaw_var += spin_rate_var; }
+    if spin_var { mdl_yaw_var += spin_rate_var*global.delta_time_var; }
     else { mdl_yaw_var = yaw_var+180; }
-    x_off_var = random_range(-shake_var,shake_var);
-    y_off_var = random_range(-shake_var,shake_var);
-    z_off_var = random_range(-shake_var,shake_var);
+    spr_prog_var -= spr_spd_var*global.delta_time_var;
+    if spr_prog_var <= 0
+    {
+        spr_prog_var = 1;
+        x_off_var = random_range(-shake_var,shake_var);
+        y_off_var = random_range(-shake_var,shake_var);
+        z_off_var = random_range(-shake_var,shake_var);
+    }
 ");
 // Attack Success
 object_event_add

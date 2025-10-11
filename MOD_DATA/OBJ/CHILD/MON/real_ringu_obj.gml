@@ -71,6 +71,7 @@ object_event_add
     // Random
     rand_alarm_var = 3;
     rand_chance_var = 2;
+    spr_spd_02_var = 1;
     // Behavior
     if global.real_ringu_type_var == -1 { local.type = irandom(3); }
     else { local.type = global.real_ringu_type_var; }
@@ -187,9 +188,22 @@ object_event_add
     {
         if seen_var == 1 { spd_base_var = state_seen_spd_var[state_var]; }
         else { spd_base_var = state_spd_var[state_var]; }
-        if state_var == 1 { image_alpha = random_range(0.2,1); }
     }
     event_inherited();
+");
+// Animation
+object_event_add
+(argument0,ev_other,ev_user1,"
+    event_inherited();
+    if state_var == 1
+    {
+        spr_prog_var -= spr_spd_02_var*global.delta_time_var;
+        if spr_prog_var <= 0
+        {
+            spr_prog_var = 1;
+            image_alpha = random_range(0.2,1);
+        }
+    }
 ");
 // Random anim
 object_event_add
