@@ -124,10 +124,12 @@ object_event_add
             {
                 if string(name_var) != '0'
                 {
+                    local.str = name_var
+                    if global.mon_hud_var == 2 { local.str += ': '+string(dur_var); }
                     draw_set_color(make_color_rgb(30,0,50));
-                    draw_text_transformed(other.left_var-other.shadow_off_var,local.offset+other.shadow_off_var,name_var,other.scale_med_var,other.scale_med_var,0);
+                    draw_text_transformed(other.left_var-other.shadow_off_var,local.offset+other.shadow_off_var,local.str,other.scale_med_var,other.scale_med_var,0);
                     draw_set_color(c_yellow);
-                    draw_text_transformed(other.left_var,local.offset,name_var,other.scale_med_var,other.scale_med_var,0);
+                    draw_text_transformed(other.left_var,local.offset,local.str,other.scale_med_var,other.scale_med_var,0);
                     local.offset += other.scale_var*36;
                 }
             }

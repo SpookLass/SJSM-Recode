@@ -9,7 +9,36 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,1,"
-    name_var = 'Patient';
+    ini_open(global.lang_var);
+    switch global.name_var
+    {
+        case name_og_const:
+        {
+            name_var = ini_read_string('NAME','patient_og','NAME_patient_og');
+            break;
+        }
+        case name_hd_const:
+        {
+            name_var = ini_read_string('NAME','patient_hd','NAME_patient_hd');
+            break;
+        }
+        case name_fanon_const:
+        {
+            name_var = ini_read_string('NAME','patient_fanon','NAME_patient_fanon');
+            break;
+        }
+        case name_num_og_const:
+        {
+            name_var = ini_read_string('NAME','patient_num_og','NAME_patient_num_og');
+            break;
+        }
+        case name_num_hd_const:
+        {
+            name_var = ini_read_string('NAME','patient_num_hd','NAME_patient_num_hd');
+            break;
+        }
+    }
+    ini_close();
     type_var = 0;
     spd_base_var = 2;
     dur_var = irandom_range(20,33);
@@ -57,9 +86,7 @@ object_event_add
     // Hang
     hang_var = true;
     seen_yaw_01_var = 3.434; // 3.r43
-    seen_pitch_01_var = 30; // 3.r43
     seen_yaw_02_var = 30;
-    seen_pitch_02_var = 30;
     // Overlay
     overlay_var = true;
     overlay_color_var = c_white;
@@ -71,6 +98,8 @@ object_event_add
     {
         case 0:
         {
+            seen_pitch_01_var = 3.434;
+            seen_pitch_02_var = 30;
             tp_sight_var = true;
             draw_pos_var = true;
             weird_var = true;

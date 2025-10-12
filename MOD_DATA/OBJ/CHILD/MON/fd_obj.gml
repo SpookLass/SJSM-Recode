@@ -9,7 +9,24 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,1,"
-    name_var = 'Food Demon';
+    ini_open(global.lang_var);
+    switch global.name_var
+    {
+        case name_og_const:
+        case name_hd_const:
+        case name_fanon_const:
+        {
+            name_var = ini_read_string('NAME','fd','NAME_fd');
+            break;
+        }
+        case name_num_og_const:
+        case name_num_hd_const:
+        {
+            name_var = ini_read_string('NAME','fd_num','NAME_fd_num');
+            break;
+        }
+    }
+    ini_close();
     type_var = 0;
     spd_base_var = 0.8;
     dur_var = irandom_range(15,25);
@@ -53,7 +70,6 @@ object_event_add
     // Seen
     do_seen_var = true;
     seen_yaw_var = 5.856;
-    seen_pitch_var = 5.856;
     seen_dist_var = 120;
     seen_spd_mult_var = 2;
     spr_spd_seen_var = 1;
@@ -88,6 +104,7 @@ object_event_add
     {
         case 0:
         {
+            seen_pitch_var = 5.856;
             flame_var = true;
             dmg_var = 30;
             break;

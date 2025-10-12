@@ -9,7 +9,24 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,1,"
-    name_var = 'Gel';
+    ini_open(global.lang_var);
+    switch global.name_var
+    {
+        case name_og_const:
+        case name_hd_const:
+        case name_fanon_const:
+        {
+            name_var = ini_read_string('NAME','gel','NAME_gel');
+            break;
+        }
+        case name_num_og_const:
+        case name_num_hd_const:
+        {
+            name_var = ini_read_string('NAME','gel_num','NAME_gel_num');
+            break;
+        }
+    }
+    ini_close();
     type_var = 0;
     spd_base_var = 0.6;
     spr_spd_var = 1/6;

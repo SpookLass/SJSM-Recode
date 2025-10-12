@@ -9,7 +9,28 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,1,"
-    name_var = 'Ghost Cow';
+    ini_open(global.lang_var);
+    switch global.name_var
+    {
+        case name_og_const:
+        case name_hd_const:
+        case name_fanon_const:
+        {
+            name_var = ini_read_string('NAME','gc','NAME_gc');
+            break;
+        }
+        case name_num_og_const:
+        {
+            name_var = ini_read_string('NAME','gc_num_og','NAME_gc_num_og');
+            break;
+        }
+        case name_num_hd_const:
+        {
+            name_var = ini_read_string('NAME','gc_num_hd','NAME_gc_num_hd');
+            break;
+        }
+    }
+    ini_close();
     type_var = 0;
     spd_base_var = 0.7;
     dur_var = irandom_range(15,30);
@@ -70,7 +91,6 @@ object_event_add
     seen_delay_min_var = 3;
     seen_delay_max_var = 15;
     seen_yaw_var = 30;
-    seen_pitch_var = 30;
     seen_flash_var = true;
     seen_spd_var = true;
     // Effects
@@ -87,6 +107,7 @@ object_event_add
     {
         case 0: // Recode
         {
+            seen_pitch_var = 30;
             move_type_var = 0;
             eff_old_var = false;
             break;

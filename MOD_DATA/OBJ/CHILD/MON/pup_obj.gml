@@ -16,7 +16,32 @@ state_var
 // Create Event
 object_event_add
 (argument0,ev_create,1,"
-    name_var = 'Puppet';
+    ini_open(global.lang_var);
+    switch global.name_var
+    {
+        case name_og_const:
+        {
+            name_var = ini_read_string('NAME','pup_og','NAME_pup_og');
+            break;
+        }
+        case name_hd_const:
+        {
+            name_var = ini_read_string('NAME','pup_hd','NAME_pup_hd');
+            break;
+        }
+        case name_fanon_const:
+        {
+            name_var = ini_read_string('NAME','pup_fanon','NAME_pup_fanon');
+            break;
+        }
+        case name_num_og_const:
+        case name_num_hd_const:
+        {
+            name_var = ini_read_string('NAME','pup_num','NAME_pup_num');
+            break;
+        }
+    }
+    ini_close();
     type_var = 0;
     spd_base_var = 5;
     spr_spd_var = 1/30;
@@ -59,7 +84,6 @@ object_event_add
     // Seen
     do_seen_var = true;
     seen_yaw_var = 30;
-    seen_pitch_var = 30;
     seen_delay_var = 60;
     seen_start_delay_var = 0;
     // TP
@@ -78,6 +102,7 @@ object_event_add
             type_var = 2;
             delay_var = 90;
             dmg_var = 30;
+            seen_pitch_var = 30;
             break;
         }
         case 3: // Hellgate

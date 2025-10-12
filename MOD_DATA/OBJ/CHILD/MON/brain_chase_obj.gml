@@ -9,7 +9,24 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,1,"
-    name_var = 'Brain';
+    ini_open(global.lang_var);
+    switch global.name_var
+    {
+        case name_og_const:
+        case name_hd_const:
+        case name_num_og_const:
+        case name_fanon_const:
+        {
+            name_var = ini_read_string('NAME','brain','NAME_brain');
+            break;
+        }
+        case name_num_hd_const:
+        {
+            name_var = ini_read_string('NAME','brain_num','NAME_brain_num');
+            break;
+        }
+    }
+    ini_close();
     type_var = 0;
     spd_base_var = 0.8;
     tex_var = brain_bg_tex;
@@ -29,6 +46,7 @@ object_event_add
         dmg_var = 99999;
         target_spd_mult_var = 0.3;
     }
+    else { eff_var = true; }
     do_snd_var = -1;
     // sine
     z_off_time_var=0;
@@ -36,6 +54,24 @@ object_event_add
     z_off_rate_var=480;
     z_off_base_var=5;
     z_off_var = z_off_base_var;
+");
+// Destroy
+object_event_add
+(argument0,ev_destroy,0,"
+    event_inherited();
+    with brain_eff_obj { if par_var == other.id { instance_destroy(); }}
+");
+// Room Start
+object_event_add
+(argument0,ev_other,ev_room_start,"
+    event_inherited();
+    if !instance_exists(brain_eff_obj)
+    {
+        with instance_create(0,0,brain_eff_obj)
+        {
+            par_var = other.id;
+        }
+    }
 ");
 // Step Event
 object_event_add

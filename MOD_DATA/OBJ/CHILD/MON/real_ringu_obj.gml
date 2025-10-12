@@ -9,7 +9,27 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,1,"
-    name_var = 'Real Ringu';
+    ini_open(global.lang_var);
+    switch global.name_var
+    {
+        case name_og_const:
+        case name_num_og_const:
+        {
+            name_var = ini_read_string('NAME','real_ringu_og','NAME_real_ringu_og');
+            break;
+        }
+        case name_hd_const:
+        case name_fanon_const:
+        {
+            name_var = ini_read_string('NAME','real_ringu_hd','NAME_real_ringu_hd');
+            break;
+        }
+        case name_num_hd_const:
+        {
+            name_var = ini_read_string('NAME','real_ringu_num','NAME_real_ringu_num');
+            break;
+        }
+    }
     type_var = 0;
     dur_var = 25;
     delay_var = 173;
@@ -49,7 +69,6 @@ object_event_add
     // Seen
     do_seen_var = true;
     seen_yaw_var = 30;
-    seen_pitch_var = 30;
     // State
     state_var = 0;
     state_chance_num_var = 175;
@@ -79,6 +98,7 @@ object_event_add
     {
         case 0: // Mod
         {
+            seen_pitch_var = 30;
             dmg_var = 40;
             eff_fog_var = true;
             eff_alarm_var = 256;
@@ -94,7 +114,6 @@ object_event_add
         case 3: // Old HD
         {
             seen_yaw_var = 60;
-            seen_pitch_var = 60;
             eff_fog_var = true;
             eff_fog_start_var = 560/3; // 186.r6
             eff_fog_end_var = 1120/3; // 373.r3
@@ -113,7 +132,6 @@ object_event_add
         case 2: // HD
         {
             seen_yaw_var = 60;
-            seen_pitch_var = 60;
             eff_fog_var = true;
             eff_fog_start_var = 560/3; // 186.r6
             eff_fog_end_var = 1120/3; // 373.r3

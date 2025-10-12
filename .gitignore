@@ -13,3 +13,4 @@ screenshot*.png
 # Except these ones
 !save_ex.ini
 !settings.ini
+!en_us.ini

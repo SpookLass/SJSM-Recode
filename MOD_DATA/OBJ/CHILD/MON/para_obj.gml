@@ -29,7 +29,24 @@ warn_dist_var: Distance to warn at
 // Create Event Begin
 object_event_add
 (argument0,ev_create,1,"
-    name_var = 'Parasite';
+    ini_open(global.lang_var);
+    switch global.name_var
+    {
+        case name_og_const:
+        case name_hd_const:
+        case name_fanon_const:
+        {
+            name_var = ini_read_string('NAME','para','NAME_para');
+            break;
+        }
+        case name_num_og_const:
+        case name_num_hd_const:
+        {
+            name_var = ini_read_string('NAME','para_num','NAME_para_num');
+            break;
+        }
+    }
+    ini_close();
     type_var = 1;
     dur_var = irandom_range(10,20);
     hurt_dur_var = 1;

@@ -15,6 +15,24 @@ state_var
 // Create Event
 object_event_add
 (argument0,ev_create,1,"
+    ini_open(global.lang_var);
+    switch global.name_var
+    {
+        case name_og_const:
+        case name_hd_const:
+        case name_num_og_const:
+        case name_fanon_const:
+        {
+            name_var = ini_read_string('NAME','bekka','NAME_bekka');
+            break;
+        }
+        case name_num_hd_const:
+        {
+            name_var = ini_read_string('NAME','bekka_num','NAME_bekka_num');
+            break;
+        }
+    }
+    ini_close();
     name_var = 'Bekka';
     type_var = 0;
     spd_base_var = 0.75;

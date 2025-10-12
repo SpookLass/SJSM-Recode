@@ -565,17 +565,29 @@ object_event_add
 (argument0,ev_other,ev_user5,"
     if instance_exists(target_var)
     {
-        target_eye_yaw_var = target_var.eye_yaw_var;
-        target_eye_pitch_var = target_var.eye_pitch_var;
         /*
         local.len = (sin(degtorad(90-seen_yaw_var))*w_var)/(2*sin(degtorad(seen_yaw_var)));
         local.xtmp = target_x_var-lengthdir_x(local.len,target_eye_yaw_var);
         local.ytmp = target_y_var-lengthdir_y(local.len,target_eye_yaw_var);
         */
-        local.yaw = abs(deg_diff_scr(point_direction(target_x_var,target_y_var,x,y),target_eye_yaw_var));
-        local.pitch = abs(deg_diff_scr(point_direction_3d_scr(target_x_var,target_y_var,target_z_var,x,y,z),target_eye_pitch_var));
-        if local.yaw <= seen_yaw_var && local.pitch <= seen_pitch_var
-        { seen_var = true; seen_per_var = 1-max(local.yaw/seen_yaw_var,local.pitch/seen_pitch_var); }
+        if seen_yaw_var > 0
+        {
+            target_eye_yaw_var = target_var.eye_yaw_var;
+            local.yaw = abs(deg_diff_scr(point_direction(target_x_var,target_y_var,x,y),target_eye_yaw_var));
+            local.radius = global.coll_var[2]/2; local.angle = radtodeg(arctan2(local.radius,target_dist_var));
+            local.seenyaw = (local.yaw <= seen_yaw_var+local.angle); local.yawper = (local.yaw+local.angle)/(seen_yaw_var+local.angle);
+        }
+        else { local.seenyaw = true; local.yawper = 0; }
+        if seen_pitch_var > 0
+        {
+            local.height = global.coll_var[1]/2; local.angle = radtodeg(arctan2(local.height,target_dist_var));
+            target_eye_pitch_var = target_var.eye_pitch_var;
+            local.pitch = abs(deg_diff_scr(point_direction_3d_scr(target_x_var,target_y_var,target_z_var,x,y,z+local.height),target_eye_pitch_var));
+            local.seenpitch = (local.pitch <= seen_pitch_var+local.angle); local.pitchper = (local.pitch+local.angle)/(seen_pitch_var+local.angle);
+        }
+        else { local.seenpitch = true; local.pitchper = 0; }
+        if local.seenyaw && local.seenpitch
+        { seen_var = true; seen_per_var = 1-max(local.yawper,local.pitchper); }
         else { seen_var = false; seen_per_var = 0; }
     }
     else { seen_var = -1; seen_per_var = -1; }

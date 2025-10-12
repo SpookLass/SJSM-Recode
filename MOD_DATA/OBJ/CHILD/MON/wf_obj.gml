@@ -9,7 +9,24 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,1,"
-    name_var = 'White Face';
+    ini_open(global.lang_var);
+    switch global.name_var
+    {
+        case name_og_const:
+        case name_hd_const:
+        case name_fanon_const:
+        case name_num_og_const:
+        {
+            name_var = ini_read_string('NAME','wf','NAME_wf');
+            break;
+        }
+        case name_num_hd_const:
+        {
+            name_var = ini_read_string('NAME','wf_num','NAME_wf_num');
+            break;
+        }
+    }
+    ini_close();
     type_var = 0;
     spr_spd_var = 1;
     dur_var = 40;
@@ -71,7 +88,6 @@ object_event_add
     seen_delay_min_var = 3;
     seen_delay_max_var = 15;
     seen_yaw_var = 30;
-    seen_pitch_var = 30;
     seen_flash_var = true;
     seen_dist_var = -1;
     // Teleport
@@ -98,7 +114,7 @@ object_event_add
     spd_base_real_var = 0.9;
     spd_delay_min_var = 1;
     spd_delay_max_var = 6;
-    seen_acc_var = 100/6; // GOOD GOD
+    seen_acc_var = 100/6; // 16.r6 GOOD GOD
     seen_spd_var = true;
     seen_spd_chance_var = 3;
     acc_var = 4/3375; // 0.001r185 :sob:
@@ -136,6 +152,7 @@ object_event_add
             exit_spawn_var = false;
             tp_spawn_var = 1;
             tp_type_var = 1; // Check sight
+            seen_pitch_var = 30;
             // Draw
             w_var = 12;
             h_var = 16.4;
@@ -171,7 +188,6 @@ object_event_add
             // Seen
             seen_acc_var = 2/45; // 0.0r4
             seen_yaw_var = 60;
-            seen_pitch_var = 60;
             seen_spd_chance_var = 4;
             // Animation
             anim_off_var = 16/15;

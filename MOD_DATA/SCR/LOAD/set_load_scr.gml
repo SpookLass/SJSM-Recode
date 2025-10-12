@@ -24,6 +24,8 @@ global.shake_type_var = ini_read_real("MAIN","shake_type",shake_modern_const);
 global.mem_save_var = ini_read_real("MAIN","mem_save",mem_save_const);
 global.res_w_var = ini_read_real("MAIN","res_w",res_w_const);
 global.res_h_var = ini_read_real("MAIN","res_h",res_h_const);
+global.name_var = ini_read_real("MAIN","name",name_hd_const);
+global.lang_var = ini_read_string("MAIN","lang","en_us.ini");
 // Hud
 global.mon_hud_var = ini_read_real("MAIN","mon_hud",mon_hud_const);
 global.rm_hud_var = ini_read_real("MAIN","rm_hud",rm_hud_const);

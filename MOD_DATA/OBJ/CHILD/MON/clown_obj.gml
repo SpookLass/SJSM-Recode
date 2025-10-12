@@ -9,7 +9,9 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,1,"
-    name_var = 'Clown';
+    ini_open(global.lang_var);
+    name_var = ini_read_string('NAME','clown','NAME_clown');
+    ini_close();
     type_var = 1;
     spd_base_var = 1; // Technically 1.r3 in DH due to a bug
     spr_spd_var = 1;
@@ -22,7 +24,6 @@ object_event_add
     do_attack_var = -1;
     do_seen_var = true;
     seen_yaw_var = 30;
-    seen_pitch_var = 30;
     // Assets
         // Search for existing assets to save memory
     with object_index
@@ -55,6 +56,11 @@ object_event_add
     else { local.type = global.clown_type_var; }
     switch local.type
     {
+        case 0:
+        {
+            seen_pitch_var = 30;
+            break;
+        }
         case 2: // HD
         {
             spd_base_var = 8/9; // 0.r8
@@ -68,6 +74,7 @@ object_event_add
             do_attack_var = true;
             dmg_var = 30;
             dmg_alarm_var = 120;
+            seen_pitch_var = 30;
             break;
         }
     }

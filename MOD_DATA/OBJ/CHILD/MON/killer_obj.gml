@@ -9,7 +9,28 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,1,"
-    name_var = 'Killer';
+    ini_open(global.lang_var);
+    switch global.name_var
+    {
+        case name_og_const:
+        {
+            name_var = ini_read_string('NAME','killer_og','NAME_killer_og');
+            break;
+        }
+        case name_hd_const:
+        case name_fanon_const:
+        {
+            name_var = ini_read_string('NAME','killer_hd','NAME_killer_hd');
+            break;
+        }
+        case name_num_og_const:
+        case name_num_hd_const:
+        {
+            name_var = ini_read_string('NAME','killer_num','NAME_killer_num');
+            break;
+        }
+    }
+    ini_close();
     type_var = 1;
     spd_base_var = 1/3; // 0.r3
     dur_var = irandom_range(15,30);
