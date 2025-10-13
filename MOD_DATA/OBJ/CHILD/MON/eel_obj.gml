@@ -14,26 +14,22 @@ object_event_add
     {
         case name_og_const:
         case name_hd_const:
-        {
-            name_var = ini_read_string('NAME','fish','NAME_fish');
-            break;
-        }
         case name_fanon_const:
         {
-            name_var = ini_read_string('NAME','fish_fanon','NAME_fish_fanon');
+            name_var = ini_read_string('NAME','eel','NAME_eel');
             break;
         }
         case name_num_og_const:
         case name_num_hd_const:
         {
-            name_var = ini_read_string('NAME','fish_num','NAME_fish_num');
+            name_var = ini_read_string('NAME','eel_num','NAME_eel_num');
             break;
         }
     }
     ini_close();
     type_var = 1;
     spd_base_var = 17/30; // 0.5r6
-    spr_var = sprite_add(main_directory_const+'\SPR\MON\fish_spr.png',9,false,false,0,0);
+    spr_var = sprite_add(main_directory_const+'\SPR\MON\eel_spr.png',9,false,false,0,0);
     spr_spd_var = 1/3; // 0.r3
     dur_var = irandom_range(15,25);
     delay_var = 72;
@@ -58,8 +54,8 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
-        spr_var = sprite_add(main_directory_const+'\SPR\MON\fish_spr.png',9,false,false,0,0);
-        bod_spr_var = sprite_add(main_directory_const+'\SPR\MON\fish_bod_spr.png',4,false,false,0,0);
+        spr_var = sprite_add(main_directory_const+'\SPR\MON\eel_spr.png',9,false,false,0,0);
+        bod_spr_var = sprite_add(main_directory_const+'\SPR\MON\eel_bod_spr.png',4,false,false,0,0);
     }
     // Sounds
     snd_len_var = 4;
@@ -98,8 +94,8 @@ object_event_add
     bod_h_var[5] = 10;
     bod_z_off_var[5] = 2;
     // Behavior
-    if global.fish_type_var == -1 { local.type = irandom(3); }
-    else { local.type = global.fish_type_var; }
+    if global.eel_type_var == -1 { local.type = irandom(3); }
+    else { local.type = global.eel_type_var; }
     switch local.type
     {
         case 0: // Recode
@@ -135,7 +131,7 @@ object_event_add
     local.follow = id;
     for (local.i=0; local.i<bod_len_var; local.i+=1;)
     {
-        with instance_create(0,0,fish_bod_obj)
+        with instance_create(0,0,eel_bod_obj)
         {
             bod_id_var = local.i;
             par_var = other.id;
@@ -155,7 +151,7 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_room_start,"
     event_inherited();
-    with fish_bod_obj
+    with eel_bod_obj
     {
         if par_var == other.id
         {
@@ -170,7 +166,7 @@ object_event_add
 object_event_add
 (argument0,ev_alarm,0,"
     event_inherited();
-    with fish_bod_obj
+    with eel_bod_obj
     {
         if par_var == other.id
         { on_var = true; }
@@ -185,7 +181,7 @@ object_event_add
         sprite_delete(spr_var);
         sprite_delete(bod_spr_var);
     }
-    with fish_bod_obj
+    with eel_bod_obj
     {
         if par_var == other.id
         { instance_destroy(); }

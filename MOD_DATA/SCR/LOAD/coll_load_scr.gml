@@ -35,12 +35,29 @@ local.radius = global.mon_coll[2]/2;
 global.mon_coll[0] = p3dc_begin_mdl_scr();
 p3dc_add_cylinder_scr(-local.radius,-local.radius,global.mon_coll[1]-0.01,local.radius,local.radius,0,true,8);
 p3dc_end_mdl_scr();
+// Wide Monster
+global.mon_wide_coll[1] = 18;
+global.mon_wide_coll[2] = 16;
+local.radius = global.mon_wide_coll[2]/2;
+global.mon_wide_coll[0] = p3dc_begin_mdl_scr();
+p3dc_add_cylinder_scr(-local.radius,-local.radius,global.mon_wide_coll[1]-0.01,local.radius,local.radius,0,true,8);
+p3dc_end_mdl_scr();
 // Slime Trigger
 global.slime_trig_coll[1] = 4;
 global.slime_trig_coll[2] = 24;
 local.radius = global.slime_trig_coll[2]/2;
 global.slime_trig_coll[0] = p3dc_begin_mdl_scr();
 p3dc_add_cylinder_scr(-local.radius,-local.radius,global.slime_trig_coll[1],local.radius,local.radius,0,true,8);
+p3dc_end_mdl_scr();
+// Axe
+global.axe_coll[1] = 12;
+global.axe_coll[2] = 48; // 
+global.axe_coll[3] = 12;
+local.radius_z = global.axe_coll[1]/2;
+local.radius_x = global.axe_coll[2]/2;
+local.radius_y = global.axe_coll[3]/2;
+global.axe_coll[0] = p3dc_begin_mdl_scr();
+p3dc_add_cylinder_scr(-local.radius_x,-local.radius_y,-local.radius_z,local.radius_x,local.radius_y,local.radius_z,true,8);
 p3dc_end_mdl_scr();
 // Grids
 global.rm_size_var = 1280;

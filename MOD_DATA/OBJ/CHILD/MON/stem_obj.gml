@@ -80,6 +80,10 @@ object_event_add
         d3d_model_load(mdl_01_var,main_directory_const+'\MDL\MON\stem_01_mdl.gmmod');
         d3d_model_load(mdl_02_var,main_directory_const+'\MDL\MON\stem_02_mdl.gmmod');
     }
+    // Collision
+    coll_var[0] = global.mon_wide_coll[0];
+    coll_var[1] = global.mon_wide_coll[1];
+    coll_var[2] = global.mon_wide_coll[2];
     // Movement
     move_type_var = 1;
     stop_dist_var = 4; // OG only
@@ -99,6 +103,10 @@ object_event_add
     // Teleport
     tp_dist_min_var = 32;
     tp_dist_max_var = 300;
+    // Hurt
+    do_hurt_var = true;
+    hurt_alarm_var = 30;
+    hurt_tp_var = false;
     // Model
     tex_var = background_get_texture(bg_var);
     mdl_var = mdl_01_var;
@@ -128,6 +136,7 @@ object_event_add
         { boost_var = true; }
         case 0: // Mod
         {
+            hurt_tp_var = true;
             tp_dist_min_var = 64;
             move_type_var = 0;
             break;
@@ -252,9 +261,9 @@ object_event_add
                     }
                     else { local.spd = autobrake_spd_var; }
                 }
-                acc_scr(global.delta_time_var,acc_var*acc_mult_var,frick_var*acc_mult_var,local.yaw,local.spd);
+                acc_3d_scr(global.delta_time_var,acc_var*acc_mult_var,frick_var*acc_mult_var,local.yaw,local.pitch,local.spd);
             }
-            else { set_motion_scr(local.spd,true,local.yaw,true); }
+            else { set_motion_3d_scr(local.spd,true,local.yaw,true,local.pitch,true); }
             mdl_yaw_var = yaw_var;
             mdl_pitch_var = pitch_var;
             break;
@@ -325,6 +334,12 @@ object_event_add
             z_off_rand_var = 0;
         }
     }
+");
+// Stem
+object_event_add
+(argument0,ev_other,ev_user4,"
+    event_inherited();
+    if hurt_tp_var { event_user(15); }
 ");
 // Draw Event
 object_event_add

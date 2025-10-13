@@ -22,6 +22,7 @@ object_event_add
         {
             with prop_par_obj { if color_var { image_blend = other.image_blend; }}
             with echidna_obj { if color_var { image_blend = other.image_blend; }}
+            with axe_obj { if color_var { image_blend = other.image_blend; }}
             with light_floor_par_obj { if color_var { image_blend = other.light_color_var; }}
             with light_wall_par_obj { if color_var { image_blend = other.light_color_var; }}
             with light_torch_obj { if color_var { image_blend = other.light_color_var; }}

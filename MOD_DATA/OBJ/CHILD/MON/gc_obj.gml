@@ -40,6 +40,10 @@ object_event_add
     w_var = 10;
     h_var = 20;
     spr_spd_var = 1;
+    // Collision
+    coll_var[0] = global.mon_wide_coll[0];
+    coll_var[1] = global.mon_wide_coll[1];
+    coll_var[2] = global.mon_wide_coll[2];
     // Assets
         // Search for existing assets to save memory
     with object_index

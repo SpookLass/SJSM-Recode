@@ -240,7 +240,6 @@ object_event_add
 // Room End
 object_event_add
 (argument0,ev_other,ev_room_end,"
-    global.make_sure_this_is_gone_please = bg_var;
     background_delete(bg_var);
     background_delete(cloud_bg_var);
     background_delete(light_01_bg_var);
@@ -341,8 +340,11 @@ object_event_add
                     // Play
                     case 0:
                     {
-                        instance_create(0,0,global.player_obj);
-                        instance_create(0,0,global.hud_obj);
+                        local.player = instance_create(0,0,global.player_obj);
+                        local.hud = instance_create(0,0,global.hud_obj);
+                        local.hud.par_var = local.player;
+                        local.axe = instance_create(0,0,global.axe_obj);
+                        local.axe.par_var = local.player;
                         caster_loop(choose(amb_01_snd,amb_02_snd,amb_03_snd,amb_04_snd,amb_05_snd,amb_06_snd,amb_07_snd,amb_08_snd,amb_09_snd,amb_10_snd,amb_11_snd,amb_12_snd),global.vol_var,1);
                         global.zone_num_var = irandom(global.zone_len_var+global.story_zone_len_var-1);
                         if global.zone_num_var >= global.zone_len_var

@@ -15,14 +15,14 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_room_start,"
     scale_min_var = 0.125;
-    if view_wview[cam_id_var] >= view_hview[cam_id_var]
-    { scale_var = view_hview[cam_id_var]/720; }
-    else { scale_var = view_wview[cam_id_var]/1280; }
+    if view_wview[par_var.cam_id_var] >= view_hview[par_var.cam_id_var]
+    { scale_var = view_hview[par_var.cam_id_var]/720; }
+    else { scale_var = view_wview[par_var.cam_id_var]/1280; }
     scale_var = max(scale_var,scale_min_var);
     left_var = 54*scale_var;
-    right_var = view_wview[cam_id_var]-(54*scale_var);
+    right_var = view_wview[par_var.cam_id_var]-(54*scale_var);
     top_var = 54*scale_var;
-    bottom_var = view_hview[cam_id_var]-(54*scale_var);
+    bottom_var = view_hview[par_var.cam_id_var]-(54*scale_var);
     shadow_off_var = 2*scale_var;
     scale_big_var = max(0.75*scale_var,scale_min_var);
     scale_med_var = max(0.5*scale_var,scale_min_var);
@@ -31,7 +31,7 @@ object_event_add
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,"
-    if view_current == cam_id_var 
+    if view_current == par_var.cam_id_var 
     {
         d3d_set_projection_ortho
         (
@@ -43,11 +43,11 @@ object_event_add
         );
         d3d_set_hidden(false);
         // Taker!
-        if player_obj.alarm_arr[3,0] < player_obj.alarm_arr[3,1]/2
+        if par_var.alarm_arr[3,0] < par_var.alarm_arr[3,1]/2
         {
             draw_set_blend_mode(bm_subtract);
-            if player_obj.alarm_arr[3,0] <= 0 { local.value = 255; }
-            else { local.value = lerp_scr(255,0,median(0,1,2*player_obj.alarm_arr[3,0]/player_obj.alarm_arr[3,1])); }
+            if par_var.alarm_arr[3,0] <= 0 { local.value = 255; }
+            else { local.value = lerp_scr(255,0,median(0,1,2*par_var.alarm_arr[3,0]/par_var.alarm_arr[3,1])); }
             draw_set_color(make_color_rgb(0,local.value,local.value));
             draw_rectangle
             (
@@ -64,9 +64,9 @@ object_event_add
         if global.bar_hud_var != bar_hud_old_const
         {
             draw_background_ext(bar_bg,91*scale_var,57*scale_var,scale_var,scale_var,0,c_white,1);
-            local.width = background_get_width(bar_stam_bg)*player_obj.stam_var/player_obj.stam_max_var;
+            local.width = background_get_width(bar_stam_bg)*par_var.stam_var/par_var.stam_max_var;
             draw_background_part_ext(bar_stam_bg,background_get_width(bar_stam_bg)-local.width,0,local.width,20,99*scale_var,96*scale_var,scale_var,scale_var,c_white,1);
-            local.width = background_get_width(bar_hp_bg)*player_obj.hp_var/player_obj.hp_max_var;
+            local.width = background_get_width(bar_hp_bg)*par_var.hp_var/par_var.hp_max_var;
             draw_background_part_ext(bar_hp_bg,background_get_width(bar_hp_bg)-local.width,0,local.width,27,99*scale_var,62*scale_var,scale_var,scale_var,c_white,1);
             draw_background_ext(bar_icon_bg,37*scale_var,34*scale_var,scale_var,scale_var,0,c_white,1);
         }
@@ -85,8 +85,8 @@ object_event_add
             case bar_hud_num_const:
             {
                 //draw_set_blend_mode_ext(bm_inv_dest_color,bm_zero);
-                local.hp_str = 'HP: '+string(round(player_obj.hp_var))+' / '+string(player_obj.hp_max_var);
-                local.stam_str = 'STAM: '+string(round(player_obj.stam_var))+' / '+string(player_obj.stam_max_var);
+                local.hp_str = 'HP: '+string(round(par_var.hp_var))+' / '+string(par_var.hp_max_var);
+                local.stam_str = 'STAM: '+string(round(par_var.stam_var))+' / '+string(par_var.stam_max_var);
                 draw_set_valign(fa_middle);
                 draw_set_color(make_color_rgb(100,0,0));
                 for (local.i=0; local.i<4; local.i+=1;)
@@ -104,8 +104,8 @@ object_event_add
             }
             case bar_hud_old_const:
             {
-                local.hp_str = 'HEALTH: '+string(round(player_obj.hp_var));
-                local.stam_str = 'STAMINA: '+string(round(player_obj.stam_var));
+                local.hp_str = 'HEALTH: '+string(round(par_var.hp_var));
+                local.stam_str = 'STAMINA: '+string(round(par_var.stam_var));
                 draw_set_color(make_color_rgb(30,0,50));
                 draw_text_transformed(left_var-shadow_off_var,top_var+shadow_off_var,local.hp_str,scale_big_var,scale_big_var,0);
                 draw_text_transformed(left_var-shadow_off_var,(top_var*2)+shadow_off_var,local.stam_str,scale_big_var,scale_big_var,0);
@@ -161,26 +161,26 @@ object_event_add
         {
             local.str = '
 Position
-    X: '+string(player_obj.x)+'
-    Y: '+string(player_obj.y)+'
-    Z: '+string(player_obj.z)+'
+    X: '+string(par_var.x)+'
+    Y: '+string(par_var.y)+'
+    Z: '+string(par_var.z)+'
 Movement
-    X speed: '+string(player_obj.x_spd_var)+'
-    Y speed: '+string(player_obj.y_spd_var)+'
-    Z speed: '+string(player_obj.z_spd_var)+'
-    Yaw: '+string(player_obj.yaw_var)+'
-    Pitch: '+string(player_obj.pitch_var)+'
-    On Floor: '+string(player_obj.on_floor_var)+'
+    X speed: '+string(par_var.x_spd_var)+'
+    Y speed: '+string(par_var.y_spd_var)+'
+    Z speed: '+string(par_var.z_spd_var)+'
+    Yaw: '+string(par_var.yaw_var)+'
+    Pitch: '+string(par_var.pitch_var)+'
+    On Floor: '+string(par_var.on_floor_var)+'
 Looking
-    Eye Yaw: '+string(player_obj.eye_yaw_var)+'
-    Eye Pitch: '+string(player_obj.eye_pitch_var)+'
+    Eye Yaw: '+string(par_var.eye_yaw_var)+'
+    Eye Pitch: '+string(par_var.eye_pitch_var)+'
 Input
     Forward: '+string(global.forward_input_var)+'
     Backward: '+string(global.backward_input_var)+'
     Left: '+string(global.strafe_left_input_var)+'
     Right: '+string(global.strafe_right_input_var)+'
 Taker
-    Taker: '+string(player_obj.alarm_arr[3,0])+' / '+string(player_obj.alarm_arr[3,1])
+    Taker: '+string(par_var.alarm_arr[3,0])+' / '+string(par_var.alarm_arr[3,1])
             draw_text_transformed(0,128*scale_var,local.str,scale_small_var,scale_small_var,0);
             d3d_set_hidden(true);
         }
