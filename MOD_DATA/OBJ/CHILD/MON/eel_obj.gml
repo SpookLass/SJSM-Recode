@@ -39,6 +39,9 @@ object_event_add
     h_var = 12;
     z_off_var = 4;
     dupe_var = dupe_canon_const;
+    // Scream
+    do_hurt_var = true;
+    violence_var = 3;
     // Assets
         // Search for existing assets to save memory
     with object_index

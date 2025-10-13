@@ -33,9 +33,6 @@ object_event_add
     delay_var = 120;
     dmg_var = 45;
     dmg_alarm_var = 120;
-    w_var = 15;
-    h_var = 19.3;
-    z_off_var = 7;
     // Assets
         // Search for existing assets to save memory
     with object_index
@@ -67,6 +64,22 @@ object_event_add
     snd_alarm_min_var = 80;
     snd_alarm_max_var = 240;
     snd_dist_var = 600;
+    // Axe
+    do_hurt_var = true;
+    hurt_alarm_var = 60;
+    hurt_spd_var = 5;
+    hurt_tp_var = true;
+    tp_dist_min_var = 128;
+    tp_dist_max_var = 512;
+    violence_var = 3;
+    w_base_var = 15;
+    h_base_var = 19.3;
+    z_off_base_var = 7;
+    flame_z_off_base_var = 19.2;
+    w_var = w_base_var;
+    h_var = h_var;
+    z_off_var = z_off_var;
+    flame_z_off_var = flame_z_off_base_var;
     // Seen
     do_seen_var = true;
     seen_yaw_var = 5.856;
@@ -107,6 +120,10 @@ object_event_add
             seen_pitch_var = 5.856;
             flame_var = true;
             dmg_var = 30;
+            hurt_spd_var = 1;
+            hurt_alarm_var = 18;
+            hurt_tp_var = 2;
+            stun_var = true;
             break;
         }
         case 2: // HD
@@ -120,6 +137,11 @@ object_event_add
             delay_min_var = 90;
             delay_max_var = 180;
             dmg_alarm_var = 180;
+            violence_var = 2;
+            hurt_spd_var = 1;
+            hurt_alarm_var = 18;
+            hurt_tp_var = 2;
+            stun_var = true;
             break;
         }
     }
@@ -142,6 +164,10 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_room_start,"
     event_inherited();
+    w_var = w_base_var;
+    h_var = h_base_var;
+    z_off_var = z_off_base_var;
+    flame_z_off_var = flame_z_off_base_var;
     spr_spd_var = spr_spd_base_var;
     anim_type_var = 0;
     if global.color_var < 2 && instance_exists(color_par_obj)
@@ -170,9 +196,21 @@ object_event_add
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,"
+    if hurt_var
+    {
+        if hurt_spd_var != 1 { spd_mult_var *= hurt_spd_var; }
+        if alarm_arr[3,0] > 0 && hurt_tp_var == 2
+        {
+            local.per = alarm_arr[3,0]/alarm_arr[3,1]
+            w_var = lerp_scr(0,w_base_var,local.per);
+            h_var = lerp_scr(h_base_var*20,h_base_var,local.per);
+            z_off_var = lerp_scr(z_off_base_var-(h_base_var*9.5),z_off_base_var,local.per)
+            flame_z_off_var = lerp_scr(flame_z_off_base_var*20,flame_z_off_base_var,local.per)
+        }
+    }
     if seen_var == 1 && target_dist_var < seen_dist_var
     {
-        spd_mult_var = seen_spd_mult_var;
+        spd_mult_var *= seen_spd_mult_var;
         spr_spd_var = spr_spd_seen_var;
         anim_type_var = 3;
     }
@@ -238,6 +276,34 @@ object_event_add
     event_inherited();
     flame_spr_id_var = (flame_spr_id_var+(flame_spr_spd_var*global.delta_time_var)) mod sprite_get_number(flame_spr_var);
     flame_tex_var = sprite_get_texture(flame_spr_var,floor(flame_spr_id_var))
+");
+// Hurt
+object_event_add
+(argument0,ev_other,ev_user4,"
+    event_inherited();
+    if hurt_tp_var == 1 { event_user(15); }
+");
+// Hurt Alarm
+object_event_add
+(argument0,ev_alarm,3,"
+    if hurt_tp_var == 2
+    {
+        w_var = w_base_var;
+        h_var = h_base_var;
+        z_off_var = z_off_base_var;
+        flame_z_off_var = flame_z_off_base_var;
+        event_user(15);
+    }
+    event_inherited();
+");
+// Teleport
+object_event_add
+(argument0,ev_other,ev_user15,"
+    // Originally anywhere in the room (0-1280 x 0-720 y)
+    local.dir = random(360);
+    local.dist = random_range(tp_dist_min_var,tp_dist_max_var);
+    x = target_x_var+lengthdir_x(local.dist,local.dir);
+    y = target_y_var+lengthdir_y(local.dist,local.dir);
 ");
 // Draw
 object_event_add

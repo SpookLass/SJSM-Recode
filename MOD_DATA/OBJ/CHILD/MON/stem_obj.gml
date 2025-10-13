@@ -104,9 +104,9 @@ object_event_add
     tp_dist_min_var = 32;
     tp_dist_max_var = 300;
     // Hurt
-    do_hurt_var = true;
+    /*do_hurt_var = true;
     hurt_alarm_var = 30;
-    hurt_tp_var = false;
+    hurt_tp_var = false;*/
     // Model
     tex_var = background_get_texture(bg_var);
     mdl_var = mdl_01_var;
@@ -136,6 +136,8 @@ object_event_add
         { boost_var = true; }
         case 0: // Mod
         {
+            do_hurt_var = true;
+            hurt_alarm_var = 30;
             hurt_tp_var = true;
             tp_dist_min_var = 64;
             move_type_var = 0;
@@ -162,6 +164,10 @@ object_event_add
         }
         case 2: // HD
         {
+            do_hurt_var = 2;
+            hurt_dur_var = 1;
+            hurt_eff_var = true;
+            hurt_tp_var = true;
             dmg_var = 20;
             dmg_alarm_var = 60;
             do_acc_var = false;
@@ -335,11 +341,20 @@ object_event_add
         }
     }
 ");
-// Stem
+// Hurt
 object_event_add
 (argument0,ev_other,ev_user4,"
     event_inherited();
     if hurt_tp_var { event_user(15); }
+    if hurt_eff_var
+    {
+        with instance_create(0,0,flash_eff_obj)
+        {
+            image_blend = c_red;
+            cam_id_var = hurt_target_var.cam_id_var;
+            set_alarm_scr(0,18);
+        }
+    }
 ");
 // Draw Event
 object_event_add
@@ -362,5 +377,5 @@ object_event_add
     local.dir = random(360);
     local.dist = random_range(tp_dist_min_var,tp_dist_max_var);
     x = target_x_var+lengthdir_x(local.dist,local.dir);
-    y = target_y_var+lengthdir_x(local.dist,local.dir);
+    y = target_y_var+lengthdir_y(local.dist,local.dir);
 ");

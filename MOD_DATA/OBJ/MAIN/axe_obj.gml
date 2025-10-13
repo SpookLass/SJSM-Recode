@@ -66,21 +66,37 @@ object_event_add
                 if par_var.do_stam_var
                 { par_var.stam_var -= stam_end_var; }
                 local.player = par_var;
-                local.xtmp = par_var.cam_x_var;
-                local.ytmp = par_var.cam_y_var;
-                local.ztmp = par_var.cam_z_var;
-                local.xvel = lengthdir_x(lengthdir_x(1,par_var.cam_yaw_var),par_var.cam_pitch_var);
-                local.yvel = lengthdir_x(lengthdir_y(1,par_var.cam_yaw_var),par_var.cam_pitch_var);
-                local.zvel = -lengthdir_y(1,par_var.cam_pitch_var);
-                local.ydir = degtorad(par_var.cam_pitch_var);
-                local.zdir = degtorad(par_var.cam_yaw_var);
+                local.xtmp = par_var.x;
+                local.ytmp = par_var.y;
+                local.ztmp = par_var.z+par_var.eye_h_var;
+                local.dist = (coll_var[2]-coll_var[3])/2;
+                local.xvel = lengthdir_x(lengthdir_x(local.dist,par_var.eye_yaw_var),par_var.eye_pitch_var);
+                local.yvel = lengthdir_x(lengthdir_y(local.dist,par_var.eye_yaw_var),par_var.eye_pitch_var);
+                local.zvel = -lengthdir_y(local.dist,par_var.eye_pitch_var);
+                local.ydir = degtorad(par_var.eye_pitch_var);
+                local.zdir = degtorad(par_var.eye_yaw_var);
+                p3dc_set_modrot_scr(0,local.ydir,local.zdir);
                 with enemy_par_obj
                 {
-                    if on_var && do_hurt_var && !hurt_var
+                    if on_var && do_hurt_var && !hurt_var && !enter_var
                     {
                         // p3dc_ray_scr(coll_var[0],x,y,z,local.xtmp,local.ytmp,local.ztmp,local.xvel,local.yvel,local.zvel)
-                        p3dc_set_modrot_scr(0,local.ydir,local.zdir);
-                        if p3dc_check_rot_scr(coll_var[0],x,y,z,other.coll_var[0],local.xtmp,local.ytmp,local.ztmp,0,0,0,0,local.ydir,local.zdir)
+                        if p3dc_check_rot_scr(coll_var[0],x,y,z,other.coll_var[0],local.xtmp+local.xvel,local.ytmp+local.yvel,local.ztmp+local.zvel,0,0,0,0,local.ydir,local.zdir)
+                        {
+                            hurt_weapon_var = other.id;
+                            hurt_target_var = local.player;
+                            hurt_power_var = other.power_var;
+                            hurt_type_var = other.type_var;
+                            event_user(4);
+                        }
+                    }
+                }
+                with prop_par_obj
+                {
+                    if weapon_var
+                    {
+                        // p3dc_ray_scr(coll_var[0],x,y,z,local.xtmp,local.ytmp,local.ztmp,local.xvel,local.yvel,local.zvel)
+                        if p3dc_check_rot_scr(coll_var[0],x,y,z,other.coll_var[0],local.xtmp+local.xvel,local.ytmp+local.yvel,local.ztmp+local.zvel,0,0,0,0,local.ydir,local.zdir)
                         {
                             hurt_weapon_var = other.id;
                             hurt_target_var = local.player;

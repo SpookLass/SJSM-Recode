@@ -509,8 +509,8 @@ room_instance_add(argument0,1024,368,wall_big_vert_obj);
 room_instance_add(argument0,1024,400,wall_big_vert_obj);
 room_instance_add(argument0,1024,432,wall_big_vert_obj);
 // Torches
-room_instance_add(argument0,64,272,torch_east_obj);
-room_instance_add(argument0,64,336,torch_east_obj);
+room_instance_add(argument0,64,272,torch_west_obj);
+room_instance_add(argument0,64,336,torch_west_obj);
 room_instance_add(argument0,496,128,torch_north_obj);
 room_instance_add(argument0,560,128,torch_north_obj);
 // Props

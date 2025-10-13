@@ -49,8 +49,8 @@ object_event_add
     ini_close();
     type_var = 1;
     dur_var = irandom_range(10,20);
+    do_hurt_var = 2;
     hurt_dur_var = 1;
-    hurt_alarm_var = 1;
     delay_calc_var = true;
     do_warn_var = false;
     warn_var = false;
@@ -148,18 +148,22 @@ object_event_add
             state_spd_var[0] = 0.8;
             state_chance_var[0] = 1;
             state_spr_spd_var[0] = 1/6;
+            state_dmg_var[0] = 30;
             state_spd_var[1] = 0.5;
             state_chance_var[1] = 1;
+            state_dmg_var[1] = 30;
             state_spd_var[2] = 1.6; // 1.8
             state_chance_var[2] = 1;
             state_acc_var[2] = true;
             state_dmg_alarm_var[2] = 60;
+            state_dmg_var[2] = 20;
             state_rm_var = true;
             state_dur_var = 8;
             state_eff_min_var = 6;
             state_eff_max_var = 6;
             acc_var = 0.16;
             frick_var = acc_var;
+            do_hurt_var = 1;
             // Autobrake
             autobrake_var = true;
             autobrake_spd_var = 1;
@@ -424,7 +428,7 @@ object_event_add
     {
         event_inherited();
         state_var = 2;
-        event_perform(ev_other,ev_user15);
+        event_user(15);
     }
 ");
 // Change state
@@ -441,5 +445,4 @@ object_event_add
     set_alarm_scr(3,state_delay_var[state_var]);
     spr_id_var = 0;
     tex_var = sprite_get_texture(spr_var,0);
-    hurt_var = true;
 ");

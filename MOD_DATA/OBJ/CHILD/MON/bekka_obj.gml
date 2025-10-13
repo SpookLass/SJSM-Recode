@@ -385,7 +385,7 @@ object_event_add
     if instance_exists(target_var)
     {
         x = target_x_var+lengthdir_x(lengthdir_x(scare_dist_var,target_var.eye_yaw_var),target_var.eye_pitch_var);
-        y = target_y_var+lengthdir_x(lengthdir_y(scare_dist_var,target_var.eye_yaw_var),target_var.eye_pitch_var);
+        y = target_y_var+lengthdir_y(lengthdir_y(scare_dist_var,target_var.eye_yaw_var),target_var.eye_pitch_var);
         z = target_z_var-lengthdir_y(scare_dist_var,target_var.eye_pitch_var);
     }
     with instance_create(0,0,fade_eff_obj)

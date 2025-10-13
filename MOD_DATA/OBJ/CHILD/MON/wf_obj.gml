@@ -132,19 +132,24 @@ object_event_add
     attack_stun_var = true;
     exit_spawn_var = true;
     // Behavior
-    if global.wf_type_var == -1 { local.type = irandom(7); }
+    if global.wf_type_var == -1 { local.type = irandom(8); }
     else { local.type = global.wf_type_var; }
     switch local.type
     {
-        case 6:
+        
+        case 7: // Maya's Idea
         {
-            // Maya's Idea
             move_type_var = 1;
             local.maya = true;
         }
-        case 0: // Recode
+        case 6: // Lass' Idea
         {
             if !local.maya { seen_dist_var = 160; }
+        }
+        case 0: // Recode
+        {
+            seen_yaw_var = 5.856;
+            seen_pitch_var = 5.856;
             dur_var = 30;
             start_var = -1;
             web_start_var = 15;
@@ -152,7 +157,6 @@ object_event_add
             exit_spawn_var = false;
             tp_spawn_var = 1;
             tp_type_var = 1; // Check sight
-            seen_pitch_var = 30;
             // Draw
             w_var = 12;
             h_var = 16.4;
@@ -258,7 +262,7 @@ object_event_add
             tex_var = sprite_get_texture(spr_var,0);
             break;
         }
-        case 7: // Imscared Recode
+        case 8: // Imscared Recode
         {
             // Recode
             dur_var = 30;
@@ -659,7 +663,7 @@ object_event_add
             else { local.dir = random(360); }
             local.dist = random_range(tp_dist_min_var,tp_dist_max_var);
             x = target_x_var+lengthdir_x(local.dist,local.dir);
-            y = target_y_var+lengthdir_x(local.dist,local.dir);
+            y = target_y_var+lengthdir_y(local.dist,local.dir);
             break;
         }
         case 2:

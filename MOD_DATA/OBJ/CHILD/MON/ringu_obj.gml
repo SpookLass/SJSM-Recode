@@ -53,6 +53,9 @@ object_event_add
     {
         spr_var = sprite_add(vanilla_directory_const+'\TEX\sprites\MS3_01_spr.png',6,false,false,0,0);
     }
+    // Laugh
+    do_hurt_var = true;
+    violence_var = 3;
     // Sounds
     snd_len_var = 4;
     snd_arr[0,0] = caster_load(main_directory_const+'\SND\MON\ringu_01_snd.ogg');

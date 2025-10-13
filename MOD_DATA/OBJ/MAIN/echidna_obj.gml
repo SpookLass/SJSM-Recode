@@ -542,13 +542,13 @@ object_event_add
     if do_hurt_var == 2 || (do_hurt_var == 3 && hurt_type_var == 1)
     && dur_var > 0 && hurt_dur_var > 0
     {
-        dur_var -= hurt_dur_var*hurt_power_var;
+        dur_var -= hurt_dur_var;
         if dur_var <= 0 { instance_destroy(); exit; }
     }
     // You can set this to higher values to have custom stun behavior
     if stun_var == 1 
     {
-        set_motion_scr(0,true,yaw_var,false);
+        set_motion_3d_scr(0,true);
         move_var = false;
         anim_var = false;
         attack_var = false;
@@ -565,24 +565,20 @@ object_event_add
 (argument0,ev_other,ev_user5,"
     if instance_exists(target_var)
     {
-        /*
-        local.len = (sin(degtorad(90-seen_yaw_var))*w_var)/(2*sin(degtorad(seen_yaw_var)));
-        local.xtmp = target_x_var-lengthdir_x(local.len,target_eye_yaw_var);
-        local.ytmp = target_y_var-lengthdir_y(local.len,target_eye_yaw_var);
-        */
         if seen_yaw_var > 0
         {
             target_eye_yaw_var = target_var.eye_yaw_var;
             local.yaw = abs(deg_diff_scr(point_direction(target_x_var,target_y_var,x,y),target_eye_yaw_var));
-            local.radius = global.coll_var[2]/2; local.angle = radtodeg(arctan2(local.radius,target_dist_var));
+            local.radius = coll_var[2]/2; local.angle = radtodeg(arctan2(local.radius,target_dist_var));
             local.seenyaw = (local.yaw <= seen_yaw_var+local.angle); local.yawper = (local.yaw+local.angle)/(seen_yaw_var+local.angle);
         }
         else { local.seenyaw = true; local.yawper = 0; }
         if seen_pitch_var > 0
         {
-            local.height = global.coll_var[1]/2; local.angle = radtodeg(arctan2(local.height,target_dist_var));
+            local.height = coll_var[1]/2; local.angle = radtodeg(arctan2(local.height,target_dist_var));
             target_eye_pitch_var = target_var.eye_pitch_var;
-            local.pitch = abs(deg_diff_scr(point_direction_3d_scr(target_x_var,target_y_var,target_z_var,x,y,z+local.height),target_eye_pitch_var));
+            target_eye_h_var = target_var.eye_h_var;
+            local.pitch = abs(deg_diff_scr(point_direction_3d_scr(target_x_var,target_y_var,target_z_var+target_eye_h_var,x,y,z+local.height),target_eye_pitch_var));
             local.seenpitch = (local.pitch <= seen_pitch_var+local.angle); local.pitchper = (local.pitch+local.angle)/(seen_pitch_var+local.angle);
         }
         else { local.seenpitch = true; local.pitchper = 0; }

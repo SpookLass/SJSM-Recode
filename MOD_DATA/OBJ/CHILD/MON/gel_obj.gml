@@ -70,9 +70,13 @@ object_event_add
     snd_alarm_max_var = 240;
     snd_dist_var = 600;
     // Coward
+    do_hurt_var = 2;
     coward_var = true;
     coward_spd_var = 4/3; // 1.r3x
-    hurt_alarm_scr = 180;
+    hurt_alarm_var = 180;
+    hurt_dur_var = 3;
+    violence_var = 3;
+    hurt_eff_var = false;
     // Slime
     slime_var = true;
     do_slime_spawn_var = false;
@@ -106,6 +110,9 @@ object_event_add
             // Bools
             coward_var = false;
             do_slime_spawn_var = true;
+            stun_var = true;
+            hurt_alarm_var = slime_alarm_var;
+            do_hurt_var = 1;
             break;
         }
         case 2: // HD
@@ -132,6 +139,11 @@ object_event_add
             // Bools
             coward_var = false;
             do_slime_spawn_var = true;
+            stun_var = true;
+            hurt_alarm_var = slime_alarm_var;
+            do_hurt_var = 1;
+            violence_var = 2;
+            hurt_eff_var = true;
             break;
         }
     }
@@ -159,6 +171,7 @@ object_event_add
             {
                 with instance_create(global.mark_arr[local.i,0],global.mark_arr[local.i,1],slime_obj)
                 {
+                    par_var = other.id;
                     tex_var = other.slime_tex_var;
                     image_alpha = other.slime_alpha_var;
                     w_var = other.slime_w_base_var;
@@ -179,6 +192,7 @@ object_event_add
         sprite_delete(spr_var);
         background_delete(slime_bg_var);
     }
+    with slime_obj { if par_var = other.id { instance_destroy(); }}
 ");
 // Slime alarm
 object_event_add
@@ -235,6 +249,25 @@ object_event_add
     }
     if coward_var && hurt_var { spd_mult_var *= -coward_spd_var; }
     event_inherited();
+");
+// Hurt
+object_event_add
+(argument0,ev_other,ev_user4,"
+    event_inherited();
+    if do_slime_spawn_var && stun_var
+    {
+        slime_spawn_var = 1;
+        set_alarm_scr(8,hurt_alarm_var);
+        if hurt_eff_var
+        {
+            with instance_create(0,0,flash_eff_obj)
+            {
+                image_blend = c_red;
+                cam_id_var = hurt_target_var.cam_id_var;
+                set_alarm_scr(0,18);
+            }
+        }
+    }
 ");
 // Draw
 object_event_add

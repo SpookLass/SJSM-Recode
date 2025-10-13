@@ -111,7 +111,8 @@ object_event_add
     {
         case 0: // Recode
         {
-            seen_pitch_var = 30;
+            seen_yaw_var = 5.856;
+            seen_pitch_var = 5.856;
             move_type_var = 0;
             eff_old_var = false;
             break;

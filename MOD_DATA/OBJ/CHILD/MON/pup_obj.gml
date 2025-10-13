@@ -246,7 +246,7 @@ object_event_add
     else { local.dir = random(360); }
     local.dist = random_range(tp_dist_min_var,tp_dist_max_var);
     x = target_x_var+lengthdir_x(local.dist,local.dir);
-    y = target_y_var+lengthdir_x(local.dist,local.dir);
+    y = target_y_var+lengthdir_y(local.dist,local.dir);
 ");
 // Going down
 object_event_add

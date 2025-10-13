@@ -38,7 +38,7 @@ object_event_add
     h_var = 10;
     spd_var = 8/15;
     target_spd_mult_var = 0.6;
-    if global.mode_var == 0 || global.behavior_type_var == 2
+    if global.mode_var == 0 || global.main_type_var == 2
     {
         spd_var = 8/9;
         // Originally 8/15
@@ -65,7 +65,7 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_room_start,"
     event_inherited();
-    if !instance_exists(brain_eff_obj)
+    if eff_var && !instance_exists(brain_eff_obj)
     {
         with instance_create(0,0,brain_eff_obj)
         {
