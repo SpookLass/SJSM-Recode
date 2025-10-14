@@ -75,7 +75,6 @@ object_event_add
         if state_var <= 0
         { set_alarm_scr(0,delay_var); }
     }
-    
 ");
 // Alarm
 object_event_add

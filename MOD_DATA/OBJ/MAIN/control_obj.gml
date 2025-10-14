@@ -307,6 +307,13 @@ object_event_add
     room_caption = 'Spookys Jump Scare Mansion - Project Recode | Room: '+string(global.rm_count_var)+' ('+global.rm_name_var+') | TPS: '+string(fps)+local.fps_str;
     global.draw_time_var = 0;
 ")
+// Room End
+object_event_add
+(argument0,ev_other,ev_room_end,"
+    event_inherited();
+    spawn_reset_scr();
+    mark_reset_scr();
+");
 // Room Start
 object_event_add
 (argument0,ev_other,ev_room_start,"

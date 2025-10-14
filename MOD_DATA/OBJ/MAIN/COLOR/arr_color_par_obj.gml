@@ -21,6 +21,7 @@ object_event_add
         // Recode
         if global.color_var != 1
         {
+            with axe_obj { if color_var { image_blend = other.image_blend; }}
             with prop_par_obj { if color_var { image_blend = other.color_arr[mod_scr(floor(x/other.dist_var),other.color_len_var)]; }}
             with echidna_obj { if color_var { image_blend = other.color_arr[mod_scr(floor(x/other.dist_var),other.color_len_var)]; }}
             with light_floor_par_obj { if color_var { image_blend = light_color_scr(other.color_arr[mod_scr(floor(x/other.dist_var),other.color_len_var)]); }}

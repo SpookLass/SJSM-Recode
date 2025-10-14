@@ -268,6 +268,34 @@ object_event_add
     }
     if type_var == 1 && enter_var
     {
+        // Shake all players
+        with player_obj
+        {
+            local.player = id;
+            switch (global.shake_type_var)
+            {
+                case shake_classic_const:
+                {
+                    with instance_create(0,0,shake_eff_obj)
+                    {
+                        player_var = local.player;
+                        mult_var = local.player.shake_pos_base_var;
+                        type_var = 0; // Constant
+                    }
+                    break;
+                }
+                case shake_modern_const:
+                {
+                    with instance_create(0,0,shake_eff_obj)
+                    {
+                        player_var = local.player;
+                        mult_var = local.player.shake_angle_base_var*median(0,1,(point_distance_3d_scr(x,y,z,other.x,other.y,other.z)-32)/600);
+                        type_var = 1; // Fade out
+                    }
+                    break;
+                }
+            }
+        }
         with door_entrance_obj
         {
             if !open_var && point_distance_3d_scr(x,y,z,other.x,other.y,other.z) < 32

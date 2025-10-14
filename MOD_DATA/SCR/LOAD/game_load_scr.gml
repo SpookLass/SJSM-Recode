@@ -58,6 +58,7 @@ ds_list_add(global.mon_list,pup_obj);
 ds_list_add(global.mon_list,real_ringu_obj);
 ds_list_add(global.mon_list,ringu_obj);
 ds_list_add(global.mon_list,stem_obj);
+ds_list_add(global.mon_list,tiri_obj);
 ds_list_add(global.mon_list,wf_obj);
 if file_exists(working_directory+"\Karamari_Hospital\KH.exe")
 {

@@ -41,10 +41,10 @@ object_event_add
     start_stam_base_var = 1;
     start_stam_rate_var = 1/19; // 19 frames
     // Acceleration
-    friction_var = 0.5;
+    frick_var = 0.5;
     acc_var = 0.8;
-    friction_mult_var = 1;
-    air_friction_mult_var = 0.1;
+    frick_mult_var = 1;
+    air_frick_mult_var = 0.1;
     // Crouch
     crouch_var = false;
     can_crouch_var = global.can_crouch_var;
@@ -370,15 +370,15 @@ object_event_add
         spd_mult_var = 1;
         // Calculate friction and acceleration
         local.acc = acc_var;
-        local.frick = friction_var;
+        local.frick = frick_var;
         if !on_floor_var
         {
-            local.acc *= air_friction_mult_var;
-            local.frick *= air_friction_mult_var;
+            local.acc *= air_frick_mult_var;
+            local.frick *= air_frick_mult_var;
         }
-        local.acc *= friction_mult_var;
-        local.frick *= friction_mult_var;
-        friction_mult_var = 1;
+        local.acc *= frick_mult_var;
+        local.frick *= frick_mult_var;
+        frick_mult_var = 1;
         // Accelerate and move
         if !do_coll_var || grav_var <= 0
         {
@@ -510,6 +510,7 @@ object_event_add
         cam_z_var = z+eye_h_var+bob_var+breath_var;
         cam_yaw_var = eye_yaw_var;
         cam_pitch_var = eye_pitch_var;
+        cam_roll_var = 0;
         // Camera shake
         if shake_var > 0
         {
@@ -526,6 +527,7 @@ object_event_add
                 {
                     cam_yaw_var += random_range(-shake_var,shake_var);
                     cam_pitch_var += random_range(-shake_var,shake_var);
+                    cam_roll_var += random_range(-shake_var,shake_var);
                     break;
                 }
             }
@@ -535,7 +537,7 @@ object_event_add
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,"
-    draw_cam_scr(cam_id_var,cam_x_var,cam_y_var,cam_z_var,cam_yaw_var,cam_pitch_var,current_fov_var);
+    draw_cam_scr(cam_id_var,cam_x_var,cam_y_var,cam_z_var,cam_yaw_var,cam_pitch_var,current_fov_var,cam_roll_var);
 ");
 // Hurt
 object_event_add
@@ -573,6 +575,6 @@ object_event_add
     if global.dmg_shake_var
     {
         eye_yaw_var = mod_scr(eye_yaw_var+random_range(-20,20),360);
-        eye_pitch_var += median(-89.9,89.9,eye_pitch_var+random_range(-20,20));
+        eye_pitch_var = median(-89.9,89.9,eye_pitch_var+random_range(-20,20));
     }
 ");

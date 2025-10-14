@@ -54,7 +54,7 @@ object_event_add
     if !local.loaded
     {
         spr_var = sprite_add(vanilla_directory_const+'\TEX\sprites\MS_01_spr.png',5,false,false,0,0);
-        slime_bg_var = background_add(main_directory_const+'\BG\MON\gel_puddle_bg.png',false,false);
+        slime_bg_var = background_add(main_directory_const+'\BG\MON\gel_slime_bg.png',false,false);
     }
     // Sounds
     snd_len_var = 4;
@@ -167,7 +167,7 @@ object_event_add
     {
         for (local.i=0; local.i<global.mark_len_var; local.i+=1;)
         {
-            if !irandom(2)
+            if !global.mark_arr[local.i,3] && !irandom(2)
             {
                 with instance_create(global.mark_arr[local.i,0],global.mark_arr[local.i,1],slime_obj)
                 {
@@ -179,6 +179,7 @@ object_event_add
                     spd_mult_var = other.slime_spd_mult_var;
                     z = global.mark_arr[local.i,2];
                 }
+                global.mark_arr[local.i,3] = true;
             }
         }
     }
