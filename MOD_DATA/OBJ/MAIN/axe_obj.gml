@@ -130,7 +130,7 @@ object_event_add
     else { scale_var = view_wview[par_var.cam_id_var]/1280; }
     w_var = sprite_get_width(spr_raise_var)*2*scale_var;
     h_var = sprite_get_height(spr_raise_var)*2*scale_var;
-    right_var = view_wview[par_var.cam_id_var]-w_var;
+    right_var = max((view_wview[par_var.cam_id_var]/2)-(w_var/3),view_wview[par_var.cam_id_var]-w_var);
     bottom_var = view_hview[par_var.cam_id_var]-h_var;
     if !color_var || !instance_exists(color_par_obj) || global.color_var == 1
     { image_blend = c_white; }

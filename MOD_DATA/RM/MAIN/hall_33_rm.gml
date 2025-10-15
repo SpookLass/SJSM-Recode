@@ -6,7 +6,9 @@ room_set_code
 (
     argument0,"
     // Name
-    global.rm_name_var = 'Hall 33'
+    ini_open(global.lang_var);
+    global.rm_name_var = ini_read_string('ROOM','hall','ROOM_hall')+' 33';
+    ini_close();
     // Spawn
     global.spawn_len_var = 2;
     global.spawn_arr[0,0] = 112;

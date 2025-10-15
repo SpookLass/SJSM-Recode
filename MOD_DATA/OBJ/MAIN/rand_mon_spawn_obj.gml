@@ -35,7 +35,8 @@ object_event_add
                         if local.index != -1 { ds_list_delete(global.mon_spawn_list,local.index); }
                     }
                 }
-                while ds_list_size(global.mon_spawn_list) > 0 && local.mons < get_mult_scr()
+                local.size = ds_list_size(global.mon_spawn_list);
+                while local.size > 0 && local.mons < get_mult_scr()
                 {
                     local.mon = ds_list_find_value(global.mon_spawn_list,irandom(local.size-1));
                     ds_list_add(global.mon_curr_list,local.mon);
@@ -43,6 +44,7 @@ object_event_add
                     {
                         local.index = ds_list_find_index(global.mon_spawn_list,local.mon);
                         if local.index != -1 { ds_list_delete(global.mon_spawn_list,local.index); }
+                        local.size = ds_list_size(global.mon_spawn_list)
                     }
                     instance_create(0,0,local.mon);
                     local.mons += 1;

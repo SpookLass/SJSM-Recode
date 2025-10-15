@@ -7,7 +7,9 @@ room_set_code
     argument0,
     "
     // Name
-    global.rm_name_var = 'Hall 2 Golden'
+    ini_open(global.lang_var);
+    global.rm_name_var = ini_read_string('ROOM','hall','ROOM_hall')+' 2 '+ini_read_string('ROOM','gold','ROOM_gold');
+    ini_close();
     // Spawn
     global.spawn_len_var = 5;
     global.spawn_arr[0,0] = 112;

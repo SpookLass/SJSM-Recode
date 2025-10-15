@@ -6,7 +6,9 @@ room_set_code
 (
     argument0,"
     // Name
-    global.rm_name_var = 'Hall 13 Story Ungolden'
+    ini_open(global.lang_var);
+    global.rm_name_var = ini_read_string('ROOM','hall','ROOM_hall')+' 13 '+ini_read_string('ROOM','story','ROOM_story')+' '+ini_read_string('ROOM','ungold','ROOM_ungold');
+    ini_close();
     // Spawn
     global.spawn_len_var = 3;
     global.spawn_arr[0,0] = 144;

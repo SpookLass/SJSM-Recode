@@ -89,6 +89,8 @@ object_event_add
     slime_w_base_var = 28;
     slime_spawn_spd_mult_var = 1;
     slime_spd_mult_var = 2/3; // 0.r6x
+    slime_num_var = 1;
+    slime_den_var = 3;
     h_base_var = 20;
     z_off_base_var = 2;
     z_off_start_var = -h_base_var;
@@ -107,6 +109,9 @@ object_event_add
             // Move slower dangit
             slime_spawn_spd_mult_var = 0.5; // 0.5r3 for full accuracy
             delay_var = 0;
+            // More Slime
+            slime_num_var = 2;
+            slime_den_var = 3;
             // Bools
             coward_var = false;
             do_slime_spawn_var = true;
@@ -122,6 +127,8 @@ object_event_add
             delay_min_var = 60;
             delay_max_var = 180;
             slime_spd_mult_var = 0.3;
+            slime_num_var = 2;
+            slime_den_var = 3;
             // Movement
             type_var = 2;
             spd_base_var = 8/9; // 0.r8
@@ -167,7 +174,7 @@ object_event_add
     {
         for (local.i=0; local.i<global.mark_len_var; local.i+=1;)
         {
-            if !global.mark_arr[local.i,3] && !irandom(2)
+            if !global.mark_arr[local.i,3] && frac_chance_scr(slime_num_var,slime_den_var)
             {
                 with instance_create(global.mark_arr[local.i,0],global.mark_arr[local.i,1],slime_obj)
                 {
@@ -234,11 +241,11 @@ object_event_add
 (argument0,ev_other,ev_user0,"
     if enter_var && do_slime_spawn_var && target_dist_var <= spd_base_var*spd_mult_var
     {
+        enter_var = false;
         x = target_x_var;
         y = target_y_var;
         z = target_z_var;
         do_coll_var = true;
-        enter_var = false;
         slime_spawn_var = 1;
         move_var = false;
         attack_var = false;
@@ -246,6 +253,49 @@ object_event_add
         set_alarm_scr(1,slime_alarm_var);
         set_alarm_scr(4,slime_alarm_var);
         set_motion_scr(0,true);
+        // Slime Spawning
+        event_user(6);
+        local.bestdist = target_dist_var;
+        local.slime = noone;
+        with slime_obj
+        {
+            if par_var = other.id
+            {
+                local.dist = point_distance_3d_scr(x,y,z,other.target_x_var,other.target_y_var,other.target_z_var);
+                if local.dist < local.bestdist
+                {
+                    local.slime = id;
+                    local.bestdist = local.dist
+                }
+            }
+        }
+        if instance_exists(local.slime)
+        {
+            with local.slime
+            {
+                local.xtmp = x;
+                local.ytmp = y;
+                local.ztmp = z;
+                local.dir = direction;
+                // local.zoff = z_off_var;
+                // local.alpha = image_alpha;
+                // local.width = w_var;
+                x = other.x;
+                y = other.y;
+                z = other.z;
+                direction = other.slime_angle_var;
+                // z_off_var = other.slime_z_off_var;
+                // image_alpha = other.slime_alpha_var;
+                // w_var = other.slime_w_base_var;
+                other.x = local.xtmp;
+                other.y = local.ytmp;
+                other.z = local.ztmp;
+                other.slime_angle_var = local.dir;
+                // other.slime_z_off_var = local.zoff;
+                // other.slime_alpha_var = local.alpha;
+                // other.slime_w_base_var = local.width;
+            }
+        }
         exit;
     }
     if coward_var && hurt_var { spd_mult_var *= -coward_spd_var; }

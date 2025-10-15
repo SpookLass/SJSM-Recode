@@ -114,9 +114,16 @@ object_event_add
             do_acc_var = true;
             acc_var = 16/675; // 0.02r370
             seen_yaw_var = 60;
-            seen_pitch_var = 60;
+            rand_alarm_min_var = 6;
+            rand_alarm_max_var = 6;
+            tp_alarm_var = 480;
+            overlay_var = false;
+            // HD Only
             seen_spd_mult_var = 1;
-            draw_pos_var = true;
+            seen_rage_var = true;
+            inv_move_var = true;
+            inv_limit_var = 30;
+            back_tp_alarm_var = 60;
             break;
         }
     }
@@ -131,9 +138,10 @@ object_event_add
         seen_pitch_var = seen_pitch_02_var;
     }
     // Alarms
-    alarm_len_var = 10;
+    alarm_len_var = 11;
     alarm_arr[8,2] = '';
     alarm_arr[9,2] = '';
+    alarm_arr[10,2] = '';
     // Bools
     do_mdl_var = true;
     do_anim_var = -1;
@@ -192,10 +200,9 @@ object_event_add
         }
     }
     enter_var = false;
-    draw_x_var = x;
-    draw_y_var = y;
-    draw_z_var = z;
-    image_alpha = 1;
+    do_coll_var = type_var > 0;
+    // Become visible
+    event_user(14);
 ");
 // Room End
 object_event_add
@@ -212,57 +219,46 @@ object_event_add
 // Delay
 object_event_add
 (argument0,ev_alarm,0,"
-    event_perform(ev_alarm,8);
     event_inherited();
+    if inv_move_var { move_var = false; }
+    event_perform(ev_alarm,8);
 ");
 // Random anim
 object_event_add
 (argument0,ev_alarm,8,"
-    if frac_chance_scr(1,rand_chance_var)
-    { image_alpha = 0; }
-    else
+    if seen_rage_var
     {
-        if image_alpha == 0
-        {
-            if draw_pos_var
-            {
-                draw_x_var = x;
-                draw_y_var = y;
-                draw_z_var = z;
-                draw_yaw_var = yaw_var;
-            }
-            if weird_var
-            {
-                if frac_chance_scr(1,weird_chance_var)
-                {
-                    if frac_chance_scr(1,4)
-                    {
-                        mdl_var = mdl_02_var;
-                        tex_var = sprite_get_texture(spr_var,1);
-                        draw_yaw_var += 180;
-                    }
-                    else
-                    {
-                        mdl_var = mdl_01_var;
-                        tex_var = sprite_get_texture(spr_var,2);
-                    }
-                    
-                }
-                else
-                {
-                    mdl_var = mdl_01_var;
-                    tex_var = sprite_get_texture(spr_var,0);
-                }
-            }
-        }
-        image_alpha = 1;
+        if alarm_arr[9,0] <= 0 { local.chance = true; }
+        else { local.chance = (random(1) >= alarm_arr[9,0]/alarm_arr[9,1]); }
     }
+    else { local.chance = frac_chance_scr(1,rand_chance_var) }
+    if local.chance && (inv_limit_var <= 0 || inv_time_var < inv_limit_var)
+    {
+        if image_alpha == 1 && inv_move_var { move_var = do_move_var; }
+        image_alpha = 0;
+    }
+    // Become visible
+    else { event_user(14); }
     set_alarm_scr(8,irandom_range(rand_alarm_min_var,rand_alarm_max_var));
 ");
 // Teleport Alarm
 object_event_add
 (argument0,ev_alarm,9,"
     event_user(15);
+");
+// Teleport Behind Alarm
+object_event_add
+(argument0,ev_alarm,10,"
+    local.xvel = -lengthdir_x(1,target_eye_yaw_var);
+    local.yvel = -lengthdir_y(1,target_eye_yaw_var);
+    if check_ray_scr(target_x_var,target_y_var,target_z_var+(target_var.coll_var[1]/2),local.xvel,local.yvel,0) > 32+(coll_var[2]/2)
+    {
+        x = target_x_var+(local.xvel*32);
+        y = target_y_var+(local.yvel*32);
+        z = target_z_var;
+        // Become visible
+        event_user(14);
+    }
 ");
 // Step event
 object_event_add
@@ -283,10 +279,19 @@ object_event_add
     {
         if seen_var == 1
         {
-            spd_mult_var = seen_spd_mult_var;
+            spd_mult_var *= seen_spd_mult_var;
             if alarm_arr[9,0] <= 0 { set_alarm_scr(9,tp_alarm_var); }
+            if image_alpha == 0 && inv_limit_var > 0 { inv_time_var += global.delta_time_var; }
         }
         else if alarm_arr[9,0] > 0 { set_alarm_scr(9,-1); }
+        if back_tp_alarm_var > 0
+        {
+            if seen_var == 0
+            {
+                if alarm_arr[10,0] <= 0 { set_alarm_scr(10,back_tp_alarm_var); }
+            }
+            else if alarm_arr[10,0] > 0 { set_alarm_scr(10,-1); }
+        }
     }
     event_inherited();
 ");
@@ -295,27 +300,85 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user3,"
     event_inherited();
-    image_alpha = 1;
-    draw_x_var = x;
-    draw_y_var = y;
-    draw_z_var = z;
-    draw_yaw_var = yaw_var;
+    // Become visible
+    event_user(14);
 ");
+// Become visible
+object_event_add
+(argument0,ev_other,ev_user14,"
+    if image_alpha == 0
+    {
+        if inv_move_var { move_var = false; set_motion_3d_scr(0,true); }
+        if inv_limit_var > 0 { inv_time_var = 0; }
+        if draw_pos_var
+        {
+            draw_x_var = x;
+            draw_y_var = y;
+            draw_z_var = z;
+            draw_yaw_var = yaw_var;
+        }
+        if weird_var
+        {
+            if frac_chance_scr(1,weird_chance_var)
+            {
+                if frac_chance_scr(1,4)
+                {
+                    mdl_var = mdl_02_var;
+                    tex_var = sprite_get_texture(spr_var,1);
+                    draw_yaw_var += 180;
+                }
+                else
+                {
+                    mdl_var = mdl_01_var;
+                    tex_var = sprite_get_texture(spr_var,2);
+                }
+                
+            }
+            else
+            {
+                mdl_var = mdl_01_var;
+                tex_var = sprite_get_texture(spr_var,0);
+            }
+        }
+    }
+    image_alpha = 1;
+")
 // Teleport
 object_event_add
 (argument0,ev_other,ev_user15,"
     // Originally anywhere in the room (0-1280 x 0-720 y)
-    if tp_sight_var { local.dir = random_range(target_eye_yaw_var+seen_yaw_var,target_eye_yaw_var+360-seen_yaw_var); }
-    else { local.dir = random(360); }
-    local.dist = random_range(tp_dist_min_var,tp_dist_max_var);
-    x = target_x_var+lengthdir_x(local.dist,local.dir);
-    y = target_y_var+lengthdir_y(local.dist,local.dir);
-    z = target_z_var;
-    image_alpha = 1;
-    draw_x_var = x;
-    draw_y_var = y;
-    draw_z_var = z;
-    draw_yaw_var = yaw_var;
+    if type_var > 0
+    {
+        if mp_grid_path(grid_var,path_var,global.spawn_arr[0,0],global.spawn_arr[0,1],global.spawn_arr[1,0],global.spawn_arr[1,1],true)
+        {
+            if path_get_length(path_var) > tp_dist_min_var*2.5
+            {
+                local.pos = random(path_get_length(path_var));
+                local.xtmp = path_get_x(path_var,local.pos);
+                local.ytmp = path_get_y(path_var,local.pos);
+                z = global.spawn_arr[0,2];
+                while point_distance_3d_scr(target_x_var,target_y_var,target_z_var,local.xtmp,local.ytmp,z) < tp_dist_min_var
+                {
+                    local.pos = random(path_get_length(path_var));
+                    local.xtmp = path_get_x(path_var,local.pos);
+                    local.ytmp = path_get_y(path_var,local.pos);
+                }
+                x = local.xtmp;
+                y = local.ytmp;
+            }
+        }
+    }
+    else
+    {
+        if tp_sight_var { local.dir = random_range(target_eye_yaw_var+seen_yaw_var,target_eye_yaw_var+360-seen_yaw_var); }
+        else { local.dir = random(360); }
+        local.dist = random_range(tp_dist_min_var,tp_dist_max_var);
+        x = target_x_var+lengthdir_x(local.dist,local.dir);
+        y = target_y_var+lengthdir_y(local.dist,local.dir);
+        z = target_z_var;
+    }
+    // Become visible
+    event_user(14);
 ");
 // Draw Event
 object_event_add

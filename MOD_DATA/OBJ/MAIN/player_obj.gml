@@ -201,6 +201,7 @@ object_event_add
     cam_z_var = z+eye_h_var;
     cam_yaw_var = eye_yaw_var;
     cam_pitch_var = eye_pitch_var;
+    cam_roll_var = 0;
     // View
     view_visible[cam_id_var] = true;
     view_enabled = true;
