@@ -7,8 +7,8 @@ object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
 object_set_visible(argument0,false);
 // Create
-object_event_add
-(argument0,ev_create,0,"
+object_event_add // ev_create,0
+(argument0,ev_other,ev_room_start,"
     ds_list_clear(global.mon_curr_list);
     local.mons = 0;
     with mon_par_obj

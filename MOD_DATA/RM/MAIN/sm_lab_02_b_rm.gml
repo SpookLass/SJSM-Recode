@@ -5,7 +5,9 @@ Argument 0: Room Variable (same for all rooms)
 room_set_code
 (
     argument0,"
-    global.rm_name_var = 'Small Lab Room 2 B'
+    ini_open(global.lang_var);
+	global.rm_name_var = ini_read_string('ROOM','sm_lab','ROOM_sm_lab')+' 2 B';
+	ini_close();
     // Spawn
     global.spawn_len_var = 4;
     global.spawn_arr[0,0] = 192;

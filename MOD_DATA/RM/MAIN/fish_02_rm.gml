@@ -7,7 +7,9 @@ room_set_code
     argument0,
     "
     // Name
-    global.rm_name_var = 'Fish Room 2'
+    ini_open(global.lang_var);
+global.rm_name_var = ini_read_string('ROOM','fish','ROOM_fish')+' 2';
+ini_close();
     global.spawn_len_var = 2;
     // Spawn 0 (entrance)
     global.spawn_arr[0,0] = 256;

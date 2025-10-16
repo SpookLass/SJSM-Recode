@@ -1,11 +1,12 @@
 /*
 Argument 0: Room Variable (same for all rooms)
 */
-// Spawn spots// Name
 room_set_code
 (
     argument0,"
-    global.rm_name_var = 'Purple Room 5 / Small Room 13'
+    ini_open(global.lang_var);
+	global.rm_name_var = ini_read_string('ROOM','purp','ROOM_purp')+' 5 / '+ini_read_string('ROOM','sm','ROOM_sm')+' 13';
+	ini_close();
     // Spawn
     global.spawn_len_var = 2;
     global.spawn_arr[0,0] = 176;

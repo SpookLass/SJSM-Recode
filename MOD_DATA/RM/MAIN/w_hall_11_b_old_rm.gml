@@ -5,7 +5,9 @@ Argument 0: Room Variable (same for all rooms)
 room_set_code
 (
     argument0,"
-    global.rm_name_var = 'Winding Hall 11 B / 16 Old'
+    ini_open(global.lang_var);
+	global.rm_name_var = ini_read_string('ROOM','w','ROOM_w')+' 11 B / 16 '+ini_read_string('ROOM','old','ROOM_old');
+	ini_close();
     // Spawn
     global.spawn_len_var = 2;
     global.spawn_arr[0,0] = 176;
