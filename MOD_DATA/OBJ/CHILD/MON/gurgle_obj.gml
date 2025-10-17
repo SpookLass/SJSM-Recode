@@ -34,6 +34,9 @@ object_event_add
         if id != other.id
         {
             other.spr_var = spr_var;
+            for (local.i=0; local.i<snd_len_var; local.i+=1;)
+            { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
+            other.wake_snd_var[1] = wake_snd_var[1];
             local.loaded = true;
             break;
         }
@@ -42,15 +45,16 @@ object_event_add
     if !local.loaded
     {
         spr_var = sprite_add(main_directory_const+'\SPR\MON\gurgle_spr.png',5,false,false,0,0);
+        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\gurgle_01_snd.wav',true);
+        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\gurgle_02_snd.wav',true);
+        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\gurgle_03_snd.wav',true);
+        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\gurgle_04_snd.wav',true);
+        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\gurgle_wake_snd.wav');
+        charge_snd_var[0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\gurgle_charge_snd.wav',true);
     }
     // Sounds
     snd_len_var = 4;
-    snd_arr[0,0] = caster_load(main_directory_const+'\SND\MON\gurgle_01_snd.wav');
-    snd_arr[1,0] = caster_load(main_directory_const+'\SND\MON\gurgle_02_snd.wav');
-    snd_arr[2,0] = caster_load(main_directory_const+'\SND\MON\gurgle_03_snd.wav');
-    snd_arr[3,0] = caster_load(main_directory_const+'\SND\MON\gurgle_04_snd.wav');
     wake_snd_var[0] = true; // Has a wake sound, otherwise it'll use a normal sound
-    wake_snd_var[1] = caster_load(main_directory_const+'\SND\MON\gurgle_wake_snd.wav');
     snd_num_var = 1;
     snd_den_var = 2;
     snd_alarm_min_var = 80;
@@ -68,7 +72,10 @@ object_event_add
     charge_delay_var = 180;
     charge_start_var = 40;
     charge_dist_var = 64;
-    charge_snd_var[0] = caster_load(main_directory_const+'\SND\MON\gurgle_charge_snd.wav');
+    // Yoo what if it was like the NES
+    res_var = true;
+    res_w_var = 256;
+    res_h_var = 240;
 ");
 // Destroy Event
 object_event_add
@@ -76,13 +83,26 @@ object_event_add
     event_inherited();
     if instance_number(object_index) <= 1
     { sprite_delete(spr_var); }
-    caster_free(charge_snd_var[0]);
+    fmod_snd_free_scr(charge_snd_var[0]);
+    if res_var
+    {
+        global.res_override_var = false;
+        global.res_override_w_var = global.res_w_var;
+        global.res_override_h_var = global.res_h_var;
+    }
 ");
 // Room Start Event
 object_event_add
 (argument0,ev_other,ev_room_start,"
     event_inherited();
     charge_var = -1;
+    // Effect
+    if res_var
+    {
+        global.res_override_var = res_var;
+        global.res_override_w_var = res_w_var;
+        global.res_override_h_var = res_h_var;
+    }
 ");
 // Delay Alarm
 object_event_add
@@ -115,10 +135,10 @@ object_event_add
             set_alarm_scr(4,charge_alarm_var);
             set_alarm_scr(8,charge_alarm_var);
             // Sound
-            caster_stop(snd_var);
+            fmod_inst_stop_scr(snd_var);
             if snd_dist_var { snd_vol_var = global.vol_var*(1-(target_dist/snd_dist_var)); }
             else { snd_vol_var = global.vol_var; }
-            snd_var = caster_play(charge_snd_var[0],snd_vol_var,1);
+            snd_var = fmod_snd_3d_play_scr(charge_snd_var[0]);
             sub_var = charge_snd_var[1];
             set_alarm_scr(6,irandom_range(snd_alarm_min_var,snd_alarm_max_var))
         }

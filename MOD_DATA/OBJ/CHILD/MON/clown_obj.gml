@@ -31,6 +31,8 @@ object_event_add
         if id != other.id
         {
             other.spr_var = spr_var;
+            for (local.i=0; local.i<snd_len_var; local.i+=1;)
+            { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
             local.loaded = true;
             break;
         }
@@ -39,13 +41,13 @@ object_event_add
     if !local.loaded
     {
         spr_var = sprite_add(dh_directory_const+'\TEX\sprites\CLWN_SPR1.png',6,false,false,0,0);
+        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\ringu_01_snd.ogg',true);
+        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\ringu_02_snd.ogg',true);
+        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\ringu_03_snd.ogg',true);
+        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\ringu_04_snd.ogg',true);
     }
     // Sounds
     snd_len_var = 4;
-    snd_arr[0,0] = caster_load(main_directory_const+'\SND\MON\ringu_01_snd.ogg');
-    snd_arr[1,0] = caster_load(main_directory_const+'\SND\MON\ringu_02_snd.ogg');
-    snd_arr[2,0] = caster_load(main_directory_const+'\SND\MON\ringu_03_snd.ogg');
-    snd_arr[3,0] = caster_load(main_directory_const+'\SND\MON\ringu_04_snd.ogg');
     snd_num_var = 1;
     snd_den_var = 1;
     snd_alarm_min_var = 300;

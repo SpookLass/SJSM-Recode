@@ -117,6 +117,7 @@ Menu and button States
     11: Config Behavior
         Behaviors (Recode, OG, HD, Modded?)
         Back
+	12: Save Name Entry
 */
 // Create Event
 object_event_add
@@ -129,6 +130,45 @@ object_event_add
     path_bg_var = background_add(vanilla_directory_const+'\TEX\menu\path_tex.png',false,false);
     path_cloud_bg_var = background_add(vanilla_directory_const+'\TEX\menu\menu_clouds_tex.png',false,false);
     light_bg_var = light_01_bg_var;
+	
+	local.array_index = 0;
+	local.wall_index = 1;
+	local.finalwall_index = '01'
+	
+    while file_exists(working_directory+'\DATA\TEX\WALL_'+local.finalwall_index+'.png')
+	{
+        sub_bg_arr[local.array_index] = background_add(working_directory+'\DATA\TEX\WALL_'+local.finalwall_index+'.png',false,false);
+        
+        local.array_index += 1;
+        local.wall_index += 1;
+        
+        if local.wall_index < 10 { local.finalwall_index = '0'+string(local.wall_index); }
+        else { local.finalwall_index = string(local.wall_index); }
+	
+	}
+	
+	local.wall_index = 1;
+	local.finalwall_index = '01';
+	
+	while file_exists(working_directory+'\DATA\EM\TEX\EM_WALL_'+local.finalwall_index+'.png')
+	{
+        sub_bg_arr[local.array_index] = background_add(working_directory+'\DATA\EM\TEX\EM_WALL_'+local.finalwall_index+'.png',false,false);
+        
+        local.array_index += 1;
+        local.wall_index += 1;
+        
+        if local.wall_index < 10 { local.finalwall_index = '0'+string(local.wall_index); }
+        else { local.finalwall_index = string(local.wall_index); }
+	}
+	
+	sub_bg_len_var = local.array_index;
+	
+	sub_bg_var = 0;
+	
+	subbgscroll_var = 0;
+	
+	subbgalpha_var = 0;
+	
     // Sprites
     set_spr_var = sprite_add(main_directory_const+'\SPR\UI\settings_spr.png',2,false,false,0,0);
     sprite_set_offset(set_spr_var,sprite_get_width(set_spr_var)/2,sprite_get_height(set_spr_var)/2);
@@ -137,8 +177,9 @@ object_event_add
     else { local.path = vanilla_directory_const+'\TEX\menu\name_uhh_spr.png' }
     name_spr_var = sprite_add(local.path,1,false,false,0,0);
     sprite_set_offset(name_spr_var,sprite_get_width(name_spr_var)/2,sprite_get_height(name_spr_var)/2);
-    name_y_var = 180;
+    name_y_var = 170;
     // Text
+    ini_open(global.lang_var);
     skip_str_var = 'Press Confirm to Skip.'; // Maybe get a string of the key?
     confirm_str_var = 'PRESS CONFIRM';
     story_str_var = 'For as long as you can remember, legends have been told about the derelict mansion upon the hill that casts a blanket of darkness over the town. The history of the house itself is virtually unknown, and even the towns oldest residents cannot remember the mansions origin. Being an avid history enthusiast, you embark up the mountain to visit the manor. Hoping to shed some light on the backstory of this crumbling fortress of darkness.';
@@ -181,6 +222,18 @@ object_event_add
         // Behavior
     button_str_arr[5,0] = 'PLAYER';
     button_str_arr[5,1] = 'AXE';
+    /*
+    switch global.name_var
+    {
+        case name_og_const
+        {
+            button_str_arr[5,2] = string_upper(ini_read_string('NAME','gel','NAME_gel'));
+            button_str_arr[5,3] = string_upper(ini_read_string('NAME','bug_og','NAME_bug_og'));
+            button_str_arr[5,4] = string_upper(ini_read_string('NAME','ringu','NAME_ringu'));
+            button_str_arr[5,5] = string_upper(ini_read_string('NAME','pup_og','NAME_pup_og'));
+        }
+    }
+    */
     button_str_arr[5,2] = 'GEL';
     button_str_arr[5,3] = 'BUG';
     button_str_arr[5,4] = 'RINGU';
@@ -210,6 +263,8 @@ object_event_add
     button_str_arr[5,28] = 'OTTO';
     button_str_arr[5,29] = 'SPOOPER';
     button_str_arr[5,30] = 'WHITE FACE';
+		//Load Saves
+	button_str_arr[6,0] = 'BACK';
         // Other
     on_str_var = 'ON';
     off_str_var = 'OFF';
@@ -223,6 +278,7 @@ object_event_add
     kh_str_var = 'KARAMARI';
     dh_str_var = 'DOLLHOUSE';
     alt_str_var = 'ALTERNATE';
+    ini_close();
     // Alarms
     alarm_len_var = 1;
     alarm_arr[0,2] = '';
@@ -236,10 +292,83 @@ object_event_add
     path_cloud_y_var = 0;
     story_y_var = 750;
     str_scale_var = 0.8;
+	
+	menuscroll_var = 0;
+	menuscroll_lerp_var = 0;
+	menuscroll_focal_var = 0;
+	
+	// Save Variables
+	save_name_var = '';
+	save_violence_var = 0;
+	save_rm_count_var = 0;
+	save_note_var = 0;
+	save_diff_var = 2;
+	save_custom_var = 0;
+	save_rm_var = hall_01_rm;
+	
+	save_stam_per_var=0;
+	save_fall_var=0;
+	save_lock_var=1;
+	save_dmg_shake_var=0;
+	save_multi_type_var=0;
+	save_multi_min_var=1;
+	save_multi_max_var=5;
+	save_multi_start_var=1000;
+	save_multi_end_var=2000;
+	save_count_type_var=0;
+	save_count_min_var=0;
+	save_count_max_var=20;
+	save_count_start_var=1000;
+	save_count_end_var=2000;
+	save_mode_var=1;
+	
+	save_type_var=0;
+	save_player_type_var=-1;
+	save_axe_type_var=-1;
+	save_gel_type_var=-1;
+	save_bug_type_var=-1;
+	save_ringu_type_var=-1;
+	save_bab_type_var=-1;
+	save_pup_type_var=-1;
+	save_flesh_type_var=-1;
+	save_dl_type_var=-1;
+	save_taker_type_var=-1;
+	save_para_type_var=-1;
+	save_fd_type_var=-1;
+	save_killer_type_var=-1;
+	save_mur_type_var=-1;
+	save_sg_type_var=-1;
+	save_body_type_var=-1;
+	save_stem_type_var=-1;
+	save_patient_type_var=-1;
+	save_cow_type_var=-1;
+	save_bekka_type_var=-1;
+	save_husk_type_var=-1;
+	save_wc_type_var=-1;
+	save_clown_type_var=-1;
+	save_hd_type_var=-1;
+	save_frenzy_type_var=-1;
+	save_nm_type_var=-1;
+	save_tiri_type_var=-1;
+	save_lisa_type_var=-1;
+	save_otto_type_var=-1;
+	save_spooper_type_var=-1;
+	save_wf_type_var=-1;
+	save_real_ringu_type_var=-1;
+	
+	ds_list_clear(global.save_list);
+	
+	ini_open('saves.ini');
+					
+	ds_list_read(global.save_list,ini_read_string('SAVES','SAVES','2F01000000000000'));
+
+	ini_close();
+	
 ");
 // Room End
 object_event_add
 (argument0,ev_other,ev_room_end,"
+    global.make_sure_this_is_gone_please = bg_var;
     background_delete(bg_var);
     background_delete(cloud_bg_var);
     background_delete(light_01_bg_var);
@@ -248,11 +377,15 @@ object_event_add
     background_delete(path_cloud_bg_var);
     sprite_delete(set_spr_var);
     sprite_delete(name_spr_var);
+	
+    for (local.i=0; local.i<sub_bg_len_var; local.i+=1;)
+    { background_delete(sub_bg_arr[local.i]); }
 ");
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,"
     event_inherited();
+	
     x = (x-global.delta_time_var) mod background_get_width(cloud_bg_var);
     switch state_var
     {
@@ -303,13 +436,111 @@ object_event_add
             }
             time_var = (time_var+global.delta_time_var) mod 160;
             str_scale_var = 0.8+(cos(2*time_var*pi/80)*0.2);
-            name_y_var = 180+(sin(2*time_var*pi/160)*24)
+            name_y_var = 170+(sin(2*time_var*pi/160)*10)
             if global.confirm_input_press_var
             {
                 switch button_state_var
                 {
-                    case 0: { state_var = 3; event_user(0); break; }
-                    case 1: { state_var = 6; event_user(0); break; }
+                    case 0:
+					{
+						state_var = 3;
+						event_user(0);
+						
+						menuscroll_focal_var = 2;
+						menuscroll_var = 0;
+						menuscroll_lerp_var = 0;
+						
+						sub_bg_var = irandom_range(0,sub_bg_len_var-1);
+						
+						save_name_var = '';
+						save_violence_var = 0;
+						save_rm_count_var = 0;
+						save_note_var = 0;
+						save_diff_var = 2;
+						save_custom_var = 0;
+						save_room = hall_01_rm;
+						
+						save_stam_per_var=0;
+						save_fall_var=0;
+						save_lock_var=1;
+						save_dmg_shake_var=0;
+						save_multi_type_var=0;
+						save_multi_min_var=1;
+						save_multi_max_var=5;
+						save_multi_start_var=1000;
+						save_multi_end_var=2000;
+						save_count_type_var=0;
+						save_count_min_var=0;
+						save_count_max_var=20;
+						save_count_start_var=1000;
+						save_count_end_var=2000;
+						save_mode_var=1;
+						
+						save_type_var=0;
+						save_player_type_var=-1;
+						save_axe_type_var=-1;
+						save_gel_type_var=-1;
+						save_bug_type_var=-1;
+						save_ringu_type_var=-1;
+						save_bab_type_var=-1;
+						save_pup_type_var=-1;
+						save_flesh_type_var=-1;
+						save_dl_type_var=-1;
+						save_taker_type_var=-1;
+						save_para_type_var=-1;
+						save_fd_type_var=-1;
+						save_killer_type_var=-1;
+						save_mur_type_var=-1;
+						save_sg_type_var=-1;
+						save_body_type_var=-1;
+						save_stem_type_var=-1;
+						save_patient_type_var=-1;
+						save_cow_type_var=-1;
+						save_bekka_type_var=-1;
+						save_husk_type_var=-1;
+						save_wc_type_var=-1;
+						save_clown_type_var=-1;
+						save_hd_type_var=-1;
+						save_frenzy_type_var=-1;
+						save_nm_type_var=-1;
+						save_tiri_type_var=-1;
+						save_lisa_type_var=-1;
+						save_otto_type_var=-1;
+						save_spooper_type_var=-1;
+						save_wf_type_var=-1;
+						save_real_ringu_type_var=-1;
+						
+						break;
+					}
+					case 1:
+					{
+						if ds_list_size(global.save_list) > 0
+						{
+							button_str_arr[6] = -1;
+							button_str_arr[6,0] = 'BACK';
+						
+							local.save_index = 0;
+							local.name = '';
+							
+							repeat(ds_list_size(global.save_list))
+							{
+							local.name = string(ds_list_find_value(global.save_list,local.save_index));
+							button_str_arr[6,local.save_index+1] = local.name;
+							
+							local.save_index += 1;
+							}
+							
+							state_var = 6;
+							event_user(0);
+							
+							menuscroll_focal_var = 2;
+							menuscroll_var = 0;
+							menuscroll_lerp_var = 0;
+							
+							sub_bg_var = irandom_range(0,sub_bg_len_var-1);
+						}
+						break;
+					}
                     case 2:
                     {
                         highscore_show_ext(-1,menu_score_bg,true,c_yellow,c_purple,'Lunchtime Doubly So',16);
@@ -323,8 +554,22 @@ object_event_add
             }
             break;
         }
-        case 3:
+        case 3: //Save Creation
         {
+			subbgscroll_var += (1*global.delta_time_var);
+			
+			if subbgalpha_var < 1
+			subbgalpha_var += (0.04*global.delta_time_var);
+			
+			if button_state_var < (menuscroll_focal_var-1)
+			menuscroll_focal_var -= 1;
+			
+			if button_state_var > (menuscroll_focal_var+1)
+			menuscroll_focal_var += 1;
+			
+			menuscroll_var = 96*(menuscroll_focal_var-2);
+			menuscroll_lerp_var = menuscroll_lerp_var + (menuscroll_var - menuscroll_lerp_var) * (0.2*global.delta_time_var)
+			
             // Text Stretch
             time_var = (time_var+global.delta_time_var) mod 80;
             str_scale_var = 0.8+(cos(2*time_var*pi/80)*0.2);
@@ -340,24 +585,496 @@ object_event_add
                     // Play
                     case 0:
                     {
-                        local.player = instance_create(0,0,global.player_obj);
+						state_var = 12;
+						keyboard_string = '';
+						event_user(0);
+						break;
+                    }
+                    // Back
+                    case 6:
+					{
+						state_var = 2;
+						event_user(0);
+						subbgalpha_var = 0;
+						break;
+					}
+                }
+            }
+			
+			if global.left_input_press_var
+			{
+				switch button_state_var
+				{
+					// mode
+					case 1:
+					{
+						save_mode_var -= 1;
+						
+						if save_mode_var < 0
+						save_mode_var = 2;
+						break;
+					}
+					
+					case 2:
+					{
+						save_diff_var -= 1;
+						
+						if save_diff_var < 0
+						save_diff_var = 4;
+						break;
+					}
+					
+					case 3:
+					{
+						save_type -= 1;
+						
+						if save_type < 0
+						save_type = 2;
+						break;
+					}
+					
+					case 4:
+					{
+						save_custom_var -= 1;
+						
+						if save_custom_var < 0
+						save_custom_var = 1;
+						break;
+					}
+				}
+			}
+			if global.right_input_press_var
+			{
+				switch button_state_var
+				{
+					// mode
+					case 1:
+					{
+						save_mode_var += 1;
+						
+						if save_mode_var > 2
+						save_mode_var = 0;
+						break;
+					}
+					
+					case 2:
+					{
+						save_diff_var += 1;
+						
+						if save_diff_var > 4
+						save_diff_var = 0;
+						break;
+					}
+					
+					case 3:
+					{
+						save_type += 1;
+						
+						if save_type > 2
+						save_type = 0;
+						break;
+					}
+					
+					case 4:
+					{
+						save_custom_var += 1;
+						
+						if save_custom_var > 1
+						save_custom_var = 0;
+						break;
+					}
+				}
+			}
+			break;
+        }
+		case 6: //Save Loads
+        {
+			subbgscroll_var += (1*global.delta_time_var);
+			
+			if subbgalpha_var < 1
+			subbgalpha_var += (0.04*global.delta_time_var);
+			
+			if button_state_var < (menuscroll_focal_var-1)
+			menuscroll_focal_var -= 1;
+			
+			if button_state_var > (menuscroll_focal_var+1)
+			menuscroll_focal_var += 1;
+			
+			menuscroll_var = 96*(menuscroll_focal_var-2);
+			menuscroll_lerp_var = menuscroll_lerp_var + (menuscroll_var - menuscroll_lerp_var) * (0.2*global.delta_time_var)
+			
+            // Text Stretch
+            time_var = (time_var+global.delta_time_var) mod 80;
+            str_scale_var = 0.8+(cos(2*time_var*pi/80)*0.2);
+            // Scroll
+            if global.up_input_press_var
+			{
+				button_state_var -= 1;
+				
+				if button_state_var != 0
+				{
+					local.name = string(ds_list_find_value(global.save_list,button_state_var-1));
+					
+					ini_open('save_'+local.name+'.ini');
+					
+					save_rm_count_var = ini_read_real('MAIN','rm_count',0);
+					save_mode_var = ini_read_real('SETTING','mode',1);
+					save_diff_var = ini_read_real('MAIN','diff',0);
+					save_type = ini_read_real('BEHAVIOR','type',0);
+					save_custom_var = ini_read_real('MAIN','custom',0);
+					
+					ini_close();
+				}
+			}
+            if global.down_input_press_var
+			{
+				button_state_var += 1;
+				
+				if button_state_var != 0
+				{
+					local.name = string(ds_list_find_value(global.save_list,button_state_var-1));
+					
+					ini_open('save_'+local.name+'.ini');
+					
+					save_rm_count_var = ini_read_real('MAIN','rm_count',0);
+					save_mode_var = ini_read_real('SETTING','mode',1);
+					save_diff_var = ini_read_real('MAIN','diff',0);
+					save_type = ini_read_real('BEHAVIOR','type',0);
+					save_custom_var = ini_read_real('MAIN','custom',0);
+					
+					ini_close();
+				}
+			}
+            button_state_var = mod_scr(button_state_var,1+ds_list_size(global.save_list));
+            // Confirm
+            if global.confirm_input_press_var
+            {
+                switch button_state_var
+                {
+					case 0:
+					{
+						state_var = 2;
+						event_user(0);
+						subbgalpha_var = 0;
+						break;
+					}
+					default:
+					{
+						local.name = string(ds_list_find_value(global.save_list,button_state_var-1));
+						
+						ini_open('save_'+local.name+'.ini');
+						
+						// Main
+						global.save_name_var = local.name;
+						global.rm_count_var = ini_read_real('MAIN','rm_count',0);
+						global.violence_var = ini_read_real('MAIN','violence',0);
+						global.note_var = ini_read_real('MAIN','note',0);
+						global.diff_var = ini_read_real('MAIN','diff',0);
+						global.custom_var = ini_read_real('MAIN','custom',0);
+						save_rm_var = ini_read_real('MAIN','room',0);
+						// Settings
+						global.stam_per_var = ini_read_real('SETTING','stam_per',false);
+						global.fall_var = ini_read_real('SETTING','fall',false);
+						global.lock_var = ini_read_real('SETTING','lock',1);
+						global.dmg_shake_var = ini_read_real('SETTING','dmg_shake',false);
+						global.multi_type_var = ini_read_real('SETTING','multi_type',0);
+						global.multi_min_var = ini_read_real('SETTING','multi_min',1);
+						global.multi_max_var = ini_read_real('SETTING','multi_max',5);
+						global.multi_start_var = ini_read_real('SETTING','multi_start',1000);
+						global.multi_end_var = ini_read_real('SETTING','multi_end',2000);
+						global.count_type_var = ini_read_real('SETTING','count_type',0);
+						global.count_min_var = ini_read_real('SETTING','count_min',0);
+						global.count_max_var = ini_read_real('SETTING','count_max',20);
+						global.count_start_var = ini_read_real('SETTING','count_start',1000);
+						global.count_end_var = ini_read_real('SETTING','count_end',2000);
+						global.mode_var = ini_read_real('SETTING','mode',1);
+						// Behavior stuff
+						global.default_type_var = ini_read_real('BEHAVIOR','type',0);
+						global.player_type_var = ini_read_real('BEHAVIOR','player_type',global.default_type_var);
+						global.axe_type_var = ini_read_real('BEHAVIOR','axe_type',global.default_type_var);
+						global.gel_type_var = ini_read_real('BEHAVIOR','gel_type',global.default_type_var);
+						global.bug_type_var = ini_read_real('BEHAVIOR','bug_type',global.default_type_var);
+						global.ringu_type_var = ini_read_real('BEHAVIOR','ringu_type',global.default_type_var);
+						global.bab_type_var = ini_read_real('BEHAVIOR','bab_type',global.default_type_var);
+						global.pup_type_var = ini_read_real('BEHAVIOR','pup_type',global.default_type_var);
+						global.flesh_type_var = ini_read_real('BEHAVIOR','flesh_type',global.default_type_var);
+						global.dl_type_var = ini_read_real('BEHAVIOR','dl_type',global.default_type_var);
+						global.taker_type_var = ini_read_real('BEHAVIOR','taker_type',global.default_type_var);
+						global.para_type_var = ini_read_real('BEHAVIOR','para_type',global.default_type_var);
+						global.fd_type_var = ini_read_real('BEHAVIOR','fd_type',global.default_type_var);
+						global.killer_type_var = ini_read_real('BEHAVIOR','killer_type',global.default_type_var);
+						global.mur_type_var = ini_read_real('BEHAVIOR','mur_type',global.default_type_var);
+						global.sg_type_var = ini_read_real('BEHAVIOR','sg_type',global.default_type_var);
+						global.body_type_var = ini_read_real('BEHAVIOR','body_type',global.default_type_var);
+						global.stem_type_var = ini_read_real('BEHAVIOR','stem_type',global.default_type_var);
+						global.patient_type_var = ini_read_real('BEHAVIOR','patient_type',global.default_type_var);
+						global.cow_type_var = ini_read_real('BEHAVIOR','cow_type',global.default_type_var);
+						global.bekka_type_var = ini_read_real('BEHAVIOR','bekka_type',global.default_type_var);
+						global.husk_type_var = ini_read_real('BEHAVIOR','husk_type',global.default_type_var);
+						global.wc_type_var = ini_read_real('BEHAVIOR','wc_type',global.default_type_var);
+						global.clown_type_var = ini_read_real('BEHAVIOR','clown_type',global.default_type_var);
+						global.hd_type_var = ini_read_real('BEHAVIOR','hd_type',global.default_type_var);
+						global.frenzy_type_var = ini_read_real('BEHAVIOR','frenzy_type',global.default_type_var);
+						global.real_ringu_type_var = ini_read_real('BEHAVIOR','real_ringu_type',global.default_type_var);
+						global.tiri_type_var = ini_read_real('BEHAVIOR','tiri_type',global.default_type_var);
+						global.lisa_type_var = ini_read_real('BEHAVIOR','lisa_type',global.default_type_var);
+						global.otto_type_var = ini_read_real('BEHAVIOR','otto_type',global.default_type_var);
+						global.spooper_type_var = ini_read_real('BEHAVIOR','spooper_type',global.default_type_var);
+						global.wf_type_var = ini_read_real('BEHAVIOR','wf_type',global.default_type_var);
+						
+						
+						ini_close();
+						
+						local.player = instance_create(0,0,global.player_obj);
                         local.hud = instance_create(0,0,global.hud_obj);
                         local.hud.par_var = local.player;
                         local.axe = instance_create(0,0,global.axe_obj);
                         local.axe.par_var = local.player;
-                        caster_loop(choose(amb_01_snd,amb_02_snd,amb_03_snd,amb_04_snd,amb_05_snd,amb_06_snd,amb_07_snd,amb_08_snd,amb_09_snd,amb_10_snd,amb_11_snd,amb_12_snd),global.vol_var,1);
+                        fmod_snd_loop_scr(choose(amb_01_snd,amb_02_snd,amb_03_snd,amb_04_snd,amb_05_snd,amb_06_snd,amb_07_snd,amb_08_snd,amb_09_snd,amb_10_snd,amb_11_snd,amb_12_snd));
                         global.zone_num_var = irandom(global.zone_len_var+global.story_zone_len_var-1);
                         if global.zone_num_var >= global.zone_len_var
                         { global.zone_var = global.story_zone_arr[global.zone_num_var-global.zone_len_var]; }
                         else { global.zone_var = global.zone_arr[global.zone_num_var]; }
                         global.count_var = get_count_scr();
-                        room_goto(hall_01_rm);
-                    }
-                    // Back
-                    case 6: { state_var = 2; event_user(0); break; }
-                }
-            }
-        }
+						
+						room_goto(save_rm_var);
+					}
+				}
+			}
+			
+			if keyboard_check_pressed(vk_backspace)
+			{
+				if button_state_var != 0
+				{
+					if show_message_ext('Are you sure you want to delete this file?','YES','NO','') = 1
+					{
+						local.name = string(ds_list_find_value(global.save_list,button_state_var-1));
+						
+						ds_list_delete(global.save_list,ds_list_find_index(global.save_list,string(local.name)));
+					
+						ini_open('saves.ini');
+					
+						ini_write_string('SAVES','SAVES',ds_list_write(global.save_list));
+					
+						ini_close();
+						
+						//file_delete(working_directory+'save_'+local.name+'.ini');
+						
+						file_delete('save_'+string(local.name)+'.ini');
+						
+						button_state_var = 0;
+						
+						button_str_arr[6] = -1;
+						button_str_arr[6,0] = 'BACK';
+					
+						local.save_index = 0;
+						local.name = '';
+						
+						repeat(ds_list_size(global.save_list))
+						{
+						local.name = string(ds_list_find_value(global.save_list,local.save_index));
+						button_str_arr[6,local.save_index+1] = local.name;
+						
+						local.save_index += 1;
+						}
+					}
+				}
+			}
+			break;
+		}
+		case 12: //Name Entry
+        {
+			subbgscroll_var += (1*global.delta_time_var);
+			
+			if subbgalpha_var < 1
+			subbgalpha_var += (0.04*global.delta_time_var);
+			
+			if keyboard_string = ' '
+			{
+				keyboard_string = '';
+			}
+			
+			if string_length(keyboard_string) > 20
+			{
+				keyboard_string = string_copy(keyboard_string,1,20);
+			}
+			
+			if keyboard_check_pressed(vk_escape)
+			{
+				state_var = 3;
+				event_user(0);
+			}
+			
+			if keyboard_check_pressed(vk_enter) and keyboard_string != ''
+			{
+				save_name_var = keyboard_string;
+				global.save_name_var = save_name_var;
+				global.rm_count_var = save_rm_count_var;
+				global.violence_var = save_violence_var;
+				global.note_var = save_note_var;
+				global.diff_var = save_diff_var;
+				global.custom_var = save_custom_var;
+				save_rm_var = hall_01_rm;
+				// Settings
+				global.stam_per_var = save_stam_per_var;
+				global.fall_var = save_fall_var;
+				global.lock_var = save_lock_var;
+				global.dmg_shake_var = save_dmg_shake_var;
+				global.multi_type_var = save_multi_type;
+				global.multi_min_var = save_multi_min;
+				global.multi_max_var = save_multi_max;
+				global.multi_start_var = save_multi_start;
+				global.multi_end_var = save_multi_end;
+				global.count_type_var = save_count_type;
+				global.count_min_var = save_count_min;
+				global.count_max_var = save_count_max;
+				global.count_start_var = save_count_start;
+				global.count_end_var = save_count_end;
+				global.mode_var = save_mode_var;
+				// Behavior stuff
+				global.default_type_var = save_type;
+				
+				
+				if save_player_type = -1
+				{ global.player_type_var = save_type; }
+				else { global.player_type_var = save_player_type; }
+				
+				if save_axe_type = -1
+				{ global.axe_type_var = save_type; }
+				else { global.axe_type_var = save_axe_type; }
+				
+				if save_gel_type = -1
+				{ global.gel_type_var = save_type; }
+				else { global.gel_type_var = save_gel_type; }
+				
+				if save_bug_type = -1
+				{ global.bug_type_var = save_type; }
+				else { global.bug_type_var = save_bug_type; }
+				
+				if save_ringu_type_var = -1
+				{ global.ringu_type_var = save_type_var; }
+				else { global.ringu_type_var = save_ringu_type_var; }
+				
+				if save_bab_type_var = -1
+				{ global.bab_type_var = save_type_var; }
+				else { global.bab_type_var = save_bab_type_var; }
+				
+				if save_pup_type_var = -1
+				{ global.pup_type_var = save_type_var; }
+				else { global.pup_type_var = save_pup_type_var; }
+				
+				if save_flesh_type_var = -1 { global.flesh_type_var = save_type_var; }
+				else { global.flesh_type_var = save_flesh_type_var; }
+				
+				if save_dl_type_var = -1
+				{ global.dl_type_var = save_type_var; }
+				else { global.dl_type_var = save_dl_type_var; }
+				
+				if save_taker_type_var = -1
+				{ global.taker_type_var = save_type_var; }
+				else { global.taker_type_var = save_taker_type_var; }
+				
+				if save_para_type_var = -1
+				{ global.para_type_var = save_type_var; }
+				else { global.para_type_var = save_para_type_var; }
+				
+				if save_fd_type_var = -1
+				{ global.fd_type_var = save_type_var; }
+				else { global.fd_type_var = save_fd_type_var; }
+				
+				if save_killer_type_var = -1
+				{ global.killer_type_var = save_type_var; }
+				else { global.killer_type_var = save_killer_type_var; }
+				
+				if save_mur_type_var = -1
+				{ global.mur_type_var = save_type_var; }
+				else { global.mur_type_var = save_mur_type_var; }
+				
+				if save_sg_type_var = -1
+				{ global.sg_type_var = save_type_var; }
+				else { global.sg_type_var = save_sg_type_var; }
+				
+				if save_body_type_var = -1
+				{ global.body_type_var = save_type_var; }
+				else { global.body_type_var = save_body_type_var; }
+				
+				if save_stem_type_var = -1
+				{ global.stem_type_var = save_type_var; }
+				else { global.stem_type_var = save_stem_type_var; }
+				
+				if save_patient_type_var = -1
+				{ global.patient_type_var = save_type_var; }
+				else { global.patient_type_var = save_patient_type_var; }
+				
+				if save_cow_type_var = -1
+				{ global.cow_type_var = save_type_var; }
+				else { global.cow_type_var = save_cow_type_var; }
+				
+				if save_bekka_type_var = -1
+				{ global.bekka_type_var = save_type_var; }
+				else { global.bekka_type_var = save_bekka_type_var; }
+				
+				if save_husk_type_var = -1
+				{ global.husk_type_var = save_type_var; }
+				else { global.husk_type_var = save_husk_type_var; }
+				
+				if save_wc_type_var = -1
+				{ global.wc_type_var = save_type_var; }
+				else { global.wc_type_var = save_wc_type_var; }
+				
+				if save_clown_type_var = -1
+				{ global.clown_type_var = save_type_var; }
+				else { global.clown_type_var = save_clown_type_var; }
+				
+				if save_hd_type_var = -1
+				{ global.hd_type_var = save_type_var; }
+				else { global.hd_type_var = save_hd_type_var; }
+				
+				if save_frenzy_type_var = -1
+				{ global.frenzy_type_var = save_type_var; }
+				else { global.frenzy_type_var = save_frenzy_type_var; }
+				
+				if save_real_ringu_type_var = -1
+				{ global.real_ringu_type_var = save_type_var; }
+				else { global.real_ringu_type_var = save_real_ringu_type_var; }
+				
+				if save_tiri_type = -1
+				{ global.tiri_type_var = save_type; }
+				else
+				{ global.tiri_type_var = save_tiri_type; }
+				
+				if save_lisa_type_var = -1
+				{ global.lisa_type_var = save_type_var; }
+				else { global.lisa_type_var = save_lisa_type_var; }
+				
+				if save_otto_type_var = -1
+				{ global.otto_type_var = save_type_var; }
+				else { global.otto_type_var = save_otto_type_var; }
+				
+				if save_spooper_type_var = -1
+				{ global.spooper_type_var = save_type_var; }
+				else { global.spooper_type_var = save_spooper_type_var; }
+				
+				if save_wf_type_var = -1
+				{ global.wf_type_var = save_type_var; }
+				else { global.wf_type_var = save_wf_type_var; }
+				
+				local.player = instance_create(0,0,global.player_obj);
+				local.hud = instance_create(0,0,global.hud_obj);
+				local.hud.par_var = local.player;
+				local.axe = instance_create(0,0,global.axe_obj);
+				local.axe.par_var = local.player;
+				fmod_snd_loop_scr(choose(amb_01_snd,amb_02_snd,amb_03_snd,amb_04_snd,amb_05_snd,amb_06_snd,amb_07_snd,amb_08_snd,amb_09_snd,amb_10_snd,amb_11_snd,amb_12_snd));
+				global.zone_num_var = irandom(global.zone_len_var+global.story_zone_len_var-1);
+				if global.zone_num_var >= global.zone_len_var
+				{ global.zone_var = global.story_zone_arr[global.zone_num_var-global.zone_len_var]; }
+				else { global.zone_var = global.zone_arr[global.zone_num_var]; }
+				global.count_var = get_count_scr();
+				
+				room_goto(save_rm_var);
+			}
+			break;
+		}
     }
 ");
 // Alarm 0
@@ -387,9 +1104,9 @@ object_event_add
         case 0: // Story
         {
             draw_background_stretched(path_bg_var,0,path_y_var,1280,720);
-            draw_background_stretched_ext(path_cloud_bg_var,path_cloud_x_var,path_cloud_y_var,720,720,c_white,0.5);
-            draw_background_stretched_ext(path_cloud_bg_var,path_cloud_x_var+720,path_cloud_y_var,720,720,c_white,0.5);
-            draw_background_stretched_ext(path_cloud_bg_var,path_cloud_x_var-720,path_cloud_y_var,720,720,c_white,0.5);
+            draw_background_stretched(path_cloud_bg_var,path_cloud_x_var,path_cloud_y_var,720,720);
+            draw_background_stretched(path_cloud_bg_var,path_cloud_x_var+720,path_cloud_y_var,720,720);
+            draw_background_stretched(path_cloud_bg_var,path_cloud_x_var-720,path_cloud_y_var,720,720);
             // Text
             draw_text_transformed(64,64,skip_str_var,0.3,0.3,0);
             draw_set_halign(fa_center); draw_set_color(c_red);
@@ -427,7 +1144,8 @@ object_event_add
             {
                 local.xtmp = 96+(string_width(button_str_arr[state_var,button_state_var])*0.375);
                 local.ytmp = 336+(96*button_state_var);
-                draw_set_halign(fa_center); draw_set_color(str_bg_select_color_var);
+                draw_set_halign(fa_center);
+				draw_set_color(str_bg_select_color_var);
                 draw_text_transformed(local.xtmp-4,local.ytmp+4,button_str_arr[state_var,button_state_var],str_scale_var,0.75,0);
                 draw_text_transformed(local.xtmp-2,local.ytmp+2,button_str_arr[state_var,button_state_var],str_scale_var,0.75,0);
                 draw_set_color(c_white);
@@ -440,36 +1158,442 @@ object_event_add
         }
         case 3: // Save Creation
         {
-            // Center text vertically
-            draw_set_valign(fa_middle);
+			local.scrolly_var = 0;
+			
+			draw_background_tiled_ext(sub_bg_arr[sub_bg_var],0,subbgscroll_var*-1,1,1,make_color_rgb(70,0,90),subbgalpha_var);
+			
+			draw_set_color(str_bg_color_var);
+			draw_text_transformed(706,24,'CREATE SAVE FILE',0.95,0.95,0);
+			draw_text_transformed(708,22,'CREATE SAVE FILE',0.95,0.95,0);
+			draw_set_color(c_yellow);
+			draw_text_transformed(710,20,'CREATE SAVE FILE',0.95,0.95,0);
+			draw_set_color(c_white);
+			
+			local.stat_display_var = '';
+			
             for (local.i=0; local.i<7; local.i+=1)
             {
                 if local.i != button_state_var
                 {
-                    // Determine position. Uses current selected button and current drawing button for offset
-                    local.xtmp = 96;
-                    local.ytmp = 360+(96*(local.i-button_state_var));
-                    // Draw text background
+                    local.ytmp = 192+(96*local.i)-(menuscroll_lerp_var);
                     draw_set_color(str_bg_color_var);
-                    draw_text_transformed(local.xtmp-4,local.ytmp+4,button_str_arr[state_var,local.i],0.75,0.75,0);
-                    draw_text_transformed(local.xtmp-2,local.ytmp+2,button_str_arr[state_var,local.i],0.75,0.75,0);
-                    // Draw text
+                    draw_text_transformed(92,local.ytmp+4,button_str_arr[state_var,local.i],0.75,0.75,0);
+                    draw_text_transformed(94,local.ytmp+2,button_str_arr[state_var,local.i],0.75,0.75,0);
                     draw_set_color(c_yellow);
-                    draw_text_transformed(local.xtmp,local.ytmp,button_str_arr[state_var,local.i],0.75,0.75,0);
+                    draw_text_transformed(96,local.ytmp,button_str_arr[state_var,local.i],0.75,0.75,0);
+					
+					switch local.i
+					{
+						case 1:
+						{	
+							switch save_mode_var
+							{
+								case 0:
+								{
+									local.stat_display_var = 'STORY';
+									break;
+								}
+								case 1:
+								{
+									local.stat_display_var = 'ENDLESS';
+									break;
+								}
+								case 2:
+								{
+									local.stat_display_var = 'SANBOX';
+									break;
+								}
+							}
+							break;
+						}
+						
+						case 2:
+						{
+							switch save_diff_var
+							{
+								case 0:
+								{
+									local.stat_display_var = 'EASIEST';
+									break;
+								}
+								case 1:
+								{
+									local.stat_display_var = 'EASY';
+									break;
+								}
+								case 2:
+								{
+									local.stat_display_var = 'NORMAL';
+									break;
+								}
+								case 3:
+								{
+									local.stat_display_var = 'HARD';
+									break;
+								}
+								case 4:
+								{
+									local.stat_display_var = 'HARDEST';
+									break;
+								}
+							}
+							break;
+						}
+						
+						case 3:
+						{
+							switch save_type
+							{
+								case 0:
+								{
+									local.stat_display_var = 'RECODE';
+									break;
+								}
+								case 1:
+								{
+									local.stat_display_var = 'OG';
+									break;
+								}
+								case 2:
+								{
+									local.stat_display_var = 'HD';
+									break;
+								}
+							}
+							break;
+						}
+						
+						case 4:
+						{
+							switch save_custom_var
+							{
+								case 0:
+								{
+									local.stat_display_var = 'NO';
+									break;
+								}
+								case 1:
+								{
+									local.stat_display_var = 'YES';
+									break;
+								}
+							}
+							break;
+						}
+						
+						default:
+						{
+							local.stat_display_var = '';
+						}
+					}
+					
+					if local.stat_display_var != ''
+					{
+						draw_set_color(str_bg_color_var);
+						draw_text_transformed(496,local.ytmp+4,string(local.stat_display_var),0.75,0.75,0);
+						draw_text_transformed(498,local.ytmp+2,string(local.stat_display_var),0.75,0.75,0);
+						draw_set_color(c_yellow);
+						draw_text_transformed(500,local.ytmp,string(local.stat_display_var),0.75,0.75,0);
+					}
                 }
             }
-            // Determine position. X is modified so the text can go boing properly
             local.xtmp = 96+(string_width(button_str_arr[state_var,button_state_var])*0.375);
-            local.ytmp = 360;
-            // Draw text background
+            local.ytmp = 192+(96*button_state_var)-(menuscroll_lerp_var);
             draw_set_halign(fa_center); draw_set_color(str_bg_select_color_var);
             draw_text_transformed(local.xtmp-4,local.ytmp+4,button_str_arr[state_var,button_state_var],str_scale_var,0.75,0);
             draw_text_transformed(local.xtmp-2,local.ytmp+2,button_str_arr[state_var,button_state_var],str_scale_var,0.75,0);
-            // Draw text
             draw_set_color(c_white);
             draw_text_transformed(local.xtmp,local.ytmp,button_str_arr[state_var,button_state_var],str_scale_var,0.75,0);
-            // Reset variables
-            draw_set_valign(fa_left); draw_set_halign(fa_left); 
+            draw_set_halign(fa_left); 
+			
+			switch button_state_var
+			{
+				case 1:
+				{	
+					switch save_mode_var
+					{
+						case 0:
+						{
+							local.stat_display_var = 'STORY';
+							break;
+						}
+						case 1:
+						{
+							local.stat_display_var = 'ENDLESS';
+							break;
+						}
+						case 2:
+						{
+							local.stat_display_var = 'SANBOX';
+							break;
+						}
+					}
+					break;
+				}
+				
+				case 2:
+				{
+					switch save_diff_var
+					{
+						case 0:
+						{
+							local.stat_display_var = 'EASIEST';
+							break;
+						}
+						case 1:
+						{
+							local.stat_display_var = 'EASY';
+							break;
+						}
+						case 2:
+						{
+							local.stat_display_var = 'NORMAL';
+							break;
+						}
+						case 3:
+						{
+							local.stat_display_var = 'HARD';
+							break;
+						}
+						case 4:
+						{
+							local.stat_display_var = 'HARDEST';
+							break;
+						}
+					}
+					break;
+				}
+				
+				case 3:
+				{
+					switch save_type
+					{
+						case 0:
+						{
+							local.stat_display_var = 'RECODE';
+							break;
+						}
+						case 1:
+						{
+							local.stat_display_var = 'OG';
+							break;
+						}
+						case 2:
+						{
+							local.stat_display_var = 'HD';
+							break;
+						}
+					}
+					break;
+				}
+				
+				case 4:
+				{
+					switch save_custom_var
+					{
+						case 0:
+						{
+							local.stat_display_var = 'NO';
+							break;
+						}
+						case 1:
+						{
+							local.stat_display_var = 'YES';
+							break;
+						}
+					}
+					break;
+				}
+				
+				default:
+				{
+					local.stat_display_var = '';
+				}
+			}
+			
+			if local.stat_display_var != ''
+			{
+				draw_set_color(str_bg_select_color_var);
+				draw_text_transformed(496,local.ytmp+4,string(local.stat_display_var),0.75,0.75,0);
+				draw_text_transformed(498,local.ytmp+2,string(local.stat_display_var),0.75,0.75,0);
+				draw_set_color(c_white);
+				draw_text_transformed(500,local.ytmp,string(local.stat_display_var),0.75,0.75,0);
+			}
+			
+			break;
         }
+		case 6: // Save Loads
+        {			
+			draw_background_tiled_ext(sub_bg_arr[sub_bg_var],0,subbgscroll_var*-1,1,1,make_color_rgb(70,0,90),subbgalpha_var);
+			
+			draw_set_color(str_bg_color_var);
+			draw_text_transformed(756,24,'LOAD SAVE FILE',0.95,0.95,0);
+			draw_text_transformed(758,22,'LOAD SAVE FILE',0.95,0.95,0);
+			draw_set_color(c_yellow);
+			draw_text_transformed(760,20,'LOAD SAVE FILE',0.95,0.95,0);
+			
+			
+			local.stat_display_var = '';
+			
+			if button_state_var != 0
+			{
+				draw_set_halign(fa_right);
+				draw_text_transformed(1232,125,'ROOM:'+string(save_rm_count_var),0.6,0.6,0);
+				
+				switch save_mode_var
+				{
+					case 0:
+					{
+						local.stat_display_var = 'STORY';
+						break;
+					}
+					case 1:
+					{
+						local.stat_display_var = 'ENDLESS';
+						break;
+					}
+					case 2:
+					{
+						local.stat_display_var = 'SANBOX';
+						break;
+					}
+				}
+				
+				draw_text_transformed(1232,200,'MODE:'+string(local.stat_display_var),0.6,0.6,0);
+				
+				switch save_diff_var
+				{
+					case 0:
+					{
+						local.stat_display_var = 'EASIEST';
+						break;
+					}
+					case 1:
+					{
+						local.stat_display_var = 'EASY';
+						break;
+					}
+					case 2:
+					{
+						local.stat_display_var = 'NORMAL';
+						break;
+					}
+					case 3:
+					{
+						local.stat_display_var = 'HARD';
+						break;
+					}
+					case 4:
+					{
+						local.stat_display_var = 'HARDEST';
+						break;
+					}
+				}
+					
+				draw_text_transformed(1232,275,'DIFFICULTY:'+string(local.stat_display_var),0.6,0.6,0);
+				
+				switch save_type
+				{
+					case 0:
+					{
+						local.stat_display_var = 'RECODE';
+						break;
+					}
+					case 1:
+					{
+						local.stat_display_var = 'OG';
+						break;
+					}
+					case 2:
+					{
+						local.stat_display_var = 'HD';
+						break;
+					}
+				}
+				
+				draw_text_transformed(1232,350,'BEHAVIOR:'+string(local.stat_display_var),0.6,0.6,0);
+				
+				switch save_custom_var
+				{
+					case 0:
+					{
+						local.stat_display_var = 'NO';
+						break;
+					}
+					case 1:
+					{
+						local.stat_display_var = 'YES';
+						break;
+					}
+				}
+				
+				draw_text_transformed(1232,425,'CUSTOM:'+string(local.stat_display_var),0.6,0.6,0);
+				
+				draw_set_halign(fa_left);
+			}
+			
+			draw_set_color(c_white);
+			draw_set_alpha(0.5);
+			
+			draw_text_transformed(855,690,'PRESS BACKSPACE TO DELETE A SAVE FILE',0.3,0.3,0);
+			
+			draw_set_alpha(1);
+			
+			for (local.i=0; local.i<(1+ds_list_size(global.save_list)); local.i+=1)
+            {
+                if local.i != button_state_var
+                {
+                    local.ytmp = 192+(96*local.i)-(menuscroll_lerp_var);
+                    draw_set_color(str_bg_color_var);
+                    draw_text_transformed(92,local.ytmp+4,button_str_arr[state_var,local.i],0.75,0.75,0);
+                    draw_text_transformed(94,local.ytmp+2,button_str_arr[state_var,local.i],0.75,0.75,0);
+                    draw_set_color(c_yellow);
+                    draw_text_transformed(96,local.ytmp,button_str_arr[state_var,local.i],0.75,0.75,0);
+				}
+			}
+			
+			local.xtmp = 96+(string_width(button_str_arr[state_var,button_state_var])*0.375);
+            local.ytmp = 192+(96*button_state_var)-(menuscroll_lerp_var);
+            draw_set_halign(fa_center); draw_set_color(str_bg_select_color_var);
+            draw_text_transformed(local.xtmp-4,local.ytmp+4,button_str_arr[state_var,button_state_var],str_scale_var,0.75,0);
+            draw_text_transformed(local.xtmp-2,local.ytmp+2,button_str_arr[state_var,button_state_var],str_scale_var,0.75,0);
+            draw_set_color(c_white);
+            draw_text_transformed(local.xtmp,local.ytmp,button_str_arr[state_var,button_state_var],str_scale_var,0.75,0);
+            draw_set_halign(fa_left); 
+			
+			break;
+		}
+		case 12: // Name Entry
+        {
+			draw_background_tiled_ext(sub_bg_arr[sub_bg_var],0,subbgscroll_var*-1,1,1,make_color_rgb(70,0,90),subbgalpha_var);
+			
+			draw_set_color(c_black);
+			draw_set_alpha(0.5);
+			draw_rectangle(340,330,940,420,0);
+			draw_set_color(c_white);
+			draw_set_alpha(1);
+			
+			draw_set_halign(fa_center);
+			draw_set_color(str_bg_color_var);
+			draw_text_transformed(636,24,'ENTER NAME',1,1,0);
+			draw_text_transformed(638,22,'ENTER NAME',1,1,0);
+			draw_set_color(c_yellow);
+			draw_text_transformed(640,20,'ENTER NAME',1,1,0);
+			draw_set_color(c_white);
+			draw_text_transformed(640,120,'PRESS ESC TO CANCEL',0.5,0.5,0);
+			
+			draw_text_transformed(640,350,keyboard_string,0.75,0.75,0);
+			
+			draw_set_alpha(0.5);
+			
+			draw_text_transformed(640,600,'WARNING: CHOOSING AN EXISTING SAVE NAME
+			WILL OVERWRITE THAT FILE.',0.3,0.3,0);
+			
+			draw_set_alpha(1);
+			
+			draw_set_halign(fa_left);
+			
+			break;
+		}
     }
 ");

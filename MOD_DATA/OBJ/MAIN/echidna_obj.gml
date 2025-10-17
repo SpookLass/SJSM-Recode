@@ -107,6 +107,20 @@ object_event_add
             case 2: { grid_var = global.float_grid; break; }
         }
     }
+    // Sounds
+    if do_snd_var
+    {
+        for (local.i=0; local.i<snd_len_var; local.i+=1;)
+        {
+            fmod_snd_set_minmax_dist_scr(snd_arr[local.i,0],0,snd_dist_var);
+            fmod_snd_set_group_scr(snd_arr[local.i,0],snd_group_mon_const);
+        }
+        if wake_snd_var[0]
+        {
+            fmod_snd_set_minmax_dist_scr(wake_snd_var[1],0,snd_dist_var);
+            fmod_snd_set_group_scr(wake_snd_var[1],snd_group_mon_const);
+        }
+    }
     // Alarms
     if alarm_len_var == 0
     { alarm_len_var = 8; }
@@ -126,19 +140,15 @@ object_event_add
     // Play wake (or random sound if it doesn't exist)
     if do_snd_var
     {
-        if snd_dist_var { snd_vol_var = global.vol_var*(1-(target_dist/snd_dist_var)); }
-        else { snd_vol_var = global.vol_var; }
         if wake_snd_var[0]
         {
-            /*snd_var = */
-            caster_play(wake_snd_var[1],snd_vol_var,1);
+            fmod_snd_play_scr(wake_snd_var[1]);
             sub_var = wake_snd_var[2];
         }
-        else
+        else if !snd_loop_var
         {
             local.snd = irandom(snd_len_var-1);
-            /*snd_var = */
-            caster_play(snd_arr[local.snd,0],snd_vol_var,1);
+            fmod_snd_3d_play_scr(snd_arr[local.snd,0]);
             sub_var = snd_arr[local.snd,1];
         }
     }
@@ -158,9 +168,12 @@ object_event_add
     event_inherited();
     if type_var > 0 && path_exists(path_var)
     { path_delete(path_var); }
-    for (local.i=0; local.i<snd_len_var; local.i+=1;)
-    { caster_free(snd_arr[local.i,0]); }
-    if wake_snd_var[0] { caster_free(wake_snd_var[1]); }
+    if instance_number(object_index) <= 1
+    {
+        for (local.i=0; local.i<snd_len_var; local.i+=1;)
+        { fmod_snd_free_scr(snd_arr[local.i,0]); }
+        if wake_snd_var[0] { fmod_snd_free_scr(wake_snd_var[1]); }
+    }
 ");
 // Room Start Event
 object_event_add
@@ -184,6 +197,9 @@ object_event_add
     set_motion_3d_scr(0,true,yaw_var,true,0,true);
     // Set target
     event_user(6);
+    // Sound
+    if do_snd_var && snd_loop_var
+    { fmod_inst_stop_scr(snd_var); }
     // Delay
     if delay_min_var > 0
     {
@@ -263,39 +279,11 @@ object_event_add
     on_var = true;
     if do_snd_var
     {
-        // event_perform(ev_alarm,6); // Don't play on room start, that was a stupid idea
-        set_alarm_scr(6,irandom_range(snd_alarm_min_var,snd_alarm_max_var));
+        if snd_loop_var { snd_var = fmod_snd_3d_loop_scr(snd_arr[0,0]); }
+        else { set_alarm_scr(6,irandom_range(snd_alarm_min_var,snd_alarm_max_var)); }
     }
     if type_var == 1 && enter_var
     {
-        // Shake all players
-        with player_obj
-        {
-            local.player = id;
-            switch (global.shake_type_var)
-            {
-                case shake_classic_const:
-                {
-                    with instance_create(0,0,shake_eff_obj)
-                    {
-                        player_var = local.player;
-                        mult_var = local.player.shake_pos_base_var;
-                        type_var = 0; // Constant
-                    }
-                    break;
-                }
-                case shake_modern_const:
-                {
-                    with instance_create(0,0,shake_eff_obj)
-                    {
-                        player_var = local.player;
-                        mult_var = local.player.shake_angle_base_var*median(0,1,(point_distance_3d_scr(x,y,z,other.x,other.y,other.z)-32)/600);
-                        type_var = 1; // Fade out
-                    }
-                    break;
-                }
-            }
-        }
         with door_entrance_obj
         {
             if !open_var && point_distance_3d_scr(x,y,z,other.x,other.y,other.z) < 32
@@ -304,6 +292,36 @@ object_event_add
                 mdl_path_var = door_broke_mdl_path;
                 direction += 180;
                 open_var = true;
+                // Shake all players
+                local.door = id;
+                with player_obj
+                {
+                    local.player = id;
+                    switch (global.shake_type_var)
+                    {
+                        case shake_classic_const:
+                        {
+                            with instance_create(0,0,shake_eff_obj)
+                            {
+                                player_var = local.player;
+                                mult_var = local.player.shake_pos_base_var;
+                                type_var = 0; // Constant
+                            }
+                            break;
+                        }
+                        case shake_modern_const:
+                        {
+                            local.mult = median(0,1,1-(point_distance_3d_scr(x,y,z,local.door.x,local.door.y,local.door.z)/600))
+                            with instance_create(0,0,shake_eff_obj)
+                            {
+                                player_var = local.player;
+                                mult_var = local.player.shake_angle_base_var*local.mult;
+                                type_var = 1; // Fade out
+                            }
+                            break;
+                        }
+                    }
+                }
             }
         }
     }
@@ -350,12 +368,10 @@ object_event_add
 // Sound alarm
 object_event_add
 (argument0,ev_alarm,6,"
-    if do_snd_var && frac_chance_scr(snd_num_var,snd_den_var)
+    if do_snd_var && !snd_loop_var && frac_chance_scr(snd_num_var,snd_den_var)
     {
         local.snd = irandom(snd_len_var-1);
-        if snd_dist_var { snd_vol_var = global.vol_var*(1-(target_dist/snd_dist_var)); }
-        else { snd_vol_var = global.vol_var; }
-        snd_var = caster_play(snd_arr[local.snd,0],snd_vol_var,1);
+        snd_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0]);
         sub_var = snd_arr[local.snd,1];
     }
     set_alarm_scr(6,irandom_range(snd_alarm_min_var,snd_alarm_max_var));
@@ -696,15 +712,7 @@ object_event_add
 // Sound update
 object_event_add
 (argument0,ev_other,ev_user9,"
-    if true//caster_is_playing(snd_var)
-    {
-        if snd_dist_var { snd_vol_var = global.vol_var*(1-(target_dist/snd_dist_var)); }
-        else { snd_vol_var = global.vol_var; }
-        local.dir = global.cam_yaw_var[0]-point_direction(x,y,global.cam_x_var[0],global.cam_y_var[0]);
-        snd_pan_var = -sin(degtorad(local.dir));
-        caster_set_volume(snd_var,snd_vol_var);
-        caster_set_panning(snd_var,snd_pan_var);
-    }
+    fmod_inst_set_pos_scr(snd_var,x,y,z);
 ");
 // Monster Collision
 object_event_add

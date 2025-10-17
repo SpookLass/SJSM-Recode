@@ -71,7 +71,7 @@ object_event_add
                         stay_var = true;
                         cam_id_var = local.player.cam_id_var;
                     }
-                    caster_play(choose(door_01_snd,door_02_snd,door_03_snd,door_04_snd),global.vol_var,1);
+                    fmod_snd_play_scr(choose(door_01_snd,door_02_snd,door_03_snd,door_04_snd));
                 }
                 else if !instance_exists(txt_obj)
                 {

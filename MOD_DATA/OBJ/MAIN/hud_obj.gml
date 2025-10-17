@@ -10,6 +10,15 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,0,"
     event_perform(ev_other,ev_room_start);
+    ini_open(global.lang_var);
+	rm_str_var = ini_read_string('UI','rm','UI_rm');
+    hp_str_var = ini_read_string('UI','hp','UI_hp');
+    stam_str_var = ini_read_string('UI','stam','UI_stam');
+    spd_str_var = ini_read_string('UI','spd','UI_spd');
+    health_str_var = ini_read_string('UI','health','UI_health');
+    stamina_str_var = ini_read_string('UI','stamina','UI_stamina');
+	ini_close();
+    
 ");
 // Room Start
 object_event_add
@@ -85,8 +94,8 @@ object_event_add
             case bar_hud_num_const:
             {
                 //draw_set_blend_mode_ext(bm_inv_dest_color,bm_zero);
-                local.hp_str = 'HP: '+string(round(par_var.hp_var))+' / '+string(par_var.hp_max_var);
-                local.stam_str = 'STAM: '+string(round(par_var.stam_var))+' / '+string(par_var.stam_max_var);
+                local.hp_str = hp_str_var+': '+string(round(par_var.hp_var))+' / '+string(par_var.hp_max_var);
+                local.stam_str = stam_str_var+': '+string(round(par_var.stam_var))+' / '+string(par_var.stam_max_var);
                 draw_set_valign(fa_middle);
                 draw_set_color(make_color_rgb(100,0,0));
                 for (local.i=0; local.i<4; local.i+=1;)
@@ -104,8 +113,8 @@ object_event_add
             }
             case bar_hud_old_const:
             {
-                local.hp_str = 'HEALTH: '+string(round(par_var.hp_var));
-                local.stam_str = 'STAMINA: '+string(round(par_var.stam_var));
+                local.hp_str = health_str_var+': '+string(round(par_var.hp_var));
+                local.stam_str = stamina_str_var+': '+string(round(par_var.stam_var));
                 draw_set_color(make_color_rgb(30,0,50));
                 draw_text_transformed(left_var-shadow_off_var,top_var+shadow_off_var,local.hp_str,scale_big_var,scale_big_var,0);
                 draw_text_transformed(left_var-shadow_off_var,(top_var*2)+shadow_off_var,local.stam_str,scale_big_var,scale_big_var,0);
@@ -138,7 +147,7 @@ object_event_add
         draw_set_halign(fa_right);
         if global.game_spd_var != 1
         {
-            local.str = 'SPEED: '+string(global.game_spd_var);
+            local.str = spd_str_var+': '+string(global.game_spd_var);
             draw_set_color(make_color_rgb(100,0,0));
             draw_text_transformed(right_var-shadow_off_var,bottom_var+shadow_off_var,local.str,scale_med_var,scale_med_var,0);
             draw_set_color(c_white);
@@ -146,7 +155,7 @@ object_event_add
         }
         draw_set_valign(fa_top);
         // Room Count
-        local.str = 'ROOM: '+string(global.rm_count_var);
+        local.str = rm_str_var+': '+string(global.rm_count_var);
         draw_set_color(make_color_rgb(30,0,50));
         draw_text_transformed(right_var-shadow_off_var,top_var+shadow_off_var,local.str,scale_big_var,scale_big_var,0);
         if global.rm_hud_var

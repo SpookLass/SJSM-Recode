@@ -15,7 +15,7 @@ object_event_add
 ");
 // Step event
 object_event_add
-(argument0,ev_step,ev_step_normal,"
+(argument0,ev_step,ev_step_begin,"
     // Get inputs
     // I know this looks bad, but keyboard_check_pressed doesn't persist between rooms
     global.forward_input_prev_var = global.forward_input_var;
@@ -273,14 +273,11 @@ object_event_add
         global.last_time_var = current_time;
         display_mouse_set(display_get_width()/2,display_get_height()/2);
     }
-    // Check for Gaster errors
-    if caster_error_occurred()
-    {
-        show_error(caster_error_message(),false);
-        global.last_time_var = current_time;
-        display_mouse_set(display_get_width()/2,display_get_height()/2);
-    }
 ");
+object_event_add(argument0,ev_step,ev_step_end,"
+    // Update FMOD!
+    FMODUpdate();
+")
 // Draw
 object_event_add
 (argument0,ev_draw,0,"

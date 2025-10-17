@@ -76,11 +76,17 @@ object_event_add
         ds_list_add(zone_list_var,long_hall_08_rm);
         ds_list_add(zone_list_var,long_hall_10_rm);
         ds_list_add(zone_list_var,long_hall_11_rm);
+        wake_snd_var[0] = true;
+        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\wf_wake_snd.mp3');
+        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\wf_snd.wav',true);
     }
     tex_02_var = background_get_texture(bg_var);
     web_tex_var = background_get_texture(web_bg_var);
     // Sounds
-    do_snd_var = -1; // At least for now
+    do_snd_var = 1; // At least for now
+    snd_loop_var = true;
+    snd_dist_var = 432; // 600
+    snd_len_var = 1;
     // White Face Specific
     vis_num_var = 2;
     vis_den_var = 3;
@@ -164,6 +170,8 @@ object_event_add
             // Smaller Resolution
             res_w_var = 640;
             res_h_var = 480;
+            // Dist
+            snd_dist_var = 600;
             break;
         }
         case 4: // Old HD
@@ -357,7 +365,6 @@ object_event_add
                 event_perform(ev_alarm,0);
                 set_alarm_scr(0,-1);
             }
-            
         }
         else if tp_spawn_var && frac_chance_scr(1,tp_spawn_chance_var)
         {
@@ -378,7 +385,12 @@ object_event_add
             }
         }
     }
-    else { on_var = false; set_alarm_scr(0,-1); }
+    else
+    {
+        on_var = false; 
+        set_alarm_scr(0,-1);
+        fmod_inst_stop_scr(snd_var);
+    }
     // Zone
     if zone_start_var > 0 && dur_start_var-dur_var >= zone_start_var-1
     {
@@ -681,6 +693,7 @@ object_event_add
     on_var = false;
     set_motion_3d_scr(0,true);
     set_alarm_scr(0,tp_alarm_var);
+    fmod_inst_stop_scr(snd_var);
 ");
 // Draw Event
 object_event_add

@@ -67,6 +67,8 @@ object_event_add
             other.bg_var = bg_var;
             other.mdl_01_var = mdl_01_var;
             other.mdl_02_var = mdl_02_var;
+            for (local.i=0; local.i<snd_len_var; local.i+=1;)
+            { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
             local.loaded = true;
             break;
         }
@@ -79,6 +81,11 @@ object_event_add
         mdl_02_var = d3d_model_create();
         d3d_model_load(mdl_01_var,main_directory_const+'\MDL\MON\stem_01_mdl.gmmod');
         d3d_model_load(mdl_02_var,main_directory_const+'\MDL\MON\stem_02_mdl.gmmod');
+        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\stem_01_snd.wav',true);
+        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\stem_02_snd.wav',true);
+        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\stem_03_snd.wav',true);
+        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\stem_04_snd.wav',true);
+        snd_arr[4,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\stem_05_snd.wav',true);
     }
     // Collision
     coll_var[0] = global.mon_wide_coll[0];
@@ -117,11 +124,6 @@ object_event_add
     inv_chance_var = 3;
     // Sounds
     snd_len_var = 5;
-    snd_arr[0,0] = caster_load(main_directory_const+'\SND\MON\stem_01_snd.ogg');
-    snd_arr[1,0] = caster_load(main_directory_const+'\SND\MON\stem_02_snd.ogg');
-    snd_arr[2,0] = caster_load(main_directory_const+'\SND\MON\stem_03_snd.ogg');
-    snd_arr[3,0] = caster_load(main_directory_const+'\SND\MON\stem_04_snd.ogg');
-    snd_arr[4,0] = caster_load(main_directory_const+'\SND\MON\stem_05_snd.ogg');
     snd_num_var = 1;
     snd_den_var = 1;
     snd_alarm_min_var = 200;

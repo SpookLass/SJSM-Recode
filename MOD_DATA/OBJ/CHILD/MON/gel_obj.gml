@@ -46,6 +46,9 @@ object_event_add
         {
             other.spr_var = spr_var;
             other.slime_bg_var = slime_bg_var;
+            for (local.i=0; local.i<snd_len_var; local.i+=1;)
+            { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
+            other.wake_snd_var[1] = wake_snd_var[1];
             local.loaded = true;
             break;
         }
@@ -55,15 +58,15 @@ object_event_add
     {
         spr_var = sprite_add(vanilla_directory_const+'\TEX\sprites\MS_01_spr.png',5,false,false,0,0);
         slime_bg_var = background_add(main_directory_const+'\BG\MON\gel_slime_bg.png',false,false);
+        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\gel_01_snd.wav',true);
+        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\gel_02_snd.wav',true);
+        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\gel_03_snd.wav',true);
+        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\gel_04_snd.wav',true);
+        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\gel_wake_snd.wav');
     }
     // Sounds
     snd_len_var = 4;
-    snd_arr[0,0] = caster_load(main_directory_const+'\SND\MON\gel_01_snd.ogg');
-    snd_arr[1,0] = caster_load(main_directory_const+'\SND\MON\gel_02_snd.ogg');
-    snd_arr[2,0] = caster_load(main_directory_const+'\SND\MON\gel_03_snd.ogg');
-    snd_arr[3,0] = caster_load(main_directory_const+'\SND\MON\gel_04_snd.ogg');
     wake_snd_var[0] = true; // Has a wake sound, otherwise it'll use a normal sound
-    wake_snd_var[1] = caster_load(main_directory_const+'\SND\MON\gel_wake_snd.ogg');
     snd_num_var = 1;
     snd_den_var = 2;
     snd_alarm_min_var = 80;
@@ -307,6 +310,7 @@ object_event_add
     event_inherited();
     if do_slime_spawn_var && stun_var
     {
+        fmod_snd_play_scr(claw_snd);
         slime_spawn_var = 1;
         set_alarm_scr(8,hurt_alarm_var);
         if hurt_eff_var

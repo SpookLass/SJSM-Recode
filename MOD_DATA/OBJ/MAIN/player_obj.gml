@@ -533,17 +533,28 @@ object_event_add
                 }
             }
         }
+        // Set camera and listener position
+        cam_set_scr(cam_id_var,cam_x_var,cam_y_var,cam_z_var,cam_yaw_var,cam_pitch_var,current_fov_var,cam_roll_var);
+        // Could put this in control, but needs extra camera boolean
+        fmod_listen_pos_ex_scr
+        (
+            cam_id_var+1,
+            global.cam_x_var[cam_id_var],global.cam_y_var[cam_id_var],global.cam_z_var[cam_id_var],
+            global.cam_fx_var[cam_id_var],global.cam_fy_var[cam_id_var],global.cam_fz_var[cam_id_var],
+            global.cam_ux_var[cam_id_var],global.cam_uy_var[cam_id_var],global.cam_uz_var[cam_id_var],
+        )
     }
 ");
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,"
-    draw_cam_scr(cam_id_var,cam_x_var,cam_y_var,cam_z_var,cam_yaw_var,cam_pitch_var,current_fov_var,cam_roll_var);
+    cam_draw_scr(cam_id_var);
 ");
 // Hurt
 object_event_add
 (argument0,ev_other,ev_user0,"
     // Play hurt noise, flash red, shake screen, etc
+    fmod_snd_play_scr(claw_snd);
     with instance_create(0,0,flash_eff_obj)
     {
         image_blend = c_red; 

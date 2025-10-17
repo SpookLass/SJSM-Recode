@@ -42,6 +42,9 @@ object_event_add
             other.spr_var = spr_var;
             other.eff_spr_01_var = eff_spr_01_var;
             other.eff_spr_02_var = eff_spr_02_var;
+            for (local.i=0; local.i<snd_len_var; local.i+=1;)
+            { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
+            other.wake_snd_var[1] = wake_snd_var[1];
             local.loaded = true;
             break;
         }
@@ -52,13 +55,15 @@ object_event_add
         spr_var = sprite_add(vanilla_directory_const+'\TEX\sprites\MS9_01_spr.png',12,false,false,0,0);
         eff_spr_01_var = sprite_add(vanilla_directory_const+'\TEX\sprites\MS9_02_spr.png',3,0,0,0,0);
         eff_spr_02_var = sprite_add(vanilla_directory_const+'\TEX\sprites\MS9_03_spr.png',19,0,0,0,0);
+        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\fd_01_snd.wav',true);
+        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\fd_02_snd.wav',true);
+        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\fd_03_snd.wav',true);
+        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\fd_04_snd.wav',true);
+        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\fd_wake_snd.wav',true);
     }
     // Sounds
     snd_len_var = 4;
-    snd_arr[0,0] = caster_load(main_directory_const+'\SND\MON\ringu_01_snd.ogg');
-    snd_arr[1,0] = caster_load(main_directory_const+'\SND\MON\ringu_02_snd.ogg');
-    snd_arr[2,0] = caster_load(main_directory_const+'\SND\MON\ringu_03_snd.ogg');
-    snd_arr[3,0] = caster_load(main_directory_const+'\SND\MON\ringu_04_snd.ogg');
+    
     snd_num_var = 1;
     snd_den_var = 2;
     snd_alarm_min_var = 80;
@@ -198,7 +203,7 @@ object_event_add
 (argument0,ev_step,ev_step_normal,"
     if hurt_var
     {
-        if hurt_spd_var != 1 { spd_mult_var *= hurt_spd_var; }
+        if hurt_spd_var != 1 && move_var { spd_mult_var *= hurt_spd_var; }
         if alarm_arr[3,0] > 0 && hurt_tp_var == 2
         {
             local.per = alarm_arr[3,0]/alarm_arr[3,1]
@@ -210,7 +215,7 @@ object_event_add
     }
     if seen_var == 1 && target_dist_var < seen_dist_var
     {
-        spd_mult_var *= seen_spd_mult_var;
+        if move_var { spd_mult_var *= seen_spd_mult_var; }
         spr_spd_var = spr_spd_seen_var;
         anim_type_var = 3;
     }
@@ -220,6 +225,7 @@ object_event_add
         anim_type_var = 0;
     }
     event_inherited();
+    spd_mult_var = 1;
 ");
 // Sound alarm
 object_event_add
@@ -304,6 +310,7 @@ object_event_add
     local.dist = random_range(tp_dist_min_var,tp_dist_max_var);
     x = target_x_var+lengthdir_x(local.dist,local.dir);
     y = target_y_var+lengthdir_y(local.dist,local.dir);
+    z = target_z_var;
 ");
 // Draw
 object_event_add

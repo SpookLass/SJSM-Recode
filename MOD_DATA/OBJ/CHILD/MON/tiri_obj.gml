@@ -47,6 +47,9 @@ object_event_add
             other.spr_var = spr_var;
             other.bg_overlay_var = bg_overlay_var;
             other.shadow_spr_var = shadow_spr_var;
+            for (local.i=0; local.i<snd_len_var; local.i+=1;)
+            { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
+            other.wake_snd_var[1] = wake_snd_var[1];
             local.loaded = true;
             break;
         }
@@ -57,6 +60,11 @@ object_event_add
         spr_var = sprite_add(vanilla_directory_const+'\TEX\sprites\MS24_01_spr.png',8,false,false,0,0);
         bg_overlay_var = background_add(vanilla_directory_const+'\TEX\sprites\fog2_spr.png',false,false);
         shadow_spr_var = sprite_add(vanilla_directory_const+'\TEX\sprites\MS24_02_spr.png',9,false,false,0,0);
+        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\tiri_01_snd.wav',true);
+        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\tiri_02_snd.wav',true);
+        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\tiri_03_snd.wav',true);
+        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\tiri_04_snd.wav',true);
+        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\tiri_wake_snd.wav');
     }
     // Coward
     do_coward_var = true;
@@ -78,10 +86,6 @@ object_event_add
     shadow_den_var = 2;
     // Sounds
     snd_len_var = 4;
-    snd_arr[0,0] = caster_load(main_directory_const+'\SND\MON\ringu_01_snd.ogg');
-    snd_arr[1,0] = caster_load(main_directory_const+'\SND\MON\ringu_02_snd.ogg');
-    snd_arr[2,0] = caster_load(main_directory_const+'\SND\MON\ringu_03_snd.ogg');
-    snd_arr[3,0] = caster_load(main_directory_const+'\SND\MON\ringu_04_snd.ogg');
     snd_num_var = 1;
     snd_den_var = 3;
     snd_alarm_min_var = 200;

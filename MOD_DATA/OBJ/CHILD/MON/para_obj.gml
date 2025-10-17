@@ -66,6 +66,9 @@ object_event_add
             other.state_spr_var[2] = state_spr_var[2];
             other.spr_eff_var = spr_eff_var;
             other.spr_overlay_var = spr_overlay_var;
+            for (local.i=0; local.i<snd_len_var; local.i+=1;)
+            { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
+            other.wake_snd_var[1] = wake_snd_var[1];
             local.loaded = true;
             break;
         }
@@ -78,13 +81,14 @@ object_event_add
         state_spr_var[2] = sprite_add(vanilla_directory_const+'\TEX\sprites\MS8_03_spr.png',7,false,false,0,0);
         spr_eff_var = sprite_add(main_directory_const+'\SPR\MON\para_eff_spr.png',19,false,false,0,0);
         spr_overlay_var = sprite_add(main_directory_const+'\SPR\MON\para_overlay_spr.png',3,false,false,0,0);
+        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\para_01_snd.wav',true);
+        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\para_02_snd.wav',true);
+        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\para_03_snd.wav',true);
+        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\para_04_snd.wav',true);
+        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\para_wake_snd.wav');
     }
     // Sounds
     snd_len_var = 4;
-    snd_arr[0,0] = caster_load(main_directory_const+'\SND\MON\para_01_snd.ogg');
-    snd_arr[1,0] = caster_load(main_directory_const+'\SND\MON\para_02_snd.ogg');
-    snd_arr[2,0] = caster_load(main_directory_const+'\SND\MON\para_03_snd.ogg');
-    snd_arr[3,0] = caster_load(main_directory_const+'\SND\MON\para_04_snd.ogg');
     snd_num_var = 1;
     snd_den_var = 2;
     snd_alarm_min_var = 80;
@@ -155,7 +159,7 @@ object_event_add
             state_spd_var[2] = 1.6; // 1.8
             state_chance_var[2] = 1;
             state_acc_var[2] = true;
-            state_dmg_alarm_var[2] = 60;
+            // state_dmg_alarm_var[2] = 60;
             state_dmg_var[2] = 20;
             state_rm_var = true;
             state_dur_var = 8;

@@ -55,6 +55,8 @@ object_event_add
         {
             other.spr_var = spr_var;
             local.loaded = true;
+            for (local.i=0; local.i<snd_len_var; local.i+=1;)
+            { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
             break;
         }
     }
@@ -62,13 +64,14 @@ object_event_add
     if !local.loaded
     {
         spr_var = sprite_add(vanilla_directory_const+'\TEX\sprites\MS26_01_spr.png',3,false,false,0,0);
+        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\otto_01_snd.wav',true);
+        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\otto_02_snd.wav',true);
+        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\otto_03_snd.wav',true);
+        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\otto_04_snd.wav',true);
     }
     // Sounds
     snd_len_var = 4;
-    snd_arr[0,0] = caster_load(main_directory_const+'\SND\MON\otto_01_snd.ogg');
-    snd_arr[1,0] = caster_load(main_directory_const+'\SND\MON\otto_02_snd.ogg');
-    snd_arr[2,0] = caster_load(main_directory_const+'\SND\MON\otto_03_snd.ogg');
-    snd_arr[3,0] = caster_load(main_directory_const+'\SND\MON\otto_04_snd.ogg');
+    
     snd_num_var = 1;
     snd_den_var = 2;
     snd_alarm_min_var = 300;

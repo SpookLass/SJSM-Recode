@@ -40,10 +40,6 @@ object_event_add
     h_var = 22;
     // Sounds
     snd_len_var = 4;
-    snd_arr[0,0] = caster_load(main_directory_const+'\SND\MON\ringu_01_snd.ogg');
-    snd_arr[1,0] = caster_load(main_directory_const+'\SND\MON\ringu_02_snd.ogg');
-    snd_arr[2,0] = caster_load(main_directory_const+'\SND\MON\ringu_03_snd.ogg');
-    snd_arr[3,0] = caster_load(main_directory_const+'\SND\MON\ringu_04_snd.ogg');
     snd_num_var = 1;
     snd_den_var = 2;
     snd_alarm_min_var = 80;
@@ -56,7 +52,7 @@ object_event_add
     {
         if id != other.id
         {
-            local.loaded = true;
+            
             other.spr_arr_var[0,0] = spr_arr_var[0,0];
             other.spr_arr_var[8,0] = spr_arr_var[8,0];
             if other.do_turn_var
@@ -76,6 +72,9 @@ object_event_add
                 other.spr_arr_var[14,0] = spr_arr_var[14,0];
                 other.spr_arr_var[15,0] = spr_arr_var[15,0];
             }
+            for (local.i=0; local.i<snd_len_var; local.i+=1;)
+            { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
+            local.loaded = true;
             break;
         }
     }
@@ -133,6 +132,10 @@ object_event_add
             spr_arr_var[15,1] = 11;
             spr_arr_var[15,2] = 11;
         }
+        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\ringu_01_snd.ogg',true);
+        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\ringu_02_snd.ogg',true);
+        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\ringu_03_snd.ogg',true);
+        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\ringu_04_snd.ogg',true);
     }
     spr_var = spr_arr_var[0,0];
     w_01_var = spr_arr_var[0,1];

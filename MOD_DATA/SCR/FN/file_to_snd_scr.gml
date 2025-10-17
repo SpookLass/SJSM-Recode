@@ -9,7 +9,7 @@ if argument0 != "" && file_exists(argument0)
 {
     if argument2 { show_message("Initialized sound at "+argument1); }
     // Add the sprite
-    local.snd = caster_load(argument0);
+    local.snd = fmod_snd_add_scr(argument0);
     // Add sprite to variable using execute_string
     execute_string
     (
