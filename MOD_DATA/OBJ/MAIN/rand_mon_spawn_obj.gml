@@ -29,7 +29,8 @@ object_event_add // ev_create,0
                 for (local.i=0; local.i<ds_list_size(global.mon_curr_list); local.i+=1;)
                 {
                     local.mon = ds_list_find_value(global.mon_curr_list,local.i);
-                    if local.mon.dupe_var < global.dupe_var
+                    if global.dupe_var == dupe_never_const || local.mon.dupe_var == dupe_never_const
+                    || (global.dupe_var == dupe_canon_const && local.mon.dupe_var != dupe_canon_const)
                     {
                         local.index = ds_list_find_index(global.mon_spawn_list,local.mon);
                         if local.index != -1 { ds_list_delete(global.mon_spawn_list,local.index); }
@@ -40,7 +41,8 @@ object_event_add // ev_create,0
                 {
                     local.mon = ds_list_find_value(global.mon_spawn_list,irandom(local.size-1));
                     ds_list_add(global.mon_curr_list,local.mon);
-                    if local.mon.dupe_var < global.dupe_var
+                    if global.dupe_var == dupe_never_const || local.mon.dupe_var == dupe_never_const
+                    || (global.dupe_var == dupe_canon_const && local.mon.dupe_var != dupe_canon_const)
                     {
                         local.index = ds_list_find_index(global.mon_spawn_list,local.mon);
                         if local.index != -1 { ds_list_delete(global.mon_spawn_list,local.index); }
@@ -53,7 +55,7 @@ object_event_add // ev_create,0
             }
             else
             {
-                if !irandom(global.mon_chance_var-1-global.mon_fail_var)
+                if !irandom(global.mon_chance_var+(global.mon_chance_mult_var*local.mons)-1-global.mon_fail_var)
                 {
                     ds_list_clear(global.mon_spawn_list);
                     ds_list_copy(global.mon_spawn_list,global.mon_list);

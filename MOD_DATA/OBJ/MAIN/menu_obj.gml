@@ -144,7 +144,6 @@ object_event_add
         
         if local.wall_index < 10 { local.finalwall_index = '0'+string(local.wall_index); }
         else { local.finalwall_index = string(local.wall_index); }
-	
 	}
 	
 	local.wall_index = 1;
@@ -183,101 +182,230 @@ object_event_add
     skip_str_var = 'Press Confirm to Skip.'; // Maybe get a string of the key?
     confirm_str_var = 'PRESS CONFIRM';
     story_str_var = 'For as long as you can remember, legends have been told about the derelict mansion upon the hill that casts a blanket of darkness over the town. The history of the house itself is virtually unknown, and even the towns oldest residents cannot remember the mansions origin. Being an avid history enthusiast, you embark up the mountain to visit the manor. Hoping to shed some light on the backstory of this crumbling fortress of darkness.';
+    back_str_var = ini_read_string('MENU','back','MENU_back');
     str_bg_color_var = make_color_rgb(57,0,91);
     str_bg_select_color_var = make_color_rgb(138,0,0);
     // Button Text
         // Main
-    button_str_arr[2,0] = 'NEW GAME';
-    button_str_arr[2,1] = 'LOAD GAME';
-    button_str_arr[2,2] = 'SCORES';
-    button_str_arr[2,3] = 'EXIT';
-    button_str_arr[2,4] = 'SETTINGS';
-    button_str_arr[2,5] = 'CONFIG';
+    button_str_arr[2,0] = ini_read_string('MENU','ng','MENU_ng');
+    button_str_arr[2,1] = ini_read_string('MENU','lg','MENU_lg');
+    button_str_arr[2,2] = ini_read_string('MENU','score','MENU_score');
+    button_str_arr[2,3] = ini_read_string('MENU','exit','MENU_exit');
+    button_str_arr[2,4] = ini_read_string('MENU','setting','MENU_setting');
+    button_str_arr[2,5] = 'CONFIG'; // Might scrap
         // Save Creation
-    button_str_arr[3,0] = 'PLAY';
-    button_str_arr[3,1] = 'MODE';
-    button_str_arr[3,2] = 'DIFFICULTY';
-    button_str_arr[3,3] = 'BEHAVIOR';
-    button_str_arr[3,4] = 'CUSTOM';
-    button_str_arr[3,5] = 'CUSTOMIZE';
-    button_str_arr[3,6] = 'BACK';
+    button_str_arr[3,0] = ini_read_string('MENU','play','MENU_play');
+    button_str_arr[3,1] = ini_read_string('MENU','mode','MENU_mode');
+    button_str_arr[3,2] = ini_read_string('MENU','diff','MENU_diff');
+    button_str_arr[3,3] = ini_read_string('MENU','type','MENU_type');
+    button_str_arr[3,4] = ini_read_string('MENU','custom','MENU_custom');
+    button_str_arr[3,5] = ini_read_string('MENU','customize','MENU_customize');
+    button_str_arr[3,6] = back_str_var;
         // Ditto (Customize)
-    button_str_arr[4,0] = 'CROUCH';
-    button_str_arr[4,1] = 'JUMP';
-    button_str_arr[4,2] = 'STAMINA';
-    button_str_arr[4,3] = 'FALL';
-    button_str_arr[4,4] = 'LOCK';
-    button_str_arr[4,5] = 'DAMAGE SHAKE';
-    button_str_arr[4,6] = 'MULTICHASE TYPE';
-    button_str_arr[4,7] = 'MULTICHASE MIN';
-    button_str_arr[4,8] = 'MULTICHASE MAX';
-    button_str_arr[4,9] = 'MULTICHASE START';
-    button_str_arr[4,10] = 'MULTICHASE END';
-    button_str_arr[4,11] = 'COUNT TYPE';
-    button_str_arr[4,12] = 'COUNT MIN';
-    button_str_arr[4,13] = 'COUNT MAX';
-    button_str_arr[4,14] = 'COUNT START';
-    button_str_arr[4,15] = 'COUNT END';
-    button_str_arr[4,16] = 'BEHAVIOR';
+    button_str_arr[4,0] = ini_read_string('MENU','crouch','MENU_crouch');
+    button_str_arr[4,1] = ini_read_string('MENU','jump','MENU_jump');
+    button_str_arr[4,2] = ini_read_string('MENU','stam_per','MENU_stam_per');
+    button_str_arr[4,3] = ini_read_string('MENU','fall','MENU_fall');
+    button_str_arr[4,4] = ini_read_string('MENU','lock','MENU_lock');
+    button_str_arr[4,5] = ini_read_string('MENU','dmg_shake','MENU_dmg_shake');
+    button_str_arr[4,6] = ini_read_string('MENU','mult_type','MENU_mult_type');
+    button_str_arr[4,7] = ini_read_string('MENU','mult_min','MENU_mult_min');
+    button_str_arr[4,8] = ini_read_string('MENU','mult_max','MENU_mult_max');
+    button_str_arr[4,9] = ini_read_string('MENU','mult_start','MENU_mult_start');
+    button_str_arr[4,10] = ini_read_string('MENU','mult_end','MENU_mult_end');
+    button_str_arr[4,11] = ini_read_string('MENU','mult_type','MENU_mult_type');
+    button_str_arr[4,12] = ini_read_string('MENU','count_min','MENU_count_min');
+    button_str_arr[4,13] = ini_read_string('MENU','count_max','MENU_count_max');
+    button_str_arr[4,14] = ini_read_string('MENU','count_start','MENU_count_start');
+    button_str_arr[4,15] = ini_read_string('MENU','count_end','MENU_count_end');
+    button_str_arr[4,16] = ini_read_string('MENU','dupe','MENU_dupe');
+    button_str_arr[4,17] = ini_read_string('MENU','chance','MENU_chance');
+    button_str_arr[4,18] = ini_read_string('MENU','chance_mult','MENU_chance_mult');
+    button_str_arr[4,19] = ini_read_string('MENU','type','MENU_type');
+    button_str_arr[4,20] = back_str_var;
         // Behavior
     button_str_arr[5,0] = 'PLAYER';
     button_str_arr[5,1] = 'AXE';
-    /*
     switch global.name_var
     {
-        case name_og_const
+        case name_og_const:
         {
             button_str_arr[5,2] = string_upper(ini_read_string('NAME','gel','NAME_gel'));
             button_str_arr[5,3] = string_upper(ini_read_string('NAME','bug_og','NAME_bug_og'));
             button_str_arr[5,4] = string_upper(ini_read_string('NAME','ringu','NAME_ringu'));
-            button_str_arr[5,5] = string_upper(ini_read_string('NAME','pup_og','NAME_pup_og'));
+            button_str_arr[5,5] = string_upper(ini_read_string('NAME','bab','NAME_bab'));
+            button_str_arr[5,6] = string_upper(ini_read_string('NAME','pup_og','NAME_pup_og'));
+            button_str_arr[5,7] = string_upper(ini_read_string('NAME','flesh','NAME_flesh'));
+            button_str_arr[5,8] = string_upper(ini_read_string('NAME','dl','NAME_dl'));
+            button_str_arr[5,9] = string_upper(ini_read_string('NAME','taker','NAME_taker'));
+            button_str_arr[5,10] = string_upper(ini_read_string('NAME','para','NAME_para'));
+            button_str_arr[5,11] = string_upper(ini_read_string('NAME','fd','NAME_fd'));
+            button_str_arr[5,12] = string_upper(ini_read_string('NAME','killer_og','NAME_killer_og'));
+            button_str_arr[5,13] = string_upper(ini_read_string('NAME','mur','NAME_mur'));
+            button_str_arr[5,14] = string_upper(ini_read_string('NAME','sg','NAME_sg'));
+            button_str_arr[5,15] = string_upper(ini_read_string('NAME','bodybag','NAME_bodybag'));
+            button_str_arr[5,16] = string_upper(ini_read_string('NAME','stem_og','NAME_stem_og'));
+            button_str_arr[5,17] = string_upper(ini_read_string('NAME','patient_og','NAME_patient_og'));
+            button_str_arr[5,18] = string_upper(ini_read_string('NAME','gc','NAME_gc'));
+            button_str_arr[5,19] = string_upper(ini_read_string('NAME','bekka','NAME_bekka'));
+            button_str_arr[5,20] = string_upper(ini_read_string('NAME','husk_og','NAME_husk_og'));
+            button_str_arr[5,25] = string_upper(ini_read_string('NAME','real_ringu_og','NAME_real_ringu_og'));
+            button_str_arr[5,26] = string_upper(ini_read_string('NAME','tiri','NAME_tiri'));
+            button_str_arr[5,27] = string_upper(ini_read_string('NAME','lisa','NAME_lisa'));
+            button_str_arr[5,28] = string_upper(ini_read_string('NAME','otto_og','NAME_otto_og'));
+            button_str_arr[5,29] = string_upper(ini_read_string('NAME','spooper','NAME_spooper'));
+            button_str_arr[5,30] = string_upper(ini_read_string('NAME','wf','NAME_wf'));
+        }
+        case name_hd_const:
+        {
+            button_str_arr[5,2] = string_upper(ini_read_string('NAME','gel','NAME_gel'));
+            button_str_arr[5,3] = string_upper(ini_read_string('NAME','bug_hd','NAME_bug_hd'));
+            button_str_arr[5,4] = string_upper(ini_read_string('NAME','ringu','NAME_ringu'));
+            button_str_arr[5,5] = string_upper(ini_read_string('NAME','bab','NAME_bab'));
+            button_str_arr[5,6] = string_upper(ini_read_string('NAME','pup_hd','NAME_pup_hd'));
+            button_str_arr[5,7] = string_upper(ini_read_string('NAME','flesh','NAME_flesh'));
+            button_str_arr[5,8] = string_upper(ini_read_string('NAME','dl','NAME_dl'));
+            button_str_arr[5,9] = string_upper(ini_read_string('NAME','taker','NAME_taker'));
+            button_str_arr[5,10] = string_upper(ini_read_string('NAME','para','NAME_para'));
+            button_str_arr[5,11] = string_upper(ini_read_string('NAME','fd','NAME_fd'));
+            button_str_arr[5,12] = string_upper(ini_read_string('NAME','killer_hd','NAME_killer_hd'));
+            button_str_arr[5,13] = string_upper(ini_read_string('NAME','mur','NAME_mur'));
+            button_str_arr[5,14] = string_upper(ini_read_string('NAME','sg','NAME_sg'));
+            button_str_arr[5,15] = string_upper(ini_read_string('NAME','bodybag','NAME_bodybag'));
+            button_str_arr[5,16] = string_upper(ini_read_string('NAME','stem_hd','NAME_stem_hd'));
+            button_str_arr[5,17] = string_upper(ini_read_string('NAME','patient_hd','NAME_patient_hd'));
+            button_str_arr[5,18] = string_upper(ini_read_string('NAME','gc','NAME_gc'));
+            button_str_arr[5,19] = string_upper(ini_read_string('NAME','bekka','NAME_bekka'));
+            button_str_arr[5,20] = string_upper(ini_read_string('NAME','husk_hd','NAME_husk_hd'));
+            button_str_arr[5,25] = string_upper(ini_read_string('NAME','real_ringu_hd','NAME_real_ringu_hd'));
+            button_str_arr[5,26] = string_upper(ini_read_string('NAME','tiri','NAME_tiri'));
+            button_str_arr[5,27] = string_upper(ini_read_string('NAME','lisa','NAME_lisa'));
+            button_str_arr[5,28] = string_upper(ini_read_string('NAME','otto_hd','NAME_otto_hd'));
+            button_str_arr[5,29] = string_upper(ini_read_string('NAME','spooper','NAME_spooper'));
+            button_str_arr[5,30] = string_upper(ini_read_string('NAME','wf','NAME_wf'));
+        }
+        case name_fanon_const:
+        {
+            button_str_arr[5,2] = string_upper(ini_read_string('NAME','gel','NAME_gel'));
+            button_str_arr[5,3] = string_upper(ini_read_string('NAME','bug_fanon','NAME_bug_fanon'));
+            button_str_arr[5,4] = string_upper(ini_read_string('NAME','ringu','NAME_ringu'));
+            button_str_arr[5,5] = string_upper(ini_read_string('NAME','bab','NAME_bab'));
+            button_str_arr[5,6] = string_upper(ini_read_string('NAME','pup_fanon','NAME_pup_fanon'));
+            button_str_arr[5,7] = string_upper(ini_read_string('NAME','flesh','NAME_flesh'));
+            button_str_arr[5,8] = string_upper(ini_read_string('NAME','dl','NAME_dl'));
+            button_str_arr[5,9] = string_upper(ini_read_string('NAME','taker','NAME_taker'));
+            button_str_arr[5,10] = string_upper(ini_read_string('NAME','para','NAME_para'));
+            button_str_arr[5,11] = string_upper(ini_read_string('NAME','fd','NAME_fd'));
+            button_str_arr[5,12] = string_upper(ini_read_string('NAME','killer_hd','NAME_killer_hd'));
+            button_str_arr[5,13] = string_upper(ini_read_string('NAME','mur','NAME_mur'));
+            button_str_arr[5,14] = string_upper(ini_read_string('NAME','sg','NAME_sg'));
+            button_str_arr[5,15] = string_upper(ini_read_string('NAME','bodybag_fanon','NAME_bodybag_fanon'));
+            button_str_arr[5,16] = string_upper(ini_read_string('NAME','stem_fanon','NAME_stem_fanon'));
+            button_str_arr[5,17] = string_upper(ini_read_string('NAME','patient_fanon','NAME_patient_fanon'));
+            button_str_arr[5,18] = string_upper(ini_read_string('NAME','gc','NAME_gc'));
+            button_str_arr[5,19] = string_upper(ini_read_string('NAME','bekka','NAME_bekka'));
+            button_str_arr[5,20] = string_upper(ini_read_string('NAME','husk_hd','NAME_husk_hd'));
+            button_str_arr[5,25] = string_upper(ini_read_string('NAME','real_ringu_hd','NAME_real_ringu_hd'));
+            button_str_arr[5,26] = string_upper(ini_read_string('NAME','tiri','NAME_tiri'));
+            button_str_arr[5,27] = string_upper(ini_read_string('NAME','lisa','NAME_lisa'));
+            button_str_arr[5,28] = string_upper(ini_read_string('NAME','otto_fanon','NAME_otto_fanon'));
+            button_str_arr[5,29] = string_upper(ini_read_string('NAME','spooper','NAME_spooper'));
+            button_str_arr[5,30] = string_upper(ini_read_string('NAME','wf','NAME_wf'));
+        }
+        case name_num_og_const:
+        {
+            button_str_arr[5,2] = string_upper(ini_read_string('NAME','gel_num','NAME_gel_num'));
+            button_str_arr[5,3] = string_upper(ini_read_string('NAME','bug_num','NAME_bug_num'));
+            button_str_arr[5,4] = string_upper(ini_read_string('NAME','ringu_num','NAME_ringu_num'));
+            button_str_arr[5,5] = string_upper(ini_read_string('NAME','bab_num','NAME_bab_num'));
+            button_str_arr[5,6] = string_upper(ini_read_string('NAME','pup_num','NAME_pup_num'));
+            button_str_arr[5,7] = string_upper(ini_read_string('NAME','flesh_num','NAME_flesh_num'));
+            button_str_arr[5,8] = string_upper(ini_read_string('NAME','dl_num','NAME_dl_num'));
+            button_str_arr[5,9] = string_upper(ini_read_string('NAME','taker_num','NAME_taker_num'));
+            button_str_arr[5,10] = string_upper(ini_read_string('NAME','para_num','NAME_para_num'));
+            button_str_arr[5,11] = string_upper(ini_read_string('NAME','fd_num','NAME_fd_num'));
+            button_str_arr[5,12] = string_upper(ini_read_string('NAME','killer_num','NAME_killer_num'));
+            button_str_arr[5,13] = string_upper(ini_read_string('NAME','mur_num','NAME_mur_num'));
+            button_str_arr[5,14] = string_upper(ini_read_string('NAME','sg_num_og','NAME_sg_num_og'));
+            button_str_arr[5,15] = string_upper(ini_read_string('NAME','bodybag_num_og','NAME_bodybag_num_og'));
+            button_str_arr[5,16] = string_upper(ini_read_string('NAME','stem_num_og','NAME_stem_num_og'));
+            button_str_arr[5,17] = string_upper(ini_read_string('NAME','patient_num_og','NAME_patient_num_og'));
+            button_str_arr[5,18] = string_upper(ini_read_string('NAME','gc_num_og','NAME_gc_num_og'));
+            button_str_arr[5,19] = string_upper(ini_read_string('NAME','bekka','NAME_bekka'));
+            button_str_arr[5,20] = string_upper(ini_read_string('NAME','husk_num','NAME_husk_num'));
+            button_str_arr[5,25] = string_upper(ini_read_string('NAME','real_ringu_og','NAME_real_ringu_og'));
+            button_str_arr[5,26] = string_upper(ini_read_string('NAME','tiri','NAME_tiri'));
+            button_str_arr[5,27] = string_upper(ini_read_string('NAME','lisa','NAME_lisa'));
+            button_str_arr[5,28] = string_upper(ini_read_string('NAME','otto_og','NAME_otto_og'));
+            button_str_arr[5,29] = string_upper(ini_read_string('NAME','spooper','NAME_spooper'));
+            button_str_arr[5,30] = string_upper(ini_read_string('NAME','wf','NAME_wf'));
+        }
+        case name_num_hd_const:
+        {
+            button_str_arr[5,2] = string_upper(ini_read_string('NAME','gel_num','NAME_gel_num'));
+            button_str_arr[5,3] = string_upper(ini_read_string('NAME','bug_num','NAME_bug_num'));
+            button_str_arr[5,4] = string_upper(ini_read_string('NAME','ringu_num','NAME_ringu_num'));
+            button_str_arr[5,5] = string_upper(ini_read_string('NAME','bab_num','NAME_bab_num'));
+            button_str_arr[5,6] = string_upper(ini_read_string('NAME','pup_num','NAME_pup_num'));
+            button_str_arr[5,7] = string_upper(ini_read_string('NAME','flesh_num','NAME_flesh_num'));
+            button_str_arr[5,8] = string_upper(ini_read_string('NAME','dl_num','NAME_dl_num'));
+            button_str_arr[5,9] = string_upper(ini_read_string('NAME','taker_num','NAME_taker_num'));
+            button_str_arr[5,10] = string_upper(ini_read_string('NAME','para_num','NAME_para_num'));
+            button_str_arr[5,11] = string_upper(ini_read_string('NAME','fd_num','NAME_fd_num'));
+            button_str_arr[5,12] = string_upper(ini_read_string('NAME','killer_num','NAME_killer_num'));
+            button_str_arr[5,13] = string_upper(ini_read_string('NAME','mur_num','NAME_mur_num'));
+            button_str_arr[5,14] = string_upper(ini_read_string('NAME','sg_num_hd','NAME_sg_num_hd'));
+            button_str_arr[5,15] = string_upper(ini_read_string('NAME','bodybag_num_hd','NAME_bodybag_num_hd'));
+            button_str_arr[5,16] = string_upper(ini_read_string('NAME','stem_num_hd','NAME_stem_num_hd'));
+            button_str_arr[5,17] = string_upper(ini_read_string('NAME','patient_num_hd','NAME_patient_num_hd'));
+            button_str_arr[5,18] = string_upper(ini_read_string('NAME','gc_num_hd','NAME_gc_num_hd'));
+            button_str_arr[5,19] = string_upper(ini_read_string('NAME','bekka_num','NAME_bekka_num'));
+            button_str_arr[5,20] = string_upper(ini_read_string('NAME','husk_hd','NAME_husk_hd'));
+            button_str_arr[5,25] = string_upper(ini_read_string('NAME','real_ringu_num','NAME_real_ringu_num'));
+            button_str_arr[5,26] = string_upper(ini_read_string('NAME','tiri_num','NAME_tiri_num'));
+            button_str_arr[5,27] = string_upper(ini_read_string('NAME','lisa_num','NAME_lisa_num'));
+            button_str_arr[5,28] = string_upper(ini_read_string('NAME','otto_num','NAME_otto_num'));
+            button_str_arr[5,29] = string_upper(ini_read_string('NAME','spooper_num','NAME_spooper_num'));
+            button_str_arr[5,30] = string_upper(ini_read_string('NAME','wf_num','NAME_wf_num'));
         }
     }
-    */
-    button_str_arr[5,2] = 'GEL';
-    button_str_arr[5,3] = 'BUG';
-    button_str_arr[5,4] = 'RINGU';
-    button_str_arr[5,5] = 'BAB';
-    button_str_arr[5,6] = 'PUPPET';
-    button_str_arr[5,7] = 'FLESH';
-    button_str_arr[5,8] = 'DEER LORD';
-    button_str_arr[5,9] = 'TAKER';
-    button_str_arr[5,10] = 'PARASITE';
-    button_str_arr[5,11] = 'FOOD DEMON';
-    button_str_arr[5,12] = 'KILLER';
-    button_str_arr[5,13] = 'MERMAID';
-    button_str_arr[5,14] = 'SECURITY GUARD';
-    button_str_arr[5,15] = 'BODY BAG';
-    button_str_arr[5,16] = 'STEM';
-    button_str_arr[5,17] = 'PATIENT';
-    button_str_arr[5,18] = 'GHOST COW';
-    button_str_arr[5,19] = 'BEKKA';
-    button_str_arr[5,20] = 'HUSKS';
-    button_str_arr[5,21] = 'WOORMY CHARLES';
-    button_str_arr[5,22] = 'CLOWN';
-    button_str_arr[5,23] = 'HOOKED DOLL';
-    button_str_arr[5,24] = 'FRENZY';
-    button_str_arr[5,25] = 'REAL RINGU';
-    button_str_arr[5,26] = 'TIRSIAK';
-    button_str_arr[5,27] = 'LISA';
-    button_str_arr[5,28] = 'OTTO';
-    button_str_arr[5,29] = 'SPOOPER';
-    button_str_arr[5,30] = 'WHITE FACE';
+    button_str_arr[5,21] = string_upper(ini_read_string('NAME','wc','NAME_wc'));
+    button_str_arr[5,22] = string_upper(ini_read_string('NAME','clown','NAME_clown'));
+    button_str_arr[5,23] = string_upper(ini_read_string('NAME','hd','NAME_hd'));
+    button_str_arr[5,24] = string_upper(ini_read_string('NAME','frenzy','NAME_frenzy'));
+    button_str_arr[5,31] = back_str_var;
 		//Load Saves
-	button_str_arr[6,0] = 'BACK';
+	button_str_arr[6,0] = back_str_var;
         // Other
-    on_str_var = 'ON';
-    off_str_var = 'OFF';
-    true_str_var = 'TRUE';
-    false_str_var = 'FALSE';
-    const_str_var = 'CONSTANT';
-    taper_str_var = 'TAPER';
-    mod_str_var = 'RECODE';
-    og_str_var = 'ORIGINAL';
-    hd_str_var = 'RENOVATION';
-    kh_str_var = 'KARAMARI';
-    dh_str_var = 'DOLLHOUSE';
-    alt_str_var = 'ALTERNATE';
+    on_str_var = ini_read_string('MENU','on','MENU_on');
+    off_str_var = ini_read_string('MENU','off','MENU_off');
+    true_str_var = ini_read_string('MENU','true','MENU_true');
+    false_str_var = ini_read_string('MENU','false','MENU_false');
+    min_str_var = ini_read_string('MENU','min','MENU_min');
+    max_str_var = ini_read_string('MENU','max','MENU_max');
+    always_str_var = ini_read_string('MENU','always','MENU_always');
+    never_str_var = ini_read_string('MENU','never','MENU_never');
+    rand_str_var = ini_read_string('MENU','rand','MENU_rand');
+    def_str_var = ini_read_string('MENU','def','MENU_def');
+    inf_str_var = ini_read_string('MENU','inf','MENU_inf');
+    taper_str_var = ini_read_string('MENU','taper','MENU_taper');
+    mod_str_var = ini_read_string('MENU','mod','MENU_mod');
+    og_str_var = ini_read_string('MENU','og','MENU_og');
+    hd_str_var = ini_read_string('MENU','hd','MENU_hd');
+    kh_str_var = ini_read_string('MENU','kh','MENU_kh');
+    dh_str_var = ini_read_string('MENU','dh','MENU_dh');
+    alt_str_var = ini_read_string('MENU','alt','MENU_alt');
+    sm_str_var = ini_read_string('MENU','sm','MENU_sm');
+    em_str_var = ini_read_string('MENU','em','MENU_em');
+    sb_str_var = ini_read_string('MENU','sb','MENU_sb');
+    easiest_str_var = ini_read_string('MENU','easiest','MENU_easiest');
+    easy_str_var = ini_read_string('MENU','easy','MENU_easy');
+    normal_str_var = ini_read_string('MENU','normal','MENU_normal');
+    hard_str_var = ini_read_string('MENU','hard','MENU_hard');
+    hardest_str_var = ini_read_string('MENU','hardest','MENU_hardest');
+    alone_str_var = ini_read_string('MENU','alone','MENU_alone');
+    evil_str_var = ini_read_string('MENU','evil','MENU_evil'); // Not golden
+    canon_str_var = ini_read_string('MENU','canon','MENU_canon');
     ini_close();
     // Alarms
     alarm_len_var = 1;
@@ -302,25 +430,30 @@ object_event_add
 	save_violence_var = 0;
 	save_rm_count_var = 0;
 	save_note_var = 0;
+    save_mode_var=1;
 	save_diff_var = 2;
-	save_custom_var = 0;
+	save_custom_var = false;
 	save_rm_var = hall_01_rm;
 	
-	save_stam_per_var=0;
-	save_fall_var=0;
-	save_lock_var=1;
-	save_dmg_shake_var=0;
-	save_multi_type_var=0;
-	save_multi_min_var=1;
-	save_multi_max_var=5;
-	save_multi_start_var=1000;
-	save_multi_end_var=2000;
-	save_count_type_var=0;
-	save_count_min_var=0;
-	save_count_max_var=20;
-	save_count_start_var=1000;
-	save_count_end_var=2000;
-	save_mode_var=1;
+    save_crouch_var = -1;
+    save_jump_var = -1;
+	save_stam_per_var=-1;
+	save_fall_var=-1;
+	save_lock_var=-1;
+	save_dmg_shake_var=-1;
+	save_mult_type_var=-1;
+	save_mult_min_var=-1;
+	save_mult_max_var=-1;
+	save_mult_start_var=-1;
+	save_mult_end_var=-1;
+	save_count_type_var=-1;
+	save_count_min_var=-1;
+	save_count_max_var=-1;
+	save_count_start_var=-1;
+	save_count_end_var=-1;
+    save_dupe_var = -1;
+    save_chance_var = -1;
+    save_chance_mult_var = -1;
 	
 	save_type_var=0;
 	save_player_type_var=-1;
@@ -457,24 +590,29 @@ object_event_add
 						save_rm_count_var = 0;
 						save_note_var = 0;
 						save_diff_var = 2;
-						save_custom_var = 0;
+                        save_mode_var=1;
+						save_custom_var = false;
 						save_room = hall_01_rm;
 						
-						save_stam_per_var=0;
-						save_fall_var=0;
-						save_lock_var=1;
-						save_dmg_shake_var=0;
-						save_multi_type_var=0;
-						save_multi_min_var=1;
-						save_multi_max_var=5;
-						save_multi_start_var=1000;
-						save_multi_end_var=2000;
-						save_count_type_var=0;
-						save_count_min_var=0;
-						save_count_max_var=20;
-						save_count_start_var=1000;
-						save_count_end_var=2000;
-						save_mode_var=1;
+                        save_crouch_var = -1;
+                        save_jump_var = -1;
+						save_stam_per_var=-1;
+						save_fall_var=-1;
+						save_lock_var=-1;
+						save_dmg_shake_var=-1;
+						save_mult_type_var=-1;
+						save_mult_min_var=-1;
+						save_mult_max_var=-1;
+						save_mult_start_var=-1;
+						save_mult_end_var=-1;
+						save_count_type_var=-1;
+						save_count_min_var=-1;
+						save_count_max_var=-1;
+						save_count_start_var=-1;
+						save_count_end_var=-1;
+						save_dupe_var = -1;
+                        save_chance_var = -1;
+                        save_mon_chance_var = -1;
 						
 						save_type_var=0;
 						save_player_type_var=-1;
@@ -556,7 +694,7 @@ object_event_add
         }
         case 3: //Save Creation
         {
-			subbgscroll_var += (1*global.delta_time_var);
+			subbgscroll_var += global.delta_time_var;
 			
 			if subbgalpha_var < 1
 			subbgalpha_var += (0.04*global.delta_time_var);
@@ -589,6 +727,16 @@ object_event_add
 						keyboard_string = '';
 						event_user(0);
 						break;
+                    }
+                    // Customize
+                    case 5:
+                    {
+                        if save_custom_var
+                        {
+                            state_var = 4;
+                            event_user(0);
+                        }
+                        break;
                     }
                     // Back
                     case 6:
@@ -687,6 +835,156 @@ object_event_add
 			}
 			break;
         }
+        case 4: // Customize
+        {
+            // Effects! (I don't know how this works, but I trust Bird's judgement)
+            subbgscroll_var += (1*global.delta_time_var);
+			
+			if subbgalpha_var < 1
+			subbgalpha_var += (0.04*global.delta_time_var);
+			
+			if button_state_var < (menuscroll_focal_var-1)
+			menuscroll_focal_var -= 1;
+			
+			if button_state_var > (menuscroll_focal_var+1)
+			menuscroll_focal_var += 1;
+			
+			menuscroll_var = 96*(menuscroll_focal_var-2);
+			menuscroll_lerp_var = menuscroll_lerp_var + (menuscroll_var - menuscroll_lerp_var) * (0.2*global.delta_time_var);
+            // Text Stretch
+            time_var = (time_var+global.delta_time_var) mod 80;
+            str_scale_var = 0.8+(cos(2*time_var*pi/80)*0.2);
+            // Scroll
+            if global.up_input_press_var { button_state_var -= 1; }
+            if global.down_input_press_var { button_state_var += 1; }
+            button_state_var = mod_scr(button_state_var,21);
+            // Confirm
+            if global.confirm_input_press_var
+            {
+                switch button_state_var
+                {
+                    case 7: // Multichase (minimum)
+                    {
+                        save_mult_min_var =  max(-2,get_integer('Chase Min',save_mult_min_var));
+                        global.confirm_input_var = 0; // Prevent persistent control issues
+                        break;
+                    }
+                    case 8: // Multichase (maximum)
+                    {
+                        save_mult_max_var =  max(-2,get_integer('Chase Max',save_mult_max_var));
+                        global.confirm_input_var = 0;
+                        break;
+                    }
+                    case 9: // Multichase Start
+                    {
+                        save_mult_start_var =  max(-1,get_integer('Chase Start',save_mult_start_var));
+                        global.confirm_input_var = 0;
+                        break;
+                    }
+                    case 10: // Multichase End
+                    {
+                        save_mult_end_var =  max(-1,get_integer('Chase End',save_mult_end_var));
+                        global.confirm_input_var = 0;
+                        break;
+                    }
+                    case 12: // Count (minimum)
+                    {
+                        save_count_min_var = max(-1,get_integer('Count Min',save_count_min_var));
+                        global.confirm_input_var = 0;
+                        break;
+                    }
+                    case 13: // Count (maximum)
+                    {
+                        save_count_max_var = max(-1,get_integer('Count Max',save_count_max_var));
+                        global.confirm_input_var = 0;
+                        break;
+                    }
+                    case 14: // Count Start
+                    {
+                        save_count_start_var =  max(-1,get_integer('Count Start',save_count_start_var));
+                        global.confirm_input_var = 0;
+                        break;
+                    }
+                    case 15: // Count End
+                    {
+                        save_count_end_var =  max(-1,get_integer('Count End',save_count_end_var));
+                        global.confirm_input_var = 0;
+                        break;
+                    }
+                    case 17: // Monster Chance
+                    {
+                        save_chance_var =  max(-1,get_integer('Spawn Chance',save_chance_var));
+                        global.confirm_input_var = 0;
+                        break;
+                    }
+                    case 18: // Monster Chance Multiplier
+                    {
+                        save_chance_mult_var =  max(-1,get_integer('Spawn Chance',save_chance_mult_var));
+                        global.confirm_input_var = 0;
+                        break;
+                    }
+                    case 19: // Behavior
+                    {
+                        state_var = 5;
+                        event_user(0);
+                        break;
+                    }
+                    case 20: // Back
+					{
+						state_var = 3;
+                        event_user(0);
+						break;
+					}
+                }
+            }
+            // Directions
+            if global.left_input_press_var == 1 || global.right_input_press_var == 1
+            {
+                local.add = global.right_input_press_var-global.left_input_press_var;
+                switch button_state_var
+                {
+                    case 0: // Crouch
+                    { save_crouch_var = mod_scr(save_crouch_var+1+local.add,3)-1; break; }
+                    case 1: // Jump
+                    { save_jump_var = mod_scr(save_jump_var+1+local.add,3)-1; break; }
+                    case 2: // Persistent Stamina
+                    { save_stam_per_var = mod_scr(save_stam_per_var+1+local.add,3)-1; break; }
+                    case 3: // Fall
+                    { save_fall_var = mod_scr(save_fall_var+1+local.add,3)-1; break; }
+                    case 4: // Lock
+                    { save_lock_var = mod_scr(save_lock_var+1+local.add,5)-1; break; }
+                    case 5: // Damage Shake
+                    { save_dmg_shake_var = mod_scr(save_dmg_shake_var+1+local.add,3)-1; break; }
+                    case 6: // Multichase Type
+                    { save_mult_type_var = mod_scr(save_mult_type_var+1+local.add,5)-1; break; }
+                    case 7: // Multichase (minimum)
+                    { save_mult_min_var =  max(-2,save_mult_min_var+local.add); break; }
+                    case 8: // Multichase (maximum)
+                    { save_mult_max_var =  max(-2,save_mult_max_var+local.add); break; }
+                    case 9: // Multichase Start
+                    { save_mult_start_var =  max(-1,save_mult_start_var+local.add); break; }
+                    case 10: // Multichase End
+                    { save_mult_end_var =  max(-1,save_mult_end_var+local.add); break; }
+                    case 11: // Count Type
+                    { save_count_type_var = mod_scr(save_count_type_var+1+local.add,6)-1; break; }
+                    case 12: // Count (minimum)
+                    { save_count_min_var = max(-1,save_count_min_var+local.add); break; }
+                    case 13: // Count (maximum)
+                    { save_count_max_var = max(-1,save_count_max_var+local.add); break; }
+                    case 14: // Count Start
+                    { save_count_start_var =  max(-1,save_count_start_var+local.add); break; }
+                    case 15: // Count End
+                    { save_count_end_var =  max(-1,save_count_end_var+local.add); break; }
+                    case 16: // Dupe
+                    { save_dupe_var = mod_scr(save_dupe_var+1+local.add,4)-1; break; }
+                    case 17: // Monster Chance
+                    { save_chance_var =  max(-1,save_chance_var+local.add); break; }
+                    case 18: // Monster Chance Multiplier
+                    { save_chance_mult_var =  max(-1,save_chance_mult_var+local.add); break; }
+                }
+            }
+            break;
+        }
 		case 6: //Save Loads
         {
 			subbgscroll_var += (1*global.delta_time_var);
@@ -771,23 +1069,28 @@ object_event_add
 						global.note_var = ini_read_real('MAIN','note',0);
 						global.diff_var = ini_read_real('MAIN','diff',0);
 						global.custom_var = ini_read_real('MAIN','custom',0);
+                        global.mode_var = ini_read_real('SETTING','mode',1);
 						save_rm_var = ini_read_real('MAIN','room',0);
 						// Settings
+                        global.jump_var = ini_read_real('SETTING','jump',false);
+                        global.crouch_var = ini_read_real('SETTING','crouch',false);
 						global.stam_per_var = ini_read_real('SETTING','stam_per',false);
 						global.fall_var = ini_read_real('SETTING','fall',false);
 						global.lock_var = ini_read_real('SETTING','lock',1);
 						global.dmg_shake_var = ini_read_real('SETTING','dmg_shake',false);
-						global.multi_type_var = ini_read_real('SETTING','multi_type',0);
-						global.multi_min_var = ini_read_real('SETTING','multi_min',1);
-						global.multi_max_var = ini_read_real('SETTING','multi_max',5);
-						global.multi_start_var = ini_read_real('SETTING','multi_start',1000);
-						global.multi_end_var = ini_read_real('SETTING','multi_end',2000);
+						global.mult_type_var = ini_read_real('SETTING','multi_type',0);
+						global.mult_min_var = ini_read_real('SETTING','multi_min',1);
+						global.mult_max_var = ini_read_real('SETTING','multi_max',5);
+						global.mult_start_var = ini_read_real('SETTING','multi_start',0);
+						global.mult_end_var = ini_read_real('SETTING','multi_end',1000);
 						global.count_type_var = ini_read_real('SETTING','count_type',0);
 						global.count_min_var = ini_read_real('SETTING','count_min',0);
 						global.count_max_var = ini_read_real('SETTING','count_max',20);
-						global.count_start_var = ini_read_real('SETTING','count_start',1000);
-						global.count_end_var = ini_read_real('SETTING','count_end',2000);
-						global.mode_var = ini_read_real('SETTING','mode',1);
+						global.count_start_var = ini_read_real('SETTING','count_start',0);
+						global.count_end_var = ini_read_real('SETTING','count_end',1000);
+                        global.dupe_var = ini_read_real('SETTING','dupe',dupe_canon_const);
+                        global.mon_chance_var = ini_read_real('SETTING','mon_chance',mon_chance_const);
+                        global.mon_chance_mult_var = ini_read_real('SETTING','mon_chance_mult',mon_chance_mult_const);
 						// Behavior stuff
 						global.default_type_var = ini_read_real('BEHAVIOR','type',0);
 						global.player_type_var = ini_read_real('BEHAVIOR','player_type',global.default_type_var);
@@ -822,7 +1125,6 @@ object_event_add
 						global.spooper_type_var = ini_read_real('BEHAVIOR','spooper_type',global.default_type_var);
 						global.wf_type_var = ini_read_real('BEHAVIOR','wf_type',global.default_type_var);
 						
-						
 						ini_close();
 						
 						local.player = instance_create(0,0,global.player_obj);
@@ -835,6 +1137,7 @@ object_event_add
                         if global.zone_num_var >= global.zone_len_var
                         { global.zone_var = global.story_zone_arr[global.zone_num_var-global.zone_len_var]; }
                         else { global.zone_var = global.zone_arr[global.zone_num_var]; }
+                        tex_scr(-1);
                         global.count_var = get_count_scr();
 						
 						room_goto(save_rm_var);
@@ -909,154 +1212,290 @@ object_event_add
 			{
 				save_name_var = keyboard_string;
 				global.save_name_var = save_name_var;
+                // Save Info
 				global.rm_count_var = save_rm_count_var;
 				global.violence_var = save_violence_var;
 				global.note_var = save_note_var;
-				global.diff_var = save_diff_var;
-				global.custom_var = save_custom_var;
-				save_rm_var = hall_01_rm;
+                save_rm_var = hall_01_rm;
+				// Main settings
+                global.mode_var = save_mode_var;
+                global.main_type_var = save_type_var;
+                global.custom_var = save_custom_var;
+				
 				// Settings
-				global.stam_per_var = save_stam_per_var;
-				global.fall_var = save_fall_var;
-				global.lock_var = save_lock_var;
-				global.dmg_shake_var = save_dmg_shake_var;
-				global.multi_type_var = save_multi_type;
-				global.multi_min_var = save_multi_min;
-				global.multi_max_var = save_multi_max;
-				global.multi_start_var = save_multi_start;
-				global.multi_end_var = save_multi_end;
-				global.count_type_var = save_count_type;
-				global.count_min_var = save_count_min;
-				global.count_max_var = save_count_max;
-				global.count_start_var = save_count_start;
-				global.count_end_var = save_count_end;
-				global.mode_var = save_mode_var;
+                if global.main_type_var == 1 { global.diff_var = 5; } // OG
+                else if global.main_type_var == 2 { global.diff_var = 6; } // HD
+                else { global.diff_var = save_diff_var; }
+                
+                if save_jump_var == -1 || !save_custom_var { global.jump_var = (save_type_var == 0); }
+                else { global.jump_var = save_jump_var; }
+
+                if save_crouch_var == -1 || !save_custom_var { global.crouch_var = (save_type_var == 0); }
+                else { global.crouch_var = save_crouch_var; }
+
+				if save_stam_per_var == -1 || !save_custom_var
+                { global.stam_per_var = (global.diff_var == 3 || global.diff_var == 4); } // Hard & Hardest
+                else { global.stam_per_var = save_stam_per_var; }
+
+				if save_fall_var == -1 || !save_custom_var
+                { global.fall_var = (global.diff_var == 4); } // Hardest
+                else { global.fall_var = save_fall_var; }
+
+				if save_lock_var == -1 || !save_custom_var
+                { global.lock_var = 1; } // Not sure yet
+                else { global.lock_var = save_lock_var; }
+
+                if save_dmg_shake_var == -1 || !save_custom_var
+				{ global.dmg_shake_var = (global.diff_var == 5 || global.diff_var = 4); } // Hardest & OG
+                else { global.dmg_shake_var = save_dmg_shake_var; }
+
+                if save_mult_type_var == -1 || !save_custom_var
+                {
+                    switch global.diff_var
+                    {
+                        case 0: // Easiest
+                        case 1: // Easy
+                        case 5: // OG
+                        {
+                            global.mult_type_var = 1;
+                            break;
+                        }
+                        case 2: // Normal
+                        case 3: // Hard
+                        case 6: // HD
+                        {
+                            global.mult_type_var = 0;
+                            break;
+                        }
+                        case 4: // Hardest
+                        {
+                            global.mult_type_var = 3;
+                            break;
+                        }
+                    }
+                }
+				else { global.mult_type_var = save_mult_type_var; }
+
+				if  save_mult_min_var == -1 || !save_custom_var
+                {
+                    if save_diff_var == 0 { global.mult_min_var = 0; }
+                    else { global.mult_min_var = 1; }
+                }
+                else { global.mult_min_var = save_mult_min_var; }
+
+				if save_mult_max_var == -1 || !save_custom_var
+                { global.mult_max_var = 5; }
+                else { global.mult_max_var = save_mult_max_var; }
+
+				if save_mult_start_var == -1 || !save_custom_var
+                { global.mult_start_var = 0; }
+                else { global.mult_start_var = save_mult_start_var; }
+
+				if save_mult_end_var || !save_custom_var
+                { global.mult_end_var = 1000; }
+                else { global.mult_end_var = save_mult_end_var; }
+
+                if save_count_type_var == -1 || !save_custom_var
+                {
+                    switch global.diff_var
+                    {
+                        case 2: // Normal
+                        {
+                            global.count_type_var = 0;
+                            break;
+                        }
+                        case 0: // Easiest
+                        case 1: // Easy
+                        case 5: // OG
+                        {
+                            global.count_type_var = 1;
+                            break;
+                        }
+                        case 3: // Hard
+                        case 4: // Hardest
+                        case 6: // HD
+                        {
+                            global.count_type_var = 2;
+                            break;
+                        }
+                    }
+                }
+				else { global.count_type_var = save_count_type_var; }
+
+				if save_count_min_var == -1 || !save_custom_var
+                { global.count_min_var = 0; }
+                else { global.count_min_var = save_count_min_var; }
+
+				if save_count_max_var == -1 || !save_custom_var
+                { global.count_max_var = 20; }
+                else { global.count_max_var = save_count_max_var; }
+
+				if save_count_start_var == -1 || !save_custom_var
+                { global.count_start_var = 0; }
+                else { global.count_start_var = save_count_start_var; }
+
+				if save_count_end_var == -1 || !save_custom_var
+                { global.count_end_var = 1000; }
+                else { global.count_end_var = save_count_end_var; }
+
+                if save_dupe_var == -1 || !save_custom_var
+                {
+                    if global.diff_var == 4 || global.diff_var == 6 { global.dupe_var = dupe_always_const; }
+                    else { global.dupe_var = dupe_canon_const; }
+                }
+                else { global.dupe_var = save_dupe_var; }
+
+                if save_chance_var == -1 || !save_custom_var
+                { global.mon_chance_var = mon_chance_const; }
+                else { global.mon_chance_var = save_chance_var; }
+
+                if save_chance_mult_var == -1 || !save_custom_var
+                {
+                    switch global.diff_var
+                    {
+                        case 0: // Easiest
+                        case 1: // Easy
+                        case 2: // Normal
+                        case 5: // OG
+                        {
+                            global.mon_chance_mult_var = mon_chance_mult_const;
+                            break;
+                        }
+                        case 3: // Hard
+                        case 4: // Hardest
+                        case 6: // HD
+                        {
+                            global.mon_chance_mult_var = 0;
+                            break;
+                        }
+                    }
+                    
+                }
+                else { global.mon_chance_mult_var = save_chance_mult_var; }
+
 				// Behavior stuff
-				global.default_type_var = save_type;
-				
-				
-				if save_player_type = -1
-				{ global.player_type_var = save_type; }
+				if save_player_type == -1 || !save_custom_var
+                { global.player_type_var = save_type; }
 				else { global.player_type_var = save_player_type; }
-				
-				if save_axe_type = -1
-				{ global.axe_type_var = save_type; }
+
+				if save_axe_type == -1 || !save_custom_var
+                { global.axe_type_var = save_type; }
 				else { global.axe_type_var = save_axe_type; }
 				
-				if save_gel_type = -1
-				{ global.gel_type_var = save_type; }
+				if save_gel_type == -1 || !save_custom_var
+                { global.gel_type_var = save_type; }
 				else { global.gel_type_var = save_gel_type; }
 				
-				if save_bug_type = -1
-				{ global.bug_type_var = save_type; }
+				if save_bug_type == -1 || !save_custom_var
+                { global.bug_type_var = save_type; }
 				else { global.bug_type_var = save_bug_type; }
 				
-				if save_ringu_type_var = -1
-				{ global.ringu_type_var = save_type_var; }
+				if save_ringu_type_var == -1 || !save_custom_var
+                { global.ringu_type_var = save_type_var; }
 				else { global.ringu_type_var = save_ringu_type_var; }
 				
-				if save_bab_type_var = -1
-				{ global.bab_type_var = save_type_var; }
+				if save_bab_type_var == -1 || !save_custom_var
+                { global.bab_type_var = save_type_var; }
 				else { global.bab_type_var = save_bab_type_var; }
 				
-				if save_pup_type_var = -1
-				{ global.pup_type_var = save_type_var; }
+				if save_pup_type_var == -1 || !save_custom_var
+                { global.pup_type_var = save_type_var; }
 				else { global.pup_type_var = save_pup_type_var; }
 				
-				if save_flesh_type_var = -1 { global.flesh_type_var = save_type_var; }
+				if save_flesh_type_var == -1 || !save_custom_var
+                { global.flesh_type_var = save_type_var; }
 				else { global.flesh_type_var = save_flesh_type_var; }
 				
-				if save_dl_type_var = -1
-				{ global.dl_type_var = save_type_var; }
+				if save_dl_type_var == -1 || !save_custom_var
+                { global.dl_type_var = save_type_var; }
 				else { global.dl_type_var = save_dl_type_var; }
 				
-				if save_taker_type_var = -1
-				{ global.taker_type_var = save_type_var; }
+				if save_taker_type_var == -1 || !save_custom_var
+                { global.taker_type_var = save_type_var; }
 				else { global.taker_type_var = save_taker_type_var; }
 				
-				if save_para_type_var = -1
-				{ global.para_type_var = save_type_var; }
+				if save_para_type_var == -1 || !save_custom_var
+                { global.para_type_var = save_type_var; }
 				else { global.para_type_var = save_para_type_var; }
 				
-				if save_fd_type_var = -1
-				{ global.fd_type_var = save_type_var; }
+				if save_fd_type_var == -1 || !save_custom_var
+                { global.fd_type_var = save_type_var; }
 				else { global.fd_type_var = save_fd_type_var; }
 				
-				if save_killer_type_var = -1
-				{ global.killer_type_var = save_type_var; }
+				if save_killer_type_var == -1 || !save_custom_var
+                { global.killer_type_var = save_type_var; }
 				else { global.killer_type_var = save_killer_type_var; }
 				
-				if save_mur_type_var = -1
-				{ global.mur_type_var = save_type_var; }
+				if save_mur_type_var == -1 || !save_custom_var
+                { global.mur_type_var = save_type_var; }
 				else { global.mur_type_var = save_mur_type_var; }
 				
-				if save_sg_type_var = -1
-				{ global.sg_type_var = save_type_var; }
+				if save_sg_type_var == -1 || !save_custom_var
+                { global.sg_type_var = save_type_var; }
 				else { global.sg_type_var = save_sg_type_var; }
 				
-				if save_body_type_var = -1
-				{ global.body_type_var = save_type_var; }
+				if save_body_type_var == -1 || !save_custom_var
+                { global.body_type_var = save_type_var; }
 				else { global.body_type_var = save_body_type_var; }
 				
-				if save_stem_type_var = -1
-				{ global.stem_type_var = save_type_var; }
+				if save_stem_type_var == -1 || !save_custom_var
+                { global.stem_type_var = save_type_var; }
 				else { global.stem_type_var = save_stem_type_var; }
 				
-				if save_patient_type_var = -1
-				{ global.patient_type_var = save_type_var; }
+				if save_patient_type_var == -1 || !save_custom_var
+                { global.patient_type_var = save_type_var; }
 				else { global.patient_type_var = save_patient_type_var; }
 				
-				if save_cow_type_var = -1
-				{ global.cow_type_var = save_type_var; }
+				if save_cow_type_var == -1 || !save_custom_var
+                { global.cow_type_var = save_type_var; }
 				else { global.cow_type_var = save_cow_type_var; }
 				
-				if save_bekka_type_var = -1
-				{ global.bekka_type_var = save_type_var; }
+				if save_bekka_type_var == -1 || !save_custom_var
+                { global.bekka_type_var = save_type_var; }
 				else { global.bekka_type_var = save_bekka_type_var; }
 				
-				if save_husk_type_var = -1
-				{ global.husk_type_var = save_type_var; }
+				if save_husk_type_var == -1 || !save_custom_var
+                { global.husk_type_var = save_type_var; }
 				else { global.husk_type_var = save_husk_type_var; }
 				
-				if save_wc_type_var = -1
-				{ global.wc_type_var = save_type_var; }
+				if save_wc_type_var == -1 || !save_custom_var
+                { global.wc_type_var = save_type_var; }
 				else { global.wc_type_var = save_wc_type_var; }
 				
-				if save_clown_type_var = -1
-				{ global.clown_type_var = save_type_var; }
+				if save_clown_type_var == -1 || !save_custom_var
+                { global.clown_type_var = save_type_var; }
 				else { global.clown_type_var = save_clown_type_var; }
 				
-				if save_hd_type_var = -1
-				{ global.hd_type_var = save_type_var; }
+				if save_hd_type_var == -1 || !save_custom_var
+                { global.hd_type_var = save_type_var; }
 				else { global.hd_type_var = save_hd_type_var; }
 				
-				if save_frenzy_type_var = -1
-				{ global.frenzy_type_var = save_type_var; }
+				if save_frenzy_type_var == -1 || !save_custom_var
+                { global.frenzy_type_var = save_type_var; }
 				else { global.frenzy_type_var = save_frenzy_type_var; }
 				
-				if save_real_ringu_type_var = -1
-				{ global.real_ringu_type_var = save_type_var; }
+				if save_real_ringu_type_var == -1 || !save_custom_var
+                { global.real_ringu_type_var = save_type_var; }
 				else { global.real_ringu_type_var = save_real_ringu_type_var; }
 				
-				if save_tiri_type = -1
-				{ global.tiri_type_var = save_type; }
-				else
-				{ global.tiri_type_var = save_tiri_type; }
+				if save_tiri_type == -1 || !save_custom_var
+                { global.tiri_type_var = save_type; }
+				else { global.tiri_type_var = save_tiri_type; }
 				
-				if save_lisa_type_var = -1
-				{ global.lisa_type_var = save_type_var; }
+				if save_lisa_type_var == -1 || !save_custom_var
+                { global.lisa_type_var = save_type_var; }
 				else { global.lisa_type_var = save_lisa_type_var; }
 				
-				if save_otto_type_var = -1
-				{ global.otto_type_var = save_type_var; }
+				if save_otto_type_var == -1 || !save_custom_var
+                { global.otto_type_var = save_type_var; }
 				else { global.otto_type_var = save_otto_type_var; }
 				
-				if save_spooper_type_var = -1
-				{ global.spooper_type_var = save_type_var; }
+				if save_spooper_type_var == -1 || !save_custom_var
+                { global.spooper_type_var = save_type_var; }
 				else { global.spooper_type_var = save_spooper_type_var; }
 				
-				if save_wf_type_var = -1
-				{ global.wf_type_var = save_type_var; }
+				if save_wf_type_var == -1 || !save_custom_var
+                { global.wf_type_var = save_type_var; }
 				else { global.wf_type_var = save_wf_type_var; }
 				
 				local.player = instance_create(0,0,global.player_obj);
@@ -1069,6 +1508,7 @@ object_event_add
 				if global.zone_num_var >= global.zone_len_var
 				{ global.zone_var = global.story_zone_arr[global.zone_num_var-global.zone_len_var]; }
 				else { global.zone_var = global.zone_arr[global.zone_num_var]; }
+                tex_scr(-1);
 				global.count_var = get_count_scr();
 				
 				room_goto(save_rm_var);
@@ -1188,103 +1628,41 @@ object_event_add
 						{	
 							switch save_mode_var
 							{
-								case 0:
-								{
-									local.stat_display_var = 'STORY';
-									break;
-								}
-								case 1:
-								{
-									local.stat_display_var = 'ENDLESS';
-									break;
-								}
-								case 2:
-								{
-									local.stat_display_var = 'SANBOX';
-									break;
-								}
+								case 0: { local.stat_display_var = sm_str_var; break; }
+								case 1: { local.stat_display_var = em_str_var; break; }
+								case 2: { local.stat_display_var = sb_str_var; break; }
 							}
 							break;
 						}
-						
 						case 2:
 						{
 							switch save_diff_var
 							{
-								case 0:
-								{
-									local.stat_display_var = 'EASIEST';
-									break;
-								}
-								case 1:
-								{
-									local.stat_display_var = 'EASY';
-									break;
-								}
-								case 2:
-								{
-									local.stat_display_var = 'NORMAL';
-									break;
-								}
-								case 3:
-								{
-									local.stat_display_var = 'HARD';
-									break;
-								}
-								case 4:
-								{
-									local.stat_display_var = 'HARDEST';
-									break;
-								}
+                                case 0: { local.stat_display_var = easiest_str_var; break; }
+								case 1: { local.stat_display_var = easy_str_var; break; }
+								case 2: { local.stat_display_var = normal_str_var; break; }
+								case 3: { local.stat_display_var = hard_str_var; break; }
+								case 4: { local.stat_display_var = hardest_str_var; break; }
 							}
 							break;
 						}
-						
 						case 3:
 						{
 							switch save_type
 							{
-								case 0:
-								{
-									local.stat_display_var = 'RECODE';
-									break;
-								}
-								case 1:
-								{
-									local.stat_display_var = 'OG';
-									break;
-								}
-								case 2:
-								{
-									local.stat_display_var = 'HD';
-									break;
-								}
+								case 0: { local.stat_display_var = mod_str_var; break; }
+								case 1: { local.stat_display_var = og_str_var; break; }
+								case 2: { local.stat_display_var = hd_str_var; break; }
 							}
 							break;
 						}
-						
 						case 4:
 						{
-							switch save_custom_var
-							{
-								case 0:
-								{
-									local.stat_display_var = 'NO';
-									break;
-								}
-								case 1:
-								{
-									local.stat_display_var = 'YES';
-									break;
-								}
-							}
+							if save_custom_var { local.stat_display_var = on_str_var; }
+                            else { local.stat_display_var = off_str_var; }
 							break;
 						}
-						
-						default:
-						{
-							local.stat_display_var = '';
-						}
+						default: { local.stat_display_var = ''; }
 					}
 					
 					if local.stat_display_var != ''
@@ -1308,107 +1686,45 @@ object_event_add
 			
 			switch button_state_var
 			{
-				case 1:
-				{	
-					switch save_mode_var
-					{
-						case 0:
-						{
-							local.stat_display_var = 'STORY';
-							break;
-						}
-						case 1:
-						{
-							local.stat_display_var = 'ENDLESS';
-							break;
-						}
-						case 2:
-						{
-							local.stat_display_var = 'SANBOX';
-							break;
-						}
-					}
-					break;
-				}
-				
-				case 2:
-				{
-					switch save_diff_var
-					{
-						case 0:
-						{
-							local.stat_display_var = 'EASIEST';
-							break;
-						}
-						case 1:
-						{
-							local.stat_display_var = 'EASY';
-							break;
-						}
-						case 2:
-						{
-							local.stat_display_var = 'NORMAL';
-							break;
-						}
-						case 3:
-						{
-							local.stat_display_var = 'HARD';
-							break;
-						}
-						case 4:
-						{
-							local.stat_display_var = 'HARDEST';
-							break;
-						}
-					}
-					break;
-				}
-				
-				case 3:
-				{
-					switch save_type
-					{
-						case 0:
-						{
-							local.stat_display_var = 'RECODE';
-							break;
-						}
-						case 1:
-						{
-							local.stat_display_var = 'OG';
-							break;
-						}
-						case 2:
-						{
-							local.stat_display_var = 'HD';
-							break;
-						}
-					}
-					break;
-				}
-				
-				case 4:
-				{
-					switch save_custom_var
-					{
-						case 0:
-						{
-							local.stat_display_var = 'NO';
-							break;
-						}
-						case 1:
-						{
-							local.stat_display_var = 'YES';
-							break;
-						}
-					}
-					break;
-				}
-				
-				default:
-				{
-					local.stat_display_var = '';
-				}
+                case 1:
+                {	
+                    switch save_mode_var
+                    {
+                        case 0: { local.stat_display_var = sm_str_var; break; }
+                        case 1: { local.stat_display_var = em_str_var; break; }
+                        case 2: { local.stat_display_var = sb_str_var; break; }
+                    }
+                    break;
+                }
+                case 2:
+                {
+                    switch save_diff_var
+                    {
+                        case 0: { local.stat_display_var = easiest_str_var; break; }
+                        case 1: { local.stat_display_var = easy_str_var; break; }
+                        case 2: { local.stat_display_var = normal_str_var; break; }
+                        case 3: { local.stat_display_var = hard_str_var; break; }
+                        case 4: { local.stat_display_var = hardest_str_var; break; }
+                    }
+                    break;
+                }
+                case 3:
+                {
+                    switch save_type
+                    {
+                        case 0: { local.stat_display_var = mod_str_var; break; }
+                        case 1: { local.stat_display_var = og_str_var; break; }
+                        case 2: { local.stat_display_var = hd_str_var; break; }
+                    }
+                    break;
+                }
+                case 4:
+                {
+                    if save_custom_var { local.stat_display_var = on_str_var; }
+                    else { local.stat_display_var = off_str_var; }
+                    break;
+                }
+                default: { local.stat_display_var = ''; }
 			}
 			
 			if local.stat_display_var != ''
@@ -1421,6 +1737,406 @@ object_event_add
 			}
 			
 			break;
+        }
+        case 4: // Customize
+        {
+            local.scrolly_var = 0;
+			
+			draw_background_tiled_ext(sub_bg_arr[sub_bg_var],0,subbgscroll_var*-1,1,1,make_color_rgb(70,0,90),subbgalpha_var);
+			
+			draw_set_color(str_bg_color_var);
+			draw_text_transformed(706,24,'CUSTOMIZE SAVE FILE',0.95,0.95,0);
+			draw_text_transformed(708,22,'CUSTOMIZE SAVE FILE',0.95,0.95,0);
+			draw_set_color(c_yellow);
+			draw_text_transformed(710,20,'CUSTOMIZE SAVE FILE',0.95,0.95,0);
+			draw_set_color(c_white);
+			
+			local.stat_display_var = '';
+			
+            for (local.i=0; local.i<21; local.i+=1)
+            {
+                if local.i != button_state_var
+                {
+                    local.ytmp = 192+(96*local.i)-(menuscroll_lerp_var);
+                    draw_set_color(str_bg_color_var);
+                    draw_text_transformed(92,local.ytmp+4,button_str_arr[state_var,local.i],0.75,0.75,0);
+                    draw_text_transformed(94,local.ytmp+2,button_str_arr[state_var,local.i],0.75,0.75,0);
+                    draw_set_color(c_yellow);
+                    draw_text_transformed(96,local.ytmp,button_str_arr[state_var,local.i],0.75,0.75,0);
+					
+					switch local.i
+					{
+                        case 0:
+                        {
+                            switch save_crouch_var
+                            {
+                                case -1: { local.stat_display_var = def_str_var; break; }
+                                case 0: { local.stat_display_var = off_str_var; break; }
+                                case 1: { local.stat_display_var = on_str_var; break; }
+                            }
+                            break;
+                        }
+						case 1:
+						{	
+							switch save_jump_var
+                            {
+                                case -1: { local.stat_display_var = def_str_var; break; }
+                                case 0: { local.stat_display_var = off_str_var; break; }
+                                case 1: { local.stat_display_var = on_str_var; break; }
+                            }
+							break;
+						}
+                        case 2:
+						{	
+							switch save_stam_per_var
+                            {
+                                case -1: { local.stat_display_var = def_str_var; break; }
+                                case 0: { local.stat_display_var = off_str_var; break; }
+                                case 1: { local.stat_display_var = on_str_var; break; }
+                            }
+							break;
+						}
+                        case 3:
+						{	
+							switch save_fall_var
+                            {
+                                case -1: { local.stat_display_var = def_str_var; break; }
+                                case 0: { local.stat_display_var = off_str_var; break; }
+                                case 1: { local.stat_display_var = on_str_var; break; }
+                            }
+							break;
+						}
+                        case 4:
+						{	
+							switch save_lock_var
+                            {
+                                case -1: { local.stat_display_var = def_str_var; break; }
+                                case 0: { local.stat_display_var = off_str_var; break; }
+                                case 1: { local.stat_display_var = on_str_var; break; }
+                                case 2: { local.stat_display_var = alone_str_var; break; }
+                                case 3: { local.stat_display_var = evil_str_var; break; }
+                            }
+							break;
+						}
+                        case 5:
+						{	
+							switch save_dmg_shake_var
+                            {
+                                case -1: { local.stat_display_var = def_str_var; break; }
+                                case 0: { local.stat_display_var = off_str_var; break; }
+                                case 1: { local.stat_display_var = on_str_var; break; }
+                            }
+							break;
+						}
+                        case 6:
+                        {
+                            if local.i != 6 { show_error('WTF?',true); }
+                            switch save_mult_type_var
+                            {
+                                case -1: { local.stat_display_var = def_str_var; break; }
+                                case 0: { local.stat_display_var = max_str_var; break; }
+                                case 1: { local.stat_display_var = min_str_var; break; }
+                                case 2: { local.stat_display_var = taper_str_var; break; }
+                                case 3: { local.stat_display_var = always_str_var; break; }
+                            }
+                            break;
+                        }
+                        case 7:
+                        {
+                            switch save_mult_min_var
+                            {
+                                case -2: { local.stat_display_var = inf_str_var; break; }
+                                case -1: { local.stat_display_var = def_str_var; break; }
+                                default: { local.stat_display_var = string(save_mult_min_var); break; }
+                            }
+                            break;
+                        }
+                        case 8:
+                        {
+                            switch save_mult_max_var
+                            {
+                                case -2: { local.stat_display_var = inf_str_var; break; }
+                                case -1: { local.stat_display_var = def_str_var; break; }
+                                default: { local.stat_display_var = string(save_mult_max_var); break; }
+                            }
+                            break;
+                        }
+                        case 9:
+                        {
+                            if save_mult_start_var == -1 { local.stat_display_var = def_str_var; }
+                            else { local.stat_display_var = string(save_mult_start_var);}
+                            break;
+                        }
+                        case 10:
+                        {
+                            if save_mult_end_var == -1 { local.stat_display_var = def_str_var; }
+                            else { local.stat_display_var = string(save_mult_end_var);}
+                            break;
+                        }
+                        case 11:
+                        {
+                            if local.i != 11 { show_error('WTF?',true); }
+                            switch save_count_type_var
+                            {
+                                case -1: { local.stat_display_var = def_str_var; break; }
+                                case 0: { local.stat_display_var = rand_str_var; break; }
+                                case 1: { local.stat_display_var = max_str_var; break; }
+                                case 2: { local.stat_display_var = min_str_var; break; }
+                                case 3: { local.stat_display_var = taper_str_var+' '+rand_str_var; break; }
+                                case 4: { local.stat_display_var = taper_str_var; break; }
+                            }
+                            break;
+                        }
+                        case 12:
+                        {
+                            if save_count_min_var == -1 { local.stat_display_var = def_str_var; }
+                            else { local.stat_display_var = string(save_count_min_var);}
+                            break;
+                        }
+                        case 13:
+                        {
+                            if save_count_max_var == -1 { local.stat_display_var = def_str_var; }
+                            else { local.stat_display_var = string(save_count_max_var);}
+                            break;
+                        }
+                        case 14:
+                        {
+                            if save_count_start_var == -1 { local.stat_display_var = def_str_var; }
+                            else { local.stat_display_var = string(save_count_start_var);}
+                            break;
+                        }
+                        case 15:
+                        {
+                            if save_count_end_var == -1 { local.stat_display_var = def_str_var; }
+                            else { local.stat_display_var = string(save_count_end_var); }
+                            break;
+                        }
+                        case 16:
+                        {
+                            switch save_dupe_var
+                            {
+                                case -1: { local.stat_display_var = def_str_var; break; }
+                                case dupe_never_const: { local.stat_display_var = never_str_var; break; }
+                                case dupe_always_const: { local.stat_display_var = always_str_var; break; }
+                                case dupe_canon_const: { local.stat_display_var = canon_str_var; break; }
+                            }
+                            break;
+                        }
+                        case 17:
+                        {
+                            if save_chance_var == -1 { local.stat_display_var = def_str_var; }
+                            else { local.stat_display_var = string(save_chance_var); }
+                            break;
+                        }
+                        case 18:
+                        {
+                            if save_chance_mult_var == -1 { local.stat_display_var = def_str_var; }
+                            else { local.stat_display_var = string(save_chance_mult_var); }
+                            break;
+                        }
+						default: { local.stat_display_var = ''; break; }
+					}
+					
+					if local.stat_display_var != ''
+					{
+						draw_set_color(str_bg_color_var);
+						draw_text_transformed(496,local.ytmp+4,string(local.stat_display_var),0.75,0.75,0);
+						draw_text_transformed(498,local.ytmp+2,string(local.stat_display_var),0.75,0.75,0);
+						draw_set_color(c_yellow);
+						draw_text_transformed(500,local.ytmp,string(local.stat_display_var),0.75,0.75,0);
+					}
+                }
+            }
+            local.xtmp = 96+(string_width(button_str_arr[state_var,button_state_var])*0.375);
+            local.ytmp = 192+(96*button_state_var)-(menuscroll_lerp_var);
+            draw_set_halign(fa_center); draw_set_color(str_bg_select_color_var);
+            draw_text_transformed(local.xtmp-4,local.ytmp+4,button_str_arr[state_var,button_state_var],str_scale_var,0.75,0);
+            draw_text_transformed(local.xtmp-2,local.ytmp+2,button_str_arr[state_var,button_state_var],str_scale_var,0.75,0);
+            draw_set_color(c_white);
+            draw_text_transformed(local.xtmp,local.ytmp,button_str_arr[state_var,button_state_var],str_scale_var,0.75,0);
+            draw_set_halign(fa_left); 
+			
+			switch button_state_var
+			{
+                case 0:
+                {
+                    switch save_crouch_var
+                    {
+                        case -1: { local.stat_display_var = def_str_var; break; }
+                        case 0: { local.stat_display_var = off_str_var; break; }
+                        case 1: { local.stat_display_var = on_str_var; break; }
+                    }
+                    break;
+                }
+                case 1:
+                {	
+                    switch save_jump_var
+                    {
+                        case -1: { local.stat_display_var = def_str_var; break; }
+                        case 0: { local.stat_display_var = off_str_var; break; }
+                        case 1: { local.stat_display_var = on_str_var; break; }
+                    }
+                    break;
+                }
+                case 2:
+                {	
+                    switch save_stam_per_var
+                    {
+                        case -1: { local.stat_display_var = def_str_var; break; }
+                        case 0: { local.stat_display_var = off_str_var; break; }
+                        case 1: { local.stat_display_var = on_str_var; break; }
+                    }
+                    break;
+                }
+                case 3:
+                {	
+                    switch save_fall_var
+                    {
+                        case -1: { local.stat_display_var = def_str_var; break; }
+                        case 0: { local.stat_display_var = off_str_var; break; }
+                        case 1: { local.stat_display_var = on_str_var; break; }
+                    }
+                    break;
+                }
+                case 4:
+                {	
+                    switch save_lock_var
+                    {
+                        case -1: { local.stat_display_var = def_str_var; break; }
+                        case 0: { local.stat_display_var = off_str_var; break; }
+                        case 1: { local.stat_display_var = on_str_var; break; }
+                        case 2: { local.stat_display_var = alone_str_var; break; }
+                        case 3: { local.stat_display_var = evil_str_var; break; }
+                    }
+                    break;
+                }
+                case 5:
+                {	
+                    switch save_dmg_shake_var
+                    {
+                        case -1: { local.stat_display_var = def_str_var; break; }
+                        case 0: { local.stat_display_var = off_str_var; break; }
+                        case 1: { local.stat_display_var = on_str_var; break; }
+                    }
+                    break;
+                }
+                case 6:
+                {
+                    switch save_mult_type_var
+                    {
+                        case -1: { local.stat_display_var = def_str_var; break; }
+                        case 0: { local.stat_display_var = max_str_var; break; }
+                        case 1: { local.stat_display_var = min_str_var; break; }
+                        case 2: { local.stat_display_var = taper_str_var; break; }
+                        case 3: { local.stat_display_var = always_str_var; break; }
+                    }
+                    break;
+                }
+                case 7:
+                {
+                    switch save_mult_min_var
+                    {
+                        case -2: { local.stat_display_var = inf_str_var; break; }
+                        case -1: { local.stat_display_var = def_str_var; break; }
+                        default: { local.stat_display_var = string(save_mult_min_var); break; }
+                    }
+                    break;
+                }
+                case 8:
+                {
+                    switch save_mult_max_var
+                    {
+                        case -2: { local.stat_display_var = inf_str_var; break; }
+                        case -1: { local.stat_display_var = def_str_var; break; }
+                        default: { local.stat_display_var = string(save_mult_max_var); break; }
+                    }
+                    break;
+                }
+                case 9:
+                {
+                    if save_mult_start_var == -1 { local.stat_display_var = def_str_var; }
+                    else { local.stat_display_var = string(save_mult_start_var);}
+                    break;
+                }
+                case 10:
+                {
+                    if save_mult_end_var == -1 { local.stat_display_var = def_str_var; }
+                    else { local.stat_display_var = string(save_mult_end_var);}
+                    break;
+                }
+                case 11:
+                {
+                    switch save_count_type_var
+                    {
+                        case -1: { local.stat_display_var = def_str_var; break; }
+                        case 0: { local.stat_display_var = rand_str_var; break; }
+                        case 1: { local.stat_display_var = max_str_var; break; }
+                        case 2: { local.stat_display_var = min_str_var; break; }
+                        case 3: { local.stat_display_var = taper_str_var+' '+rand_str_var; break; }
+                        case 4: { local.stat_display_var = taper_str_var; break; }
+                    }
+                    break;
+                }
+                case 12:
+                {
+                    if save_count_min_var == -1 { local.stat_display_var = def_str_var; }
+                    else { local.stat_display_var = string(save_count_min_var); }
+                    break;
+                }
+                case 13:
+                {
+                    if save_count_max_var == -1 { local.stat_display_var = def_str_var; }
+                    else { local.stat_display_var = string(save_count_max_var); }
+                    break;
+                }
+                case 14:
+                {
+                    if save_count_start_var == -1 { local.stat_display_var = def_str_var; }
+                    else { local.stat_display_var = string(save_count_start_var); }
+                    break;
+                }
+                case 15:
+                {
+                    if save_count_end_var == -1 { local.stat_display_var = def_str_var; }
+                    else { local.stat_display_var = string(save_count_end_var); }
+                    break;
+                }
+                case 16:
+                {
+                    switch save_dupe_var
+                    {
+                        case -1: { local.stat_display_var = def_str_var; break; }
+                        case dupe_never_const: { local.stat_display_var = never_str_var; break; }
+                        case dupe_always_const: { local.stat_display_var = always_str_var; break; }
+                        case dupe_canon_const: { local.stat_display_var = canon_str_var; break; }
+                    }
+                    break;
+                }
+                case 17:
+                {
+                    if save_chance_var == -1 { local.stat_display_var = def_str_var; }
+                    else { local.stat_display_var = string(save_chance_var); }
+                    break;
+                }
+                case 18:
+                {
+                    if save_chance_mult_var == -1 { local.stat_display_var = def_str_var; }
+                    else { local.stat_display_var = string(save_chance_mult_var); }
+                    break;
+                }
+                default: { local.stat_display_var = ''; break; }
+			}
+			
+			if local.stat_display_var != ''
+			{
+				draw_set_color(str_bg_select_color_var);
+				draw_text_transformed(496,local.ytmp+4,string(local.stat_display_var),0.75,0.75,0);
+				draw_text_transformed(498,local.ytmp+2,string(local.stat_display_var),0.75,0.75,0);
+				draw_set_color(c_white);
+				draw_text_transformed(500,local.ytmp,string(local.stat_display_var),0.75,0.75,0);
+			}
+
+            break;
         }
 		case 6: // Save Loads
         {			
@@ -1461,35 +2177,43 @@ object_event_add
 				
 				draw_text_transformed(1232,200,'MODE:'+string(local.stat_display_var),0.6,0.6,0);
 				
-				switch save_diff_var
-				{
-					case 0:
-					{
-						local.stat_display_var = 'EASIEST';
-						break;
-					}
-					case 1:
-					{
-						local.stat_display_var = 'EASY';
-						break;
-					}
-					case 2:
-					{
-						local.stat_display_var = 'NORMAL';
-						break;
-					}
-					case 3:
-					{
-						local.stat_display_var = 'HARD';
-						break;
-					}
-					case 4:
-					{
-						local.stat_display_var = 'HARDEST';
-						break;
-					}
-				}
-					
+                switch save_type_var
+                {
+                    case 1: { local.stat_display_var = 'OG'; }
+                    case 2: { local.stat_display_var = 'HD'; }
+                    default:
+                    {
+                        switch save_diff_var
+                        {
+                            case 0:
+                            {
+                                local.stat_display_var = 'EASIEST';
+                                break;
+                            }
+                            case 1:
+                            {
+                                local.stat_display_var = 'EASY';
+                                break;
+                            }
+                            case 2:
+                            {
+                                local.stat_display_var = 'NORMAL';
+                                break;
+                            }
+                            case 3:
+                            {
+                                local.stat_display_var = 'HARD';
+                                break;
+                            }
+                            case 4:
+                            {
+                                local.stat_display_var = 'HARDEST';
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
 				draw_text_transformed(1232,275,'DIFFICULTY:'+string(local.stat_display_var),0.6,0.6,0);
 				
 				switch save_type

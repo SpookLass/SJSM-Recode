@@ -151,7 +151,7 @@ object_event_add
     // Debug commands
     if global.debug_var && keyboard_check_pressed(ord('2'))
     {
-        local.question = show_menu('Back|Restart Room|Next Room|Previous Room|Go To Room|Create Instance|Destroy Instance|Set Tex Set|Set Zone|Set Count|Set LV|Set Room|Toggle Invincibility|Toggle Noclip|Toggle Flight|Toggle Monster Spawn|Revive|Hide Debug|Hide Hud|Toggle X-ray|Execute Code',0);
+        local.question = show_menu('Back|Restart Room|Next Room|Previous Room|Go To Room|Create Instance|Destroy Instance|Set Tex Set|Set Zone|Set Count|Set LV|Set Room|Toggle Invincibility|Toggle Noclip|Toggle Flight|Toggle Monster Spawn|Revive|Hide Debug|Hide Hud|Toggle X-ray|Save|Execute Code',0);
         switch(local.question)
         {
             case 1: { room_restart(); break; }
@@ -211,17 +211,8 @@ object_event_add
             }
             case 7:
             {
-                global.tex_set = get_integer('Tex set',global.tex_set);
-                local.str = string(global.tex_set);
-                if string_length(local.str) == 1 { local.str = '0'+local.str; }
-                if file_exists(vanilla_directory_const+'\TEX\FLOOR_'+local.str+'.png')
-                {
-                    background_replace(floor_bg,vanilla_directory_const+'\TEX\FLOOR_'+local.str+'.png',false,false);
-                    background_replace(wall_bg,vanilla_directory_const+'\TEX\WALL_'+local.str+'.png',false,false);
-                    background_replace(ceil_bg,vanilla_directory_const+'\TEX\ROOF_'+local.str+'.png',false,false);
-                    sprite_replace(light_floor_spr,vanilla_directory_const+'\TEX\FLOOR_'+local.str+'L0.png',2,false,false,0,0);
-                    sprite_replace(light_wall_spr,vanilla_directory_const+'\TEX\WALL_'+local.str+'L0.png',2,false,false,0,0);
-                }
+                local.tex = get_integer('Tex set',global.tex_var);
+                tex_scr(local.tex);
                 break;
             }
             case 8:
@@ -263,6 +254,11 @@ object_event_add
             case 18: { global.hide_hud = !global.hide_hud; break; }
             case 19: { global.xray = !global.xray; break; }
             case 20:
+			{
+				save_game_scr();
+				break;
+			}
+            case 21:
             {
                 local.code = get_string('Execute Code','');
                 if local.code != ''

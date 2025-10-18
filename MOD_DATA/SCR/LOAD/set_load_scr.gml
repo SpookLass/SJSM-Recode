@@ -8,9 +8,7 @@ global.vol_var = ini_read_real("MAIN","vol",vol_const);
 global.vol_var /= 100;
 global.reduce_flash_var = ini_read_real("MAIN","reduce_flash",reduce_flash_const);
 global.max_part_var = ini_read_real("MAIN","max_part",max_part_const);
-global.can_crouch_var = ini_read_real("MAIN","crouch",crouch_const);
 global.crouch_toggle_var = ini_read_real("MAIN","crouch_toggle",crouch_toggle_const);
-global.can_jump_var = ini_read_real("MAIN","jump",jump_const);
 global.sub_var = ini_read_real("MAIN","sub",sub_const);
 global.anti_alias_var = ini_read_real("MAIN","anti_alias",anti_alias_const);
 global.vsync_var = ini_read_real("MAIN","vsync",vsync_const);
@@ -116,3 +114,6 @@ ini_close();
 window_set_fullscreen(global.fullscreen_var);
 set_synchronization(global.vsync_var);
 texture_set_interpolation(global.anti_alias_var);
+
+global.save_list = ds_list_create();
+ds_list_clear(global.save_list);

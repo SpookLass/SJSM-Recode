@@ -1,0 +1,73 @@
+if ds_list_find_index(global.save_list,global.save_name_var) = -1
+{
+    ds_list_add(global.save_list,string(global.save_name_var));
+    
+    ini_open('saves.ini');
+    
+    ini_write_string('SAVES','SAVES',ds_list_write(global.save_list));
+    
+    ini_close();
+}
+ini_open('save_'+string(global.save_name_var)+'.ini');
+// Main
+ini_write_real('MAIN','rm_count',global.rm_count_var);
+ini_write_real('MAIN','violence',global.violence_var);
+ini_write_real('MAIN','note',global.note_var);
+ini_write_real('MAIN','diff',global.diff_var);
+ini_write_real('MAIN','custom',global.custom_var);
+ini_write_real('MAIN','room',room);
+ini_write_real('SETTING','mode',global.mode_var);
+// Settings
+ini_write_real('SETTING','jump',global.jump_var);
+ini_write_real('SETTING','crouch',global.crouch_var);
+ini_write_real('SETTING','stam_per',global.stam_per_var);
+ini_write_real('SETTING','fall',global.fall_var);
+ini_write_real('SETTING','lock',global.lock_var);
+ini_write_real('SETTING','dmg_shake',global.dmg_shake_var);
+ini_write_real('SETTING','multi_type',global.multi_type_var);
+ini_write_real('SETTING','multi_min',global.multi_min_var);
+ini_write_real('SETTING','multi_max',global.multi_max_var);
+ini_write_real('SETTING','multi_start',global.multi_start_var);
+ini_write_real('SETTING','multi_end',global.multi_end_var);
+ini_write_real('SETTING','count_type',global.count_type_var);
+ini_write_real('SETTING','count_min',global.count_min_var);
+ini_write_real('SETTING','count_max',global.count_max_var);
+ini_write_real('SETTING','count_start',global.count_start_var);
+ini_write_real('SETTING','count_end',global.count_end_var);
+ini_write_real('SETTING','dupe',global.dupe_var);
+ini_write_real('SETTING','mon_chance',global.mon_chance_var);
+ini_write_real('SETTING','mon_chance_mult',global.mon_chance_mult_var);
+// Behavior stuff
+ini_write_real('BEHAVIOR','type',global.default_type_var);
+ini_write_real('BEHAVIOR','player_type',global.player_type_var);
+ini_write_real('BEHAVIOR','axe_type',global.axe_type_var);
+ini_write_real('BEHAVIOR','gel_type',global.gel_type_var);
+ini_write_real('BEHAVIOR','bug_type',global.bug_type_var);
+ini_write_real('BEHAVIOR','ringu_type',global.ringu_type_var);
+ini_write_real('BEHAVIOR','bab_type',global.bab_type_var);
+ini_write_real('BEHAVIOR','pup_type',global.pup_type_var);
+ini_write_real('BEHAVIOR','flesh_type',global.flesh_type_var);
+ini_write_real('BEHAVIOR','dl_type',global.dl_type_var);
+ini_write_real('BEHAVIOR','taker_type',global.taker_type_var);
+ini_write_real('BEHAVIOR','para_type',global.para_type_var);
+ini_write_real('BEHAVIOR','fd_type',global.fd_type_var);
+ini_write_real('BEHAVIOR','killer_type',global.killer_type_var);
+ini_write_real('BEHAVIOR','mur_type',global.mur_type_var);
+ini_write_real('BEHAVIOR','sg_type',global.sg_type_var);
+ini_write_real('BEHAVIOR','body_type',global.body_type_var);
+ini_write_real('BEHAVIOR','stem_type',global.stem_type_var);
+ini_write_real('BEHAVIOR','patient_type',global.patient_type_var);
+ini_write_real('BEHAVIOR','cow_type',global.cow_type_var);
+ini_write_real('BEHAVIOR','bekka_type',global.bekka_type_var);
+ini_write_real('BEHAVIOR','husk_type',global.husk_type_var);
+ini_write_real('BEHAVIOR','wc_type',global.wc_type_var);
+ini_write_real('BEHAVIOR','clown_type',global.clown_type_var);
+ini_write_real('BEHAVIOR','hd_type',global.hd_type_var);
+ini_write_real('BEHAVIOR','frenzy_type',global.frenzy_type_var);
+ini_write_real('BEHAVIOR','real_ringu_type',global.real_ringu_type_var);
+ini_write_real('BEHAVIOR','tiri_type',global.tiri_type_var);
+ini_write_real('BEHAVIOR','lisa_type',global.lisa_type_var);
+ini_write_real('BEHAVIOR','otto_type',global.otto_type_var);
+ini_write_real('BEHAVIOR','spooper_type',global.spooper_type_var);
+ini_write_real('BEHAVIOR','wf_type',global.wf_type_var);
+ini_close();

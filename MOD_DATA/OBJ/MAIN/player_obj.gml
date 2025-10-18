@@ -47,7 +47,7 @@ object_event_add
     air_frick_mult_var = 0.1;
     // Crouch
     crouch_var = false;
-    can_crouch_var = global.can_crouch_var;
+    can_crouch_var = global.crouch_var;
     crouch_toggle_var = global.crouch_toggle_var;
     crouch_spd_mult_var = 0.6;
     // Camera
@@ -63,7 +63,7 @@ object_event_add
     // Jump
     jump_var = false;
     jump_hold_var = false;
-    can_jump_var = global.can_jump_var;
+    can_jump_var = global.jump_var;
     jump_z_spd_var = 0.7;
     jump_spd_mult_var = 1.2;
     jump_grav_var = 2;
@@ -278,72 +278,75 @@ object_event_add
                 }
             }
             // Crouch!
-            if (global.crouch_input_press_var && crouch_toggle_var) 
-            || (global.crouch_input_var != crouch_var && !crouch_toggle_var)
+            if can_crouch_var
             {
-                local.znext = z;
-                if !on_floor_var
+                if (global.crouch_input_press_var && crouch_toggle_var) 
+                || (global.crouch_input_var != crouch_var && !crouch_toggle_var)
                 {
-                    local.coll_diff = global.player_coll[1]-global.player_crouch_coll[1];
-                    if !crouch_var { local.znext += local.coll_diff; }
-                    else { local.znext -= local.coll_diff; }
-                }
-                if !crouch_var
-                {
-                    crouch_var = true;
-                    coll_var[0] = global.player_crouch_coll[0];
-                    coll_var[1] = global.player_crouch_coll[1];
-                    coll_var[2] = global.player_crouch_coll[2];
-                    z = local.znext;
-                    target_eye_h_var = crouch_eye_h_var;
-                }
-                else if !check_coll_scr(-1,global.player_coll[0],global.player_coll[1],global.player_coll[2],x,y,local.znext+0.01)
-                {
-                    crouch_var = false;
-                    coll_var[0] = global.player_coll[0];
-                    coll_var[1] = global.player_coll[1];
-                    coll_var[2] = global.player_coll[2];
-                    z = local.znext;
-                    target_eye_h_var = base_eye_h_var;
-                }
-                else if !on_floor_var
-                {
-                    local.zdist = 10000000;
-                    local.radius = coll_var[2]/2;
-                    for (local.i=0; local.i<5; local.i+=1;)
+                    local.znext = z;
+                    if !on_floor_var
                     {
-                        local.xtmp = x;
-                        local.ytmp = y;
-                        if local.i != 0
-                        {
-                            local.xtmp += lengthdir_x(local.radius,local.i*90);
-                            local.ytmp += lengthdir_y(local.radius,local.i*90);
-                        }
-                        local.zdist = min
-                        (
-                            local.zdist,
-                            check_ray_scr
-                            (
-                                local.xtmp,local.ytmp,z+coll_var[1],
-                                0,0,-1
-                            )
-                        );
+                        local.coll_diff = global.player_coll[1]-global.player_crouch_coll[1];
+                        if !crouch_var { local.znext += local.coll_diff; }
+                        else { local.znext -= local.coll_diff; }
                     }
-                    local.zdist -= coll_var[1];
-                    local.znext = z-local.zdist;
-                    if !check_coll_scr(-1,global.player_coll[0],global.player_coll[1],global.player_coll[2],x,y,local.znext+0.01)
+                    if !crouch_var
+                    {
+                        crouch_var = true;
+                        coll_var[0] = global.player_crouch_coll[0];
+                        coll_var[1] = global.player_crouch_coll[1];
+                        coll_var[2] = global.player_crouch_coll[2];
+                        z = local.znext;
+                        target_eye_h_var = crouch_eye_h_var;
+                    }
+                    else if !check_coll_scr(-1,global.player_coll[0],global.player_coll[1],global.player_coll[2],x,y,local.znext+0.01)
                     {
                         crouch_var = false;
                         coll_var[0] = global.player_coll[0];
                         coll_var[1] = global.player_coll[1];
                         coll_var[2] = global.player_coll[2];
                         z = local.znext;
-                        z_spd_var = 0;
-                        on_floor_var = true;
                         target_eye_h_var = base_eye_h_var;
                     }
+                    else if !on_floor_var
+                    {
+                        local.zdist = 10000000;
+                        local.radius = coll_var[2]/2;
+                        for (local.i=0; local.i<5; local.i+=1;)
+                        {
+                            local.xtmp = x;
+                            local.ytmp = y;
+                            if local.i != 0
+                            {
+                                local.xtmp += lengthdir_x(local.radius,local.i*90);
+                                local.ytmp += lengthdir_y(local.radius,local.i*90);
+                            }
+                            local.zdist = min
+                            (
+                                local.zdist,
+                                check_ray_scr
+                                (
+                                    local.xtmp,local.ytmp,z+coll_var[1],
+                                    0,0,-1
+                                )
+                            );
+                        }
+                        local.zdist -= coll_var[1];
+                        local.znext = z-local.zdist;
+                        if !check_coll_scr(-1,global.player_coll[0],global.player_coll[1],global.player_coll[2],x,y,local.znext+0.01)
+                        {
+                            crouch_var = false;
+                            coll_var[0] = global.player_coll[0];
+                            coll_var[1] = global.player_coll[1];
+                            coll_var[2] = global.player_coll[2];
+                            z = local.znext;
+                            z_spd_var = 0;
+                            on_floor_var = true;
+                            target_eye_h_var = base_eye_h_var;
+                        }
+                    }
+                    if !on_floor_var { eye_h_var = target_eye_h_var }
                 }
-                if !on_floor_var { eye_h_var = target_eye_h_var }
             }
         }
         else
