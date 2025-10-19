@@ -113,6 +113,20 @@ switch argument0
         );
         break;
     }
+    case 8:
+    case 9:
+    {
+        p3dc_add_block_scr
+        (
+            -argument7,
+            -argument7,
+            argument4,
+            argument7,
+            argument7+argument2,
+            0
+        );
+        break;
+    }
 }
 p3dc_end_mdl_scr();
 return local.collmod;

@@ -164,7 +164,5 @@ room_instance_add(argument0,352,256,wall_tt_vert_obj);
 room_instance_add(argument0,352,288,wall_tt_vert_obj);
 room_instance_add(argument0,352,320,wall_tt_vert_obj);
 room_instance_add(argument0,352,352,wall_tt_vert_obj);
-// Torches
-// Props
-// Not yet
-//room_instance_add(argument0,288,368,js_obj);
+// Jumpscare
+room_instance_add(argument0,288,368,js_obj);

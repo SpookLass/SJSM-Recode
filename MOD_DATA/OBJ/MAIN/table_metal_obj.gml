@@ -11,7 +11,7 @@ global.table_coll[0] = prop_to_coll_scr(0,table_old_mdl_path);
 // Create event
 object_event_add
 (argument0,ev_create,0,"
-    stored_tex_var = machine_02_bg_tex;
+    store_tex_var = machine_02_bg_tex;
     event_inherited();
     solid_var = true;
     mdl_var = table_old_mdl;

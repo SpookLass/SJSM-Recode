@@ -169,4 +169,3 @@ room_instance_add(argument0,288,208,chain_hor_rand_obj);
 room_instance_add(argument0,544,208,chain_hor_rand_obj);
 room_instance_add(argument0,544,304,chain_hor_rand_obj);
 room_instance_add(argument0,288,304,chain_hor_rand_obj);
-// Not Yet

@@ -17,7 +17,7 @@ execute_string
 // Create event
 object_event_add
 (argument0,ev_create,0,"
-    stored_tex_var = glass_bg_tex;
+    store_tex_var = glass_bg_tex;
     event_inherited();
     solid_var = true;
     type_var = 3;

@@ -15,7 +15,7 @@ global.crate_coll[0] = prop_to_coll_scr(2,'',global.crate_coll[2],global.crate_c
 object_event_add
 (argument0,ev_create,0,"
     snap_var = 1;
-    stored_tex_var = crate_bg_tex;
+    store_tex_var = crate_bg_tex;
     event_inherited();
     solid_var = true;
     w_var = 16;

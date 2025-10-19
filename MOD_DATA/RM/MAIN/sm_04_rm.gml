@@ -147,4 +147,3 @@ room_instance_add(argument0,272,256,chair_east_obj);
 room_instance_add(argument0,304,192,chair_east_obj);
 room_instance_add(argument0,304,256,chair_east_obj);
 room_instance_add(argument0,383,224,bone_rand_obj);
-// Not yet

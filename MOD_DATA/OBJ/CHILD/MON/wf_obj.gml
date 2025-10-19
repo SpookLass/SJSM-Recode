@@ -47,6 +47,8 @@ object_event_add
             other.bg_var = bg_var;
             other.tex_spr_var = tex_spr_var;
             other.door_bg_var = door_bg_var;
+            other.light_wall_spr_var = light_wall_spr_var;
+            other.light_floor_spr_var = light_floor_spr_var;
             other.eff_spr_var = eff_spr_var;
             other.web_bg_var = web_bg_var;
             other.web_mdl_var = web_mdl_var;
@@ -62,8 +64,10 @@ object_event_add
         bg_var = background_add(vanilla_directory_const+'\TEX\sprites\MS28_02_spr.png',false,false);
         tex_spr_var = sprite_add(vanilla_directory_const+'\TEX\sprites\MS28_03_spr.png',3,false,false,0,0);
         door_bg_var = background_add(vanilla_directory_const+'\TEX\sprites\MS28_04_spr.png',false,false);
-        web_bg_var = background_add(vanilla_directory_const+'\TEX\sprites\MS28_05_spr.png',false,false);
+        light_wall_spr_var = sprite_add(main_directory_const+'\SPR\MON\wf_light_wall_spr.png',2,false,false,0,0);
+        light_floor_spr_var = sprite_add(main_directory_const+'\SPR\MON\wf_light_floor_spr.png',2,false,false,0,0);
         eff_spr_var = sprite_add(main_directory_const+'\SPR\DEAD\killer_static_02_spr.png',6,false,false,0,0);
+        web_bg_var = background_add(vanilla_directory_const+'\TEX\sprites\MS28_05_spr.png',false,false);
         web_mdl_var = d3d_model_create();
         d3d_model_load(web_mdl_var,main_directory_const+'\MDL\MON\wf_web_mdl.gmmod');
         zone_list_var = ds_list_create();
@@ -310,6 +314,8 @@ object_event_add
     global.wall_bg_tex = background_get_texture(global.wall_bg);
     global.floor_bg_tex = background_get_texture(global.floor_bg);
     global.ceil_bg_tex = background_get_texture(global.ceil_bg);
+    global.light_wall_obj_spr = global.light_wall_spr;
+    global.light_floor_obj_spr = global.light_floor_spr;
     if res_var
     {
         global.res_override_var = false;
@@ -427,6 +433,8 @@ object_event_add
     global.wall_bg_tex = sprite_get_texture(tex_spr_var,0);
     global.floor_bg_tex = sprite_get_texture(tex_spr_var,1);
     global.ceil_bg_tex = sprite_get_texture(tex_spr_var,2);
+    global.light_wall_obj_spr = light_wall_spr_var;
+    global.light_floor_obj_spr = light_floor_spr_var;
     with door_obj { tex_var = background_get_texture(other.door_bg_var); }
     with door_entrance_obj { tex_var = background_get_texture(other.door_bg_var); }
     if !instance_exists(wf_eff_obj)

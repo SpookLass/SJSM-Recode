@@ -296,7 +296,7 @@ object_event_add
                 {
                     with player_obj
                     {
-                        if box_coll_scr(x,y,z,coll_var[2],coll_var[1],other.x,other.y,other.z,other.trig_w_var,other.trig_h_var)
+                        if box_coll_scr(x,y,z,coll_var[2],coll_var[2],coll_var[1],other.x,other.y,other.z,other.trig_w_var,other.trig_w_var,other.trig_h_var)
                         {
                             local.active = true;
                             break;

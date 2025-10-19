@@ -144,6 +144,30 @@ with (prop_par_obj)
                 }
                 break;
             }
+            case 8:
+            case 9:
+            {
+                mp_grid_add_rectangle
+                (
+                    global.phys_grid,
+                    x,
+                    y,
+                    x+w_var,
+                    y
+                );
+                if solid_var != float_solid_const
+                {
+                    mp_grid_add_rectangle
+                    (
+                        global.float_grid,
+                        x,
+                        y,
+                        x+w_var,
+                        y
+                    );
+                }
+                break;
+            }
         }
     }
 }

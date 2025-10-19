@@ -151,5 +151,5 @@ room_instance_add(argument0,180,433,web_rand_obj);
 room_instance_add(argument0,187,482,web_rand_obj);
 room_instance_add(argument0,307,468,web_rand_obj);
 room_instance_add(argument0,369,447,web_rand_obj);
-// Not yet
-/*room_instance_add(argument0,400,480,random_scare_mark1);*/
+// Jumpscare
+room_instance_add(argument0,400,480,js_obj);

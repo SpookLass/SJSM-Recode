@@ -179,5 +179,5 @@ room_instance_add(argument0,224,544,wall_2high_vert_obj);
 room_instance_add(argument0,432,520,bar_hor_obj);
 room_instance_add(argument0,496,568,bar_hor_obj);
 room_instance_add(argument0,432,568,bar_hor_obj);
-// Not Yet
-//room_instance_add(argument0,272,560,random_scare_mark1);
+// Jumpscare
+room_instance_add(argument0,272,560,js_obj);

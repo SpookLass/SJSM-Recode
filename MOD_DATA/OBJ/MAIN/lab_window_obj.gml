@@ -11,8 +11,8 @@ object_event_add
 (argument0,ev_create,0,"
     event_inherited();
     h_var = 64;
-    stored_tex_02_var = lab_window_bg_tex;
-    tex_02_var = stored_tex_02_var;
+    store_tex_02_var = lab_window_bg_tex;
+    tex_02_var = store_tex_02_var;
 ");
 // Draw Event
 object_event_add

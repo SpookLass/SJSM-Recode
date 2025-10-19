@@ -220,4 +220,3 @@ room_instance_add(argument0,400,464,wall_float_vert_obj);
 // Torches
 room_instance_add(argument0,464,400,torch_east_obj);
 room_instance_add(argument0,464,464,torch_east_obj);
-// Not yet

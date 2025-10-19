@@ -119,4 +119,3 @@ room_instance_add(argument0,128,320,torch_south_obj);
 room_instance_add(argument0,256,320,torch_south_obj);
 // Props
 room_instance_add(argument0,256,256,table_rand_obj);
-// Not yet

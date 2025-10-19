@@ -277,5 +277,5 @@ room_instance_add(argument0,160,240,wall_vert_obj);
 // Props
 room_instance_add(argument0,208,272,bar_hor_obj);
 room_instance_add(argument0,208,336,bar_hor_obj);
-// Not yet
-//room_instance_add(argument0,272,320,random_scare_mark1)
+// Jumpscare
+room_instance_add(argument0,272,320,js_obj)

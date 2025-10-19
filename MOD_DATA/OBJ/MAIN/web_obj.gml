@@ -10,7 +10,7 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,0,"
     snap_var = 2; // Snap to ceiling
-    stored_tex_var = sprite_get_texture(web_spr,irandom(sprite_get_number(web_spr)-1));
+    store_tex_var = sprite_get_texture(web_spr,irandom(sprite_get_number(web_spr)-1));
     event_inherited();
     type_var = 1;
     w_var = 12;

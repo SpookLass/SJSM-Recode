@@ -1,0 +1,135 @@
+object_set_depth(argument0,-1);
+object_set_mask(argument0,noone);
+object_set_parent(argument0,prop_par_obj);
+object_set_persistent(argument0,false);
+object_set_solid(argument0,false);
+object_set_sprite(argument0,noone);
+object_set_visible(argument0,false);
+// Collision
+global.js_coll[1] = 14;
+global.js_coll[2] = 14;
+global.jsr_coll[0] = prop_to_coll_scr(9,'',global.js_coll[2],0,global.js_coll[1],false,0,3);
+global.jsl_coll[0] = prop_to_coll_scr(9,'',-global.js_coll[2],0,global.js_coll[1],false,0,3);
+// Create event
+object_event_add
+(argument0,ev_create,0,"
+    if !irandom(4)
+    {
+        // Texture
+        bg_load_var = true;
+        local.tex = irandom(global.js_len_var-1);
+        bg_01_var = background_add(global.js_arr[local.tex,0],false,false);
+        bg_02_var = background_add(global.js_arr[local.tex,1],false,false);
+        snd_3d_var = false;
+        snd_var = fmod_snd_add_scr(global.js_snd_arr[irandom(global.js_snd_len_var-1)],snd_3d_var);
+        store_tex_var = background_get_texture(bg_01_var);
+        store_tex_02_var = background_get_texture(bg_02_var);
+        tex_02_var = store_tex_02_var;
+        // Main
+        event_inherited();
+        solid_var = true;
+        type_var = 9;
+        z += 8;
+        w_var = 14;
+        h_var = 14;
+        radius_var = 3;
+        base_dir_var += 180;
+        jump_dir_var = -90;
+        direction = base_dir_var;
+        dist_var = 0.05;
+        tex_w_var = -1;
+        // Special
+        delay_var = 10;
+        alarm_len_var = 1;
+        alarm_arr[0,2] = '';
+        weapon_var = true;
+        // Collisions
+        coll_var[0] = global.jsr_coll[0];
+        coll_var[1] = global.js_coll[1];
+        coll_var[2] = global.js_coll[2];
+        // Trigger
+        with instance_create(x+lengthdir_x(16,base_dir_var-90),y+lengthdir_y(16,base_dir_var-90),js_trig_obj)
+        {
+            par_var = other.id;
+            other.trig_var = id;
+            z = other.z-8;
+            local.dir = round(other.base_dir_var/90);
+            if local.dir mod 2 != 0 // Rotate 90 degrees
+            {
+                local.coll = coll_var[2]
+                coll_var[2] = coll_var[3];
+                coll_var[3] = local.coll;
+            }
+            direction = local.dir*90;
+        }
+        // Left
+        if !irandom(1)
+        {
+            w_var *= -1;
+            jump_dir_var *= -1;
+            coll_var[0] = global.jsl_coll[0];
+            x += lengthdir_x(32,base_dir_var-90);
+            y += lengthdir_y(32,base_dir_var-90);
+        }
+    }
+    else { instance_destroy(); }
+");
+// Destroy
+object_event_add
+(argument0,ev_destroy,0,"
+    event_user(0);
+");
+// Room end event
+object_event_add
+(argument0,ev_other,ev_room_end,"
+    event_user(0);
+");
+// Delete background
+object_event_add
+(argument0,ev_other,ev_user0,"
+    if bg_load_var
+    {
+        background_delete(bg_01_var);
+        background_delete(bg_02_var);
+        fmod_snd_free_scr(snd_var);
+        bg_load_var = false;
+    }
+");
+// Jumpscare!
+object_event_add
+(argument0,ev_other,ev_user1,"
+    visible = true;
+    if snd_3d_var { inst_var = fmod_snd_3d_play_scr(snd_var); }
+    else { inst_var = fmod_snd_play_scr(snd_var); }
+    direction = base_dir_var+jump_dir_var;
+    set_alarm_scr(0,delay_var);
+");
+// Step Event
+object_event_add
+(argument0,ev_step,ev_step_normal,"
+    if alarm_arr[0,0] > 0
+    {
+        direction = lerp_scr(base_dir_var,base_dir_var+jump_dir_var,alarm_arr[0,0]/alarm_arr[0,1]);
+    }
+    if snd_3d_var && fmod_inst_is_play_scr(inst_var)
+    { fmod_inst_set_pos_scr(inst_var,x+lengthdir_x(w_var/2,direction-90),y+lengthdir_y(w_var/2,direction-90),z+(h_var/2)); }
+");
+// Alarm
+object_event_add
+(argument0,ev_alarm,0,"
+    direction = base_dir_var;
+");
+// Die
+object_event_add
+(argument0,ev_other,ev_user4,"
+    if !hit_var
+    {
+        hit_var = true;
+        solid_var = false;
+        w_var *= 0.25;
+        tex_w_var *= 0.25;
+        fmod_inst_stop_scr(inst_var);
+        fmod_snd_play_scr(choose(card_01_snd,card_02_snd,card_03_snd,card_04_snd));
+        hurt_target_var.violence_var += 1;
+    }
+");

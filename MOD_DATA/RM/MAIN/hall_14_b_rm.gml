@@ -103,8 +103,7 @@ room_instance_add(argument0,496,240,wall_hor_obj);
 // Walls (Vertical)
 room_instance_add(argument0,448,256,wall_vert_obj);
 room_instance_add(argument0,736,256,wall_vert_obj);
-// Torches
-// Not yet
-/*room_instance_add(argument0,576,272,random_scare_mark1);
-room_instance_add(argument0,608,272,random_scare_mark1);
-room_instance_add(argument0,672,272,random_scare_mark1);*/
+// Jumpscare
+room_instance_add(argument0,576,272,js_obj);
+room_instance_add(argument0,608,272,js_obj);
+room_instance_add(argument0,672,272,js_obj);

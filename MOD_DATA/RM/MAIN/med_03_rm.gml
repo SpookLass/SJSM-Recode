@@ -194,4 +194,3 @@ room_instance_add(argument0,320,480,torch_north_obj);
 room_instance_add(argument0,320,512,torch_south_obj);
 room_instance_add(argument0,288,448,torch_south_obj);
 room_instance_add(argument0,224,448,torch_south_obj);
-// Not yet

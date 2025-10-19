@@ -172,12 +172,12 @@ object_event_add
             with instance_create(global.mark_arr[local.i,0],global.mark_arr[local.i,1],tiri_shadow_obj)
             {
                 par_var = other.id;
-                stored_tex_var = sprite_get_texture(other.shadow_spr_var,local.spr_id);
-                stored_tex_02_var = sprite_get_texture(other.shadow_spr_var,local.spr_id+1);
-                stored_tex_03_var = sprite_get_texture(other.shadow_spr_var,local.spr_id+2);
+                store_tex_var = sprite_get_texture(other.shadow_spr_var,local.spr_id);
+                store_tex_02_var = sprite_get_texture(other.shadow_spr_var,local.spr_id+1);
+                store_tex_03_var = sprite_get_texture(other.shadow_spr_var,local.spr_id+2);
                 w_var = other.shadow_scale_var;
                 h_var = other.shadow_scale_var;
-                tex_var = stored_tex_var;
+                tex_var = store_tex_var;
                 hp_var = other.shadow_hp_var;
             }
             global.mark_arr[local.i,3] = true;

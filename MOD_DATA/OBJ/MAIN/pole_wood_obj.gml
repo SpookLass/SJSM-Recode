@@ -14,7 +14,7 @@ global.pole_wood_coll[0] = prop_to_coll_scr(2,'',global.pole_wood_coll[2],global
 // Create event
 object_event_add
 (argument0,ev_create,0,"
-    stored_tex_var = wood_01_bg_tex;
+    store_tex_var = wood_01_bg_tex;
     event_inherited();
     solid_var = true;
     type_var = 2;

@@ -144,4 +144,3 @@ room_instance_add(argument0,296,68,wall_vert_obj);
 room_instance_add(argument0,632,256,wall_vert_obj);
 // Engineering
 room_instance_add(argument0,384,256,bar_vert_obj);
-// Not yet

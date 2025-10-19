@@ -116,4 +116,3 @@ room_instance_add(argument0,304,192,doorframe_01_vert_obj);
 room_instance_add(argument0,304,320,doorframe_01_vert_obj);
 room_instance_add(argument0,304,192,doorframe_02_vert_obj);
 room_instance_add(argument0,304,320,doorframe_02_vert_obj);
-// Not Yet

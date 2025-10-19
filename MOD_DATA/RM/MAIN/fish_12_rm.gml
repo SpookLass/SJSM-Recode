@@ -166,4 +166,3 @@ room_instance_add(argument0,416,224,tank_rand_obj);
 room_instance_add(argument0,416,288,tank_rand_obj);
 room_instance_add(argument0,384,288,tank_rand_obj);
 room_instance_add(argument0,352,288,tank_rand_obj);
-// Not yet

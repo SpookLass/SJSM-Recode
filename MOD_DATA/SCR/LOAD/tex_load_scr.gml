@@ -22,6 +22,8 @@ while file_exists(vanilla_directory_const+"\TEX\FLOOR_"+local.index_str+'.png')
     else { local.index_str = string(local.index); }
 }
 
+global.tex_story_len_var = global.tex_len_var
+
 local.index = 1;
 local.index_str = '01';
 

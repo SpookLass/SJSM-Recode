@@ -112,5 +112,4 @@ room_instance_add(argument0,288,240,wall_vert_obj);
 room_instance_add(argument0,224,240,wall_vert_obj);
 // Torches
 // Furniture
-// Not yet
 /**/

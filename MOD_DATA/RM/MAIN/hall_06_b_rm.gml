@@ -188,5 +188,5 @@ room_instance_add(argument0,320,400,door_east_obj);
 room_instance_add(argument0,312,400,door_trig_obj);
 room_instance_add(argument0,320,560,door_east_obj);
 room_instance_add(argument0,312,560,door_trig_obj);
-// Not yet
-/*room_instance_add(argument0,256,416,random_scare_mark1);*/
+// Jumpscare
+room_instance_add(argument0,256,416,js_obj);

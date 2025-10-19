@@ -137,4 +137,3 @@ room_instance_add(argument0,208,384,runner_obj);
 room_instance_add(argument0,208,448,runner_obj);
 room_instance_add(argument0,144,448,runner_obj);
 room_instance_add(argument0,144,384,runner_obj);
-// Not yet

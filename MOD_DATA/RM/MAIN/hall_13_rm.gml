@@ -153,6 +153,5 @@ room_instance_add(argument0,240,32,wall_hor_obj);
 room_instance_add(argument0,240,64,wall_hor_obj);
 room_instance_add(argument0,240,224,wall_hor_obj);
 room_instance_add(argument0,240,256,wall_hor_obj);
-/* Not ready yet
+// Jumpscare
 room_instance_add(argument0,324,160,global.js_obj);
-*/

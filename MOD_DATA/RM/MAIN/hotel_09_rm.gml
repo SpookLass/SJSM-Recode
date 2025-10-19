@@ -146,4 +146,3 @@ room_instance_add(argument0,384,240,doorframe_01_hor_obj);
 room_instance_add(argument0,384,272,doorframe_01_hor_obj);
 room_instance_add(argument0,384,240,doorframe_02_hor_obj);
 room_instance_add(argument0,384,272,doorframe_02_hor_obj);
-// Not Yet

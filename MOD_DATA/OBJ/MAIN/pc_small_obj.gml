@@ -15,15 +15,15 @@ global.pc_small_coll[0] = prop_to_coll_scr(7,'',global.pc_small_coll[2],global.p
 object_event_add
 (argument0,ev_create,0,"
     snap_var = 1;
-    stored_tex_var = pc_sm_bg_tex;
+    store_tex_var = pc_sm_bg_tex;
     event_inherited();
     solid_var = true;
     w_var = 12;
     h_var = 12;
     l_var = 12;
     type_var = 7;
-    stored_tex_02_var = machine_01_bg_tex;
-    tex_02_var = stored_tex_02_var;
+    store_tex_02_var = machine_01_bg_tex;
+    tex_02_var = store_tex_02_var;
     // Collisions
     coll_var[0] = global.pc_small_coll[0];
     coll_var[1] = global.pc_small_coll[1];

@@ -28,6 +28,16 @@ local.radius = global.trig_coll[2]/2;
 global.trig_coll[0] = p3dc_begin_mdl_scr();
 p3dc_add_block_scr(-local.radius,-local.radius,global.trig_coll[1],local.radius,local.radius,0,true,8);
 p3dc_end_mdl_scr();
+// Jumpscare trigger
+global.js_trig_coll[1] = 32;
+global.js_trig_coll[2] = 96;
+global.js_trig_coll[3] = 32;
+local.radius_z = global.js_trig_coll[1]/2;
+local.radius_x = global.js_trig_coll[2]/2;
+local.radius_y = global.js_trig_coll[3]/2;
+global.js_trig_coll[0] = p3dc_begin_mdl_scr();
+p3dc_add_cylinder_scr(-local.radius_x,-local.radius_y,-local.radius_z,local.radius_x,local.radius_y,local.radius_z,true,8);
+p3dc_end_mdl_scr();
 // Monster
 global.mon_coll[1] = 18;
 global.mon_coll[2] = 8;

@@ -214,5 +214,5 @@ room_instance_add(argument0,464,332,bone_rand_obj);
 room_instance_add(argument0,467,270,bone_rand_obj);
 room_instance_add(argument0,564,268,bone_rand_obj);
 room_instance_add(argument0,656,338,bone_rand_obj);
-// Not yet
-//room_instance_add(argument0,416,320,random_scare_mark1);
+// Jumpscare
+room_instance_add(argument0,416,320,js_obj);

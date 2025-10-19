@@ -172,7 +172,6 @@ room_instance_add(argument0,320,352,torch_south_obj);
 // Props
 room_instance_add(argument0,320,208,rug_rand_rot_obj);
 room_instance_add(argument0,448,336,rug_rand_rot_obj);
-// Not yet
 
 
 

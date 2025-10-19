@@ -156,7 +156,6 @@ room_instance_add(argument0,192,240,wall_vert_obj);
 room_instance_add(argument0,256,112,wall_vert_obj);
 room_instance_add(argument0,256,144,wall_vert_obj);
 room_instance_add(argument0,256,176,wall_vert_obj);
-
 // Walls (Horizontal)
 room_instance_add(argument0,48,96,wall_hor_obj);
 room_instance_add(argument0,48,192,wall_hor_obj);
@@ -174,6 +173,3 @@ room_instance_add(argument0,208,96,wall_hor_obj);
 room_instance_add(argument0,208,192,wall_hor_obj);
 room_instance_add(argument0,240,96,wall_hor_obj);
 room_instance_add(argument0,240,192,wall_hor_obj);
-/* Not ready yet
-room_instance_add(argument0,324,160,global.js_obj);
-*/

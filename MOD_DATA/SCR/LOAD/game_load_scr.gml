@@ -9,6 +9,7 @@ execute_file(main_directory_const+"\SCR\LOAD\obj_load_scr.gml");
 execute_file(main_directory_const+"\SCR\LOAD\rm_load_scr.gml");
 execute_file(main_directory_const+"\SCR\LOAD\zone_load_scr.gml");
 execute_file(main_directory_const+"\SCR\LOAD\tex_load_scr.gml");
+execute_file(main_directory_const+"\SCR\LOAD\js_load_scr.gml");
 // Gay
 global.pride_len_var = 30;
 global.pride_arr[0] = pride_color_obj;

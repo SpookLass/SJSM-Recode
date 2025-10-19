@@ -11,7 +11,7 @@ execute_string("global.bar_vert_coll[0] = prop_to_coll_scr(0,bar_vert_mdl_path);
 // Create event
 object_event_add
 (argument0,ev_create,0,"
-    stored_tex_var = metal_02_bg_tex;
+    store_tex_var = metal_02_bg_tex;
     event_inherited();
     solid_var = true;
     mdl_var = bar_vert_mdl;

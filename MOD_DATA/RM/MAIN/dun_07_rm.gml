@@ -173,4 +173,3 @@ room_instance_add(argument0,416,336,torch_south_obj);
 // Props
 room_instance_add(argument0,368,176,chain_hor_rand_obj);
 room_instance_add(argument0,368,336,chain_hor_rand_obj);
-// Not Yet

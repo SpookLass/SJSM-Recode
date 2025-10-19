@@ -9,7 +9,7 @@ object_set_visible(argument0,true);
 // Create
 object_event_add
 (argument0,ev_create,0,"
-    stored_tex_var = torch_bg_tex;
+    store_tex_var = torch_bg_tex;
     event_inherited();
     mdl_var = torch_mdl;
     mdl_path_var = torch_mdl_path;

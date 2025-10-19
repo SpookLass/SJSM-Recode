@@ -134,4 +134,3 @@ room_instance_add(argument0,240,288,wall_vert_obj);
 // Props
 room_instance_add(argument0,336,384,doorframe_01_vert_obj);
 room_instance_add(argument0,336,384,doorframe_02_vert_obj);
-// Not Yet

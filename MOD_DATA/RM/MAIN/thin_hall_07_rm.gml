@@ -144,4 +144,3 @@ room_instance_add(argument0,288,408,wall_vert_obj);
 // Props
 room_instance_add(argument0,208,232,chair_rand_obj);
 room_instance_add(argument0,211,257,chair_rand_obj);
-// Not yet

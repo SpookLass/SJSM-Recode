@@ -38,14 +38,14 @@ object_event_add
     hp_var -= 1;
     if hp_var <= 0
     {
-        tex_var = stored_tex_03_var;
+        tex_var = store_tex_03_var;
         weapon_var = false;
         solid_var = false;
         set_alarm_scr(0,-1);
     }
     else if weapon_alarm_var > 0
     {
-        tex_var = stored_tex_02_var;
+        tex_var = store_tex_02_var;
         weapon_var = false;
         set_alarm_scr(0,weapon_alarm_var);
     }
@@ -53,6 +53,6 @@ object_event_add
 // Alarm
 object_event_add
 (argument0,ev_alarm,0,"
-    tex_var = stored_tex_var;
+    tex_var = store_tex_var;
     weapon_var = true;
 ")

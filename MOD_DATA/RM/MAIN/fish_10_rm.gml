@@ -174,5 +174,5 @@ room_instance_add(argument0,320,288,tank_rand_obj);
 room_instance_add(argument0,384,224,tank_rand_obj);
 room_instance_add(argument0,384,256,tank_rand_obj);
 room_instance_add(argument0,384,288,tank_rand_obj);
-// Not yet
-//room_instance_add(argument0,400,464,js_obj);
+// Jumpscare
+room_instance_add(argument0,400,464,js_obj);

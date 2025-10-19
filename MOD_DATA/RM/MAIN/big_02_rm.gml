@@ -533,5 +533,3 @@ room_instance_add(argument0,1024,304,torch_east_obj);
 room_instance_add(argument0,1024,368,torch_east_obj);
 // Props
 room_instance_add(argument0,304,400,chair_rand_obj);
-// Not yet
-/**/

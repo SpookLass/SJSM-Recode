@@ -154,5 +154,3 @@ room_instance_add(argument0,448,432,torch_south_obj);
 room_instance_add(argument0,512,432,torch_south_obj);
 room_instance_add(argument0,272,352,torch_west_obj);
 room_instance_add(argument0,368,352,torch_east_obj);
-// Props
-// Not Yet

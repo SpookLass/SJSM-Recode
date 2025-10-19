@@ -140,4 +140,3 @@ room_instance_add(argument0,320,592,wall_vert_obj);
 room_instance_add(argument0,352,304,bar_vert_obj);
 room_instance_add(argument0,352,432,bar_vert_obj);
 room_instance_add(argument0,352,560,bar_vert_obj);
-// Not yet

@@ -126,4 +126,3 @@ room_instance_add(argument0,336,304,crate_rand_obj);
 room_instance_add(argument0,432,304,crate_rand_obj);
 room_instance_add(argument0,464,304,crate_rand_obj);
 room_instance_add(argument0,432,240,crate_rand_obj);
-// Not Yet

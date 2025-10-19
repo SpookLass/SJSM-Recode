@@ -122,7 +122,6 @@ room_instance_add(argument0,432,120,wall_vert_obj);
 room_instance_add(argument0,480,152,wall_vert_obj);
 
 // Torches
-// Not yet
 
 
 

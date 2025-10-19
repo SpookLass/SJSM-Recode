@@ -114,5 +114,4 @@ room_instance_add(argument0,384,336,wall_vert_obj);
 room_instance_add(argument0,288,336,wall_vert_obj);
 room_instance_add(argument0,288,304,wall_vert_obj);
 room_instance_add(argument0,288,272,wall_vert_obj);
-// Not yet
 /**/

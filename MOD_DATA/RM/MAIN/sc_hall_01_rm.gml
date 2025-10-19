@@ -154,6 +154,5 @@ room_instance_add(argument0,288,448,wall_2high_vert_obj);
 room_instance_add(argument0,320,448,wall_2high_vert_obj);
 room_instance_add(argument0,320,480,wall_2high_vert_obj);
 room_instance_add(argument0,288,480,wall_2high_vert_obj);
-// Torches
-// Not Yet
-//room_instance_add(argument0,448,400,random_scare_mark1);
+// Jumpscare
+room_instance_add(argument0,448,400,js_obj);

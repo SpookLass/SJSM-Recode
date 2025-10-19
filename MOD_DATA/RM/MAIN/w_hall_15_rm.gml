@@ -142,5 +142,5 @@ room_instance_add(argument0,512,144,wall_vert_obj);
 room_instance_add(argument0,272,96,frame_hor_rand_obj);
 room_instance_add(argument0,400,96,frame_hor_rand_obj);
 room_instance_add(argument0,336,192,frame_hor_rand_obj);
-// Not yet
-/*room_instance_add(argument0,472,160,random_scare_mark1);*/
+// Jumpscare
+room_instance_add(argument0,472,160,js_obj);

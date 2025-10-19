@@ -17,6 +17,6 @@ object_event_add
     local.light.z += z;
     local.light.torch_var = id;
     event_inherited();
-    stored_tex_var = background_get_texture(torch_gold_bg);
-    tex_var = stored_tex_var;
+    store_tex_var = background_get_texture(torch_gold_bg);
+    tex_var = store_tex_var;
 ");

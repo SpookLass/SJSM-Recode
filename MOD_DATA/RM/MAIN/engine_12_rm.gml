@@ -250,4 +250,3 @@ room_instance_add(argument0,272,152,pole_metal_obj);
 room_instance_add(argument0,336,152,pole_metal_obj);
 room_instance_add(argument0,400,152,pole_metal_obj);
 room_instance_add(argument0,464,152,pole_metal_obj);
-// Not yet

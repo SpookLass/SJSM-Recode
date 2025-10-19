@@ -170,4 +170,3 @@ room_instance_add(argument0,288,432,doorframe_02_hor_obj);
 room_instance_add(argument0,288,496,doorframe_02_hor_obj);
 room_instance_add(argument0,352,288,bar_vert_obj);
 room_instance_add(argument0,352,416,bar_vert_obj);
-// Not Yet

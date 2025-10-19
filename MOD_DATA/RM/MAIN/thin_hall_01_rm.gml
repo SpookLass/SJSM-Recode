@@ -145,4 +145,3 @@ room_instance_add(argument0,496,280,ceil_low_obj);
 room_instance_add(argument0,528,272,ceil_low_obj);
 room_instance_add(argument0,560,280,ceil_low_obj);
 // Torches
-// Not yet

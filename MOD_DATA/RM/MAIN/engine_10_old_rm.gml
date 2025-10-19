@@ -196,5 +196,5 @@ room_instance_add(argument0,240,256,pole_metal_obj);
 room_instance_add(argument0,304,256,pole_metal_obj);
 room_instance_add(argument0,304,192,pole_metal_obj);
 room_instance_add(argument0,336,192,pole_metal_obj);
-// Not yet
-/*room_instance_add(argument0,320,336,random_scare_mark1);*/
+// Jumpscare
+room_instance_add(argument0,320,336,js_obj);

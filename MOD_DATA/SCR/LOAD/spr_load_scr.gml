@@ -20,5 +20,5 @@ file_to_spr_scr(vanilla_directory_const+"\TEX\FLOOR_01L0.png","light_floor_spr",
 // Stored so it can easily be replaced
 globalvar light_wall_obj_spr;
 globalvar light_floor_obj_spr;
-light_wall_obj_spr = light_wall_spr
-light_floor_obj_spr = light_floor_spr
+light_wall_obj_spr = light_wall_spr;
+light_floor_obj_spr = light_floor_spr;

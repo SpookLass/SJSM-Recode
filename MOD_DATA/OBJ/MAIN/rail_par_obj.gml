@@ -6,12 +6,10 @@ object_set_persistent(argument0,false);
 object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
-execute_string
-("
-    global.rail_coll[1] = 14;
-    global.rail_coll[2] = 32;
-    global.rail_coll[0] = prop_to_coll_scr(1,'',global.rail_coll[2],0,global.rail_coll[1],false,0,3);
-");
+// Collisions
+global.rail_coll[1] = 14;
+global.rail_coll[2] = 32;
+global.rail_coll[0] = prop_to_coll_scr(1,'',global.rail_coll[2],0,global.rail_coll[1],false,0,3);
 // Create event
 object_event_add
 (argument0,ev_create,0,"

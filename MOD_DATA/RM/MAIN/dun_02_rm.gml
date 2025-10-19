@@ -139,5 +139,5 @@ room_instance_add(argument0,448,464,torch_south_obj);
 // Props
 room_instance_add(argument0,448,368,chain_hor_rand_obj);
 room_instance_add(argument0,416,368,chain_hor_rand_obj);
-// Not Yet
+// Jumpscare
 room_instance_add(argument0,304,272,js_obj);

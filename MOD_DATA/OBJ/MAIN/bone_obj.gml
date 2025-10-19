@@ -16,7 +16,7 @@ execute_string
 // Create event
 object_event_add
 (argument0,ev_create,0,"
-    stored_tex_var = sprite_get_texture(bone_spr,irandom(sprite_get_number(bone_spr)-1));
+    store_tex_var = sprite_get_texture(bone_spr,irandom(sprite_get_number(bone_spr)-1));
     event_inherited();
     solid_var = false;
     type_var = 5; // Billboard

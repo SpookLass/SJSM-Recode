@@ -135,4 +135,3 @@ room_instance_add(argument0,384,304,pole_wood_obj);
 room_instance_add(argument0,448,304,pole_wood_obj);
 room_instance_add(argument0,448,336,pole_wood_obj);
 room_instance_add(argument0,384,336,pole_wood_obj);
-// Not Yet

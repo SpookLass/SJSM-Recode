@@ -138,4 +138,3 @@ room_instance_add(argument0,400,288,wall_vert_obj);
 room_instance_add(argument0,400,256,doorframe_01_vert_obj);
 room_instance_add(argument0,400,256,doorframe_02_vert_obj);
 room_instance_add(argument0,480,256,table_rand_obj);
-// Not Yet

@@ -133,4 +133,3 @@ room_instance_add(argument0,240,416,wall_vert_obj);
 room_instance_add(argument0,304,384,doorframe_01_vert_obj);
 room_instance_add(argument0,304,384,doorframe_02_vert_obj);
 room_instance_add(argument0,256,416,bed_rand_obj);
-// Not Yet

@@ -115,6 +115,3 @@ room_instance_add(argument0,608,344,wall_hor_obj);
 // Walls (Vertical)
 room_instance_add(argument0,208,336,wall_vert_obj);
 room_instance_add(argument0,624,336,wall_vert_obj);
-// Torches
-// Not yet
-/**/

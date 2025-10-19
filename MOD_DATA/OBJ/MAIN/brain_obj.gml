@@ -15,7 +15,7 @@ global.brain_coll[0] = prop_to_coll_scr(5,'',global.brain_coll[2],0,global.brain
 // Create event
 object_event_add
 (argument0,ev_create,0,"
-    stored_tex_var = brain_bg_tex;
+    store_tex_var = brain_bg_tex;
     event_inherited();
     solid_var = false;
     type_var = 5; // Billboard
@@ -91,7 +91,7 @@ object_event_add
         z_off_rate_var = other.z_rate_var;
         z_off_mult_var = other.z_mult_var;
         z_off_var = other.z;
-        tex_var = other.stored_tex_var;
+        tex_var = other.store_tex_var;
         w_var = other.w_var;
         h_var = other.h_var;
     }

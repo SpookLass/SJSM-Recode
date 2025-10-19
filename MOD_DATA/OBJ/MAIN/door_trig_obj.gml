@@ -6,7 +6,7 @@ object_set_persistent(argument0,false);
 object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
 object_set_visible(argument0,false);
-// Draw Event
+// Create Event
 object_event_add
 (argument0,ev_create,0,"
     // Collision
@@ -52,7 +52,7 @@ object_event_add
     {
         local.player = id;
         // p3dc_check_scr(coll_var[0],x,y,z,other.coll_var[0],other.x,other.y,other.z)
-        if box_coll_scr(x,y,z,coll_var[2],coll_var[1],other.x,other.y,other.z,other.coll_var[2],other.coll_var[1])
+        if box_coll_scr(x,y,z,coll_var[2],coll_var[2],coll_var[1],other.x,other.y,other.z,other.coll_var[2],other.coll_var[2],other.coll_var[1])
         {
             other.visible = other.do_txt_var;
             other.cam_id_var = cam_id_var

@@ -9,13 +9,15 @@ object_set_visible(argument0,true);
 /*
 type_var
     0: Model. Uses model and model string to do rendering and collisions.
-    1: Plane. Uses w_var, h_var, tex_w_var, tex_h_var, and radius var. Renders like a wall, but uses block collisions.
+    1: Plane. Uses w_var, h_var, tex_w_var, tex_h_var, and radius_var. Renders like a wall, but uses block collisions.
     2: Block. Uses w_var, l_var, h_var, tex_w_var, and tex_h_var.
     3: Cylinder. Uses w_var, l_var, h_var, tex_w_var, tex_h_var, close_var, and step_var.
     4: Floor. Uses w_var, l_var, tex_w_var, and tex_h_var
     5: Billboard. Uses w_var, h_var, tex_w_var, tex_h_var, and step_var. Has a cylinder collision
     6: Double Plane. Uses w_var, h_var, dist_var, tex_w_var, and tex_h_var. For wall decor
-    7: Better Block. Uses w_var, l_var, h_var, tex_w_var, tex_l_var, and tex_h_var. 
+    7: Better Block. Uses w_var, l_var, h_var, tex_w_var, tex_l_var, and tex_h_var.
+    8: Offset Plane. Uses w_var, h_var, tex_w_var, tex_h_var, and radius_var. Origin is south.
+    9: Jumpscare. Duplicate of Offset Plane with front and back sprites. Uses dist_var
 snap_var
     0: No snap
     1: Snap to floor
@@ -24,7 +26,7 @@ snap_var
 // Create event
 object_event_add
 (argument0,ev_create,0,"
-    tex_var = stored_tex_var;
+    tex_var = store_tex_var;
     tex_w_var = 1;
     tex_l_var = 1;
     tex_h_var = 1;
@@ -71,6 +73,13 @@ object_event_add
             d3d_draw_wall(local.width,-local.length,h_var,local.width,local.length,0,tex_var,tex_l_var,local.tex_height);
             d3d_draw_floor(-local.width,-local.length,0,local.width,local.length,0,tex_var,tex_w_var,tex_l_var);
             d3d_draw_floor(-local.width,-local.length,h_var,local.width,local.length,h_var,tex_var,tex_w_var,tex_l_var);
+            break;
+        }
+        case 8: { d3d_draw_wall(0,-w_var,h_var,0,0,0,tex_var,tex_w_var,tex_h_var*sign(h_var)); break; }
+        case 9:
+        {
+            d3d_draw_wall(dist_var,0,h_var,dist_var,w_var,0,tex_var,tex_w_var,tex_h_var*sign(h_var));
+            d3d_draw_wall(-dist_var,0,h_var,-dist_var,w_var,0,tex_02_var,tex_w_var,tex_h_var*sign(h_var));
             break;
         }
     }

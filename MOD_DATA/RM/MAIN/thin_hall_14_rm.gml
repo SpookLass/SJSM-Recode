@@ -143,4 +143,3 @@ room_instance_add(argument0,384,320,wall_vert_obj);
 // Torches
 // Props
 room_instance_add(argument0,400,144,chair_rand_obj);
-// Not yet

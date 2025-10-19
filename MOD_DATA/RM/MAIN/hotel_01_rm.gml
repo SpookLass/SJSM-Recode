@@ -145,4 +145,3 @@ room_instance_add(argument0,320,304,bed_rand_obj);
 room_instance_add(argument0,320,144,bed_rand_obj);
 room_instance_add(argument0,368,128,frame_hor_rand_obj);
 room_instance_add(argument0,376,320,frame_hor_rand_obj);
-// Not Yet

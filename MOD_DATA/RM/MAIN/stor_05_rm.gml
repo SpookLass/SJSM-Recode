@@ -155,4 +155,3 @@ room_instance_add(argument0,560,352,crate_rand_obj);
 room_instance_add(argument0,432,288,crate_rand_obj);
 room_instance_add(argument0,624,288,pole_wood_obj);
 room_instance_add(argument0,624,352,pole_wood_obj);
-// Not Yet

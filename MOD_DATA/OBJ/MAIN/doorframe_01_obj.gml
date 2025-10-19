@@ -11,7 +11,7 @@ global.doorframe_01_coll[0] = prop_to_coll_scr(0,doorframe_01_mdl_path);
 // Create event
 object_event_add
 (argument0,ev_create,0,"
-    stored_tex_var = door_bg_tex;
+    store_tex_var = door_bg_tex;
     event_inherited();
     solid_var = false;
     mdl_var = doorframe_01_mdl;

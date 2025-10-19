@@ -11,7 +11,7 @@ execute_string("global.tank_coll[0] = prop_to_coll_scr(0,tank_mdl_path);");
 // Create event
 object_event_add
 (argument0,ev_create,0,"
-    stored_tex_var = sprite_get_texture(tank_spr,0);
+    store_tex_var = sprite_get_texture(tank_spr,0);
     event_inherited();
     solid_var = true;
     mdl_var = tank_mdl;
@@ -22,8 +22,8 @@ object_event_add
     // Collisions
     coll_var[0] = global.tank_coll[0];
     // More stuff
-    stored_tex_02_var = sprite_get_texture(tank_spr,1);
-    tex_02_var = stored_tex_02_var;
+    store_tex_02_var = sprite_get_texture(tank_spr,1);
+    tex_02_var = store_tex_02_var;
     mdl_02_var = tank_top_mdl;
     mdl_02_path_var = tank_top_mdl_path;
 ");

@@ -100,5 +100,5 @@ room_instance_add(argument0,192,256,torch_north_obj);
 room_instance_add(argument0,256,256,torch_north_obj);
 room_instance_add(argument0,192,288,torch_south_obj);
 room_instance_add(argument0,256,288,torch_south_obj);
-// Not yet
-/*room_instance_add(argument0,240,288,random_scare_mark1);*/
+// Jumpscare
+room_instance_add(argument0,240,288,js_obj);

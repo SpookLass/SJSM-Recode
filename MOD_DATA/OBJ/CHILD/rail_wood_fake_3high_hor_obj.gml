@@ -10,7 +10,7 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,0,"
     direction = 90;
-    stored_tex_var = rail_wood_bg_tex;
+    store_tex_var = rail_wood_bg_tex;
     event_inherited();
     no_grid_var = true;
     z = 96;

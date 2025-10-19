@@ -199,4 +199,3 @@ room_instance_add(argument0,147,336,bone_rand_obj);
 room_instance_add(argument0,145,353,bone_rand_obj);
 room_instance_add(argument0,138,414,bone_rand_obj);
 room_instance_add(argument0,211,418,bone_rand_obj);
-// Not yet

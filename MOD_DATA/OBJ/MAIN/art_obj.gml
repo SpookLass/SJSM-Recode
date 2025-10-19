@@ -9,7 +9,7 @@ object_set_visible(argument0,true);
 // Create event
 object_event_add
 (argument0,ev_create,0,"
-    stored_tex_var = choose
+    store_tex_var = choose
     (
         art_01_bg_tex,
         art_02_bg_tex,
