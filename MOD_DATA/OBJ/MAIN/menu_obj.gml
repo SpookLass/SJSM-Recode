@@ -686,7 +686,13 @@ object_event_add
                         break;
                     }
                     case 3: { game_end(); break; }
-                    case 4: { state_var = 7; event_user(0); break; }
+                    case 4:
+                    {
+                        state_var = 7;
+                        instance_create(0,0,set_menu_obj);
+                        event_user(0);
+                        break;
+                    }
                     case 5: { state_var = 9; event_user(0); break; }
                 }
             }

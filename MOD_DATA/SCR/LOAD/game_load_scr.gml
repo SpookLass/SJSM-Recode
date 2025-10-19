@@ -82,6 +82,7 @@ d3d_set_lighting(false);
 d3d_set_culling(false);
 d3d_set_hidden(false);
 draw_set_font(main_font);
+global.game_spd_var = 1;
 // Load
 instance_create(0,0,global.control_obj);
 room_goto(menu_rm);

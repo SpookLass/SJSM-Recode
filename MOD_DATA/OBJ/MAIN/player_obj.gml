@@ -81,11 +81,11 @@ object_event_add
     on_floor_var = true;
     // Bob
     bob_rate_var = 3.75;
-    bob_mult_var = global.move_bob_var; // 12/7
+    bob_mult_var = global.move_bob_var/100; // 12/7
     bob_var = 0;
     // Idle Bob
     breath_rate_var = 1;
-    breath_mult_var = global.idle_bob_var;
+    breath_mult_var = global.idle_bob_var/100;
     breath_var = 0;
     breath_time_var = 0;
     breath_asthma_rate_var = 2;
