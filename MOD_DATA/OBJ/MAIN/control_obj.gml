@@ -217,8 +217,8 @@ object_event_add
             }
             case 8:
             {
-                global.zone_var = median(0,global.zone_len_var+global.story_zone_len_var-1,get_integer('Zone',global.zone_var));
-                ds_list_clear(global.rm_list_var);
+                local.zone = get_integer('Zone',global.zone_var);
+                zone_scr(local.zone);
                 break;
             }
             case 9: { global.count_var = get_integer('Set Count', global.count_var); break; }

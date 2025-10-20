@@ -36,7 +36,7 @@ object_event_add
     dur_var = irandom_range(15,30);
     delay_var = 91;
     dmg_var = 30;
-    dmg_alarm_var = 30;
+    dmg_alarm_var = 60;
     w_var = 10;
     h_var = 20;
     spr_spd_var = 1;
@@ -85,6 +85,7 @@ object_event_add
     rand_alarm_min_var = 6;
     rand_alarm_max_var = 30;
     flash_var = false;
+    dmg_stun_alarm_var = 30;
     // Seen
     spd_per_min_var = 1;
     spd_per_max_var = 12/7; // 1.r714285x
@@ -140,6 +141,8 @@ object_event_add
             seen_spd_var = false;
             spawn_dist_var = 0;
             do_anim_var = -1;
+            dmg_stun_alarm_var = -1;
+            do_seen_var = -1;
             break;
         }
         case 3: // KH
@@ -159,6 +162,8 @@ object_event_add
             seen_spd_var = false;
             spawn_dist_var = 0;
             do_anim_var = -1;
+            dmg_stun_alarm_var = -1;
+            do_seen_var = -1;
             break;
         }
         case 5: // Cow
@@ -168,6 +173,7 @@ object_event_add
             spd_base_var = 152/225; // 0.67r5
             local.spd_set = true;
             eff_var = false;
+            do_seen_var = -1;
         }
         case 2: // HD
         {
@@ -195,6 +201,7 @@ object_event_add
             rand_alarm_min_var = -1;
             rand_alarm_max_var = -1;
             dur_var = irandom_range(10,15);
+            dmg_stun_alarm_var = -1;
             break;
         }
     }
@@ -244,7 +251,7 @@ object_event_add
     }
     mdl_yaw_var = yaw_var;
     mdl_pitch_var = pitch_var;
-    do_seen_var = true;
+    if do_seen_var == 0 { do_seen_var = true; }
     spd_per_var = 1;
     visible = true;
     // Effects
@@ -463,6 +470,26 @@ object_event_add
             }
         }
         set_alarm_scr(10,irandom_range(spd_delay_min_var,spd_delay_max_var));
+    }
+");
+// Attack Success
+object_event_add
+(argument0,ev_other,ev_user3,"
+    event_inherited();
+    if dmg_stun_alarm_var > 0
+    {
+        set_motion_3d_scr(0,true);
+        move_var = false;
+        anim_var = false;
+        attack_var = false;
+        set_alarm_scr(1,dmg_stun_alarm_var);
+        set_alarm_scr(2,dmg_stun_alarm_var);
+        set_alarm_scr(4,dmg_stun_alarm_var);
+        if do_seen_var
+        {
+            do_seen_var = false;
+            set_alarm_scr(9,dmg_stun_alarm_var);
+        }
     }
 ");
 // Draw Event

@@ -70,4 +70,5 @@ ini_write_real('BEHAVIOR','lisa_type',global.lisa_type_var);
 ini_write_real('BEHAVIOR','otto_type',global.otto_type_var);
 ini_write_real('BEHAVIOR','spooper_type',global.spooper_type_var);
 ini_write_real('BEHAVIOR','wf_type',global.wf_type_var);
+ini_write_real('BEHAVIOR','js_type',global.js_type_var);
 ini_close();

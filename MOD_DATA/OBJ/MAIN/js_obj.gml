@@ -8,8 +8,8 @@ object_set_visible(argument0,false);
 // Collision
 global.js_coll[1] = 14;
 global.js_coll[2] = 14;
-global.jsr_coll[0] = prop_to_coll_scr(9,'',global.js_coll[2],0,global.js_coll[1],false,0,3);
-global.jsl_coll[0] = prop_to_coll_scr(9,'',-global.js_coll[2],0,global.js_coll[1],false,0,3);
+global.jsr_coll[0] = prop_to_coll_scr(9,'',global.js_coll[2],0,global.js_coll[1],false,0,1);
+global.jsl_coll[0] = prop_to_coll_scr(9,'',-global.js_coll[2],0,global.js_coll[1],false,0,1);
 // Create event
 object_event_add
 (argument0,ev_create,0,"
@@ -17,11 +17,16 @@ object_event_add
     {
         // Texture
         bg_load_var = true;
-        local.tex = irandom(global.js_len_var-1);
+        if global.mode_var == 0
+        {
+            if global.rm_count_var < 600 { local.tex = irandom(6); local.snd = global.js_snd_arr[irandom(7)]; }
+            else { local.tex = irandom(global.js_story_len_var-1); local.snd = global.js_snd_arr[irandom(global.js_snd_story_len_var-1)]; }
+        }
+        else { local.tex = irandom(global.js_len_var-1); local.snd = global.js_snd_arr[irandom(global.js_snd_len_var-1)]; }
         bg_01_var = background_add(global.js_arr[local.tex,0],false,false);
         bg_02_var = background_add(global.js_arr[local.tex,1],false,false);
         snd_3d_var = false;
-        snd_var = fmod_snd_add_scr(global.js_snd_arr[irandom(global.js_snd_len_var-1)],snd_3d_var);
+        snd_var = fmod_snd_add_scr(local.snd,snd_3d_var);
         store_tex_var = background_get_texture(bg_01_var);
         store_tex_02_var = background_get_texture(bg_02_var);
         tex_02_var = store_tex_02_var;
@@ -32,7 +37,7 @@ object_event_add
         z += 8;
         w_var = 14;
         h_var = 14;
-        radius_var = 3;
+        radius_var = 1;
         base_dir_var += 180;
         jump_dir_var = -90;
         direction = base_dir_var;

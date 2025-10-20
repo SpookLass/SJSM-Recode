@@ -254,17 +254,13 @@ object_event_add
                 set_motion_3d_scr(0,true);
                 move_var = false;
                 anim_var = false;
-                attack_var = fale;
+                attack_var = false;
                 set_alarm_scr(1,coward_alarm_var);
                 set_alarm_scr(2,coward_alarm_var);
                 set_alarm_scr(4,coward_alarm_var);
                 break;
             }
         }
-    }
-    if do_coward_var
-    {
-        
     }
 ");
 // Coward alarm

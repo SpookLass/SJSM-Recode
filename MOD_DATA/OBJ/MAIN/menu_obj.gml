@@ -230,150 +230,155 @@ object_event_add
     {
         case name_og_const:
         {
-            button_str_arr[5,2] = string_upper(ini_read_string('NAME','gel','NAME_gel'));
-            button_str_arr[5,3] = string_upper(ini_read_string('NAME','bug_og','NAME_bug_og'));
-            button_str_arr[5,4] = string_upper(ini_read_string('NAME','ringu','NAME_ringu'));
-            button_str_arr[5,5] = string_upper(ini_read_string('NAME','bab','NAME_bab'));
-            button_str_arr[5,6] = string_upper(ini_read_string('NAME','pup_og','NAME_pup_og'));
-            button_str_arr[5,7] = string_upper(ini_read_string('NAME','flesh','NAME_flesh'));
-            button_str_arr[5,8] = string_upper(ini_read_string('NAME','dl','NAME_dl'));
-            button_str_arr[5,9] = string_upper(ini_read_string('NAME','taker','NAME_taker'));
-            button_str_arr[5,10] = string_upper(ini_read_string('NAME','para','NAME_para'));
-            button_str_arr[5,11] = string_upper(ini_read_string('NAME','fd','NAME_fd'));
-            button_str_arr[5,12] = string_upper(ini_read_string('NAME','killer_og','NAME_killer_og'));
-            button_str_arr[5,13] = string_upper(ini_read_string('NAME','mur','NAME_mur'));
-            button_str_arr[5,14] = string_upper(ini_read_string('NAME','sg','NAME_sg'));
-            button_str_arr[5,15] = string_upper(ini_read_string('NAME','bodybag','NAME_bodybag'));
-            button_str_arr[5,16] = string_upper(ini_read_string('NAME','stem_og','NAME_stem_og'));
-            button_str_arr[5,17] = string_upper(ini_read_string('NAME','patient_og','NAME_patient_og'));
-            button_str_arr[5,18] = string_upper(ini_read_string('NAME','gc','NAME_gc'));
-            button_str_arr[5,19] = string_upper(ini_read_string('NAME','bekka','NAME_bekka'));
-            button_str_arr[5,20] = string_upper(ini_read_string('NAME','husk_og','NAME_husk_og'));
-            button_str_arr[5,25] = string_upper(ini_read_string('NAME','real_ringu_og','NAME_real_ringu_og'));
-            button_str_arr[5,26] = string_upper(ini_read_string('NAME','tiri','NAME_tiri'));
-            button_str_arr[5,27] = string_upper(ini_read_string('NAME','lisa','NAME_lisa'));
-            button_str_arr[5,28] = string_upper(ini_read_string('NAME','otto_og','NAME_otto_og'));
-            button_str_arr[5,29] = string_upper(ini_read_string('NAME','spooper','NAME_spooper'));
-            button_str_arr[5,30] = string_upper(ini_read_string('NAME','wf','NAME_wf'));
+            button_str_arr[5,2] = string_upper(ini_read_string('NAME','js_og','NAME_js_og'));
+            button_str_arr[5,3] = string_upper(ini_read_string('NAME','gel','NAME_gel'));
+            button_str_arr[5,4] = string_upper(ini_read_string('NAME','bug_og','NAME_bug_og'));
+            button_str_arr[5,5] = string_upper(ini_read_string('NAME','ringu','NAME_ringu'));
+            button_str_arr[5,6] = string_upper(ini_read_string('NAME','bab','NAME_bab'));
+            button_str_arr[5,7] = string_upper(ini_read_string('NAME','pup_og','NAME_pup_og'));
+            button_str_arr[5,8] = string_upper(ini_read_string('NAME','flesh','NAME_flesh'));
+            button_str_arr[5,9] = string_upper(ini_read_string('NAME','dl','NAME_dl'));
+            button_str_arr[5,10] = string_upper(ini_read_string('NAME','taker','NAME_taker'));
+            button_str_arr[5,11] = string_upper(ini_read_string('NAME','para','NAME_para'));
+            button_str_arr[5,12] = string_upper(ini_read_string('NAME','fd','NAME_fd'));
+            button_str_arr[5,13] = string_upper(ini_read_string('NAME','killer_og','NAME_killer_og'));
+            button_str_arr[5,14] = string_upper(ini_read_string('NAME','mur','NAME_mur'));
+            button_str_arr[5,15] = string_upper(ini_read_string('NAME','sg','NAME_sg'));
+            button_str_arr[5,16] = string_upper(ini_read_string('NAME','bodybag','NAME_bodybag'));
+            button_str_arr[5,17] = string_upper(ini_read_string('NAME','stem_og','NAME_stem_og'));
+            button_str_arr[5,18] = string_upper(ini_read_string('NAME','patient_og','NAME_patient_og'));
+            button_str_arr[5,19] = string_upper(ini_read_string('NAME','gc','NAME_gc'));
+            button_str_arr[5,20] = string_upper(ini_read_string('NAME','bekka','NAME_bekka'));
+            button_str_arr[5,21] = string_upper(ini_read_string('NAME','husk_og','NAME_husk_og'));
+            button_str_arr[5,26] = string_upper(ini_read_string('NAME','real_ringu_og','NAME_real_ringu_og'));
+            button_str_arr[5,27] = string_upper(ini_read_string('NAME','tiri','NAME_tiri'));
+            button_str_arr[5,28] = string_upper(ini_read_string('NAME','lisa','NAME_lisa'));
+            button_str_arr[5,29] = string_upper(ini_read_string('NAME','otto_og','NAME_otto_og'));
+            button_str_arr[5,30] = string_upper(ini_read_string('NAME','spooper','NAME_spooper'));
+            button_str_arr[5,31] = string_upper(ini_read_string('NAME','wf','NAME_wf'));
         }
         case name_hd_const:
         {
-            button_str_arr[5,2] = string_upper(ini_read_string('NAME','gel','NAME_gel'));
-            button_str_arr[5,3] = string_upper(ini_read_string('NAME','bug_hd','NAME_bug_hd'));
-            button_str_arr[5,4] = string_upper(ini_read_string('NAME','ringu','NAME_ringu'));
-            button_str_arr[5,5] = string_upper(ini_read_string('NAME','bab','NAME_bab'));
-            button_str_arr[5,6] = string_upper(ini_read_string('NAME','pup_hd','NAME_pup_hd'));
-            button_str_arr[5,7] = string_upper(ini_read_string('NAME','flesh','NAME_flesh'));
-            button_str_arr[5,8] = string_upper(ini_read_string('NAME','dl','NAME_dl'));
-            button_str_arr[5,9] = string_upper(ini_read_string('NAME','taker','NAME_taker'));
-            button_str_arr[5,10] = string_upper(ini_read_string('NAME','para','NAME_para'));
-            button_str_arr[5,11] = string_upper(ini_read_string('NAME','fd','NAME_fd'));
-            button_str_arr[5,12] = string_upper(ini_read_string('NAME','killer_hd','NAME_killer_hd'));
-            button_str_arr[5,13] = string_upper(ini_read_string('NAME','mur','NAME_mur'));
-            button_str_arr[5,14] = string_upper(ini_read_string('NAME','sg','NAME_sg'));
-            button_str_arr[5,15] = string_upper(ini_read_string('NAME','bodybag','NAME_bodybag'));
-            button_str_arr[5,16] = string_upper(ini_read_string('NAME','stem_hd','NAME_stem_hd'));
-            button_str_arr[5,17] = string_upper(ini_read_string('NAME','patient_hd','NAME_patient_hd'));
-            button_str_arr[5,18] = string_upper(ini_read_string('NAME','gc','NAME_gc'));
-            button_str_arr[5,19] = string_upper(ini_read_string('NAME','bekka','NAME_bekka'));
-            button_str_arr[5,20] = string_upper(ini_read_string('NAME','husk_hd','NAME_husk_hd'));
-            button_str_arr[5,25] = string_upper(ini_read_string('NAME','real_ringu_hd','NAME_real_ringu_hd'));
-            button_str_arr[5,26] = string_upper(ini_read_string('NAME','tiri','NAME_tiri'));
-            button_str_arr[5,27] = string_upper(ini_read_string('NAME','lisa','NAME_lisa'));
-            button_str_arr[5,28] = string_upper(ini_read_string('NAME','otto_hd','NAME_otto_hd'));
-            button_str_arr[5,29] = string_upper(ini_read_string('NAME','spooper','NAME_spooper'));
-            button_str_arr[5,30] = string_upper(ini_read_string('NAME','wf','NAME_wf'));
+            button_str_arr[5,2] = string_upper(ini_read_string('NAME','js_hd','NAME_js_hd'));
+            button_str_arr[5,3] = string_upper(ini_read_string('NAME','gel','NAME_gel'));
+            button_str_arr[5,4] = string_upper(ini_read_string('NAME','bug_hd','NAME_bug_hd'));
+            button_str_arr[5,5] = string_upper(ini_read_string('NAME','ringu','NAME_ringu'));
+            button_str_arr[5,6] = string_upper(ini_read_string('NAME','bab','NAME_bab'));
+            button_str_arr[5,7] = string_upper(ini_read_string('NAME','pup_hd','NAME_pup_hd'));
+            button_str_arr[5,8] = string_upper(ini_read_string('NAME','flesh','NAME_flesh'));
+            button_str_arr[5,9] = string_upper(ini_read_string('NAME','dl','NAME_dl'));
+            button_str_arr[5,10] = string_upper(ini_read_string('NAME','taker','NAME_taker'));
+            button_str_arr[5,11] = string_upper(ini_read_string('NAME','para','NAME_para'));
+            button_str_arr[5,12] = string_upper(ini_read_string('NAME','fd','NAME_fd'));
+            button_str_arr[5,13] = string_upper(ini_read_string('NAME','killer_hd','NAME_killer_hd'));
+            button_str_arr[5,14] = string_upper(ini_read_string('NAME','mur','NAME_mur'));
+            button_str_arr[5,15] = string_upper(ini_read_string('NAME','sg','NAME_sg'));
+            button_str_arr[5,16] = string_upper(ini_read_string('NAME','bodybag','NAME_bodybag'));
+            button_str_arr[5,17] = string_upper(ini_read_string('NAME','stem_hd','NAME_stem_hd'));
+            button_str_arr[5,18] = string_upper(ini_read_string('NAME','patient_hd','NAME_patient_hd'));
+            button_str_arr[5,19] = string_upper(ini_read_string('NAME','gc','NAME_gc'));
+            button_str_arr[5,20] = string_upper(ini_read_string('NAME','bekka','NAME_bekka'));
+            button_str_arr[5,21] = string_upper(ini_read_string('NAME','husk_hd','NAME_husk_hd'));
+            button_str_arr[5,26] = string_upper(ini_read_string('NAME','real_ringu_hd','NAME_real_ringu_hd'));
+            button_str_arr[5,27] = string_upper(ini_read_string('NAME','tiri','NAME_tiri'));
+            button_str_arr[5,28] = string_upper(ini_read_string('NAME','lisa','NAME_lisa'));
+            button_str_arr[5,29] = string_upper(ini_read_string('NAME','otto_hd','NAME_otto_hd'));
+            button_str_arr[5,30] = string_upper(ini_read_string('NAME','spooper','NAME_spooper'));
+            button_str_arr[5,31] = string_upper(ini_read_string('NAME','wf','NAME_wf'));
         }
         case name_fanon_const:
         {
-            button_str_arr[5,2] = string_upper(ini_read_string('NAME','gel','NAME_gel'));
-            button_str_arr[5,3] = string_upper(ini_read_string('NAME','bug_fanon','NAME_bug_fanon'));
-            button_str_arr[5,4] = string_upper(ini_read_string('NAME','ringu','NAME_ringu'));
-            button_str_arr[5,5] = string_upper(ini_read_string('NAME','bab','NAME_bab'));
-            button_str_arr[5,6] = string_upper(ini_read_string('NAME','pup_fanon','NAME_pup_fanon'));
-            button_str_arr[5,7] = string_upper(ini_read_string('NAME','flesh','NAME_flesh'));
-            button_str_arr[5,8] = string_upper(ini_read_string('NAME','dl','NAME_dl'));
-            button_str_arr[5,9] = string_upper(ini_read_string('NAME','taker','NAME_taker'));
-            button_str_arr[5,10] = string_upper(ini_read_string('NAME','para','NAME_para'));
-            button_str_arr[5,11] = string_upper(ini_read_string('NAME','fd','NAME_fd'));
-            button_str_arr[5,12] = string_upper(ini_read_string('NAME','killer_hd','NAME_killer_hd'));
-            button_str_arr[5,13] = string_upper(ini_read_string('NAME','mur','NAME_mur'));
-            button_str_arr[5,14] = string_upper(ini_read_string('NAME','sg','NAME_sg'));
-            button_str_arr[5,15] = string_upper(ini_read_string('NAME','bodybag_fanon','NAME_bodybag_fanon'));
-            button_str_arr[5,16] = string_upper(ini_read_string('NAME','stem_fanon','NAME_stem_fanon'));
-            button_str_arr[5,17] = string_upper(ini_read_string('NAME','patient_fanon','NAME_patient_fanon'));
-            button_str_arr[5,18] = string_upper(ini_read_string('NAME','gc','NAME_gc'));
-            button_str_arr[5,19] = string_upper(ini_read_string('NAME','bekka','NAME_bekka'));
-            button_str_arr[5,20] = string_upper(ini_read_string('NAME','husk_hd','NAME_husk_hd'));
-            button_str_arr[5,25] = string_upper(ini_read_string('NAME','real_ringu_hd','NAME_real_ringu_hd'));
-            button_str_arr[5,26] = string_upper(ini_read_string('NAME','tiri','NAME_tiri'));
-            button_str_arr[5,27] = string_upper(ini_read_string('NAME','lisa','NAME_lisa'));
-            button_str_arr[5,28] = string_upper(ini_read_string('NAME','otto_fanon','NAME_otto_fanon'));
-            button_str_arr[5,29] = string_upper(ini_read_string('NAME','spooper','NAME_spooper'));
-            button_str_arr[5,30] = string_upper(ini_read_string('NAME','wf','NAME_wf'));
+            button_str_arr[5,2] = string_upper(ini_read_string('NAME','js_fanon','NAME_js_fanon'));
+            button_str_arr[5,3] = string_upper(ini_read_string('NAME','gel','NAME_gel'));
+            button_str_arr[5,4] = string_upper(ini_read_string('NAME','bug_fanon','NAME_bug_fanon'));
+            button_str_arr[5,5] = string_upper(ini_read_string('NAME','ringu','NAME_ringu'));
+            button_str_arr[5,6] = string_upper(ini_read_string('NAME','bab','NAME_bab'));
+            button_str_arr[5,7] = string_upper(ini_read_string('NAME','pup_fanon','NAME_pup_fanon'));
+            button_str_arr[5,8] = string_upper(ini_read_string('NAME','flesh','NAME_flesh'));
+            button_str_arr[5,9] = string_upper(ini_read_string('NAME','dl','NAME_dl'));
+            button_str_arr[5,10] = string_upper(ini_read_string('NAME','taker','NAME_taker'));
+            button_str_arr[5,11] = string_upper(ini_read_string('NAME','para','NAME_para'));
+            button_str_arr[5,12] = string_upper(ini_read_string('NAME','fd','NAME_fd'));
+            button_str_arr[5,13] = string_upper(ini_read_string('NAME','killer_hd','NAME_killer_hd'));
+            button_str_arr[5,14] = string_upper(ini_read_string('NAME','mur','NAME_mur'));
+            button_str_arr[5,15] = string_upper(ini_read_string('NAME','sg','NAME_sg'));
+            button_str_arr[5,16] = string_upper(ini_read_string('NAME','bodybag_fanon','NAME_bodybag_fanon'));
+            button_str_arr[5,17] = string_upper(ini_read_string('NAME','stem_fanon','NAME_stem_fanon'));
+            button_str_arr[5,18] = string_upper(ini_read_string('NAME','patient_fanon','NAME_patient_fanon'));
+            button_str_arr[5,19] = string_upper(ini_read_string('NAME','gc','NAME_gc'));
+            button_str_arr[5,20] = string_upper(ini_read_string('NAME','bekka','NAME_bekka'));
+            button_str_arr[5,21] = string_upper(ini_read_string('NAME','husk_hd','NAME_husk_hd'));
+            button_str_arr[5,26] = string_upper(ini_read_string('NAME','real_ringu_hd','NAME_real_ringu_hd'));
+            button_str_arr[5,27] = string_upper(ini_read_string('NAME','tiri','NAME_tiri'));
+            button_str_arr[5,28] = string_upper(ini_read_string('NAME','lisa','NAME_lisa'));
+            button_str_arr[5,29] = string_upper(ini_read_string('NAME','otto_fanon','NAME_otto_fanon'));
+            button_str_arr[5,30] = string_upper(ini_read_string('NAME','spooper','NAME_spooper'));
+            button_str_arr[5,31] = string_upper(ini_read_string('NAME','wf','NAME_wf'));
         }
         case name_num_og_const:
         {
-            button_str_arr[5,2] = string_upper(ini_read_string('NAME','gel_num','NAME_gel_num'));
-            button_str_arr[5,3] = string_upper(ini_read_string('NAME','bug_num','NAME_bug_num'));
-            button_str_arr[5,4] = string_upper(ini_read_string('NAME','ringu_num','NAME_ringu_num'));
-            button_str_arr[5,5] = string_upper(ini_read_string('NAME','bab_num','NAME_bab_num'));
-            button_str_arr[5,6] = string_upper(ini_read_string('NAME','pup_num','NAME_pup_num'));
-            button_str_arr[5,7] = string_upper(ini_read_string('NAME','flesh_num','NAME_flesh_num'));
-            button_str_arr[5,8] = string_upper(ini_read_string('NAME','dl_num','NAME_dl_num'));
-            button_str_arr[5,9] = string_upper(ini_read_string('NAME','taker_num','NAME_taker_num'));
-            button_str_arr[5,10] = string_upper(ini_read_string('NAME','para_num','NAME_para_num'));
-            button_str_arr[5,11] = string_upper(ini_read_string('NAME','fd_num','NAME_fd_num'));
-            button_str_arr[5,12] = string_upper(ini_read_string('NAME','killer_num','NAME_killer_num'));
-            button_str_arr[5,13] = string_upper(ini_read_string('NAME','mur_num','NAME_mur_num'));
-            button_str_arr[5,14] = string_upper(ini_read_string('NAME','sg_num_og','NAME_sg_num_og'));
-            button_str_arr[5,15] = string_upper(ini_read_string('NAME','bodybag_num_og','NAME_bodybag_num_og'));
-            button_str_arr[5,16] = string_upper(ini_read_string('NAME','stem_num_og','NAME_stem_num_og'));
-            button_str_arr[5,17] = string_upper(ini_read_string('NAME','patient_num_og','NAME_patient_num_og'));
-            button_str_arr[5,18] = string_upper(ini_read_string('NAME','gc_num_og','NAME_gc_num_og'));
-            button_str_arr[5,19] = string_upper(ini_read_string('NAME','bekka','NAME_bekka'));
-            button_str_arr[5,20] = string_upper(ini_read_string('NAME','husk_num','NAME_husk_num'));
-            button_str_arr[5,25] = string_upper(ini_read_string('NAME','real_ringu_og','NAME_real_ringu_og'));
-            button_str_arr[5,26] = string_upper(ini_read_string('NAME','tiri','NAME_tiri'));
-            button_str_arr[5,27] = string_upper(ini_read_string('NAME','lisa','NAME_lisa'));
-            button_str_arr[5,28] = string_upper(ini_read_string('NAME','otto_og','NAME_otto_og'));
-            button_str_arr[5,29] = string_upper(ini_read_string('NAME','spooper','NAME_spooper'));
-            button_str_arr[5,30] = string_upper(ini_read_string('NAME','wf','NAME_wf'));
+            button_str_arr[5,2] = string_upper(ini_read_string('NAME','js_num','NAME_js_num'));
+            button_str_arr[5,3] = string_upper(ini_read_string('NAME','gel_num','NAME_gel_num'));
+            button_str_arr[5,4] = string_upper(ini_read_string('NAME','bug_num','NAME_bug_num'));
+            button_str_arr[5,5] = string_upper(ini_read_string('NAME','ringu_num','NAME_ringu_num'));
+            button_str_arr[5,6] = string_upper(ini_read_string('NAME','bab_num','NAME_bab_num'));
+            button_str_arr[5,7] = string_upper(ini_read_string('NAME','pup_num','NAME_pup_num'));
+            button_str_arr[5,8] = string_upper(ini_read_string('NAME','flesh_num','NAME_flesh_num'));
+            button_str_arr[5,9] = string_upper(ini_read_string('NAME','dl_num','NAME_dl_num'));
+            button_str_arr[5,10] = string_upper(ini_read_string('NAME','taker_num','NAME_taker_num'));
+            button_str_arr[5,11] = string_upper(ini_read_string('NAME','para_num','NAME_para_num'));
+            button_str_arr[5,12] = string_upper(ini_read_string('NAME','fd_num','NAME_fd_num'));
+            button_str_arr[5,13] = string_upper(ini_read_string('NAME','killer_num','NAME_killer_num'));
+            button_str_arr[5,14] = string_upper(ini_read_string('NAME','mur_num','NAME_mur_num'));
+            button_str_arr[5,15] = string_upper(ini_read_string('NAME','sg_num_og','NAME_sg_num_og'));
+            button_str_arr[5,16] = string_upper(ini_read_string('NAME','bodybag_num_og','NAME_bodybag_num_og'));
+            button_str_arr[5,17] = string_upper(ini_read_string('NAME','stem_num_og','NAME_stem_num_og'));
+            button_str_arr[5,18] = string_upper(ini_read_string('NAME','patient_num_og','NAME_patient_num_og'));
+            button_str_arr[5,19] = string_upper(ini_read_string('NAME','gc_num_og','NAME_gc_num_og'));
+            button_str_arr[5,20] = string_upper(ini_read_string('NAME','bekka','NAME_bekka'));
+            button_str_arr[5,21] = string_upper(ini_read_string('NAME','husk_num','NAME_husk_num'));
+            button_str_arr[5,26] = string_upper(ini_read_string('NAME','real_ringu_og','NAME_real_ringu_og'));
+            button_str_arr[5,27] = string_upper(ini_read_string('NAME','tiri','NAME_tiri'));
+            button_str_arr[5,28] = string_upper(ini_read_string('NAME','lisa','NAME_lisa'));
+            button_str_arr[5,29] = string_upper(ini_read_string('NAME','otto_og','NAME_otto_og'));
+            button_str_arr[5,30] = string_upper(ini_read_string('NAME','spooper','NAME_spooper'));
+            button_str_arr[5,31] = string_upper(ini_read_string('NAME','wf','NAME_wf'));
         }
         case name_num_hd_const:
         {
-            button_str_arr[5,2] = string_upper(ini_read_string('NAME','gel_num','NAME_gel_num'));
-            button_str_arr[5,3] = string_upper(ini_read_string('NAME','bug_num','NAME_bug_num'));
-            button_str_arr[5,4] = string_upper(ini_read_string('NAME','ringu_num','NAME_ringu_num'));
-            button_str_arr[5,5] = string_upper(ini_read_string('NAME','bab_num','NAME_bab_num'));
-            button_str_arr[5,6] = string_upper(ini_read_string('NAME','pup_num','NAME_pup_num'));
-            button_str_arr[5,7] = string_upper(ini_read_string('NAME','flesh_num','NAME_flesh_num'));
-            button_str_arr[5,8] = string_upper(ini_read_string('NAME','dl_num','NAME_dl_num'));
-            button_str_arr[5,9] = string_upper(ini_read_string('NAME','taker_num','NAME_taker_num'));
-            button_str_arr[5,10] = string_upper(ini_read_string('NAME','para_num','NAME_para_num'));
-            button_str_arr[5,11] = string_upper(ini_read_string('NAME','fd_num','NAME_fd_num'));
-            button_str_arr[5,12] = string_upper(ini_read_string('NAME','killer_num','NAME_killer_num'));
-            button_str_arr[5,13] = string_upper(ini_read_string('NAME','mur_num','NAME_mur_num'));
-            button_str_arr[5,14] = string_upper(ini_read_string('NAME','sg_num_hd','NAME_sg_num_hd'));
-            button_str_arr[5,15] = string_upper(ini_read_string('NAME','bodybag_num_hd','NAME_bodybag_num_hd'));
-            button_str_arr[5,16] = string_upper(ini_read_string('NAME','stem_num_hd','NAME_stem_num_hd'));
-            button_str_arr[5,17] = string_upper(ini_read_string('NAME','patient_num_hd','NAME_patient_num_hd'));
-            button_str_arr[5,18] = string_upper(ini_read_string('NAME','gc_num_hd','NAME_gc_num_hd'));
-            button_str_arr[5,19] = string_upper(ini_read_string('NAME','bekka_num','NAME_bekka_num'));
-            button_str_arr[5,20] = string_upper(ini_read_string('NAME','husk_hd','NAME_husk_hd'));
-            button_str_arr[5,25] = string_upper(ini_read_string('NAME','real_ringu_num','NAME_real_ringu_num'));
-            button_str_arr[5,26] = string_upper(ini_read_string('NAME','tiri_num','NAME_tiri_num'));
-            button_str_arr[5,27] = string_upper(ini_read_string('NAME','lisa_num','NAME_lisa_num'));
-            button_str_arr[5,28] = string_upper(ini_read_string('NAME','otto_num','NAME_otto_num'));
-            button_str_arr[5,29] = string_upper(ini_read_string('NAME','spooper_num','NAME_spooper_num'));
-            button_str_arr[5,30] = string_upper(ini_read_string('NAME','wf_num','NAME_wf_num'));
+            button_str_arr[5,2] = string_upper(ini_read_string('NAME','js_num','NAME_js_num'));
+            button_str_arr[5,3] = string_upper(ini_read_string('NAME','gel_num','NAME_gel_num'));
+            button_str_arr[5,4] = string_upper(ini_read_string('NAME','bug_num','NAME_bug_num'));
+            button_str_arr[5,5] = string_upper(ini_read_string('NAME','ringu_num','NAME_ringu_num'));
+            button_str_arr[5,6] = string_upper(ini_read_string('NAME','bab_num','NAME_bab_num'));
+            button_str_arr[5,7] = string_upper(ini_read_string('NAME','pup_num','NAME_pup_num'));
+            button_str_arr[5,8] = string_upper(ini_read_string('NAME','flesh_num','NAME_flesh_num'));
+            button_str_arr[5,9] = string_upper(ini_read_string('NAME','dl_num','NAME_dl_num'));
+            button_str_arr[5,10] = string_upper(ini_read_string('NAME','taker_num','NAME_taker_num'));
+            button_str_arr[5,11] = string_upper(ini_read_string('NAME','para_num','NAME_para_num'));
+            button_str_arr[5,12] = string_upper(ini_read_string('NAME','fd_num','NAME_fd_num'));
+            button_str_arr[5,13] = string_upper(ini_read_string('NAME','killer_num','NAME_killer_num'));
+            button_str_arr[5,14] = string_upper(ini_read_string('NAME','mur_num','NAME_mur_num'));
+            button_str_arr[5,15] = string_upper(ini_read_string('NAME','sg_num_hd','NAME_sg_num_hd'));
+            button_str_arr[5,16] = string_upper(ini_read_string('NAME','bodybag_num_hd','NAME_bodybag_num_hd'));
+            button_str_arr[5,17] = string_upper(ini_read_string('NAME','stem_num_hd','NAME_stem_num_hd'));
+            button_str_arr[5,18] = string_upper(ini_read_string('NAME','patient_num_hd','NAME_patient_num_hd'));
+            button_str_arr[5,19] = string_upper(ini_read_string('NAME','gc_num_hd','NAME_gc_num_hd'));
+            button_str_arr[5,20] = string_upper(ini_read_string('NAME','bekka_num','NAME_bekka_num'));
+            button_str_arr[5,21] = string_upper(ini_read_string('NAME','husk_hd','NAME_husk_hd'));
+            button_str_arr[5,26] = string_upper(ini_read_string('NAME','real_ringu_num','NAME_real_ringu_num'));
+            button_str_arr[5,27] = string_upper(ini_read_string('NAME','tiri_num','NAME_tiri_num'));
+            button_str_arr[5,28] = string_upper(ini_read_string('NAME','lisa_num','NAME_lisa_num'));
+            button_str_arr[5,29] = string_upper(ini_read_string('NAME','otto_num','NAME_otto_num'));
+            button_str_arr[5,30] = string_upper(ini_read_string('NAME','spooper_num','NAME_spooper_num'));
+            button_str_arr[5,31] = string_upper(ini_read_string('NAME','wf_num','NAME_wf_num'));
         }
     }
-    button_str_arr[5,21] = string_upper(ini_read_string('NAME','wc','NAME_wc'));
-    button_str_arr[5,22] = string_upper(ini_read_string('NAME','clown','NAME_clown'));
-    button_str_arr[5,23] = string_upper(ini_read_string('NAME','hd','NAME_hd'));
-    button_str_arr[5,24] = string_upper(ini_read_string('NAME','frenzy','NAME_frenzy'));
-    button_str_arr[5,31] = back_str_var;
+    button_str_arr[5,22] = string_upper(ini_read_string('NAME','wc','NAME_wc'));
+    button_str_arr[5,23] = string_upper(ini_read_string('NAME','clown','NAME_clown'));
+    button_str_arr[5,24] = string_upper(ini_read_string('NAME','hd','NAME_hd'));
+    button_str_arr[5,25] = string_upper(ini_read_string('NAME','frenzy','NAME_frenzy'));
+    button_str_arr[5,32] = back_str_var;
 		//Load Saves
 	button_str_arr[6,0] = back_str_var;
         // Other
@@ -488,6 +493,7 @@ object_event_add
 	save_spooper_type_var=-1;
 	save_wf_type_var=-1;
 	save_real_ringu_type_var=-1;
+    save_js_type_var=-1;
 	
 	ds_list_clear(global.save_list);
 	
@@ -647,6 +653,7 @@ object_event_add
 						save_spooper_type_var=-1;
 						save_wf_type_var=-1;
 						save_real_ringu_type_var=-1;
+                        save_js_type_var=-1;
 						
 						break;
 					}
@@ -1130,6 +1137,7 @@ object_event_add
 						global.otto_type_var = ini_read_real('BEHAVIOR','otto_type',global.default_type_var);
 						global.spooper_type_var = ini_read_real('BEHAVIOR','spooper_type',global.default_type_var);
 						global.wf_type_var = ini_read_real('BEHAVIOR','wf_type',global.default_type_var);
+                        global.js_type_var = ini_read_real('BEHAVIOR','js_type',global.default_type_var);
 						
 						ini_close();
 						
@@ -1503,6 +1511,10 @@ object_event_add
 				if save_wf_type_var == -1 || !save_custom_var
                 { global.wf_type_var = save_type_var; }
 				else { global.wf_type_var = save_wf_type_var; }
+
+                if save_js_type_var == -1 || !save_custom_var
+                { global.js_type_var = save_type_var; }
+				else { global.js_type_var = save_js_type_var; }
 				
 				local.player = instance_create(0,0,global.player_obj);
 				local.hud = instance_create(0,0,global.hud_obj);
@@ -1510,14 +1522,10 @@ object_event_add
 				local.axe = instance_create(0,0,global.axe_obj);
 				local.axe.par_var = local.player;
 				fmod_snd_loop_scr(choose(amb_01_snd,amb_02_snd,amb_03_snd,amb_04_snd,amb_05_snd,amb_06_snd,amb_07_snd,amb_08_snd,amb_09_snd,amb_10_snd,amb_11_snd,amb_12_snd));
-				global.zone_num_var = irandom(global.zone_len_var+global.story_zone_len_var-1);
-				if global.zone_num_var >= global.zone_len_var
-				{ global.zone_var = global.story_zone_arr[global.zone_num_var-global.zone_len_var]; }
-				else { global.zone_var = global.zone_arr[global.zone_num_var]; }
+                global.count_var = get_count_scr();
+
                 tex_scr(-1);
-				global.count_var = get_count_scr();
-				
-				room_goto(save_rm_var);
+                zone_scr(-1);
 			}
 			break;
 		}

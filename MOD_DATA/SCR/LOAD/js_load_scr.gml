@@ -27,7 +27,7 @@ global.js_story_len_var = global.js_len_var;
 local.index = 1;
 local.index_str = '01';
 
-while file_exists(vanilla_directory_const+"\EM\TEX\SCARE_"+local.index_str+'.png')
+while file_exists(vanilla_directory_const+"\EM\TEX\JS_"+local.index_str+'.png')
 {
     global.js_arr[global.js_len_var,0] = vanilla_directory_const+"\EM\TEX\JS_"+local.index_str+".png";
     global.js_arr[global.js_len_var,1] = vanilla_directory_const+"\EM\TEX\JS_"+local.index_str+"B.png";
