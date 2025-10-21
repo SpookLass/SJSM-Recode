@@ -166,7 +166,7 @@ object_event_add
     else { local.type = global.killer_type_var; }
     switch local.type
     {
-        case 0:
+        case 6: // Recode
         {
             do_sprint_var = true;
             do_stam_var = true;
@@ -240,6 +240,18 @@ object_event_add
             autobrake_dir_var = 60;
             break;
         }
+        case 0: // Scary!!!
+        {
+            spd_base_var = 8;
+            scary_var = true;
+            dmg_var = 30;
+            dmg_stun_var = 30;
+            do_hurt_var = true;
+            stun_var = true;
+            hurt_alarm_var = 30;
+            spr_spd_base_var = 1;
+            break;
+        }
     }
     if sprint_acc_var
     {
@@ -271,6 +283,19 @@ object_event_add
 // Room Start Event
 object_event_add
 (argument0,ev_other,ev_room_start,"
+    if scary_var
+    {
+        if player_obj.rm_clear_time_var == -1
+        {
+            delay_min_var = 3600+(delay_var*instance_number(mon_par_obj));
+            delay_max_var = delay_min_var;
+        }
+        else
+        {
+            delay_min_var = player_obj.rm_clear_time_var+(delay_var*instance_number(mon_par_obj));
+            delay_max_var = delay_min_var;
+        }
+    }
     event_inherited();
     if do_stam_var
     {
@@ -347,6 +372,21 @@ object_event_add
         }
     }
     event_inherited();
+");
+// Attack Success
+object_event_add
+(argument0,ev_other,ev_user3,"
+    event_inherited();
+    if dmg_stun_var > 0
+    {
+        set_motion_3d_scr(0,true);
+        move_var = false;
+        anim_var = false;
+        attack_var = false;
+        set_alarm_scr(1,dmg_stun_var);
+        set_alarm_scr(2,dmg_stun_var);
+        set_alarm_scr(4,dmg_stun_var);
+    }
 ");
 // Draw
 object_event_add

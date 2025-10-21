@@ -101,6 +101,9 @@ object_event_add
     shake_var = 0;
     shake_angle_base_var = 5;
     shake_pos_base_var = 1;
+    // Clear Time
+    path_var = path_add();
+    grid_var = global.phys_grid;
     // Alarms
     alarm_len_var = 4;
     alarm_arr[0,2] = '';
@@ -135,6 +138,11 @@ object_event_add
     set_alarm_scr(3,taker_alarm_var);
     // Stuff
     event_perform(ev_other,ev_room_start);
+");
+// Destroy Event
+object_event_add
+(argument0,ev_destroy,0,"
+    path_delete(path_var);
 ");
 // Alarm 0 Event
 object_event_add
@@ -205,6 +213,10 @@ object_event_add
     // View
     view_visible[cam_id_var] = true;
     view_enabled = true;
+    // Clear time
+    if mp_grid_path(grid_var,path_var,x,y,global.spawn_arr[1,0],global.spawn_arr[1,1],true)
+    { rm_clear_time_var = path_get_length(path_var)/(spd_base_var*(1+sprint_spd_mult_var)*9/19); } // 9/19 to account for faster stamina drain when pressing shift
+    else { rm_clear_time_var = -1; }
     // Start room
     taker_spawn_var = false;
     if !global.stam_per_var

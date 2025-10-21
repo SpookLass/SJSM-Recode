@@ -13,8 +13,43 @@ global.jsl_coll[0] = prop_to_coll_scr(9,'',-global.js_coll[2],0,global.js_coll[1
 // Create event
 object_event_add
 (argument0,ev_create,0,"
-    if !irandom(4)
+    if chance_num_var == 0
     {
+        chance_num_var = 1;
+        chance_den_var = 5;
+    }
+    if frac_chance_scr(chance_num_var,chance_den_var)
+    {
+        snd_dist_var = -1;
+        snd_3d_var = false;
+        freeze_var = true;
+        rotate_var = false;
+        look_var = false;
+        // Behavior
+        if global.js_type_var == -1 { local.type = irandom(2); }
+        else { local.type = global.js_type_var; }
+        switch local.type
+        {
+            case 3:
+            {
+                look_var = true;
+            }
+            case 0:
+            {
+                snd_3d_var = true;
+                freeze_var = 2;
+                rotate_var = true;
+                break;
+            }
+            case 2:
+            {
+                snd_3d_var = true;
+                freeze_var = false;
+                rotate_var = true;
+                snd_dist_var = 600;
+                break;
+            }
+        }
         // Texture
         bg_load_var = true;
         if global.mode_var == 0
@@ -25,11 +60,12 @@ object_event_add
         else { local.tex = irandom(global.js_len_var-1); local.snd = global.js_snd_arr[irandom(global.js_snd_len_var-1)]; }
         bg_01_var = background_add(global.js_arr[local.tex,0],false,false);
         bg_02_var = background_add(global.js_arr[local.tex,1],false,false);
-        snd_3d_var = false;
         snd_var = fmod_snd_add_scr(local.snd,snd_3d_var);
         store_tex_var = background_get_texture(bg_01_var);
         store_tex_02_var = background_get_texture(bg_02_var);
         tex_02_var = store_tex_02_var;
+        if snd_dist_var > 0
+        { fmod_snd_set_minmax_dist_scr(wake_snd_var[1],0,snd_dist_var); }
         // Main
         event_inherited();
         solid_var = true;
@@ -53,19 +89,22 @@ object_event_add
         coll_var[1] = global.js_coll[1];
         coll_var[2] = global.js_coll[2];
         // Trigger
-        with instance_create(x+lengthdir_x(16,base_dir_var-90),y+lengthdir_y(16,base_dir_var-90),js_trig_obj)
+        if trig_var == 0
         {
-            par_var = other.id;
-            other.trig_var = id;
-            z = other.z-8;
-            local.dir = round(other.base_dir_var/90);
-            if local.dir mod 2 != 0 // Rotate 90 degrees
+            with instance_create(x+lengthdir_x(16,base_dir_var-90),y+lengthdir_y(16,base_dir_var-90),js_trig_obj)
             {
-                local.coll = coll_var[2]
-                coll_var[2] = coll_var[3];
-                coll_var[3] = local.coll;
+                par_var = other.id;
+                other.trig_var = id;
+                z = other.z-8;
+                local.dir = round(other.base_dir_var/90);
+                if local.dir mod 2 != 0 // Rotate 90 degrees
+                {
+                    local.coll = coll_var[2]
+                    coll_var[2] = coll_var[3];
+                    coll_var[3] = local.coll;
+                }
+                direction = local.dir*90;
             }
-            direction = local.dir*90;
         }
         // Left
         if !irandom(1)
@@ -104,10 +143,34 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user1,"
     visible = true;
+    switch freeze_var
+    {
+        case 1: { local.freeze = true; break; }
+        case 2: { local.freeze = !instance_exists(mon_par_obj); break; }
+        default: { local.freeze = false; break; }
+    }
+    if local.freeze
+    {
+        if look_var
+        {
+            local.xtmp = x+lengthdir_x(w_var/2,direction-90);
+            local.ytmp = y+lengthdir_y(w_var/2,direction-90);
+            local.ztmp = z+(h_var/2);
+            with player_var
+            {
+                eye_yaw_var = point_direction(x,y,local.xtmp,local.ytmp);
+                eye_pitch_var = point_direction_3d_scr(x,y,z+eye_h_var,local.xtmp,local.ytmp,local.ztmp)
+            }
+        }
+        with instance_create(0,0,player_freeze_obj) { player_var = other.player_var; }
+    }
     if snd_3d_var { inst_var = fmod_snd_3d_play_scr(snd_var); }
     else { inst_var = fmod_snd_play_scr(snd_var); }
-    direction = base_dir_var+jump_dir_var;
-    set_alarm_scr(0,delay_var);
+    if rotate_var
+    {
+        direction = base_dir_var+jump_dir_var;
+        set_alarm_scr(0,delay_var);
+    }
 ");
 // Step Event
 object_event_add

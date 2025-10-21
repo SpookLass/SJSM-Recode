@@ -18,17 +18,20 @@ object_event_add
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,"
-    local.active = false;
+    local.player = noone;
     with player_obj
     {
-        local.player = id;
         // p3dc_check_scr(coll_var[0],x,y,z,other.coll_var[0],other.x,other.y,other.z)
         if box_coll_scr(x,y,z,coll_var[2],coll_var[2],coll_var[1],other.x,other.y,other.z,other.coll_var[2],other.coll_var[3],other.coll_var[1])
-        { local.active = true; }
+        { local.player = id; }
     }
-    if local.active
+    if local.player != noone
     {
-        with par_var { event_user(1); }
+        with par_var
+        {
+            player_var = local.player;
+            event_user(1);
+        }
         instance_destroy();
     }
 ");

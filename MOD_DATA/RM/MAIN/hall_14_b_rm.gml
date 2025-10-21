@@ -30,6 +30,20 @@ room_set_code
     global.mark_arr[2,0] = 627;
     global.mark_arr[2,1] = 250;
     global.mark_arr[2,2] = 0;
+    // Jumpscare Mark
+    global.js_mark_len_var = 3;
+    global.js_mark_arr[0,0] = 576;
+    global.js_mark_arr[0,1] = 272;
+    global.js_mark_arr[0,2] = 0;
+    global.js_mark_arr[0,3] = 0;
+    global.js_mark_arr[1,0] = 608;
+    global.js_mark_arr[1,1] = 272;
+    global.js_mark_arr[1,2] = 0;
+    global.js_mark_arr[1,3] = 0;
+    global.js_mark_arr[2,0] = 672;
+    global.js_mark_arr[2,1] = 272;
+    global.js_mark_arr[2,2] = 0;
+    global.js_mark_arr[2,3] = 0;
     // 3D Draw
     d3d_start();
     global.draw_3d_var = true;
@@ -104,6 +118,4 @@ room_instance_add(argument0,496,240,wall_hor_obj);
 room_instance_add(argument0,448,256,wall_vert_obj);
 room_instance_add(argument0,736,256,wall_vert_obj);
 // Jumpscare
-room_instance_add(argument0,576,272,js_obj);
-room_instance_add(argument0,608,272,js_obj);
-room_instance_add(argument0,672,272,js_obj);
+room_instance_add(argument0,528,256,multi_js_trig_obj);
