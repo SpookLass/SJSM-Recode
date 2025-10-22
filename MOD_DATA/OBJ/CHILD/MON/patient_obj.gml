@@ -45,6 +45,8 @@ object_event_add
     delay_var = 60;
     dmg_var = 10;
     dmg_alarm_var = 30;
+    // Theme
+    mus_delay_var = 144
     // Assets
         // Search for existing assets to save memory
     with object_index
@@ -55,6 +57,8 @@ object_event_add
             other.mdl_01_var = mdl_01_var;
             other.mdl_02_var = mdl_02_var;
             other.bg_overlay_var = bg_overlay_var;
+            other.wake_snd_var[1] = wake_snd_var[1];
+            other.mus_snd_var = mus_snd_var;
             local.loaded = true;
             break;
         }
@@ -63,6 +67,8 @@ object_event_add
     if !local.loaded
     {
         spr_var = sprite_add(main_directory_const+'\SPR\MON\patient_spr.png',3,false,false,0,0); // vanilla_directory_const+'\3D\npc_6_tex.png'
+        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\patient_wake_snd.wav');
+        mus_snd_var = fmod_snd_add_scr(main_directory_const+'\SND\MON\patient_mus_snd.mp3');
         mdl_01_var = d3d_model_create();
         mdl_02_var = d3d_model_create();
         d3d_model_load(mdl_01_var,main_directory_const+'\MDL\MON\patient_01_mdl.gmmod');
@@ -129,19 +135,18 @@ object_event_add
     }
     if hang_var
     {
+        wake_snd_var[0] = 2;
         seen_yaw_var = seen_yaw_01_var;
         seen_pitch_var = seen_pitch_01_var;
     }
     else
     {
+        wake_snd_var[0] = true;
         seen_yaw_var = seen_yaw_02_var;
         seen_pitch_var = seen_pitch_02_var;
     }
     // Alarms
-    alarm_len_var = 11;
-    alarm_arr[8,2] = '';
-    alarm_arr[9,2] = '';
-    alarm_arr[10,2] = '';
+    alarm_len_var = 12;
     // Bools
     do_mdl_var = true;
     do_anim_var = -1;
@@ -157,6 +162,7 @@ object_event_add
         background_delete(bg_overlay_var);
         d3d_model_destroy(mdl_01_var);
         d3d_model_destroy(mdl_02_var);
+        fmod_snd_free_scr(mus_snd_var);
     }
     with kh_overlay_obj
     { if par_var == other.id { instance_destroy(); }}
@@ -185,6 +191,8 @@ object_event_add
     }
     else
     {
+        if mus_prio_var <= amb_mus_prio_const
+        { set_alarm_scr(11,mus_delay_var); }
         x = global.spawn_arr[0,0];
         y = global.spawn_arr[0,1];
         z = global.spawn_arr[0,2];
@@ -207,14 +215,15 @@ object_event_add
 // Room End
 object_event_add
 (argument0,ev_other,ev_room_end,"
-    event_inherited();
     if hang_var
     {
         hang_var = false;
         visible = true;
         seen_yaw_var = seen_yaw_02_var;
         seen_pitch_var = seen_pitch_02_var;
+        snd_var = fmod_snd_play_scr(wake_snd_var[1]);
     }
+    event_inherited();
 ");
 // Delay
 object_event_add
@@ -260,6 +269,12 @@ object_event_add
         event_user(14);
     }
 ");
+// Play Theme
+object_event_add
+(argument0,ev_alarm,11,"
+    mus_prio_var = theme_mus_prio_const;
+    with mus_control_obj { event_user(0); }
+");
 // Step event
 object_event_add
 (argument0,ev_step,ev_step_normal,"
@@ -272,6 +287,7 @@ object_event_add
             seen_yaw_var = seen_yaw_02_var;
             seen_pitch_var = seen_pitch_02_var;
             event_perform(ev_other,ev_room_start);
+            snd_var = fmod_snd_play_scr(wake_snd_var[1]);
         }
         else { visible = !irandom(1); }
     }

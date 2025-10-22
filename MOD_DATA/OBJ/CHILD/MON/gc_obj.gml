@@ -51,6 +51,8 @@ object_event_add
     snd_alarm_max = 240;
     glitch_snd_len_var = 4;
     dmg_snd_len_var = 2;
+    // Theme
+    mus_prio_var = theme_mus_prio_const;
     // Assets
         // Search for existing assets to save memory
     with object_index
@@ -68,6 +70,7 @@ object_event_add
             { other.glitch_snd_arr[local.i,0] = glitch_snd_arr[local.i,0]; }
             for (local.i=0; local.i<dmg_snd_len_var; local.i+=1;)
             { other.dmg_snd_arr[local.i,0] = dmg_snd_arr[local.i,0]; }
+            other.mus_snd_var = mus_snd_var;
             local.loaded = true;
             break;
         }
@@ -89,8 +92,13 @@ object_event_add
         glitch_snd_arr[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\glitch_02_snd.wav');
         glitch_snd_arr[2] = fmod_snd_add_scr(main_directory_const+'\SND\MON\glitch_03_snd.wav');
         glitch_snd_arr[3] = fmod_snd_add_scr(main_directory_const+'\SND\MON\glitch_04_snd.wav');
+        for (local.i=0; local.i<glitch_snd_len_var; local.i+=1;)
+        { fmod_snd_set_group_scr(glitch_snd_arr[local.i,0],snd_group_mon_const); }
         dmg_snd_arr[0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\cow_01_snd.wav');
         dmg_snd_arr[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\cow_02_snd.wav');
+        for (local.i=0; local.i<dmg_snd_len_var; local.i+=1;)
+        { fmod_snd_set_group_scr(dmg_snd_arr[local.i,0],snd_group_mon_const); }
+        mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+'\SND\mus\M7_mus.mp3');
     }
     tex_var = background_get_texture(bg_var);
     // Movement
@@ -230,10 +238,6 @@ object_event_add
     }
     // Alarms
     alarm_len_var = 12;
-    alarm_arr[8,2] = '';
-    alarm_arr[9,2] = '';
-    alarm_arr[10,2] = '';
-    alarm_arr[11,2] = '';
     event_inherited();
     if upside_var { z_off_var = 24.5; } // 21.3
     do_snd_var = false;
@@ -246,6 +250,7 @@ object_event_add
     global.floor_bg_tex = background_get_texture(global.floor_bg);
     if instance_number(object_index) <= 1
     {
+        fmod_snd_free_scr(mus_snd_var);
         for (local.i=0; local.i<glitch_snd_len_var; local.i+=1;)
         { fmod_snd_free_scr(glitch_snd_arr[local.i,0]); }
         for (local.i=0; local.i<dmg_snd_len_var; local.i+=1;)

@@ -8,14 +8,14 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create Event
 object_event_add
-(argument0,ev_step,ev_step_normal,"
+(argument0,ev_create,0,"
     image_blend = make_color_rgb(251,255,143);
     image_alpha = 0;
     alpha_01_var = 0;
     alpha_02_var = 0;
     alpha_03_var = 0;
 ");
-// Draw Event
+// Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,"
     if instance_exists(play_var) { per_var = play_var.hp_infect_var/play_var.hp_max_var; }

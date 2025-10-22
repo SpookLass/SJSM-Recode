@@ -40,6 +40,8 @@ object_event_add
     snd_alarm_min_var = 80;
     snd_alarm_max_var = 240;
     snd_dist_var = 600;
+    // Theme
+    mus_prio_var = theme_mus_prio_const;
     // Assets
         // Search for existing assets to save memory
     with object_index
@@ -52,6 +54,7 @@ object_event_add
             for (local.i=0; local.i<snd_len_var; local.i+=1;)
             { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
             other.wake_snd_var[1] = wake_snd_var[1];
+            other.mus_snd_var = mus_snd_var;
             local.loaded = true;
             break;
         }
@@ -66,7 +69,9 @@ object_event_add
         snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\fd_02_snd.wav',true);
         snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\fd_03_snd.wav',true);
         snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\fd_04_snd.wav',true);
+        mus_snd_var = fmod_snd_add_scr(main_directory_const+'\SND\MON\gel_mus_snd.mp3');
         wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\fd_wake_snd.wav',true);
+        mus_snd_var = fmod_snd_add_scr(main_directory_const+'\SND\MON\fd_mus_snd.mp3');
     }
     // Axe
     do_hurt_var = true;
@@ -99,7 +104,6 @@ object_event_add
     hide_trig_var = true;
     hide_per_var = true;
     alarm_len_var = 9;
-    alarm_arr[8,2] = '';
     // Effect
     eff_dist_var = 32;
     eff_chance_var = 5;
@@ -156,6 +160,7 @@ object_event_add
     event_inherited();
     if instance_number(object_index) <= 1
     {
+        fmod_snd_free_scr(mus_snd_var);
         sprite_delete(spr_var);
         sprite_delete(eff_spr_01_var);
         sprite_delete(eff_spr_02_var);

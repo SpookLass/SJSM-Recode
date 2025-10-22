@@ -25,7 +25,6 @@ object_event_add
     fog_max_end_var = 256; // 373.r3
     // Alarm
     alarm_len_var = 1;
-    alarm_arr[0,2] = '';
     // Set
     set_alarm_scr(0,alarm_var);
     image_alpha = 0;
@@ -43,7 +42,7 @@ object_event_add
 // Room End Event
 object_event_add
 (argument0,ev_other,ev_room_end,"
-    // Nothin
+    if !per_var { event_inherited(); }
 ");
 // Room Start Event
 object_event_add
@@ -77,6 +76,7 @@ object_event_add
 // Alarm 0 Event
 object_event_add
 (argument0,ev_alarm,0,"
+    fmod_snd_play_scr(snd_var);
     with (ringu_real_obj)
     { event_perform(ev_other,ev_user15); }
     set_alarm_scr(0,alarm_var);

@@ -53,6 +53,8 @@ object_event_add
     drag_snd_den_var = 2;
     drag_snd_alarm_var = 120;
     drag_snd_dist_var = 700;
+    // Theme
+    mus_prio_var = mon_mus_prio_const;
     // Killer is SO ANNOYING
     do_turn_var = !global.mem_save_var;
     // Search for existing assets to save memory
@@ -87,6 +89,8 @@ object_event_add
             other.wake_snd_var[1] = wake_snd_var[1];
             other.charge_snd_var[0] = charge_snd_var[0];
             other.loop_snd_var[0] = loop_snd_var[0];
+            other.hide_mus_snd_var = hide_mus_snd_var;
+            other.main_mus_snd_var = main_mus_snd_var;
             local.loaded = true;
             break;
         }
@@ -165,7 +169,8 @@ object_event_add
             fmod_snd_set_minmax_dist_scr(drag_snd_arr[local.i,0],0,drag_snd_dist_var);
             fmod_snd_set_group_scr(drag_snd_arr[local.i,0],snd_group_mon_const);
         }
-        
+        hide_mus_snd_var = fmod_snd_add_scr(main_directory_const+'\SND\MON\killer_hide_mus_snd.mp3');
+        main_mus_snd_var = fmod_snd_add_scr(main_directory_const+'\SND\MON\killer_mus_snd.mp3');
     }
     spr_var = spr_arr_var[0,0];
     w_01_var = spr_arr_var[0,1];
@@ -295,9 +300,10 @@ object_event_add
     spr_spd_var = spr_spd_base_var;
     z_off_var = z_off_base_var;
     h_var = h_base_var;
+    if !irandom(1) { mus_snd_var = hide_mus_snd_var; }
+    else { mus_snd_var = main_mus_snd_var; }
     // Alarms
     alarm_len_var = 9;
-    alarm_arr[8,2] = '';
 ");
 // Destroy Event
 object_event_add
@@ -305,6 +311,8 @@ object_event_add
     event_inherited();
     if instance_number(object_index) <= 1
     {
+        fmod_snd_free_scr(main_mus_snd_var);
+        fmod_snd_free_scr(hide_mus_snd_var);
         for (local.i=0; local.i<drag_snd_len_var; local.i+=1;)
         { fmod_snd_free_scr(drag_snd_arr[local.i,0]); }
         fmod_snd_free_scr(charge_snd_var[0]);

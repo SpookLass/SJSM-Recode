@@ -28,8 +28,6 @@ object_event_add
     str_arr_var[0,8] = 'Weak.'
     str_var = str_wake_var;
     alarm_len_var = 2;
-    alarm_arr[0,2] = '';
-    alarm_arr[1,2] = '';
     set_alarm_scr(0,anim_alarm_var);
     set_alarm_scr(1,char_alarm_var);
     char_var = 1;

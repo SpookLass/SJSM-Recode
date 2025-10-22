@@ -32,7 +32,6 @@ object_event_add
     }
     // Alarm
     alarm_len_var = 1;
-    alarm_arr[0,2] = '';
 ");
 // Alarm 0 Event
 object_event_add

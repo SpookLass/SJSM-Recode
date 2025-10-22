@@ -14,7 +14,6 @@ object_event_add
     event_inherited();
     // Alarm
     alarm_len_var = 2;
-    alarm_arr[1,2] = '';
 ");
 // Alarm 1 Event
 object_event_add

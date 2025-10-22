@@ -414,7 +414,6 @@ object_event_add
     ini_close();
     // Alarms
     alarm_len_var = 1;
-    alarm_arr[0,2] = '';
     set_alarm_scr(0,3000);
     // States
     state_var = 0;
@@ -1521,7 +1520,7 @@ object_event_add
 				local.hud.par_var = local.player;
 				local.axe = instance_create(0,0,global.axe_obj);
 				local.axe.par_var = local.player;
-				fmod_snd_loop_scr(choose(amb_01_snd,amb_02_snd,amb_03_snd,amb_04_snd,amb_05_snd,amb_06_snd,amb_07_snd,amb_08_snd,amb_09_snd,amb_10_snd,amb_11_snd,amb_12_snd));
+				instance_create(0,0,mus_control_obj);
                 global.count_var = get_count_scr();
 
                 tex_scr(-1);

@@ -45,6 +45,8 @@ object_event_add
     snd_alarm_min_var = 80;
     snd_alarm_max_var = 240;
     snd_dist_var = 600;
+    // Theme
+    mus_prio_var = theme_mus_prio_const;
     // Assets
         // Search for existing assets to save memory
     with object_index
@@ -55,6 +57,8 @@ object_event_add
             for (local.i=0; local.i<snd_len_var; local.i+=1;)
             { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
             other.wake_snd_var[1] = wake_snd_var[1];
+            other.mus_snd_var = mus_snd_var;
+            other.laugh_snd_var[0] = laugh_snd_var[0];
             local.loaded = true;
             break;
         }
@@ -68,6 +72,10 @@ object_event_add
         snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\ringu_03_snd.wav',true);
         snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\ringu_04_snd.wav',true);
         wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\ringu_wake_snd.wav');
+        mus_snd_var = fmod_snd_add_scr(main_directory_const+'\SND\MON\ringu_mus_snd.mp3');
+        laugh_snd_var[0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\ringu_laugh_snd.wav',true);
+        fmod_snd_set_minmax_dist_scr(laugh_snd_var[1],0,snd_dist_var);
+        fmod_snd_set_group_scr(laugh_snd_var[1],snd_group_mon_const);
     }
     // Laugh
     do_hurt_var = true;
@@ -106,5 +114,15 @@ object_event_add
 (argument0,ev_destroy,0,"
     event_inherited();
     if instance_number(object_index) <= 1
-    { sprite_delete(spr_var); }
+    {
+        sprite_delete(spr_var);
+        fmod_snd_free_scr(mus_snd_var);
+        fmod_snd_free_scr(laugh_snd_var);
+    }
+");
+// Hurt Event
+object_event_add
+(argument0,ev_other,ev_user4,"
+    snd_var = fmod_snd_3d_play_scr(laugh_snd_var);
+    event_inherited();
 ");

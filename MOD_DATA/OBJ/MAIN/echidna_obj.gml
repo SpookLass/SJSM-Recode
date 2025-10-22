@@ -121,17 +121,15 @@ object_event_add
             fmod_snd_set_group_scr(wake_snd_var[1],snd_group_mon_const);
         }
     }
+    // Theme
+    if mus_prio_var > amb_mus_prio_const
+    {
+        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
+        with mus_control_obj { event_user(0); }
+    }
     // Alarms
     if alarm_len_var == 0
     { alarm_len_var = 8; }
-    alarm_arr[0,2] = '';
-    alarm_arr[1,2] = '';
-    alarm_arr[2,2] = '';
-    alarm_arr[3,2] = '';
-    alarm_arr[4,2] = '';
-    alarm_arr[5,2] = '';
-    alarm_arr[6,2] = '';
-    alarm_arr[7,2] = '';
 ");
 // Create End Event
     // Startup
@@ -140,7 +138,7 @@ object_event_add
     // Play wake (or random sound if it doesn't exist)
     if do_snd_var
     {
-        if wake_snd_var[0]
+        if wake_snd_var[0] == 1
         {
             fmod_snd_play_scr(wake_snd_var[1]);
             sub_var = wake_snd_var[2];
@@ -175,6 +173,8 @@ object_event_add
         { fmod_snd_free_scr(snd_arr[local.i,0]); }
         if wake_snd_var[0] { fmod_snd_free_scr(wake_snd_var[1]); }
     }
+    if mus_prio_var > amb_mus_prio_const
+    { with mus_control_obj { event_user(0); }}
 ");
 // Room Start Event
 object_event_add
@@ -563,7 +563,7 @@ object_event_add
         cam_id_var = other.attack_target_var.cam_id_var;
     }
 ");
-// Hurt
+// Hurt Event
 /*Weapons call this function when attacking
 Weapons set hurt_weapon_var, hurt_target_var, hurt_power_var, and hurt_type_var, to use as arguments in this function
 hurt_weapon_var: The weapon

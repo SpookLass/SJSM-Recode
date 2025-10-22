@@ -14,7 +14,6 @@ object_event_add
     image_alpha = 0.5;
     // Alarm
     alarm_len_var = 1;
-    alarm_arr[0,2] = '';
     set_alarm_scr(0,irandom_range(6,30));
     // Old
     old_var = true;

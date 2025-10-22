@@ -25,7 +25,6 @@ object_event_add
     delay_var = 600;
     // Alarms
     alarm_len_var = 1;
-    alarm_arr[0,2] = '';
     // Collision
     coll_var[0] = global.mon_coll[0];
     coll_var[1] = global.mon_coll[1];

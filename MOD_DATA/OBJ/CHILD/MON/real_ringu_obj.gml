@@ -45,6 +45,8 @@ object_event_add
     snd_alarm_min_var = 80;
     snd_alarm_max_var = 240;
     snd_dist_var = 600;
+    // Theme
+    mus_prio_var = theme_mus_prio_const;
     // Assets
         // Search for existing assets to save memory
     with object_index
@@ -56,6 +58,8 @@ object_event_add
             for (local.i=0; local.i<snd_len_var; local.i+=1;)
             { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
             other.wake_snd_var[1] = wake_snd_var[1];
+            other.mus_snd_var = mus_snd_var;
+            other.cam_snd_var = cam_snd_var;
             local.loaded = true;
             break;
         }
@@ -71,6 +75,9 @@ object_event_add
         snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\ringu_04_snd.wav',true);
         snd_arr[4,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\ringu_laugh_snd.wav',true);
         wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\ringu_real_wake_snd.wav');
+        cam_snd_var = fmod_snd_add_scr(main_directory_const+'\SND\MON\ringu_cam_snd.wav');
+        fmod_snd_set_group_scr(cam_snd_var,snd_group_mon_const);
+        mus_snd_var = fmod_snd_add_scr(main_directory_const+'\SND\MON\ringu_real_mus_snd.mp3');
     }
     // Laugh
     do_hurt_var = true;
@@ -169,7 +176,6 @@ object_event_add
     }
     // Alarms
     alarm_len_var = 9;
-    alarm_arr[8,2] = '';
     // Stuff
     event_perform(ev_other,ev_user14);
 ");
@@ -189,6 +195,7 @@ object_event_add
             fog_end_var = fog_max_end_var;
             per_var = other.eff_per_var;
             alarm_var = other.eff_alarm_var;
+            snd_var = other.cam_snd_var;
             set_alarm_scr(0,alarm_var);
             if fog_var { depth = 99; }
             else { depth = -99; }
@@ -208,9 +215,17 @@ object_event_add
     {
         sprite_delete(state_spr_var[0]);
         sprite_delete(state_spr_var[1]);
+        fmod_snd_free_scr(cam_snd_var);
+        fmod_snd_free_scr(mus_snd_var);
     }
     with ringu_static_eff_obj
     { if par_var == other.id { instance_destroy(); }}
+");
+// Hurt Event
+object_event_add
+(argument0,ev_other,ev_user4,"
+    snd_var = fmod_snd_3d_play_scr(snd_arr[4,0]);
+    event_inherited();
 ");
 // Delay
 object_event_add

@@ -46,6 +46,8 @@ object_event_add
     w_var = 10;
     h_var = 20;
     dupe_var = dupe_canon_const;
+    // Theme
+    mus_prio_var = theme_mus_prio_const;
     // Assets
     // Search for existing assets to save memory
     with object_index
@@ -56,6 +58,7 @@ object_event_add
             other.bg_var = bg_var;
             other.spr_overlay_var = spr_overlay_var;
             other.spr_eff_var = spr_eff_var;
+            other.mus_snd_var = mus_snd_var;
             local.loaded = true;
             break;
         }
@@ -68,6 +71,7 @@ object_event_add
         mdl_var = d3d_model_create();
         d3d_model_load(mdl_var,main_directory_const+'\MDL\MON\bodybag_mon_mdl.gmmod');
         bg_var = background_add(main_directory_const+'\BG\MON\bodybag_bg.png',false,false);
+        mus_snd_var = fmod_snd_add_scr(main_directory_const+'\SND\MON\bodybag_mus_snd.mp3');
     }
     tex_var = background_get_texture(bg_var);
     // Sounds
@@ -130,7 +134,6 @@ object_event_add
     }
     // Alarms
     alarm_len_var = 9;
-    alarm_arr[8,2] = '';
     // Bools
     do_mdl_var = true;
     do_snd_var = -1;
@@ -147,6 +150,7 @@ object_event_add
     event_inherited();
     if instance_number(object_index) <= 1
     {
+        fmod_snd_free_scr(mus_snd_var);
         background_delete(bg_var);
         d3d_model_destroy(mdl_var);
         sprite_delete(spr_eff_var);

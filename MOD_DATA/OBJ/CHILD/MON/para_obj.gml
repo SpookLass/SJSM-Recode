@@ -62,6 +62,8 @@ object_event_add
     snd_alarm_min_var = 80;
     snd_alarm_max_var = 240;
     snd_dist_var = 600;
+    // Theme
+    mus_prio_var = theme_mus_prio_const;
     // Assets
         // Search for existing assets to save memory
     with object_index
@@ -76,6 +78,8 @@ object_event_add
             for (local.i=0; local.i<snd_len_var; local.i+=1;)
             { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
             other.wake_snd_var[1] = wake_snd_var[1];
+            other.main_mus_snd_var = main_mus_snd_var;
+            other.leech_mus_snd_var = leech_mus_snd_var;
             local.loaded = true;
             break;
         }
@@ -93,7 +97,10 @@ object_event_add
         snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\para_03_snd.wav',true);
         snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\para_04_snd.wav',true);
         wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\para_wake_snd.wav');
+        main_mus_snd_var = fmod_snd_add_scr(main_directory_const+'\SND\MON\para_mus_snd.mp3');
+        leech_mus_snd_var = fmod_snd_add_scr(main_directory_const+'\SND\MON\para_leech_mus_snd.mp3');
     }
+    mus_snd_var = main_mus_snd_var;
     // State
     state_var = 0;
     state_rm_var = false;
@@ -102,6 +109,7 @@ object_event_add
     state_check_var = false;
     state_delay_var = 0;
     state_dur_var = 0;
+    state_miniboss_var = true;
     // Closed
     state_spd_var[0] = 1/3;
     state_spr_spd_var[0] = 1/12;
@@ -219,8 +227,6 @@ object_event_add
     { delay_var = max(0,64-(32/state_spd_var[0])); }
     // Alarms
     alarm_len_var = 10;
-    alarm_arr[8,2] = '';
-    alarm_arr[9,2] = '';
     // Defaults
     spd_base_var = state_spd_var[0];
     spr_var = state_spr_var[0]
@@ -237,6 +243,8 @@ object_event_add
     event_inherited();
     if instance_number(object_index) <= 1
     {
+        fmod_snd_free_scr(main_mus_snd_var);
+        fmod_snd_free_scr(leech_mus_snd_var);
         sprite_delete(spr_eff_var);
         sprite_delete(state_spr_var[0]);
         sprite_delete(state_spr_var[1]);
@@ -244,6 +252,8 @@ object_event_add
         sprite_delete(spr_overlay_var);
     }
     with spr_flash_eff_obj
+    { if par_var == other.id { instance_destroy(); }}
+    with para_eff_obj
     { if par_var == other.id { instance_destroy(); }}
 ");
 // Room Start Event
@@ -270,6 +280,7 @@ object_event_add
             local.play = id;
             with instance_create(0,0,para_eff_obj)
             {
+                par_var = local.para;
                 spr_var = local.para.spr_overlay_var;
                 play_var = local.play;
                 cam_id_var = local.play.cam_id_var;
@@ -383,6 +394,12 @@ object_event_add
                     dur_var = state_dur_var;
                     dur_start_var = dur_var;
                 }
+                if state_miniboss_var
+                {
+                    mus_prio_var = mb_mus_prio_const;
+                    mus_snd_var = leech_mus_snd_var;
+                    with mus_control_obj { event_user(0); }
+                }
                 exit;
             }
         }
@@ -432,7 +449,29 @@ object_event_add
     {
         event_inherited();
         state_var = 2;
-        event_user(15);
+        with instance_create(0,0,spr_flash_eff_obj)
+        {
+            par_var= other.id;
+            spr_var = other.spr_eff_var;
+            spr_id_var = irandom(sprite_get_number(spr_var)-1);
+            spr_spd_var = 1;
+            rand_rate_var = 15;
+            set_alarm_scr(0,irandom_range(other.state_eff_min_var,other.state_eff_max_var));
+            // Set camera to player
+            cam_id_var = other.hurt_target_var.cam_id_var;
+        }
+        event_perform(ev_other,ev_user15);
+        if state_dur_var > 0 && dur_var > state_dur_var
+        {
+            dur_var = state_dur_var;
+            dur_start_var = dur_var;
+        }
+        if state_miniboss_var
+        {
+            mus_prio_var = mb_mus_prio_const;
+            mus_snd_var = leech_mus_snd_var;
+            with mus_control_obj { event_user(0); }
+        }
     }
 ");
 // Change state

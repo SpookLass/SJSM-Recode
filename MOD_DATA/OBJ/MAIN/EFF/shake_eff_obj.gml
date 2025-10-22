@@ -14,7 +14,6 @@ object_event_add
     type_var = 0;
     // Alarm
     alarm_len_var = 1;
-    alarm_arr[0,2] = '';
     set_alarm_scr(0,12);
 ");
 // Alarm 0 Event

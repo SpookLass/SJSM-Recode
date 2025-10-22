@@ -45,6 +45,8 @@ object_event_add
     snd_alarm_min_var = 200;
     snd_alarm_max_var = 480;
     snd_dist_var = 700;
+    // Theme
+    mus_prio_var = theme_mus_prio_const;
     // Assets
         // Search for existing assets to save memory
     with object_index
@@ -57,6 +59,7 @@ object_event_add
             for (local.i=0; local.i<snd_len_var; local.i+=1;)
             { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
             other.wake_snd_var[1] = wake_snd_var[1];
+            other.mus_snd_var = mus_snd_var;
             local.loaded = true;
             break;
         }
@@ -72,13 +75,13 @@ object_event_add
         snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\tiri_03_snd.wav',true);
         snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\tiri_04_snd.wav',true);
         wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\tiri_wake_snd.wav');
+        mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+'\SND\mus\TIRSIAK_mus.mp3');
     }
     // Coward
     do_coward_var = true;
     coward_var = false;
     coward_alarm_var = 90;
     alarm_len_var = 9;
-    alarm_arr[8,2] = '';
     // Effects
     eff_color_var = make_color_rgb(51,255,255);
     overlay_color_var = eff_color_var;
@@ -157,6 +160,7 @@ object_event_add
         sprite_delete(spr_var);
         background_delete(bg_overlay_var);
         sprite_delete(shadow_spr_var);
+        fmod_snd_free_scr(mus_snd_var);
     }
     with kh_overlay_obj
     { if par_var == other.id { instance_destroy(); }}

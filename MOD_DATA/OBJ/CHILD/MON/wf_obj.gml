@@ -86,11 +86,13 @@ object_event_add
         ds_list_add(zone_list_var,long_hall_11_rm);
         wake_snd_var[0] = true;
         wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\wf_wake_snd.mp3');
+        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\wf_snd.wav',true);
         glitch_snd_arr[0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\glitch_01_snd.wav');
         glitch_snd_arr[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\glitch_02_snd.wav');
         glitch_snd_arr[2] = fmod_snd_add_scr(main_directory_const+'\SND\MON\glitch_03_snd.wav');
         glitch_snd_arr[3] = fmod_snd_add_scr(main_directory_const+'\SND\MON\glitch_04_snd.wav');
-        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\wf_snd.wav',true);
+        for (local.i=0; local.i<glitch_snd_len_var; local.i+=1;)
+        { fmod_snd_set_group_scr(glitch_snd_arr[local.i,0],snd_group_mon_const); }
     }
     tex_02_var = background_get_texture(bg_var);
     web_tex_var = background_get_texture(web_bg_var);
@@ -311,9 +313,6 @@ object_event_add
     }
     spd_base_var = spd_base_real_var;
     alarm_len_var = 11;
-    alarm_arr[8,2] = '';
-    alarm_arr[9,2] = '';
-    alarm_arr[10,2] = '';
 ");
 // Destroy Event
 object_event_add

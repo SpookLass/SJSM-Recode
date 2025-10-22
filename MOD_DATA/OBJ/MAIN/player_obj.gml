@@ -106,10 +106,6 @@ object_event_add
     grid_var = global.phys_grid;
     // Alarms
     alarm_len_var = 4;
-    alarm_arr[0,2] = '';
-    alarm_arr[1,2] = '';
-    alarm_arr[2,2] = '';
-    alarm_arr[3,2] = '';
     // Behavior
     switch global.player_type_var
     {

@@ -19,7 +19,6 @@ object_event_add
     part_frick_var = 0.002;
     part_turn_var = 2;
     alarm_len_var = 1;
-    alarm_arr[0,2] = '';
     set_alarm_scr(0,part_delay_var);
     image_blend = make_color_rgb(224,208,142);
 ");

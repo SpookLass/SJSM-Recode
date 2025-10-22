@@ -14,7 +14,6 @@ object_event_add
     cam_id_var = 0;
     // Alarm
     alarm_len_var = 1;
-    alarm_arr[0,2] = '';
     set_alarm_scr(0,3);
 ");
 // Alarm 0 Event

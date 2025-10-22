@@ -20,8 +20,6 @@ object_event_add
     rand_chance_var = 2;
     // Alarm
     alarm_len_var = 2;
-    alarm_arr[0,2] = '';
-    alarm_arr[1,2] = '';
     set_alarm_scr(0,irandom_range(30,60));
     set_alarm_scr(1,rand_rate_var);
 ");

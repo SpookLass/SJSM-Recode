@@ -82,7 +82,6 @@ object_event_add
         // Special
         delay_var = 10;
         alarm_len_var = 1;
-        alarm_arr[0,2] = '';
         weapon_var = true;
         // Collisions
         coll_var[0] = global.jsr_coll[0];

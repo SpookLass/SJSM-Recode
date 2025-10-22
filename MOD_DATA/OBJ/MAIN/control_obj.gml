@@ -10,7 +10,6 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,0,"
     alarm_len_var = 1;
-    alarm_arr[0,2] = '';
     event_perform(ev_other,ev_room_start);
 ");
 // Step event
@@ -272,7 +271,7 @@ object_event_add
 ");
 object_event_add(argument0,ev_step,ev_step_end,"
     // Update FMOD!
-    FMODUpdate();
+    fmod_update_scr();
 ")
 // Draw
 object_event_add
@@ -333,4 +332,6 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_game_end,"
     p3dc_free_scr();
+    fmod_free_scr();
+    fmod_unload_scr();
 ")

@@ -62,8 +62,6 @@ object_event_add
     }
     // Alarms
     alarm_len_var = 10;
-    alarm_arr[8,2] = '';
-    alarm_arr[9,2] = '';
     // Charge
     do_attack_var = -1;
     charge_var = -1;

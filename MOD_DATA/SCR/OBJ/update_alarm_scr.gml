@@ -12,8 +12,8 @@ if alarm_len_var
             if alarm_arr[local.i,0] <= 0
             {
                 alarm_arr[local.i,0] = -1;
-                if alarm_arr[local.i,2] != '' { execute_string(alarm_arr[local.i,2]); }
-                else if local.i < 12 { event_perform(ev_alarm,local.i); }
+                alarm_arr[local.i,1] = -1;
+                event_perform(ev_alarm,local.i);
             }
         }
     }

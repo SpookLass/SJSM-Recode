@@ -65,6 +65,8 @@ object_event_add
     snd_alarm_min_var = 200;
     snd_alarm_max_var = 400;
     snd_dist_var = 600;
+    // Theme
+    mus_prio_var = mon_mus_prio_const;
     // Assets
         // Search for existing assets to save memory
     with object_index
@@ -76,6 +78,7 @@ object_event_add
             other.mdl_02_var = mdl_02_var;
             for (local.i=0; local.i<snd_len_var; local.i+=1;)
             { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
+            other.mus_snd_var = mus_snd_var;
             local.loaded = true;
             break;
         }
@@ -93,6 +96,7 @@ object_event_add
         snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\stem_03_snd.wav',true);
         snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\stem_04_snd.wav',true);
         snd_arr[4,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\stem_05_snd.wav',true);
+        mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+'\SND\mus\M5_mus.mp3');
     }
     // Collision
     coll_var[0] = global.mon_wide_coll[0];
@@ -195,7 +199,6 @@ object_event_add
     }
     // Alarms
     alarm_len_var = 9;
-    alarm_arr[8,2] = '';
     // sine
     z_off_time_var=0;
     z_off_mult_var=6;
@@ -210,6 +213,7 @@ object_event_add
         background_delete(bg_var);
         d3d_model_destroy(mdl_01_var);
         d3d_model_destroy(mdl_02_var);
+        fmod_snd_free_scr(mus_snd_var);
     }
 ");
 // Room Start Event

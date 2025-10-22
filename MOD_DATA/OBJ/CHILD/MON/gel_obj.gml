@@ -46,6 +46,8 @@ object_event_add
     snd_alarm_min_var = 80;
     snd_alarm_max_var = 240;
     snd_dist_var = 600;
+    // Theme
+    mus_prio_var = mon_mus_prio_const;
     // Assets
         // Search for existing assets to save memory
     with object_index
@@ -57,6 +59,7 @@ object_event_add
             for (local.i=0; local.i<snd_len_var; local.i+=1;)
             { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
             other.wake_snd_var[1] = wake_snd_var[1];
+            other.mus_snd_var = mus_snd_var;
             local.loaded = true;
             break;
         }
@@ -71,6 +74,7 @@ object_event_add
         snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\gel_03_snd.wav',true);
         snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\gel_04_snd.wav',true);
         wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\gel_wake_snd.wav');
+        mus_snd_var = fmod_snd_add_scr(main_directory_const+'\SND\MON\gel_mus_snd.mp3');
     }
     // Coward
     do_hurt_var = 2;
@@ -159,7 +163,6 @@ object_event_add
         }
     }
     alarm_len_var = 9;
-    alarm_arr[8,2] = '';
 ");
 // Room Start Event
 object_event_add

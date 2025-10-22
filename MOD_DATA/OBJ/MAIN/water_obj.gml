@@ -22,7 +22,7 @@ object_event_add
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,"
-    time_var = (time_var+1) mod rate_var;
+    time_var = (time_var+global.delta_time_var) mod rate_var;
     y = sin((2*time_var*pi)/rate_var)*mult_var;
 ");
 

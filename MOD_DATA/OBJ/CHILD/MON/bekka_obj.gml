@@ -43,6 +43,8 @@ object_event_add
     dmg_alarm_var = 30;
     w_var = 14;
     h_var = 21;
+    // mus
+    mus_prio_var = theme_mus_prio_const;
     // Assets
     // Search for existing assets to save memory
     with object_index
@@ -51,6 +53,7 @@ object_event_add
         {
             other.bg_var = bg_var;
             other.bg_overlay_var = bg_overlay_var;
+            other.mus_snd_var = mus_snd_var;
             local.loaded = true;
             break;
         }
@@ -60,6 +63,7 @@ object_event_add
     {
         bg_var = background_add(vanilla_directory_const+'\TEX\sprites\MS23_01_spr.png',false,false);
         bg_overlay_var = background_add(vanilla_directory_const+'\TEX\sprites\fog_spr.png',false,false);
+        mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+'\SND\mus\BEKKA_mus.mp3');
     }
     tex_var = background_get_texture(bg_var);
     // Sounds
@@ -164,9 +168,6 @@ object_event_add
     }
     // Alarms
     alarm_len_var = 11;
-    alarm_arr[8,2] = '';
-    alarm_arr[9,2] = '';
-    alarm_arr[10,2] = '';
     // Bools
     do_snd_var = -1;
     if bright_var { color_var = -1; }
@@ -177,6 +178,7 @@ object_event_add
     event_inherited();
     if instance_number(object_index) <= 1
     {
+        fmod_snd_free_scr(mus_snd_var);
         background_delete(bg_var);
         background_delete(bg_overlay_var);
     }
