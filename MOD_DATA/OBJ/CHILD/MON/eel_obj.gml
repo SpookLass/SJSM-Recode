@@ -42,6 +42,14 @@ object_event_add
     // Scream
     do_hurt_var = true;
     violence_var = 3;
+    // Sounds
+    snd_len_var = 4;
+    wake_snd_var[0] = true;
+    snd_num_var = 1;
+    snd_den_var = 2;
+    snd_alarm_min_var = 80;
+    snd_alarm_max_var = 240;
+    snd_dist_var = 600;
     // Assets
         // Search for existing assets to save memory
     with object_index
@@ -68,14 +76,6 @@ object_event_add
         snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\eel_04_snd.wav',true);
         wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\eel_wake_snd.wav');
     }
-    // Sounds
-    snd_len_var = 4;
-    wake_snd_var[0] = true;
-    snd_num_var = 1;
-    snd_den_var = 2;
-    snd_alarm_min_var = 80;
-    snd_alarm_max_var = 240;
-    snd_dist_var = 600;
     // Body
     bod_len_var = 6;
     bod_taper_var = 3;

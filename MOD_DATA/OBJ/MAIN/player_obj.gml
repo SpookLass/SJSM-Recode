@@ -215,7 +215,15 @@ object_event_add
     view_enabled = true;
     // Clear time
     if mp_grid_path(grid_var,path_var,x,y,global.spawn_arr[1,0],global.spawn_arr[1,1],true)
-    { rm_clear_time_var = path_get_length(path_var)/(spd_base_var*(1+sprint_spd_mult_var)*9/19); } // 9/19 to account for faster stamina drain when pressing shift
+    {
+        if do_sprint_var
+        {
+            if do_stam_var { local.spd = spd_base_var*(1+sprint_spd_mult_var)*9/19; }
+            else { local.spd = spd_base_var*sprint_spd_mult_var; }
+        }
+        else { local.spd = spd_base_var; }
+        rm_clear_time_var = path_get_length(path_var)/local.spd;
+    } 
     else { rm_clear_time_var = -1; }
     // Start room
     taker_spawn_var = false;
@@ -495,15 +503,15 @@ object_event_add
         breath_time_var = (breath_time_var+local.breath_rate) mod 360;
         breath_var = breath_mult_var*sin(degtorad(breath_time_var));
         // Calculate health
-        if !hurt_var && !in_door_var && heal_var && !dead_var
+        if !hurt_var && !in_door_var && heal_var && !dead_var && hp_var < hp_max_var
         {
             local.heal_rate = heal_rate_var*heal_mult_var*global.delta_time_var;
-            hp_var += local.heal_rate;
+            hp_var = min(hp_max_var,hp_var+local.heal_rate);
             hp_infect_var -= local.heal_rate;
             heal_mult_var = 1;
         }
         // Clamp Health
-        hp_var = median(0,hp_max_var,hp_var);
+        hp_var = max(0,hp_var); // median(0,hp_max_var,hp_var); Allow overheal
         hp_infect_var = median(0,hp_max_var-hp_var,hp_infect_var);
         // Calculate FOV
         local.target_fov = fov_var*power(max(1,spd_var/spd_base_var),0.25); // 0.6

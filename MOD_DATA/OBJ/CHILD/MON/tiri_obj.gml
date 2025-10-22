@@ -38,6 +38,13 @@ object_event_add
     w_var = 8.6;
     h_var = 22;
     z_off_var = 1;
+    // Sounds
+    snd_len_var = 4;
+    snd_num_var = 1;
+    snd_den_var = 3;
+    snd_alarm_min_var = 200;
+    snd_alarm_max_var = 480;
+    snd_dist_var = 700;
     // Assets
         // Search for existing assets to save memory
     with object_index
@@ -84,13 +91,6 @@ object_event_add
     shadow_scale_var = 16;
     shadow_num_var = 1;
     shadow_den_var = 2;
-    // Sounds
-    snd_len_var = 4;
-    snd_num_var = 1;
-    snd_den_var = 3;
-    snd_alarm_min_var = 200;
-    snd_alarm_max_var = 480;
-    snd_dist_var = 700;
     // Behavior
     if global.tiri_type_var == -1 { local.type = irandom(3); }
     else { local.type = global.tiri_type_var; }
@@ -139,6 +139,11 @@ object_event_add
             shadow_scale_var = 24;
             shadow_num_var = 3;
             shadow_den_var = 5;
+            // Sound
+            snd_alarm_min_var = 180;
+            snd_alarm_max_var = 480;
+            snd_den_var = 1;
+            snd_dist_var = 500;
             break;
         }
     }

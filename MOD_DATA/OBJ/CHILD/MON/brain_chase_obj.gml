@@ -38,6 +38,27 @@ object_event_add
     h_var = 10;
     spd_var = 8/15;
     target_spd_mult_var = 0.6;
+    // Sounds
+    do_snd_var = true;
+    snd_loop_var = true;
+    snd_dist_var = 600;
+    snd_len_var = 1;
+    // Assets
+        // Search for existing assets to save memory
+    with object_index
+    {
+        if id != other.id
+        {
+            other.snd_arr[0,0] = snd_arr[0,0];
+            local.loaded = true;
+            break;
+        }
+    }
+        // If no existing assets were found, load them
+    if !local.loaded
+    {
+        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\brain_loop_snd.wav',true);
+    }
     if global.mode_var == 0 || global.main_type_var == 2
     {
         spd_var = 8/9;
@@ -47,7 +68,6 @@ object_event_add
         target_spd_mult_var = 0.3;
     }
     else { eff_var = true; }
-    do_snd_var = -1;
     // sine
     z_off_time_var=0;
     z_off_mult_var=2;

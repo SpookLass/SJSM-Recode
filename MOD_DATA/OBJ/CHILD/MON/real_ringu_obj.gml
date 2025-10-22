@@ -37,6 +37,14 @@ object_event_add
     dmg_alarm_var = 120;
     h_var = 20;
     z_off_var = 2;
+    // Sounds
+    snd_len_var = 5;
+    wake_snd_var[0] = true;
+    snd_num_var = 1;
+    snd_den_var = 2;
+    snd_alarm_min_var = 80;
+    snd_alarm_max_var = 240;
+    snd_dist_var = 600;
     // Assets
         // Search for existing assets to save memory
     with object_index
@@ -61,19 +69,12 @@ object_event_add
         snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\ringu_02_snd.wav',true);
         snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\ringu_03_snd.wav',true);
         snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\ringu_04_snd.wav',true);
+        snd_arr[4,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\ringu_laugh_snd.wav',true);
         wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\ringu_real_wake_snd.wav');
     }
     // Laugh
     do_hurt_var = true;
     violence_var = 3;
-    // Sounds
-    snd_len_var = 4;
-    wake_snd_var[0] = true;
-    snd_num_var = 1;
-    snd_den_var = 2;
-    snd_alarm_min_var = 80;
-    snd_alarm_max_var = 240;
-    snd_dist_var = 600;
     // Seen
     do_seen_var = true;
     seen_yaw_var = 30;
@@ -135,6 +136,11 @@ object_event_add
             state_seen_spd_var[0] = 44/45; // 0.9r7 WHAT
             state_spd_var[1] = state_spd_var[0];
             state_seen_spd_var[1] = state_seen_spd_var[0];
+            // Sound
+            snd_alarm_min_var = 90;
+            snd_alarm_max_var = 240;
+            snd_den_var = 1;
+            snd_dist_var = 500;
             break;
         }
         case 2: // HD
@@ -152,7 +158,12 @@ object_event_add
             state_spd_var[0] = 1222/1125; // 1.086r2
             state_seen_spd_var[0] = 188/225; // 0.83r5
             state_spd_var[1] = state_spd_var[0];
-            state_seen_spd_var[1] = state_seen_spd_var[0]
+            state_seen_spd_var[1] = state_seen_spd_var[0];
+            // Sound
+            snd_alarm_min_var = 90;
+            snd_alarm_max_var = 240;
+            snd_den_var = 1;
+            snd_dist_var = 500;
             break;
         }
     }

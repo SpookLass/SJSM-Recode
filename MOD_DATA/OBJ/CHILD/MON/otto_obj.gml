@@ -47,6 +47,13 @@ object_event_add
     h_var = 24;
     spr_num_var = 4;
     anim_type_var = 4;
+    // Sounds
+    snd_len_var = 4;
+    snd_num_var = 1;
+    snd_den_var = 2;
+    snd_alarm_min_var = 300;
+    snd_alarm_max_var = 480;
+    snd_dist_var = 600;
     // Assets
         // Search for existing assets to save memory
     with object_index
@@ -69,14 +76,6 @@ object_event_add
         snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\otto_03_snd.wav',true);
         snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\otto_04_snd.wav',true);
     }
-    // Sounds
-    snd_len_var = 4;
-    
-    snd_num_var = 1;
-    snd_den_var = 2;
-    snd_alarm_min_var = 300;
-    snd_alarm_max_var = 480;
-    snd_dist_var = 600;
     // Behavior
     if global.otto_type_var == -1 { local.type = irandom(3); }
     else { local.type = global.otto_type_var; }

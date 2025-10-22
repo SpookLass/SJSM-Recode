@@ -27,6 +27,14 @@ object_event_add
     dmg_alarm_var = 120;
     w_var = 16;
     h_var = 23;
+    // Sounds
+    snd_len_var = 4;
+    wake_snd_var[0] = true; // Has a wake sound, otherwise it'll use a normal sound
+    snd_num_var = 1;
+    snd_den_var = 2;
+    snd_alarm_min_var = 80;
+    snd_alarm_max_var = 240;
+    snd_dist_var = 600;
     // Assets
         // Search for existing assets to save memory
     with object_index
@@ -52,14 +60,6 @@ object_event_add
         wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\gurgle_wake_snd.wav');
         charge_snd_var[0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\gurgle_charge_snd.wav',true);
     }
-    // Sounds
-    snd_len_var = 4;
-    wake_snd_var[0] = true; // Has a wake sound, otherwise it'll use a normal sound
-    snd_num_var = 1;
-    snd_den_var = 2;
-    snd_alarm_min_var = 80;
-    snd_alarm_max_var = 240;
-    snd_dist_var = 600;
     // Alarms
     alarm_len_var = 10;
     alarm_arr[8,2] = '';

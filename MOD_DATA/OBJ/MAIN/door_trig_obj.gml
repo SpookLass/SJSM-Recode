@@ -46,44 +46,49 @@ object_event_add
 (argument0,ev_step,ev_step_normal,"
     visible = false;
     local.door = id;
-    local.indoor = true;
     local.active = false;
+    local.remaining = 0;
+    with player_obj { if !in_door_var && !dead_var { local.remaining += 1; }}
     with player_obj
     {
-        local.player = id;
-        // p3dc_check_scr(coll_var[0],x,y,z,other.coll_var[0],other.x,other.y,other.z)
-        if box_coll_scr(x,y,z,coll_var[2],coll_var[2],coll_var[1],other.x,other.y,other.z,other.coll_var[2],other.coll_var[2],other.coll_var[1])
+        if !in_door_var && !dead_var
         {
-            other.visible = other.do_txt_var;
-            other.cam_id_var = cam_id_var
-            if global.interact_input_press_var == 1 && !in_door_var
+            // p3dc_check_scr(coll_var[0],x,y,z,other.coll_var[0],other.x,other.y,other.z)
+            if box_coll_scr(x,y,z,coll_var[2],coll_var[2],coll_var[1],other.x,other.y,other.z,other.coll_var[2],other.coll_var[2],other.coll_var[1])
             {
-                if !other.lock_var
+                other.visible = other.do_txt_var;
+                other.cam_id_var = cam_id_var
+                if global.interact_input_press_var == 1
                 {
-                    on_var = false;
-                    in_door_var = true;
-                    local.active = true;
-                    with instance_create(0,0,fade_eff_obj)
+                    if !other.lock_var
                     {
-                        image_blend = c_black; 
-                        set_alarm_scr(0,local.door.delay_var); 
-                        invert_var = true;
-                        stay_var = true;
-                        cam_id_var = local.player.cam_id_var;
+                        
+                        on_var = false;
+                        in_door_var = true;
+                        local.active = true;
+                        local.player = id;
+                        local.remaining -= 1;
+                        with instance_create(0,0,fade_eff_obj)
+                        {
+                            image_blend = c_black; 
+                            set_alarm_scr(0,local.door.delay_var); 
+                            invert_var = true;
+                            stay_var = true;
+                            cam_id_var = local.player.cam_id_var;
+                        }
+                        fmod_snd_play_scr(choose(door_01_snd,door_02_snd,door_03_snd,door_04_snd));
                     }
-                    fmod_snd_play_scr(choose(door_01_snd,door_02_snd,door_03_snd,door_04_snd));
-                }
-                else if !instance_exists(txt_obj)
-                {
-                    local.txt = instance_create(0,0,txt_obj);
-                    local.txt.txt_var = other.txt_lock_var;
+                    else if !instance_exists(txt_obj)
+                    {
+                        local.txt = instance_create(0,0,txt_obj);
+                        local.txt.txt_var = other.txt_lock_var;
+                    }
                 }
             }
         }
-        if !in_door_var 
-        { local.indoor = false; }
     }
-    if local.active && local.indoor { set_alarm_scr(0,delay_var); }
+    if local.active && local.remaining == 0
+    { set_alarm_scr(0,delay_var); }
 ");
 // Draw Event
 object_event_add

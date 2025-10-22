@@ -33,6 +33,13 @@ object_event_add
     delay_var = 120;
     dmg_var = 45;
     dmg_alarm_var = 120;
+    // Sounds
+    snd_len_var = 4;
+    snd_num_var = 1;
+    snd_den_var = 2;
+    snd_alarm_min_var = 80;
+    snd_alarm_max_var = 240;
+    snd_dist_var = 600;
     // Assets
         // Search for existing assets to save memory
     with object_index
@@ -61,14 +68,6 @@ object_event_add
         snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\fd_04_snd.wav',true);
         wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\fd_wake_snd.wav',true);
     }
-    // Sounds
-    snd_len_var = 4;
-    
-    snd_num_var = 1;
-    snd_den_var = 2;
-    snd_alarm_min_var = 80;
-    snd_alarm_max_var = 240;
-    snd_dist_var = 600;
     // Axe
     do_hurt_var = true;
     hurt_alarm_var = 60;

@@ -38,6 +38,14 @@ object_event_add
     h_var = 20;
     z_off_var = 2;
     dupe_var = dupe_canon_const;
+    // Sounds
+    snd_len_var = 4;
+    wake_snd_var[0] = true; // Has a wake sound, otherwise it'll use a normal sound
+    snd_num_var = 1;
+    snd_den_var = 2;
+    snd_alarm_min_var = 80;
+    snd_alarm_max_var = 240;
+    snd_dist_var = 600;
     // Assets
         // Search for existing assets to save memory
     with object_index
@@ -64,14 +72,6 @@ object_event_add
         snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\gel_04_snd.wav',true);
         wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\gel_wake_snd.wav');
     }
-    // Sounds
-    snd_len_var = 4;
-    wake_snd_var[0] = true; // Has a wake sound, otherwise it'll use a normal sound
-    snd_num_var = 1;
-    snd_den_var = 2;
-    snd_alarm_min_var = 80;
-    snd_alarm_max_var = 240;
-    snd_dist_var = 600;
     // Coward
     do_hurt_var = 2;
     coward_var = true;
@@ -146,6 +146,7 @@ object_event_add
             snd_alarm_min_var = 90;
             snd_alarm_max_var = 240;
             snd_den_var = 1;
+            snd_dist_var = 500;
             // Bools
             coward_var = false;
             do_slime_spawn_var = true;

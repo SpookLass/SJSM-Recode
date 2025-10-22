@@ -53,6 +53,10 @@ object_event_add
             other.web_bg_var = web_bg_var;
             other.web_mdl_var = web_mdl_var;
             other.zone_list_var = zone_list_var;
+            other.snd_arr[0,0] = snd_arr[0,0];
+            other.wake_snd_var[1] = wake_snd_var[1];
+            for (local.i=0; local.i<glitch_snd_len_var; local.i+=1;)
+            { other.glitch_snd_arr[local.i,0] = glitch_snd_arr[local.i,0]; }
             local.loaded = true;
             break;
         }
@@ -82,6 +86,10 @@ object_event_add
         ds_list_add(zone_list_var,long_hall_11_rm);
         wake_snd_var[0] = true;
         wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\wf_wake_snd.mp3');
+        glitch_snd_arr[0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\glitch_01_snd.wav');
+        glitch_snd_arr[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\glitch_02_snd.wav');
+        glitch_snd_arr[2] = fmod_snd_add_scr(main_directory_const+'\SND\MON\glitch_03_snd.wav');
+        glitch_snd_arr[3] = fmod_snd_add_scr(main_directory_const+'\SND\MON\glitch_04_snd.wav');
         snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\wf_snd.wav',true);
     }
     tex_02_var = background_get_texture(bg_var);
@@ -89,7 +97,7 @@ object_event_add
     // Sounds
     do_snd_var = 1; // At least for now
     snd_loop_var = true;
-    snd_dist_var = 432; // 600
+    snd_dist_var = 600;
     snd_len_var = 1;
     // White Face Specific
     vis_num_var = 2;
@@ -332,6 +340,8 @@ object_event_add
         background_delete(web_bg_var);
         d3d_model_destroy(web_mdl_var);
         ds_list_destroy(zone_list_var);
+        for (local.i=0; local.i<glitch_snd_len_var; local.i+=1;)
+        { fmod_snd_free_scr(glitch_snd_arr[local.i,0]); }
     }
     if zone_start_var > 0
     {
@@ -596,6 +606,7 @@ object_event_add
         // Flashing effects
         if frac_chance_scr(1,flash_chance_var) && seen_flash_var && (flash_agg_var <= 0 || seen_agg_var > flash_agg_var)
         {
+            fmod_snd_play_scr(glitch_snd_arr[irandom(glitch_snd_len_var-1)]);
             // Make sure not to blind the player
             if !instance_exists(color_par_obj)
             || color_get_red(color_par_obj.image_blend) > 96

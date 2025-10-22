@@ -55,6 +55,13 @@ object_event_add
     do_warn_var = false;
     warn_var = false;
     warn_dist_var = 320/3;
+    // Sounds
+    snd_len_var = 4;
+    snd_num_var = 1;
+    snd_den_var = 2;
+    snd_alarm_min_var = 80;
+    snd_alarm_max_var = 240;
+    snd_dist_var = 600;
     // Assets
         // Search for existing assets to save memory
     with object_index
@@ -87,13 +94,6 @@ object_event_add
         snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\para_04_snd.wav',true);
         wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\para_wake_snd.wav');
     }
-    // Sounds
-    snd_len_var = 4;
-    snd_num_var = 1;
-    snd_den_var = 2;
-    snd_alarm_min_var = 80;
-    snd_alarm_max_var = 240;
-    snd_dist_var = 600;
     // State
     state_var = 0;
     state_rm_var = false;

@@ -51,6 +51,14 @@ object_event_add
     dmg_alarm_var = 120;
     w_var = 10;
     h_var = 20;
+    // Sounds
+    snd_len_var = 4;
+    wake_snd_var[0] = true;
+    snd_num_var = 1;
+    snd_den_var = 3;
+    snd_alarm_min_var = 30;
+    snd_alarm_max_var = 30;
+    snd_dist_var = 600;
     // Assets
         // Search for existing assets to save memory
     with object_index
@@ -75,14 +83,6 @@ object_event_add
         snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\pup_04_snd.wav',true);
         wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\pup_wake_snd.wav');
     }
-    // Sounds
-    snd_len_var = 4;
-    wake_snd_var[0] = true;
-    snd_num_var = 1;
-    snd_den_var = 3;
-    snd_alarm_min_var = 30;
-    snd_alarm_max_var = 30;
-    snd_dist_var = 600;
     // Anim
     anim_type_var = 3; // Random
     visible_var = true;

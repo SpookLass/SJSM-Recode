@@ -58,6 +58,13 @@ object_event_add
     h_var = 10;
     dupe_var = dupe_canon_const;
     spr_spd_var = 1;
+    // Sounds
+    snd_len_var = 5;
+    snd_num_var = 1;
+    snd_den_var = 1;
+    snd_alarm_min_var = 200;
+    snd_alarm_max_var = 400;
+    snd_dist_var = 600;
     // Assets
         // Search for existing assets to save memory
     with object_index
@@ -122,13 +129,6 @@ object_event_add
     do_mdl_var = true;
     rand_alarm_var = 6;
     inv_chance_var = 3;
-    // Sounds
-    snd_len_var = 5;
-    snd_num_var = 1;
-    snd_den_var = 1;
-    snd_alarm_min_var = 200;
-    snd_alarm_max_var = 400;
-    snd_dist_var = 600;
     // Behavior
     if global.stem_type_var == -1 { local.type = irandom(3); }
     else { local.type = global.stem_type_var; }

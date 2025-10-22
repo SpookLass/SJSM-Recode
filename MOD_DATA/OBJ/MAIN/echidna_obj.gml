@@ -168,6 +168,7 @@ object_event_add
     event_inherited();
     if type_var > 0 && path_exists(path_var)
     { path_delete(path_var); }
+    fmod_inst_stop_scr(snd_var);
     if instance_number(object_index) <= 1
     {
         for (local.i=0; local.i<snd_len_var; local.i+=1;)

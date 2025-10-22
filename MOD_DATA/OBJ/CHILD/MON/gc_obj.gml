@@ -44,6 +44,13 @@ object_event_add
     coll_var[0] = global.mon_wide_coll[0];
     coll_var[1] = global.mon_wide_coll[1];
     coll_var[2] = global.mon_wide_coll[2];
+    // Sound
+    snd_len_var = 4;
+    snd_dist_var = 500;
+    snd_alarm_min = 90;
+    snd_alarm_max = 240;
+    glitch_snd_len_var = 4;
+    dmg_snd_len_var = 2;
     // Assets
         // Search for existing assets to save memory
     with object_index
@@ -55,6 +62,12 @@ object_event_add
             other.wall_bg_var = wall_bg_var;
             other.floor_bg_var = floor_bg_var;
             other.eff_bg_var = eff_bg_var;
+            for (local.i=0; local.i<snd_len_var; local.i+=1;)
+            { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
+            for (local.i=0; local.i<glitch_snd_len_var; local.i+=1;)
+            { other.glitch_snd_arr[local.i,0] = glitch_snd_arr[local.i,0]; }
+            for (local.i=0; local.i<dmg_snd_len_var; local.i+=1;)
+            { other.dmg_snd_arr[local.i,0] = dmg_snd_arr[local.i,0]; }
             local.loaded = true;
             break;
         }
@@ -68,6 +81,16 @@ object_event_add
         wall_bg_var = background_add(vanilla_directory_const+'\TEX\HOS_21.png',false,false);
         floor_bg_var = background_add(vanilla_directory_const+'\TEX\HOS_14.png',false,false);
         eff_bg_var = background_add(vanilla_directory_const+'\TEX\sprites\EX_13_spr.png',false,false);
+        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\glitch_01_snd.wav',true);
+        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\glitch_02_snd.wav',true);
+        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\glitch_03_snd.wav',true);
+        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\glitch_04_snd.wav',true);
+        glitch_snd_arr[0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\glitch_01_snd.wav');
+        glitch_snd_arr[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\glitch_02_snd.wav');
+        glitch_snd_arr[2] = fmod_snd_add_scr(main_directory_const+'\SND\MON\glitch_03_snd.wav');
+        glitch_snd_arr[3] = fmod_snd_add_scr(main_directory_const+'\SND\MON\glitch_04_snd.wav');
+        dmg_snd_arr[0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\cow_01_snd.wav');
+        dmg_snd_arr[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\cow_02_snd.wav');
     }
     tex_var = background_get_texture(bg_var);
     // Movement
@@ -177,6 +200,7 @@ object_event_add
         }
         case 2: // HD
         {
+            do_snd_var = true;
             type_var = 2;
             move_type_var = 2;
             if !local.spd_set
@@ -194,8 +218,7 @@ object_event_add
             autobrake_spd_var = 0;
             autobrake_dir_var = 60;
             // No fun
-            seen_flash_var = false;
-            seen_spd_var = false;
+            do_seen_var = -1;
             spawn_dist_var = 0;
             do_anim_var = -1;
             rand_alarm_min_var = -1;
@@ -223,6 +246,10 @@ object_event_add
     global.floor_bg_tex = background_get_texture(global.floor_bg);
     if instance_number(object_index) <= 1
     {
+        for (local.i=0; local.i<glitch_snd_len_var; local.i+=1;)
+        { fmod_snd_free_scr(glitch_snd_arr[local.i,0]); }
+        for (local.i=0; local.i<dmg_snd_len_var; local.i+=1;)
+        { fmod_snd_free_scr(dmg_snd_arr[local.i,0]); }
         background_delete(bg_var);
         background_delete(wall_bg_var);
         background_delete(floor_bg_var);
@@ -459,6 +486,7 @@ object_event_add
         }
         if !irandom(3) && seen_flash_var
         {
+            fmod_snd_play_scr(glitch_snd_arr[irandom(glitch_snd_len_var-1)]);
             with instance_create(0,0,fade_eff_obj)
             {
                 if !irandom(1) { image_blend = c_black; }
@@ -476,6 +504,7 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user3,"
     event_inherited();
+    fmod_snd_play_scr(dmg_snd_arr[irandom(dmg_snd_len_var-1)]);
     if dmg_stun_alarm_var > 0
     {
         set_motion_3d_scr(0,true);
