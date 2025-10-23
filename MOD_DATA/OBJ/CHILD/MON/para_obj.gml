@@ -98,7 +98,9 @@ object_event_add
         snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\para_04_snd.wav',true);
         wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\para_wake_snd.wav');
         main_mus_snd_var = fmod_snd_add_scr(main_directory_const+'\SND\MON\para_mus_snd.mp3');
+        fmod_snd_set_group_scr(main_mus_snd_var,snd_group_mus_const);
         leech_mus_snd_var = fmod_snd_add_scr(main_directory_const+'\SND\MON\para_leech_mus_snd.mp3');
+        fmod_snd_set_group_scr(leech_mus_snd_var,snd_group_mus_const);
     }
     mus_snd_var = main_mus_snd_var;
     // State

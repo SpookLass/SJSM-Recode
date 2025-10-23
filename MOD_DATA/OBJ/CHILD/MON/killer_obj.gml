@@ -170,7 +170,9 @@ object_event_add
             fmod_snd_set_group_scr(drag_snd_arr[local.i,0],snd_group_mon_const);
         }
         hide_mus_snd_var = fmod_snd_add_scr(main_directory_const+'\SND\MON\killer_hide_mus_snd.mp3');
+        fmod_snd_set_group_scr(hide_mus_snd_var,snd_group_mus_const);
         main_mus_snd_var = fmod_snd_add_scr(main_directory_const+'\SND\MON\killer_mus_snd.mp3');
+        fmod_snd_set_group_scr(main_mus_snd_var,snd_group_mus_const);
     }
     spr_var = spr_arr_var[0,0];
     w_01_var = spr_arr_var[0,1];

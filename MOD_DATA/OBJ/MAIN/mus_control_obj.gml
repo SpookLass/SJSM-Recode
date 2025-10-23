@@ -13,7 +13,7 @@ object_event_add
     dur_max_var = 15;
     dur_var = 1;
     curr_prio_var = amb_mus_prio_const;
-    curr_snd_var = choose(amb_01_snd,amb_02_snd,amb_03_snd,amb_04_snd,amb_05_snd,amb_06_snd,amb_07_snd,amb_08_snd,amb_09_snd,amb_10_snd,amb_11_snd);
+    curr_snd_var = choose(amb_mus_01_snd,amb_mus_02_snd,amb_mus_03_snd,amb_mus_04_snd,amb_mus_05_snd,amb_mus_06_snd,amb_mus_07_snd,amb_mus_08_snd,amb_mus_09_snd,amb_mus_10_snd,amb_mus_11_snd);
     snd_var = fmod_snd_play_scr(curr_snd_var);
 ");
 // Room Start
@@ -53,7 +53,7 @@ object_event_add
         if (dur_var <= 0 && !irandom(4)) || override_var
         {
             override_var = false;
-            local.mus = choose(amb_01_snd,amb_02_snd,amb_03_snd,amb_04_snd,amb_05_snd,amb_06_snd,amb_07_snd,amb_08_snd,amb_09_snd,amb_10_snd,amb_11_snd);
+            local.mus = choose(amb_mus_01_snd,amb_mus_02_snd,amb_mus_03_snd,amb_mus_04_snd,amb_mus_05_snd,amb_mus_06_snd,amb_mus_07_snd,amb_mus_08_snd,amb_mus_09_snd,amb_mus_10_snd,amb_mus_11_snd);
             if local.mus != curr_snd_var
             {
                 curr_snd_var = local.mus;

@@ -1145,7 +1145,7 @@ object_event_add
                         local.hud.par_var = local.player;
                         local.axe = instance_create(0,0,global.axe_obj);
                         local.axe.par_var = local.player;
-                        fmod_snd_loop_scr(choose(amb_01_snd,amb_02_snd,amb_03_snd,amb_04_snd,amb_05_snd,amb_06_snd,amb_07_snd,amb_08_snd,amb_09_snd,amb_10_snd,amb_11_snd,amb_12_snd));
+                        fmod_snd_loop_scr(choose(amb_mus_01_snd,amb_mus_02_snd,amb_mus_03_snd,amb_mus_04_snd,amb_mus_05_snd,amb_mus_06_snd,amb_mus_07_snd,amb_mus_08_snd,amb_mus_09_snd,amb_mus_10_snd,amb_mus_11_snd,amb_mus_12_snd));
                         global.zone_num_var = irandom(global.zone_len_var+global.story_zone_len_var-1);
                         if global.zone_num_var >= global.zone_len_var
                         { global.zone_var = global.story_zone_arr[global.zone_num_var-global.zone_len_var]; }
