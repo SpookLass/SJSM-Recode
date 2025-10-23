@@ -120,6 +120,7 @@ object_event_add
             slime_num_var = 2;
             slime_den_var = 3;
             // Bools
+            hurt_snd_var = 1;
             coward_var = false;
             do_slime_spawn_var = true;
             stun_var = true;
@@ -152,6 +153,7 @@ object_event_add
             snd_den_var = 1;
             snd_dist_var = 500;
             // Bools
+            hurt_snd_var = 2;
             coward_var = false;
             do_slime_spawn_var = true;
             stun_var = true;
@@ -314,7 +316,6 @@ object_event_add
     event_inherited();
     if do_slime_spawn_var && stun_var
     {
-        fmod_snd_play_scr(claw_snd);
         slime_spawn_var = 1;
         set_alarm_scr(8,hurt_alarm_var);
         if hurt_eff_var

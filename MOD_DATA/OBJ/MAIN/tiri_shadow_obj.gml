@@ -48,6 +48,7 @@ object_event_add
         weapon_var = false;
         set_alarm_scr(0,weapon_alarm_var);
     }
+    fmod_snd_play_scr(choose(axe_hit_01_snd,axe_hit_02_snd));
 ");
 // Alarm
 object_event_add

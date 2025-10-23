@@ -94,6 +94,7 @@ object_event_add
     hang_var = true;
     seen_yaw_01_var = 3.434; // 3.r43
     seen_yaw_02_var = 30;
+    spr_spd_var = 1;
     // Overlay
     overlay_var = true;
     overlay_color_var = c_white;
@@ -103,12 +104,19 @@ object_event_add
     else { local.type = global.patient_type_var; }
     switch local.type
     {
-        case 0:
+        case 0: // Recode
         {
+            spd_base_var = 2;
             seen_pitch_01_var = 3.434;
             seen_pitch_02_var = 30;
-            tp_sight_var = true;
-            draw_pos_var = true;
+            rand_alarm_min_var = 6;
+            rand_alarm_max_var = 6;
+            tp_alarm_var = -1;
+            rage_alarm_var = 480;
+            seen_spd_mult_var = 1;
+            seen_rage_var = 2;
+            inv_move_var = true;
+            inv_limit_var = 30;
             weird_var = true;
             weird_chance_var = 16;
             break;
@@ -128,9 +136,23 @@ object_event_add
             // HD Only
             seen_spd_mult_var = 1;
             seen_rage_var = true;
+            rage_alarm_var = 480;
             inv_move_var = true;
             inv_limit_var = 30;
             back_tp_alarm_var = 60;
+            hurt_snd_var = 3;
+            do_hurt_var = true;
+            stun_var = true;
+            break;
+        }
+        case 3: // Old Recode / Plus
+        {
+            seen_pitch_01_var = 3.434;
+            seen_pitch_02_var = 30;
+            tp_sight_var = true;
+            draw_pos_var = true;
+            weird_var = true;
+            weird_chance_var = 16;
             break;
         }
     }
@@ -139,18 +161,19 @@ object_event_add
         wake_snd_var[0] = 2;
         seen_yaw_var = seen_yaw_01_var;
         seen_pitch_var = seen_pitch_01_var;
+        do_anim_var = true;
     }
     else
     {
-        wake_snd_var[0] = true;
+        wake_snd_var[0] = 1;
         seen_yaw_var = seen_yaw_02_var;
         seen_pitch_var = seen_pitch_02_var;
+        do_anim_var = -1;
     }
     // Alarms
-    alarm_len_var = 12;
+    alarm_len_var = 13;
     // Bools
     do_mdl_var = true;
-    do_anim_var = -1;
     do_snd_var = -1;
 ");
 // Destroy Event
@@ -167,7 +190,6 @@ object_event_add
     }
     with kh_overlay_obj
     { if par_var == other.id { instance_destroy(); }}
-    
 ");
 // Room start
 object_event_add
@@ -180,7 +202,7 @@ object_event_add
         set_alarm_scr(0,-1);
         move_var = false;
         attack_var = false;
-        anim_var = false;
+        anim_var = do_anim_var;
         local.spawn = irandom_range(1,global.spawn_len_var-1);
         x = global.spawn_arr[local.spawn,0];
         y = global.spawn_arr[local.spawn,1];
@@ -192,8 +214,12 @@ object_event_add
     }
     else
     {
-        if mus_prio_var <= amb_mus_prio_const
-        { set_alarm_scr(11,mus_delay_var); }
+        mdl_var = mdl_01_var;
+        if mus_prio_var <= amb_mus_prio_const && alarm_arr[11,0] <= 0
+        {
+            if fmod_inst_is_play_scr(snd_var) { set_alarm_scr(11,fmod_inst_get_len_var(snd_var)*(1-fmod_inst_get_pos_var(snd_var))*milli_frame_rate_const); }
+            else { event_perform(ev_alarm,11); }
+        }
         x = global.spawn_arr[0,0];
         y = global.spawn_arr[0,1];
         z = global.spawn_arr[0,2];
@@ -207,10 +233,15 @@ object_event_add
                 bg_var = other.bg_overlay_var;
             }
         }
+        if seen_rage_var { set_alarm_scr(12,rage_alarm_var); }
     }
+    if seen_rage_var == 2 { rage_var = false; }
     enter_var = false;
     do_coll_var = type_var > 0;
     // Become visible
+    draw_x_var = x;
+    draw_y_var = y;
+    draw_z_var = z;
     event_user(14);
 ");
 // Room End
@@ -223,6 +254,8 @@ object_event_add
         seen_yaw_var = seen_yaw_02_var;
         seen_pitch_var = seen_pitch_02_var;
         snd_var = fmod_snd_play_scr(wake_snd_var[1]);
+        do_anim_var = false;
+        anim_var = false;
     }
     event_inherited();
 ");
@@ -238,8 +271,8 @@ object_event_add
 (argument0,ev_alarm,8,"
     if seen_rage_var
     {
-        if alarm_arr[9,0] <= 0 { local.chance = true; }
-        else { local.chance = (random(1) >= alarm_arr[9,0]/alarm_arr[9,1]); }
+        if alarm_arr[12,0] <= 0 || rage_var { local.chance = true; }
+        else { local.chance = (random(1) >= alarm_arr[12,0]/alarm_arr[12,1]); }
     }
     else { local.chance = frac_chance_scr(1,rand_chance_var) }
     if local.chance && (inv_limit_var <= 0 || inv_time_var < inv_limit_var)
@@ -250,6 +283,16 @@ object_event_add
     // Become visible
     else { event_user(14); }
     set_alarm_scr(8,irandom_range(rand_alarm_min_var,rand_alarm_max_var));
+");
+// Animation
+object_event_add
+(argument0,ev_other,ev_user1,"
+    spr_prog_var -= spr_spd_var*global.delta_time_var;
+    if spr_prog_var <= 0
+    {
+        spr_prog_var = 1;
+        visible = frac_chance_scr(1,2);
+    }
 ");
 // Teleport Alarm
 object_event_add
@@ -276,6 +319,15 @@ object_event_add
     mus_prio_var = theme_mus_prio_const;
     with mus_control_obj { event_user(0); }
 ");
+// Maybe scream?
+object_event_add
+(argument0,ev_alarm,12,"
+    if seen_rage_var == 2
+    {
+        snd_var = fmod_snd_play_scr(wake_snd_var[1]);
+        rage_var = true;
+    }
+");
 // Step event
 object_event_add
 (argument0,ev_step,ev_step_normal,"
@@ -287,20 +339,28 @@ object_event_add
             visible = true;
             seen_yaw_var = seen_yaw_02_var;
             seen_pitch_var = seen_pitch_02_var;
-            event_perform(ev_other,ev_room_start);
             snd_var = fmod_snd_play_scr(wake_snd_var[1]);
+            do_anim_var = false;
+            anim_var = false;
+            set_alarm_scr(11,fmod_inst_get_len_var(snd_var)*milli_frame_rate_const);
+            event_perform(ev_other,ev_room_start);
         }
-        else { visible = !irandom(1); }
     }
     else
     {
         if seen_var == 1
         {
             spd_mult_var *= seen_spd_mult_var;
-            if alarm_arr[9,0] <= 0 { set_alarm_scr(9,tp_alarm_var); }
+            if tp_alarm_var > 0 && alarm_arr[9,0] <= 0 { set_alarm_scr(9,tp_alarm_var); }
+            if seen_rage_var && !rage_var && alarm_arr[12,0] <= 0 { set_alarm_scr(12,rage_alarm_var); }
             if image_alpha == 0 && inv_limit_var > 0 { inv_time_var += global.delta_time_var; }
         }
-        else if alarm_arr[9,0] > 0 { set_alarm_scr(9,-1); }
+        else
+        {
+            if alarm_arr[9,0] > 0 { set_alarm_scr(9,-1); }
+            if alarm_arr[12,0] > 0 { set_alarm_scr(12,-1); }
+            if seen_rage_var == 2 { rage_var = false; }
+        }
         if back_tp_alarm_var > 0
         {
             if seen_var == 0
@@ -309,6 +369,14 @@ object_event_add
             }
             else if alarm_arr[10,0] > 0 { set_alarm_scr(10,-1); }
         }
+    }
+    if !draw_pos_var
+    {
+        draw_x_var = x;
+        draw_y_var = y;
+        draw_z_var = z;
+        draw_yaw_var = yaw_var;
+        if mdl_var == mdl_02_var { draw_yaw_var += 180; }
     }
     event_inherited();
 ");
@@ -319,6 +387,21 @@ object_event_add
     event_inherited();
     // Become visible
     event_user(14);
+");
+// Hurt
+object_event_add
+(argument0,ev_other,ev_user4,"
+    event_inherited();
+    if stun_var
+    {
+        on_var = false;
+        with instance_create(0,0,flash_eff_obj)
+        {
+            image_blend = c_red;
+            cam_id_var = hurt_target_var.cam_id_var;
+            set_alarm_scr(0,18);
+        }
+    }
 ");
 // Become visible
 object_event_add
@@ -400,8 +483,7 @@ object_event_add
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,"
-    if !draw_pos_var { event_inherited(); }
-    else if on_var || visible_var
+    if on_var || visible_var
     {
         draw_set_color(image_blend); draw_set_alpha(image_alpha);
         d3d_transform_set_identity();
@@ -420,7 +502,7 @@ object_event_add
         }
         d3d_transform_set_identity();
         draw_set_color(c_white); draw_set_alpha(1);
-        if global.debug_var
+        if global.debug_var && type_var > 0
         {
             d3d_set_hidden(false);
             if path_exists(path_var)

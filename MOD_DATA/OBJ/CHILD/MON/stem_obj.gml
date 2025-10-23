@@ -147,6 +147,7 @@ object_event_add
             hurt_tp_var = true;
             tp_dist_min_var = 64;
             move_type_var = 0;
+            hurt_snd_var = 1;
             break;
         }
         case 4: // Karamari HD
@@ -185,6 +186,7 @@ object_event_add
             snd_alarm_max_var = 600;
             inv_chance_var = 5;
             tp_dist_max_var = 640/3; // 213.r3
+            hurt_snd_var = 3;
             break;
         }
         case 3: // Karamari

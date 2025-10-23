@@ -86,11 +86,11 @@ object_event_add
     eff_delay_var = 60;
     strobe_var = true;
     // Behavior
-    if global.body_type_var == -1 { local.type = irandom(4); }
+    if global.body_type_var == -1 { local.type = irandom(5); }
     else { local.type = global.body_type_var; }
     switch local.type
     {
-        case 4: // Speen!!!
+        case 5: // Speen!!!
         { spin_var = true; }
         case 0: // Mod
         {
@@ -107,6 +107,10 @@ object_event_add
             autobrake_spd_var = 1;
             autobrake_dir_var = 60;
             break;
+        }
+        case 4: // Old HD
+        {
+            type_var = 2;
         }
         case 2: // HD
         {
@@ -131,6 +135,7 @@ object_event_add
             autobrake_dir_var = 60;
             break;
         }
+        
     }
     // Alarms
     alarm_len_var = 9;

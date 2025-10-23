@@ -136,19 +136,16 @@ object_event_add
 object_event_add
 (argument0,ev_create,3,"
     // Play wake (or random sound if it doesn't exist)
-    if do_snd_var
+    if wake_snd_var[0] == 1
     {
-        if wake_snd_var[0] == 1
-        {
-            fmod_snd_play_scr(wake_snd_var[1]);
-            sub_var = wake_snd_var[2];
-        }
-        else if !snd_loop_var
-        {
-            local.snd = irandom(snd_len_var-1);
-            fmod_snd_3d_play_scr(snd_arr[local.snd,0]);
-            sub_var = snd_arr[local.snd,1];
-        }
+        snd_var = fmod_snd_play_scr(wake_snd_var[1]);
+        sub_var = wake_snd_var[2];
+    }
+    else if do_snd_var && !snd_loop_var
+    {
+        local.snd = irandom(snd_len_var-1);
+        fmod_snd_3d_play_scr(snd_arr[local.snd,0]);
+        sub_var = snd_arr[local.snd,1];
     }
     // Room start
     event_perform(ev_other,ev_room_start);
@@ -264,7 +261,7 @@ object_event_add
         }
         d3d_transform_set_identity();
         draw_set_color(c_white); draw_set_alpha(1);
-        if global.debug_var
+        if global.debug_var && type_var > 0
         {
             d3d_set_hidden(false);
             if path_exists(path_var)
@@ -557,6 +554,7 @@ object_event_add
         move_var = false;
         set_motion_3d_scr(0,true);
     }
+    fmod_snd_play_scr(claw_snd);
     with instance_create(0,0,blood_eff_obj)
     {
         // Set camera to player
@@ -589,6 +587,16 @@ object_event_add
     {
         dur_var -= hurt_dur_var;
         if dur_var <= 0 { instance_destroy(); exit; }
+    }
+    // Hurt sound
+    if hurt_snd_var
+    {
+        switch hurt_snd_var
+        {
+            case 1: { fmod_snd_play_scr(choose(axe_hit_01_snd,axe_hit_02_snd)); break; } // Clank!
+            case 2: { fmod_snd_play_scr(claw_snd); break; } // Scratch!
+            case 3: { fmod_snd_play_scr(choose(axe_01_snd,axe_02_snd,axe_03_snd)); break; } // Ding!
+        }
     }
     // You can set this to higher values to have custom stun behavior
     if stun_var == 1 

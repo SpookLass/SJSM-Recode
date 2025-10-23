@@ -573,7 +573,6 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user0,"
     // Play hurt noise, flash red, shake screen, etc
-    fmod_snd_play_scr(claw_snd);
     with instance_create(0,0,flash_eff_obj)
     {
         image_blend = c_red; 

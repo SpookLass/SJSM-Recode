@@ -109,8 +109,8 @@ object_event_add
     // Speed!
     if global.draw_3d_var
     {
-        if global.ff_input_press_var == 1 { global.game_spd_var = min(3,global.game_spd_var+0.25); }
-        if global.slow_input_press_var == 1 { global.game_spd_var = max(1,global.game_spd_var-0.25); }
+        if global.ff_input_press_var == 1 { global.game_spd_var = min(3,global.game_spd_var+0.25); fmod_group_set_pitch_scr(0,global.game_spd_var); }
+        if global.slow_input_press_var == 1 { global.game_spd_var = max(1,global.game_spd_var-0.25); fmod_group_set_pitch_scr(0,global.game_spd_var); }
     }
     else if global.game_spd_var != 1 { global.game_spd_var = 1; }
     // Delta Time
@@ -136,7 +136,7 @@ object_event_add
     {
         if !global.debug_unlock_var
         {
-            local.pass = string_lower(string_letters(get_string('Password Please','')));
+            local.pass = 'spooklass'; //string_lower(string_letters(get_string('Password Please','')));
             if local.pass == 'birdbonanza' || local.pass == 'yoshicraft' || local.pass == 'spooklass' || local.pass == 'everlastingmaya'
             || local.pass == 'bird' || local.pass == 'yoshi' || local.pass == 'lass' || local.pass == 'maya'
             || local.pass == 'kira' || local.pass == 'lag' || local.pass == 'poi' || local.pass == 'open'
@@ -144,6 +144,7 @@ object_event_add
             else { show_error(string_repeat('3',3333),true); exit; }
             global.last_time_var = current_time;
             display_mouse_set(display_get_width()/2,display_get_height()/2);
+            global.debug_input_press_var = 0;
         }
         global.debug_var = !global.debug_var;
     }

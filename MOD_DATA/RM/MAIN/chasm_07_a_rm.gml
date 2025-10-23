@@ -5,17 +5,25 @@ Argument 0: Room Variable (same for all rooms)
 room_set_code
 (
     argument0,"
-    global.rm_name_var = 'Chasm Room 3'
+    global.rm_name_var = 'Chasm Room 7 A'
     // Spawn
-    global.spawn_len_var = 2;
+    global.spawn_len_var = 4;
     global.spawn_arr[0,0] = 224;
     global.spawn_arr[0,1] = 304;
     global.spawn_arr[0,2] = 0;
     global.spawn_arr[0,3] = 0;
-    global.spawn_arr[1,0] = 448;
+    global.spawn_arr[1,0] = 384;
     global.spawn_arr[1,1] = 304;
     global.spawn_arr[1,2] = 0;
     global.spawn_arr[1,3] = 180;
+    global.spawn_arr[2,0] = 224;
+    global.spawn_arr[2,1] = 512;
+    global.spawn_arr[2,2] = 0;
+    global.spawn_arr[2,3] = 0;
+    global.spawn_arr[3,0] = 384;
+    global.spawn_arr[3,1] = 512;
+    global.spawn_arr[3,2] = 0;
+    global.spawn_arr[3,3] = 180;
     // Mark
     global.mark_len_var = 0;
     // 3D Draw
@@ -51,26 +59,30 @@ room_instance_add(argument0,288,304,floor_bridge_hor_obj);
 room_instance_add(argument0,320,304,floor_bridge_hor_obj);
 room_instance_add(argument0,352,304,floor_bridge_hor_obj);
 room_instance_add(argument0,384,304,floor_bridge_hor_obj);
-room_instance_add(argument0,416,304,floor_bridge_hor_obj);
-room_instance_add(argument0,448,304,floor_bridge_hor_obj);
+room_instance_add(argument0,224,512,floor_bridge_fake_hor_obj);
+room_instance_add(argument0,256,512,floor_bridge_fake_hor_obj);
+room_instance_add(argument0,288,512,floor_bridge_fake_hor_obj);
+room_instance_add(argument0,320,512,floor_bridge_fake_hor_obj);
+room_instance_add(argument0,352,512,floor_bridge_fake_hor_obj);
+room_instance_add(argument0,384,512,floor_bridge_fake_hor_obj);
 // Walls (Horizontal)
-room_instance_add(argument0,240,432,wall_chasm_wide_hor_obj);
-room_instance_add(argument0,304,432,wall_chasm_wide_hor_obj);
-room_instance_add(argument0,368,432,wall_chasm_wide_hor_obj);
-room_instance_add(argument0,432,432,wall_chasm_wide_hor_obj);
-room_instance_add(argument0,432,176,wall_chasm_wide_hor_obj);
-room_instance_add(argument0,368,176,wall_chasm_wide_hor_obj);
-room_instance_add(argument0,304,176,wall_chasm_wide_hor_obj);
-room_instance_add(argument0,240,176,wall_chasm_wide_hor_obj);
+room_instance_add(argument0,368,240,wall_chasm_wide_hor_obj);
+room_instance_add(argument0,304,240,wall_chasm_wide_hor_obj);
+room_instance_add(argument0,240,240,wall_chasm_wide_hor_obj);
+room_instance_add(argument0,240,560,wall_chasm_wide_hor_obj);
+room_instance_add(argument0,304,560,wall_chasm_wide_hor_obj);
+room_instance_add(argument0,368,560,wall_chasm_wide_hor_obj);
 // Walls (Vertical)
 room_instance_add(argument0,208,272,wall_chasm_wide_vert_obj);
 room_instance_add(argument0,208,336,wall_chasm_wide_vert_obj);
-room_instance_add(argument0,464,272,wall_chasm_wide_vert_obj);
-room_instance_add(argument0,464,336,wall_chasm_wide_vert_obj);
 room_instance_add(argument0,208,400,wall_chasm_wide_vert_obj);
-room_instance_add(argument0,208,208,wall_chasm_wide_vert_obj);
-room_instance_add(argument0,464,208,wall_chasm_wide_vert_obj);
-room_instance_add(argument0,464,400,wall_chasm_wide_vert_obj);
+room_instance_add(argument0,208,464,wall_chasm_wide_vert_obj);
+room_instance_add(argument0,400,464,wall_chasm_wide_vert_obj);
+room_instance_add(argument0,400,400,wall_chasm_wide_vert_obj);
+room_instance_add(argument0,400,272,wall_chasm_wide_vert_obj);
+room_instance_add(argument0,400,336,wall_chasm_wide_vert_obj);
+room_instance_add(argument0,208,528,wall_chasm_wide_vert_obj);
+room_instance_add(argument0,400,528,wall_chasm_wide_vert_obj);
 // Rails
 room_instance_add(argument0,224,288,rail_wood_hor_obj);
 room_instance_add(argument0,224,320,rail_wood_hor_obj);
@@ -84,8 +96,18 @@ room_instance_add(argument0,352,320,rail_wood_hor_obj);
 room_instance_add(argument0,352,288,rail_wood_hor_obj);
 room_instance_add(argument0,384,288,rail_wood_hor_obj);
 room_instance_add(argument0,384,320,rail_wood_hor_obj);
-room_instance_add(argument0,416,288,rail_wood_hor_obj);
-room_instance_add(argument0,448,288,rail_wood_hor_obj);
-room_instance_add(argument0,448,320,rail_wood_hor_obj);
-room_instance_add(argument0,416,320,rail_wood_hor_obj);
+room_instance_add(argument0,224,496,rail_wood_fake_hor_obj);
+room_instance_add(argument0,224,528,rail_wood_fake_hor_obj);
+room_instance_add(argument0,256,528,rail_wood_fake_hor_obj);
+room_instance_add(argument0,256,496,rail_wood_fake_hor_obj);
+room_instance_add(argument0,288,496,rail_wood_fake_hor_obj);
+room_instance_add(argument0,288,528,rail_wood_fake_hor_obj);
+room_instance_add(argument0,320,496,rail_wood_fake_hor_obj);
+room_instance_add(argument0,320,528,rail_wood_fake_hor_obj);
+room_instance_add(argument0,352,528,rail_wood_fake_hor_obj);
+room_instance_add(argument0,352,496,rail_wood_fake_hor_obj);
+room_instance_add(argument0,384,496,rail_wood_fake_hor_obj);
+room_instance_add(argument0,384,528,rail_wood_fake_hor_obj);
 // Torches
+room_instance_add(argument0,304,240,torch_north_obj);
+room_instance_add(argument0,304,560,torch_south_obj);
