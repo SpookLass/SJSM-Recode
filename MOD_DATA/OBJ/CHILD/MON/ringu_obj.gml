@@ -45,6 +45,7 @@ object_event_add
     snd_alarm_min_var = 80;
     snd_alarm_max_var = 240;
     snd_dist_var = 600;
+    hurt_snd_var = 4;
     // Theme
     mus_prio_var = theme_mus_prio_const;
     // Assets
@@ -58,7 +59,7 @@ object_event_add
             { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
             other.wake_snd_var[1] = wake_snd_var[1];
             other.mus_snd_var = mus_snd_var;
-            other.laugh_snd_var[0] = laugh_snd_var[0];
+            other.hurt_snd_var[1] = hurt_snd_var[1];
             local.loaded = true;
             break;
         }
@@ -73,9 +74,9 @@ object_event_add
         snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\ringu_04_snd.wav',true);
         wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\ringu_wake_snd.wav');
         mus_snd_var = fmod_snd_add_scr(main_directory_const+'\SND\MON\ringu_mus_snd.mp3');
-        laugh_snd_var[0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\ringu_laugh_snd.wav',true);
-        fmod_snd_set_minmax_dist_scr(laugh_snd_var[1],0,snd_dist_var);
-        fmod_snd_set_group_scr(laugh_snd_var[1],snd_group_mon_const);
+        hurt_snd_var[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\ringu_laugh_snd.wav',true);
+        fmod_snd_set_minmax_dist_scr(hurt_snd_var[1],0,snd_dist_var);
+        fmod_snd_set_group_scr(hurt_snd_var[1],snd_group_mon_const);
     }
     // Laugh
     do_hurt_var = true;
@@ -117,12 +118,6 @@ object_event_add
     {
         sprite_delete(spr_var);
         fmod_snd_free_scr(mus_snd_var);
-        fmod_snd_free_scr(laugh_snd_var);
+        fmod_snd_free_scr(hurt_snd_var[1]);
     }
-");
-// Hurt Event
-object_event_add
-(argument0,ev_other,ev_user4,"
-    snd_var = fmod_snd_3d_play_scr(laugh_snd_var);
-    event_inherited();
 ");

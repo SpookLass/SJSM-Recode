@@ -10,6 +10,10 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,0,"
     alarm_len_var = 1;
+    window_x_var = window_get_x();
+    window_y_var = window_get_y();
+    window_w_var = window_get_width();
+    window_h_var = window_get_height();
     event_perform(ev_other,ev_room_start);
 ");
 // Step event
@@ -306,6 +310,10 @@ object_event_add
     event_inherited();
     spawn_reset_scr();
     mark_reset_scr();
+    window_x_var = window_get_x();
+    window_y_var = window_get_y();
+    window_w_var = window_get_width();
+    window_h_var = window_get_height();
 ");
 // Room Start
 object_event_add
@@ -322,6 +330,12 @@ object_event_add
     update_fps_var = true;
     // Create Collisions
     rm_to_coll_scr();
+    // Resolution
+    if window_x_var != window_get_x() || window_y_var != window_get_y()
+    || window_w_var != window_get_width() || window_h_var != window_get_height()
+    { window_set_rectangle(window_x_var,window_y_var,window_w_var,window_h_var); }
+    // Window Color
+    if !instance_exists(fog_par_obj) { window_set_color(make_color_rgb(30,0,50)); }
 ");
 // Update FPS
 object_event_add

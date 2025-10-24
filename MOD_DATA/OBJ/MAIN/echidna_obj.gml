@@ -19,6 +19,18 @@ sight_type_var
     0: Default
     1: Only center
     2: No Blocking
+anim_type_var
+    0: Normal
+    1: End on last
+    2: End on first
+    3: Random
+    4: Custom
+hurt_snd_var
+    0: None
+    1: Axe Hit
+    2: Claw
+    3: Axe
+    4: Custom
 
 Main
 
@@ -47,6 +59,11 @@ spd_mult_var: Multiplier for the monster's speed, mostly for monsters that have 
 acc_var: How fast the monster accelerates in pixels per frame squared (60fps)
 frick_var: How fast the monster decelerates in pixels per frame squared
 enter_var: Whether a physical monster is entering the room
+
+Hurt
+
+hurt_dur_var: How much duration to deduct per hit
+violence_var: How much violence to add per hit
 
 Booleans
 
@@ -596,6 +613,13 @@ object_event_add
             case 1: { fmod_snd_play_scr(choose(axe_hit_01_snd,axe_hit_02_snd)); break; } // Clank!
             case 2: { fmod_snd_play_scr(claw_snd); break; } // Scratch!
             case 3: { fmod_snd_play_scr(choose(axe_01_snd,axe_02_snd,axe_03_snd)); break; } // Ding!
+            case 4:
+            {
+                if fmod_is_snd_3d_scr(hurt_snd_var[1]) { snd_var = fmod_snd_3d_play_scr(hurt_snd_var[1]); }
+                else { snd_var = fmod_snd_play_scr(hurt_snd_var[1]); }
+                sub_var = hurt_snd_var[2];
+                break;
+            }
         }
     }
     // You can set this to higher values to have custom stun behavior

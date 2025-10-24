@@ -240,7 +240,6 @@ object_event_add
         set_alarm_scr(10,-1);
     }
 ");
-
 // Teleport alarm
 object_event_add
 (argument0,ev_alarm,8,"

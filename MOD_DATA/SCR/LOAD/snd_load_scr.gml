@@ -1,7 +1,7 @@
 /*
 Argument 0: Print
 */
-fmod_load_scr(); // I'll rename these eventually
+fmod_load_scr();
 fmod_ini_scr(100,false); // 100 is max sounds, second argument is web sounds
 fmod_set_all_vol_scr(global.vol_var/100);
 fmod_set_group_vol_scr(snd_group_sfx_const,global.sfx_vol_var/100);

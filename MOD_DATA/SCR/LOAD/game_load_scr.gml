@@ -75,6 +75,7 @@ ds_list_clear(global.mon_spawn_list);
 global.mon_curr_list = ds_list_create();
 ds_list_clear(global.mon_curr_list);
 // Set variables
+window_set_color(make_color_rgb(30,0,50));
 texture_set_repeat(true);
 action_set_cursor(-1,false);
 draw_set_color(c_white);

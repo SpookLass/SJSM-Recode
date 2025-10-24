@@ -111,7 +111,7 @@ object_event_add
     state_check_var = false;
     state_delay_var = 0;
     state_dur_var = 0;
-    state_miniboss_var = true;
+    state_miniboss_var = false;
     // Closed
     state_spd_var[0] = 1/3;
     state_spr_spd_var[0] = 1/12;
@@ -175,6 +175,7 @@ object_event_add
             state_dur_var = 8;
             state_eff_min_var = 6;
             state_eff_max_var = 6;
+            state_miniboss_var = true;
             acc_var = 0.16;
             frick_var = acc_var;
             do_hurt_var = 1;
@@ -447,7 +448,7 @@ object_event_add
 // Hurt
 object_event_add
 (argument0,ev_other,ev_user4,"
-    if state_var < 2
+    if state_var < 2 && (!state_miniboss_var || instance_number(mon_par_obj) <= 1)
     {
         event_inherited();
         state_var = 2;

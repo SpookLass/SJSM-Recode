@@ -506,7 +506,6 @@ object_event_add
 // Room End
 object_event_add
 (argument0,ev_other,ev_room_end,"
-    global.make_sure_this_is_gone_please = bg_var;
     background_delete(bg_var);
     background_delete(cloud_bg_var);
     background_delete(light_01_bg_var);
@@ -695,6 +694,8 @@ object_event_add
                     case 4:
                     {
                         state_var = 7;
+                        global.confirm_input_press_var = 0;
+                        global.confirm_input_var = 0;
                         instance_create(0,0,set_menu_obj);
                         event_user(0);
                         break;

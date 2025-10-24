@@ -50,6 +50,7 @@ object_event_add
     snd_alarm_min_var = 80;
     snd_alarm_max_var = 240;
     snd_dist_var = 600;
+    hurt_snd_var = 4;
     // Theme
     mus_prio_var = mon_mus_prio_const;
     // Assets
@@ -63,6 +64,7 @@ object_event_add
             for (local.i=0; local.i<snd_len_var; local.i+=1;)
             { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
             other.wake_snd_var[1] = wake_snd_var[1];
+            other.hurt_snd_var[1] = hurt_snd_var[1];
             other.mus_snd_var = mus_snd_var;
             local.loaded = true;
             break;
@@ -78,6 +80,9 @@ object_event_add
         snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\eel_03_snd.wav',true);
         snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\eel_04_snd.wav',true);
         wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\eel_wake_snd.wav');
+        hurt_snd_var[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\eel_hurt_snd.wav',true);
+        fmod_snd_set_minmax_dist_scr(hurt_snd_var[1],0,snd_dist_var);
+        fmod_snd_set_group_scr(hurt_snd_var[1],snd_group_mon_const);
         mus_snd_var = fmod_snd_add_scr(main_directory_const+'\SND\MON\eel_mus_snd.mp3');
     }
     // Body
@@ -159,6 +164,23 @@ object_event_add
         }
     }
 ");
+// Destroy Event
+object_event_add
+(argument0,ev_destroy,0,"
+    event_inherited();
+    if instance_number(object_index) <= 1
+    {
+        sprite_delete(spr_var);
+        sprite_delete(bod_spr_var);
+        fmod_snd_free_scr(hurt_snd_var[1]);
+        fmod_snd_free_scr(mus_snd_var);
+    }
+    with eel_bod_obj
+    {
+        if par_var == other.id
+        { instance_destroy(); }
+    }
+");
 // Room Start Event
 object_event_add
 (argument0,ev_other,ev_room_start,"
@@ -184,19 +206,10 @@ object_event_add
         { on_var = true; }
     }
 ");
-// Destroy Event
+// Hurt
 object_event_add
-(argument0,ev_destroy,0,"
+(argument0,ev_other,ev_user4,"
+    if hurt_snd_var
+    { fmod_snd_play_scr(choose(axe_hit_01_snd,axe_hit_02_snd)); }
     event_inherited();
-    if instance_number(object_index) <= 1
-    {
-        sprite_delete(spr_var);
-        sprite_delete(bod_spr_var);
-        fmod_snd_free_scr(mus_snd_var);
-    }
-    with eel_bod_obj
-    {
-        if par_var == other.id
-        { instance_destroy(); }
-    }
 ");
