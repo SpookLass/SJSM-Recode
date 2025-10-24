@@ -217,7 +217,7 @@ object_event_add
         mdl_var = mdl_01_var;
         if mus_prio_var <= amb_mus_prio_const && alarm_arr[11,0] <= 0
         {
-            if fmod_inst_is_play_scr(snd_var) { set_alarm_scr(11,fmod_inst_get_len_var(snd_var)*(1-fmod_inst_get_pos_var(snd_var))*milli_frame_rate_const); }
+            if fmod_inst_is_play_scr(snd_var) { set_alarm_scr(11,fmod_inst_get_len_scr(snd_var)*(1-fmod_inst_get_pos_scr(snd_var))*milli_frame_rate_const/global.game_spd_var); }
             else { event_perform(ev_alarm,11); }
         }
         x = global.spawn_arr[0,0];
@@ -342,7 +342,7 @@ object_event_add
             snd_var = fmod_snd_play_scr(wake_snd_var[1]);
             do_anim_var = false;
             anim_var = false;
-            set_alarm_scr(11,fmod_inst_get_len_var(snd_var)*milli_frame_rate_const);
+            set_alarm_scr(11,fmod_inst_get_len_scr(snd_var)*milli_frame_rate_const/global.game_spd_var);
             event_perform(ev_other,ev_room_start);
         }
     }

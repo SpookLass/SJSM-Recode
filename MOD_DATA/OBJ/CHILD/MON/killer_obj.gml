@@ -8,25 +8,25 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create Event
 object_event_add
-(argument0,ev_create,1,"
+(argument0,ev_create,1,'
     ini_open(global.lang_var);
     switch global.name_var
     {
         case name_og_const:
         {
-            name_var = ini_read_string('NAME','killer_og','NAME_killer_og');
+            name_var = ini_read_string("NAME","killer_og","NAME_killer_og");
             break;
         }
         case name_hd_const:
         case name_fanon_const:
         {
-            name_var = ini_read_string('NAME','killer_hd','NAME_killer_hd');
+            name_var = ini_read_string("NAME","killer_hd","NAME_killer_hd");
             break;
         }
         case name_num_og_const:
         case name_num_hd_const:
         {
-            name_var = ini_read_string('NAME','killer_num','NAME_killer_num');
+            name_var = ini_read_string("NAME","killer_num","NAME_killer_num");
             break;
         }
     }
@@ -41,12 +41,16 @@ object_event_add
     // Sounds
     wake_snd_var[0] = true;
     do_snd_var = true;
-    snd_len_var = 5;
+    snd_len_var = 3;
     snd_num_var = 1;
     snd_den_var = 2;
     snd_alarm_min_var = 240;
     snd_alarm_max_var = 240;
     snd_dist_var = 600;
+    // Breath sounds
+    breath_snd_len_var = 2;
+    breath_snd_num_var = 2;
+    breath_snd_den_var = 3;
     // Drag Sounds
     drag_snd_len_var = 3;
     drag_snd_num_var = 1;
@@ -84,6 +88,8 @@ object_event_add
             }
             for (local.i=0; local.i<snd_len_var; local.i+=1;)
             { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
+            for (local.i=0; local.i<breath_snd_len_var; local.i+=1;)
+            { other.breath_snd_arr[local.i,0] = breath_snd_arr[local.i,0]; }
             for (local.i=0; local.i<drag_snd_len_var; local.i+=1;)
             { other.drag_snd_arr[local.i,0] = drag_snd_arr[local.i,0]; }
             other.wake_snd_var[1] = wake_snd_var[1];
@@ -98,80 +104,85 @@ object_event_add
     // If no existing assets were found, load them
     if !local.loaded
     {
-        spr_arr_var[0,0] = sprite_add(vanilla_directory_const+'\TEX\sprites\MS10_05_spr.png',15,false,false,0,0);
+        spr_arr_var[0,0] = sprite_add(vanilla_directory_const+"\TEX\sprites\MS10_05_spr.png",15,false,false,0,0);
         spr_arr_var[0,1] = 7.5;
         spr_arr_var[0,2] = 6.3;
-        spr_arr_var[8,0] = sprite_add(main_directory_const+'\SPR\MON\killer_sprint_01_spr.png',15,false,false,0,0);
+        spr_arr_var[8,0] = sprite_add(main_directory_const+"\SPR\MON\killer_sprint_01_spr.png",15,false,false,0,0);
         spr_arr_var[8,1] = 11;
         spr_arr_var[8,2] = 11;
         if do_turn_var
         {
-            spr_arr_var[1,0] = sprite_add(vanilla_directory_const+'\TEX\sprites\MS10_06_spr.png',15,false,false,0,0);
+            spr_arr_var[1,0] = sprite_add(vanilla_directory_const+"\TEX\sprites\MS10_06_spr.png",15,false,false,0,0);
             spr_arr_var[1,1] = 9;
             spr_arr_var[1,2] = 7.2;
-            spr_arr_var[2,0] = sprite_add(vanilla_directory_const+'\TEX\sprites\MS10_07_spr.png',15,false,false,0,0);
+            spr_arr_var[2,0] = sprite_add(vanilla_directory_const+"\TEX\sprites\MS10_07_spr.png",15,false,false,0,0);
             spr_arr_var[2,1] = 10.7;
             spr_arr_var[2,2] = 7.8;
-            spr_arr_var[3,0] = sprite_add(vanilla_directory_const+'\TEX\sprites\MS10_08_spr.png',15,false,false,0,0);
+            spr_arr_var[3,0] = sprite_add(vanilla_directory_const+"\TEX\sprites\MS10_08_spr.png",15,false,false,0,0);
             spr_arr_var[3,1] = 9;
             spr_arr_var[3,2] = 6;
-            spr_arr_var[4,0] = sprite_add(vanilla_directory_const+'\TEX\sprites\MS10_01_spr.png',15,false,false,0,0);
+            spr_arr_var[4,0] = sprite_add(vanilla_directory_const+"\TEX\sprites\MS10_01_spr.png",15,false,false,0,0);
             spr_arr_var[4,1] = 6.3;
             spr_arr_var[4,2] = 9;
-            spr_arr_var[5,0] = sprite_add(vanilla_directory_const+'\TEX\sprites\MS10_02_spr.png',15,false,false,0,0);
+            spr_arr_var[5,0] = sprite_add(vanilla_directory_const+"\TEX\sprites\MS10_02_spr.png",15,false,false,0,0);
             spr_arr_var[5,1] = 6.6;
             spr_arr_var[5,2] = 9.6;
-            spr_arr_var[6,0] = sprite_add(vanilla_directory_const+'\TEX\sprites\MS10_03_spr.png',15,false,false,0,0);
+            spr_arr_var[6,0] = sprite_add(vanilla_directory_const+"\TEX\sprites\MS10_03_spr.png",15,false,false,0,0);
             spr_arr_var[6,1] = 7.5;
             spr_arr_var[6,2] = 10.4;
-            spr_arr_var[7,0] = sprite_add(vanilla_directory_const+'\TEX\sprites\MS10_04_spr.png',15,false,false,0,0);
+            spr_arr_var[7,0] = sprite_add(vanilla_directory_const+"\TEX\sprites\MS10_04_spr.png",15,false,false,0,0);
             spr_arr_var[7,1] = 7.2;
             spr_arr_var[7,2] = 7.2;
-            spr_arr_var[9,0] = sprite_add(main_directory_const+'\SPR\MON\killer_sprint_02_spr.png',15,false,false,0,0);
+            spr_arr_var[9,0] = sprite_add(main_directory_const+"\SPR\MON\killer_sprint_02_spr.png",15,false,false,0,0);
             spr_arr_var[9,1] = 11;
             spr_arr_var[9,2] = 11;
-            spr_arr_var[10,0] = sprite_add(main_directory_const+'\SPR\MON\killer_sprint_03_spr.png',15,false,false,0,0);
+            spr_arr_var[10,0] = sprite_add(main_directory_const+"\SPR\MON\killer_sprint_03_spr.png",15,false,false,0,0);
             spr_arr_var[10,1] = 11;
             spr_arr_var[10,2] = 11;
-            spr_arr_var[11,0] = sprite_add(main_directory_const+'\SPR\MON\killer_sprint_04_spr.png',15,false,false,0,0);
+            spr_arr_var[11,0] = sprite_add(main_directory_const+"\SPR\MON\killer_sprint_04_spr.png",15,false,false,0,0);
             spr_arr_var[11,1] = 11;
             spr_arr_var[11,2] = 11;
-            spr_arr_var[12,0] = sprite_add(main_directory_const+'\SPR\MON\killer_sprint_05_spr.png',15,false,false,0,0);
+            spr_arr_var[12,0] = sprite_add(main_directory_const+"\SPR\MON\killer_sprint_05_spr.png",15,false,false,0,0);
             spr_arr_var[12,1] = 11;
             spr_arr_var[12,2] = 11;
-            spr_arr_var[13,0] = sprite_add(main_directory_const+'\SPR\MON\killer_sprint_06_spr.png',15,false,false,0,0);
+            spr_arr_var[13,0] = sprite_add(main_directory_const+"\SPR\MON\killer_sprint_06_spr.png",15,false,false,0,0);
             spr_arr_var[13,1] = 11;
             spr_arr_var[13,2] = 11;
-            spr_arr_var[14,0] = sprite_add(main_directory_const+'\SPR\MON\killer_sprint_07_spr.png',15,false,false,0,0);
+            spr_arr_var[14,0] = sprite_add(main_directory_const+"\SPR\MON\killer_sprint_07_spr.png",15,false,false,0,0);
             spr_arr_var[14,1] = 11;
             spr_arr_var[14,2] = 11;
-            spr_arr_var[15,0] = sprite_add(main_directory_const+'\SPR\MON\killer_sprint_08_spr.png',15,false,false,0,0);
+            spr_arr_var[15,0] = sprite_add(main_directory_const+"\SPR\MON\killer_sprint_08_spr.png",15,false,false,0,0);
             spr_arr_var[15,1] = 11;
             spr_arr_var[15,2] = 11;
         }
-        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\killer_01_snd.wav',true);
-        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\killer_02_snd.wav',true);
-        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\killer_03_snd.wav',true);
-        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\killer_04_snd.wav',true);
-        snd_arr[4,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\killer_05_snd.wav',true);
-        drag_snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\killer_drag_01_snd.wav',true);
-        drag_snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\killer_drag_02_snd.wav',true);
-        drag_snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\killer_drag_03_snd.wav',true);
-        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\stab_11_snd.wav');
-        charge_snd_var[0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\stab_11_snd.wav',true);
-        loop_snd_var[0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\killer_loop_snd.wav',true);
+        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_01_snd.wav",true);
+        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_02_snd.wav",true);
+        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_03_snd.wav",true);
+        breath_snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_breath_01_snd.wav",true);
+        breath_snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_breath_02_snd.wav",true);
+        drag_snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_drag_01_snd.wav",true);
+        drag_snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_drag_02_snd.wav",true);
+        drag_snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_drag_03_snd.wav",true);
+        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\stab_11_snd.wav");
+        charge_snd_var[0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\stab_11_snd.wav",true);
+        loop_snd_var[0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_loop_snd.wav",true);
         fmod_snd_set_minmax_dist_scr(charge_snd_var[0],0,snd_dist_var);
         fmod_snd_set_group_scr(charge_snd_var[0],snd_group_mon_const);
         fmod_snd_set_minmax_dist_scr(loop_snd_var[0],0,snd_dist_var);
         fmod_snd_set_group_scr(loop_snd_var[0],snd_group_mon_const);
+        for (local.i=0; local.i<breath_snd_len_var; local.i+=1;)
+        {
+            fmod_snd_set_minmax_dist_scr(breath_snd_arr[local.i,0],0,snd_dist_var);
+            fmod_snd_set_group_scr(breath_snd_arr[local.i,0],snd_group_mon_const);
+        }
         for (local.i=0; local.i<drag_snd_len_var; local.i+=1;)
         {
             fmod_snd_set_minmax_dist_scr(drag_snd_arr[local.i,0],0,drag_snd_dist_var);
             fmod_snd_set_group_scr(drag_snd_arr[local.i,0],snd_group_mon_const);
         }
-        hide_mus_snd_var = fmod_snd_add_scr(main_directory_const+'\SND\MON\killer_hide_mus_snd.mp3');
+        hide_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_hide_mus_snd.mp3");
         fmod_snd_set_group_scr(hide_mus_snd_var,snd_group_mus_const);
-        main_mus_snd_var = fmod_snd_add_scr(main_directory_const+'\SND\MON\killer_mus_snd.mp3');
+        main_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_mus_snd.mp3");
         fmod_snd_set_group_scr(main_mus_snd_var,snd_group_mus_const);
     }
     spr_var = spr_arr_var[0,0];
@@ -193,7 +204,7 @@ object_event_add
     acc_base_var = 4/225; // 0.01r7
     // Sprint animation
     spr_spd_base_var = 1/6;
-    sprint_spr_spd_var = 5/6; // Don't look at me, stealing this from Gone Rouge
+    sprint_spr_spd_var = 5/6; // Don"t look at me, stealing this from Gone Rouge
     h_base_var = 22;
     sprint_h_var = 25;
     z_off_base_var = 0;
@@ -208,6 +219,9 @@ object_event_add
             do_sprint_var = true;
             do_stam_var = true;
             dmg_var = 30;
+            // Parry
+            do_hurt_var = true;
+            hurt_snd_var = 3;
             break;
         }
         case 2: // HD
@@ -224,6 +238,18 @@ object_event_add
             autobrake_var = true;
             autobrake_spd_var = 0;
             autobrake_dir_var = 60;
+            // Sound
+            snd_alarm_min_var = 180;
+            snd_alarm_max_var = 480;
+            snd_num_var = 1;
+            snd_den_var = 3;
+            breath_snd_num_var = 3;
+            breath_snd_den_var = 4;
+            drag_snd_num_var = 1;
+            drag_snd_den_var = 3;
+            // Parry
+            do_hurt_var = true;
+            hurt_snd_var = 3;
             break;
         }
         case 3: // Old HD
@@ -244,6 +270,16 @@ object_event_add
             autobrake_var = true;
             autobrake_spd_var = 0;
             autobrake_dir_var = 60;
+            // Sound
+            snd_num_var = 1;
+            snd_den_var = 3;
+            breath_snd_num_var = 3;
+            breath_snd_den_var = 4;
+            drag_snd_num_var = 1;
+            drag_snd_den_var = 3;
+            // Parry
+            do_hurt_var = true;
+            hurt_snd_var = 3;
             break;
         }
         case 4: // Remodeled
@@ -306,10 +342,10 @@ object_event_add
     else { mus_snd_var = main_mus_snd_var; }
     // Alarms
     alarm_len_var = 9;
-");
+');
 // Destroy Event
 object_event_add
-(argument0,ev_destroy,0,"
+(argument0,ev_destroy,0,'
     event_inherited();
     if instance_number(object_index) <= 1
     {
@@ -317,6 +353,8 @@ object_event_add
         fmod_snd_free_scr(hide_mus_snd_var);
         for (local.i=0; local.i<drag_snd_len_var; local.i+=1;)
         { fmod_snd_free_scr(drag_snd_arr[local.i,0]); }
+        for (local.i=0; local.i<breath_snd_len_var; local.i+=1;)
+        { fmod_snd_free_scr(breath_snd_arr[local.i,0]); }
         fmod_snd_free_scr(charge_snd_var[0]);
         fmod_snd_free_scr(loop_snd_var[0]);
         if do_turn_var
@@ -330,10 +368,10 @@ object_event_add
             sprite_delete(spr_arr_var[8,0]);
         }
     }
-");
+');
 // Room Start Event
 object_event_add
-(argument0,ev_other,ev_room_start,"
+(argument0,ev_other,ev_room_start,'
     if scary_var
     {
         if player_obj.rm_clear_time_var == -1
@@ -380,10 +418,10 @@ object_event_add
             frick_var = sprint_acc_var;
         }
     }      
-");
+');
 // Movement
 object_event_add
-(argument0,ev_other,ev_user0,"
+(argument0,ev_other,ev_user0,'
     if do_sprint_var
     {
         if sprint_var
@@ -427,10 +465,10 @@ object_event_add
         }
     }
     event_inherited();
-");
+');
 // Attack Success
 object_event_add
-(argument0,ev_other,ev_user3,"
+(argument0,ev_other,ev_user3,'
     event_inherited();
     if scary_var
     {
@@ -448,10 +486,10 @@ object_event_add
         set_alarm_scr(2,dmg_stun_var);
         set_alarm_scr(4,dmg_stun_var);
     }
-");
+');
 // Delay Alarm
 object_event_add
-(argument0,ev_alarm,0,"
+(argument0,ev_alarm,0,'
     event_inherited();
     if do_snd_var
     { set_alarm_scr(8,drag_snd_alarm_var); }
@@ -462,10 +500,32 @@ object_event_add
         sub_var = loop_snd_var[1];
         snd_loop_var = true;
     }
-");
+');
+// Sound alarm
+object_event_add
+(argument0,ev_alarm,6,'
+    if do_snd_var && !snd_loop_var && frac_chance_scr(snd_num_var,snd_den_var)
+    {
+        if frac_chance_scr(breath_snd_num_var,breath_snd_den_var) || sprint_var
+        {
+            local.index = irandom(breath_snd_len_var-1);
+            local.snd = breath_snd_arr[local.index,0];
+            sub_var = breath_snd_arr[local.index,1];
+        }
+        else
+        {
+            local.index = irandom(snd_len_var-1);
+            local.snd = snd_arr[local.index,0];
+            sub_var = snd_arr[local.index,1];
+        }
+        snd_var = fmod_snd_3d_play_scr(local.snd);
+        
+    }
+    set_alarm_scr(6,irandom_range(snd_alarm_min_var,snd_alarm_max_var));
+');
 // Drag Sound Alarm
 object_event_add
-(argument0,ev_alarm,8,"
+(argument0,ev_alarm,8,'
     if do_snd_var && frac_chance_scr(drag_snd_num_var,drag_snd_den_var)
     {
         local.snd = irandom(drag_snd_len_var-1);
@@ -473,16 +533,27 @@ object_event_add
         sub_var = drag_snd_arr[local.snd,1];
     }
     set_alarm_scr(8,drag_snd_alarm_var);
-");
+');
+// Hurt Event
+object_event_add
+(argument0,ev_other,ev_user4,'
+    event_inherited();
+    with instance_create(0,0,fade_eff_obj)
+    {
+        image_blend = c_white;
+        cam_id_var = hurt_target_var.cam_id_var;
+        set_alarm_scr(0,18);
+    }
+');
 // Sound update
 object_event_add
-(argument0,ev_other,ev_user9,"
+(argument0,ev_other,ev_user9,'
     event_inherited();
     fmod_inst_set_pos_scr(drag_snd_var,x,y,z);
-");
+');
 // Draw
 object_event_add
-(argument0,ev_draw,0,"
+(argument0,ev_draw,0,'
     if on_var || visible_var
     {
         draw_set_color(image_blend); draw_set_alpha(image_alpha);
@@ -521,4 +592,4 @@ object_event_add
             // mp_grid_draw(grid_var);
         }
     }
-");
+');

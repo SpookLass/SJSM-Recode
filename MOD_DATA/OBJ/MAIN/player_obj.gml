@@ -8,7 +8,7 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create Event
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
     // Collision
     do_coll_var = true;
     coll_var[0] = global.player_coll[0];
@@ -127,37 +127,37 @@ object_event_add
     taker_alarm_var = 7200;
     switch global.taker_type_var
     {
-        // Gotta take the wiki's word, can't find it
+        // Gotta take the wikis word, cant find it
         case 2: { taker_alarm_var = 4200; break; } // HD
         case 3: { taker_alarm_var = 2760; break; } // DH
     }
     set_alarm_scr(3,taker_alarm_var);
     // Stuff
     event_perform(ev_other,ev_room_start);
-");
+');
 // Destroy Event
 object_event_add
-(argument0,ev_destroy,0,"
+(argument0,ev_destroy,0,'
     path_delete(path_var);
-");
+');
 // Alarm 0 Event
 object_event_add
-(argument0,ev_alarm,0,"
+(argument0,ev_alarm,0,'
     hurt_var = false;
-");
+');
 // Alarm 1 Event
 object_event_add
-(argument0,ev_alarm,1,"
+(argument0,ev_alarm,1,'
     heal_var = true;
-");
+');
 // Alarm 2 Event
 object_event_add
-(argument0,ev_alarm,2,"
+(argument0,ev_alarm,2,'
     in_door_var = false;
-");
+');
 // Alarm 3 Event
 object_event_add
-(argument0,ev_alarm,3,"
+(argument0,ev_alarm,3,'
     if on_var && !dead_var && !active_var && !taker_spawn_var
     {
         taker_spawn_var = true;
@@ -167,17 +167,17 @@ object_event_add
             cam_id_var = other.cam_id_var;
         }
     }
-");
+');
 // Room End Event
 object_event_add
-(argument0,ev_other,ev_room_end,"
+(argument0,ev_other,ev_room_end,'
     event_inherited();
     hurt_var = false;
     heal_var = true;
-");
+');
 // Room Start Event
 object_event_add
-(argument0,ev_other,ev_room_start,"
+(argument0,ev_other,ev_room_start,'
     // Position
     x = global.spawn_arr[0,0];
     y = global.spawn_arr[0,1];
@@ -240,10 +240,10 @@ object_event_add
         stay_var = false;
         cam_id_var = other.cam_id_var;
     }
-");
+');
 // Step
 object_event_add
-(argument0,ev_step,ev_step_normal,"
+(argument0,ev_step,ev_step_normal,'
     if on_var
     {
         event_inherited();
@@ -454,10 +454,10 @@ object_event_add
             acc_odd_scr(global.delta_time_var,local.acc,local.frick,local.input_dir_x,local.input_dir_y,local.forspd,local.sidespd,eye_yaw_var);
         }
     }
-");
+');
 // End Step
 object_event_add
-(argument0,ev_step,ev_step_end,"
+(argument0,ev_step,ev_step_end,'
     if on_var
     {
         event_inherited();
@@ -488,7 +488,7 @@ object_event_add
                 if local.bobprev > bob_time_var
                 {
                     // Play footsteps
-                    // The new sound system isn't set up yet
+                    fmod_snd_play_scr(choose(ft_01_snd,ft_02_snd,ft_03_snd,ft_04_snd,ft_05_snd,ft_06_snd))
                 }
             }
         }
@@ -563,15 +563,15 @@ object_event_add
             global.cam_ux_var[cam_id_var],global.cam_uy_var[cam_id_var],global.cam_uz_var[cam_id_var],
         )
     }
-");
+');
 // Draw Event
 object_event_add
-(argument0,ev_draw,0,"
+(argument0,ev_draw,0,'
     cam_draw_scr(cam_id_var);
-");
+');
 // Hurt
 object_event_add
-(argument0,ev_other,ev_user0,"
+(argument0,ev_other,ev_user0,'
     // Play hurt noise, flash red, shake screen, etc
     with instance_create(0,0,flash_eff_obj)
     {
@@ -607,4 +607,4 @@ object_event_add
         eye_yaw_var = mod_scr(eye_yaw_var+random_range(-20,20),360);
         eye_pitch_var = median(-89.9,89.9,eye_pitch_var+random_range(-20,20));
     }
-");
+');

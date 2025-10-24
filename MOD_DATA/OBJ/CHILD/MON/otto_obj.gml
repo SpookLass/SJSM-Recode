@@ -141,6 +141,7 @@ object_event_add
 // Attack Success
 object_event_add
 (argument0,ev_other,ev_user3,"
+    event_inherited();
     if atk_stun_var > 0
     {
         set_motion_scr(0,true,yaw_var,false);

@@ -37,6 +37,16 @@ object_event_add
             local.mus = mus_snd_var;
         }
     }
+    with mus_par_obj
+    {
+        if prio_var > other.curr_prio_var
+        || (prio_var > amb_mus_prio_const && prio_var == other.curr_prio_var && id > local.curr_id)
+        {
+            local.curr_id = id;
+            other.curr_prio_var = prio_var;
+            local.mus = snd_var;
+        }
+    }
     if curr_prio_var > amb_mus_prio_const
     {
         override_var = true;
