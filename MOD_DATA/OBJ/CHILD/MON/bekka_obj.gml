@@ -14,7 +14,7 @@ state_var
 */
 // Create Event
 object_event_add
-(argument0,ev_create,1,"
+(argument0,ev_create,1,'
     ini_open(global.lang_var);
     switch global.name_var
     {
@@ -23,17 +23,17 @@ object_event_add
         case name_num_og_const:
         case name_fanon_const:
         {
-            name_var = ini_read_string('NAME','bekka','NAME_bekka');
+            name_var = ini_read_string("NAME","bekka","NAME_bekka");
             break;
         }
         case name_num_hd_const:
         {
-            name_var = ini_read_string('NAME','bekka_num','NAME_bekka_num');
+            name_var = ini_read_string("NAME","bekka_num","NAME_bekka_num");
             break;
         }
     }
     ini_close();
-    name_var = 'Bekka';
+    name_var = "Bekka";
     type_var = 0;
     spd_base_var = 0.75;
     spr_spd_var = 1;
@@ -61,9 +61,9 @@ object_event_add
     // If no existing assets were found, load them
     if !local.loaded
     {
-        bg_var = background_add(vanilla_directory_const+'\TEX\sprites\MS23_01_spr.png',false,false);
-        bg_overlay_var = background_add(vanilla_directory_const+'\TEX\sprites\fog_spr.png',false,false);
-        mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+'\SND\AMB\BEKKA_AMB.mp3');
+        bg_var = background_add(vanilla_directory_const+"\TEX\sprites\MS23_01_spr.png",false,false);
+        bg_overlay_var = background_add(vanilla_directory_const+"\TEX\sprites\fog_spr.png",false,false);
+        mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\BEKKA_AMB.mp3");
     }
     tex_var = background_get_texture(bg_var);
     // Sounds
@@ -97,14 +97,14 @@ object_event_add
     trig_dist_var = 64;
     trig_w_var = 128;
     trig_h_var = 32/6; // 5.r3
-    // Maya's idea
+    // Mayas idea
     derand_var = false;
-    // Yoshi's idea
+    // Yoshis idea
     fade_var = false;
     fade_dmg_var = 10;
     fade_dmg_alarm_var = 30;
     fade_alarm_var = 300;
-    // Bird's idea
+    // Birds idea
     scare_var = false;
     scare_dist_var = 48;
     scare_alarm_var = 480;
@@ -117,7 +117,7 @@ object_event_add
     else { local.type = global.bekka_type_var; }
     switch local.type
     {
-        case 5: // Maya's Idea
+        case 5: // Mayas Idea
         {
             exit_dist_var = 0;
             exit_spd_var = 0;
@@ -171,7 +171,7 @@ object_event_add
     // Bools
     do_snd_var = -1;
     if bright_var { color_var = -1; }
-");
+');
 // Destroy Event
 object_event_add
 (argument0,ev_destroy,0,"

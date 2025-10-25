@@ -349,4 +349,5 @@ object_event_add
     p3dc_free_scr();
     fmod_free_scr();
     fmod_unload_scr();
+    sf_free_scr();
 ")

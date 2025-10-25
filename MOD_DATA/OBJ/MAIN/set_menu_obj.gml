@@ -358,10 +358,10 @@ object_event_add
     button_arr[29,2] = "Volume for various other sound effects." // Description
     button_arr[29,3] = 2; // Type: Clamped Number
     button_arr[29,4] = false; // Wrap value
-    button_arr[29,5] = mus_vol_const; // Default value
+    button_arr[29,5] = sfx_vol_const; // Default value
     button_arr[29,6] = 0; // Minimum Value
     button_arr[29,7] = 100; // Maximum Value
-    button_arr[29,8] = "mus_vol"; // Global variable to modify
+    button_arr[29,8] = "sfx_vol"; // Global variable to modify
 
     button_arr[30,0] = global.lang_var;
     button_arr[30,1] = ini_read_string("SETTINGS","lang","SETTINGS_lang"); // Label
@@ -600,9 +600,17 @@ object_event_add
     {
         if button_arr[local.i,3] >= 0
         {
-            execute_string("global."+button_arr[local.i,8]+"_var = button_arr[local.i,0];");
-            if button_arr[local.i,3] == 5 { ini_write_string("MAIN",button_arr[local.i,8],button_arr[local.i,0]); }
-            else { ini_write_real("MAIN",button_arr[local.i,8],button_arr[local.i,0]); }
+            if button_arr[local.i,3] == 5 
+            {
+                str_var = button_arr[local.i,0];
+                execute_string("global."+button_arr[local.i,8]+"_var = str_var");
+                ini_write_string("MAIN",button_arr[local.i,8],button_arr[local.i,0]);
+            }
+            else
+            {
+                execute_string("global."+button_arr[local.i,8]+"_var = "+string(button_arr[local.i,0]));
+                ini_write_real("MAIN",button_arr[local.i,8],button_arr[local.i,0]);
+            }
         }
     }
     ini_close();
