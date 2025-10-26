@@ -47,7 +47,10 @@ object_event_add
     if type_var == 5 { d3d_transform_add_rotation_z(point_direction(x,y,global.cam_x_var[view_current],global.cam_y_var[view_current])); }
     else { d3d_transform_add_rotation_z(direction); }
     d3d_transform_add_translation(x,y,z);
-    draw_set_color(image_blend); draw_set_alpha(image_alpha);
+    draw_set_alpha(image_alpha);
+    if color_var == 2
+    { draw_set_color(color_mult_scr(image_blend,tone_var)); }
+    else { draw_set_color(image_blend); }
     switch type_var
     {
         case 0: { d3d_model_draw(mdl_var,0,0,0,tex_var); break; }

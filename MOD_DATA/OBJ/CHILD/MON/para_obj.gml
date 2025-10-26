@@ -28,7 +28,7 @@ warn_dist_var: Distance to warn at
 */
 // Create Event Begin
 object_event_add
-(argument0,ev_create,1,"
+(argument0,ev_create,1,'
     ini_open(global.lang_var);
     switch global.name_var
     {
@@ -36,13 +36,13 @@ object_event_add
         case name_hd_const:
         case name_fanon_const:
         {
-            name_var = ini_read_string('NAME','para','NAME_para');
+            name_var = ini_read_string("NAME","para","NAME_para");
             break;
         }
         case name_num_og_const:
         case name_num_hd_const:
         {
-            name_var = ini_read_string('NAME','para_num','NAME_para_num');
+            name_var = ini_read_string("NAME","para_num","NAME_para_num");
             break;
         }
     }
@@ -62,6 +62,7 @@ object_event_add
     snd_alarm_min_var = 80;
     snd_alarm_max_var = 240;
     snd_dist_var = 600;
+    eff_snd_len_var = 4;
     // Theme
     mus_prio_var = theme_mus_prio_const;
     // Assets
@@ -77,6 +78,8 @@ object_event_add
             other.spr_overlay_var = spr_overlay_var;
             for (local.i=0; local.i<snd_len_var; local.i+=1;)
             { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
+            for (local.i=0; local.i<eff_snd_len_var; local.i+=1;)
+            { other.eff_snd_arr[local.i] = eff_snd_arr[local.i]; }
             other.wake_snd_var[1] = wake_snd_var[1];
             other.main_mus_snd_var = main_mus_snd_var;
             other.leech_mus_snd_var = leech_mus_snd_var;
@@ -87,19 +90,25 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
-        state_spr_var[0] = sprite_add(vanilla_directory_const+'\TEX\sprites\MS8_01_spr.png',6,false,false,0,0);
-        state_spr_var[1] = sprite_add(vanilla_directory_const+'\TEX\sprites\MS8_02_spr.png',6,false,false,0,0);
-        state_spr_var[2] = sprite_add(vanilla_directory_const+'\TEX\sprites\MS8_03_spr.png',7,false,false,0,0);
-        spr_eff_var = sprite_add(main_directory_const+'\SPR\MON\para_eff_spr.png',19,false,false,0,0);
-        spr_overlay_var = sprite_add(main_directory_const+'\SPR\MON\para_overlay_spr.png',3,false,false,0,0);
-        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\para_01_snd.wav',true);
-        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\para_02_snd.wav',true);
-        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\para_03_snd.wav',true);
-        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\para_04_snd.wav',true);
-        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\para_wake_snd.wav');
-        main_mus_snd_var = fmod_snd_add_scr(main_directory_const+'\SND\MON\para_mus_snd.mp3');
+        state_spr_var[0] = sprite_add(vanilla_directory_const+"\TEX\sprites\MS8_01_spr.png",6,false,false,0,0);
+        state_spr_var[1] = sprite_add(vanilla_directory_const+"\TEX\sprites\MS8_02_spr.png",6,false,false,0,0);
+        state_spr_var[2] = sprite_add(vanilla_directory_const+"\TEX\sprites\MS8_03_spr.png",7,false,false,0,0);
+        spr_eff_var = execute_file(main_directory_const+"\SPR\MON\para_eff_spr.gml",main_directory_const+"\SPR\MON\para_eff_spr.png");
+        spr_overlay_var = execute_file(main_directory_const+"\SPR\MON\para_overlay_spr.gml",main_directory_const+"\SPR\MON\para_overlay_spr.png");
+        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\para_01_snd.wav",true);
+        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\para_02_snd.wav",true);
+        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\para_03_snd.wav",true);
+        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\para_04_snd.wav",true);
+        eff_snd_arr[0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\para_eff_01_snd.wav");
+        eff_snd_arr[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\para_eff_02_snd.wav");
+        eff_snd_arr[2] = fmod_snd_add_scr(main_directory_const+"\SND\MON\para_eff_03_snd.wav");
+        eff_snd_arr[3] = fmod_snd_add_scr(main_directory_const+"\SND\MON\dl_eff_03_snd.wav");
+        for (local.i=0; local.i<eff_snd_len_var; local.i+=1;)
+        { fmod_snd_set_group_scr(eff_snd_arr[local.i,0],snd_group_mon_const); }
+        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\para_wake_snd.wav");
+        main_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\para_mus_snd.mp3");
         fmod_snd_set_group_scr(main_mus_snd_var,snd_group_mus_const);
-        leech_mus_snd_var = fmod_snd_add_scr(main_directory_const+'\SND\MON\para_leech_mus_snd.mp3');
+        leech_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\para_leech_mus_snd.mp3");
         fmod_snd_set_group_scr(leech_mus_snd_var,snd_group_mus_const);
     }
     mus_snd_var = main_mus_snd_var;
@@ -239,10 +248,10 @@ object_event_add
     w_var = state_w_var[0];
     h_var = state_h_var[0];
     do_acc_var = state_acc_var[0];
-");
+');
 // Destroy Event
 object_event_add
-(argument0,ev_destroy,0,"
+(argument0,ev_destroy,0,'
     event_inherited();
     if instance_number(object_index) <= 1
     {
@@ -253,15 +262,20 @@ object_event_add
         sprite_delete(state_spr_var[1]);
         sprite_delete(state_spr_var[2]);
         sprite_delete(spr_overlay_var);
+        for (local.i=0; local.i<snd_len_var; local.i+=1;)
+        { fmod_snd_free_scr(snd_arr[local.i,0]); }
+        if wake_snd_var[0] { fmod_snd_free_scr(wake_snd_var[1]); }
+        for (local.i=0; local.i<eff_snd_len_var; local.i+=1;)
+        { fmod_snd_free_scr(eff_snd_arr[local.i]); }
     }
     with spr_flash_eff_obj
     { if par_var == other.id { instance_destroy(); }}
     with para_eff_obj
     { if par_var == other.id { instance_destroy(); }}
-");
+');
 // Room Start Event
 object_event_add
-(argument0,ev_other,ev_room_start,"
+(argument0,ev_other,ev_room_start,'
     // Chance forms
     if state_var < 2 || !state_rm_var
     {
@@ -294,10 +308,10 @@ object_event_add
     warn_var = false;
     // Inherit
     event_inherited();
-");
+');
 // Delay
 object_event_add
-(argument0,ev_alarm,0,"
+(argument0,ev_alarm,0,'
     if !state_check_var && state_var < 2
     {
         set_alarm_scr(8,state_alarm_var[!state_var]);
@@ -305,10 +319,10 @@ object_event_add
     }
     // Inherit
     event_inherited();
-");
+');
 // Step Event
 object_event_add
-(argument0,ev_step,ev_step_normal,"
+(argument0,ev_step,ev_step_normal,'
     if on_var
     {
         if state_check_var && state_var < 2
@@ -324,6 +338,8 @@ object_event_add
                 par_var= other.id;
                 spr_var = other.spr_eff_var;
                 spr_id_var = irandom(sprite_get_number(spr_var)-1);
+                do_snd_var = true;
+                snd_var = fmod_snd_play_scr(other.eff_snd_arr[irandom(other.eff_snd_len_var-1)]);
                 spr_spd_var = 1;
                 rand_rate_var = 15;
                 set_alarm_scr(0,irandom_range(other.eff_min_var,other.eff_max_var));
@@ -333,10 +349,10 @@ object_event_add
         }
     }
     event_inherited();
-");
+');
 // Check State 1
 object_event_add
-(argument0,ev_alarm,8,"
+(argument0,ev_alarm,8,'
     if state_close_var { local.maxstate = 2; }
     else { local.maxstate = 1; }
     if state_var < local.maxstate
@@ -355,6 +371,8 @@ object_event_add
                     spr_var = other.spr_eff_var;
                     spr_id_var = irandom(sprite_get_number(spr_var)-1);
                     spr_spd_var = 1;
+                    do_snd_var = true;
+                    snd_var = fmod_snd_play_scr(other.eff_snd_arr[irandom(other.eff_snd_len_var-1)]);
                     rand_rate_var = 15;
                     set_alarm_scr(0,irandom_range(other.state_eff_min_var,other.state_eff_max_var));
                     // Set camera to player
@@ -366,13 +384,13 @@ object_event_add
         if !state_check_var
         { set_alarm_scr(8,state_alarm_var[local.check]); }
     }
-");
+');
 // Check State 2
 object_event_add
-(argument0,ev_alarm,9,"
+(argument0,ev_alarm,9,'
     if state_var < 2
     {
-        // Technically doesn't check for if they entered in OG, but I'm lazy
+        // Technically doesnt check for if they entered in OG, but Im lazy
         if !enter_var
         {
             local.target_dist = target_dist_var;
@@ -386,6 +404,8 @@ object_event_add
                     spr_var = other.spr_eff_var;
                     spr_id_var = irandom(sprite_get_number(spr_var)-1);
                     spr_spd_var = 1;
+                    do_snd_var = true;
+                    snd_var = fmod_snd_play_scr(other.eff_snd_arr[irandom(other.eff_snd_len_var-1)]);
                     rand_rate_var = 15;
                     set_alarm_scr(0,irandom_range(other.state_eff_min_var,other.state_eff_max_var));
                     // Set camera to player
@@ -409,10 +429,10 @@ object_event_add
         if !state_check_var
         { set_alarm_scr(9,state_alarm_var[2]); }
     }
-");
+');
 // Attack Success
 object_event_add
-(argument0,ev_other,ev_user3,"
+(argument0,ev_other,ev_user3,'
     event_inherited();
     with attack_target_var
     {
@@ -424,6 +444,8 @@ object_event_add
         spr_var = other.spr_eff_var;
         spr_id_var = irandom(sprite_get_number(spr_var)-1);
         spr_spd_var = 1;
+        do_snd_var = true;
+        snd_var = fmod_snd_play_scr(other.eff_snd_arr[irandom(other.eff_snd_len_var-1)]);
         rand_rate_var = 15;
         set_alarm_scr(0,min(other.dmg_alarm_var/2,irandom_range(other.eff_min_var,other.eff_max_var)));
         // Set camera to player
@@ -444,10 +466,10 @@ object_event_add
             set_alarm_scr(4,state_delay_var);
         }
     }
-");
+');
 // Hurt
 object_event_add
-(argument0,ev_other,ev_user4,"
+(argument0,ev_other,ev_user4,'
     if state_var < 2 && (!state_miniboss_var || instance_number(mon_par_obj) <= 1)
     {
         event_inherited();
@@ -458,6 +480,8 @@ object_event_add
             spr_var = other.spr_eff_var;
             spr_id_var = irandom(sprite_get_number(spr_var)-1);
             spr_spd_var = 1;
+            do_snd_var = true;
+            snd_var = fmod_snd_play_scr(other.eff_snd_arr[irandom(other.eff_snd_len_var-1)]);
             rand_rate_var = 15;
             set_alarm_scr(0,irandom_range(other.state_eff_min_var,other.state_eff_max_var));
             // Set camera to player
@@ -476,10 +500,10 @@ object_event_add
             with mus_control_obj { event_user(0); }
         }
     }
-");
+');
 // Change state
 object_event_add
-(argument0,ev_other,ev_user15,"
+(argument0,ev_other,ev_user15,'
     spd_base_var = state_spd_var[state_var];
     spr_var = state_spr_var[state_var]
     spr_spd_var = state_spr_spd_var[state_var];
@@ -491,4 +515,4 @@ object_event_add
     set_alarm_scr(3,state_delay_var[state_var]);
     spr_id_var = 0;
     tex_var = sprite_get_texture(spr_var,0);
-");
+');

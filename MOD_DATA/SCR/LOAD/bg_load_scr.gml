@@ -18,6 +18,7 @@ file_to_bg_scr(vanilla_directory_const+"\TEX\ROOF_01.png","ceil_bg",false,false,
 file_to_bg_scr(vanilla_directory_const+"\TEX\sprites\POS_07_spr.png","poster_01_bg",false,false,argument0); // 7-10 and EM
 file_to_bg_scr(vanilla_directory_const+"\TEX\sprites\POS_01_spr.png","poster_02_bg",false,false,argument0); // 1-6
 // Materials
+file_to_bg_scr(vanilla_directory_const+"\MAT\BASIC.png","basic_bg",false,false,argument0);
 file_to_bg_scr(vanilla_directory_const+"\MAT\BLANK.png","blank_bg",false,false,argument0);
 file_to_bg_scr(vanilla_directory_const+"\MAT\CRATE_01.png","crate_bg",false,false,argument0);
 file_to_bg_scr(vanilla_directory_const+"\MAT\DOOR_01B.png","door_bg",false,false,argument0);

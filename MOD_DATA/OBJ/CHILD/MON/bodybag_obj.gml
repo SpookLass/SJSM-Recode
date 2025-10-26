@@ -8,29 +8,29 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create Begin Event
 object_event_add
-(argument0,ev_create,1,"
+(argument0,ev_create,1,'
     ini_open(global.lang_var);
     switch global.name_var
     {
         case name_og_const:
         case name_hd_const:
         {
-            name_var = ini_read_string('NAME','bodybag','NAME_bodybag');
+            name_var = ini_read_string("NAME","bodybag","NAME_bodybag");
             break;
         }
         case name_fanon_const:
         {
-            name_var = ini_read_string('NAME','bodybag_fanon','NAME_bodybag_fanon');
+            name_var = ini_read_string("NAME","bodybag_fanon","NAME_bodybag_fanon");
             break;
         }
         case name_num_og_const:
         {
-            name_var = ini_read_string('NAME','bodybag_num_og','NAME_bodybag_num_og');
+            name_var = ini_read_string("NAME","bodybag_num_og","NAME_bodybag_num_og");
             break;
         }
         case name_num_hd_const:
         {
-            name_var = ini_read_string('NAME','bodybag_num_hd','NAME_bodybag_num_hd');
+            name_var = ini_read_string("NAME","bodybag_num_hd","NAME_bodybag_num_hd");
             break;
         }
     }
@@ -46,7 +46,8 @@ object_event_add
     w_var = 10;
     h_var = 20;
     dupe_var = dupe_canon_const;
-    // Theme
+    // Sound
+    wake_snd_var[0] = true;
     mus_prio_var = theme_mus_prio_const;
     // Assets
     // Search for existing assets to save memory
@@ -58,7 +59,9 @@ object_event_add
             other.bg_var = bg_var;
             other.spr_overlay_var = spr_overlay_var;
             other.spr_eff_var = spr_eff_var;
+            other.eff_snd_var = eff_snd_var;
             other.mus_snd_var = mus_snd_var;
+            other.wake_snd_var[1] = wake_snd_var[1];
             local.loaded = true;
             break;
         }
@@ -66,12 +69,15 @@ object_event_add
     // If no existing assets were found, load them
     if !local.loaded
     {
-        spr_overlay_var = sprite_add(kh_directory_const+'\TEX\sprites\HOS_ex6.png',4,false,false,0,0);
-        spr_eff_var = sprite_add(kh_directory_const+'\TEX\sprites\HOS_ex7.png',8,false,false,0,0);
+        spr_overlay_var = sprite_add(kh_directory_const+"\TEX\sprites\HOS_ex6.png",4,false,false,0,0);
+        spr_eff_var = sprite_add(kh_directory_const+"\TEX\sprites\HOS_ex7.png",8,false,false,0,0);
         mdl_var = d3d_model_create();
-        d3d_model_load(mdl_var,main_directory_const+'\MDL\MON\bodybag_mon_mdl.gmmod');
-        bg_var = background_add(main_directory_const+'\BG\MON\bodybag_bg.png',false,false);
-        mus_snd_var = fmod_snd_add_scr(main_directory_const+'\SND\MON\bodybag_mus_snd.mp3');
+        d3d_model_load(mdl_var,main_directory_const+"\MDL\MON\bodybag_mon_mdl.gmmod");
+        bg_var = background_add(main_directory_const+"\BG\MON\bodybag_bg.png",false,false);
+        eff_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\bodybag_eff_snd.wav");
+        fmod_snd_set_group_scr(eff_snd_var,snd_group_mon_const);
+        mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\bodybag_mus_snd.mp3");
+        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\bodybag_wake_snd.wav");
     }
     tex_var = background_get_texture(bg_var);
     // Sounds
@@ -142,16 +148,16 @@ object_event_add
     // Bools
     do_mdl_var = true;
     do_snd_var = -1;
-");
+');
 // Create End Event
 object_event_add
-(argument0,ev_create,2,"
+(argument0,ev_create,2,'
     event_inherited();
     if eff_delay_var > 0 { set_alarm_scr(8,eff_delay_var); }
-");
+');
 // Destroy Event
 object_event_add
-(argument0,ev_destroy,0,"
+(argument0,ev_destroy,0,'
     event_inherited();
     if instance_number(object_index) <= 1
     {
@@ -160,6 +166,8 @@ object_event_add
         d3d_model_destroy(mdl_var);
         sprite_delete(spr_eff_var);
         sprite_delete(spr_overlay_var);
+        fmod_snd_free_scr(wake_snd_var[1]);
+        fmod_snd_free_scr(eff_snd_var);
     }
     if inf_stam_var
     { with player_obj { do_stam_var = true; }}
@@ -167,16 +175,18 @@ object_event_add
     { if par_var == other.id { instance_destroy(); }}
     with body_eff_obj
     { if par_var == other.id { instance_destroy(); }}
-");
+');
 // Effect alarm
 object_event_add
-(argument0,ev_alarm,8,"
+(argument0,ev_alarm,8,'
     with instance_create(0,0,spr_flash_eff_obj)
     {
         par_var = other.id;
         spr_var = other.spr_eff_var;
         spr_id_var = irandom(sprite_get_number(spr_var)-1);
         spr_spd_var = 0.5;
+        do_snd_var = true;
+        snd_var = fmod_snd_play_scr(other.eff_snd_var);
         rand_rate_var = 2;
         rand_chance_var = 2;
         fade_var = other.eff_fade_var;
@@ -184,10 +194,10 @@ object_event_add
         // Set camera to player
         cam_id_var = other.attack_target_var.cam_id_var;
     }
-");
+');
 // Room Start Event
 object_event_add
-(argument0,ev_other,ev_room_start,"
+(argument0,ev_other,ev_room_start,'
     event_inherited();
     if inf_stam_var
     { with player_obj { do_stam_var = false; }}
@@ -200,10 +210,10 @@ object_event_add
             strobe_var = other.strobe_var;
         }
     }
-");
+');
 // Animation
 object_event_add
-(argument0,ev_other,ev_user1,"
+(argument0,ev_other,ev_user1,'
     if spin_var { mdl_yaw_var += spin_rate_var*global.delta_time_var; }
     else { mdl_yaw_var = yaw_var+180; }
     spr_prog_var -= spr_spd_var*global.delta_time_var;
@@ -214,10 +224,10 @@ object_event_add
         y_off_var = random_range(-shake_var,shake_var);
         z_off_var = random_range(-shake_var,shake_var);
     }
-");
+');
 // Attack Success
 object_event_add
-(argument0,ev_other,ev_user3,"
+(argument0,ev_other,ev_user3,'
     event_inherited();
     if atk_spawn_delay_var > 0
     {
@@ -238,6 +248,8 @@ object_event_add
             spr_var = other.spr_eff_var;
             spr_id_var = irandom(sprite_get_number(spr_var)-1);
             spr_spd_var = 0.5;
+            do_snd_var = true;
+            snd_var = fmod_snd_play_scr(other.eff_snd_var);
             rand_rate_var = 2;
             rand_chance_var = 2;
             fade_var = other.eff_fade_var;
@@ -246,10 +258,10 @@ object_event_add
             cam_id_var = other.attack_target_var.cam_id_var;
         }
     }
-");
+');
 // Draw Event
 object_event_add
-(argument0,ev_draw,0,"
+(argument0,ev_draw,0,'
     if on_var || visible_var
     {
         draw_set_color(image_blend); draw_set_alpha(image_alpha);
@@ -269,4 +281,4 @@ object_event_add
             // mp_grid_draw(grid_var);
         }
     }
-");
+');

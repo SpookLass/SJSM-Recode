@@ -187,6 +187,7 @@ object_event_add
         d3d_model_destroy(mdl_01_var);
         d3d_model_destroy(mdl_02_var);
         fmod_snd_free_scr(mus_snd_var);
+        fmod_snd_free_scr(wake_snd_var[1]);
     }
     with kh_overlay_obj
     { if par_var == other.id { instance_destroy(); }}

@@ -108,6 +108,8 @@ object_event_add
             spr_spd_var = 1/3;
             delay_var = 128;
             flesh_door_var = false;
+            w_01_var = 7.7; // 7
+            w_02_var = 2.8; // 3.5
             break;
         }
         case 2: // HD
@@ -117,6 +119,8 @@ object_event_add
             delay_min_var = 90;
             delay_max_var = 180;
             spr_spd_var = 1/3;
+            w_01_var = 7.7; // 7
+            w_02_var = 2.8; // 3.5
             flesh_door_var = false;
             eff_var = false;
             flesh_alarm_min_var = 180;
@@ -180,6 +184,8 @@ object_event_add
         sprite_delete(flesh_spr_var);
         sprite_delete(eff_spr_var);
         fmod_snd_free_scr(mus_snd_var);
+        for (local.i=0; local.i<snd_len_var; local.i+=1;)
+        { fmod_snd_free_scr(snd_arr[local.i,0]); }
     }
     if flesh_var { with bab_flesh_obj { if par_var == other.id { instance_destroy(); }}}
     if eff_var { with bab_eff_obj { if par_var == other.id { instance_destroy(); }}}

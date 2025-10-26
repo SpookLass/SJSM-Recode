@@ -341,6 +341,9 @@ object_event_add
         ds_list_destroy(zone_list_var);
         for (local.i=0; local.i<glitch_snd_len_var; local.i+=1;)
         { fmod_snd_free_scr(glitch_snd_arr[local.i,0]); }
+        for (local.i=0; local.i<snd_len_var; local.i+=1;)
+        { fmod_snd_free_scr(snd_arr[local.i,0]); }
+        if wake_snd_var[0] { fmod_snd_free_scr(wake_snd_var[1]); }
     }
     if zone_start_var > 0
     {

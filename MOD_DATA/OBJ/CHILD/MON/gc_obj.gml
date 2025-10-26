@@ -260,6 +260,9 @@ object_event_add
         background_delete(floor_bg_var);
         background_delete(eff_bg_var);
         d3d_model_destroy(mdl_var);
+        for (local.i=0; local.i<snd_len_var; local.i+=1;)
+        { fmod_snd_free_scr(snd_arr[local.i,0]); }
+        if wake_snd_var[0] { fmod_snd_free_scr(wake_snd_var[1]); }
     }
     with player_obj
     { fov_var = global.fov_var; }

@@ -18,7 +18,6 @@ object_event_add
     health_str_var = ini_read_string('UI','health','UI_health');
     stamina_str_var = ini_read_string('UI','stamina','UI_stamina');
 	ini_close();
-    
 ");
 // Room Start
 object_event_add

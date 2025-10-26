@@ -16,7 +16,7 @@ object_event_add
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,"
-    y = (y+y_spd_var) mod (background_get_height(bg_var)*image_yscale);
+    y = (y+(y_spd_var*global.delta_time_var)) mod (background_get_height(bg_var)*image_yscale);
 ");
 // Draw Event
 object_event_add

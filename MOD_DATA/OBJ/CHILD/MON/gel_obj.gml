@@ -208,6 +208,9 @@ object_event_add
     {
         sprite_delete(spr_var);
         background_delete(slime_bg_var);
+        for (local.i=0; local.i<snd_len_var; local.i+=1;)
+        { fmod_snd_free_scr(snd_arr[local.i,0]); }
+        if wake_snd_var[0] { fmod_snd_free_scr(wake_snd_var[1]); }
     }
     with slime_obj { if par_var = other.id { instance_destroy(); }}
 ");

@@ -18,9 +18,9 @@ object_event_add
 ");
 // Step event
 object_event_add
-(argument0,ev_step,ev_step_begin,"
+(argument0,ev_step,ev_step_begin,'
     // Get inputs
-    // I know this looks bad, but keyboard_check_pressed doesn't persist between rooms
+    // I know this looks bad, but keyboard_check_pressed doesnt persist between rooms
     global.forward_input_prev_var = global.forward_input_var;
     global.backward_input_prev_var = global.backward_input_var;
     global.strafe_left_input_prev_var = global.strafe_left_input_var;
@@ -103,12 +103,13 @@ object_event_add
     global.debug_input_press_var = global.debug_input_var-global.debug_input_prev_var;
     global.ff_input_press_var = global.ff_input_var-global.ff_input_prev_var;
     global.slow_input_press_var = global.slow_input_var-global.slow_input_prev_var;
-    // Free da mouse
-    if keyboard_check_pressed(vk_tab) || keyboard_check_pressed(vk_escape)
+    // This is pause now
+    if keyboard_check_pressed(vk_escape) && !instance_exists(pause_menu_obj) // || keyboard_check_pressed(vk_tab)
     {
-        global.mouse_free_var = !global.mouse_free_var;
+        /*global.mouse_free_var = !global.mouse_free_var;
         action_set_cursor(-1,global.mouse_free_var);
-        if !global.mouse_free_var { display_mouse_set(display_get_width()/2,display_get_height()/2); }
+        if !global.mouse_free_var { display_mouse_set(display_get_width()/2,display_get_height()/2); }*/
+        instance_create(0,0,pause_menu_obj);
     }
     // Speed!
     if global.draw_3d_var
@@ -140,12 +141,12 @@ object_event_add
     {
         if !global.debug_unlock_var
         {
-            local.pass = 'spooklass'; //string_lower(string_letters(get_string('Password Please','')));
-            if local.pass == 'birdbonanza' || local.pass == 'yoshicraft' || local.pass == 'spooklass' || local.pass == 'everlastingmaya'
-            || local.pass == 'bird' || local.pass == 'yoshi' || local.pass == 'lass' || local.pass == 'maya'
-            || local.pass == 'kira' || local.pass == 'lag' || local.pass == 'poi' || local.pass == 'open'
+            local.pass = "spooklass"; //string_lower(string_letters(get_string("Password Please","")));
+            if local.pass == "birdbonanza" || local.pass == "yoshicraft" || local.pass == "spooklass" || local.pass == "everlastingmaya"
+            || local.pass == "bird" || local.pass == "yoshi" || local.pass == "lass" || local.pass == "maya"
+            || local.pass == "kira" || local.pass == "lag" || local.pass == "poi" || local.pass == "open"
             { global.debug_unlock_var = true; }
-            else { show_error(string_repeat('3',3333),true); exit; }
+            else { show_error(string_repeat("3",3333),true); exit; }
             global.last_time_var = current_time;
             display_mouse_set(display_get_width()/2,display_get_height()/2);
             global.debug_input_press_var = 0;
@@ -153,9 +154,9 @@ object_event_add
         global.debug_var = !global.debug_var;
     }
     // Debug commands
-    if global.debug_var && keyboard_check_pressed(ord('2'))
+    if global.debug_var && keyboard_check_pressed(ord("2"))
     {
-        local.question = show_menu('Back|Restart Room|Next Room|Previous Room|Go To Room|Create Instance|Destroy Instance|Set Tex Set|Set Zone|Set Count|Set LV|Set Room|Toggle Invincibility|Toggle Noclip|Toggle Flight|Toggle Monster Spawn|Revive|Hide Debug|Hide Hud|Toggle X-ray|Save|Execute Code',0);
+        local.question = show_menu("Back|Restart Room|Next Room|Previous Room|Go To Room|Create Instance|Destroy Instance|Set Tex Set|Set Zone|Set Count|Set LV|Set Room|Toggle Invincibility|Toggle Noclip|Toggle Flight|Toggle Monster Spawn|Revive|Hide Debug|Hide Hud|Toggle X-ray|Save|Execute Code",0);
         switch(local.question)
         {
             case 1: { room_restart(); break; }
@@ -173,61 +174,61 @@ object_event_add
             }
             case 4:
             {
-                local.rm = get_string('Go To Room','');
-                if local.rm != ''
+                local.rm = get_string("Go To Room","");
+                if local.rm != ""
                 {
                     execute_string
-                    ('
-                        if room_exists('+local.rm+') && '+local.rm+' != 0
-                        { room_goto('+local.rm+'); }
-                    ');
+                    ("
+                        if room_exists("+local.rm+") && "+local.rm+" != 0
+                        { room_goto("+local.rm+"); }
+                    ");
                 }
                 break;
             }
             case 5:
             {
-                local.instance = get_string('Create Instance','');
-                if local.instance != ''
+                local.instance = get_string("Create Instance","");
+                if local.instance != ""
                 {
                     execute_string
-                    ('
-                        if object_exists('+local.instance+') && '+local.instance+' != 0 
-                        { instance_create(0,0,'+local.instance+'); }
-                    ');
+                    ("
+                        if object_exists("+local.instance+") && "+local.instance+" != 0 
+                        { instance_create(0,0,"+local.instance+"); }
+                    ");
                 }
                 break;
             }
             case 6:
             {
-                local.instance = get_string('Destroy Instance','');
-                if local.instance != ''
+                local.instance = get_string("Destroy Instance","");
+                if local.instance != ""
                 {
                     execute_string
-                    ('
-                        if object_exists('+local.instance+') && '+local.instance+' != 0 
+                    ("
+                        if object_exists("+local.instance+") && "+local.instance+" != 0 
                         {
-                            with '+local.instance+'
+                            with "+local.instance+"
                             { instance_destroy(); }
                         }
-                    ');
+                    ");
                 }
                 break;
             }
             case 7:
             {
-                local.tex = get_integer('Tex set',global.tex_var);
+                local.tex = get_integer("Tex set",global.tex_var);
                 tex_scr(local.tex);
                 break;
             }
             case 8:
             {
-                local.zone = get_integer('Zone',global.zone_var);
+                local.zone = get_integer("Zone",global.zone_var);
                 zone_scr(local.zone);
                 break;
             }
-            case 9: { global.count_var = get_integer('Set Count', global.count_var); break; }
-            case 10: { global.violence_var = get_integer('Set LOVE', global.violence_var); break; }
-            case 11: { global.rm_count_var = get_integer('Set Room Count', global.rm_count_var); break; }
+            case 9: { global.count_var = get_integer("Set Count", global.count_var); break; }
+            case 10: { global.violence_var = get_integer("Set LOVE", global.violence_var); break; }
+            case 11: { global.rm_count_var = get_integer("Set Room Count", global.rm_count_var); break; }
             case 12: { with player_obj { invuln_var = !invuln_var; } break; }
             case 13: { with player_obj { do_coll_var = !do_coll_var; } break; }
             case 14:
@@ -264,8 +265,8 @@ object_event_add
 			}
             case 21:
             {
-                local.code = get_string('Execute Code','');
-                if local.code != ''
+                local.code = get_string("Execute Code","");
+                if local.code != ""
                 { execute_string(local.code); }
                 break;
             }
@@ -273,14 +274,14 @@ object_event_add
         global.last_time_var = current_time;
         display_mouse_set(display_get_width()/2,display_get_height()/2);
     }
-");
-object_event_add(argument0,ev_step,ev_step_end,"
+');
+object_event_add(argument0,ev_step,ev_step_end,'
     // Update FMOD!
     fmod_update_scr();
-")
+');
 // Draw
 object_event_add
-(argument0,ev_draw,0,"
+(argument0,ev_draw,0,'
     // Reset Drawing
     draw_set_color(c_white);
     draw_set_alpha(1);
@@ -296,17 +297,17 @@ object_event_add
         else
         {
             if global.draw_time_var != 0 { global.fps_curr_var = floor(global.fps_var/global.draw_time_var); }
-            // else { global.fps_curr_var = 0; } // I still don't know what causes this
+            // else { global.fps_curr_var = 0; } // I still dont know what causes this
         }
         if global.fps_update_var > 0 { update_fps_var = false; }
     }
-    local.fps_str = ' | FPS: '+string(global.fps_curr_var);
-    room_caption = 'Spookys Jump Scare Mansion - Project Recode | Room: '+string(global.rm_count_var)+' ('+global.rm_name_var+') | TPS: '+string(fps)+local.fps_str;
+    local.fps_str = " | FPS: "+string(global.fps_curr_var);
+    room_caption = "Spookys Jump Scare Mansion - Project Recode | Room: "+string(global.rm_count_var)+" ("+global.rm_name_var+") | TPS: "+string(fps)+local.fps_str;
     global.draw_time_var = 0;
-")
+')
 // Room End
 object_event_add
-(argument0,ev_other,ev_room_end,"
+(argument0,ev_other,ev_room_end,'
     event_inherited();
     spawn_reset_scr();
     mark_reset_scr();
@@ -314,10 +315,10 @@ object_event_add
     window_y_var = window_get_y();
     window_w_var = window_get_width();
     window_h_var = window_get_height();
-");
+');
 // Room Start
 object_event_add
-(argument0,ev_other,ev_room_start,"
+(argument0,ev_other,ev_room_start,'
     // Fix Delta
     global.delta_time_var = 0;
     global.last_time_var = current_time;
@@ -336,18 +337,18 @@ object_event_add
     { window_set_rectangle(window_x_var,window_y_var,window_w_var,window_h_var); }
     // Window Color
     if !instance_exists(fog_par_obj) { window_set_color(make_color_rgb(30,0,50)); }
-");
+');
 // Update FPS
 object_event_add
-(argument0,ev_alarm,0,"
+(argument0,ev_alarm,0,'
     update_fps_var = true;
     set_alarm_scr(0,global.fps_update_var);
-");
+');
 // Game end
 object_event_add
-(argument0,ev_other,ev_game_end,"
+(argument0,ev_other,ev_game_end,'
     p3dc_free_scr();
     fmod_free_scr();
     fmod_unload_scr();
     sf_free_scr();
-")
+');

@@ -56,12 +56,12 @@ ds_list_add(global.zone_arr[0],purp_03_rm); ds_list_add(global.zone_arr[0],purp_
 ds_list_add(global.zone_arr[0],purp_04_rm); ds_list_add(global.zone_arr[0],purp_04_rm);
 ds_list_add(global.zone_arr[0],purp_05_rm); ds_list_add(global.zone_arr[0],purp_05_rm);
 ds_list_add(global.zone_arr[0],purp_06_rm); ds_list_add(global.zone_arr[0],purp_06_rm);
-// ds_list_add(global.zone_arr[0],bed_01_rm); ds_list_add(global.zone_arr[0],bed_01_rm); ds_list_add(global.zone_arr[0],bed_01_rm); ds_list_add(global.zone_arr[0],bed_01_rm);
-// ds_list_add(global.zone_arr[0],bed_02_rm); ds_list_add(global.zone_arr[0],bed_02_rm); ds_list_add(global.zone_arr[0],bed_02_rm); ds_list_add(global.zone_arr[0],bed_02_rm);
-// ds_list_add(global.zone_arr[0],bed_03_rm); ds_list_add(global.zone_arr[0],bed_03_rm); ds_list_add(global.zone_arr[0],bed_03_rm); ds_list_add(global.zone_arr[0],bed_03_rm);
-// ds_list_add(global.zone_arr[0],bed_04_rm); ds_list_add(global.zone_arr[0],bed_04_rm);
-// ds_list_add(global.zone_arr[0],bed_05_rm); ds_list_add(global.zone_arr[0],bed_05_rm);
-// ds_list_add(global.zone_arr[0],bed_06_rm); ds_list_add(global.zone_arr[0],bed_06_rm);
+ds_list_add(global.zone_arr[0],bed_01_rm); ds_list_add(global.zone_arr[0],bed_01_rm); ds_list_add(global.zone_arr[0],bed_01_rm); ds_list_add(global.zone_arr[0],bed_01_rm);
+ds_list_add(global.zone_arr[0],bed_02_rm); ds_list_add(global.zone_arr[0],bed_02_rm); ds_list_add(global.zone_arr[0],bed_02_rm); ds_list_add(global.zone_arr[0],bed_02_rm);
+ds_list_add(global.zone_arr[0],bed_03_rm); ds_list_add(global.zone_arr[0],bed_03_rm); ds_list_add(global.zone_arr[0],bed_03_rm); ds_list_add(global.zone_arr[0],bed_03_rm);
+ds_list_add(global.zone_arr[0],bed_04_rm); ds_list_add(global.zone_arr[0],bed_04_rm);
+ds_list_add(global.zone_arr[0],bed_05_rm); ds_list_add(global.zone_arr[0],bed_05_rm);
+ds_list_add(global.zone_arr[0],bed_06_rm); ds_list_add(global.zone_arr[0],bed_06_rm);
 ds_list_add(global.zone_arr[0],med_01_rm); ds_list_add(global.zone_arr[0],med_01_rm);
 ds_list_add(global.zone_arr[0],med_02_rm); ds_list_add(global.zone_arr[0],med_02_rm);
 ds_list_add(global.zone_arr[0],med_03_rm); ds_list_add(global.zone_arr[0],med_03_rm);
@@ -421,14 +421,14 @@ ds_list_add(global.zone_arr[5],stor_05_rm); ds_list_add(global.zone_arr[5],stor_
 ds_list_add(global.zone_arr[5],stor_06_rm); ds_list_add(global.zone_arr[5],stor_06_rm);
 ds_list_add(global.zone_arr[5],stor_07_rm); ds_list_add(global.zone_arr[5],stor_07_rm);
 ds_list_add(global.zone_arr[5],stor_08_rm); ds_list_add(global.zone_arr[5],stor_08_rm);
-/*ds_list_add(global.zone_arr[5],bed_01_rm);
+ds_list_add(global.zone_arr[5],bed_01_rm);
 ds_list_add(global.zone_arr[5],bed_02_rm);
 ds_list_add(global.zone_arr[5],bed_03_rm);
 ds_list_add(global.zone_arr[5],bed_04_rm);
 ds_list_add(global.zone_arr[5],bed_05_rm);
 ds_list_add(global.zone_arr[5],bed_06_rm);
 ds_list_add(global.zone_arr[5],bed_07_rm);
-ds_list_add(global.zone_arr[5],bed_08_rm);*/
+ds_list_add(global.zone_arr[5],bed_08_rm);
 ds_list_add(global.zone_arr[5],sm_lab_01_a_rm);
 ds_list_add(global.zone_arr[5],sm_lab_01_b_rm);
 ds_list_add(global.zone_arr[5],sm_lab_02_a_rm);
@@ -583,7 +583,6 @@ ds_list_add(global.zone_arr[7],stor_05_rm);
 ds_list_add(global.zone_arr[7],stor_06_rm);
 ds_list_add(global.zone_arr[7],stor_07_rm);
 ds_list_add(global.zone_arr[7],stor_08_rm);
-/*
 ds_list_add(global.zone_arr[7],bed_01_rm);
 ds_list_add(global.zone_arr[7],bed_02_rm);
 ds_list_add(global.zone_arr[7],bed_03_rm);
@@ -592,7 +591,6 @@ ds_list_add(global.zone_arr[7],bed_05_rm);
 ds_list_add(global.zone_arr[7],bed_06_rm);
 ds_list_add(global.zone_arr[7],bed_07_rm);
 ds_list_add(global.zone_arr[7],bed_08_rm);
-*/
 ds_list_add(global.zone_arr[7],hotel_01_rm);
 ds_list_add(global.zone_arr[7],hotel_02_rm);
 ds_list_add(global.zone_arr[7],hotel_03_rm);
@@ -691,6 +689,14 @@ ds_list_add(global.zone_arr[8],sc_hall_12_rm);
 // Zone 9: Every
 global.zone_arr[9] = ds_list_create();
 ds_list_clear(global.zone_arr[9]);
+ds_list_add(global.zone_arr[9],bed_01_rm);
+ds_list_add(global.zone_arr[9],bed_02_rm);
+ds_list_add(global.zone_arr[9],bed_03_rm);
+ds_list_add(global.zone_arr[9],bed_04_rm);
+ds_list_add(global.zone_arr[9],bed_05_rm);
+ds_list_add(global.zone_arr[9],bed_06_rm);
+ds_list_add(global.zone_arr[9],bed_07_rm);
+ds_list_add(global.zone_arr[9],bed_08_rm);
 ds_list_add(global.zone_arr[9],big_01_rm);
 ds_list_add(global.zone_arr[9],big_02_rm);
 ds_list_add(global.zone_arr[9],big_03_rm);
@@ -1130,12 +1136,12 @@ ds_list_add(global.story_zone_arr[0],purp_03_rm); ds_list_add(global.story_zone_
 ds_list_add(global.story_zone_arr[0],purp_04_rm); ds_list_add(global.story_zone_arr[0],purp_04_rm);
 ds_list_add(global.story_zone_arr[0],purp_05_rm); ds_list_add(global.story_zone_arr[0],purp_05_rm);
 ds_list_add(global.story_zone_arr[0],purp_06_rm); ds_list_add(global.story_zone_arr[0],purp_06_rm);
-/*ds_list_add(global.story_zone_arr[0],bed_01_rm); ds_list_add(global.story_zone_arr[0],bed_01_rm); ds_list_add(global.story_zone_arr[0],bed_01_rm); ds_list_add(global.story_zone_arr[0],bed_01_rm);
+ds_list_add(global.story_zone_arr[0],bed_01_rm); ds_list_add(global.story_zone_arr[0],bed_01_rm); ds_list_add(global.story_zone_arr[0],bed_01_rm); ds_list_add(global.story_zone_arr[0],bed_01_rm);
 ds_list_add(global.story_zone_arr[0],bed_02_rm); ds_list_add(global.story_zone_arr[0],bed_02_rm); ds_list_add(global.story_zone_arr[0],bed_02_rm); ds_list_add(global.story_zone_arr[0],bed_02_rm);
 ds_list_add(global.story_zone_arr[0],bed_03_rm); ds_list_add(global.story_zone_arr[0],bed_03_rm); ds_list_add(global.story_zone_arr[0],bed_03_rm); ds_list_add(global.story_zone_arr[0],bed_03_rm);
 ds_list_add(global.story_zone_arr[0],bed_04_rm); ds_list_add(global.story_zone_arr[0],bed_04_rm);
 ds_list_add(global.story_zone_arr[0],bed_05_rm); ds_list_add(global.story_zone_arr[0],bed_05_rm);
-ds_list_add(global.story_zone_arr[0],bed_06_rm); ds_list_add(global.story_zone_arr[0],bed_06_rm);*/
+ds_list_add(global.story_zone_arr[0],bed_06_rm); ds_list_add(global.story_zone_arr[0],bed_06_rm);
 // Story Zone 1: 50-100
 global.story_zone_arr[1] = ds_list_create();
 ds_list_clear(global.story_zone_arr[1]);

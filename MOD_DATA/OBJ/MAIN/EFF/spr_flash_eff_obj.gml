@@ -12,6 +12,8 @@ object_event_add
     //Defaults
     fade_var = false;
     cam_id_var = 0;
+    // Sound
+    do_snd_var = false;
     // Animate
     anim_var = !global.reduce_flash_var;
     spr_spd_var = 1;
@@ -38,19 +40,20 @@ object_event_add
 ");
 // Alarm 0 Event
 object_event_add
-(argument0,ev_alarm,0,"
+(argument0,ev_alarm,0,'
+    if do_snd_var { fmod_inst_stop_scr(snd_var); }
     instance_destroy();
-");
+');
 // Alarm 1 Event
 object_event_add
-(argument0,ev_alarm,1,"
+(argument0,ev_alarm,1,'
     if rand_var
     {
         if frac_chance_scr(1,rand_chance_var)
         { spr_id_var = irandom(sprite_get_number(spr_var)-1); }
         set_alarm_scr(1,rand_rate_var);
     }
-");
+');
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,"

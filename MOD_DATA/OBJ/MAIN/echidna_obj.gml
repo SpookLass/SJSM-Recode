@@ -181,12 +181,6 @@ object_event_add
     if type_var > 0 && path_exists(path_var)
     { path_delete(path_var); }
     fmod_inst_stop_scr(snd_var);
-    if instance_number(object_index) <= 1
-    {
-        for (local.i=0; local.i<snd_len_var; local.i+=1;)
-        { fmod_snd_free_scr(snd_arr[local.i,0]); }
-        if wake_snd_var[0] { fmod_snd_free_scr(wake_snd_var[1]); }
-    }
     if mus_prio_var > amb_mus_prio_const
     { with mus_control_obj { event_user(0); }}
 ");

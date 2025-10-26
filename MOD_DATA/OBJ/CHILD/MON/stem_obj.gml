@@ -216,6 +216,8 @@ object_event_add
         d3d_model_destroy(mdl_01_var);
         d3d_model_destroy(mdl_02_var);
         fmod_snd_free_scr(mus_snd_var);
+        for (local.i=0; local.i<snd_len_var; local.i+=1;)
+        { fmod_snd_free_scr(snd_arr[local.i,0]); }
     }
 ");
 // Room Start Event

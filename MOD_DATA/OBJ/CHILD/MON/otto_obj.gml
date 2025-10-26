@@ -121,7 +121,11 @@ object_event_add
 (argument0,ev_destroy,0,"
     event_inherited();
     if instance_number(object_index) <= 1
-    { sprite_delete(spr_var); }
+    {
+        sprite_delete(spr_var);
+        for (local.i=0; local.i<snd_len_var; local.i+=1;)
+        { fmod_snd_free_scr(snd_arr[local.i,0]); }
+    }
 ");
 // Animation
 object_event_add

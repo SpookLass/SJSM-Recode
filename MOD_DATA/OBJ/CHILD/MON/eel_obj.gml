@@ -174,6 +174,8 @@ object_event_add
         sprite_delete(bod_spr_var);
         fmod_snd_free_scr(hurt_snd_var[1]);
         fmod_snd_free_scr(mus_snd_var);
+        for (local.i=0; local.i<snd_len_var; local.i+=1;)
+        { fmod_snd_free_scr(snd_arr[local.i,0]); }
     }
     with eel_bod_obj
     {

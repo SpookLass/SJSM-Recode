@@ -14,15 +14,15 @@ if argument0 != "" && file_exists(argument0)
     execute_string
     (
         // If variable has not been set previously, set it.
-        "if "+argument1+" == 0
+        'if '+argument1+' == 0
         {
-            globalvar "+argument1+";
-            globalvar "+argument1+"_path;
-            "+argument1+" = "+string(local.mdl)+";
-            "+argument1+"_path = '"+argument0+"';
+            globalvar '+argument1+';
+            globalvar '+argument1+'_path;
+            '+argument1+' = '+string(local.mdl)+';
+            '+argument1+'_path = "'+argument0+'";
         }
-        else if "+string(argument2)+"
-        { show_error('Variable "+argument1+" already in use!',false); }"
+        else if '+string(argument2)+'
+        { show_error("Variable '+argument1+' already in use!",false); }'
     );
 }
 else if argument2 { show_error("File "+argument1+" doesn't exist at path "+argument0,false); }
