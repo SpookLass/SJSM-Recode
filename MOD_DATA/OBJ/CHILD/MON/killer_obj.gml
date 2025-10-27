@@ -545,7 +545,7 @@ object_event_add
     {
         image_blend = c_white;
         cam_id_var = hurt_target_var.cam_id_var;
-        set_alarm_scr(0,18);
+        set_alarm_scr(0,8);
     }
 ');
 // Sound update

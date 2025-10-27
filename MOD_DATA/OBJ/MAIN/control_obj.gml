@@ -37,6 +37,8 @@ object_event_add
     global.debug_input_prev_var = global.debug_input_var;
     global.ff_input_prev_var = global.ff_input_var;
     global.slow_input_prev_var = global.slow_input_var;
+    global.pause_input_prev_var = global.pause_input_var;
+    global.back_input_prev_var = global.back_input_var;
     if !global.controller_var
     {
         if keyboard_check_pressed(global.forward_key_var) { global.forward_input_var = true; }
@@ -86,6 +88,12 @@ object_event_add
 
         if keyboard_check_pressed(global.slow_key_var) { global.slow_input_var = true; }
         if keyboard_check_released(global.slow_key_var) { global.slow_input_var = false; }
+
+        if keyboard_check_pressed(global.pause_key_var) { global.pause_input_var = true; }
+        if keyboard_check_released(global.pause_key_var) { global.pause_input_var = false; }
+
+        if keyboard_check_pressed(global.back_key_var) { global.back_input_var = true; }
+        if keyboard_check_released(global.back_key_var) { global.back_input_var = false; }
     }
     global.forward_input_press_var = global.forward_input_var-global.forward_input_prev_var;
     global.backward_input_press_var = global.backward_input_var-global.backward_input_prev_var;
@@ -103,12 +111,15 @@ object_event_add
     global.debug_input_press_var = global.debug_input_var-global.debug_input_prev_var;
     global.ff_input_press_var = global.ff_input_var-global.ff_input_prev_var;
     global.slow_input_press_var = global.slow_input_var-global.slow_input_prev_var;
+    global.pause_input_press_var = global.pause_input_var-global.pause_input_prev_var;
+    global.back_input_press_var = global.back_input_var-global.back_input_prev_var;
     // This is pause now
-    if keyboard_check_pressed(vk_escape) && !instance_exists(pause_menu_obj) // || keyboard_check_pressed(vk_tab)
+    if global.pause_input_press_var == 1 && !instance_exists(pause_menu_obj)
     {
         /*global.mouse_free_var = !global.mouse_free_var;
         action_set_cursor(-1,global.mouse_free_var);
         if !global.mouse_free_var { display_mouse_set(display_get_width()/2,display_get_height()/2); }*/
+        global.back_input_press_var = 0;
         instance_create(0,0,pause_menu_obj);
     }
     // Speed!
@@ -120,7 +131,7 @@ object_event_add
     else if global.game_spd_var != 1 { global.game_spd_var = 1; }
     // Delta Time
     // Goes by frames rather than seconds (at 60 fps)
-    global.true_delta_time_var = (current_time-global.last_time_var)*global.game_spd_var*milli_frame_rate_const;
+    global.true_delta_time_var = (current_time-global.last_time_var)*milli_frame_rate_const;
     global.delta_time_var = global.true_delta_time_var*global.game_spd_var;
     global.last_time_var = current_time;
     // Framerate
@@ -156,6 +167,7 @@ object_event_add
     // Debug commands
     if global.debug_var && keyboard_check_pressed(ord("2"))
     {
+        fmod_update_take_over_when_lock_scr();
         local.question = show_menu("Back|Restart Room|Next Room|Previous Room|Go To Room|Create Instance|Destroy Instance|Set Tex Set|Set Zone|Set Count|Set LV|Set Room|Toggle Invincibility|Toggle Noclip|Toggle Flight|Toggle Monster Spawn|Revive|Hide Debug|Hide Hud|Toggle X-ray|Save|Execute Code",0);
         switch(local.question)
         {
@@ -272,10 +284,13 @@ object_event_add
             }
         }
         global.last_time_var = current_time;
+        fmod_update_take_over_done_scr();
         display_mouse_set(display_get_width()/2,display_get_height()/2);
     }
 ');
+// Room End Event
 object_event_add(argument0,ev_step,ev_step_end,'
+    update_alarm_scr(global.true_delta_time_var);
     // Update FMOD!
     fmod_update_scr();
 ');

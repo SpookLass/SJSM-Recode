@@ -7,7 +7,7 @@ room_set_code
     argument0,"
     global.rm_name_var = 'Chasm Room 9'
     // Spawn
-    global.spawn_len_var = 4;
+    global.spawn_len_var = 2;
     global.spawn_arr[0,0] = 224;
     global.spawn_arr[0,1] = 304;
     global.spawn_arr[0,2] = 0;
@@ -44,6 +44,7 @@ room_set_view(argument0,0,true,0,0,1280,720,0,0,1280,720,32,32,-1,-1,noone);
 // Effects
 room_instance_add(argument0,0,0,fog_01_obj);
 room_instance_add(argument0,0,0,color_control_bright_obj);
+room_instance_add(argument0,0,0,rand_mon_spawn_obj);
 // Floors
 room_instance_add(argument0,224,304,floor_bridge_hor_obj);
 room_instance_add(argument0,256,304,floor_bridge_hor_obj);

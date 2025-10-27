@@ -46,6 +46,7 @@ global.pride_arr[29] = xenogender_color_obj;
 // Monster spawn
 global.mon_list = ds_list_create();
 ds_list_clear(global.mon_list);
+ds_list_add(global.mon_list,bab_obj);
 ds_list_add(global.mon_list,bekka_obj);
 ds_list_add(global.mon_list,brain_chase_obj);
 ds_list_add(global.mon_list,fd_obj);

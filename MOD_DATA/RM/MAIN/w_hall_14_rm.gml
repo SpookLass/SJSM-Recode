@@ -159,5 +159,3 @@ room_instance_add(argument0,304,208,light_floor_obj);
 room_instance_add(argument0,272,208,light_floor_obj);
 room_instance_add(argument0,272,240,light_floor_obj);
 room_instance_add(argument0,304,144,light_floor_obj);
-// Jumpscare
-room_instance_add(argument0,416,160,js_obj);
