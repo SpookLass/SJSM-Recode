@@ -174,7 +174,7 @@ object_event_add
 ');
 // Destroy Event
 object_event_add
-(argument0,ev_destroy,0,"
+(argument0,ev_destroy,0,'
     event_inherited();
     if instance_number(object_index) <= 1
     {
@@ -184,10 +184,10 @@ object_event_add
     }
     with kh_overlay_obj
     { if par_var == other.id { instance_destroy(); }}
-");
+');
 // Room Start Event
 object_event_add
-(argument0,ev_other,ev_room_start,"
+(argument0,ev_other,ev_room_start,'
     event_inherited();
     visible = true;
     // Effects
@@ -201,7 +201,7 @@ object_event_add
             bg_var = other.bg_overlay_var;
         }
     }
-    // Make sure the room isn't golden
+    // Make sure the room isnt golden
     if dark_var && !instance_exists(maze_dark_color_obj)
     {
         with (torch_obj) { on_var = false; }
@@ -226,7 +226,7 @@ object_event_add
     state_var = 0;
     if exit_spawn_var
     {
-        // Maya's idea
+        // Mayas idea
         if derand_var { local.active = (dur_start_var-dur_var) mod exit_chance_var; }
         else { local.active = frac_chance_scr(1,exit_chance_var); }
         if local.active && !instance_exists(maze_dark_color_obj)
@@ -252,35 +252,35 @@ object_event_add
             set_alarm_scr(0,-1);
         }
     }
-");
+');
 // Delay
 object_event_add
-(argument0,ev_alarm,0,"
+(argument0,ev_alarm,0,'
     event_perform(ev_alarm,8); // Random anim
     if scare_var { event_perform(ev_alarm,10); } // Scare
     event_inherited();
-");
+');
 // Random anim
 object_event_add
-(argument0,ev_alarm,8,"
+(argument0,ev_alarm,8,'
     if frac_chance_scr(1,rand_chance_var)
     { image_alpha = 1; }
     else { image_alpha = random_range(alpha_min_var,alpha_max_var); }
     set_alarm_scr(8,irandom_range(rand_alarm_min_var,rand_alarm_max_var)); // Self
-");
+');
 // Animation
 object_event_add
-(argument0,ev_other,ev_user1,"
+(argument0,ev_other,ev_user1,'
     spr_prog_var -= spr_spd_var*global.delta_time_var;
     if spr_prog_var <= 0
     {
         spr_prog_var = 1;
         visible = frac_chance_scr(1,draw_chance_var);
     }
-");
+');
 // Step Event
 object_event_add
-(argument0,ev_step,ev_step_normal,"
+(argument0,ev_step,ev_step_normal,'
     if on_var
     {
         switch state_var
@@ -321,10 +321,10 @@ object_event_add
         }
     }
     event_inherited();
-");
+');
 // Vanish
 object_event_add
-(argument0,ev_alarm,9,"
+(argument0,ev_alarm,9,'
     with instance_create(0,0,fade_eff_obj)
     {
         image_blend = c_black; 
@@ -379,10 +379,10 @@ object_event_add
         set_motion_3d_scr(0,true);
         on_var = false;
     }
-");
+');
 // Rouge
 object_event_add
-(argument0,ev_alarm,10,"
+(argument0,ev_alarm,10,'
     event_user(6);
     if instance_exists(target_var)
     {
@@ -399,19 +399,20 @@ object_event_add
         cam_id_var = -1;
     }
     set_alarm_scr(10,scare_alarm_var);
-");
+');
 // Attack Success
 object_event_add
-(argument0,ev_other,ev_user3,"
+(argument0,ev_other,ev_user3,'
+    event_inherited();
     if state_var == 2
     {
         event_perform(ev_alarm,9);
         set_alarm_scr(9,-1);
     }
-");
+');
 // Draw
 object_event_add
-(argument0,ev_draw,0,"
+(argument0,ev_draw,0,'
     if state_var != 1
     {
         if bright_var && global.fog_dark_var 
@@ -422,4 +423,4 @@ object_event_add
         }
         else { event_inherited(); }
     }
-");
+');

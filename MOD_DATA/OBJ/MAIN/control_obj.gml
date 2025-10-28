@@ -114,7 +114,7 @@ object_event_add
     global.pause_input_press_var = global.pause_input_var-global.pause_input_prev_var;
     global.back_input_press_var = global.back_input_var-global.back_input_prev_var;
     // This is pause now
-    if global.pause_input_press_var == 1 && !instance_exists(pause_menu_obj)
+    if global.pause_input_press_var == 1 && !instance_exists(pause_menu_obj) && global.draw_3d_var
     {
         /*global.mouse_free_var = !global.mouse_free_var;
         action_set_cursor(-1,global.mouse_free_var);
@@ -288,7 +288,7 @@ object_event_add
         display_mouse_set(display_get_width()/2,display_get_height()/2);
     }
 ');
-// Room End Event
+// Step End Event
 object_event_add(argument0,ev_step,ev_step_end,'
     update_alarm_scr(global.true_delta_time_var);
     // Update FMOD!
@@ -320,12 +320,11 @@ object_event_add
     room_caption = "Spookys Jump Scare Mansion - Project Recode | Room: "+string(global.rm_count_var)+" ("+global.rm_name_var+") | TPS: "+string(fps)+local.fps_str;
     global.draw_time_var = 0;
 ')
-// Room End
+// Room End Eventt
 object_event_add
 (argument0,ev_other,ev_room_end,'
     event_inherited();
-    spawn_reset_scr();
-    mark_reset_scr();
+    rm_reset_scr();
     window_x_var = window_get_x();
     window_y_var = window_get_y();
     window_w_var = window_get_width();

@@ -10,6 +10,7 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,0,"
     event_perform(ev_other,ev_room_start);
+    
     ini_open(global.lang_var);
 	rm_str_var = ini_read_string('UI','rm','UI_rm');
     hp_str_var = ini_read_string('UI','hp','UI_hp');
@@ -17,7 +18,11 @@ object_event_add
     spd_str_var = ini_read_string('UI','spd','UI_spd');
     health_str_var = ini_read_string('UI','health','UI_health');
     stamina_str_var = ini_read_string('UI','stamina','UI_stamina');
+    taker_str_var = 'YOUR TAKING TOO LONG '
 	ini_close();
+    // Taker
+    taker_color_var = make_color_rgb(159,0,0);
+    taker_cool_var = true;
 ");
 // Room Start
 object_event_add
@@ -35,7 +40,39 @@ object_event_add
     scale_big_var = max(0.75*scale_var,scale_min_var);
     scale_med_var = max(0.5*scale_var,scale_min_var);
     scale_small_var = max(0.25*scale_var,scale_min_var);
+    // Taker
+    taker_xspd_var = -2*scale_var;
+    taker_yspd_var = 2*scale_var;
+    taker_xscale_var = 0.86*scale_var;
+    taker_yscale_var = scale_var;
+    draw_set_font(taker_font);
+    taker_w_var = string_width_ext(taker_str_var,-1,-1)*taker_xscale_var;
+    taker_h_var = (string_height_ext(taker_str_var,-1,-1)+8)*taker_yscale_var;
+    draw_set_font(main_font);
+    if taker_classic_var
+    {
+        taker_off_arr[0] = 222*scale_var;
+        taker_off_arr[1] = 94*scale_var;
+        taker_off_arr[2] = 13*scale_var;
+        taker_off_arr[3] = 68*scale_var;
+        taker_off_arr[4] = 94*scale_var;
+        taker_off_arr[5] = 57*scale_var;
+        taker_off_arr[6] = 230*scale_var;
+        taker_off_len_var = 7*scale_var;
+    }
+    else
+    {
+        taker_off_len_var = round(view_hview[par_var.cam_id_var]/taker_h_var);
+        for (local.i=0; local.i < taker_off_len_var; local.i+=1;)
+        { taker_off_arr[local.i] = random(taker_w_var); }
+    }
 ");
+// Step Event
+object_event_add
+(argument0,ev_step,ev_step_normal,'
+    taker_x_var += taker_xspd_var*global.delta_time_var;
+    taker_y_var += taker_yspd_var*global.delta_time_var;
+');
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,"
@@ -53,9 +90,23 @@ object_event_add
         // Taker!
         if par_var.alarm_arr[3,0] < par_var.alarm_arr[3,1]/2
         {
+            if par_var.alarm_arr[3,0] <= 0 { local.per = 1; }
+            else { local.per = median(0,1,1-(2*par_var.alarm_arr[3,0]/par_var.alarm_arr[3,1])); }
+            // Take your text!
+            draw_set_color(taker_color_var); draw_set_alpha(local.per);
+            draw_set_font(taker_font);
+            for (local.i=0; local.i<round(view_hview[view_current]/taker_h_var)+(taker_off_len_var*2); local.i+=1;)
+            {
+                if taker_cool_var && (local.i mod taker_off_len_var) mod 2 { local.xtmp = ((-taker_x_var+taker_off_arr[local.i mod taker_off_len_var]) mod taker_w_var)-taker_w_var; }
+                else { local.xtmp = ((taker_x_var+taker_off_arr[local.i mod taker_off_len_var]) mod taker_w_var)-taker_w_var; }
+                local.ytmp = (taker_y_var mod (taker_h_var*taker_off_len_var))+(taker_h_var*(local.i-taker_off_len_var));
+                for (local.w=0; local.w<round(view_wview[view_current]/taker_w_var)+2; local.w+=1;)
+                { draw_text_transformed(local.xtmp+(local.w*taker_w_var),local.ytmp,taker_str_var,taker_xscale_var,taker_yscale_var,0); }
+            }
+            draw_set_font(main_font); draw_set_alpha(1);
+            // Turn it red
+            local.value = lerp_scr(0,255,local.per);
             draw_set_blend_mode(bm_subtract);
-            if par_var.alarm_arr[3,0] <= 0 { local.value = 255; }
-            else { local.value = lerp_scr(255,0,median(0,1,2*par_var.alarm_arr[3,0]/par_var.alarm_arr[3,1])); }
             draw_set_color(make_color_rgb(0,local.value,local.value));
             draw_rectangle
             (
@@ -196,7 +247,7 @@ Clear Time
 Taker
     Taker: '+string(par_var.alarm_arr[3,0])+' / '+string(par_var.alarm_arr[3,1])
             draw_text_transformed(0,128*scale_var,local.str,scale_small_var,scale_small_var,0);
-            d3d_set_hidden(true);
         }
+        d3d_set_hidden(true);
     }
 ");

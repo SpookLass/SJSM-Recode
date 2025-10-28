@@ -78,7 +78,7 @@ object_event_add
                     if persistent && object_index != other.object_index && object_index != control_obj
                     { instance_destroy(); }
                 }
-                fmod_snd_play_scr(confirm_snd);
+                fmod_all_stop_scr();
                 room_goto(menu_rm);
                 
                 break;
@@ -109,10 +109,10 @@ object_event_add
     global.mouse_free_var = false;
     action_set_cursor(-1,global.mouse_free_var);
     display_mouse_set(display_get_width()/2,display_get_height()/2);
+    fmod_inst_stop_scr(mus_snd_var);
     fmod_group_set_pause_scr(snd_group_mon_const,false);
     fmod_group_set_pause_scr(snd_group_voice_const,false);
     fmod_inst_set_pause_scr(mus_control_obj.snd_var,false);
-    fmod_inst_stop_scr(mus_snd_var);
     global.pause_var = false;
 ');
 // Scale Event
@@ -191,6 +191,8 @@ object_event_add
         draw_text_transformed(center_var-shadow_off_01_var,top_var+shadow_off_01_var,str_var,scale_var,scale_var,0);
         draw_set_color(c_white);
         draw_text_transformed(center_var,top_var,str_var,scale_var,scale_var,0);
-        draw_set_halign(fa_left); 
+        draw_set_halign(fa_left);
+        // Hidden
+        d3d_set_hidden(true);
     }
 ');

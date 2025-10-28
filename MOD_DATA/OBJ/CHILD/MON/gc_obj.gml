@@ -8,7 +8,7 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create Event
 object_event_add
-(argument0,ev_create,1,"
+(argument0,ev_create,1,'
     ini_open(global.lang_var);
     switch global.name_var
     {
@@ -16,17 +16,17 @@ object_event_add
         case name_hd_const:
         case name_fanon_const:
         {
-            name_var = ini_read_string('NAME','gc','NAME_gc');
+            name_var = ini_read_string("NAME","gc","NAME_gc");
             break;
         }
         case name_num_og_const:
         {
-            name_var = ini_read_string('NAME','gc_num_og','NAME_gc_num_og');
+            name_var = ini_read_string("NAME","gc_num_og","NAME_gc_num_og");
             break;
         }
         case name_num_hd_const:
         {
-            name_var = ini_read_string('NAME','gc_num_hd','NAME_gc_num_hd');
+            name_var = ini_read_string("NAME","gc_num_hd","NAME_gc_num_hd");
             break;
         }
     }
@@ -78,27 +78,27 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
-        bg_var = background_add(vanilla_directory_const+'\3D\npc_7_tex.png',false,false);
+        bg_var = background_add(vanilla_directory_const+"\3D\npc_7_tex.png",false,false);
         mdl_var = d3d_model_create();
-        d3d_model_load(mdl_var,main_directory_const+'\MDL\MON\gc_mdl.gmmod');
-        wall_bg_var = background_add(vanilla_directory_const+'\TEX\HOS_21.png',false,false);
-        floor_bg_var = background_add(vanilla_directory_const+'\TEX\HOS_14.png',false,false);
-        eff_bg_var = background_add(vanilla_directory_const+'\TEX\sprites\EX_13_spr.png',false,false);
-        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\glitch_01_snd.wav',true);
-        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\glitch_02_snd.wav',true);
-        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\glitch_03_snd.wav',true);
-        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\glitch_04_snd.wav',true);
-        glitch_snd_arr[0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\glitch_01_snd.wav');
-        glitch_snd_arr[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\glitch_02_snd.wav');
-        glitch_snd_arr[2] = fmod_snd_add_scr(main_directory_const+'\SND\MON\glitch_03_snd.wav');
-        glitch_snd_arr[3] = fmod_snd_add_scr(main_directory_const+'\SND\MON\glitch_04_snd.wav');
+        d3d_model_load(mdl_var,main_directory_const+"\MDL\MON\gc_mdl.gmmod");
+        wall_bg_var = background_add(vanilla_directory_const+"\TEX\HOS_21.png",false,false);
+        floor_bg_var = background_add(vanilla_directory_const+"\TEX\HOS_14.png",false,false);
+        eff_bg_var = background_add(vanilla_directory_const+"\TEX\sprites\EX_13_spr.png",false,false);
+        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_01_snd.wav",true);
+        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_02_snd.wav",true);
+        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_03_snd.wav",true);
+        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_04_snd.wav",true);
+        glitch_snd_arr[0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_01_snd.wav");
+        glitch_snd_arr[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_02_snd.wav");
+        glitch_snd_arr[2] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_03_snd.wav");
+        glitch_snd_arr[3] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_04_snd.wav");
         for (local.i=0; local.i<glitch_snd_len_var; local.i+=1;)
         { fmod_snd_set_group_scr(glitch_snd_arr[local.i,0],snd_group_mon_const); }
-        dmg_snd_arr[0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\cow_01_snd.wav');
-        dmg_snd_arr[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\cow_02_snd.wav');
+        dmg_snd_arr[0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\cow_01_snd.wav");
+        dmg_snd_arr[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\cow_02_snd.wav");
         for (local.i=0; local.i<dmg_snd_len_var; local.i+=1;)
         { fmod_snd_set_group_scr(dmg_snd_arr[local.i,0],snd_group_mon_const); }
-        mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+'\SND\AMB\M7_AMB.mp3');
+        mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\M7_AMB.mp3");
     }
     tex_var = background_get_texture(bg_var);
     // Movement
@@ -241,10 +241,10 @@ object_event_add
     event_inherited();
     if upside_var { z_off_var = 24.5; } // 21.3
     do_snd_var = false;
-");
+');
 // Destroy Event
 object_event_add
-(argument0,ev_destroy,0,"
+(argument0,ev_destroy,0,'
     event_inherited();
     global.wall_bg_tex = background_get_texture(global.wall_bg);
     global.floor_bg_tex = background_get_texture(global.floor_bg);
@@ -268,10 +268,10 @@ object_event_add
     { fov_var = global.fov_var; }
     with gc_eff_obj
     { instance_destroy(); }
-");
+');
 // Room Start Event
 object_event_add
-(argument0,ev_other,ev_room_start,"
+(argument0,ev_other,ev_room_start,'
     event_inherited();
     if move_type_var == 3
     {
@@ -306,19 +306,19 @@ object_event_add
             old_var = other.eff_old_var;
         }
     }
-");
+');
 // Delay
 object_event_add
-(argument0,ev_alarm,0,"
+(argument0,ev_alarm,0,'
     event_inherited();
     if rand_alarm_min_var > 0
     { set_alarm_scr(8,irandom_range(rand_alarm_min_var,rand_alarm_max_var)); }
     if move_type_var == 3
     { set_alarm_scr(11,move_alarm_var); }
-");
+');
 // Movement
 object_event_add
-(argument0,ev_other,ev_user0,"
+(argument0,ev_other,ev_user0,'
     if spd_per_var != 1 { spd_mult_var *= spd_per_var; }
     local.yaw = point_direction(x,y,target_x_var,target_y_var);
     local.pitch = point_direction_3d_scr(x,y,z,target_x_var,target_y_var,target_z_var);
@@ -370,31 +370,31 @@ object_event_add
         }
     }
     spd_mult_var = 1;
-");
+');
 // Random anim
 object_event_add
-(argument0,ev_alarm,8,"
+(argument0,ev_alarm,8,'
     if !irandom(inv_chance_var-1) && image_alpha != 0 { image_alpha = 0; }
     else { image_alpha = choose(1,random_range(0.5,1)); }
     set_alarm_scr(8,irandom_range(rand_alarm_min_var,rand_alarm_max_var));
-");
+');
 // Seen Alarm
 object_event_add
-(argument0,ev_alarm,9,"
+(argument0,ev_alarm,9,'
     do_seen_var = true;
     event_perform(ev_alarm,10);
     set_alarm_scr(10,-1);
-");
+');
 // Speed Reset
 object_event_add
-(argument0,ev_alarm,10,"
+(argument0,ev_alarm,10,'
     spd_per_var = 1;
     if spd_var > spd_base_var
     { set_motion_3d_scr(spd_base_var,true); }
-");
+');
 // Move alarm (move type 3 only)
 object_event_add
-(argument0,ev_alarm,11,"
+(argument0,ev_alarm,11,'
     if move_var
     {
         local.spd = spd_base_var*spd_mult_var*move_alarm_var;
@@ -428,12 +428,11 @@ object_event_add
             }
             else
             {
-                // I think it's based on grid snap?
+                // I think its based on grid snap?
                 local.xnext = path_get_point_x(path_var,local.spd/global.grid_snap_var);
                 local.ynext = path_get_point_y(path_var,local.spd/global.grid_snap_var);
                 if local.xnext != 0 || local.ynext != 0
                 {
-                    // if keyboard_check(ord('P')) { show_message(string(point_distance(x,y,local.xnext,local.ynext)/local.spd)); }
                     yaw_var = point_direction(x,y,local.xnext,local.ynext)
                     x = local.xnext;
                     y = local.ynext;
@@ -454,10 +453,10 @@ object_event_add
         mdl_pitch_var = pitch_var;
     }
     set_alarm_scr(11,move_alarm_var);
-");
+');
 // Animation
 object_event_add
-(argument0,ev_other,ev_user1,"
+(argument0,ev_other,ev_user1,'
     spr_prog_var -= spr_spd_var*global.delta_time_var;
     if spr_prog_var <= 0
     {
@@ -468,10 +467,10 @@ object_event_add
         if upside_var { z_off_var += 24.5; }
         visible = frac_chance_scr(vis_num_var,vis_den_var);
     }
-");
+');
 // Calculate Seen
 object_event_add
-(argument0,ev_other,ev_user5,"
+(argument0,ev_other,ev_user5,'
     event_inherited();
     if seen_var == true
     {
@@ -507,10 +506,10 @@ object_event_add
         }
         set_alarm_scr(10,irandom_range(spd_delay_min_var,spd_delay_max_var));
     }
-");
+');
 // Attack Success
 object_event_add
-(argument0,ev_other,ev_user3,"
+(argument0,ev_other,ev_user3,'
     event_inherited();
     fmod_snd_play_scr(dmg_snd_arr[irandom(dmg_snd_len_var-1)]);
     if dmg_stun_alarm_var > 0
@@ -528,10 +527,10 @@ object_event_add
             set_alarm_scr(9,dmg_stun_alarm_var);
         }
     }
-");
+');
 // Draw Event
 object_event_add
-(argument0,ev_draw,0,"
+(argument0,ev_draw,0,'
     if on_var || visible_var
     {
         draw_set_color(image_blend); draw_set_alpha(image_alpha);
@@ -544,4 +543,4 @@ object_event_add
         d3d_transform_set_identity();
         draw_set_color(c_white); draw_set_alpha(1);
     }
-");
+');

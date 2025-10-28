@@ -787,10 +787,10 @@ object_event_add
 					
 					case 3:
 					{
-						save_type -= 1;
+						save_type_var -= 1;
 						
-						if save_type < 0
-						save_type = 2;
+						if save_type_var < 0
+						save_type_var = 2;
 						break;
 					}
 					
@@ -829,10 +829,10 @@ object_event_add
 					
 					case 3:
 					{
-						save_type += 1;
+						save_type_var += 1;
 						
-						if save_type > 2
-						save_type = 0;
+						if save_type_var > 2
+						save_type_var = 0;
 						break;
 					}
 					
@@ -1031,7 +1031,7 @@ object_event_add
 					save_rm_count_var = ini_read_real('MAIN','rm_count',0);
 					save_mode_var = ini_read_real('SETTING','mode',1);
 					save_diff_var = ini_read_real('MAIN','diff',0);
-					save_type = ini_read_real('BEHAVIOR','type',0);
+					save_type_var = ini_read_real('BEHAVIOR','type',0);
 					save_custom_var = ini_read_real('MAIN','custom',0);
 					
 					ini_close();
@@ -1050,7 +1050,7 @@ object_event_add
 					save_rm_count_var = ini_read_real('MAIN','rm_count',0);
 					save_mode_var = ini_read_real('SETTING','mode',1);
 					save_diff_var = ini_read_real('MAIN','diff',0);
-					save_type = ini_read_real('BEHAVIOR','type',0);
+					save_type_var = ini_read_real('BEHAVIOR','type',0);
 					save_custom_var = ini_read_real('MAIN','custom',0);
 					
 					ini_close();
@@ -1153,6 +1153,7 @@ object_event_add
                         else { global.zone_var = global.zone_arr[global.zone_num_var]; }
                         tex_scr(-1);
                         global.count_var = get_count_scr();
+                        if local.name == '1987' { instance_create(0,0,otter8_js_obj); }
 						
 						room_goto(save_rm_var);
 					}
@@ -1241,7 +1242,7 @@ object_event_add
                 else if global.main_type_var == 2 { global.diff_var = 6; } // HD
                 else { global.diff_var = save_diff_var; }
                 
-                if save_jump_var == -1 || !save_custom_var { global.jump_var = (save_type_var == 0); }
+                if save_jump_var == -1 || !save_custom_var { global.jump_var = (save_type_var == 0); show_message('It working?'); }
                 else { global.jump_var = save_jump_var; }
 
                 if save_crouch_var == -1 || !save_custom_var { global.crouch_var = (save_type_var == 0); }
@@ -1260,7 +1261,7 @@ object_event_add
                 else { global.lock_var = save_lock_var; }
 
                 if save_dmg_shake_var == -1 || !save_custom_var
-				{ global.dmg_shake_var = (global.diff_var == 5 || global.diff_var = 4); } // Hardest & OG
+				{ global.dmg_shake_var = (global.diff_var == 5 || global.diff_var == 4); } // Hardest & OG
                 else { global.dmg_shake_var = save_dmg_shake_var; }
 
                 if save_mult_type_var == -1 || !save_custom_var
@@ -1389,19 +1390,19 @@ object_event_add
 
 				// Behavior stuff
 				if save_player_type == -1 || !save_custom_var
-                { global.player_type_var = save_type; }
+                { global.player_type_var = save_type_var; }
 				else { global.player_type_var = save_player_type; }
 
 				if save_axe_type == -1 || !save_custom_var
-                { global.axe_type_var = save_type; }
+                { global.axe_type_var = save_type_var; }
 				else { global.axe_type_var = save_axe_type; }
 				
 				if save_gel_type == -1 || !save_custom_var
-                { global.gel_type_var = save_type; }
+                { global.gel_type_var = save_type_var; }
 				else { global.gel_type_var = save_gel_type; }
 				
 				if save_bug_type == -1 || !save_custom_var
-                { global.bug_type_var = save_type; }
+                { global.bug_type_var = save_type_var; }
 				else { global.bug_type_var = save_bug_type; }
 				
 				if save_ringu_type_var == -1 || !save_custom_var
@@ -1493,7 +1494,7 @@ object_event_add
 				else { global.real_ringu_type_var = save_real_ringu_type_var; }
 				
 				if save_tiri_type == -1 || !save_custom_var
-                { global.tiri_type_var = save_type; }
+                { global.tiri_type_var = save_type_var; }
 				else { global.tiri_type_var = save_tiri_type; }
 				
 				if save_lisa_type_var == -1 || !save_custom_var
@@ -1523,6 +1524,7 @@ object_event_add
 				local.axe.par_var = local.player;
 				instance_create(0,0,mus_control_obj);
                 global.count_var = get_count_scr();
+                if save_name_var == '1987' { instance_create(0,0,otter8_js_obj); }
 
                 tex_scr(-1);
                 zone_scr(-1);
@@ -1662,7 +1664,7 @@ object_event_add
 						}
 						case 3:
 						{
-							switch save_type
+							switch save_type_var
 							{
 								case 0: { local.stat_display_var = mod_str_var; break; }
 								case 1: { local.stat_display_var = og_str_var; break; }
@@ -1724,7 +1726,7 @@ object_event_add
                 }
                 case 3:
                 {
-                    switch save_type
+                    switch save_type_var
                     {
                         case 0: { local.stat_display_var = mod_str_var; break; }
                         case 1: { local.stat_display_var = og_str_var; break; }
@@ -2230,7 +2232,7 @@ object_event_add
                 }
 				draw_text_transformed(1232,275,'DIFFICULTY:'+string(local.stat_display_var),0.6,0.6,0);
 				
-				switch save_type
+				switch save_type_var
 				{
 					case 0:
 					{

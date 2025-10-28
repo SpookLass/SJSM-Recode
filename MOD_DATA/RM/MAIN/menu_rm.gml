@@ -9,9 +9,9 @@ room_set_code
 	global.rm_name_var = ini_read_string('ROOM','menu','ROOM_menu');
 	ini_close();
     // Spawn
-    global.spawn_len_var = 0;
+    global.spawn_len_var = -1;
     // Mark
-    global.mark_len_var = 0;
+    global.mark_len_var = -1;
     // 2D Draw
     d3d_end();
     global.draw_3d_var = false;

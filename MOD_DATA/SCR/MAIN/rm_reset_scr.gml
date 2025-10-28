@@ -1,0 +1,5 @@
+global.cam_end_var = 800;
+global.draw_3d_var = false;
+d3d_end();
+spawn_reset_scr();
+mark_reset_scr();

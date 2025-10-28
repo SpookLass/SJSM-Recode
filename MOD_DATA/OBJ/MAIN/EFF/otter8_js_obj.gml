@@ -26,24 +26,31 @@ object_event_add
     snd_var = 0;
     alarm_len_var = 2;
     chance_alarm_var = 60;
-    chance_num_var = 100;
-    chance_den_var = 1000;
+    chance_num_var = 1;
+    chance_den_var = 1987;
     anim_alarm_var = 24;
     set_alarm_scr(0,chance_alarm_var+irandom(chance_alarm_var));
 ');
-
+// Destroy Event
+object_event_add
+(argument0,ev_destroy,0,'
+    if instance_number(object_index) <= 1
+    {
+        sprite_delete(spr_var);
+        fmod_snd_free_scr(js_snd_var);
+    }
+');
 // Step Event
 object_event_add
-(argument0,ev_step,ev_step_normal,"
+(argument0,ev_step,ev_step_normal,'
     if visible
     {
         spr_id_var = floor(lerp_scr(sprite_get_number(spr_var),0,alarm_arr[1,0]/alarm_arr[1,1]));
     }
-");
-// 
+');
+// Jump alarm
 object_event_add
-(argument0,ev_alarm,0,"
-    test_var = irandom_range(1,1000)
+(argument0,ev_alarm,0,'
     if frac_chance_scr(chance_num_var,chance_den_var)
     {
         visible = true
@@ -52,28 +59,29 @@ object_event_add
         set_alarm_scr(1,anim_alarm_var)
     }
     else { set_alarm_scr(0,chance_alarm_var); }
-");
+');
+// Stop Alarm
 object_event_add
-(argument0,ev_alarm,1,"
+(argument0,ev_alarm,1,'
     fmod_inst_stop_scr(snd_var);
     visible = false
     spr_id_var = 0;
     set_alarm_scr(0,chance_alarm_var);
-");
+');
 // Room End
 object_event_add
-(argument0,ev_other,ev_room_end,"
-    // Nothin'
-");
+(argument0,ev_other,ev_room_end,'
+    // Nothin
+');
 // Room Start
 object_event_add
-(argument0,ev_other,ev_room_start,"
+(argument0,ev_other,ev_room_start,'
     if alarm_arr[0,0] <= 0 && alarm_arr[1,0] <= 0
     { set_alarm_scr(0,60); visible = false; }
-");
+');
 // Draw Event
 object_event_add
-(argument0,ev_draw,0,"
+(argument0,ev_draw,0,'
     if view_current == cam_id_var || cam_id_var == -1
     {
         d3d_set_projection_ortho
@@ -97,4 +105,4 @@ object_event_add
         draw_set_color(c_white); draw_set_alpha(1);
         d3d_set_hidden(true);
     }
-");
+');

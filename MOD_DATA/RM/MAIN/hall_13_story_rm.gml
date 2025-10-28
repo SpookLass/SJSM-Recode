@@ -39,18 +39,9 @@ room_set_code
     local.entrance.z = global.spawn_arr[0,2];
     local.entrance.direction = global.spawn_arr[0,3]+180;
     // Exit
-    local.unlock = irandom_range(1,global.spawn_len_var-1);
+    local.unlock = spawn_create_scr(true,true);
     if local.unlock == 1 { global.mark_arr[0,1] = 176; }
     else { global.mark_arr[0,1] = 112; }
-    for (local.i=1; local.i<global.spawn_len_var; local.i+=1;)
-    {
-        local.exitdoor = instance_create(global.spawn_arr[local.i,0]-lengthdir_x(16,global.spawn_arr[local.i,3]),global.spawn_arr[local.i,1]-lengthdir_y(16,global.spawn_arr[local.i,3]),door_obj);
-        local.exitdoor.direction = global.spawn_arr[local.i,3]+180;
-        local.exittrig = instance_create(global.spawn_arr[local.i,0]-lengthdir_x(8,global.spawn_arr[local.i,3]),global.spawn_arr[local.i,1]-lengthdir_y(8,global.spawn_arr[local.i,3]),door_trig_obj);
-        local.exittrig.z = global.spawn_arr[local.i,2];
-        if local.i != local.unlock { local.exittrig.lock_var = true; }
-        global.spawn_arr[local.i,4] = local.exittrig;
-    }
     // Left
     local.torch = instance_create(144,32,torch_gold_north_obj);
     local.torch.door_var = global.spawn_arr[1,4];
