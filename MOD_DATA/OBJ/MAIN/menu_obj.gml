@@ -1242,7 +1242,7 @@ object_event_add
                 else if global.main_type_var == 2 { global.diff_var = 6; } // HD
                 else { global.diff_var = save_diff_var; }
                 
-                if save_jump_var == -1 || !save_custom_var { global.jump_var = (save_type_var == 0); show_message('It working?'); }
+                if save_jump_var == -1 || !save_custom_var { global.jump_var = (save_type_var == 0); }
                 else { global.jump_var = save_jump_var; }
 
                 if save_crouch_var == -1 || !save_custom_var { global.crouch_var = (save_type_var == 0); }
