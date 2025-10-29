@@ -9,6 +9,14 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,1,'
+    // Sound
+    snd_len_var = 4;
+    snd_dist_var = 500;
+    snd_alarm_min = 90;
+    snd_alarm_max = 240;
+    glitch_snd_len_var = 4;
+    dmg_snd_len_var = 2;
+    // Translations
     ini_open(global.lang_var);
     switch global.name_var
     {
@@ -30,6 +38,12 @@ object_event_add
             break;
         }
     }
+    local.sub_01 = string_replace(ini_read_string("SUB","gc","SUB_gc"),"@n",name_var);
+    local.sub_02 = string_replace(ini_read_string("SUB","gc_glitch","SUB_gc_glitch"),"@n",name_var);
+    for (local.i=0; local.i<dmg_snd_len_var; local.i+=1)
+    { dmg_snd_arr[local.i,1] = local.sub_01; }
+    for (local.i=0; local.i<snd_len_var; local.i+=1)
+    { snd_arr[local.i,1] = local.sub_02; }
     ini_close();
     type_var = 0;
     spd_base_var = 0.7;
@@ -44,13 +58,6 @@ object_event_add
     coll_var[0] = global.mon_wide_coll[0];
     coll_var[1] = global.mon_wide_coll[1];
     coll_var[2] = global.mon_wide_coll[2];
-    // Sound
-    snd_len_var = 4;
-    snd_dist_var = 500;
-    snd_alarm_min = 90;
-    snd_alarm_max = 240;
-    glitch_snd_len_var = 4;
-    dmg_snd_len_var = 2;
     // Theme
     mus_prio_var = theme_mus_prio_const;
     // Assets
@@ -93,9 +100,9 @@ object_event_add
         glitch_snd_arr[2] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_03_snd.wav");
         glitch_snd_arr[3] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_04_snd.wav");
         for (local.i=0; local.i<glitch_snd_len_var; local.i+=1;)
-        { fmod_snd_set_group_scr(glitch_snd_arr[local.i,0],snd_group_mon_const); }
-        dmg_snd_arr[0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\cow_01_snd.wav");
-        dmg_snd_arr[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\cow_02_snd.wav");
+        { fmod_snd_set_group_scr(glitch_snd_arr[local.i],snd_group_mon_const); }
+        dmg_snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\cow_01_snd.wav");
+        dmg_snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\cow_02_snd.wav");
         for (local.i=0; local.i<dmg_snd_len_var; local.i+=1;)
         { fmod_snd_set_group_scr(dmg_snd_arr[local.i,0],snd_group_mon_const); }
         mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\M7_AMB.mp3");
@@ -526,7 +533,10 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user3,'
     event_inherited();
-    fmod_snd_play_scr(dmg_snd_arr[irandom(dmg_snd_len_var-1)]);
+    local.index = irandom(dmg_snd_len_var-1);
+    snd_var = fmod_snd_play_scr(dmg_snd_arr[local.index,0]);
+    sub_var[0] = dmg_snd_arr[local.index,1]
+    sub_var[1] = dmg_snd_arr[local.index,2]
     if dmg_stun_alarm_var > 0
     {
         set_motion_3d_scr(0,true);

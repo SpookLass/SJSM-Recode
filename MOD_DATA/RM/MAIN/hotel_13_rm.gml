@@ -42,7 +42,7 @@ room_set_code
     global.draw_3d_var = true;
     // Doors
     local.unlock = spawn_create_scr(true,true);
-    for (local.i=0; local.i<global.spawn_len_var; local.i+=1;)
+    for (local.i=1; local.i<global.spawn_len_var; local.i+=1;)
     {
         if local.i != local.unlock
         { instance_create(global.spawn_arr[local.i,0],global.spawn_arr[local.i,1],bar_vert_obj); }

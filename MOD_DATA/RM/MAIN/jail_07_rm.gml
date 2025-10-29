@@ -46,7 +46,6 @@ room_set_code
     {
         if local.i != local.unlock
         {
-            local.exittrig.lock_var = true;
             instance_create(global.spawn_arr[local.i,0]-24,global.spawn_arr[local.i,1],bone_rand_obj);
             instance_create(global.spawn_arr[local.i,0]-48,global.spawn_arr[local.i,1],bar_vert_obj);
         }

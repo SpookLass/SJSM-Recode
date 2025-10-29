@@ -8,7 +8,16 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create Event
 object_event_add
-(argument0,ev_create,1,"
+(argument0,ev_create,1,'
+    // Sounds
+    snd_len_var = 4;
+    wake_snd_var[0] = true; // Has a wake sound, otherwise itll use a normal sound
+    snd_num_var = 1;
+    snd_den_var = 2;
+    snd_alarm_min_var = 80;
+    snd_alarm_max_var = 240;
+    snd_dist_var = 600;
+    // Translations
     ini_open(global.lang_var);
     switch global.name_var
     {
@@ -16,16 +25,20 @@ object_event_add
         case name_hd_const:
         case name_fanon_const:
         {
-            name_var = ini_read_string('NAME','gel','NAME_gel');
+            name_var = ini_read_string("NAME","gel","NAME_gel");
             break;
         }
         case name_num_og_const:
         case name_num_hd_const:
         {
-            name_var = ini_read_string('NAME','gel_num','NAME_gel_num');
+            name_var = ini_read_string("NAME","gel_num","NAME_gel_num");
             break;
         }
     }
+    local.sub = string_replace(ini_read_string("SUB","gel","SUB_gel"),"@n",name_var);
+    for (local.i=0; local.i<snd_len_var; local.i+=1)
+    { snd_arr[local.i,1] = local.sub; }
+    wake_snd_var[2] = local.sub;
     ini_close();
     type_var = 0;
     spd_base_var = 0.6;
@@ -38,14 +51,6 @@ object_event_add
     h_var = 20;
     z_off_var = 2;
     dupe_var = dupe_canon_const;
-    // Sounds
-    snd_len_var = 4;
-    wake_snd_var[0] = true; // Has a wake sound, otherwise it'll use a normal sound
-    snd_num_var = 1;
-    snd_den_var = 2;
-    snd_alarm_min_var = 80;
-    snd_alarm_max_var = 240;
-    snd_dist_var = 600;
     // Theme
     mus_prio_var = mon_mus_prio_const;
     // Assets
@@ -67,14 +72,14 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
-        spr_var = sprite_add(vanilla_directory_const+'\TEX\sprites\MS_01_spr.png',5,false,false,0,0);
-        slime_bg_var = background_add(main_directory_const+'\BG\MON\gel_slime_bg.png',false,false);
-        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\gel_01_snd.wav',true);
-        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\gel_02_snd.wav',true);
-        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\gel_03_snd.wav',true);
-        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\gel_04_snd.wav',true);
-        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\gel_wake_snd.wav');
-        mus_snd_var = fmod_snd_add_scr(main_directory_const+'\SND\MON\gel_mus_snd.mp3');
+        spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS_01_spr.png",5,false,false,0,0);
+        slime_bg_var = background_add(main_directory_const+"\BG\MON\gel_slime_bg.png",false,false);
+        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_01_snd.wav",true);
+        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_02_snd.wav",true);
+        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_03_snd.wav",true);
+        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_04_snd.wav",true);
+        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_wake_snd.wav");
+        mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_mus_snd.mp3");
     }
     // Coward
     do_hurt_var = 2;
@@ -165,7 +170,7 @@ object_event_add
         }
     }
     alarm_len_var = 9;
-");
+');
 // Room Start Event
 object_event_add
 (argument0,ev_other,ev_room_start,"

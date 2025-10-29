@@ -8,9 +8,23 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create Event
 object_event_add
-(argument0,ev_create,1,"
+(argument0,ev_create,1,'
     ini_open(global.lang_var);
-    name_var = ini_read_string('NAME','clown','NAME_clown');
+    name_var = ini_read_string("NAME","clown","NAME_clown");
+    local.sub_01 = string_replace(ini_read_string("SUB","clown","SUB_clown"),"@n",name_var);
+    local.sub_02 = string_replace(ini_read_string("SUB","clown_laugh","SUB_clown_laugh"),"@n",name_var);
+    snd_arr[0,1] = local.sub_01;
+    snd_arr[1,1] = local.sub_01;
+    snd_arr[2,1] = local.sub_01;
+    snd_arr[3,1] = local.sub_01;
+    snd_arr[4,1] = local.sub_02;
+    snd_arr[5,1] = local.sub_02;
+    snd_arr[6,1] = local.sub_02;
+    snd_arr[7,1] = local.sub_02;
+    snd_arr[8,1] = local.sub_02;
+    snd_arr[9,1] = local.sub_02;
+    leave_snd_arr[0,1] = ini_read_string("SUB","clown_leave","SUB_clown_leave"); leave_snd_arr[0,2] = true;
+    leave_snd_arr[1,1] = ini_read_string("SUB","clown_bye","SUB_clown_bye"); leave_snd_arr[1,2] = true;
     ini_close();
     type_var = 1;
     spd_base_var = 1; // Technically 1.r3 in DH due to a bug
@@ -52,19 +66,19 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
-        spr_var = sprite_add(dh_directory_const+'\TEX\sprites\CLWN_SPR1.png',6,false,false,0,0);
-        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\clown_01_snd.wav',true);
-        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\clown_02_snd.wav',true);
-        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\clown_03_snd.wav',true);
-        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\clown_04_snd.wav',true);
-        snd_arr[4,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\clown_05_snd.wav',true);
-        snd_arr[5,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\clown_06_snd.wav',true);
-        snd_arr[6,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\clown_07_snd.wav',true);
-        snd_arr[7,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\clown_08_snd.wav',true);
-        snd_arr[8,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\clown_09_snd.wav',true);
-        snd_arr[9,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\clown_10_snd.wav',true);
-        leave_snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\clown_leave_01_snd.wav');
-        leave_snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\clown_leave_02_snd.wav');
+        spr_var = sprite_add(dh_directory_const+"\TEX\sprites\CLWN_SPR1.png",6,false,false,0,0);
+        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\clown_01_snd.wav",true);
+        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\clown_02_snd.wav",true);
+        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\clown_03_snd.wav",true);
+        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\clown_04_snd.wav",true);
+        snd_arr[4,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\clown_05_snd.wav",true);
+        snd_arr[5,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\clown_06_snd.wav",true);
+        snd_arr[6,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\clown_07_snd.wav",true);
+        snd_arr[7,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\clown_08_snd.wav",true);
+        snd_arr[8,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\clown_09_snd.wav",true);
+        snd_arr[9,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\clown_10_snd.wav",true);
+        leave_snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\clown_leave_01_snd.wav");
+        leave_snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\clown_leave_02_snd.wav");
         for (local.i=0; local.i<leave_snd_len_var; local.i+=1;)
         {
             fmod_snd_set_minmax_dist_scr(leave_snd_arr[local.i,0],0,leave_snd_dist_var);
@@ -98,7 +112,7 @@ object_event_add
         }
         
     }
-");
+');
 // Destroy Event
 object_event_add
 (argument0,ev_destroy,0,"
@@ -163,3 +177,11 @@ object_event_add
         if alarm_arr[6,0] <= 0 { set_alarm_scr(6,irandom_range(snd_alarm_min_var,snd_alarm_max_var)); }
     }
 ");
+// Leave
+object_event_add
+(argument0,ev_other,ev_user15,'
+    local.index = irandom(leave_snd_len_var-1);
+    snd_var = fmod_snd_play_scr(leave_snd_arr[local.index,0]);
+    sub_var[0] = leave_snd_arr[local.index,1];
+    sub_var[1] = leave_snd_arr[local.index,2];
+')

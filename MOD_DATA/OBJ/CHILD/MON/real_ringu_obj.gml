@@ -8,28 +8,36 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create Event
 object_event_add
-(argument0,ev_create,1,"
+(argument0,ev_create,1,'
     ini_open(global.lang_var);
     switch global.name_var
     {
         case name_og_const:
         case name_num_og_const:
         {
-            name_var = ini_read_string('NAME','real_ringu_og','NAME_real_ringu_og');
+            name_var = ini_read_string("NAME","real_ringu_og","NAME_real_ringu_og");
             break;
         }
         case name_hd_const:
         case name_fanon_const:
         {
-            name_var = ini_read_string('NAME','real_ringu_hd','NAME_real_ringu_hd');
+            name_var = ini_read_string("NAME","real_ringu_hd","NAME_real_ringu_hd");
             break;
         }
         case name_num_hd_const:
         {
-            name_var = ini_read_string('NAME','real_ringu_num','NAME_real_ringu_num');
+            name_var = ini_read_string("NAME","real_ringu_num","NAME_real_ringu_num");
             break;
         }
     }
+    snd_arr[0,1] = ini_read_string("SUB","ringu_01","SUB_ringu_01"); snd_arr[0,2] = true;
+    snd_arr[1,1] = ini_read_string("SUB","ringu_02","SUB_ringu_02"); snd_arr[1,2] = true;
+    snd_arr[2,1] = ini_read_string("SUB","ringu_03","SUB_ringu_03"); snd_arr[2,2] = true;
+    snd_arr[3,1] = string_replace(ini_read_string("SUB","ringu_04","SUB_ringu_04"),"@n",name_var);
+    snd_arr[4,1] = string_replace(ini_read_string("SUB","ringu_hurt","SUB_ringu_hurt"),"@n",name_var);
+    wake_snd_var[2] = string_replace(ini_read_string("SUB","ringu_wake","SUB_ringu_wake"),"@n",name_var);
+    hurt_snd_var[2] = snd_arr[4,1];
+    ini_close();
     type_var = 0;
     dur_var = 25;
     delay_var = 173;
@@ -67,17 +75,17 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
-        state_spr_var[0] = sprite_add(vanilla_directory_const+'\TEX\sprites\MS3_03_spr.png',6,false,false,0,0);
-        state_spr_var[1] = sprite_add(vanilla_directory_const+'\TEX\sprites\MS3_04_spr.png',6,false,false,0,0);
-        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\ringu_01_snd.wav',true);
-        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\ringu_02_snd.wav',true);
-        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\ringu_03_snd.wav',true);
-        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\ringu_04_snd.wav',true);
-        snd_arr[4,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\ringu_laugh_snd.wav',true);
-        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\ringu_real_wake_snd.wav');
-        cam_snd_var = fmod_snd_add_scr(main_directory_const+'\SND\MON\ringu_cam_snd.wav');
+        state_spr_var[0] = sprite_add(vanilla_directory_const+"\TEX\sprites\MS3_03_spr.png",6,false,false,0,0);
+        state_spr_var[1] = sprite_add(vanilla_directory_const+"\TEX\sprites\MS3_04_spr.png",6,false,false,0,0);
+        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_01_snd.wav",true);
+        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_02_snd.wav",true);
+        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_03_snd.wav",true);
+        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_04_snd.wav",true);
+        snd_arr[4,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_laugh_snd.wav",true);
+        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_real_wake_snd.wav");
+        cam_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_cam_snd.wav");
         fmod_snd_set_group_scr(cam_snd_var,snd_group_mon_const);
-        mus_snd_var = fmod_snd_add_scr(main_directory_const+'\SND\MON\ringu_real_mus_snd.mp3');
+        mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_real_mus_snd.mp3");
         fmod_snd_set_loop_point_scr(mus_snd_var,0.5,1);
     }
     // Laugh
@@ -179,7 +187,7 @@ object_event_add
     alarm_len_var = 9;
     // Stuff
     event_perform(ev_other,ev_user14);
-");
+');
 // Room Start Event
 object_event_add
 (argument0,ev_other,ev_room_start,"

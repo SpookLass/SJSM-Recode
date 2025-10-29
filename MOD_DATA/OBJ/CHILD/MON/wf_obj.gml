@@ -8,7 +8,7 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create Event
 object_event_add
-(argument0,ev_create,1,"
+(argument0,ev_create,1,'
     ini_open(global.lang_var);
     switch global.name_var
     {
@@ -17,15 +17,16 @@ object_event_add
         case name_fanon_const:
         case name_num_og_const:
         {
-            name_var = ini_read_string('NAME','wf','NAME_wf');
+            name_var = ini_read_string("NAME","wf","NAME_wf");
             break;
         }
         case name_num_hd_const:
         {
-            name_var = ini_read_string('NAME','wf_num','NAME_wf_num');
+            name_var = ini_read_string("NAME","wf_num","NAME_wf_num");
             break;
         }
     }
+    snd_arr[0,1] = string_replace(ini_read_string("SUB","wf","SUB_wf"),"@n",name_var);
     ini_close();
     type_var = 0;
     spr_spd_var = 1;
@@ -37,6 +38,12 @@ object_event_add
     h_var = 4.1;
     z_off_base_var = 14;
     z_off_var = 14;
+    // Sounds
+    do_snd_var = 1; // At least for now
+    snd_loop_var = true;
+    snd_dist_var = 600;
+    snd_len_var = 1;
+    glitch_snd_len_var = 4;
     // Assets
         // Search for existing assets to save memory
     with object_index
@@ -64,16 +71,16 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
-        spr_var = sprite_add(vanilla_directory_const+'\TEX\sprites\MS28_01_spr.png',8,false,false,0,0);
-        bg_var = background_add(vanilla_directory_const+'\TEX\sprites\MS28_02_spr.png',false,false);
-        tex_spr_var = sprite_add(vanilla_directory_const+'\TEX\sprites\MS28_03_spr.png',3,false,false,0,0);
-        door_bg_var = background_add(vanilla_directory_const+'\TEX\sprites\MS28_04_spr.png',false,false);
-        light_wall_spr_var = sprite_add(main_directory_const+'\SPR\MON\wf_light_wall_spr.png',2,false,false,0,0);
-        light_floor_spr_var = sprite_add(main_directory_const+'\SPR\MON\wf_light_floor_spr.png',2,false,false,0,0);
-        eff_spr_var = sprite_add(main_directory_const+'\SPR\DEAD\killer_static_02_spr.png',6,false,false,0,0);
-        web_bg_var = background_add(vanilla_directory_const+'\TEX\sprites\MS28_05_spr.png',false,false);
+        spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS28_01_spr.png",8,false,false,0,0);
+        bg_var = background_add(vanilla_directory_const+"\TEX\sprites\MS28_02_spr.png",false,false);
+        tex_spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS28_03_spr.png",3,false,false,0,0);
+        door_bg_var = background_add(vanilla_directory_const+"\TEX\sprites\MS28_04_spr.png",false,false);
+        light_wall_spr_var = sprite_add(main_directory_const+"\SPR\MON\wf_light_wall_spr.png",2,false,false,0,0);
+        light_floor_spr_var = sprite_add(main_directory_const+"\SPR\MON\wf_light_floor_spr.png",2,false,false,0,0);
+        eff_spr_var = sprite_add(main_directory_const+"\SPR\DEAD\killer_static_02_spr.png",6,false,false,0,0);
+        web_bg_var = background_add(vanilla_directory_const+"\TEX\sprites\MS28_05_spr.png",false,false);
         web_mdl_var = d3d_model_create();
-        d3d_model_load(web_mdl_var,main_directory_const+'\MDL\MON\wf_web_mdl.gmmod');
+        d3d_model_load(web_mdl_var,main_directory_const+"\MDL\MON\wf_web_mdl.gmmod");
         zone_list_var = ds_list_create();
         ds_list_clear(zone_list_var);
         ds_list_add(zone_list_var,long_hall_01_rm);
@@ -85,22 +92,17 @@ object_event_add
         ds_list_add(zone_list_var,long_hall_10_rm);
         ds_list_add(zone_list_var,long_hall_11_rm);
         wake_snd_var[0] = true;
-        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\wf_wake_snd.mp3');
-        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\wf_snd.wav',true);
-        glitch_snd_arr[0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\glitch_01_snd.wav');
-        glitch_snd_arr[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\glitch_02_snd.wav');
-        glitch_snd_arr[2] = fmod_snd_add_scr(main_directory_const+'\SND\MON\glitch_03_snd.wav');
-        glitch_snd_arr[3] = fmod_snd_add_scr(main_directory_const+'\SND\MON\glitch_04_snd.wav');
+        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\wf_wake_snd.mp3");
+        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\wf_snd.wav",true);
+        glitch_snd_arr[0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_01_snd.wav");
+        glitch_snd_arr[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_02_snd.wav");
+        glitch_snd_arr[2] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_03_snd.wav");
+        glitch_snd_arr[3] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_04_snd.wav");
         for (local.i=0; local.i<glitch_snd_len_var; local.i+=1;)
         { fmod_snd_set_group_scr(glitch_snd_arr[local.i,0],snd_group_mon_const); }
     }
     tex_02_var = background_get_texture(bg_var);
     web_tex_var = background_get_texture(web_bg_var);
-    // Sounds
-    do_snd_var = 1; // At least for now
-    snd_loop_var = true;
-    snd_dist_var = 600;
-    snd_len_var = 1;
     // White Face Specific
     vis_num_var = 2;
     vis_den_var = 3;
@@ -145,6 +147,7 @@ object_event_add
     anim_type_var = 4;
     face_dist_var = 48;
     // other
+    do_fog_var = true;
     start_var = 6;
     zone_start_var = 25;
     web_start_var = 22;
@@ -157,12 +160,12 @@ object_event_add
     switch local.type
     {
         
-        case 7: // Maya's Idea
+        case 7: // Maya"s Idea
         {
             move_type_var = 1;
             local.maya = true;
         }
-        case 6: // Lass' Idea
+        case 6: // Lass" Idea
         {
             if !local.maya { seen_dist_var = 160; }
         }
@@ -205,6 +208,7 @@ object_event_add
             delay_max_var = 180;
             spr_spd_var = 1/6; // 0.1r6 I think
             move_type_var = 2;
+            do_fog_var = false;
             // Teleport
             tp_dist_min_var = 320/3; // 106.r6
             tp_dist_max_var = 2560/3; // 853.r3
@@ -222,7 +226,7 @@ object_event_add
             // Effects
             eff_02_alarm_var = 12;
             face_dist_var = 0;
-            // Don't set stuff
+            // Don"t set stuff
             loop_var = false;
             res_var = false;
             attack_stun_var = false;
@@ -268,6 +272,7 @@ object_event_add
             zone_start_var = -1;
             start_var = -1;
             web_start_var = -1;
+            do_fog_var = false;
             // Smaller Resolution
             res_w_var = 180;
             res_h_var = 180;
@@ -313,10 +318,10 @@ object_event_add
     }
     spd_base_var = spd_base_real_var;
     alarm_len_var = 11;
-");
+');
 // Destroy Event
 object_event_add
-(argument0,ev_destroy,0,"
+(argument0,ev_destroy,0,'
     event_inherited();
     global.wall_bg_tex = background_get_texture(global.wall_bg);
     global.floor_bg_tex = background_get_texture(global.floor_bg);
@@ -343,7 +348,7 @@ object_event_add
         { fmod_snd_free_scr(glitch_snd_arr[local.i,0]); }
         for (local.i=0; local.i<snd_len_var; local.i+=1;)
         { fmod_snd_free_scr(snd_arr[local.i,0]); }
-        if wake_snd_var[0] { fmod_snd_free_scr(wake_snd_var[1]); }
+        fmod_snd_free_scr(wake_snd_var[1]);
     }
     if zone_start_var > 0
     {
@@ -352,10 +357,10 @@ object_event_add
     }
     with wf_eff_obj
     { if par_var == other.id { instance_destroy(); }}
-");
+');
 // Room Start Event
 object_event_add
-(argument0,ev_other,ev_room_start,"
+(argument0,ev_other,ev_room_start,'
     event_inherited();
     // Reset
     spd_base_var = spd_base_real_var;
@@ -418,7 +423,7 @@ object_event_add
             global.zone_var = zone_list_var;
         }
         if loop_var { door_trig_obj.rm_count_var = 0; }
-        global.rm_name_var = string_replace(global.rm_name_var,'Long','My');
+        global.rm_name_var = string_replace(global.rm_name_var,"Long","My");
     }
     // Webs
     if web_start_var > 0 && dur_start_var-dur_var >= web_start_var
@@ -457,7 +462,7 @@ object_event_add
             spr_var = other.eff_spr_var;
         }
     }
-    if !instance_exists(maze_dark_color_obj)
+    if do_fog_var && !instance_exists(maze_dark_color_obj)
     {
         with (fog_par_obj) { instance_destroy(); }
         with color_par_obj { instance_destroy(); }
@@ -484,20 +489,20 @@ object_event_add
         with art_obj { instance_destroy(); }
         with web_obj { instance_destroy(); }
     }
-");
+');
 // Delay Alarm
 object_event_add
-(argument0,ev_alarm,0,"
+(argument0,ev_alarm,0,'
     event_inherited();
     if tp_alarm_var > 0
     {
         event_user(15);
         set_alarm_scr(10,vanish_alarm_var);
     }
-");
+');
 // Seen Alarm
 object_event_add
-(argument0,ev_alarm,8,"
+(argument0,ev_alarm,8,'
     if do_seen_agg_var
     { seen_agg_var = 0; }
     else { do_seen_var = true; }
@@ -506,17 +511,17 @@ object_event_add
         event_perform(ev_alarm,9);
         set_alarm_scr(9,-1);
     }
-");
+');
 // Speed Reset
 object_event_add
-(argument0,ev_alarm,9,"
+(argument0,ev_alarm,9,'
     spd_base_var = spd_base_real_var;
     if spd_var > spd_base_var
     { set_motion_3d_scr(spd_base_var,true); }
-");
+');
 // Animation
 object_event_add
-(argument0,ev_other,ev_user1,"
+(argument0,ev_other,ev_user1,'
     if anim_type_var == 4
     {
         spr_prog_var -= spr_spd_var*global.delta_time_var;
@@ -533,10 +538,10 @@ object_event_add
         }
     }
     event_inherited();
-");
+');
 // Movement
 object_event_add
-(argument0,ev_other,ev_user0,"
+(argument0,ev_other,ev_user0,'
     if tp_dist_var > 0 && target_dist_var > tp_dist_var { event_user(15); }
     switch move_type_var
     {
@@ -559,10 +564,10 @@ object_event_add
         }
     }
     spd_mult_var = 1;
-");
+');
 // Calculate Seen
 object_event_add
-(argument0,ev_other,ev_user5,"
+(argument0,ev_other,ev_user5,'
     event_inherited();
     if seen_var == true && (seen_dist_var <= 0 || target_dist_var >= seen_dist_var)
     {
@@ -663,10 +668,10 @@ object_event_add
         }
         else { set_alarm_scr(8,irandom_range(seen_delay_min_var,seen_delay_max_var)); }
     }
-");
+');
 // Attack Success
 object_event_add
-(argument0,ev_other,ev_user3,"
+(argument0,ev_other,ev_user3,'
     event_inherited();
     // Tp
     if tp_alarm_var > 0
@@ -681,10 +686,10 @@ object_event_add
         set_alarm_scr(8,dmg_alarm_var);
         set_motion_3d_scr(0,true);
     }
-");
+');
 // Teleport
 object_event_add
-(argument0,ev_other,ev_user15,"
+(argument0,ev_other,ev_user15,'
     // Originally anywhere in the room (0-1280 x 0-720 y)
     switch tp_type_var
     {
@@ -707,18 +712,18 @@ object_event_add
             break;
         }
     }
-");
+');
 // Teleport Alarm
 object_event_add
-(argument0,ev_alarm,10,"
+(argument0,ev_alarm,10,'
     on_var = false;
     set_motion_3d_scr(0,true);
     set_alarm_scr(0,tp_alarm_var);
     fmod_inst_stop_scr(snd_var);
-");
+');
 // Draw Event
 object_event_add
-(argument0,ev_draw,0,"
+(argument0,ev_draw,0,'
     if on_var || visible_var
     {
         local.tex = tex_var;
@@ -727,9 +732,13 @@ object_event_add
             if face_var && point_distance_3d_scr(x,y,z,global.cam_x_var[view_current],global.cam_y_var[view_current],global.cam_z_var[view_current]) <= face_dist_var
             { tex_var = tex_02_var; }
         }
-        d3d_set_fog(true,c_black,0,256);
-        event_inherited();
-        d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var);
+        if do_fog_var && global.fog_dark_var && global.fog_var
+        {
+            d3d_set_fog(true,c_black,0,256);
+            event_inherited();
+            d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var);
+        }
+        else { event_inherited(); }
         tex_var = local.tex;
     }
-");
+');

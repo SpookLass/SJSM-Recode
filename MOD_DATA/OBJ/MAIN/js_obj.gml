@@ -179,7 +179,7 @@ object_event_add
         direction = lerp_scr(base_dir_var,base_dir_var+jump_dir_var,alarm_arr[0,0]/alarm_arr[0,1]);
     }
     if snd_3d_var && fmod_inst_is_play_scr(inst_var)
-    { fmod_inst_set_pos_scr(inst_var,x+lengthdir_x(w_var/2,direction-90),y+lengthdir_y(w_var/2,direction-90),z+(h_var/2)); }
+    { fmod_inst_set_3d_pos_scr(inst_var,x+lengthdir_x(w_var/2,direction-90),y+lengthdir_y(w_var/2,direction-90),z+(h_var/2)); }
 ");
 // Alarm
 object_event_add

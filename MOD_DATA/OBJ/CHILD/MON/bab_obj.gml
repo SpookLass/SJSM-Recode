@@ -26,6 +26,12 @@ object_event_add
             break;
         }
     }
+    sub_main_var = string_replace(ini_read_string("SUB","bab","SUB_bab"),"@n",name_var);
+    sub_amb_var = ini_read_string("SUB","bab_amb","SUB_bab_amb");
+    snd_arr[0,1] = sub_amb_var;
+    snd_arr[1,1] = sub_main_var;
+    snd_arr[2,1] = sub_main_var;
+    snd_arr[3,1] = sub_main_var;
     ini_close();
     type_var = 1;
     if global.mode_var == 0

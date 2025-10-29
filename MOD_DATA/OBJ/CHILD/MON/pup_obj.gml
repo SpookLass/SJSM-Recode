@@ -15,32 +15,45 @@ state_var
 */
 // Create Event
 object_event_add
-(argument0,ev_create,1,"
+(argument0,ev_create,1,'
+    // Sounds
+    snd_len_var = 4;
+    wake_snd_var[0] = true;
+    snd_num_var = 1;
+    snd_den_var = 3;
+    snd_alarm_min_var = 30;
+    snd_alarm_max_var = 30;
+    snd_dist_var = 600;
+    // Translations
     ini_open(global.lang_var);
     switch global.name_var
     {
         case name_og_const:
         {
-            name_var = ini_read_string('NAME','pup_og','NAME_pup_og');
+            name_var = ini_read_string("NAME","pup_og","NAME_pup_og");
             break;
         }
         case name_hd_const:
         {
-            name_var = ini_read_string('NAME','pup_hd','NAME_pup_hd');
+            name_var = ini_read_string("NAME","pup_hd","NAME_pup_hd");
             break;
         }
         case name_fanon_const:
         {
-            name_var = ini_read_string('NAME','pup_fanon','NAME_pup_fanon');
+            name_var = ini_read_string("NAME","pup_fanon","NAME_pup_fanon");
             break;
         }
         case name_num_og_const:
         case name_num_hd_const:
         {
-            name_var = ini_read_string('NAME','pup_num','NAME_pup_num');
+            name_var = ini_read_string("NAME","pup_num","NAME_pup_num");
             break;
         }
     }
+    local.sub = string_replace(ini_read_string("SUB","pup","SUB_pup"),"@n",name_var);
+    for (local.i=0; local.i<snd_len_var; local.i+=1)
+    { snd_arr[local.i,1] = local.sub; }
+    wake_snd_var[2] = string_replace(ini_read_string("SUB","pup_laugh","SUB_pup_laugh"),"@n",name_var);
     ini_close();
     type_var = 0;
     spd_base_var = 5;
@@ -51,14 +64,6 @@ object_event_add
     dmg_alarm_var = 120;
     w_var = 10;
     h_var = 20;
-    // Sounds
-    snd_len_var = 4;
-    wake_snd_var[0] = true;
-    snd_num_var = 1;
-    snd_den_var = 3;
-    snd_alarm_min_var = 30;
-    snd_alarm_max_var = 30;
-    snd_dist_var = 600;
     // Theme
     mus_prio_var = theme_mus_prio_const;
     // Assets
@@ -79,13 +84,13 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
-        spr_var = sprite_add(vanilla_directory_const+'\TEX\sprites\MS5_01_spr.png',4,false,false,0,0);
-        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\pup_01_snd.wav',true);
-        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\pup_02_snd.wav',true);
-        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\pup_03_snd.wav',true);
-        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\pup_04_snd.wav',true);
-        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\pup_wake_snd.wav');
-        mus_snd_var = fmod_snd_add_scr(main_directory_const+'\SND\MON\pup_mus_snd.mp3');
+        spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS5_01_spr.png",4,false,false,0,0);
+        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\pup_01_snd.wav",true);
+        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\pup_02_snd.wav",true);
+        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\pup_03_snd.wav",true);
+        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\pup_04_snd.wav",true);
+        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\pup_wake_snd.wav");
+        mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\pup_mus_snd.mp3");
     }
     // Anim
     anim_type_var = 3; // Random
@@ -123,7 +128,7 @@ object_event_add
             tp_alarm_var = 530;
             break;
         }
-        case 4: // 'True' Hellgate
+        case 4: // "True" Hellgate
         {
             seen_delay_var = 15;
             seen_start_delay_var = 120;
@@ -135,7 +140,7 @@ object_event_add
     }
     // Alarms
     alarm_len_var = 11;
-");
+');
 // Room start
 object_event_add
 (argument0,ev_other,ev_room_start,"

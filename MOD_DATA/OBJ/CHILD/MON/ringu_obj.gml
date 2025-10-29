@@ -8,7 +8,7 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create Event
 object_event_add
-(argument0,ev_create,1,"
+(argument0,ev_create,1,'
     ini_open(global.lang_var);
     switch global.name_var
     {
@@ -16,16 +16,22 @@ object_event_add
         case name_hd_const:
         case name_fanon_const:
         {
-            name_var = ini_read_string('NAME','ringu','NAME_ringu');
+            name_var = ini_read_string("NAME","ringu","NAME_ringu");
             break;
         }
         case name_num_og_const:
         case name_num_hd_const:
         {
-            name_var = ini_read_string('NAME','ringu_num','NAME_ringu_num');
+            name_var = ini_read_string("NAME","ringu_num","NAME_ringu_num");
             break;
         }
     }
+    snd_arr[0,1] = ini_read_string("SUB","ringu_01","SUB_ringu_01"); snd_arr[0,2] = true;
+    snd_arr[1,1] = ini_read_string("SUB","ringu_02","SUB_ringu_02"); snd_arr[1,2] = true;
+    snd_arr[2,1] = ini_read_string("SUB","ringu_03","SUB_ringu_03"); snd_arr[2,2] = true;
+    snd_arr[3,1] = string_replace(ini_read_string("SUB","ringu_04","SUB_ringu_04"),"@n",name_var);
+    wake_snd_var[2] = string_replace(ini_read_string("SUB","ringu_wake","SUB_ringu_wake"),"@n",name_var);
+    hurt_snd_var[2] = string_replace(ini_read_string("SUB","ringu_hurt","SUB_ringu_hurt"),"@n",name_var);
     ini_close();
     type_var = 0;
     spd_base_var = 0.8;
@@ -67,14 +73,14 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
-        spr_var = sprite_add(vanilla_directory_const+'\TEX\sprites\MS3_01_spr.png',6,false,false,0,0);
-        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\ringu_01_snd.wav',true);
-        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\ringu_02_snd.wav',true);
-        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\ringu_03_snd.wav',true);
-        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\ringu_04_snd.wav',true);
-        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\ringu_wake_snd.wav');
-        mus_snd_var = fmod_snd_add_scr(main_directory_const+'\SND\MON\ringu_mus_snd.mp3');
-        hurt_snd_var[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\ringu_laugh_snd.wav',true);
+        spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS3_01_spr.png",6,false,false,0,0);
+        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_01_snd.wav",true);
+        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_02_snd.wav",true);
+        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_03_snd.wav",true);
+        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_04_snd.wav",true);
+        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_wake_snd.wav");
+        mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_mus_snd.mp3");
+        hurt_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_laugh_snd.wav",true);
         fmod_snd_set_minmax_dist_scr(hurt_snd_var[1],0,snd_dist_var);
         fmod_snd_set_group_scr(hurt_snd_var[1],snd_group_mon_const);
     }
@@ -114,10 +120,10 @@ object_event_add
             break;
         }
     }
-");
+');
 // Destroy Event
 object_event_add
-(argument0,ev_destroy,0,"
+(argument0,ev_destroy,0,'
     event_inherited();
     if instance_number(object_index) <= 1
     {
@@ -126,6 +132,6 @@ object_event_add
         fmod_snd_free_scr(hurt_snd_var[1]);
         for (local.i=0; local.i<snd_len_var; local.i+=1;)
         { fmod_snd_free_scr(snd_arr[local.i,0]); }
-        if wake_snd_var[0] { fmod_snd_free_scr(wake_snd_var[1]); }
+        fmod_snd_free_scr(wake_snd_var[1]);
     }
-");
+');

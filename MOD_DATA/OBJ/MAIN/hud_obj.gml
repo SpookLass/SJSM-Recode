@@ -8,25 +8,27 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
     event_perform(ev_other,ev_room_start);
     
     ini_open(global.lang_var);
-	rm_str_var = ini_read_string('UI','rm','UI_rm');
-    hp_str_var = ini_read_string('UI','hp','UI_hp');
-    stam_str_var = ini_read_string('UI','stam','UI_stam');
-    spd_str_var = ini_read_string('UI','spd','UI_spd');
-    health_str_var = ini_read_string('UI','health','UI_health');
-    stamina_str_var = ini_read_string('UI','stamina','UI_stamina');
-    taker_str_var = 'YOUR TAKING TOO LONG '
+	rm_str_var = ini_read_string("UI","rm","UI_rm");
+    hp_str_var = ini_read_string("UI","hp","UI_hp");
+    stam_str_var = ini_read_string("UI","stam","UI_stam");
+    spd_str_var = ini_read_string("UI","spd","UI_spd");
+    health_str_var = ini_read_string("UI","health","UI_health");
+    stamina_str_var = ini_read_string("UI","stamina","UI_stamina");
+    taker_str_var = ini_read_string("UI","taker","UI_taker");
+    tps_str_var = ini_read_string("UI","tps","UI_tps");
+    fps_str_var = ini_read_string("UI","fps","UI_fps");
 	ini_close();
     // Taker
     taker_color_var = make_color_rgb(159,0,0);
     taker_cool_var = true;
-");
+');
 // Room Start
 object_event_add
-(argument0,ev_other,ev_room_start,"
+(argument0,ev_other,ev_room_start,'
     scale_min_var = 0.125;
     if view_wview[par_var.cam_id_var] >= view_hview[par_var.cam_id_var]
     { scale_var = view_hview[par_var.cam_id_var]/720; }
@@ -40,6 +42,13 @@ object_event_add
     scale_big_var = max(0.75*scale_var,scale_min_var);
     scale_med_var = max(0.5*scale_var,scale_min_var);
     scale_small_var = max(0.25*scale_var,scale_min_var);
+    // Subtitle
+    center_var = view_wview[par_var.cam_id_var]/2;
+    sub_bottom_var = view_hview[par_var.cam_id_var]-(120*scale_var);
+    local.offset = 380;
+    sub_hor_var = (view_wview[par_var.cam_id_var]-(380*scale_var))/2; // 450*scale_var
+    sub_vert_var = 128*scale_var;
+    sub_w_var = local.offset*2*scale_var/scale_med_var; // (view_wview[par_var.cam_id_var]-(sub_hor_var*2))/scale_med_var
     // Taker
     taker_xspd_var = -2*scale_var;
     taker_yspd_var = 2*scale_var;
@@ -66,7 +75,7 @@ object_event_add
         for (local.i=0; local.i < taker_off_len_var; local.i+=1;)
         { taker_off_arr[local.i] = random(taker_w_var); }
     }
-");
+');
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,'
@@ -75,7 +84,7 @@ object_event_add
 ');
 // Draw Event
 object_event_add
-(argument0,ev_draw,0,"
+(argument0,ev_draw,0,'
     if view_current == par_var.cam_id_var 
     {
         d3d_set_projection_ortho
@@ -119,6 +128,28 @@ object_event_add
             draw_set_color(c_white);
             draw_set_blend_mode(bm_normal);
         }
+        // Monster Sub
+        if global.sub_var > 0
+        {
+            draw_set_halign(fa_center); draw_set_valign(fa_bottom);
+            with echidna_obj
+            {
+                local.dist = point_distance_3d_scr(x,y,z,global.cam_x_var[view_current],global.cam_y_var[view_current],global.cam_z_var[view_current])
+                if local.dist < snd_dist_var && fmod_inst_is_play_scr(snd_var)
+                && string(sub_var[0]) != "0" && (sub_var[1] || global.sub_var > 1)
+                {
+                    local.dir = global.cam_yaw_var[view_current]-point_direction(x,y,global.cam_x_var[view_current],global.cam_y_var[view_current]);
+                    local.xtmp = other.center_var-lengthdir_x(other.sub_hor_var,local.dir-90);
+                    local.ytmp = other.sub_bottom_var-other.sub_vert_var+lengthdir_y(other.sub_vert_var,local.dir-90); // 624
+                    draw_set_alpha(1-(local.dist/snd_dist_var));
+                    draw_set_color(make_color_rgb(30,0,50));
+                    draw_text_ext_transformed(local.xtmp-2,local.ytmp+2,sub_var[0],-1,other.sub_w_var,other.scale_med_var,other.scale_med_var,0);
+                    draw_set_color(c_white);
+                    draw_text_ext_transformed(local.xtmp,local.ytmp,sub_var[0],-1,other.sub_w_var,other.scale_med_var,other.scale_med_var,0);
+                }
+            }
+            draw_set_halign(fa_left); draw_set_valign(fa_top); draw_set_alpha(1);
+        }
         // Health and Stamina bars
         if global.bar_hud_var != bar_hud_old_const
         {
@@ -140,7 +171,7 @@ object_event_add
         // TPS
         if global.tps_hud_var
         {
-            local.str = 'TPS: '+string(fps)+' | FPS: '+string(global.fps_curr_var);
+            local.str = tps_str_var+": "+string(fps)+" | "+fps_str_var+": "+string(global.fps_curr_var);
             draw_set_color(make_color_rgb(30,0,50));
             draw_text_transformed(0,scale_var,local.str,scale_small_var,scale_small_var,0); // 106 138
             draw_set_color(c_yellow);
@@ -152,8 +183,8 @@ object_event_add
             case bar_hud_num_const:
             {
                 //draw_set_blend_mode_ext(bm_inv_dest_color,bm_zero);
-                local.hp_str = hp_str_var+': '+string(round(par_var.hp_var))+' / '+string(par_var.hp_max_var);
-                local.stam_str = stam_str_var+': '+string(round(par_var.stam_var))+' / '+string(par_var.stam_max_var);
+                local.hp_str = hp_str_var+": "+string(round(par_var.hp_var))+" / "+string(par_var.hp_max_var);
+                local.stam_str = stam_str_var+": "+string(round(par_var.stam_var))+" / "+string(par_var.stam_max_var);
                 draw_set_valign(fa_middle);
                 draw_set_color(make_color_rgb(100,0,0));
                 for (local.i=0; local.i<4; local.i+=1;)
@@ -171,8 +202,8 @@ object_event_add
             }
             case bar_hud_old_const:
             {
-                local.hp_str = health_str_var+': '+string(round(par_var.hp_var));
-                local.stam_str = stamina_str_var+': '+string(round(par_var.stam_var));
+                local.hp_str = health_str_var+": "+string(round(par_var.hp_var));
+                local.stam_str = stamina_str_var+": "+string(round(par_var.stam_var));
                 draw_set_color(make_color_rgb(30,0,50));
                 draw_text_transformed(left_var-shadow_off_var,top_var+shadow_off_var,local.hp_str,scale_big_var,scale_big_var,0);
                 draw_text_transformed(left_var-shadow_off_var,(top_var*2)+shadow_off_var,local.stam_str,scale_big_var,scale_big_var,0);
@@ -189,10 +220,10 @@ object_event_add
             local.offset = bottom_var-((instance_number(mon_par_obj)-1)*36*scale_var);
             with mon_par_obj
             {
-                if string(name_var) != '0'
+                if string(name_var) != "0"
                 {
                     local.str = name_var;
-                    if global.mon_hud_var == 2 { local.str += ': '+string(dur_var); }
+                    if global.mon_hud_var == 2 { local.str += ": "+string(dur_var); }
                     draw_set_color(make_color_rgb(30,0,50));
                     draw_text_transformed(other.left_var-other.shadow_off_var,local.offset+other.shadow_off_var,local.str,other.scale_med_var,other.scale_med_var,0);
                     draw_set_color(c_yellow);
@@ -205,7 +236,7 @@ object_event_add
         draw_set_halign(fa_right);
         if global.game_spd_var != 1
         {
-            local.str = spd_str_var+': '+string(global.game_spd_var);
+            local.str = spd_str_var+": "+string(global.game_spd_var);
             draw_set_color(make_color_rgb(100,0,0));
             draw_text_transformed(right_var-shadow_off_var,bottom_var+shadow_off_var,local.str,scale_med_var,scale_med_var,0);
             draw_set_color(c_white);
@@ -213,7 +244,7 @@ object_event_add
         }
         draw_set_valign(fa_top);
         // Room Count
-        local.str = rm_str_var+': '+string(global.rm_count_var);
+        local.str = rm_str_var+": "+string(global.rm_count_var);
         draw_set_color(make_color_rgb(30,0,50));
         draw_text_transformed(right_var-shadow_off_var,top_var+shadow_off_var,local.str,scale_big_var,scale_big_var,0);
         if global.rm_hud_var
@@ -226,28 +257,28 @@ object_event_add
         // Debug text
         if global.debug_var
         {
-            local.str = '
+            local.str = "
 Position
-    X: '+string(par_var.x)+'
-    Y: '+string(par_var.y)+'
-    Z: '+string(par_var.z)+'
+    X: "+string(par_var.x)+"
+    Y: "+string(par_var.y)+"
+    Z: "+string(par_var.z)+"
 Movement
-    X speed: '+string(par_var.x_spd_var)+'
-    Y speed: '+string(par_var.y_spd_var)+'
-    Z speed: '+string(par_var.z_spd_var)+'
-    Yaw: '+string(par_var.yaw_var)+'
-    Pitch: '+string(par_var.pitch_var)+'
-    On Floor: '+string(par_var.on_floor_var)+'
+    X speed: "+string(par_var.x_spd_var)+"
+    Y speed: "+string(par_var.y_spd_var)+"
+    Z speed: "+string(par_var.z_spd_var)+"
+    Yaw: "+string(par_var.yaw_var)+"
+    Pitch: "+string(par_var.pitch_var)+"
+    On Floor: "+string(par_var.on_floor_var)+"
 Looking
-    Eye Yaw: '+string(par_var.eye_yaw_var)+'
-    Eye Pitch: '+string(par_var.eye_pitch_var)+'
+    Eye Yaw: "+string(par_var.eye_yaw_var)+"
+    Eye Pitch: "+string(par_var.eye_pitch_var)+"
 Clear Time
-    Room Size: '+string(path_get_length(par_var.path_var))+'
-    Clear Time: '+string(par_var.rm_clear_time_var)+'
+    Room Size: "+string(path_get_length(par_var.path_var))+"
+    Clear Time: "+string(par_var.rm_clear_time_var)+"
 Taker
-    Taker: '+string(par_var.alarm_arr[3,0])+' / '+string(par_var.alarm_arr[3,1])
+    Taker: "+string(par_var.alarm_arr[3,0])+" / "+string(par_var.alarm_arr[3,1])
             draw_text_transformed(0,128*scale_var,local.str,scale_small_var,scale_small_var,0);
         }
         d3d_set_hidden(true);
     }
-");
+');

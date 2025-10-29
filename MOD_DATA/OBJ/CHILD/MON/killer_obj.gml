@@ -30,6 +30,14 @@ object_event_add
             break;
         }
     }
+    snd_arr[0,1] = ini_read_string("SUB","killer_01","SUB_killer_01"); snd_arr[0,2] = true;
+    snd_arr[1,1] = ini_read_string("SUB","killer_02","SUB_killer_02"); snd_arr[1,2] = true;
+    snd_arr[2,1] = ini_read_string("SUB","killer_03","SUB_killer_03"); snd_arr[2,2] = true;
+    breath_snd_arr[0,1] = string_replace(ini_read_string("SUB","killer_breath","SUB_killer_breath"),"@n",name_var);
+    breath_snd_arr[1,1] = breath_snd_arr[0,1];
+    drag_snd_arr[0,1] = ini_read_string("SUB","killer_drag","SUB_killer_drag");
+    drag_snd_arr[1,1] = drag_snd_arr[0,1];
+    drag_snd_arr[2,1] = drag_snd_arr[0,1];
     ini_close();
     type_var = 1;
     spd_base_var = 1/3; // 0.r3
@@ -513,16 +521,17 @@ object_event_add
         {
             local.index = irandom(breath_snd_len_var-1);
             local.snd = breath_snd_arr[local.index,0];
-            sub_var = breath_snd_arr[local.index,1];
+            sub_var[0] = breath_snd_arr[local.index,1];
+            sub_var[1] = breath_snd_arr[local.index,2];
         }
         else
         {
             local.index = irandom(snd_len_var-1);
             local.snd = snd_arr[local.index,0];
-            sub_var = snd_arr[local.index,1];
+            sub_var[0] = snd_arr[local.index,1];
+            sub_var[1] = snd_arr[local.index,2];
         }
         snd_var = fmod_snd_3d_play_scr(local.snd);
-        
     }
     set_alarm_scr(6,irandom_range(snd_alarm_min_var,snd_alarm_max_var));
 ');
@@ -533,7 +542,8 @@ object_event_add
     {
         local.snd = irandom(drag_snd_len_var-1);
         drag_snd_var = fmod_snd_3d_play_scr(drag_snd_arr[local.snd,0]);
-        sub_var = drag_snd_arr[local.snd,1];
+        drag_sub_var[0] = drag_snd_arr[local.snd,1];
+        drag_sub_var[1] = drag_snd_arr[local.snd,2];
     }
     set_alarm_scr(8,drag_snd_alarm_var);
 ');
@@ -552,7 +562,7 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user9,'
     event_inherited();
-    fmod_inst_set_pos_scr(drag_snd_var,x,y,z);
+    fmod_inst_set_3d_pos_scr(drag_snd_var,x,y,z);
 ');
 // Draw
 object_event_add

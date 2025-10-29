@@ -84,7 +84,7 @@ object_event_add
         with clown_obj
         {
             if dur_var == 1
-            { snd_var = fmod_snd_play_scr(leave_snd_arr[irandom(leave_snd_len_var-1),0]); }
+            { event_user(15); }
         }
         set_alarm_scr(1,clown_delay_var);
     }

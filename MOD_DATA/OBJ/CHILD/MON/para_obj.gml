@@ -29,6 +29,15 @@ warn_dist_var: Distance to warn at
 // Create Event Begin
 object_event_add
 (argument0,ev_create,1,'
+    // Sounds
+    snd_len_var = 4;
+    snd_num_var = 1;
+    snd_den_var = 2;
+    snd_alarm_min_var = 80;
+    snd_alarm_max_var = 240;
+    snd_dist_var = 600;
+    eff_snd_len_var = 4;
+    // Translations
     ini_open(global.lang_var);
     switch global.name_var
     {
@@ -46,6 +55,10 @@ object_event_add
             break;
         }
     }
+    local.sub = string_replace(ini_read_string("SUB","para","SUB_para"),"@n",name_var);
+    for (local.i=0; local.i<snd_len_var; local.i+=1)
+    { snd_arr[local.i,1] = local.sub; }
+    wake_snd_var[2] = local.sub;
     ini_close();
     type_var = 1;
     dur_var = irandom_range(10,20);
@@ -55,14 +68,6 @@ object_event_add
     do_warn_var = false;
     warn_var = false;
     warn_dist_var = 320/3;
-    // Sounds
-    snd_len_var = 4;
-    snd_num_var = 1;
-    snd_den_var = 2;
-    snd_alarm_min_var = 80;
-    snd_alarm_max_var = 240;
-    snd_dist_var = 600;
-    eff_snd_len_var = 4;
     // Theme
     mus_prio_var = theme_mus_prio_const;
     // Assets

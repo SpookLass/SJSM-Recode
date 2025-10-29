@@ -73,14 +73,13 @@ object_event_add
             }
             case 2: // Exit to Menu
             {
-                with par_obj
+                with all
                 {
                     if persistent && object_index != other.object_index && object_index != control_obj
                     { instance_destroy(); }
                 }
                 fmod_all_stop_scr();
                 room_goto_scr(menu_rm);
-                
                 break;
             }
             case 3: // Quit

@@ -138,15 +138,15 @@ object_event_add
     button_arr[9,9] = "OFF"; // Text for each option
     button_arr[9,10] = "ON";
 
-    button_arr[10,0] = global.subtitle_var;
-    button_arr[10,1] = ini_read_string("SETTINGS","subtitle","SETTINGS_subtitle"); // Label
+    button_arr[10,0] = global.sub_var;
+    button_arr[10,1] = ini_read_string("SETTINGS","sub","SETTINGS_sub"); // Label
     button_arr[10,2] = "Whether NPCs should have subtitles." // Description
     button_arr[10,3] = 0; // Type: Enum
     button_arr[10,4] = true; // Wrap value
-    button_arr[10,5] = subtitle_const; // Default value
+    button_arr[10,5] = sub_const; // Default value
     button_arr[10,6] = false; // Minimum Value
     button_arr[10,7] = 2; // Maximum Value
-    button_arr[10,8] = "subtitle"; // Global variable to modify
+    button_arr[10,8] = "sub"; // Global variable to modify
     button_arr[10,9] = "OFF"; // Text for each option
     button_arr[10,10] = "VOICE";
     button_arr[10,11] = "ALL";

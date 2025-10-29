@@ -8,7 +8,17 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create Event
 object_event_add
-(argument0,ev_create,1,"
+(argument0,ev_create,1,'
+    // Sounds
+    snd_len_var = 4;
+    wake_snd_var[0] = true;
+    snd_num_var = 1;
+    snd_den_var = 2;
+    snd_alarm_min_var = 80;
+    snd_alarm_max_var = 240;
+    snd_dist_var = 600;
+    hurt_snd_var = 4;
+    // Translations
     ini_open(global.lang_var);
     switch global.name_var
     {
@@ -16,20 +26,25 @@ object_event_add
         case name_hd_const:
         case name_fanon_const:
         {
-            name_var = ini_read_string('NAME','eel','NAME_eel');
+            name_var = ini_read_string("NAME","eel","NAME_eel");
             break;
         }
         case name_num_og_const:
         case name_num_hd_const:
         {
-            name_var = ini_read_string('NAME','eel_num','NAME_eel_num');
+            name_var = ini_read_string("NAME","eel_num","NAME_eel_num");
             break;
         }
     }
+    local.sub = string_replace(ini_read_string("SUB","eel","SUB_eel"),"@n",name_var);
+    for (local.i=0; local.i<snd_len_var; local.i+=1)
+    { snd_arr[local.i,1] = local.sub; }
+    wake_snd_var[2] = local.sub;
+    hurt_snd_var[2] = local.sub;
     ini_close();
     type_var = 1;
     spd_base_var = 17/30; // 0.5r6
-    spr_var = sprite_add(main_directory_const+'\SPR\MON\eel_spr.png',9,false,false,0,0);
+    spr_var = sprite_add(main_directory_const+"\SPR\MON\eel_spr.png",9,false,false,0,0);
     spr_spd_var = 1/3; // 0.r3
     dur_var = irandom_range(15,25);
     delay_var = 72;
@@ -42,15 +57,6 @@ object_event_add
     // Scream
     do_hurt_var = true;
     violence_var = 3;
-    // Sounds
-    snd_len_var = 4;
-    wake_snd_var[0] = true;
-    snd_num_var = 1;
-    snd_den_var = 2;
-    snd_alarm_min_var = 80;
-    snd_alarm_max_var = 240;
-    snd_dist_var = 600;
-    hurt_snd_var = 4;
     // Theme
     mus_prio_var = mon_mus_prio_const;
     // Assets
@@ -73,17 +79,17 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
-        spr_var = sprite_add(main_directory_const+'\SPR\MON\eel_spr.png',9,false,false,0,0);
-        bod_spr_var = sprite_add(main_directory_const+'\SPR\MON\eel_bod_spr.png',4,false,false,0,0);
-        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\eel_01_snd.wav',true);
-        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\eel_02_snd.wav',true);
-        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\eel_03_snd.wav',true);
-        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\eel_04_snd.wav',true);
-        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\eel_wake_snd.wav');
-        hurt_snd_var[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\eel_hurt_snd.wav',true);
+        spr_var = sprite_add(main_directory_const+"\SPR\MON\eel_spr.png",9,false,false,0,0);
+        bod_spr_var = sprite_add(main_directory_const+"\SPR\MON\eel_bod_spr.png",4,false,false,0,0);
+        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\eel_01_snd.wav",true);
+        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\eel_02_snd.wav",true);
+        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\eel_03_snd.wav",true);
+        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\eel_04_snd.wav",true);
+        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\eel_wake_snd.wav");
+        hurt_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\eel_hurt_snd.wav",true);
         fmod_snd_set_minmax_dist_scr(hurt_snd_var[1],0,snd_dist_var);
         fmod_snd_set_group_scr(hurt_snd_var[1],snd_group_mon_const);
-        mus_snd_var = fmod_snd_add_scr(main_directory_const+'\SND\MON\eel_mus_snd.mp3');
+        mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\eel_mus_snd.mp3");
     }
     // Body
     bod_len_var = 6;
@@ -163,7 +169,7 @@ object_event_add
             local.follow = id;
         }
     }
-");
+');
 // Destroy Event
 object_event_add
 (argument0,ev_destroy,0,"

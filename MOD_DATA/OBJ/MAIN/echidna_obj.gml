@@ -160,13 +160,15 @@ object_event_add
     if wake_snd_var[0] == 1
     {
         snd_var = fmod_snd_play_scr(wake_snd_var[1]);
-        sub_var = wake_snd_var[2];
+        sub_var[0] = wake_snd_var[2];
+        sub_var[1] = wake_snd_var[3];
     }
     else if do_snd_var && !snd_loop_var
     {
         local.snd = irandom(snd_len_var-1);
-        fmod_snd_3d_play_scr(snd_arr[local.snd,0]);
-        sub_var = snd_arr[local.snd,1];
+        snd_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0]);
+        sub_var[0] = snd_arr[local.snd,1];
+        sub_var[1] = snd_arr[local.snd,2];
     }
     // Room start
     event_perform(ev_other,ev_room_start);
@@ -274,10 +276,11 @@ object_event_add
             d3d_transform_add_translation(x+x_off_var,y+y_off_var,z+z_off_var);
             if sil_var
             {
-                d3d_set_fog(true,sil_color_var,0,0);
+                if sil_color_var >= 0 { d3d_set_fog(true,sil_color_var,0,0); }
                 d3d_set_hidden(false); draw_set_alpha(image_alpha*sil_alpha_var);
                 d3d_draw_wall(-sil_dist_var,w_var/2,h_var,-sil_dist_var,-w_var/2,0,tex_var,1,1);
-                d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var);
+                if sil_color_var >= 0
+                { d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var); }
                 d3d_set_hidden(true); draw_set_alpha(image_alpha);
             }
             d3d_draw_wall(0,w_var/2,h_var,0,-w_var/2,0,tex_var,1,1);
@@ -300,7 +303,12 @@ object_event_add
     on_var = true;
     if do_snd_var
     {
-        if snd_loop_var { snd_var = fmod_snd_3d_loop_scr(snd_arr[0,0]); }
+        if snd_loop_var
+        {
+            snd_var = fmod_snd_3d_loop_scr(snd_arr[0,0]);
+            sub_var[0] = snd_arr[0,1];
+            sub_var[1] = snd_arr[0,2];
+        }
         else { set_alarm_scr(6,irandom_range(snd_alarm_min_var,snd_alarm_max_var)); }
     }
     if type_var == 1 && enter_var
@@ -393,7 +401,8 @@ object_event_add
     {
         local.snd = irandom(snd_len_var-1);
         snd_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0]);
-        sub_var = snd_arr[local.snd,1];
+        sub_var[0] = snd_arr[local.snd,1];
+        sub_var[1] = snd_arr[local.snd,2];
     }
     set_alarm_scr(6,irandom_range(snd_alarm_min_var,snd_alarm_max_var));
 ");
@@ -623,7 +632,8 @@ object_event_add
             {
                 if fmod_is_snd_3d_scr(hurt_snd_var[1]) { snd_var = fmod_snd_3d_play_scr(hurt_snd_var[1]); }
                 else { snd_var = fmod_snd_play_scr(hurt_snd_var[1]); }
-                sub_var = hurt_snd_var[2];
+                sub_var[0] = hurt_snd_var[2];
+                sub_var[1] = hurt_snd_var[3];
                 break;
             }
         }
@@ -748,10 +758,10 @@ object_event_add
         target_visible_var = local.dist+local.radius >= target_dist_var;
     }
 ");
-// Sound update
+// Sound Event
 object_event_add
 (argument0,ev_other,ev_user9,"
-    fmod_inst_set_pos_scr(snd_var,x,y,z);
+    fmod_inst_set_3d_pos_scr(snd_var,x,y,z);
 ");
 // Monster Collision
 object_event_add

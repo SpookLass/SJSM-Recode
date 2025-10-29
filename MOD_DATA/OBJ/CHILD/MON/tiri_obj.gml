@@ -8,7 +8,7 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create Event
 object_event_add
-(argument0,ev_create,1,"
+(argument0,ev_create,1,'
     ini_open(global.lang_var);
     switch global.name_var
     {
@@ -17,16 +17,20 @@ object_event_add
         case name_fanon_const:
         case name_num_og_const:
         {
-            name_var = ini_read_string('NAME','tiri','NAME_tiri');
+            name_var = ini_read_string("NAME","tiri","NAME_tiri");
             break;
         }
         
         case name_num_hd_const:
         {
-            name_var = ini_read_string('NAME','tiri_num','NAME_tiri_num');
+            name_var = ini_read_string("NAME","tiri_num","NAME_tiri_num");
             break;
         }
     }
+    snd_arr[0,1] = ini_read_string("SUB","tiri_01","SUB_tiri_01"); snd_arr[0,2] = true;
+    snd_arr[1,1] = ini_read_string("SUB","tiri_02","SUB_tiri_02"); snd_arr[1,2] = true;
+    snd_arr[2,1] = ini_read_string("SUB","tiri_03","SUB_tiri_03"); snd_arr[2,2] = true;
+    snd_arr[3,1] = ini_read_string("SUB","tiri_04","SUB_tiri_04"); snd_arr[3,2] = true;
     ini_close();
     type_var = 0;
     spd_base_var = 0.7;
@@ -67,15 +71,15 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
-        spr_var = sprite_add(vanilla_directory_const+'\TEX\sprites\MS24_01_spr.png',8,false,false,0,0);
-        bg_overlay_var = background_add(vanilla_directory_const+'\TEX\sprites\fog2_spr.png',false,false);
-        shadow_spr_var = sprite_add(vanilla_directory_const+'\TEX\sprites\MS24_02_spr.png',9,false,false,0,0);
-        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\tiri_01_snd.wav',true);
-        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\tiri_02_snd.wav',true);
-        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\tiri_03_snd.wav',true);
-        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\tiri_04_snd.wav',true);
-        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\tiri_wake_snd.wav');
-        mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+'\SND\AMB\TIRSIAK_AMB.mp3');
+        spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS24_01_spr.png",8,false,false,0,0);
+        bg_overlay_var = background_add(vanilla_directory_const+"\TEX\sprites\fog2_spr.png",false,false);
+        shadow_spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS24_02_spr.png",9,false,false,0,0);
+        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\tiri_01_snd.wav",true);
+        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\tiri_02_snd.wav",true);
+        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\tiri_03_snd.wav",true);
+        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\tiri_04_snd.wav",true);
+        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\tiri_wake_snd.wav");
+        mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\TIRSIAK_AMB.mp3");
     }
     // Coward
     do_coward_var = true;
@@ -117,6 +121,10 @@ object_event_add
                 eff_color_var = make_color_hsv(138,160,250);
                 fog_color_01_var = eff_color_var;
             }
+            // Silhouette
+            sil_var = true;
+            sil_color_var = -1;
+            sil_alpha_var = 0.2;
             break;
         }
         case 3: // Old HD
@@ -150,7 +158,7 @@ object_event_add
             break;
         }
     }
-");
+');
 // Destroy Event
 object_event_add
 (argument0,ev_destroy,0,"

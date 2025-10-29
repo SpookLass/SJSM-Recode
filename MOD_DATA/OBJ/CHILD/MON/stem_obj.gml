@@ -14,36 +14,47 @@ move_type_var
 */
 // Create Event
 object_event_add
-(argument0,ev_create,1,"
+(argument0,ev_create,1,'
+    // Sounds
+    snd_len_var = 5;
+    snd_num_var = 1;
+    snd_den_var = 1;
+    snd_alarm_min_var = 200;
+    snd_alarm_max_var = 400;
+    snd_dist_var = 600;
+    // Translations
     ini_open(global.lang_var);
     switch global.name_var
     {
         case name_og_const:
         {
-            name_var = ini_read_string('NAME','stem_og','NAME_stem_og');
+            name_var = ini_read_string("NAME","stem_og","NAME_stem_og");
             break;
         }
         case name_hd_const:
         {
-            name_var = ini_read_string('NAME','stem_hd','NAME_stem_hd');
+            name_var = ini_read_string("NAME","stem_hd","NAME_stem_hd");
             break;
         }
         case name_fanon_const:
         {
-            name_var = ini_read_string('NAME','stem_fanon','NAME_stem_fanon');
+            name_var = ini_read_string("NAME","stem_fanon","NAME_stem_fanon");
             break;
         }
         case name_num_og_const:
         {
-            name_var = ini_read_string('NAME','stem_num_og','NAME_stem_num_og');
+            name_var = ini_read_string("NAME","stem_num_og","NAME_stem_num_og");
             break;
         }
         case name_num_hd_const:
         {
-            name_var = ini_read_string('NAME','stem_num_hd','NAME_stem_num_hd');
+            name_var = ini_read_string("NAME","stem_num_hd","NAME_stem_num_hd");
             break;
         }
     }
+    local.sub = string_replace(ini_read_string("SUB","stem","SUB_stem"),"@n",name_var);
+    for (local.i=0; local.i<snd_len_var; local.i+=1)
+    { snd_arr[local.i,1] = local.sub; }
     ini_close();
     type_var = 0;
     spd_base_var = 0.4;
@@ -58,13 +69,6 @@ object_event_add
     h_var = 10;
     dupe_var = dupe_canon_const;
     spr_spd_var = 1;
-    // Sounds
-    snd_len_var = 5;
-    snd_num_var = 1;
-    snd_den_var = 1;
-    snd_alarm_min_var = 200;
-    snd_alarm_max_var = 400;
-    snd_dist_var = 600;
     // Theme
     mus_prio_var = mon_mus_prio_const;
     // Assets
@@ -86,17 +90,17 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
-        bg_var = background_add(vanilla_directory_const+'\3D\npc_5_tex.png',false,false);
+        bg_var = background_add(vanilla_directory_const+"\3D\npc_5_tex.png",false,false);
         mdl_01_var = d3d_model_create();
         mdl_02_var = d3d_model_create();
-        d3d_model_load(mdl_01_var,main_directory_const+'\MDL\MON\stem_01_mdl.gmmod');
-        d3d_model_load(mdl_02_var,main_directory_const+'\MDL\MON\stem_02_mdl.gmmod');
-        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\stem_01_snd.wav',true);
-        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\stem_02_snd.wav',true);
-        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\stem_03_snd.wav',true);
-        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\stem_04_snd.wav',true);
-        snd_arr[4,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\stem_05_snd.wav',true);
-        mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+'\SND\AMB\M5_AMB.mp3');
+        d3d_model_load(mdl_01_var,main_directory_const+"\MDL\MON\stem_01_mdl.gmmod");
+        d3d_model_load(mdl_02_var,main_directory_const+"\MDL\MON\stem_02_mdl.gmmod");
+        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\stem_01_snd.wav",true);
+        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\stem_02_snd.wav",true);
+        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\stem_03_snd.wav",true);
+        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\stem_04_snd.wav",true);
+        snd_arr[4,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\stem_05_snd.wav",true);
+        mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\M5_AMB.mp3");
     }
     // Collision
     coll_var[0] = global.mon_wide_coll[0];
@@ -205,7 +209,7 @@ object_event_add
     z_off_time_var=0;
     z_off_mult_var=6;
     z_off_rate_var=360;
-");
+');
 // Destroy Event
 object_event_add
 (argument0,ev_destroy,0,"

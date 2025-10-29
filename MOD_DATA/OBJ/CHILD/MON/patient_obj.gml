@@ -8,36 +8,37 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create Event
 object_event_add
-(argument0,ev_create,1,"
+(argument0,ev_create,1,'
     ini_open(global.lang_var);
     switch global.name_var
     {
         case name_og_const:
         {
-            name_var = ini_read_string('NAME','patient_og','NAME_patient_og');
+            name_var = ini_read_string("NAME","patient_og","NAME_patient_og");
             break;
         }
         case name_hd_const:
         {
-            name_var = ini_read_string('NAME','patient_hd','NAME_patient_hd');
+            name_var = ini_read_string("NAME","patient_hd","NAME_patient_hd");
             break;
         }
         case name_fanon_const:
         {
-            name_var = ini_read_string('NAME','patient_fanon','NAME_patient_fanon');
+            name_var = ini_read_string("NAME","patient_fanon","NAME_patient_fanon");
             break;
         }
         case name_num_og_const:
         {
-            name_var = ini_read_string('NAME','patient_num_og','NAME_patient_num_og');
+            name_var = ini_read_string("NAME","patient_num_og","NAME_patient_num_og");
             break;
         }
         case name_num_hd_const:
         {
-            name_var = ini_read_string('NAME','patient_num_hd','NAME_patient_num_hd');
+            name_var = ini_read_string("NAME","patient_num_hd","NAME_patient_num_hd");
             break;
         }
     }
+    wake_snd_var[2] = string_replace(ini_read_string("SUB","patient","SUB_patient"),"@n",name_var);
     ini_close();
     type_var = 0;
     spd_base_var = 2;
@@ -66,15 +67,15 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
-        spr_var = sprite_add(main_directory_const+'\SPR\MON\patient_spr.png',3,false,false,0,0); // vanilla_directory_const+'\3D\npc_6_tex.png'
-        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\patient_wake_snd.wav');
-        mus_snd_var = fmod_snd_add_scr(main_directory_const+'\SND\MON\patient_mus_snd.mp3');
+        spr_var = sprite_add(main_directory_const+"\SPR\MON\patient_spr.png",3,false,false,0,0); // vanilla_directory_const+"\3D\npc_6_tex.png"
+        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\patient_wake_snd.wav");
+        mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\patient_mus_snd.mp3");
         fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
         mdl_01_var = d3d_model_create();
         mdl_02_var = d3d_model_create();
-        d3d_model_load(mdl_01_var,main_directory_const+'\MDL\MON\patient_01_mdl.gmmod');
-        d3d_model_load(mdl_02_var,main_directory_const+'\MDL\MON\patient_02_mdl.gmmod');
-        bg_overlay_var = background_add(vanilla_directory_const+'\TEX\sprites\fog_spr.png',false,false);
+        d3d_model_load(mdl_01_var,main_directory_const+"\MDL\MON\patient_01_mdl.gmmod");
+        d3d_model_load(mdl_02_var,main_directory_const+"\MDL\MON\patient_02_mdl.gmmod");
+        bg_overlay_var = background_add(vanilla_directory_const+"\TEX\sprites\fog_spr.png",false,false);
     }
     // Seen
     do_seen_var = true;
@@ -175,10 +176,10 @@ object_event_add
     // Bools
     do_mdl_var = true;
     do_snd_var = -1;
-");
+');
 // Destroy Event
 object_event_add
-(argument0,ev_destroy,0,"
+(argument0,ev_destroy,0,'
     event_inherited();
     if instance_number(object_index) <= 1
     {
@@ -191,7 +192,7 @@ object_event_add
     }
     with kh_overlay_obj
     { if par_var == other.id { instance_destroy(); }}
-");
+');
 // Room start
 object_event_add
 (argument0,ev_other,ev_room_start,"
@@ -255,6 +256,8 @@ object_event_add
         seen_yaw_var = seen_yaw_02_var;
         seen_pitch_var = seen_pitch_02_var;
         snd_var = fmod_snd_play_scr(wake_snd_var[1]);
+        sub_var[0] = wake_snd_var[2];
+        sub_var[1] = wake_snd_var[3];
         do_anim_var = false;
         anim_var = false;
     }
@@ -326,6 +329,8 @@ object_event_add
     if seen_rage_var == 2
     {
         snd_var = fmod_snd_play_scr(wake_snd_var[1]);
+        sub_var[0] = wake_snd_var[2];
+        sub_var[1] = wake_snd_var[3];
         rage_var = true;
     }
 ");
@@ -341,6 +346,8 @@ object_event_add
             seen_yaw_var = seen_yaw_02_var;
             seen_pitch_var = seen_pitch_02_var;
             snd_var = fmod_snd_play_scr(wake_snd_var[1]);
+            sub_var[0] = wake_snd_var[2];
+        sub_var[1] = wake_snd_var[3];
             do_anim_var = false;
             anim_var = false;
             set_alarm_scr(11,fmod_inst_get_len_scr(snd_var)*milli_frame_rate_const/global.game_spd_var);
