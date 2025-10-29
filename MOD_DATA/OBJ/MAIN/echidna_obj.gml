@@ -1,5 +1,5 @@
 // Builtin Variables
-object_set_depth(argument0,0);
+object_set_depth(argument0,-2);
 object_set_mask(argument0,noone);
 object_set_parent(argument0,mon_par_obj);
 object_set_persistent(argument0,true);
@@ -43,6 +43,10 @@ Draw
 w_var: How many pixels wide the monster is
 h_var: How many pixels tall the monster is
 x_off_var,y_off_var,z_off_var: How many pixels offset the monster draws
+sil_var: Draw silhouette. Mostly for incorporeal monsters
+sil_dist_var: How far to draw the silhouette to prevent Z-fighting
+sil_color_var: The color of the silhouette
+sil_alpha_var: The alpha of the silhouette (multiplied by image alpha)
 
 Attack
 
@@ -268,6 +272,14 @@ object_event_add
         {
             d3d_transform_add_rotation_z(point_direction(x,y,global.cam_x_var[view_current],global.cam_y_var[view_current]));
             d3d_transform_add_translation(x+x_off_var,y+y_off_var,z+z_off_var);
+            if sil_var
+            {
+                d3d_set_fog(true,sil_color_var,0,0);
+                d3d_set_hidden(false); draw_set_alpha(image_alpha*sil_alpha_var);
+                d3d_draw_wall(-sil_dist_var,w_var/2,h_var,-sil_dist_var,-w_var/2,0,tex_var,1,1);
+                d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var);
+                d3d_set_hidden(true); draw_set_alpha(image_alpha);
+            }
             d3d_draw_wall(0,w_var/2,h_var,0,-w_var/2,0,tex_var,1,1);
         }
         d3d_transform_set_identity();

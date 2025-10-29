@@ -1,5 +1,5 @@
 // Builtin Variables
-object_set_depth(argument0,0);
+object_set_depth(argument0,-2);
 object_set_mask(argument0,noone);
 object_set_parent(argument0,echidna_obj);
 object_set_persistent(argument0,true);
@@ -89,6 +89,11 @@ object_event_add
         case 0:
         {
             dmg_var = 30;
+            // Silhouette
+            sil_var = true;
+            sil_color_var = c_black;
+            sil_alpha_var = 0.2;
+            sil_dist_var = 0.1;
             break;
         }
         case 3: // Old HD

@@ -1,7 +1,5 @@
-
-
 // Builtin Variables
-object_set_depth(argument0,-2);
+object_set_depth(argument0,-3);
 object_set_mask(argument0,noone);
 object_set_parent(argument0,prop_par_obj);
 object_set_persistent(argument0,false);
