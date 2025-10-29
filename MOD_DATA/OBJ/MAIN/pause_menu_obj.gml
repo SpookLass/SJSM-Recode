@@ -79,7 +79,7 @@ object_event_add
                     { instance_destroy(); }
                 }
                 fmod_all_stop_scr();
-                room_goto(menu_rm);
+                room_goto_scr(menu_rm);
                 
                 break;
             }

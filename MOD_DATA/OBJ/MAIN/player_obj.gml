@@ -250,8 +250,10 @@ object_event_add
         // Mouse
         if !global.mouse_free_var
         {
-            eye_yaw_var = mod_scr(eye_yaw_var-((display_mouse_get_x()-(display_get_width()/2))*global.sens_var/1600),360);
-            eye_pitch_var = median(-89.9,89.9,eye_pitch_var-((display_mouse_get_y()-(display_get_height()/2))*global.sens_var/1600));
+            if global.invert_yaw_var { local.mult = -1; } else { local.mult = 1; }
+            eye_yaw_var = mod_scr(eye_yaw_var+(((display_get_width()/2)-display_mouse_get_x())*local.mult*global.sens_var/1600),360);
+            if global.invert_pitch_var { local.mult = -1; } else { local.mult = 1; }
+            eye_pitch_var = median(-89.9,89.9,eye_pitch_var+(((display_get_height()/2)-display_mouse_get_y())*local.mult*global.sens_var/1600));
             display_mouse_set(display_get_width()/2,display_get_height()/2);
         }
         // Get inputs

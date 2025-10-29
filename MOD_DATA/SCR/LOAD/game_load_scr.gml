@@ -89,4 +89,4 @@ draw_set_font(main_font);
 global.game_spd_var = 1;
 // Load
 instance_create(0,0,global.control_obj);
-room_goto(menu_rm);
+room_goto_scr(menu_rm);

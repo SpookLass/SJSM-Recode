@@ -26,6 +26,8 @@ global.res_w_var = ini_read_real("MAIN","res_w",res_w_const);
 global.res_h_var = ini_read_real("MAIN","res_h",res_h_const);
 global.name_var = ini_read_real("MAIN","name",name_hd_const);
 global.lang_var = ini_read_string("MAIN","lang","en_us.ini");
+global.invert_yaw_var = ini_read_real("MAIN","invert_yaw",invert_yaw_const);
+global.invert_pitch_var = ini_read_real("MAIN","invert_pitch",invert_pitch_const);
 // Hud
 global.mon_hud_var = ini_read_real("MAIN","mon_hud",mon_hud_const);
 global.rm_hud_var = ini_read_real("MAIN","rm_hud",rm_hud_const);

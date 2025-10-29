@@ -24,6 +24,7 @@ room_set_code
     // 3D Draw
     d3d_start();
     global.draw_3d_var = true;
+    lobal.cam_end_var = 1280;
     // Doors
     spawn_create_scr(true,false);
 ")

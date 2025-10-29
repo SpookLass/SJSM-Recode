@@ -42,7 +42,16 @@ room_set_code
     global.draw_3d_var = true;
     // Doors
     local.unlock = spawn_create_scr(true,true);
-")
+    for (local.i=1; local.i<global.spawn_len_var; local.i+=1;)
+    {
+        if local.i != local.unlock
+        {
+            local.exittrig.lock_var = true;
+            instance_create(global.spawn_arr[local.i,0]-24,global.spawn_arr[local.i,1],bone_rand_obj);
+            instance_create(global.spawn_arr[local.i,0]-48,global.spawn_arr[local.i,1],bar_vert_obj);
+        }
+    }
+");
 // Room settings
 room_set_width(argument0,1280);
 room_set_height(argument0,720);

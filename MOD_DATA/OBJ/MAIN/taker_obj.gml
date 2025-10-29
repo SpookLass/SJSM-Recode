@@ -120,7 +120,7 @@ object_event_add
                 {
                     global.dead_mon_var = object_index;
                     instance_destroy();
-                    room_goto(dead_rm_var);
+                    room_goto_scr(dead_rm_var);
                 }
                 else { event_perform(ev_other,ev_user3); }
             }

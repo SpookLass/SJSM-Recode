@@ -30,7 +30,7 @@ object_event_add
     str_bg_select_color_var = make_color_rgb(138,0,0);
     str_scale_var = 0.8;
 
-    button_len_var = 34;
+    button_len_var = 36;
 
     ini_open(global.lang_var);
 
@@ -370,20 +370,44 @@ object_event_add
     button_arr[30,5] = lang_const; // Default value
     button_arr[30,8] = "lang"; // Global variable to modify
 
-    button_arr[31,0] = 0;
-    button_arr[31,1] = ini_read_string("SETTINGS","apply","SETTINGS_apply"); // Label
-    button_arr[31,2] = "Apply your settings. If you do not do this, your settings will not apply. Some settings may require a reload."
-    button_arr[31,3] = -1;
+    button_arr[31,0] = global.invert_yaw_var;
+    button_arr[31,1] = ini_read_string("SETTINGS","invert_yaw","SETTINGS_invert_yaw"); // Label
+    button_arr[31,2] = "Invert camera yaw control / mouse x." // Description
+    button_arr[31,3] = 0; // Type: Enum
+    button_arr[31,4] = true; // Wrap value
+    button_arr[31,5] = invert_yaw_const; // Default value
+    button_arr[31,6] = false; // Minimum Value
+    button_arr[31,7] = true; // Maximum Value
+    button_arr[31,8] = "invert_yaw"; // Global variable to modify
+    button_arr[31,9] = "OFF"; // Text for each option
+    button_arr[31,10] = "ON";
 
-    button_arr[32,0] = 0;
-    button_arr[32,1] = ini_read_string("SETTINGS","reset","SETTINGS_reset"); // Label
-    button_arr[32,2] = "Reset all settings. CANNOT BE UNDONE"
-    button_arr[32,3] = -3;
+    button_arr[32,0] = global.invert_pitch_var;
+    button_arr[32,1] = ini_read_string("SETTINGS","invert_pitch","SETTINGS_invert_pitch"); // Label
+    button_arr[32,2] = "Invert camera pitch control / mouse y." // Description
+    button_arr[32,3] = 0; // Type: Enum
+    button_arr[32,4] = true; // Wrap value
+    button_arr[32,5] = invert_pitch_const; // Default value
+    button_arr[32,6] = false; // Minimum Value
+    button_arr[32,7] = true; // Maximum Value
+    button_arr[32,8] = "invert_pitch"; // Global variable to modify
+    button_arr[32,9] = "OFF"; // Text for each option
+    button_arr[32,10] = "ON";
 
-    button_arr[33,0] = 0;
-    button_arr[33,1] = ini_read_string("MENU","back","MENU_back"); // Label
-    button_arr[33,2] = "Back to the previous menu."
-    button_arr[33,3] = -2;
+    button_arr[button_len_var-3,0] = 0;
+    button_arr[button_len_var-3,1] = ini_read_string("SETTINGS","apply","SETTINGS_apply"); // Label
+    button_arr[button_len_var-3,2] = "Apply your settings. If you do not do this, your settings will not apply. Some settings may require a reload."
+    button_arr[button_len_var-3,3] = -1;
+
+    button_arr[button_len_var-2,0] = 0;
+    button_arr[button_len_var-2,1] = ini_read_string("SETTINGS","reset","SETTINGS_reset"); // Label
+    button_arr[button_len_var-2,2] = "Reset all settings. CANNOT BE UNDONE"
+    button_arr[button_len_var-2,3] = -3;
+
+    button_arr[button_len_var-1,0] = 0;
+    button_arr[button_len_var-1,1] = ini_read_string("MENU","back","MENU_back"); // Label
+    button_arr[button_len_var-1,2] = "Back to the previous menu."
+    button_arr[button_len_var-1,3] = -2;
 ');
 // Step Event
 object_event_add

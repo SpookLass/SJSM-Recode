@@ -1155,7 +1155,7 @@ object_event_add
                         global.count_var = get_count_scr();
                         if local.name == '1987' { instance_create(0,0,otter8_js_obj); }
 						
-						room_goto(save_rm_var);
+						room_goto_scr(save_rm_var);
 					}
 				}
 			}

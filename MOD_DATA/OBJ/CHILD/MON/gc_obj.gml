@@ -130,6 +130,8 @@ object_event_add
     seen_flash_var = true;
     seen_spd_var = true;
     // Effects
+    cam_end_var = 128;
+    fov_var = 40;
     eff_old_var = true;
     eff_var = true;
     // Spawn
@@ -174,6 +176,8 @@ object_event_add
             do_anim_var = -1;
             dmg_stun_alarm_var = -1;
             do_seen_var = -1;
+            cam_end_var = -1;
+            fov_var = -1;
             break;
         }
         case 3: // KH
@@ -195,6 +199,8 @@ object_event_add
             do_anim_var = -1;
             dmg_stun_alarm_var = -1;
             do_seen_var = -1;
+            cam_end_var = -1;
+            fov_var = -1;
             break;
         }
         case 5: // Cow
@@ -205,6 +211,8 @@ object_event_add
             local.spd_set = true;
             eff_var = false;
             do_seen_var = -1;
+            cam_end_var = -1;
+            fov_var = -1;
         }
         case 2: // HD
         {
@@ -233,6 +241,8 @@ object_event_add
             rand_alarm_max_var = -1;
             dur_var = irandom_range(10,15);
             dmg_stun_alarm_var = -1;
+            cam_end_var = -1;
+            fov_var = -1;
             break;
         }
     }
@@ -296,8 +306,13 @@ object_event_add
     { visible = false; }
     with wall_par_obj
     { h_var = max(h_var,ceil(global.fog_end_var/32)*32); }
-    with player_obj
-    { if fov_var > 40 { fov_var = 40; }}
+    if fov_var > 0
+    {
+        with player_obj
+        { if fov_var > other.fov_var { fov_var = other.fov_var; }}
+    }
+    
+    if cam_end_var > 0 { global.cam_end_var = cam_end_var; }
     if !instance_exists(gc_eff_obj)
     {
         with instance_create(0,0,gc_eff_obj)
