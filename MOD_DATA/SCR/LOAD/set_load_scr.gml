@@ -55,65 +55,6 @@ global.turnaround_key_var = ini_read_real("CONTROL","turnaround_key",81);
 global.ff_key_var = ini_read_real("CONTROL","ff_key",70); // 190 or 71
 global.slow_key_var = ini_read_real("CONTROL","slow_key",82); // 188 or 70
 ini_close();
-// This should happen when a game starts, but we don't have a menu right now
-ini_open("save_ex.ini");
-// Main
-global.rm_count_var = ini_read_real("SETTING","rm_count",0);
-global.violence_var = ini_read_real("SETTING","violence",0);
-global.note_var = ini_read_real("SETTING","note",0);
-// Settings
-global.stam_per_var = ini_read_real("SETTING","stam_per",false);
-global.fall_var = ini_read_real("SETTING","fall",false);
-global.lock_var = ini_read_real("SETTING","lock",1);
-global.dmg_shake_var = ini_read_real("SETTING","dmg_shake",false);
-global.mult_type_var = ini_read_real("SETTING","mult_type",0);
-global.mult_min_var = ini_read_real("SETTING","mult_min",1);
-global.mult_max_var = ini_read_real("SETTING","mult_max",5);
-global.mult_start_var = ini_read_real("SETTING","mult_start",1000);
-global.mult_end_var = ini_read_real("SETTING","mult_end",2000);
-global.count_type_var = ini_read_real("SETTING","count_type",0);
-global.count_min_var = ini_read_real("SETTING","count_min",0);
-global.count_max_var = ini_read_real("SETTING","count_max",20);
-global.count_start_var = ini_read_real("SETTING","count_start",1000);
-global.count_end_var = ini_read_real("SETTING","count_end",2000);
-global.mode_var = ini_read_real("SETTING","mode",1);
-global.dupe_var = ini_read_real("SETTING","dupe",dupe_canon_const);
-global.mon_chance_var = ini_read_real("SETTING","mon_chance_var",8);
-// Behavior stuff
-global.main_type_var = ini_read_real("BEHAVIOR","type",0);
-global.player_type_var = ini_read_real("BEHAVIOR","player_type",global.main_type_var);
-global.axe_type_var = ini_read_real("BEHAVIOR","axe_type",global.main_type_var);
-global.gel_type_var = ini_read_real("BEHAVIOR","gel_type",global.main_type_var);
-global.bug_type_var = ini_read_real("BEHAVIOR","bug_type",global.main_type_var);
-global.ringu_type_var = ini_read_real("BEHAVIOR","ringu_type",global.main_type_var);
-global.bab_type_var = ini_read_real("BEHAVIOR","bab_type",global.main_type_var);
-global.pup_type_var = ini_read_real("BEHAVIOR","pup_type",global.main_type_var);
-global.flesh_type_var = ini_read_real("BEHAVIOR","flesh_type",global.main_type_var);
-global.dl_type_var = ini_read_real("BEHAVIOR","dl_type",global.main_type_var);
-global.taker_type_var = ini_read_real("BEHAVIOR","taker_type",global.main_type_var);
-global.fish_type_var = ini_read_real("BEHAVIOR","fish_type",global.main_type_var);
-global.para_type_var = ini_read_real("BEHAVIOR","para_type",global.main_type_var);
-global.fd_type_var = ini_read_real("BEHAVIOR","fd_type",global.main_type_var);
-global.killer_type_var = ini_read_real("BEHAVIOR","killer_type",global.main_type_var);
-global.mur_type_var = ini_read_real("BEHAVIOR","mur_type",global.main_type_var);
-global.sg_type_var = ini_read_real("BEHAVIOR","sg_type",global.main_type_var);
-global.body_type_var = ini_read_real("BEHAVIOR","body_type",global.main_type_var);
-global.stem_type_var = ini_read_real("BEHAVIOR","stem_type",global.main_type_var);
-global.patient_type_var = ini_read_real("BEHAVIOR","patient_type",global.main_type_var);
-global.cow_type_var = ini_read_real("BEHAVIOR","cow_type",global.main_type_var);
-global.bekka_type_var = ini_read_real("BEHAVIOR","bekka_type",global.main_type_var);
-global.husk_type_var = ini_read_real("BEHAVIOR","husk_type",global.main_type_var);
-global.wc_type_var = ini_read_real("BEHAVIOR","wc_type",global.main_type_var);
-global.clown_type_var = ini_read_real("BEHAVIOR","clown_type",global.main_type_var);
-global.hd_type_var = ini_read_real("BEHAVIOR","hd_type",global.main_type_var);
-global.frenzy_type_var = ini_read_real("BEHAVIOR","frenzy_type",global.main_type_var);
-global.real_ringu_type_var = ini_read_real("BEHAVIOR","real_ringu_type",global.main_type_var);
-global.tiri_type_var = ini_read_real("BEHAVIOR","tiri_type",global.main_type_var);
-global.lisa_type_var = ini_read_real("BEHAVIOR","lisa_type",global.main_type_var);
-global.otto_type_var = ini_read_real("BEHAVIOR","otto_type",global.main_type_var);
-global.spooper_type_var = ini_read_real("BEHAVIOR","spooper_type",global.main_type_var);
-global.wf_type_var = ini_read_real("BEHAVIOR","wf_type",global.main_type_var);
-ini_close();
 // Set stuff
 window_set_fullscreen(global.fullscreen_var);
 set_synchronization(global.vsync_var);
