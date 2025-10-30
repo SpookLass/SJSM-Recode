@@ -413,12 +413,12 @@ object_event_add
 object_event_add
 (argument0,ev_step,ev_step_normal,'
     // Text Stretch
-    time_var = (time_var+global.delta_time_var) mod 80;
+    time_var = (time_var+global.true_delta_time_var) mod 80;
     str_scale_var = 0.8+(cos(2*time_var*pi/80)*0.2);
     // Lerp
-    local.target_scroll = 96*(local.i-button_state_var);
+    local.target_scroll = -96*button_state_var;
     local.scroll_diff = abs(local.target_scroll-scroll_var);
-    local.scroll_rate = max(scroll_min_var,local.scroll_diff*scroll_rate_var)*global.delta_time_var;
+    local.scroll_rate = max(scroll_min_var,local.scroll_diff*scroll_rate_var)*global.true_delta_time_var;
     scroll_var += min(local.scroll_diff,local.scroll_rate)*sign(local.target_scroll-scroll_var);
     // Scroll
     if global.up_input_press_var { button_state_var -= 1; }

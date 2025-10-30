@@ -135,6 +135,7 @@ object_event_add
         }
         case 2: // HD
         {
+            dur_var = irandom_range(10,15);
             enter_spawn_var = false;
             exit_spawn_var = true;
             spd_base_var = 8/15; // 0.5r3

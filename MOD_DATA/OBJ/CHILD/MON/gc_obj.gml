@@ -223,6 +223,7 @@ object_event_add
         }
         case 2: // HD
         {
+            dur_var = irandom_range(10,15);
             do_snd_var = true;
             type_var = 2;
             move_type_var = 2;
@@ -236,6 +237,11 @@ object_event_add
             dmg_var = 20;
             dmg_alarm_var = 120;
             eff_old_var = false;
+            // Hurt
+            do_hurt_var = 2;
+            hurt_die_var = 1;
+            hurt_dur_var = 1;
+            hurt_snd_var = 3;
             // Autobrake (close enough)
             autobrake_var = true;
             autobrake_spd_var = 0;
@@ -551,6 +557,27 @@ object_event_add
             do_seen_var = false;
             set_alarm_scr(9,dmg_stun_alarm_var);
         }
+    }
+');
+// Hurt Event
+object_event_add
+(argument0,ev_other,ev_user4,'
+    event_inherited();
+    x = global.spawn_arr[0,0];
+    y = global.spawn_arr[0,1];
+    z = global.spawn_arr[0,2];
+    set_motion_scr(0,true);
+    with instance_create(0,0,flash_eff_obj)
+    {
+        image_blend = c_red;
+        cam_id_var = hurt_target_var.cam_id_var;
+        set_alarm_scr(0,18);
+    }
+    with instance_create(0,0,fade_eff_obj)
+    {
+        image_blend = c_blue;
+        cam_id_var = hurt_target_var.cam_id_var;
+        set_alarm_scr(0,18);
     }
 ');
 // Draw Event

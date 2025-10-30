@@ -160,12 +160,12 @@ object_event_add
     switch local.type
     {
         
-        case 7: // Maya"s Idea
+        case 7: // Mayas Idea
         {
             move_type_var = 1;
             local.maya = true;
         }
-        case 6: // Lass" Idea
+        case 6: // Lass Idea
         {
             if !local.maya { seen_dist_var = 160; }
         }

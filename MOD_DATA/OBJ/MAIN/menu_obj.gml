@@ -185,6 +185,45 @@ object_event_add
     back_str_var = ini_read_string("MENU","back","MENU_back");
     str_bg_color_var = make_color_rgb(57,0,91);
     str_bg_select_color_var = make_color_rgb(138,0,0);
+    // Options
+        // Basic
+    on_str_var = ini_read_string("MENU","on","MENU_on"); // On
+    off_str_var = ini_read_string("MENU","off","MENU_off"); // Off
+    true_str_var = ini_read_string("MENU","true","MENU_true"); // True
+    false_str_var = ini_read_string("MENU","false","MENU_false"); // False
+    min_str_var = ini_read_string("MENU","min","MENU_min"); // Minimum
+    max_str_var = ini_read_string("MENU","max","MENU_max"); // Maximum
+    always_str_var = ini_read_string("MENU","always","MENU_always"); // Always
+    never_str_var = ini_read_string("MENU","never","MENU_never"); // Never
+    rand_str_var = ini_read_string("MENU","rand","MENU_rand"); // Random
+    def_str_var = ini_read_string("MENU","def","MENU_def"); // Default
+    inf_str_var = ini_read_string("MENU","inf","MENU_inf"); // Infinite
+    taper_str_var = ini_read_string("MENU","taper","MENU_taper"); // Taper
+        // Behaviors
+    mod_str_var = ini_read_string("MENU","mod","MENU_mod"); // Recode
+    og_str_var = ini_read_string("MENU","og","MENU_og"); // Original
+    hd_str_var = ini_read_string("MENU","hd","MENU_hd"); // Renovation
+    kh_str_var = ini_read_string("MENU","kh","MENU_kh"); // Karamari Hospital
+    dh_str_var = ini_read_string("MENU","dh","MENU_dh"); // Dollhouse
+    alt_str_var = ini_read_string("MENU","alt","MENU_alt"); // Alternate
+    rouge_str_var = ini_read_string("MENU","rouge","MENU_rouge"); // Gone Rouge
+    yoshi_str_var = ini_read_string("MENU","yoshi","MENU_yoshi"); // Remodeled
+    old_str_var = ini_read_string("MENU","old","MENU_old"); // Classic
+    imscared_str_var = ini_read_string("MENU","imscared","MENU_imscared"); // Im Scared
+        // Modes
+    sm_str_var = ini_read_string("MENU","sm","MENU_sm"); // Story Mode
+    em_str_var = ini_read_string("MENU","em","MENU_em"); // Endless Mode
+    sb_str_var = ini_read_string("MENU","sb","MENU_sb"); // Sandbox Mode
+        // Difficulties
+    easiest_str_var = ini_read_string("MENU","easiest","MENU_easiest"); // Easiest
+    easy_str_var = ini_read_string("MENU","easy","MENU_easy"); // Easy
+    normal_str_var = ini_read_string("MENU","normal","MENU_normal"); // Normal
+    hard_str_var = ini_read_string("MENU","hard","MENU_hard"); // Hard
+    hardest_str_var = ini_read_string("MENU","hardest","MENU_hardest"); // Hardest
+        // Unique
+    alone_str_var = ini_read_string("MENU","alone","MENU_alone"); // Alone (Locks)
+    evil_str_var = ini_read_string("MENU","evil","MENU_evil"); // Not Golden (Locks)
+    canon_str_var = ini_read_string("MENU","canon","MENU_canon"); // Canon (Dupes)
     // Button Text
         // Main
     button_str_arr[2,0] = ini_read_string("MENU","ng","MENU_ng");
@@ -223,194 +262,265 @@ object_event_add
     button_str_arr[4,18] = ini_read_string("MENU","chance_mult","MENU_chance_mult");
     button_str_arr[4,19] = ini_read_string("MENU","type","MENU_type");
     button_str_arr[4,20] = back_str_var;
-        // Behavior
-    button_str_arr[5,0] = "PLAYER";
-    button_str_arr[5,1] = "AXE";
+    	//Load Saves
+	button_str_arr[6,0] = back_str_var;
+    // Behavior
+        // Defaults
+    type_button_len_var = 34;
+    for (local.i=0; local.i<type_button_len_var-1; local.i+=1;)
+    {
+        type_button_arr[local.i,0] = -1; // Current Value
+        type_button_arr[local.i,2] = 3; // Allowed values (Default is Recode, OG, and HD)
+    }
+        // Names
+    type_button_arr[0,1] = "PLAYER"; // Label
+    type_button_arr[1,1] = "AXE";
     switch global.name_var
     {
         case name_og_const:
         {
-            button_str_arr[5,2] = string_upper(ini_read_string("NAME","js_og","NAME_js_og"));
-            button_str_arr[5,3] = string_upper(ini_read_string("NAME","gel","NAME_gel"));
-            button_str_arr[5,4] = string_upper(ini_read_string("NAME","bug_og","NAME_bug_og"));
-            button_str_arr[5,5] = string_upper(ini_read_string("NAME","ringu","NAME_ringu"));
-            button_str_arr[5,6] = string_upper(ini_read_string("NAME","bab","NAME_bab"));
-            button_str_arr[5,7] = string_upper(ini_read_string("NAME","pup_og","NAME_pup_og"));
-            button_str_arr[5,8] = string_upper(ini_read_string("NAME","flesh","NAME_flesh"));
-            button_str_arr[5,9] = string_upper(ini_read_string("NAME","dl","NAME_dl"));
-            button_str_arr[5,10] = string_upper(ini_read_string("NAME","taker","NAME_taker"));
-            button_str_arr[5,11] = string_upper(ini_read_string("NAME","para","NAME_para"));
-            button_str_arr[5,12] = string_upper(ini_read_string("NAME","fd","NAME_fd"));
-            button_str_arr[5,13] = string_upper(ini_read_string("NAME","killer_og","NAME_killer_og"));
-            button_str_arr[5,14] = string_upper(ini_read_string("NAME","mur","NAME_mur"));
-            button_str_arr[5,15] = string_upper(ini_read_string("NAME","sg","NAME_sg"));
-            button_str_arr[5,16] = string_upper(ini_read_string("NAME","bodybag","NAME_bodybag"));
-            button_str_arr[5,17] = string_upper(ini_read_string("NAME","stem_og","NAME_stem_og"));
-            button_str_arr[5,18] = string_upper(ini_read_string("NAME","patient_og","NAME_patient_og"));
-            button_str_arr[5,19] = string_upper(ini_read_string("NAME","gc","NAME_gc"));
-            button_str_arr[5,20] = string_upper(ini_read_string("NAME","bekka","NAME_bekka"));
-            button_str_arr[5,21] = string_upper(ini_read_string("NAME","husk_og","NAME_husk_og"));
-            button_str_arr[5,26] = string_upper(ini_read_string("NAME","real_ringu_og","NAME_real_ringu_og"));
-            button_str_arr[5,27] = string_upper(ini_read_string("NAME","tiri","NAME_tiri"));
-            button_str_arr[5,28] = string_upper(ini_read_string("NAME","lisa","NAME_lisa"));
-            button_str_arr[5,29] = string_upper(ini_read_string("NAME","otto_og","NAME_otto_og"));
-            button_str_arr[5,30] = string_upper(ini_read_string("NAME","spooper","NAME_spooper"));
-            button_str_arr[5,31] = string_upper(ini_read_string("NAME","wf","NAME_wf"));
+            type_button_arr[2,1] = string_upper(ini_read_string("NAME","js_og","NAME_js_og"));
+            type_button_arr[3,1] = string_upper(ini_read_string("NAME","gel","NAME_gel"));
+            type_button_arr[4,1] = string_upper(ini_read_string("NAME","bug_og","NAME_bug_og"));
+            type_button_arr[5,1] = string_upper(ini_read_string("NAME","ringu","NAME_ringu"));
+            type_button_arr[6,1] = string_upper(ini_read_string("NAME","bab","NAME_bab"));
+            type_button_arr[7,1] = string_upper(ini_read_string("NAME","pup_og","NAME_pup_og"));
+            type_button_arr[8,1] = string_upper(ini_read_string("NAME","flesh","NAME_flesh"));
+            type_button_arr[9,1] = string_upper(ini_read_string("NAME","dl","NAME_dl"));
+            type_button_arr[10,1] = string_upper(ini_read_string("NAME","taker","NAME_taker"));
+            type_button_arr[11,1] = string_upper(ini_read_string("NAME","eel_num","NAME_eel_num"));
+            type_button_arr[12,1] = string_upper(ini_read_string("NAME","para","NAME_para"));
+            type_button_arr[13,1] = string_upper(ini_read_string("NAME","fd","NAME_fd"));
+            type_button_arr[14,1] = string_upper(ini_read_string("NAME","killer_og","NAME_killer_og"));
+            type_button_arr[15,1] = string_upper(ini_read_string("NAME","mur","NAME_mur"));
+            type_button_arr[16,1] = string_upper(ini_read_string("NAME","sg","NAME_sg"));
+            type_button_arr[17,1] = string_upper(ini_read_string("NAME","bodybag","NAME_bodybag"));
+            type_button_arr[18,1] = string_upper(ini_read_string("NAME","stem_og","NAME_stem_og"));
+            type_button_arr[19,1] = string_upper(ini_read_string("NAME","patient_og","NAME_patient_og"));
+            type_button_arr[20,1] = string_upper(ini_read_string("NAME","gc","NAME_gc"));
+            type_button_arr[21,1] = string_upper(ini_read_string("NAME","bekka","NAME_bekka"));
+            type_button_arr[22,1] = string_upper(ini_read_string("NAME","husk_og","NAME_husk_og"));
+            type_button_arr[27,1] = string_upper(ini_read_string("NAME","real_ringu_og","NAME_real_ringu_og"));
+            type_button_arr[28,1] = string_upper(ini_read_string("NAME","tiri","NAME_tiri"));
+            type_button_arr[29,1] = string_upper(ini_read_string("NAME","lisa","NAME_lisa"));
+            type_button_arr[30,1] = string_upper(ini_read_string("NAME","otto_og","NAME_otto_og"));
+            type_button_arr[31,1] = string_upper(ini_read_string("NAME","spooper","NAME_spooper"));
+            type_button_arr[32,1] = string_upper(ini_read_string("NAME","wf","NAME_wf"));
+            break;
         }
         case name_hd_const:
         {
-            button_str_arr[5,2] = string_upper(ini_read_string("NAME","js_hd","NAME_js_hd"));
-            button_str_arr[5,3] = string_upper(ini_read_string("NAME","gel","NAME_gel"));
-            button_str_arr[5,4] = string_upper(ini_read_string("NAME","bug_hd","NAME_bug_hd"));
-            button_str_arr[5,5] = string_upper(ini_read_string("NAME","ringu","NAME_ringu"));
-            button_str_arr[5,6] = string_upper(ini_read_string("NAME","bab","NAME_bab"));
-            button_str_arr[5,7] = string_upper(ini_read_string("NAME","pup_hd","NAME_pup_hd"));
-            button_str_arr[5,8] = string_upper(ini_read_string("NAME","flesh","NAME_flesh"));
-            button_str_arr[5,9] = string_upper(ini_read_string("NAME","dl","NAME_dl"));
-            button_str_arr[5,10] = string_upper(ini_read_string("NAME","taker","NAME_taker"));
-            button_str_arr[5,11] = string_upper(ini_read_string("NAME","para","NAME_para"));
-            button_str_arr[5,12] = string_upper(ini_read_string("NAME","fd","NAME_fd"));
-            button_str_arr[5,13] = string_upper(ini_read_string("NAME","killer_hd","NAME_killer_hd"));
-            button_str_arr[5,14] = string_upper(ini_read_string("NAME","mur","NAME_mur"));
-            button_str_arr[5,15] = string_upper(ini_read_string("NAME","sg","NAME_sg"));
-            button_str_arr[5,16] = string_upper(ini_read_string("NAME","bodybag","NAME_bodybag"));
-            button_str_arr[5,17] = string_upper(ini_read_string("NAME","stem_hd","NAME_stem_hd"));
-            button_str_arr[5,18] = string_upper(ini_read_string("NAME","patient_hd","NAME_patient_hd"));
-            button_str_arr[5,19] = string_upper(ini_read_string("NAME","gc","NAME_gc"));
-            button_str_arr[5,20] = string_upper(ini_read_string("NAME","bekka","NAME_bekka"));
-            button_str_arr[5,21] = string_upper(ini_read_string("NAME","husk_hd","NAME_husk_hd"));
-            button_str_arr[5,26] = string_upper(ini_read_string("NAME","real_ringu_hd","NAME_real_ringu_hd"));
-            button_str_arr[5,27] = string_upper(ini_read_string("NAME","tiri","NAME_tiri"));
-            button_str_arr[5,28] = string_upper(ini_read_string("NAME","lisa","NAME_lisa"));
-            button_str_arr[5,29] = string_upper(ini_read_string("NAME","otto_hd","NAME_otto_hd"));
-            button_str_arr[5,30] = string_upper(ini_read_string("NAME","spooper","NAME_spooper"));
-            button_str_arr[5,31] = string_upper(ini_read_string("NAME","wf","NAME_wf"));
+            type_button_arr[2,1] = string_upper(ini_read_string("NAME","js_hd","NAME_js_hd"));
+            type_button_arr[3,1] = string_upper(ini_read_string("NAME","gel","NAME_gel"));
+            type_button_arr[4,1] = string_upper(ini_read_string("NAME","bug_hd","NAME_bug_hd"));
+            type_button_arr[5,1] = string_upper(ini_read_string("NAME","ringu","NAME_ringu"));
+            type_button_arr[6,1] = string_upper(ini_read_string("NAME","bab","NAME_bab"));
+            type_button_arr[7,1] = string_upper(ini_read_string("NAME","pup_hd","NAME_pup_hd"));
+            type_button_arr[8,1] = string_upper(ini_read_string("NAME","flesh","NAME_flesh"));
+            type_button_arr[9,1] = string_upper(ini_read_string("NAME","dl","NAME_dl"));
+            type_button_arr[10,1] = string_upper(ini_read_string("NAME","taker","NAME_taker"));
+            type_button_arr[11,1] = string_upper(ini_read_string("NAME","eel","NAME_eel"));
+            type_button_arr[12,1] = string_upper(ini_read_string("NAME","para","NAME_para"));
+            type_button_arr[13,1] = string_upper(ini_read_string("NAME","fd","NAME_fd"));
+            type_button_arr[14,1] = string_upper(ini_read_string("NAME","killer_hd","NAME_killer_hd"));
+            type_button_arr[15,1] = string_upper(ini_read_string("NAME","mur","NAME_mur"));
+            type_button_arr[16,1] = string_upper(ini_read_string("NAME","sg","NAME_sg"));
+            type_button_arr[17,1] = string_upper(ini_read_string("NAME","bodybag","NAME_bodybag"));
+            type_button_arr[18,1] = string_upper(ini_read_string("NAME","stem_hd","NAME_stem_hd"));
+            type_button_arr[19,1] = string_upper(ini_read_string("NAME","patient_hd","NAME_patient_hd"));
+            type_button_arr[20,1] = string_upper(ini_read_string("NAME","gc","NAME_gc"));
+            type_button_arr[21,1] = string_upper(ini_read_string("NAME","bekka","NAME_bekka"));
+            type_button_arr[22,1] = string_upper(ini_read_string("NAME","husk_hd","NAME_husk_hd"));
+            type_button_arr[27,1] = string_upper(ini_read_string("NAME","real_ringu_hd","NAME_real_ringu_hd"));
+            type_button_arr[28,1] = string_upper(ini_read_string("NAME","tiri","NAME_tiri"));
+            type_button_arr[29,1] = string_upper(ini_read_string("NAME","lisa","NAME_lisa"));
+            type_button_arr[30,1] = string_upper(ini_read_string("NAME","otto_hd","NAME_otto_hd"));
+            type_button_arr[31,1] = string_upper(ini_read_string("NAME","spooper","NAME_spooper"));
+            type_button_arr[32,1] = string_upper(ini_read_string("NAME","wf","NAME_wf"));
+            break;
         }
         case name_fanon_const:
         {
-            button_str_arr[5,2] = string_upper(ini_read_string("NAME","js_fanon","NAME_js_fanon"));
-            button_str_arr[5,3] = string_upper(ini_read_string("NAME","gel","NAME_gel"));
-            button_str_arr[5,4] = string_upper(ini_read_string("NAME","bug_fanon","NAME_bug_fanon"));
-            button_str_arr[5,5] = string_upper(ini_read_string("NAME","ringu","NAME_ringu"));
-            button_str_arr[5,6] = string_upper(ini_read_string("NAME","bab","NAME_bab"));
-            button_str_arr[5,7] = string_upper(ini_read_string("NAME","pup_fanon","NAME_pup_fanon"));
-            button_str_arr[5,8] = string_upper(ini_read_string("NAME","flesh","NAME_flesh"));
-            button_str_arr[5,9] = string_upper(ini_read_string("NAME","dl","NAME_dl"));
-            button_str_arr[5,10] = string_upper(ini_read_string("NAME","taker","NAME_taker"));
-            button_str_arr[5,11] = string_upper(ini_read_string("NAME","para","NAME_para"));
-            button_str_arr[5,12] = string_upper(ini_read_string("NAME","fd","NAME_fd"));
-            button_str_arr[5,13] = string_upper(ini_read_string("NAME","killer_hd","NAME_killer_hd"));
-            button_str_arr[5,14] = string_upper(ini_read_string("NAME","mur","NAME_mur"));
-            button_str_arr[5,15] = string_upper(ini_read_string("NAME","sg","NAME_sg"));
-            button_str_arr[5,16] = string_upper(ini_read_string("NAME","bodybag_fanon","NAME_bodybag_fanon"));
-            button_str_arr[5,17] = string_upper(ini_read_string("NAME","stem_fanon","NAME_stem_fanon"));
-            button_str_arr[5,18] = string_upper(ini_read_string("NAME","patient_fanon","NAME_patient_fanon"));
-            button_str_arr[5,19] = string_upper(ini_read_string("NAME","gc","NAME_gc"));
-            button_str_arr[5,20] = string_upper(ini_read_string("NAME","bekka","NAME_bekka"));
-            button_str_arr[5,21] = string_upper(ini_read_string("NAME","husk_hd","NAME_husk_hd"));
-            button_str_arr[5,26] = string_upper(ini_read_string("NAME","real_ringu_hd","NAME_real_ringu_hd"));
-            button_str_arr[5,27] = string_upper(ini_read_string("NAME","tiri","NAME_tiri"));
-            button_str_arr[5,28] = string_upper(ini_read_string("NAME","lisa","NAME_lisa"));
-            button_str_arr[5,29] = string_upper(ini_read_string("NAME","otto_fanon","NAME_otto_fanon"));
-            button_str_arr[5,30] = string_upper(ini_read_string("NAME","spooper","NAME_spooper"));
-            button_str_arr[5,31] = string_upper(ini_read_string("NAME","wf","NAME_wf"));
+            type_button_arr[2,1] = string_upper(ini_read_string("NAME","js_fanon","NAME_js_fanon"));
+            type_button_arr[3,1] = string_upper(ini_read_string("NAME","gel","NAME_gel"));
+            type_button_arr[4,1] = string_upper(ini_read_string("NAME","bug_fanon","NAME_bug_fanon"));
+            type_button_arr[5,1] = string_upper(ini_read_string("NAME","ringu","NAME_ringu"));
+            type_button_arr[6,1] = string_upper(ini_read_string("NAME","bab","NAME_bab"));
+            type_button_arr[7,1] = string_upper(ini_read_string("NAME","pup_fanon","NAME_pup_fanon"));
+            type_button_arr[8,1] = string_upper(ini_read_string("NAME","flesh","NAME_flesh"));
+            type_button_arr[9,1] = string_upper(ini_read_string("NAME","dl","NAME_dl"));
+            type_button_arr[10,1] = string_upper(ini_read_string("NAME","taker","NAME_taker"));
+            type_button_arr[11,1] = string_upper(ini_read_string("NAME","eel_num","NAME_eel_num"));
+            type_button_arr[12,1] = string_upper(ini_read_string("NAME","para","NAME_para"));
+            type_button_arr[13,1] = string_upper(ini_read_string("NAME","fd","NAME_fd"));
+            type_button_arr[14,1] = string_upper(ini_read_string("NAME","killer_hd","NAME_killer_hd"));
+            type_button_arr[15,1] = string_upper(ini_read_string("NAME","mur","NAME_mur"));
+            type_button_arr[16,1] = string_upper(ini_read_string("NAME","sg","NAME_sg"));
+            type_button_arr[17,1] = string_upper(ini_read_string("NAME","bodybag_fanon","NAME_bodybag_fanon"));
+            type_button_arr[18,1] = string_upper(ini_read_string("NAME","stem_fanon","NAME_stem_fanon"));
+            type_button_arr[19,1] = string_upper(ini_read_string("NAME","patient_fanon","NAME_patient_fanon"));
+            type_button_arr[20,1] = string_upper(ini_read_string("NAME","gc","NAME_gc"));
+            type_button_arr[21,1] = string_upper(ini_read_string("NAME","bekka","NAME_bekka"));
+            type_button_arr[22,1] = string_upper(ini_read_string("NAME","husk_hd","NAME_husk_hd"));
+            type_button_arr[27,1] = string_upper(ini_read_string("NAME","real_ringu_hd","NAME_real_ringu_hd"));
+            type_button_arr[28,1] = string_upper(ini_read_string("NAME","tiri","NAME_tiri"));
+            type_button_arr[29,1] = string_upper(ini_read_string("NAME","lisa","NAME_lisa"));
+            type_button_arr[30,1] = string_upper(ini_read_string("NAME","otto_fanon","NAME_otto_fanon"));
+            type_button_arr[31,1] = string_upper(ini_read_string("NAME","spooper","NAME_spooper"));
+            type_button_arr[32,1] = string_upper(ini_read_string("NAME","wf","NAME_wf"));
+            break;
         }
         case name_num_og_const:
         {
-            button_str_arr[5,2] = string_upper(ini_read_string("NAME","js_num","NAME_js_num"));
-            button_str_arr[5,3] = string_upper(ini_read_string("NAME","gel_num","NAME_gel_num"));
-            button_str_arr[5,4] = string_upper(ini_read_string("NAME","bug_num","NAME_bug_num"));
-            button_str_arr[5,5] = string_upper(ini_read_string("NAME","ringu_num","NAME_ringu_num"));
-            button_str_arr[5,6] = string_upper(ini_read_string("NAME","bab_num","NAME_bab_num"));
-            button_str_arr[5,7] = string_upper(ini_read_string("NAME","pup_num","NAME_pup_num"));
-            button_str_arr[5,8] = string_upper(ini_read_string("NAME","flesh_num","NAME_flesh_num"));
-            button_str_arr[5,9] = string_upper(ini_read_string("NAME","dl_num","NAME_dl_num"));
-            button_str_arr[5,10] = string_upper(ini_read_string("NAME","taker_num","NAME_taker_num"));
-            button_str_arr[5,11] = string_upper(ini_read_string("NAME","para_num","NAME_para_num"));
-            button_str_arr[5,12] = string_upper(ini_read_string("NAME","fd_num","NAME_fd_num"));
-            button_str_arr[5,13] = string_upper(ini_read_string("NAME","killer_num","NAME_killer_num"));
-            button_str_arr[5,14] = string_upper(ini_read_string("NAME","mur_num","NAME_mur_num"));
-            button_str_arr[5,15] = string_upper(ini_read_string("NAME","sg_num_og","NAME_sg_num_og"));
-            button_str_arr[5,16] = string_upper(ini_read_string("NAME","bodybag_num_og","NAME_bodybag_num_og"));
-            button_str_arr[5,17] = string_upper(ini_read_string("NAME","stem_num_og","NAME_stem_num_og"));
-            button_str_arr[5,18] = string_upper(ini_read_string("NAME","patient_num_og","NAME_patient_num_og"));
-            button_str_arr[5,19] = string_upper(ini_read_string("NAME","gc_num_og","NAME_gc_num_og"));
-            button_str_arr[5,20] = string_upper(ini_read_string("NAME","bekka","NAME_bekka"));
-            button_str_arr[5,21] = string_upper(ini_read_string("NAME","husk_num","NAME_husk_num"));
-            button_str_arr[5,26] = string_upper(ini_read_string("NAME","real_ringu_og","NAME_real_ringu_og"));
-            button_str_arr[5,27] = string_upper(ini_read_string("NAME","tiri","NAME_tiri"));
-            button_str_arr[5,28] = string_upper(ini_read_string("NAME","lisa","NAME_lisa"));
-            button_str_arr[5,29] = string_upper(ini_read_string("NAME","otto_og","NAME_otto_og"));
-            button_str_arr[5,30] = string_upper(ini_read_string("NAME","spooper","NAME_spooper"));
-            button_str_arr[5,31] = string_upper(ini_read_string("NAME","wf","NAME_wf"));
+            type_button_arr[2,1] = string_upper(ini_read_string("NAME","js_num","NAME_js_num"));
+            type_button_arr[3,1] = string_upper(ini_read_string("NAME","gel_num","NAME_gel_num"));
+            type_button_arr[4,1] = string_upper(ini_read_string("NAME","bug_num","NAME_bug_num"));
+            type_button_arr[5,1] = string_upper(ini_read_string("NAME","ringu_num","NAME_ringu_num"));
+            type_button_arr[6,1] = string_upper(ini_read_string("NAME","bab_num","NAME_bab_num"));
+            type_button_arr[7,1] = string_upper(ini_read_string("NAME","pup_num","NAME_pup_num"));
+            type_button_arr[8,1] = string_upper(ini_read_string("NAME","flesh_num","NAME_flesh_num"));
+            type_button_arr[9,1] = string_upper(ini_read_string("NAME","dl_num","NAME_dl_num"));
+            type_button_arr[10,1] = string_upper(ini_read_string("NAME","taker_num","NAME_taker_num"));
+            type_button_arr[11,1] = string_upper(ini_read_string("NAME","eel_num","NAME_eel_num"));
+            type_button_arr[12,1] = string_upper(ini_read_string("NAME","para_num","NAME_para_num"));
+            type_button_arr[13,1] = string_upper(ini_read_string("NAME","fd_num","NAME_fd_num"));
+            type_button_arr[14,1] = string_upper(ini_read_string("NAME","killer_num","NAME_killer_num"));
+            type_button_arr[15,1] = string_upper(ini_read_string("NAME","mur_num","NAME_mur_num"));
+            type_button_arr[16,1] = string_upper(ini_read_string("NAME","sg_num_og","NAME_sg_num_og"));
+            type_button_arr[17,1] = string_upper(ini_read_string("NAME","bodybag_num_og","NAME_bodybag_num_og"));
+            type_button_arr[18,1] = string_upper(ini_read_string("NAME","stem_num_og","NAME_stem_num_og"));
+            type_button_arr[19,1] = string_upper(ini_read_string("NAME","patient_num_og","NAME_patient_num_og"));
+            type_button_arr[20,1] = string_upper(ini_read_string("NAME","gc_num_og","NAME_gc_num_og"));
+            type_button_arr[21,1] = string_upper(ini_read_string("NAME","bekka","NAME_bekka"));
+            type_button_arr[22,1] = string_upper(ini_read_string("NAME","husk_num","NAME_husk_num"));
+            type_button_arr[27,1] = string_upper(ini_read_string("NAME","real_ringu_og","NAME_real_ringu_og"));
+            type_button_arr[28,1] = string_upper(ini_read_string("NAME","tiri","NAME_tiri"));
+            type_button_arr[29,1] = string_upper(ini_read_string("NAME","lisa","NAME_lisa"));
+            type_button_arr[30,1] = string_upper(ini_read_string("NAME","otto_og","NAME_otto_og"));
+            type_button_arr[31,1] = string_upper(ini_read_string("NAME","spooper","NAME_spooper"));
+            type_button_arr[32,1] = string_upper(ini_read_string("NAME","wf","NAME_wf"));
+            break;
         }
         case name_num_hd_const:
         {
-            button_str_arr[5,2] = string_upper(ini_read_string("NAME","js_num","NAME_js_num"));
-            button_str_arr[5,3] = string_upper(ini_read_string("NAME","gel_num","NAME_gel_num"));
-            button_str_arr[5,4] = string_upper(ini_read_string("NAME","bug_num","NAME_bug_num"));
-            button_str_arr[5,5] = string_upper(ini_read_string("NAME","ringu_num","NAME_ringu_num"));
-            button_str_arr[5,6] = string_upper(ini_read_string("NAME","bab_num","NAME_bab_num"));
-            button_str_arr[5,7] = string_upper(ini_read_string("NAME","pup_num","NAME_pup_num"));
-            button_str_arr[5,8] = string_upper(ini_read_string("NAME","flesh_num","NAME_flesh_num"));
-            button_str_arr[5,9] = string_upper(ini_read_string("NAME","dl_num","NAME_dl_num"));
-            button_str_arr[5,10] = string_upper(ini_read_string("NAME","taker_num","NAME_taker_num"));
-            button_str_arr[5,11] = string_upper(ini_read_string("NAME","para_num","NAME_para_num"));
-            button_str_arr[5,12] = string_upper(ini_read_string("NAME","fd_num","NAME_fd_num"));
-            button_str_arr[5,13] = string_upper(ini_read_string("NAME","killer_num","NAME_killer_num"));
-            button_str_arr[5,14] = string_upper(ini_read_string("NAME","mur_num","NAME_mur_num"));
-            button_str_arr[5,15] = string_upper(ini_read_string("NAME","sg_num_hd","NAME_sg_num_hd"));
-            button_str_arr[5,16] = string_upper(ini_read_string("NAME","bodybag_num_hd","NAME_bodybag_num_hd"));
-            button_str_arr[5,17] = string_upper(ini_read_string("NAME","stem_num_hd","NAME_stem_num_hd"));
-            button_str_arr[5,18] = string_upper(ini_read_string("NAME","patient_num_hd","NAME_patient_num_hd"));
-            button_str_arr[5,19] = string_upper(ini_read_string("NAME","gc_num_hd","NAME_gc_num_hd"));
-            button_str_arr[5,20] = string_upper(ini_read_string("NAME","bekka_num","NAME_bekka_num"));
-            button_str_arr[5,21] = string_upper(ini_read_string("NAME","husk_hd","NAME_husk_hd"));
-            button_str_arr[5,26] = string_upper(ini_read_string("NAME","real_ringu_num","NAME_real_ringu_num"));
-            button_str_arr[5,27] = string_upper(ini_read_string("NAME","tiri_num","NAME_tiri_num"));
-            button_str_arr[5,28] = string_upper(ini_read_string("NAME","lisa_num","NAME_lisa_num"));
-            button_str_arr[5,29] = string_upper(ini_read_string("NAME","otto_num","NAME_otto_num"));
-            button_str_arr[5,30] = string_upper(ini_read_string("NAME","spooper_num","NAME_spooper_num"));
-            button_str_arr[5,31] = string_upper(ini_read_string("NAME","wf_num","NAME_wf_num"));
+            type_button_arr[2,1] = string_upper(ini_read_string("NAME","js_num","NAME_js_num"));
+            type_button_arr[3,1] = string_upper(ini_read_string("NAME","gel_num","NAME_gel_num"));
+            type_button_arr[4,1] = string_upper(ini_read_string("NAME","bug_num","NAME_bug_num"));
+            type_button_arr[5,1] = string_upper(ini_read_string("NAME","ringu_num","NAME_ringu_num"));
+            type_button_arr[6,1] = string_upper(ini_read_string("NAME","bab_num","NAME_bab_num"));
+            type_button_arr[7,1] = string_upper(ini_read_string("NAME","pup_num","NAME_pup_num"));
+            type_button_arr[8,1] = string_upper(ini_read_string("NAME","flesh_num","NAME_flesh_num"));
+            type_button_arr[9,1] = string_upper(ini_read_string("NAME","dl_num","NAME_dl_num"));
+            type_button_arr[10,1] = string_upper(ini_read_string("NAME","taker_num","NAME_taker_num"));
+            type_button_arr[11,1] = string_upper(ini_read_string("NAME","eel_num","NAME_eel_num"));
+            type_button_arr[12,1] = string_upper(ini_read_string("NAME","para_num","NAME_para_num"));
+            type_button_arr[13,1] = string_upper(ini_read_string("NAME","fd_num","NAME_fd_num"));
+            type_button_arr[14,1] = string_upper(ini_read_string("NAME","killer_num","NAME_killer_num"));
+            type_button_arr[15,1] = string_upper(ini_read_string("NAME","mur_num","NAME_mur_num"));
+            type_button_arr[16,1] = string_upper(ini_read_string("NAME","sg_num_hd","NAME_sg_num_hd"));
+            type_button_arr[17,1] = string_upper(ini_read_string("NAME","bodybag_num_hd","NAME_bodybag_num_hd"));
+            type_button_arr[18,1] = string_upper(ini_read_string("NAME","stem_num_hd","NAME_stem_num_hd"));
+            type_button_arr[19,1] = string_upper(ini_read_string("NAME","patient_num_hd","NAME_patient_num_hd"));
+            type_button_arr[20,1] = string_upper(ini_read_string("NAME","gc_num_hd","NAME_gc_num_hd"));
+            type_button_arr[21,1] = string_upper(ini_read_string("NAME","bekka_num","NAME_bekka_num"));
+            type_button_arr[22,1] = string_upper(ini_read_string("NAME","husk_hd","NAME_husk_hd"));
+            type_button_arr[27,1] = string_upper(ini_read_string("NAME","real_ringu_num","NAME_real_ringu_num"));
+            type_button_arr[28,1] = string_upper(ini_read_string("NAME","tiri_num","NAME_tiri_num"));
+            type_button_arr[29,1] = string_upper(ini_read_string("NAME","lisa_num","NAME_lisa_num"));
+            type_button_arr[30,1] = string_upper(ini_read_string("NAME","otto_num","NAME_otto_num"));
+            type_button_arr[31,1] = string_upper(ini_read_string("NAME","spooper_num","NAME_spooper_num"));
+            type_button_arr[32,1] = string_upper(ini_read_string("NAME","wf_num","NAME_wf_num"));
+            break;
         }
     }
-    button_str_arr[5,22] = string_upper(ini_read_string("NAME","wc","NAME_wc"));
-    button_str_arr[5,23] = string_upper(ini_read_string("NAME","clown","NAME_clown"));
-    button_str_arr[5,24] = string_upper(ini_read_string("NAME","hd","NAME_hd"));
-    button_str_arr[5,25] = string_upper(ini_read_string("NAME","frenzy","NAME_frenzy"));
-    button_str_arr[5,32] = back_str_var;
-		//Load Saves
-	button_str_arr[6,0] = back_str_var;
-        // Other
-    on_str_var = ini_read_string("MENU","on","MENU_on");
-    off_str_var = ini_read_string("MENU","off","MENU_off");
-    true_str_var = ini_read_string("MENU","true","MENU_true");
-    false_str_var = ini_read_string("MENU","false","MENU_false");
-    min_str_var = ini_read_string("MENU","min","MENU_min");
-    max_str_var = ini_read_string("MENU","max","MENU_max");
-    always_str_var = ini_read_string("MENU","always","MENU_always");
-    never_str_var = ini_read_string("MENU","never","MENU_never");
-    rand_str_var = ini_read_string("MENU","rand","MENU_rand");
-    def_str_var = ini_read_string("MENU","def","MENU_def");
-    inf_str_var = ini_read_string("MENU","inf","MENU_inf");
-    taper_str_var = ini_read_string("MENU","taper","MENU_taper");
-    mod_str_var = ini_read_string("MENU","mod","MENU_mod");
-    og_str_var = ini_read_string("MENU","og","MENU_og");
-    hd_str_var = ini_read_string("MENU","hd","MENU_hd");
-    kh_str_var = ini_read_string("MENU","kh","MENU_kh");
-    dh_str_var = ini_read_string("MENU","dh","MENU_dh");
-    alt_str_var = ini_read_string("MENU","alt","MENU_alt");
-    sm_str_var = ini_read_string("MENU","sm","MENU_sm");
-    em_str_var = ini_read_string("MENU","em","MENU_em");
-    sb_str_var = ini_read_string("MENU","sb","MENU_sb");
-    easiest_str_var = ini_read_string("MENU","easiest","MENU_easiest");
-    easy_str_var = ini_read_string("MENU","easy","MENU_easy");
-    normal_str_var = ini_read_string("MENU","normal","MENU_normal");
-    hard_str_var = ini_read_string("MENU","hard","MENU_hard");
-    hardest_str_var = ini_read_string("MENU","hardest","MENU_hardest");
-    alone_str_var = ini_read_string("MENU","alone","MENU_alone");
-    evil_str_var = ini_read_string("MENU","evil","MENU_evil"); // Not golden
-    canon_str_var = ini_read_string("MENU","canon","MENU_canon");
+    type_button_arr[23,1] = string_upper(ini_read_string("NAME","wc","NAME_wc"));
+    type_button_arr[24,1] = string_upper(ini_read_string("NAME","clown","NAME_clown"));
+    type_button_arr[25,1] = string_upper(ini_read_string("NAME","hd","NAME_hd"));
+    type_button_arr[26,1] = string_upper(ini_read_string("NAME","frenzy","NAME_frenzy"));
+    type_button_arr[33,1] = back_str_var;
+        // Variable to write to
+    type_button_arr[0,3] = "player";
+    type_button_arr[1,3] = "axe";
+    type_button_arr[2,3] = "js";
+    type_button_arr[3,3] = "gel";
+    type_button_arr[4,3] = "bug";
+    type_button_arr[5,3] = "ringu";
+    type_button_arr[6,3] = "bab";
+    type_button_arr[7,3] = "pup";
+    type_button_arr[8,3] = "flesh";
+    type_button_arr[9,3] = "dl";
+    type_button_arr[10,3] = "taker";
+    type_button_arr[11,3] = "eel";
+    type_button_arr[12,3] = "para";
+    type_button_arr[13,3] = "fd";
+    type_button_arr[14,3] = "killer";
+    type_button_arr[15,3] = "mur";
+    type_button_arr[16,3] = "sg";
+    type_button_arr[17,3] = "body";
+    type_button_arr[18,3] = "stem";
+    type_button_arr[19,3] = "patient";
+    type_button_arr[20,3] = "gc";
+    type_button_arr[21,3] = "bekka";
+    type_button_arr[22,3] = "husk";
+    type_button_arr[23,3] = "wc";
+    type_button_arr[24,3] = "clown";
+    type_button_arr[25,3] = "hd";
+    type_button_arr[26,3] = "frenzy";
+    type_button_arr[27,3] = "real_ringu";
+    type_button_arr[28,3] = "tiri";
+    type_button_arr[29,3] = "lisa";
+    type_button_arr[30,3] = "otto";
+    type_button_arr[31,3] = "spooper";
+    type_button_arr[32,3] = "wf";
+        // Extra Settings
+    type_button_arr[5,2] = 4; // Ringu
+    type_button_arr[5,4] = old_str_var;
+    type_button_arr[6,2] = 4; // Bab
+    type_button_arr[6,4] = old_str_var;
+    type_button_arr[7,2] = 5; // Puppet
+    type_button_arr[7,4] = dh_str_var;
+    type_button_arr[7,5] = dh_str_var+" "+mod_str_var;
+    type_button_arr[11,2] = 4; // Eel
+    type_button_arr[11,4] = yoshi_str_var;
+    type_button_arr[14,2] = 7; // Killer
+    type_button_arr[14,4] = old_str_var;
+    type_button_arr[14,5] = yoshi_str_var;
+    type_button_arr[14,6] = rouge_str_var;
+    type_button_arr[14,7] = alt_str_var;
+    type_button_arr[17,2] = 6; // Bodybag
+    type_button_arr[17,4] = kh_str_var;
+    type_button_arr[17,5] = old_str_var;
+    type_button_arr[17,6] = alt_str_var;
+    type_button_arr[18,2] = 7; // Stem
+    type_button_arr[18,4] = kh_str_var;
+    type_button_arr[18,5] = kh_str_var+" "+hd_str_var;
+    type_button_arr[18,6] = old_str_var;
+    type_button_arr[18,7] = alt_str_var;
+    type_button_arr[19,2] = 4; // Patient
+    type_button_arr[19,4] = alt_str_var;
+    type_button_arr[20,2] = 7; // Ghost Cow
+    type_button_arr[20,4] = kh_str_var;
+    type_button_arr[20,5] = kh_str_var+" "+hd_str_var;
+    type_button_arr[20,6] = alt_str_var;
+    type_button_arr[20,7] = kh_str_var+" "+mod_str_var;
+    type_button_arr[21,2] = 6; // Bekka
+    type_button_arr[21,4] = yoshi_str_var;
+    type_button_arr[21,5] = rouge_str_var;
+    type_button_arr[21,6] = alt_str_var;
+    type_button_arr[24,2] = 4; // Clown
+    type_button_arr[24,4] = alt_str_var;
+    type_button_arr[27,2] = 4; // Real Ringu
+    type_button_arr[27,4] = old_str_var;
+    type_button_arr[28,2] = 4; // Tirsiak
+    type_button_arr[28,4] = old_str_var;
+    type_button_arr[30,2] = 4; // Otto
+    type_button_arr[30,4] = old_str_var;
+    type_button_arr[32,2] = 8; // White Face
+    type_button_arr[32,4] = old_str_var;
+    type_button_arr[32,5] = imscared_str_var;
+    type_button_arr[32,6] = alt_str_var+" 1";
+    type_button_arr[32,7] = alt_str_var+" 2";
+    type_button_arr[32,8] = imscared_str_var+" "+mod_str_var;
     ini_close();
     // Alarms
     alarm_len_var = 1;
@@ -428,6 +538,11 @@ object_event_add
 	menuscroll_var = 0;
 	menuscroll_lerp_var = 0;
 	menuscroll_focal_var = 0;
+
+    // Sorry menuscroll, youre getting REPLACED
+    scroll_var = 0;
+    scroll_rate_var = 0.2;
+    scroll_min_var = 0.5;
 	
 	// Save Variables
 	save_name_var = "";
@@ -460,39 +575,8 @@ object_event_add
     save_chance_mult_var = -1;
 	
 	save_type_var=0;
-	save_player_type_var=-1;
-	save_axe_type_var=-1;
-	save_gel_type_var=-1;
-	save_bug_type_var=-1;
-	save_ringu_type_var=-1;
-	save_bab_type_var=-1;
-	save_pup_type_var=-1;
-	save_flesh_type_var=-1;
-	save_dl_type_var=-1;
-	save_taker_type_var=-1;
-	save_para_type_var=-1;
-	save_fd_type_var=-1;
-	save_killer_type_var=-1;
-	save_mur_type_var=-1;
-	save_sg_type_var=-1;
-	save_body_type_var=-1;
-	save_stem_type_var=-1;
-	save_patient_type_var=-1;
-	save_cow_type_var=-1;
-	save_bekka_type_var=-1;
-	save_husk_type_var=-1;
-	save_wc_type_var=-1;
-	save_clown_type_var=-1;
-	save_hd_type_var=-1;
-	save_frenzy_type_var=-1;
-	save_nm_type_var=-1;
-	save_tiri_type_var=-1;
-	save_lisa_type_var=-1;
-	save_otto_type_var=-1;
-	save_spooper_type_var=-1;
-	save_wf_type_var=-1;
-	save_real_ringu_type_var=-1;
-    save_js_type_var=-1;
+	for (local.i=0; local.i<type_button_len_var-1; local.i+=1;)
+    { type_button_arr[local.i,0] = -1; }
 	
 	ds_list_clear(global.save_list);
 	
@@ -523,7 +607,7 @@ object_event_add
 (argument0,ev_step,ev_step_normal,'
     event_inherited();
 	
-    x = (x-global.delta_time_var) mod background_get_width(cloud_bg_var);
+    x = (x-global.true_delta_time_var) mod background_get_width(cloud_bg_var);
     switch state_var
     {
         case 0: // Story
@@ -531,7 +615,7 @@ object_event_add
             y = lerp_scr(0,-1440,alarm_arr[0,0]/alarm_arr[0,1]);
             path_y_var = lerp_scr(720,-720,alarm_arr[0,0]/alarm_arr[0,1]);
             path_cloud_y_var = lerp_scr(720,0,alarm_arr[0,0]/alarm_arr[0,1]);
-            path_cloud_x_var = (path_cloud_x_var+global.delta_time_var) mod 720;
+            path_cloud_x_var = (path_cloud_x_var+global.true_delta_time_var) mod 720;
             story_y_var = lerp_scr(-750,750,alarm_arr[0,0]/alarm_arr[0,1]); // -748, 752
             if global.confirm_input_press_var
             {
@@ -542,7 +626,7 @@ object_event_add
         }
         case 1: // Press Confirm
         {
-            time_var = (time_var+global.delta_time_var) mod 120;
+            time_var = (time_var+global.true_delta_time_var) mod 120;
             str_alpha_var = (cos(2*time_var*pi/120)+1)/2;
             if global.confirm_input_press_var
             { state_var += 1; event_user(0); }
@@ -571,7 +655,7 @@ object_event_add
                     button_state_var = mod_scr(button_state_var-4,2)+4;
                 }
             }
-            time_var = (time_var+global.delta_time_var) mod 160;
+            time_var = (time_var+global.true_delta_time_var) mod 160;
             str_scale_var = 0.8+(cos(2*time_var*pi/80)*0.2);
             name_y_var = 170+(sin(2*time_var*pi/160)*10)
             if global.confirm_input_press_var
@@ -619,39 +703,8 @@ object_event_add
                         save_mon_chance_var = -1;
 						
 						save_type_var=0;
-						save_player_type_var=-1;
-						save_axe_type_var=-1;
-						save_gel_type_var=-1;
-						save_bug_type_var=-1;
-						save_ringu_type_var=-1;
-						save_bab_type_var=-1;
-						save_pup_type_var=-1;
-						save_flesh_type_var=-1;
-						save_dl_type_var=-1;
-						save_taker_type_var=-1;
-						save_para_type_var=-1;
-						save_fd_type_var=-1;
-						save_killer_type_var=-1;
-						save_mur_type_var=-1;
-						save_sg_type_var=-1;
-						save_body_type_var=-1;
-						save_stem_type_var=-1;
-						save_patient_type_var=-1;
-						save_cow_type_var=-1;
-						save_bekka_type_var=-1;
-						save_husk_type_var=-1;
-						save_wc_type_var=-1;
-						save_clown_type_var=-1;
-						save_hd_type_var=-1;
-						save_frenzy_type_var=-1;
-						save_nm_type_var=-1;
-						save_tiri_type_var=-1;
-						save_lisa_type_var=-1;
-						save_otto_type_var=-1;
-						save_spooper_type_var=-1;
-						save_wf_type_var=-1;
-						save_real_ringu_type_var=-1;
-                        save_js_type_var=-1;
+						for (local.i=0; local.i<type_button_len_var-1; local.i+=1;)
+                        { type_button_arr[local.i,0] = -1; }
 						
 						break;
 					}
@@ -707,10 +760,10 @@ object_event_add
         }
         case 3: //Save Creation
         {
-			subbgscroll_var += global.delta_time_var;
+			subbgscroll_var += global.true_delta_time_var;
 			
 			if subbgalpha_var < 1
-			subbgalpha_var += (0.04*global.delta_time_var);
+			subbgalpha_var += (0.04*global.true_delta_time_var);
 			
 			if button_state_var < (menuscroll_focal_var-1)
 			menuscroll_focal_var -= 1;
@@ -719,10 +772,10 @@ object_event_add
 			menuscroll_focal_var += 1;
 			
 			menuscroll_var = 96*(menuscroll_focal_var-2);
-			menuscroll_lerp_var = menuscroll_lerp_var + (menuscroll_var - menuscroll_lerp_var) * (0.2*global.delta_time_var)
+			menuscroll_lerp_var = menuscroll_lerp_var + (menuscroll_var - menuscroll_lerp_var) * (0.2*global.true_delta_time_var)
 			
             // Text Stretch
-            time_var = (time_var+global.delta_time_var) mod 80;
+            time_var = (time_var+global.true_delta_time_var) mod 80;
             str_scale_var = 0.8+(cos(2*time_var*pi/80)*0.2);
             // Scroll
             if global.up_input_press_var { button_state_var -= 1; }
@@ -851,10 +904,10 @@ object_event_add
         case 4: // Customize
         {
             // Effects! (I don"t know how this works, but I trust Bird"s judgement)
-            subbgscroll_var += (1*global.delta_time_var);
+            subbgscroll_var += (1*global.true_delta_time_var);
 			
 			if subbgalpha_var < 1
-			subbgalpha_var += (0.04*global.delta_time_var);
+			subbgalpha_var += (0.04*global.true_delta_time_var);
 			
 			if button_state_var < (menuscroll_focal_var-1)
 			menuscroll_focal_var -= 1;
@@ -863,9 +916,9 @@ object_event_add
 			menuscroll_focal_var += 1;
 			
 			menuscroll_var = 96*(menuscroll_focal_var-2);
-			menuscroll_lerp_var = menuscroll_lerp_var + (menuscroll_var - menuscroll_lerp_var) * (0.2*global.delta_time_var);
+			menuscroll_lerp_var = menuscroll_lerp_var + (menuscroll_var - menuscroll_lerp_var) * (0.2*global.true_delta_time_var);
             // Text Stretch
-            time_var = (time_var+global.delta_time_var) mod 80;
+            time_var = (time_var+global.true_delta_time_var) mod 80;
             str_scale_var = 0.8+(cos(2*time_var*pi/80)*0.2);
             // Scroll
             if global.up_input_press_var { button_state_var -= 1; }
@@ -998,12 +1051,44 @@ object_event_add
             }
             break;
         }
-		case 6: //Save Loads
+        case 5: // Behavior
         {
-			subbgscroll_var += (1*global.delta_time_var);
+            // Effects! (I dont know how this works, but I trust Birds judgement)
+            subbgscroll_var += (1*global.true_delta_time_var);
 			
 			if subbgalpha_var < 1
-			subbgalpha_var += (0.04*global.delta_time_var);
+			subbgalpha_var += (0.04*global.true_delta_time_var);
+            // Text Stretch
+            time_var = (time_var+global.true_delta_time_var) mod 80;
+            str_scale_var = 0.8+(cos(2*time_var*pi/80)*0.2);
+            // Lerp
+            local.target_scroll = -96*button_state_var;
+            local.scroll_diff = abs(local.target_scroll-scroll_var);
+            local.scroll_rate = max(scroll_min_var,local.scroll_diff*scroll_rate_var)*global.true_delta_time_var;
+            scroll_var += min(local.scroll_diff,local.scroll_rate)*sign(local.target_scroll-scroll_var);
+            // Scroll
+            if global.up_input_press_var { button_state_var -= 1; }
+            if global.down_input_press_var { button_state_var += 1; }
+            button_state_var = mod_scr(button_state_var,type_button_len_var);
+            // Confirm
+            if global.confirm_input_press_var && button_state_var == type_button_len_var-1
+            {
+                state_var = 3;
+                event_user(0);
+            }
+            if button_state_var != type_button_len_var-1 && (global.left_input_press_var || global.right_input_press_var)
+            {
+                local.add = global.right_input_press_var-global.left_input_press_var;
+                type_button_arr[button_state_var,0] = mod_scr(type_button_arr[button_state_var,0]+2+local.add,type_button_arr[button_state_var,2]+2)-2;
+            }
+            break;
+        }
+		case 6: //Save Loads
+        {
+			subbgscroll_var += (1*global.true_delta_time_var);
+			
+			if subbgalpha_var < 1
+			subbgalpha_var += (0.04*global.true_delta_time_var);
 			
 			if button_state_var < (menuscroll_focal_var-1)
 			menuscroll_focal_var -= 1;
@@ -1012,10 +1097,10 @@ object_event_add
 			menuscroll_focal_var += 1;
 			
 			menuscroll_var = 96*(menuscroll_focal_var-2);
-			menuscroll_lerp_var = menuscroll_lerp_var + (menuscroll_var - menuscroll_lerp_var) * (0.2*global.delta_time_var)
+			menuscroll_lerp_var = menuscroll_lerp_var + (menuscroll_var - menuscroll_lerp_var) * (0.2*global.true_delta_time_var)
 			
             // Text Stretch
-            time_var = (time_var+global.delta_time_var) mod 80;
+            time_var = (time_var+global.true_delta_time_var) mod 80;
             str_scale_var = 0.8+(cos(2*time_var*pi/80)*0.2);
             // Scroll
             if global.up_input_press_var
@@ -1120,10 +1205,10 @@ object_event_add
 		}
 		case 12: //Name Entry
         {
-			subbgscroll_var += (1*global.delta_time_var);
+			subbgscroll_var += (1*global.true_delta_time_var);
 			
 			if subbgalpha_var < 1
-			subbgalpha_var += (0.04*global.delta_time_var);
+			subbgalpha_var += (0.04*global.true_delta_time_var);
 			
 			if keyboard_string = " "
 			{
@@ -1307,133 +1392,14 @@ object_event_add
                 else { global.mon_chance_mult_var = save_chance_mult_var; }
 
 				// Behavior stuff
-				if save_player_type == -1 || !save_custom_var
-                { global.player_type_var = save_type_var; }
-				else { global.player_type_var = save_player_type; }
-
-				if save_axe_type == -1 || !save_custom_var
-                { global.axe_type_var = save_type_var; }
-				else { global.axe_type_var = save_axe_type; }
-				
-				if save_gel_type == -1 || !save_custom_var
-                { global.gel_type_var = save_type_var; }
-				else { global.gel_type_var = save_gel_type; }
-				
-				if save_bug_type == -1 || !save_custom_var
-                { global.bug_type_var = save_type_var; }
-				else { global.bug_type_var = save_bug_type; }
-				
-				if save_ringu_type_var == -1 || !save_custom_var
-                { global.ringu_type_var = save_type_var; }
-				else { global.ringu_type_var = save_ringu_type_var; }
-				
-				if save_bab_type_var == -1 || !save_custom_var
-                { global.bab_type_var = save_type_var; }
-				else { global.bab_type_var = save_bab_type_var; }
-				
-				if save_pup_type_var == -1 || !save_custom_var
-                { global.pup_type_var = save_type_var; }
-				else { global.pup_type_var = save_pup_type_var; }
-				
-				if save_flesh_type_var == -1 || !save_custom_var
-                { global.flesh_type_var = save_type_var; }
-				else { global.flesh_type_var = save_flesh_type_var; }
-				
-				if save_dl_type_var == -1 || !save_custom_var
-                { global.dl_type_var = save_type_var; }
-				else { global.dl_type_var = save_dl_type_var; }
-				
-				if save_taker_type_var == -1 || !save_custom_var
-                { global.taker_type_var = save_type_var; }
-				else { global.taker_type_var = save_taker_type_var; }
-				
-				if save_para_type_var == -1 || !save_custom_var
-                { global.para_type_var = save_type_var; }
-				else { global.para_type_var = save_para_type_var; }
-				
-				if save_fd_type_var == -1 || !save_custom_var
-                { global.fd_type_var = save_type_var; }
-				else { global.fd_type_var = save_fd_type_var; }
-				
-				if save_killer_type_var == -1 || !save_custom_var
-                { global.killer_type_var = save_type_var; }
-				else { global.killer_type_var = save_killer_type_var; }
-				
-				if save_mur_type_var == -1 || !save_custom_var
-                { global.mur_type_var = save_type_var; }
-				else { global.mur_type_var = save_mur_type_var; }
-				
-				if save_sg_type_var == -1 || !save_custom_var
-                { global.sg_type_var = save_type_var; }
-				else { global.sg_type_var = save_sg_type_var; }
-				
-				if save_body_type_var == -1 || !save_custom_var
-                { global.body_type_var = save_type_var; }
-				else { global.body_type_var = save_body_type_var; }
-				
-				if save_stem_type_var == -1 || !save_custom_var
-                { global.stem_type_var = save_type_var; }
-				else { global.stem_type_var = save_stem_type_var; }
-				
-				if save_patient_type_var == -1 || !save_custom_var
-                { global.patient_type_var = save_type_var; }
-				else { global.patient_type_var = save_patient_type_var; }
-				
-				if save_cow_type_var == -1 || !save_custom_var
-                { global.cow_type_var = save_type_var; }
-				else { global.cow_type_var = save_cow_type_var; }
-				
-				if save_bekka_type_var == -1 || !save_custom_var
-                { global.bekka_type_var = save_type_var; }
-				else { global.bekka_type_var = save_bekka_type_var; }
-				
-				if save_husk_type_var == -1 || !save_custom_var
-                { global.husk_type_var = save_type_var; }
-				else { global.husk_type_var = save_husk_type_var; }
-				
-				if save_wc_type_var == -1 || !save_custom_var
-                { global.wc_type_var = save_type_var; }
-				else { global.wc_type_var = save_wc_type_var; }
-				
-				if save_clown_type_var == -1 || !save_custom_var
-                { global.clown_type_var = save_type_var; }
-				else { global.clown_type_var = save_clown_type_var; }
-				
-				if save_hd_type_var == -1 || !save_custom_var
-                { global.hd_type_var = save_type_var; }
-				else { global.hd_type_var = save_hd_type_var; }
-				
-				if save_frenzy_type_var == -1 || !save_custom_var
-                { global.frenzy_type_var = save_type_var; }
-				else { global.frenzy_type_var = save_frenzy_type_var; }
-				
-				if save_real_ringu_type_var == -1 || !save_custom_var
-                { global.real_ringu_type_var = save_type_var; }
-				else { global.real_ringu_type_var = save_real_ringu_type_var; }
-				
-				if save_tiri_type == -1 || !save_custom_var
-                { global.tiri_type_var = save_type_var; }
-				else { global.tiri_type_var = save_tiri_type; }
-				
-				if save_lisa_type_var == -1 || !save_custom_var
-                { global.lisa_type_var = save_type_var; }
-				else { global.lisa_type_var = save_lisa_type_var; }
-				
-				if save_otto_type_var == -1 || !save_custom_var
-                { global.otto_type_var = save_type_var; }
-				else { global.otto_type_var = save_otto_type_var; }
-				
-				if save_spooper_type_var == -1 || !save_custom_var
-                { global.spooper_type_var = save_type_var; }
-				else { global.spooper_type_var = save_spooper_type_var; }
-				
-				if save_wf_type_var == -1 || !save_custom_var
-                { global.wf_type_var = save_type_var; }
-				else { global.wf_type_var = save_wf_type_var; }
-
-                if save_js_type_var == -1 || !save_custom_var
-                { global.js_type_var = save_type_var; }
-				else { global.js_type_var = save_js_type_var; }
+                for (local.i=0; local.i<type_button_len_var-1; local.i+=1;)
+                {
+                    if type_button_arr[local.i,0] == -1 || !save_custom_var
+                    { execute_string("global."+type_button_arr[local.i,3]+"_type_var = "+string(save_type_var)); }
+                    else if type_button_arr[local.i,0] < 0
+                    { execute_string("global."+type_button_arr[local.i,3]+"_type_var = -1;"); }
+                    else { execute_string("global."+type_button_arr[local.i,3]+"_type_var = "+string(type_button_arr[local.i,0])); }
+                }
 				
 				local.player = instance_create(0,0,global.player_obj);
 				local.hud = instance_create(0,0,global.hud_obj);
@@ -2068,6 +2034,81 @@ object_event_add
 				draw_text_transformed(500,local.ytmp,string(local.stat_display_var),0.75,0.75,0);
 			}
 
+            break;
+        }
+        case 5:
+        {
+            draw_background_tiled_ext(sub_bg_arr[sub_bg_var],0,subbgscroll_var*-1,1,1,make_color_rgb(70,0,90),subbgalpha_var);
+			
+			draw_set_halign(fa_right); draw_set_color(str_bg_color_var);
+			draw_text_transformed(1256,24,"CUSTOMIZE BEHAVIOR",0.95,0.95,0);
+			draw_text_transformed(1258,22,"CUSTOMIZE BEHAVIOR",0.95,0.95,0);
+			draw_set_color(c_yellow);
+			draw_text_transformed(1260,20,"CUSTOMIZE BEHAVIOR",0.95,0.95,0);
+			draw_set_color(c_white); draw_set_halign(fa_left);
+    
+            for (local.i=0; local.i<type_button_len_var; local.i+=1)
+            {
+                if local.i != button_state_var
+                {
+                    local.ytmp = 192+(96*local.i)+scroll_var
+                    draw_set_color(str_bg_color_var);
+                    draw_text_transformed(92,local.ytmp+4,type_button_arr[local.i,1],0.75,0.75,0);
+                    draw_text_transformed(94,local.ytmp+2,type_button_arr[local.i,1],0.75,0.75,0);
+                    draw_set_color(c_yellow);
+                    draw_text_transformed(96,local.ytmp,type_button_arr[local.i,1],0.75,0.75,0);
+                    
+                    if local.i != type_button_len_var-1
+                    {
+                        if type_button_arr[local.i,0] < 3
+                        {
+                            switch type_button_arr[local.i,0]
+                            {
+                                case -2: { local.str = rand_str_var; break; }
+                                case -1: { local.str = def_str_var; break; }
+                                case 0: { local.str = mod_str_var; break; }
+                                case 1: { local.str = og_str_var; break; }
+                                case 2: { local.str = hd_str_var; break; }
+                            }
+                        }
+                        else { local.str = string(type_button_arr[local.i,type_button_arr[local.i,0]+1]); }
+                        draw_set_color(str_bg_select_color_var);
+                        draw_text_transformed(496,local.ytmp+4,local.str,0.75,0.75,0);
+                        draw_text_transformed(498,local.ytmp+2,local.str,0.75,0.75,0);
+                        draw_set_color(c_white);
+                        draw_text_transformed(500,local.ytmp,local.str,0.75,0.75,0);
+                    }
+                }
+            }
+            local.xtmp = 96+(string_width(type_button_arr[button_state_var,1])*0.375);
+            local.ytmp = 192+(96*button_state_var)+scroll_var;
+            draw_set_halign(fa_center); draw_set_color(str_bg_select_color_var);
+            draw_text_transformed(local.xtmp-4,local.ytmp+4,type_button_arr[button_state_var,1],str_scale_var,0.75,0);
+            draw_text_transformed(local.xtmp-2,local.ytmp+2,type_button_arr[button_state_var,1],str_scale_var,0.75,0);
+            draw_set_color(c_white);
+            draw_text_transformed(local.xtmp,local.ytmp,type_button_arr[button_state_var,1],str_scale_var,0.75,0);
+            draw_set_halign(fa_left);
+
+            if button_state_var != type_button_len_var-1
+            {
+                if type_button_arr[button_state_var,0] < 3
+                {
+                    switch type_button_arr[button_state_var,0]
+                    {
+                        case -2: { local.str = rand_str_var; break; }
+                        case -1: { local.str = def_str_var; break; }
+                        case 0: { local.str = mod_str_var; break; }
+                        case 1: { local.str = og_str_var; break; }
+                        case 2: { local.str = hd_str_var; break; }
+                    }
+                }
+                else { local.str = string(type_button_arr[button_state_var,type_button_arr[button_state_var,0]+1]); }
+                draw_set_color(str_bg_select_color_var);
+                draw_text_transformed(496,local.ytmp+4,local.str,0.75,0.75,0);
+                draw_text_transformed(498,local.ytmp+2,local.str,0.75,0.75,0);
+                draw_set_color(c_white);
+                draw_text_transformed(500,local.ytmp,local.str,0.75,0.75,0);
+            }
             break;
         }
 		case 6: // Save Loads

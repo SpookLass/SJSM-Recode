@@ -124,6 +124,7 @@ object_event_add
         }
         case 2:
         {
+            dur_var = irandom_range(10,15);
             hang_var = false;
             type_var = 2;
             spd_base_var = 8/9; // 0.r8
@@ -141,8 +142,11 @@ object_event_add
             inv_move_var = true;
             inv_limit_var = 30;
             back_tp_alarm_var = 60;
+            // Hurt
             hurt_snd_var = 3;
-            do_hurt_var = true;
+            do_hurt_var = 2;
+            hurt_dur_var = 1;
+            hurt_die_var = 1;
             stun_var = true;
             break;
         }
@@ -217,6 +221,7 @@ object_event_add
     else
     {
         mdl_var = mdl_01_var;
+        tex_var = sprite_get_texture(spr_var,0);
         if mus_prio_var <= amb_mus_prio_const && alarm_arr[11,0] <= 0
         {
             if fmod_inst_is_play_scr(snd_var) { set_alarm_scr(11,fmod_inst_get_len_scr(snd_var)*(1-fmod_inst_get_pos_scr(snd_var))*milli_frame_rate_const/global.game_spd_var); }
@@ -391,14 +396,14 @@ object_event_add
 // Attack Success
 // Uses attack_target_var as an argument, usually the player.
 object_event_add
-(argument0,ev_other,ev_user3,"
+(argument0,ev_other,ev_user3,'
     event_inherited();
     // Become visible
     event_user(14);
-");
-// Hurt
+');
+// Hurt Event
 object_event_add
-(argument0,ev_other,ev_user4,"
+(argument0,ev_other,ev_user4,'
     event_inherited();
     if stun_var
     {
@@ -410,10 +415,10 @@ object_event_add
             set_alarm_scr(0,18);
         }
     }
-");
+');
 // Become visible
 object_event_add
-(argument0,ev_other,ev_user14,"
+(argument0,ev_other,ev_user14,'
     if image_alpha == 0
     {
         if inv_move_var { move_var = false; set_motion_3d_scr(0,true); }
@@ -450,7 +455,7 @@ object_event_add
         }
     }
     image_alpha = 1;
-")
+');
 // Teleport
 object_event_add
 (argument0,ev_other,ev_user15,"

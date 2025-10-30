@@ -31,6 +31,15 @@ hurt_snd_var
     2: Claw
     3: Axe
     4: Custom
+do_hurt_var
+    0: Cannot be hurt
+    1: Hurt event is called
+    2: Being damaged reduces duration or health
+    3: Being damaged by spiritual weapons reduces duration or health
+hurt_die_var
+    0: Monster only dies on the next room
+    1: Monster dies when duration is depleted
+    2: Monster only dies when health is depleted
 
 Main
 
@@ -188,7 +197,10 @@ object_event_add
     { path_delete(path_var); }
     fmod_inst_stop_scr(snd_var);
     if mus_prio_var > amb_mus_prio_const
-    { with mus_control_obj { event_user(0); }}
+    {
+        mus_prio_var = -1;
+        with mus_control_obj { event_user(0); }
+    }
 ");
 // Room Start Event
 object_event_add
@@ -615,10 +627,19 @@ object_event_add
     if violence_var > 0 { hurt_target_var.violence_var += violence_var; }
     // Reduce duration if very vulnerable
     if do_hurt_var == 2 || (do_hurt_var == 3 && hurt_type_var == 1)
-    && dur_var > 0 && hurt_dur_var > 0
     {
-        dur_var -= hurt_dur_var;
-        if dur_var <= 0 { instance_destroy(); exit; }
+        if dur_var > 0 && hurt_dur_var > 0
+        {
+            dur_var -= hurt_dur_var;
+            if hurt_die_var == 1 && dur_var <= 0 { event_user(11); exit; }
+            else { dur_var = max(1,dur_var); }
+        }
+        if hp_var > 0 && hurt_hp_var > 0
+        {
+            hp_var -= hurt_hp_var;
+            if hurt_die_var == 1 && hp_var <= 0 { event_user(11); exit; }
+            else { hp_var = max(1,hp_var); }
+        }
     }
     // Hurt sound
     if hurt_snd_var
@@ -790,4 +811,9 @@ object_event_add
             y = local.ytmp;
         }
     }
+");
+// Die event
+object_event_add
+(argument0,ev_other,ev_user11,"
+    instance_destroy();
 ");

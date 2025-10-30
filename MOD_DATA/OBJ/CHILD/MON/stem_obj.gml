@@ -125,10 +125,6 @@ object_event_add
     // Teleport
     tp_dist_min_var = 32;
     tp_dist_max_var = 300;
-    // Hurt
-    /*do_hurt_var = true;
-    hurt_alarm_var = 30;
-    hurt_tp_var = false;*/
     // Model
     tex_var = background_get_texture(bg_var);
     mdl_var = mdl_01_var;
@@ -176,6 +172,7 @@ object_event_add
         case 2: // HD
         {
             do_hurt_var = 2;
+            hurt_die_var = 1;
             hurt_dur_var = 1;
             hurt_eff_var = true;
             hurt_tp_var = true;
@@ -355,7 +352,7 @@ object_event_add
         }
     }
 ");
-// Hurt
+// Hurt Event
 object_event_add
 (argument0,ev_other,ev_user4,"
     event_inherited();
