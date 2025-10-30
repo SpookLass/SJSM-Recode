@@ -41,7 +41,6 @@ room_set_code
     {
         if local.i != local.unlock
         {
-            local.exittrig.lock_var = true;
             // Bars
             switch local.i
             {

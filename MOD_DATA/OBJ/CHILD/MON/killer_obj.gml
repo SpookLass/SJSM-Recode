@@ -9,6 +9,26 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,1,'
+    // Sounds
+    snd_len_var = 3;
+    wake_snd_var[0] = true;
+    do_snd_var = true;
+    snd_num_var = 1;
+    snd_den_var = 2;
+    snd_alarm_min_var = 240;
+    snd_alarm_max_var = 240;
+    snd_dist_var = 600;
+    // Breath sounds
+    breath_snd_len_var = 2;
+    breath_snd_num_var = 2;
+    breath_snd_den_var = 3;
+    // Drag Sounds
+    drag_snd_len_var = 3;
+    drag_snd_num_var = 1;
+    drag_snd_den_var = 2;
+    drag_snd_alarm_var = 120;
+    drag_snd_dist_var = 700;
+    // Translations
     ini_open(global.lang_var);
     switch global.name_var
     {
@@ -30,11 +50,43 @@ object_event_add
             break;
         }
     }
-    snd_arr[0,1] = ini_read_string("SUB","killer_01","SUB_killer_01"); snd_arr[0,2] = true;
-    snd_arr[1,1] = ini_read_string("SUB","killer_02","SUB_killer_02"); snd_arr[1,2] = true;
-    snd_arr[2,1] = ini_read_string("SUB","killer_03","SUB_killer_03"); snd_arr[2,2] = true;
     breath_snd_arr[0,1] = string_replace(ini_read_string("SUB","killer_breath","SUB_killer_breath"),"@n",name_var);
     breath_snd_arr[1,1] = breath_snd_arr[0,1];
+    switch global.killer_voice_var
+    {
+        case 0: // Vernon Shaw
+        {
+            snd_arr[0,1] = ini_read_string("SUB","killer_01","SUB_killer_01"); snd_arr[0,2] = true;
+            snd_arr[1,1] = ini_read_string("SUB","killer_02","SUB_killer_02"); snd_arr[1,2] = true;
+            snd_arr[2,1] = ini_read_string("SUB","killer_03","SUB_killer_03"); snd_arr[2,2] = true;
+            break;
+        }
+        case 1: // DirectorFlik
+        {
+            snd_len_var = 9;
+            snd_arr[0,1] = ini_read_string("SUB","killer_hd_01","SUB_killer_hd_01"); snd_arr[0,2] = true;
+            snd_arr[1,1] = ini_read_string("SUB","killer_hd_02","SUB_killer_hd_02"); snd_arr[1,2] = true;
+            snd_arr[2,1] = ini_read_string("SUB","killer_hd_03","SUB_killer_hd_03"); snd_arr[2,2] = true;
+            snd_arr[3,1] = ini_read_string("SUB","killer_hd_04","SUB_killer_hd_04"); snd_arr[3,2] = true;
+            snd_arr[4,1] = ini_read_string("SUB","killer_hd_05","SUB_killer_hd_05"); snd_arr[4,2] = true;
+            snd_arr[5,1] = ini_read_string("SUB","killer_hd_06","SUB_killer_hd_06"); snd_arr[5,2] = true;
+            snd_arr[6,1] = ini_read_string("SUB","killer_hd_07","SUB_killer_hd_07"); snd_arr[6,2] = true;
+            snd_arr[7,1] = ini_read_string("SUB","killer_hd_08","SUB_killer_hd_08"); snd_arr[7,2] = true;
+            snd_arr[8,1] = ini_read_string("SUB","killer_hd_09","SUB_killer_hd_09"); snd_arr[8,2] = true;
+            break;
+        }
+        case 2: // Spook Lass
+        {
+            snd_len_var = 4;
+            breath_snd_len_var = 3;
+            snd_arr[0,1] = ini_read_string("SUB","killer_hd_01","SUB_killer_hd_01"); snd_arr[0,2] = true;
+            snd_arr[1,1] = ini_read_string("SUB","killer_hd_02","SUB_killer_hd_02"); snd_arr[1,2] = true;
+            snd_arr[2,1] = ini_read_string("SUB","killer_hd_08","SUB_killer_hd_08"); snd_arr[2,2] = true;
+            snd_arr[3,1] = ini_read_string("SUB","killer_hd_09","SUB_killer_hd_09"); snd_arr[3,2] = true;
+            breath_snd_arr[2,1] = breath_snd_arr[0,1];
+            break;
+        }
+    }
     drag_snd_arr[0,1] = ini_read_string("SUB","killer_drag","SUB_killer_drag");
     drag_snd_arr[1,1] = drag_snd_arr[0,1];
     drag_snd_arr[2,1] = drag_snd_arr[0,1];
@@ -46,25 +98,6 @@ object_event_add
     dmg_var = 45;
     dmg_alarm_var = 30;
     h_var = 22;
-    // Sounds
-    wake_snd_var[0] = true;
-    do_snd_var = true;
-    snd_len_var = 3;
-    snd_num_var = 1;
-    snd_den_var = 2;
-    snd_alarm_min_var = 240;
-    snd_alarm_max_var = 240;
-    snd_dist_var = 600;
-    // Breath sounds
-    breath_snd_len_var = 2;
-    breath_snd_num_var = 2;
-    breath_snd_den_var = 3;
-    // Drag Sounds
-    drag_snd_len_var = 3;
-    drag_snd_num_var = 1;
-    drag_snd_den_var = 2;
-    drag_snd_alarm_var = 120;
-    drag_snd_dist_var = 700;
     // Theme
     mus_prio_var = mon_mus_prio_const;
     // Killer is SO ANNOYING
@@ -163,11 +196,44 @@ object_event_add
             spr_arr_var[15,1] = 11;
             spr_arr_var[15,2] = 11;
         }
-        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_01_snd.wav",true);
-        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_02_snd.wav",true);
-        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_03_snd.wav",true);
-        breath_snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_breath_01_snd.wav",true);
-        breath_snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_breath_02_snd.wav",true);
+        switch global.killer_voice_var
+        {
+            case 0: // Vernon Shaw
+            {
+                snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_01_snd.wav",true);
+                snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_02_snd.wav",true);
+                snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_03_snd.wav",true);
+                breath_snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_breath_01_snd.wav",true);
+                breath_snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_breath_02_snd.wav",true);
+                break;
+            }
+            case 1: // DirectorFlik
+            {
+                snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_hd_01_snd.wav",true);
+                snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_hd_02_snd.wav",true);
+                snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_hd_03_snd.wav",true);
+                snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_hd_04_snd.wav",true);
+                snd_arr[4,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_hd_05_snd.wav",true);
+                snd_arr[5,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_hd_06_snd.wav",true);
+                snd_arr[6,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_hd_07_snd.wav",true);
+                snd_arr[7,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_hd_08_snd.wav",true);
+                snd_arr[8,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_hd_09_snd.wav",true);
+                breath_snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_breath_hd_01_snd.wav",true);
+                breath_snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_breath_hd_02_snd.wav",true);
+                break;
+            }
+            case 2: // Spook Lass
+            {
+                snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_lass_01_snd.wav",true);
+                snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_lass_02_snd.wav",true);
+                snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_lass_08_snd.wav",true);
+                snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_lass_09_snd.wav",true);
+                breath_snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_breath_lass_01_snd.wav",true);
+                breath_snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_breath_lass_02_snd.wav",true);
+                breath_snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_breath_lass_03_snd.wav",true);
+                break;
+            }
+        }
         drag_snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_drag_01_snd.wav",true);
         drag_snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_drag_02_snd.wav",true);
         drag_snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_drag_03_snd.wav",true);

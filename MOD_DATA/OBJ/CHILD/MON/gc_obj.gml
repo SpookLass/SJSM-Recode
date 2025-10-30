@@ -215,7 +215,7 @@ object_event_add
         case 4: // HD KH
         {
             spd_base_var = 152/225; // 0.67r5
-            local.spd_set = true;
+            local.set = true;
             eff_var = false;
             do_seen_var = -1;
             cam_end_var = -1;
@@ -223,12 +223,9 @@ object_event_add
         }
         case 2: // HD
         {
-            dur_var = irandom_range(10,15);
             do_snd_var = true;
             type_var = 2;
             move_type_var = 2;
-            if !local.spd_set
-            { spd_base_var = 44/45; } // 0.9r7
             do_acc_var = true;
             acc_var = 16/675; // 0.02r370
             frick_var = acc_var;
@@ -237,11 +234,15 @@ object_event_add
             dmg_var = 20;
             dmg_alarm_var = 120;
             eff_old_var = false;
-            // Hurt
-            do_hurt_var = 2;
-            hurt_die_var = 1;
-            hurt_dur_var = 1;
-            hurt_snd_var = 3;
+            if !local.set
+            {
+                spd_base_var = 44/45; // 0.9r7
+                // Hurt
+                do_hurt_var = 2;
+                hurt_die_var = 1;
+                hurt_dur_var = 1;
+                hurt_snd_var = 3;
+            }
             // Autobrake (close enough)
             autobrake_var = true;
             autobrake_spd_var = 0;

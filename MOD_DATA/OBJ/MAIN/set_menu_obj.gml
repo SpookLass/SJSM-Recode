@@ -30,7 +30,7 @@ object_event_add
     str_bg_select_color_var = make_color_rgb(138,0,0);
     str_scale_var = 0.8;
 
-    button_len_var = 36;
+    button_len_var = 37;
 
     ini_open(global.lang_var);
 
@@ -393,6 +393,19 @@ object_event_add
     button_arr[32,8] = "invert_pitch"; // Global variable to modify
     button_arr[32,9] = "OFF"; // Text for each option
     button_arr[32,10] = "ON";
+
+    button_arr[33,0] = global.killer_voice_var;
+    button_arr[33,1] = ini_read_string("SETTINGS","killer_voice","SETTINGS_killer_voice"); // Label
+    button_arr[33,2] = "The voice used for @n." // Description
+    button_arr[33,3] = 0; // Type: Enum
+    button_arr[33,4] = true; // Wrap value
+    button_arr[33,5] = invert_pitch_const; // Default value
+    button_arr[33,6] = 0; // Minimum Value
+    button_arr[33,7] = 2; // Maximum Value
+    button_arr[33,8] = "killer_voice"; // Global variable to modify
+    button_arr[33,9] = "VERNON"; // Text for each option
+    button_arr[33,10] = "DIRECTORFLIK";
+    button_arr[33,11] = "LASS";
 
     button_arr[button_len_var-3,0] = 0;
     button_arr[button_len_var-3,1] = ini_read_string("SETTINGS","apply","SETTINGS_apply"); // Label

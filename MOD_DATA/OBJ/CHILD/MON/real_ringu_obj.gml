@@ -138,29 +138,13 @@ object_event_add
         }
         case 3: // Old HD
         {
-            seen_yaw_var = 60;
-            eff_fog_var = true;
-            eff_fog_start_var = 560/3; // 186.r6
-            eff_fog_end_var = 1120/3; // 373.r3
-            eff_alarm_var = 420;
-            eff_per_var = true;
-            state_chance_num_var = 1;
-            state_chance_den_var = 3;
-            delay_min_var = 90;
-            delay_max_var = 180;
             state_spd_var[0] = 286/225; // 1.27r1
             state_seen_spd_var[0] = 44/45; // 0.9r7 WHAT
-            state_spd_var[1] = state_spd_var[0];
-            state_seen_spd_var[1] = state_seen_spd_var[0];
-            // Sound
-            snd_alarm_min_var = 90;
-            snd_alarm_max_var = 240;
-            snd_den_var = 1;
-            snd_dist_var = 500;
-            break;
+            local.set = true;
         }
         case 2: // HD
         {
+            dur_var = irandom_range(10,15);
             seen_yaw_var = 60;
             eff_fog_var = true;
             eff_fog_start_var = 560/3; // 186.r6
@@ -171,10 +155,13 @@ object_event_add
             state_chance_den_var = 3;
             delay_min_var = 90;
             delay_max_var = 180;
-            state_spd_var[0] = 1222/1125; // 1.086r2
-            state_seen_spd_var[0] = 188/225; // 0.83r5
             state_spd_var[1] = state_spd_var[0];
             state_seen_spd_var[1] = state_seen_spd_var[0];
+            if !local.set
+            {
+                state_spd_var[0] = 1222/1125; // 1.086r2
+                state_seen_spd_var[0] = 188/225; // 0.83r5
+            }
             // Sound
             snd_alarm_min_var = 90;
             snd_alarm_max_var = 240;

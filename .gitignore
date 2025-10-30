@@ -10,7 +10,5 @@ screenshot*.png
 *.log
 *.gb1
 *.zip
-# Except these ones
-!save_ex.ini
-!settings.ini
+# Except this one
 !en_us.ini
