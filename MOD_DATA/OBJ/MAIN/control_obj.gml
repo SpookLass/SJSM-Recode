@@ -128,7 +128,7 @@ object_event_add
         if global.ff_input_press_var == 1 { global.game_spd_var = min(3,global.game_spd_var+0.25); fmod_group_set_pitch_scr(0,global.game_spd_var); }
         if global.slow_input_press_var == 1 { global.game_spd_var = max(1,global.game_spd_var-0.25); fmod_group_set_pitch_scr(0,global.game_spd_var); }
     }
-    else if global.game_spd_var != 1 { global.game_spd_var = 1; }
+    else if global.game_spd_var != 1 { global.game_spd_var = 1; fmod_group_set_pitch_scr(0,global.game_spd_var); }
     // Delta Time
     // Goes by frames rather than seconds (at 60 fps)
     global.true_delta_time_var = (current_time-global.last_time_var)*milli_frame_rate_const;

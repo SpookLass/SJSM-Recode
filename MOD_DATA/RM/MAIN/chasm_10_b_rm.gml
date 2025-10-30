@@ -7,7 +7,8 @@ room_set_code
     argument0,"
     global.rm_name_var = 'Chasm Room 10 B'
     // Spawn
-    global.spawn_len_var = 6;
+    global.spawn_len_var = 2;
+    global.spawn_len_extra_var = 6;
     global.spawn_arr[0,0] = 336;
     global.spawn_arr[0,1] = 288;
     global.spawn_arr[0,2] = 60;

@@ -325,44 +325,11 @@ object_event_add
     }
     if type_var == 1 && enter_var
     {
-        with door_entrance_obj
+        with global.spawn_arr[0,5] // Entrance door
         {
-            if !open_var && point_distance_3d_scr(x,y,z,other.x,other.y,other.z) < 32
+            if !open_var
             {
-                mdl_var = door_broke_mdl;
-                mdl_path_var = door_broke_mdl_path;
-                direction += 180;
-                open_var = true;
-                // Shake all players
-                local.door = id;
-                with player_obj
-                {
-                    local.player = id;
-                    switch (global.shake_type_var)
-                    {
-                        case shake_classic_const:
-                        {
-                            with instance_create(0,0,shake_eff_obj)
-                            {
-                                player_var = local.player;
-                                mult_var = local.player.shake_pos_base_var;
-                                type_var = 0; // Constant
-                            }
-                            break;
-                        }
-                        case shake_modern_const:
-                        {
-                            local.mult = median(0,1,1-(point_distance_3d_scr(x,y,z,local.door.x,local.door.y,local.door.z)/600))
-                            with instance_create(0,0,shake_eff_obj)
-                            {
-                                player_var = local.player;
-                                mult_var = local.player.shake_angle_base_var*local.mult;
-                                type_var = 1; // Fade out
-                            }
-                            break;
-                        }
-                    }
-                }
+                event_user(0);
             }
         }
     }

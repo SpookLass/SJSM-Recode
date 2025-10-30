@@ -50,6 +50,8 @@ object_event_add // ev_create,0
                     }
                     instance_create(0,0,local.mon);
                     local.mons += 1;
+                    if global.reset_spd_var > 0 && global.game_spd_var > 1
+                    { global.game_spd_var = 1; fmod_group_set_pitch_scr(0,global.game_spd_var); }
                 }
                 global.count_var = get_count_scr();
             }
@@ -76,6 +78,8 @@ object_event_add // ev_create,0
                         instance_create(0,0,local.mon);
                         global.count_var = get_count_scr();
                         global.mon_fail_var = 0;
+                        if global.reset_spd_var > 0 && global.game_spd_var > 1
+                        { global.game_spd_var = 1; fmod_group_set_pitch_scr(0,global.game_spd_var); }
                     }
                 }
                 else { global.mon_fail_var += 1; }

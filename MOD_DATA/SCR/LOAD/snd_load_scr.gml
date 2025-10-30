@@ -13,19 +13,20 @@ local.file = file_find_first(main_directory_const+"\SND\MAIN\*.wav",-1);
 // Not sure why, but it doesn't include the path.
 while (local.file != "")
 {
-    file_to_snd_scr(main_directory_const+"\SND\MAIN\"+local.file,filename_change_ext(local.file,""),snd_group_sfx_const,argument0);
+    file_to_snd_scr(main_directory_const+"\SND\MAIN\"+local.file,filename_change_ext(local.file,""),false,snd_group_sfx_const,argument0);
     local.file = file_find_next();
 }
 file_find_close();
+if !fmod_is_snd_3d_scr(break_snd) { show_message("wtf"); }
 // Manual
-file_to_snd_scr(vanilla_directory_const+"\SND\AMB\AMB_01.mp3","amb_mus_01_snd",snd_group_mus_const,argument0);
-file_to_snd_scr(vanilla_directory_const+"\SND\AMB\AMB_02.mp3","amb_mus_02_snd",snd_group_mus_const,argument0);
-file_to_snd_scr(vanilla_directory_const+"\SND\AMB\AMB_03.mp3","amb_mus_03_snd",snd_group_mus_const,argument0);
-file_to_snd_scr(vanilla_directory_const+"\SND\AMB\AMB_04.mp3","amb_mus_04_snd",snd_group_mus_const,argument0);
-file_to_snd_scr(vanilla_directory_const+"\SND\AMB\AMB_05.mp3","amb_mus_05_snd",snd_group_mus_const,argument0);
-file_to_snd_scr(vanilla_directory_const+"\SND\AMB\AMB_06.mp3","amb_mus_06_snd",snd_group_mus_const,argument0);
-file_to_snd_scr(vanilla_directory_const+"\SND\AMB\AMB_07.mp3","amb_mus_07_snd",snd_group_mus_const,argument0);
-file_to_snd_scr(vanilla_directory_const+"\SND\AMB\AMB_08.mp3","amb_mus_08_snd",snd_group_mus_const,argument0);
-file_to_snd_scr(vanilla_directory_const+"\SND\AMB\AMB_09.mp3","amb_mus_09_snd",snd_group_mus_const,argument0);
-file_to_snd_scr(vanilla_directory_const+"\SND\AMB\AMB_10.mp3","amb_mus_10_snd",snd_group_mus_const,argument0);
-file_to_snd_scr(vanilla_directory_const+"\SND\AMB\AMB_11.mp3","amb_mus_11_snd",snd_group_mus_const,argument0);
+file_to_snd_scr(vanilla_directory_const+"\SND\AMB\AMB_01.mp3","amb_mus_01_snd",false,snd_group_mus_const,argument0);
+file_to_snd_scr(vanilla_directory_const+"\SND\AMB\AMB_02.mp3","amb_mus_02_snd",false,snd_group_mus_const,argument0);
+file_to_snd_scr(vanilla_directory_const+"\SND\AMB\AMB_03.mp3","amb_mus_03_snd",false,snd_group_mus_const,argument0);
+file_to_snd_scr(vanilla_directory_const+"\SND\AMB\AMB_04.mp3","amb_mus_04_snd",false,snd_group_mus_const,argument0);
+file_to_snd_scr(vanilla_directory_const+"\SND\AMB\AMB_05.mp3","amb_mus_05_snd",false,snd_group_mus_const,argument0);
+file_to_snd_scr(vanilla_directory_const+"\SND\AMB\AMB_06.mp3","amb_mus_06_snd",false,snd_group_mus_const,argument0);
+file_to_snd_scr(vanilla_directory_const+"\SND\AMB\AMB_07.mp3","amb_mus_07_snd",false,snd_group_mus_const,argument0);
+file_to_snd_scr(vanilla_directory_const+"\SND\AMB\AMB_08.mp3","amb_mus_08_snd",false,snd_group_mus_const,argument0);
+file_to_snd_scr(vanilla_directory_const+"\SND\AMB\AMB_09.mp3","amb_mus_09_snd",false,snd_group_mus_const,argument0);
+file_to_snd_scr(vanilla_directory_const+"\SND\AMB\AMB_10.mp3","amb_mus_10_snd",false,snd_group_mus_const,argument0);
+file_to_snd_scr(vanilla_directory_const+"\SND\AMB\AMB_11.mp3","amb_mus_11_snd",false,snd_group_mus_const,argument0);

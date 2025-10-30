@@ -20,5 +20,20 @@ for (local.i=1; local.i<global.spawn_len_var; local.i+=1;)
     global.spawn_arr[local.i,4] = local.exittrig;
     global.spawn_arr[local.i,5] = local.exitdoor;
 }
+// Extra Exits (trust me it's worth it)
+if global.spawn_len_extra_var > global.spawn_len_var
+{
+    for (local.i=global.spawn_len_var; local.i<global.spawn_len_extra_var; local.i+=1;)
+    {
+        local.exitdoor = instance_create(global.spawn_arr[local.i,0]-lengthdir_x(16,global.spawn_arr[local.i,3]),global.spawn_arr[local.i,1]-lengthdir_y(16,global.spawn_arr[local.i,3]),door_obj);
+        local.exitdoor.z = global.spawn_arr[local.i,2];
+        local.exitdoor.direction = global.spawn_arr[local.i,3]+180;
+        local.exittrig = instance_create(global.spawn_arr[local.i,0]-lengthdir_x(8,global.spawn_arr[local.i,3]),global.spawn_arr[local.i,1]-lengthdir_y(8,global.spawn_arr[local.i,3]),door_trig_obj);
+        local.exittrig.z = global.spawn_arr[local.i,2];
+        global.spawn_arr[local.i,4] = local.exittrig;
+        global.spawn_arr[local.i,5] = local.exitdoor;
+    }
+}
+// Return
 if argument1 { return local.unlock; }
 else { return -1; }
