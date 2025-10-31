@@ -68,7 +68,7 @@ atk_delay_var: How long before the monster can start attacking
 Movement
 
 spd_base_var: How fast the monster moves in pixels per frame (60fps)
-spd_mult_var: Multiplier for the monster's speed, mostly for monsters that have varied speeds
+spd_mult_var: Multiplier for the monster"s speed, mostly for monsters that have varied speeds
 acc_var: How fast the monster accelerates in pixels per frame squared (60fps)
 frick_var: How fast the monster decelerates in pixels per frame squared
 enter_var: Whether a physical monster is entering the room
@@ -92,12 +92,12 @@ hurt_var: Whether the specimen is currently hurt
 // Create Start
     // Loading specimen specific settings
 object_event_add
-(argument0,ev_create,1,"");
+(argument0,ev_create,1,'');
 // Create Normal Event
     // Default settings
 object_event_add
-(argument0,ev_create,2,"
-    if string(name_var) == '0' { name_var = 'Unknown'; }
+(argument0,ev_create,2,'
+    if string(name_var) == "0" { name_var = "Unknown"; }
     // Gotta set type, delay, and duration
     dur_start_var = dur_var;
     enter_var = type_var > 0;
@@ -160,12 +160,12 @@ object_event_add
     // Alarms
     if alarm_len_var == 0
     { alarm_len_var = 8; }
-");
+');
 // Create End Event
     // Startup
 object_event_add
-(argument0,ev_create,3,"
-    // Play wake (or random sound if it doesn't exist)
+(argument0,ev_create,3,'
+    // Play wake (or random sound if it doesn"t exist)
     if wake_snd_var[0] == 1
     {
         snd_var = fmod_snd_play_scr(wake_snd_var[1]);
@@ -181,17 +181,17 @@ object_event_add
     }
     // Room start
     event_perform(ev_other,ev_room_start);
-");
+');
 // Create Event
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
     event_perform(ev_create,1);
     event_perform(ev_create,2);
     event_perform(ev_create,3);
-");
+');
 // Destroy Event
 object_event_add
-(argument0,ev_destroy,0,"
+(argument0,ev_destroy,0,'
     event_inherited();
     if type_var > 0 && path_exists(path_var)
     { path_delete(path_var); }
@@ -201,10 +201,10 @@ object_event_add
         mus_prio_var = -1;
         with mus_control_obj { event_user(0); }
     }
-");
+');
 // Room Start Event
 object_event_add
-(argument0,ev_other,ev_room_start,"
+(argument0,ev_other,ev_room_start,'
     event_inherited();
     // Reset Variables
     move_var = do_move_var;
@@ -234,10 +234,10 @@ object_event_add
         set_alarm_scr(0,irandom_range(delay_min_var,delay_max_var));
     }
     else { event_perform(ev_alarm,0); }
-");
+');
 // Step Event
 object_event_add
-(argument0,ev_step,ev_step_normal,"
+(argument0,ev_step,ev_step_normal,'
     if on_var
     {
         if move_var || do_seen_var { event_user(6); }
@@ -260,17 +260,17 @@ object_event_add
         }
     }
     if do_snd_var { event_user(9); }
-");
+');
 // Step End Event
 object_event_add
-(argument0,ev_step,ev_step_end,"
+(argument0,ev_step,ev_step_end,'
     event_inherited();
     if on_var && (do_coll_var || type_var <= 0) && mon_coll_var
     { event_user(10); }
-");
+');
 // Draw Event
 object_event_add
-(argument0,ev_draw,0,"
+(argument0,ev_draw,0,'
     if on_var || visible_var
     {
         draw_set_color(image_blend); draw_set_alpha(image_alpha);
@@ -308,10 +308,10 @@ object_event_add
             // mp_grid_draw(grid_var);
         }
     }
-");
+');
 // Delay Alarm
 object_event_add
-(argument0,ev_alarm,0,"
+(argument0,ev_alarm,0,'
     on_var = true;
     if do_snd_var
     {
@@ -333,33 +333,33 @@ object_event_add
             }
         }
     }
-");
+');
 // Unstun Alarm
 object_event_add
-(argument0,ev_alarm,1,"
+(argument0,ev_alarm,1,'
     move_var = do_move_var;
-");
+');
 // Start Anim Alarm
 object_event_add
-(argument0,ev_alarm,2,"
+(argument0,ev_alarm,2,'
     anim_var = do_anim_var;
-");
+');
 // Hurt Alarm
 object_event_add
-(argument0,ev_alarm,3,"
+(argument0,ev_alarm,3,'
     hurt_var = false;
-");
+');
 // Attack Alarm
 object_event_add
-(argument0,ev_alarm,4,"
+(argument0,ev_alarm,4,'
     attack_var = do_attack_var;
-");
+');
 // Anim Alarm (Different from Plus!!!)
 object_event_add
-(argument0,ev_alarm,5,"
+(argument0,ev_alarm,5,'
     switch(anim_type_var)
     {
-        case 0: { show_error('Animation type not set before animating.',false); }
+        case 0: { show_error("Animation type not set before animating.",false); }
         case 1: // End on last
         {
             spr_id_var = sprite_get_number(spr_var)-1;
@@ -372,27 +372,29 @@ object_event_add
         }
     }
     tex_var = sprite_get_texture(spr_var,spr_id_var);
-");
+');
 // Sound alarm
 object_event_add
-(argument0,ev_alarm,6,"
+(argument0,ev_alarm,6,'
     if do_snd_var && !snd_loop_var && frac_chance_scr(snd_num_var,snd_den_var)
     {
+        if fmod_inst_is_play_scr(snd_var) && fmod_inst_is_3d_scr(snd_var)
+        { fmod_inst_stop_scr(snd_var); }
         local.snd = irandom(snd_len_var-1);
         snd_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0]);
         sub_var[0] = snd_arr[local.snd,1];
         sub_var[1] = snd_arr[local.snd,2];
     }
     set_alarm_scr(6,irandom_range(snd_alarm_min_var,snd_alarm_max_var));
-");
+');
 // Attack alarm
 object_event_add
-(argument0,ev_alarm,7,"
+(argument0,ev_alarm,7,'
     event_user(2);
-");
-// Movement
+');
+// Movement Event
 object_event_add
-(argument0,ev_other,ev_user0,"
+(argument0,ev_other,ev_user0,'
     local.spd = spd_base_var*spd_mult_var;
     if target_dist_var <= local.spd
     {
@@ -437,7 +439,7 @@ object_event_add
         else { local.yaw = point_direction(x,y,target_x_var,target_y_var); }
         if do_acc_var
         {
-            // Tried to add autobrake support, but it's difficult without Unity source code
+            // Tried to add autobrake support, but it"s difficult without Unity source code
             if autobrake_var && target_visible_var && spd_var > autobrake_spd_var
             && (target_dist_var <= autobrake_dist_var || autobrake_dist_var <= 0) 
             {
@@ -474,10 +476,10 @@ object_event_add
         else { set_motion_3d_scr(local.spd,true,local.yaw,true,local.pitch,true); }
     }
     spd_mult_var = 1;
-");
+');
 // Animation
 object_event_add
-(argument0,ev_other,ev_user1,"
+(argument0,ev_other,ev_user1,'
     switch(anim_type_var)
     {
         case 0: // Animate normally
@@ -507,10 +509,10 @@ object_event_add
         }
     }
     tex_var = sprite_get_texture(spr_var,floor(spr_id_var));
-");
+');
 // Attack
 object_event_add
-(argument0,ev_other,ev_user2,"
+(argument0,ev_other,ev_user2,'
     local.dead = true;
     with player_obj
     {
@@ -553,11 +555,11 @@ object_event_add
         }
         else { event_perform(ev_other,ev_user3); }
     }
-");
+');
 // Attack Success
 // Uses attack_target_var as an argument, usually the player.
 object_event_add
-(argument0,ev_other,ev_user3,"
+(argument0,ev_other,ev_user3,'
     if atk_delay_var > 0
     {
         set_alarm_scr(7,dmg_alarm_var);
@@ -571,7 +573,7 @@ object_event_add
         // Set camera to player
         cam_id_var = other.attack_target_var.cam_id_var;
     }
-");
+');
 // Hurt Event
 /*Weapons call this function when attacking
 Weapons set hurt_weapon_var, hurt_target_var, hurt_power_var, and hurt_type_var, to use as arguments in this function
@@ -585,7 +587,7 @@ hurt_type_var
     3: Parry
 */
 object_event_add
-(argument0,ev_other,ev_user4,"
+(argument0,ev_other,ev_user4,'
     if hurt_alarm_var
     {
         hurt_var = true;
@@ -618,7 +620,12 @@ object_event_add
             case 3: { fmod_snd_play_scr(choose(axe_01_snd,axe_02_snd,axe_03_snd)); break; } // Ding!
             case 4:
             {
-                if fmod_is_snd_3d_scr(hurt_snd_var[1]) { snd_var = fmod_snd_3d_play_scr(hurt_snd_var[1]); }
+                if fmod_snd_is_3d_scr(hurt_snd_var[1])
+                {
+                    if fmod_inst_is_play_scr(snd_var) && fmod_inst_is_3d_scr(snd_var)
+                    { fmod_inst_stop_scr(snd_var); }
+                    snd_var = fmod_snd_3d_play_scr(hurt_snd_var[1]);
+                }
                 else { snd_var = fmod_snd_play_scr(hurt_snd_var[1]); }
                 sub_var[0] = hurt_snd_var[2];
                 sub_var[1] = hurt_snd_var[3];
@@ -640,10 +647,10 @@ object_event_add
             set_alarm_scr(4,hurt_alarm_var);
         }
     }
-");
+');
 // Calculate Seen
 object_event_add
-(argument0,ev_other,ev_user5,"
+(argument0,ev_other,ev_user5,'
     if instance_exists(target_var)
     {
         if seen_yaw_var > 0
@@ -668,10 +675,10 @@ object_event_add
         else { seen_var = false; seen_per_var = 0; }
     }
     else { seen_var = -1; seen_per_var = -1; }
-");
+');
 // Determine target
 object_event_add
-(argument0,ev_other,ev_user6,"
+(argument0,ev_other,ev_user6,'
     if enter_var
     {
         target_var = noone;
@@ -706,10 +713,10 @@ object_event_add
             target_z_var = z;
         }
     }
-");
+');
 // Check sight
 object_event_add
-(argument0,ev_other,ev_user8,"
+(argument0,ev_other,ev_user8,'
     if target_dist_var == 0
     { target_visible_var = true; }
     else
@@ -745,15 +752,15 @@ object_event_add
         }
         target_visible_var = local.dist+local.radius >= target_dist_var;
     }
-");
+');
 // Sound Event
 object_event_add
-(argument0,ev_other,ev_user9,"
+(argument0,ev_other,ev_user9,'
     fmod_inst_set_3d_pos_scr(snd_var,x,y,z);
-");
+');
 // Monster Collision
 object_event_add
-(argument0,ev_other,ev_user10,"
+(argument0,ev_other,ev_user10,'
     local.xtmp = x;
     local.ytmp = y;
     with echidna_obj
@@ -778,9 +785,9 @@ object_event_add
             y = local.ytmp;
         }
     }
-");
+');
 // Die event
 object_event_add
-(argument0,ev_other,ev_user11,"
+(argument0,ev_other,ev_user11,'
     instance_destroy();
-");
+');

@@ -17,7 +17,6 @@ while (local.file != "")
     local.file = file_find_next();
 }
 file_find_close();
-if !fmod_is_snd_3d_scr(break_snd) { show_message("wtf"); }
 // Manual
 file_to_snd_scr(vanilla_directory_const+"\SND\AMB\AMB_01.mp3","amb_mus_01_snd",false,snd_group_mus_const,argument0);
 file_to_snd_scr(vanilla_directory_const+"\SND\AMB\AMB_02.mp3","amb_mus_02_snd",false,snd_group_mus_const,argument0);

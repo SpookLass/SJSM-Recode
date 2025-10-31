@@ -401,11 +401,12 @@ object_event_add
     button_arr[33,4] = true; // Wrap value
     button_arr[33,5] = killer_voice_const; // Default value
     button_arr[33,6] = 0; // Minimum Value
-    button_arr[33,7] = 2; // Maximum Value
+    button_arr[33,7] = 3; // Maximum Value
     button_arr[33,8] = "killer_voice"; // Global variable to modify
     button_arr[33,9] = "VERNON"; // Text for each option
     button_arr[33,10] = "DIRECTORFLIK";
     button_arr[33,11] = "LASS";
+    button_arr[33,12] = "RYAN";
 
     button_arr[34,0] = global.reset_spd_var;
     button_arr[34,1] = ini_read_string("SETTINGS","reset_spd","SETTINGS_reset_spd"); // Label
