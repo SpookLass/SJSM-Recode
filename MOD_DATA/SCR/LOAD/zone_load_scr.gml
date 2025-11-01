@@ -1,7 +1,7 @@
 /*
 Argument 0: Print
 */
-global.zone_len_var = 12;
+global.zone_len_var = 10;
 // Zone 0: Basic
 global.zone_arr[0] = ds_list_create();
 ds_list_clear(global.zone_arr[0]);

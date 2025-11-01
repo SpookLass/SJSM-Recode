@@ -123,6 +123,7 @@ object_event_add
             }
             // Silhouette
             sil_var = true;
+            sil_type_var = 0; // None
             sil_color_var = -1;
             sil_alpha_var = 0.2;
             break;

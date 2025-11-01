@@ -480,6 +480,10 @@ object_event_add
     type_button_arr[7,2] = 5; // Puppet
     type_button_arr[7,4] = dh_str_var;
     type_button_arr[7,5] = dh_str_var+" "+mod_str_var;
+    type_button_arr[9,2] = 6; // Deer Lord
+    type_button_arr[9,4] = old_str_var;
+    type_button_arr[9,5] = rouge_str_var;
+    type_button_arr[9,6] = yoshi_str_var;
     type_button_arr[11,2] = 4; // Eel
     type_button_arr[11,4] = yoshi_str_var;
     type_button_arr[14,2] = 7; // Killer

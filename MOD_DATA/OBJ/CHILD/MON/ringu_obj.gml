@@ -97,6 +97,7 @@ object_event_add
             dmg_var = 30;
             // Silhouette
             sil_var = true;
+            sil_type_var = 1; // Pure color
             sil_color_var = c_black;
             sil_alpha_var = 0.2;
             sil_dist_var = 0.1;

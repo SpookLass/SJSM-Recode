@@ -43,16 +43,20 @@ object_event_add
     z_off_var = 0;
     // Sounds
     snd_len_var = 4;
-    wake_snd_var[0] = true;
     snd_num_var = 1;
     snd_den_var = 3;
     snd_alarm_min_var = 240;
     snd_alarm_max_var = 460;
     snd_dist_var = 600;
+    eff_snd_len_var = 4;
     // Theme
     mus_prio_var = theme_mus_prio_const;
+    // Effect
+    eff_min_var = 30;
+    eff_max_var = 60;
     // Special
     open_dist_var = 48;
+    close_dist_var = 48;
     warp_update_var = true;
     warp_alarm_var = 60;
     warp_dist_var = 128;
@@ -69,6 +73,11 @@ object_event_add
             { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
             other.wake_snd_var[1] = wake_snd_var[1];
             other.mus_snd_var = mus_snd_var;
+            // Effect
+            other.eff_spr_01_var = eff_spr_01_var;
+            other.eff_spr_02_var = eff_spr_02_var;
+            for (local.i=0; local.i<eff_snd_len_var; local.i+=1;)
+            { other.eff_snd_arr[local.i] = eff_snd_arr[local.i]; }
             local.loaded = true;
             break;
         }
@@ -84,6 +93,15 @@ object_event_add
         snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\dl_04_snd.wav",true);
         wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\dl_wake_snd.wav");
         mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\dl_mus_snd.mp3");
+        // Effect
+        eff_spr_01_var = execute_file(main_directory_const+"\SPR\MON\dl_eff_01_spr.gml",main_directory_const+"\SPR\MON\dl_eff_01_spr.png");
+        eff_spr_02_var = execute_file(main_directory_const+"\SPR\MON\dl_eff_02_spr.gml",main_directory_const+"\SPR\MON\dl_eff_02_spr.png");
+        eff_snd_arr[0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\dl_eff_01_snd.wav");
+        eff_snd_arr[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\dl_eff_02_snd.wav");
+        eff_snd_arr[2] = fmod_snd_add_scr(main_directory_const+"\SND\MON\dl_eff_03_snd.wav");
+        eff_snd_arr[3] = fmod_snd_add_scr(main_directory_const+"\SND\MON\dl_eff_04_snd.wav");
+        for (local.i=0; local.i<eff_snd_len_var; local.i+=1;)
+        { fmod_snd_set_group_scr(eff_snd_arr[local.i,0],snd_group_mon_const); }
     }
     // Behavior
     if global.dl_type_var == -1 { local.type = irandom(3); }
@@ -96,6 +114,9 @@ object_event_add
             dmg_alarm_var = 120;
             do_warp_var = true;
             delay_var = 60;
+            // Effect
+            eff_min_var = 15;
+            eff_max_var = 30;
             break;
         }
         case 3: // Old HD
@@ -107,6 +128,7 @@ object_event_add
         }
         case 2: // HD
         {
+            do_warp_var = true;
             spd_base_var = 32/45; // 0.7r1
             dur_var = irandom_range(10,20);
             dmg_alarm_var = 180;
@@ -115,13 +137,31 @@ object_event_add
                 delay_min_var = 60;
                 delay_max_var = 120;
             }
-            // Special
-            do_warp_var = true;
+            // Cloak
+            close_dist_var = 96;
+            open_dist_var = 224/3; // 74.r6
             // Sound
-            snd_alarm_min_var = 90;
-            snd_alarm_max_var = 240;
+            snd_alarm_min_var = 360; // 60 at start
+            snd_alarm_max_var = 720; // 180 at start
             snd_den_var = 1;
             snd_dist_var = 500;
+            break;
+        }
+        case 4: // Gone Rouge
+        {
+            // Rubberband
+            rb_var = true;
+            rb_min_var = 0.1;
+            rb_dist_var = 48;
+            acc_var = 0.02;
+            // Silhouette
+            xray_var = true;
+            xray_rate_var = 0.05;
+            sil_var = true;
+            sil_type_var = 2; // Color
+            sil_color_var = c_red;
+            sil_alpha_var = 0;
+            sil_dist_var = 0.1;
             break;
         }
     }
@@ -137,6 +177,10 @@ object_event_add
         fmod_snd_free_scr(mus_snd_var);
         for (local.i=0; local.i<snd_len_var; local.i+=1;)
         { fmod_snd_free_scr(snd_arr[local.i,0]); }
+        sprite_delete(eff_spr_01_var);
+        sprite_delete(eff_spr_02_var);
+        for (local.i=0; local.i<eff_snd_len_var; local.i+=1;)
+        { fmod_snd_free_scr(eff_snd_arr[local.i]); }
     }
 ');
 // Room Start Event
@@ -144,6 +188,8 @@ object_event_add
 (argument0,ev_other,ev_room_start,'
     if !instance_exists(dl_eff_obj) { instance_create(0,0,dl_eff_obj); }
     warp_var = false;
+    if rb_var { spd_base_var = rb_min_var; }
+    if xray_var { sil_alpha_var = 0; }
     event_inherited();
 ');
 // Step Event
@@ -151,16 +197,33 @@ object_event_add
 (argument0,ev_step,ev_step_normal,'
     if on_var
     {
-        if warp_var 
-        || (instance_exists(target_var) && target_dist_var < open_dist_var)
+        if instance_exists(target_var)
+        {
+            if open_var { if target_dist_var >= close_dist_var { open_var = false; }}
+            else if target_dist_var < open_dist_var { open_var = true; }
+        }
+        else { open_var = false; }
+        if warp_var || open_var
         { spr_var = open_spr_var; }
         else { spr_var = close_spr_var; }
+        if xray_var
+        {
+            sight_type_var = 0;
+            event_user(8);
+            if target_visible_var { sil_alpha_var -= xray_rate_var*global.delta_time_var; }
+            else { sil_alpha_var += xray_rate_var*global.delta_time_var; }
+            sil_alpha_var = median(0,1,sil_alpha_var);
+        }
     }
     event_inherited();
 ');
 // Movement Event
 object_event_add
 (argument0,ev_other,ev_user0,'
+    if rb_var
+    {
+        spd_base_var = median(rb_min_var,target_dist_var/rb_dist_var,spd_base_var+(acc_var*global.delta_time_var));
+    }
     if do_warp_var && !enter_var
     {
         if warp_var
@@ -172,18 +235,29 @@ object_event_add
             if warp_update_var && instance_exists(target_var)
             {
                 event_user(15);
+                if temp_var == -1
+                {
+                    if !check_coll_scr(-1,0,0,0,x,y,z)
+                    {
+                        warp_var = false;
+                        do_coll_var = true;
+                        set_alarm_scr(8,-1);
+                    }
+                }
                 temp_var = false;
             }
         }
         else 
         {
-            if target_dist_var >= warp_dist_var
+            if type_var > 0 { local.dist = path_get_length(path_var); }
+            else { local.dist = target_dist_var; }
+            if local.dist >= warp_dist_var && target_dist_var > 0
             {
                 start_x_var = x;
                 start_y_var = y;
                 start_z_var = z;
                 event_user(15);
-                if temp_var
+                if temp_var == true
                 {
                     warp_var = true;
                     do_coll_var = false;
@@ -212,13 +286,18 @@ object_event_add
     local.xtmp = target_x_var+lengthdir_x(local.dist-coll_var[2],local.dir);
     local.ytmp = target_y_var+lengthdir_y(local.dist-coll_var[2],local.dir);
     local.ztmp = target_z_var;
-    if target_dist_var > local.dist && !check_coll_scr(-1,0,0,0,local.xtmp,local.ytmp,local.ztmp)
+    if target_dist_var > local.dist
     {
-        warp_x_var = local.xtmp;
-        warp_y_var = local.ytmp;
-        warp_z_var = local.ztmp;
-        temp_var = true;
+        if !check_coll_scr(-1,0,0,0,local.xtmp,local.ytmp,local.ztmp)
+        {
+            warp_x_var = local.xtmp;
+            warp_y_var = local.ytmp;
+            warp_z_var = local.ztmp;
+            temp_var = true;
+        }
+        else { temp_var = false; }
     }
+    else { temp_var = -1; }
 ');
 // Warp alarm
 object_event_add
@@ -228,6 +307,25 @@ object_event_add
     x = warp_x_var;
     y = warp_y_var;
     z = warp_z_var;
+');
+// Attack Success
+object_event_add
+(argument0,ev_other,ev_user3,'
+    event_inherited();
+    with instance_create(0,0,spr_flash_eff_obj)
+    {
+        par_var= other.id;
+        if !irandom(1) { spr_var = other.eff_spr_01_var; }
+        else { spr_var = other.eff_spr_02_var; }
+        spr_id_var = irandom(sprite_get_number(spr_var)-1);
+        spr_spd_var = 1;
+        do_snd_var = true;
+        snd_var = fmod_snd_play_scr(other.eff_snd_arr[irandom(other.eff_snd_len_var-1)]);
+        rand_rate_var = 15;
+        set_alarm_scr(0,min(other.dmg_alarm_var/2,irandom_range(other.eff_min_var,other.eff_max_var)));
+        // Set camera to player
+        cam_id_var = other.attack_target_var.cam_id_var;
+    }
 ');
 // Draw Event
 object_event_add

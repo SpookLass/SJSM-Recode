@@ -145,6 +145,7 @@ object_event_add
             stun_var = true;
             // Silhouette
             sil_var = true;
+            sil_type_var = 1; // Pure color
             sil_color_var = c_orange;
             sil_alpha_var = 0.15;
             sil_dist_var = 0.1;

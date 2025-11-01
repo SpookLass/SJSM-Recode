@@ -362,9 +362,9 @@ object_event_add
             set_motion_3d_scr
             (
                 0,false,
-                local.yaw+(sign(local.yawdiff)*-turn_max_var),
+                local.yaw-(sign(local.yawdiff)*turn_max_var),
                 abs(local.yawdiff)>turn_max_var, // Change yaw if difference is over max
-                local.pitch+(sign(local.pitchdiff)*-turn_max_var),
+                local.pitch-(sign(local.pitchdiff)*turn_max_var),
                 abs(local.pitchdiff)>turn_max_var // Change pitch if difference is over max
             );
             mdl_yaw_var = yaw_var;
@@ -382,8 +382,8 @@ object_event_add
             else { mdl_pitch_var += sign(local.pitchdiff)*min(abs(local.pitchdiff),turn_rate_var*global.delta_time_var); }
             // Movement
             if target_dist_var < 4 { local.newspd = 0; }
-            else if target_dist_var < 16 { local.newspd = spd_var-frick_var; }
-            else { local.newspd = spd_var+acc_var; }
+            else if target_dist_var < 16 { local.newspd = spd_var-(frick_var*global.delta_time_var); }
+            else { local.newspd = spd_var+(acc_var*global.delta_time_var); }
             local.newspd = median(0,local.spd,local.newspd);
             set_motion_3d_scr(local.newspd,true,local.yaw,true,local.pitch,true);
             break;

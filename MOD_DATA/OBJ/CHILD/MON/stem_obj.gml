@@ -294,8 +294,8 @@ object_event_add
             mdl_pitch_var += sign(local.pitchdiff)*min(abs(local.pitchdiff),turn_rate_var*global.delta_time_var); 
             // Movement
             if target_dist_var < 4 { local.newspd = 0; }
-            else if target_dist_var < 16 { local.newspd = spd_var-frick_var; }
-            else { local.newspd = spd_var+acc_var; }
+            else if target_dist_var < 16 { local.newspd = spd_var-(frick_var*global.delta_time_var); }
+            else { local.newspd = spd_var+(acc_var*global.delta_time_var); }
             local.spd = median(0,local.spd,local.newspd);
             set_motion_3d_scr(local.spd,true,local.yaw,true,local.pitch,true);
             break;

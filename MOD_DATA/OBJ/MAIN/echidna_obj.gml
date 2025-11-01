@@ -288,11 +288,29 @@ object_event_add
             d3d_transform_add_translation(x+x_off_var,y+y_off_var,z+z_off_var);
             if sil_var
             {
-                if sil_color_var >= 0 { d3d_set_fog(true,sil_color_var,0,0); }
                 d3d_set_hidden(false); draw_set_alpha(image_alpha*sil_alpha_var);
-                d3d_draw_wall(-sil_dist_var,w_var/2,h_var,-sil_dist_var,-w_var/2,0,tex_var,1,1);
-                if sil_color_var >= 0
-                { d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var); }
+                switch sil_type_var
+                {
+                    case 0:
+                    {
+                        d3d_draw_wall(-sil_dist_var,w_var/2,h_var,-sil_dist_var,-w_var/2,0,tex_var,1,1);
+                        break;
+                    }
+                    case 1:
+                    {
+                        d3d_set_fog(true,sil_color_var,0,0);
+                        d3d_draw_wall(-sil_dist_var,w_var/2,h_var,-sil_dist_var,-w_var/2,0,tex_var,1,1);
+                        d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var);
+                        break;
+                    }
+                    case 2:
+                    {
+                        draw_set_color(color_mult_scr(image_blend,sil_color_var));
+                        d3d_draw_wall(-sil_dist_var,w_var/2,h_var,-sil_dist_var,-w_var/2,0,tex_var,1,1);
+                        draw_set_color(image_blend);
+                        break;
+                    }
+                }
                 d3d_set_hidden(true); draw_set_alpha(image_alpha);
             }
             d3d_draw_wall(0,w_var/2,h_var,0,-w_var/2,0,tex_var,1,1);
@@ -418,7 +436,7 @@ object_event_add
     {
         // V3
         sight_type_var = 2;
-        event_perform(ev_other,ev_user8);
+        event_user(8); // Check Sight
         // V4
         if !enter_var && !target_visible_var
         {
