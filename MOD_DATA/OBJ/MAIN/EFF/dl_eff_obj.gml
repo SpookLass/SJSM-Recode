@@ -24,6 +24,8 @@ object_event_add
     scale_big_chance_var = 6;
     scale_bigger_chance_var = 8;
     rand_rate_var = 30;
+    // Remodeled
+    slender_var = false;
     // Set
     image_alpha = random_range(alpha_min_var,alpha_max_var);
     image_xscale = 1;
@@ -35,15 +37,19 @@ object_event_add
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,'
-    if anim_var
+    if slender_var
     {
-        spr_id_var = (spr_id_var+(spr_spd_var*global.delta_time_var)) mod sprite_get_number(spr_var);
+        image_alpha = 0;
+        with dl_obj { if slender_var { other.image_alpha = max(slender_alpha_var,other.image_alpha); }}
     }
+    if anim_var
+    { spr_id_var = (spr_id_var+(spr_spd_var*global.delta_time_var)) mod sprite_get_number(spr_var); }
 ');
 // Alarm 0 Event
 object_event_add
 (argument0,ev_alarm,0,'
-    if frac_chance_scr(1,rand_chance_var) { image_alpha = random_range(alpha_min_var,alpha_max_var); }
+    if frac_chance_scr(1,rand_chance_var) && !slender_var
+    { image_alpha = random_range(alpha_min_var,alpha_max_var); }
     if frac_chance_scr(1,scale_bigger_chance_var) { image_yscale = scale_bigger_var; }
     else if frac_chance_scr(1,scale_big_chance_var) { image_yscale = scale_big_var; }
     else if frac_chance_scr(1,rand_chance_var) { image_yscale = random_range(scale_min_var,scale_max_var); }

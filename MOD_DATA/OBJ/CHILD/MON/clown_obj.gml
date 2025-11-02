@@ -128,7 +128,7 @@ object_event_add
 ");
 // Room Start Event
 object_event_add
-(argument0,ev_other,ev_room_start,"
+(argument0,ev_other,ev_room_start,'
     if dur_var == 1
     {
         with door_trig_obj
@@ -148,7 +148,7 @@ object_event_add
         }
     }
     event_inherited();
-");
+');
 // Step event
 object_event_add
 (argument0,ev_step,ev_step_normal,"

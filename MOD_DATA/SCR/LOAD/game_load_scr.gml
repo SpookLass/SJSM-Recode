@@ -49,6 +49,7 @@ ds_list_clear(global.mon_list);
 ds_list_add(global.mon_list,bab_obj);
 ds_list_add(global.mon_list,bekka_obj);
 // ds_list_add(global.mon_list,brain_chase_obj);
+ds_list_add(global.mon_list,dl_obj);
 ds_list_add(global.mon_list,fd_obj);
 ds_list_add(global.mon_list,eel_obj);
 ds_list_add(global.mon_list,gc_obj);

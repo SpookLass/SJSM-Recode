@@ -104,7 +104,7 @@ object_event_add
         { fmod_snd_set_group_scr(eff_snd_arr[local.i,0],snd_group_mon_const); }
     }
     // Behavior
-    if global.dl_type_var == -1 { local.type = irandom(3); }
+    if global.dl_type_var == -1 { local.type = irandom(5); }
     else { local.type = global.dl_type_var; }
     switch local.type
     {
@@ -150,8 +150,8 @@ object_event_add
         case 4: // Gone Rouge
         {
             // Rubberband
+            spd_min_var = 0.1;
             rb_var = true;
-            rb_min_var = 0.1;
             rb_dist_var = 48;
             acc_var = 0.02;
             // Silhouette
@@ -162,6 +162,18 @@ object_event_add
             sil_color_var = c_red;
             sil_alpha_var = 0;
             sil_dist_var = 0.1;
+            break;
+        }
+        case 5: // Remodeled
+        {
+            spd_min_var = 0.1;
+            acc_var = 1/60; // 0.01r6
+            slender_var = true;
+            slender_rate_var = 0.02;
+            slender_alpha_var = 0;
+            slender_spd_var = 6;
+            do_seen_var = true;
+            seen_yaw_var = 30;
             break;
         }
     }
@@ -182,21 +194,34 @@ object_event_add
         for (local.i=0; local.i<eff_snd_len_var; local.i+=1;)
         { fmod_snd_free_scr(eff_snd_arr[local.i]); }
     }
+    with spr_flash_eff_obj { if par_var = other.id { instance_destroy(); }}
+    with dl_eff_obj { if par_var = other.id { instance_destroy(); }}
 ');
 // Room Start Event
 object_event_add
 (argument0,ev_other,ev_room_start,'
-    if !instance_exists(dl_eff_obj) { instance_create(0,0,dl_eff_obj); }
+    if !instance_exists(dl_eff_obj)
+    {
+        with instance_create(0,0,dl_eff_obj)
+        {
+            par_var = other.id;
+            slender_var = other.slender_var;
+        }
+    }
+    else if slender_var { with dl_eff_obj { slender_var = true; }}
     warp_var = false;
-    if rb_var { spd_base_var = rb_min_var; }
+    if rb_var || slender_var { spd_base_var = spd_min_var; }
+    if slender_var { slender_alpha_var = 0; }
     if xray_var { sil_alpha_var = 0; }
     event_inherited();
 ');
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,'
+    event_inherited();
     if on_var
     {
+        // Open sprite
         if instance_exists(target_var)
         {
             if open_var { if target_dist_var >= close_dist_var { open_var = false; }}
@@ -206,6 +231,14 @@ object_event_add
         if warp_var || open_var
         { spr_var = open_spr_var; }
         else { spr_var = close_spr_var; }
+        // Slender
+        if slender_var
+        {
+            if seen_var { slender_alpha_var += slender_rate_var*global.delta_time_var; }
+            else { slender_alpha_var -= slender_rate_var*global.delta_time_var; }
+            slender_alpha_var = median(0,1,slender_alpha_var);
+        }
+        // X-ray
         if xray_var
         {
             sight_type_var = 0;
@@ -215,14 +248,19 @@ object_event_add
             sil_alpha_var = median(0,1,sil_alpha_var);
         }
     }
-    event_inherited();
 ');
 // Movement Event
 object_event_add
 (argument0,ev_other,ev_user0,'
     if rb_var
     {
-        spd_base_var = median(rb_min_var,target_dist_var/rb_dist_var,spd_base_var+(acc_var*global.delta_time_var));
+        spd_base_var = median(spd_min_var,target_dist_var/rb_dist_var,spd_base_var+(acc_var*global.delta_time_var));
+    }
+    else if slender_var
+    {
+        if slender_alpha_var >= 1 { spd_base_var = slender_spd_var; }
+        else if seen_var { spd_base_var = 0; }
+        else { spd_base_var += acc_var*global.delta_time_var; }
     }
     if do_warp_var && !enter_var
     {
