@@ -155,6 +155,7 @@ object_event_add
             state_chance_den_var = 3;
             delay_min_var = 90;
             delay_max_var = 180;
+            do_enter_var = true;
             state_spd_var[1] = state_spd_var[0];
             state_seen_spd_var[1] = state_seen_spd_var[0];
             if !local.set
@@ -177,7 +178,7 @@ object_event_add
 ');
 // Room Start Event
 object_event_add
-(argument0,ev_other,ev_room_start,"
+(argument0,ev_other,ev_room_start,'
     event_inherited();
     if !instance_exists(ringu_static_eff_obj)
     {
@@ -202,7 +203,7 @@ object_event_add
     { with (fog_par_obj) { instance_destroy(); }}
     state_var = 0;
     event_perform(ev_other,ev_user14);
-");
+');
 // Destroy Event
 object_event_add
 (argument0,ev_destroy,0,"
@@ -237,7 +238,7 @@ object_event_add
 (argument0,ev_step,ev_step_normal,"
     if on_var
     {
-        if seen_var == 1 { spd_base_var = state_seen_spd_var[state_var]; }
+        if is_seen_var == 1 { spd_base_var = state_seen_spd_var[state_var]; }
         else { spd_base_var = state_spd_var[state_var]; }
     }
     event_inherited();
@@ -266,7 +267,7 @@ object_event_add
 // Change form event
 object_event_add
 (argument0,ev_other,ev_user14,"
-    if seen_var { spd_base_var = state_seen_spd_var[state_var]; }
+    if is_seen_var { spd_base_var = state_seen_spd_var[state_var]; }
     else { spd_base_var = state_spd_var[state_var]; }
     spr_var = state_spr_var[state_var];
     spr_spd_var = state_spr_spd_var[state_var];
@@ -277,7 +278,7 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user15,"
     if state_var { state_var = 0; }
-    else if seen_var 
+    else if is_seen_var 
     && frac_chance_scr(state_chance_num_var,state_chance_den_var)
     { state_var = 1; }
     event_perform(ev_other,ev_user14);

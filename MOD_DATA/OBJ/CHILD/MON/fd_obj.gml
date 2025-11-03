@@ -161,6 +161,7 @@ object_event_add
             hide_alarm_max_var = 318;
             delay_min_var = 90;
             delay_max_var = 180;
+            do_enter_var = true;
             dmg_alarm_var = 180;
             violence_var = 2;
             hurt_spd_var = 1;
@@ -238,7 +239,7 @@ object_event_add
             flame_z_off_var = lerp_scr(flame_z_off_base_var*20,flame_z_off_base_var,local.per)
         }
     }
-    if seen_var == 1 && target_dist_var < seen_dist_var
+    if is_seen_var == 1 && target_dist_var < seen_dist_var
     {
         if move_var { spd_mult_var *= seen_spd_mult_var; }
         spr_spd_var = spr_spd_seen_var;
@@ -329,14 +330,19 @@ object_event_add
 ');
 // Teleport
 object_event_add
-(argument0,ev_other,ev_user15,"
+(argument0,ev_other,ev_user15,'
     // Originally anywhere in the room (0-1280 x 0-720 y)
+    if enter_var
+    {
+        enter_var = false;
+        event_user(6);
+    }
     local.dir = random(360);
     local.dist = random_range(tp_dist_min_var,tp_dist_max_var);
     x = target_x_var+lengthdir_x(local.dist,local.dir);
     y = target_y_var+lengthdir_y(local.dist,local.dir);
     z = target_z_var;
-");
+');
 // Draw
 object_event_add
 (argument0,ev_draw,0,"

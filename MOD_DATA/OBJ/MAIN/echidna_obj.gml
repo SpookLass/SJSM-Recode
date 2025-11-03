@@ -9,85 +9,102 @@ object_set_visible(argument0,true);
 /*
 Variables
 
-Enums
-
-type_var
-    0: Ignores walls
-    1: Pathfinds normally
-    2: Floats over pits
-sight_type_var
-    0: Default
-    1: Only center
-    2: No Blocking
-anim_type_var
-    0: Normal
-    1: End on last
-    2: End on first
-    3: Random
-    4: Custom
-hurt_snd_var
-    0: None
-    1: Axe Hit
-    2: Claw
-    3: Axe
-    4: Custom
-do_hurt_var
-    0: Cannot be hurt
-    1: Hurt event is called
-    2: Being damaged reduces duration or health
-    3: Being damaged by spiritual weapons reduces duration or health
-hurt_die_var
-    0: Monster only dies on the next room
-    1: Monster dies when duration is depleted
-    2: Monster only dies when health is depleted
-
 Main
 
-dur_var: The chase duration
-dur_start_var: How much duration a monster starts with, used for scripted events and boss bars
-delay_var: How much time before a monster starts acting
+    dur_var: The chase duration
+    dur_start_var: How much duration a monster starts with, used for scripted events and boss bars
+    delay_var: How much time before a monster starts acting
 
 Draw
 
-w_var: How many pixels wide the monster is
-h_var: How many pixels tall the monster is
-x_off_var,y_off_var,z_off_var: How many pixels offset the monster draws
-sil_var: Draw silhouette. Mostly for incorporeal monsters
-sil_dist_var: How far to draw the silhouette to prevent Z-fighting
-sil_color_var: The color of the silhouette
-sil_alpha_var: The alpha of the silhouette (multiplied by image alpha)
+    anim_type_var
+        0: Normal
+        1: End on last
+        2: End on first
+        3: Random
+        4: Custom
+    do_anim_var: Whether the specimen should animate
+    anim_var: Whether the specimen can currently animate
+    w_var: How many pixels wide the monster is
+    h_var: How many pixels tall the monster is
+    x_off_var,y_off_var,z_off_var: How many pixels offset the monster draws
+    sil_var: Draw silhouette. Mostly for incorporeal monsters
+    sil_dist_var: How far to draw the silhouette to prevent Z-fighting
+    sil_color_var: The color of the silhouette
+    sil_alpha_var: The alpha of the silhouette (multiplied by image alpha)
 
 Attack
 
-dmg_var: How much damage a monster deals per hit
-dmg_alarm_var: How much time before something can hit the player again (per player)
-atk_range_var: How far the specimen can reach while attacking
-atk_dist_var: How close the target should be before attempting to attack (If applicable)
-atk_delay_var: How long before the monster can start attacking
+    do_attack_var: Whether the specimen should attack
+    attack_var: Whether the specimen can currently attack
+    dmg_var: How much damage a monster deals per hit
+    dmg_alarm_var: How much time before something can hit the player again (per player)
+    atk_range_var: How far the specimen can reach while attacking
+    atk_dist_var: How close the target should be before attempting to attack (If applicable)
+    atk_delay_var: How long before the monster can start attacking
 
 Movement
 
-spd_base_var: How fast the monster moves in pixels per frame (60fps)
-spd_mult_var: Multiplier for the monster"s speed, mostly for monsters that have varied speeds
-acc_var: How fast the monster accelerates in pixels per frame squared (60fps)
-frick_var: How fast the monster decelerates in pixels per frame squared
-enter_var: Whether a physical monster is entering the room
+    type_var
+        0: Ignores walls
+        1: Pathfinds normally
+        2: Floats over pits
+    do_acc_var
+        0: Doesn't accelerate
+        1: Accelerates in a natural modern way
+        2: Accelerates in a rigid classic way
+        3: Only slows down
+    do_move_var: Whether the specimen should move
+    move_var: Whether the specimen can currently move
+    do_enter_var: Whether the monster should enter the room before chasing the player
+    enter_var: Whether a monster is entering the room
+    spd_base_var: How fast the monster moves in pixels per frame (60fps)
+    spd_mult_var: Multiplier for the monster's speed that resets every frame
+    spd_mult_per_var: Multiplier for the monster's speed that doesn't reset every frame, mostly for monsters that have varied speeds
+    acc_var: How fast the monster accelerates in pixels per frame squared (60fps)
+    frick_var: How fast the monster decelerates in pixels per frame squared
 
 Hurt
 
-hurt_dur_var: How much duration to deduct per hit
-violence_var: How much violence to add per hit
+    do_hurt_var
+        0: Cannot be hurt
+        1: Hurt event is called
+        2: Being damaged reduces duration or health
+        3: Being damaged by spiritual weapons reduces duration or health
+    hurt_die_var
+        0: Monster only dies on the next room
+        1: Monster dies when duration is depleted
+        2: Monster only dies when health is depleted
+    hurt_snd_var
+        0: None
+        1: Axe Hit
+        2: Claw
+        3: Axe
+        4: Custom
+    hurt_var: Whether the specimen is currently hurt
+    hurt_dur_var: How much duration to deduct per hit
+    violence_var: How much violence to add per hit
 
-Booleans
+Sight
 
-do_move_var: Whether the specimen should move
-do_anim_var: Whether the specimen should animate
-do_attack_var: Whether the specimen should attack
-do_hurt_var: Whether the specimen should be vulnerable
-move_var: Whether the specimen can currently move
-anim_var: Whether the specimen can currently animate
-attack_var: Whether the specimen can currently attack
-hurt_var: Whether the specimen is currently hurt
+    sight_type_var
+        0: Default
+        1: Only center
+        2: No Blocking
+
+Seen
+
+    is_seen_var
+        -1: Seen checks are currently disabled
+        0: Monster is not being seen
+        1: Monster is being seen
+    seen_type_var
+        0: Check all players
+        1: Only check current target
+    do_seen_var: Whether the monstter should do seen checks
+    seen_var: Whether the specimen is currently doing seen checks
+    do_seen_mult_var: Whether the monster should automatically apply speed based on whether they are spotted by the player
+
 */
 // Create Start
     // Loading specimen specific settings
@@ -105,9 +122,11 @@ object_event_add
     if do_attack_var == 0 { do_attack_var = true; }
     if do_anim_var == 0 { do_anim_var = true; }
     if do_snd_var == 0 { do_snd_var = true; }
+    if do_enter_var == 0 { do_enter_var = type_var; }
     if color_var == 0 { color_var = true; }
     // Speed
     spd_mult_var = 1;
+    spd_mult_per_var = 1;
     // Delay
     if delay_var != 0 && delay_min_var == 0
     {
@@ -210,8 +229,9 @@ object_event_add
     move_var = do_move_var;
     anim_var = do_anim_var;
     attack_var = do_attack_var;
+    seen_var = do_seen_var;
     hurt_var = false;
-    enter_var = type_var > 0;
+    enter_var = do_enter_var;
     do_coll_var = false;
     // Color
     if !color_var || !instance_exists(color_par_obj) || global.color_var == 1
@@ -240,10 +260,10 @@ object_event_add
 (argument0,ev_step,ev_step_normal,'
     if on_var
     {
-        if move_var || do_seen_var { event_user(6); }
+        if move_var || seen_var { event_user(6); }
         if move_var { event_user(0); }
         if anim_var { event_user(1); }
-        if do_seen_var { event_user(5); }
+        if seen_var { event_user(5); }
         if attack_var
         {
             if atk_delay_var > 0
@@ -413,7 +433,12 @@ object_event_add
 // Movement Event
 object_event_add
 (argument0,ev_other,ev_user0,'
-    local.spd = spd_base_var*spd_mult_var;
+    if seen_var && do_seen_mult_var
+    {
+        if is_seen_var == 1 && seen_mult_var != 1 { spd_mult_var *= seen_mult_var; }
+        else if is_seen_var == 0 && unseen_mult_var != 1 { spd_mult_var *= unseen_mult_var; }
+    }
+    local.spd = spd_base_var*spd_mult_var*spd_mult_per_var;
     if target_dist_var <= local.spd
     {
         if enter_var
@@ -455,47 +480,69 @@ object_event_add
             );
         }
         else { local.yaw = point_direction(x,y,target_x_var,target_y_var); }
-        if do_acc_var
+        switch do_acc_var
         {
-            // Tried to add autobrake support, but it"s difficult without Unity source code
-            if autobrake_var && target_visible_var && spd_var > autobrake_spd_var
-            && (target_dist_var <= autobrake_dist_var || autobrake_dist_var <= 0) 
+            case 1: // Modern
             {
-                if autobrake_dir_var > 0
+                // Tried to add autobrake support, but it"s difficult without Unity source code
+                if autobrake_var && target_visible_var && spd_var > autobrake_spd_var
+                && (target_dist_var <= autobrake_dist_var || autobrake_dist_var <= 0) 
                 {
-                    if abs(deg_diff_scr(local.yaw,yaw_var)) > autobrake_dir_var
-                    { local.spd = autobrake_spd_var; }
+                    if autobrake_dir_var > 0
+                    {
+                        if abs(deg_diff_scr(local.yaw,yaw_var)) > autobrake_dir_var
+                        { local.spd = autobrake_spd_var; }
+                    }
+                    else { local.spd = autobrake_spd_var; }
                 }
-                else { local.spd = autobrake_spd_var; }
+                acc_scr(global.delta_time_var,acc_var,frick_var,local.yaw,local.spd);
+                break;
             }
-            acc_scr(global.delta_time_var,acc_var,frick_var,local.yaw,local.spd);
+            case 2: // Classic
+            {
+                if spd_var < local.spd { local.spd = min(local.spd,spd_var+(acc_var*global.delta_time_var)); }
+            }
+            case 3: // Friction only
+            {
+                if spd_var > local.spd { local.spd = max(local.spd,spd_var-(frick_var*global.delta_time_var)); }
+            }
+            default: { set_motion_scr(local.spd,true,local.yaw,true); break; }
         }
-        else { set_motion_scr(local.spd,true,local.yaw,true); }
     }
     else
     {
         local.yaw = point_direction(x,y,target_x_var,target_y_var);
         local.pitch = point_direction_3d_scr(x,y,z,target_x_var,target_y_var,target_z_var);
-        if do_acc_var
+        switch do_acc_var
         {
-            if autobrake_var && target_visible_var && spd_var > autobrake_spd_var
-            && (target_dist_var <= autobrake_dist_var || autobrake_dist_var <= 0) 
+            case 1:
             {
-                if autobrake_dir_var > 0
+                // Tried to add autobrake support, but it"s difficult without Unity source code
+                if autobrake_var && target_visible_var && spd_var > autobrake_spd_var
+                && (target_dist_var <= autobrake_dist_var || autobrake_dist_var <= 0) 
                 {
-                    if abs(deg_diff_scr(local.yaw,yaw_var)) > autobrake_dir_var
-                    || abs(deg_diff_scr(local.pitch,pitch_var)) > autobrake_dir_var
-                    { local.spd = autobrake_spd_var; }
+                    if autobrake_dir_var > 0
+                    {
+                        if abs(deg_diff_scr(local.yaw,yaw_var)) > autobrake_dir_var
+                        || abs(deg_diff_scr(local.pitch,pitch_var)) > autobrake_dir_var
+                        { local.spd = autobrake_spd_var; }
+                    }
+                    else { local.spd = autobrake_spd_var; }
                 }
-                else { local.spd = autobrake_spd_var; }
+                acc_3d_scr(global.delta_time_var,acc_var,frick_var,local.yaw,local.pitch,local.spd);
+                break;
             }
-            acc_3d_scr(global.delta_time_var,acc_var,frick_var,local.yaw,local.pitch,local.spd);
+            case 2:
+            {
+                if spd_var < local.spd { local.spd = min(local.spd,spd_var+(acc_var*global.delta_time_var)); }
+                else if spd_var > local.spd { local.spd = max(local.spd,spd_var-(frick_var*global.delta_time_var)); }
+            }
+            default: { set_motion_3d_scr(local.spd,true,local.yaw,true,local.pitch,true); break; }
         }
-        else { set_motion_3d_scr(local.spd,true,local.yaw,true,local.pitch,true); }
     }
     spd_mult_var = 1;
 ');
-// Animation
+// Animation Event
 object_event_add
 (argument0,ev_other,ev_user1,'
     switch(anim_type_var)
@@ -689,10 +736,10 @@ object_event_add
         }
         else { local.seenpitch = true; local.pitchper = 0; }
         if local.seenyaw && local.seenpitch
-        { seen_var = true; seen_per_var = 1-max(local.yawper,local.pitchper); }
-        else { seen_var = false; seen_per_var = 0; }
+        { is_seen_var = true; seen_per_var = 1-max(local.yawper,local.pitchper); }
+        else { is_seen_var = false; seen_per_var = 0; }
     }
-    else { seen_var = -1; seen_per_var = -1; }
+    else { is_seen_var = -1; seen_per_var = -1; }
 ');
 // Determine target
 object_event_add

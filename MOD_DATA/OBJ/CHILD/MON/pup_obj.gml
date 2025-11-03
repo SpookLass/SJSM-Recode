@@ -186,11 +186,11 @@ object_event_add
 // Step event
 object_event_add
 (argument0,ev_step,ev_step_normal,"
-    if seen_var == 1 && target_var != noone && !target_var.active_var
+    if is_seen_var == 1 && target_var != noone && !target_var.active_var
     { if alarm_arr[8,0] <= 0 { set_alarm_scr(8,tp_alarm_var); }}
     else if alarm_arr[8,0] > 0 { set_alarm_scr(8,-1); }
     // Seem stuff
-    if seen_var != 0
+    if is_seen_var != 0
     {
         if spd_var > 0 { set_motion_3d_scr(0,true); }
         move_var = false;

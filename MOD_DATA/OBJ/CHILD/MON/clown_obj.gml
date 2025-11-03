@@ -154,7 +154,7 @@ object_event_add
 (argument0,ev_step,ev_step_normal,"
     event_inherited();
     // Seem stuff
-    if seen_var == 1
+    if is_seen_var == 1
     {
         if spd_var > 0 { set_motion_3d_scr(0,true); }
         move_var = false;

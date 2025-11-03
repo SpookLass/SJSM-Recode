@@ -107,6 +107,7 @@ object_event_add
     vis_num_var = 2;
     vis_den_var = 3;
     // Seen Stuff
+    do_seen_var = true;
     seen_delay_min_var = 3;
     seen_delay_max_var = 15;
     seen_yaw_var = 30;
@@ -176,7 +177,7 @@ object_event_add
             dur_var = 30;
             start_var = -1;
             web_start_var = 15;
-            zone_start_var = -1;
+            // zone_start_var = -1;
             exit_spawn_var = false;
             tp_spawn_var = 1;
             tp_type_var = 1; // Check sight
@@ -262,7 +263,7 @@ object_event_add
             tp_spawn_var = false;
             exit_spawn_var = false;
             tp_dist_var = -1;
-            do_seen_var = -1;
+            do_seen_var = false;
             tp_dist_min_var = 500;
             tp_dist_max_var = 500;
             spd_base_real_var = 1.5;
@@ -302,7 +303,7 @@ object_event_add
             tp_spawn_var = false;
             exit_spawn_var = false;
             tp_dist_var = -1;
-            do_seen_var = -1;
+            do_seen_var = false;
             attack_stun_var = false;
             // Special Imscared stuff
             delay_var = 60;
@@ -368,9 +369,6 @@ object_event_add
     // Spawn
     if start_var <= 0 || dur_start_var-dur_var >= start_var
     {
-        if do_seen_var == 0 
-        { do_seen_var = true; }
-        
         visible = true;
         if exit_spawn_var && !irandom(5)
         {
@@ -505,7 +503,7 @@ object_event_add
 (argument0,ev_alarm,8,'
     if do_seen_agg_var
     { seen_agg_var = 0; }
-    else { do_seen_var = true; }
+    else { seen_var = true; }
     if alarm_arr[9,0] > 0
     {
         event_perform(ev_alarm,9);
@@ -569,9 +567,9 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user5,'
     event_inherited();
-    if seen_var == true && (seen_dist_var <= 0 || target_dist_var >= seen_dist_var)
+    if is_seen_var == true && (seen_dist_var <= 0 || target_dist_var >= seen_dist_var)
     {
-        if !do_seen_agg_var { do_seen_var = false; }
+        if !do_seen_agg_var { seen_var = false; }
         else { seen_agg_var += global.delta_time_var; }
         // Increase speed
         if seen_spd_var && (spd_agg_var <= 0 || seen_agg_var < spd_agg_var)
@@ -680,11 +678,14 @@ object_event_add
     // OG only, gets stopped in place briefly
     if attack_stun_var
     {
-        do_seen_var = false;
         move_var = false;
         set_alarm_scr(1,dmg_alarm_var);
-        set_alarm_scr(8,dmg_alarm_var);
         set_motion_3d_scr(0,true);
+        if do_seen_var
+        {
+            seen_var = false;
+            set_alarm_scr(8,dmg_alarm_var);
+        }
     }
 ');
 // Teleport

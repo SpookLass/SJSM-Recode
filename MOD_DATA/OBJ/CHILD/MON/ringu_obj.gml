@@ -113,6 +113,7 @@ object_event_add
             dmg_alarm_var = 180;
             delay_min_var = 90;
             delay_max_var = 180;
+            do_enter_var = true;
             // Sound
             snd_alarm_min_var = 90;
             snd_alarm_max_var = 240;

@@ -125,6 +125,7 @@ object_event_add
     flash_var = false;
     dmg_stun_alarm_var = 30;
     // Seen
+    do_seen_var = true;
     spd_per_min_var = 1;
     spd_per_max_var = 12/7; // 1.r714285x
     spd_per_pain_var = 100/7; // 14.r285714x
@@ -182,7 +183,7 @@ object_event_add
             spawn_dist_var = 0;
             do_anim_var = -1;
             dmg_stun_alarm_var = -1;
-            do_seen_var = -1;
+            do_seen_var = false;
             cam_end_var = -1;
             fov_var = -1;
             break;
@@ -205,7 +206,7 @@ object_event_add
             spawn_dist_var = 0;
             do_anim_var = -1;
             dmg_stun_alarm_var = -1;
-            do_seen_var = -1;
+            do_seen_var = false;
             cam_end_var = -1;
             fov_var = -1;
             break;
@@ -217,7 +218,7 @@ object_event_add
             spd_base_var = 152/225; // 0.67r5
             local.set = true;
             eff_var = false;
-            do_seen_var = -1;
+            do_seen_var = false;
             cam_end_var = -1;
             fov_var = -1;
         }
@@ -248,7 +249,7 @@ object_event_add
             autobrake_spd_var = 0;
             autobrake_dir_var = 60;
             // No fun
-            do_seen_var = -1;
+            do_seen_var = false;
             spawn_dist_var = 0;
             do_anim_var = -1;
             rand_alarm_min_var = -1;
@@ -310,7 +311,6 @@ object_event_add
     }
     mdl_yaw_var = yaw_var;
     mdl_pitch_var = pitch_var;
-    if do_seen_var == 0 { do_seen_var = true; }
     spd_per_var = 1;
     visible = true;
     // Effects
@@ -410,7 +410,7 @@ object_event_add
 // Seen Alarm
 object_event_add
 (argument0,ev_alarm,9,'
-    do_seen_var = true;
+    seen_var = true;
     event_perform(ev_alarm,10);
     set_alarm_scr(10,-1);
 ');
@@ -501,9 +501,9 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user5,'
     event_inherited();
-    if seen_var == true
+    if is_seen_var == true
     {
-        do_seen_var = false;
+        seen_var = false;
         if seen_spd_var
         {
             if !irandom(3)
@@ -555,7 +555,7 @@ object_event_add
         set_alarm_scr(4,dmg_stun_alarm_var);
         if do_seen_var
         {
-            do_seen_var = false;
+            seen_var = false;
             set_alarm_scr(9,dmg_stun_alarm_var);
         }
     }

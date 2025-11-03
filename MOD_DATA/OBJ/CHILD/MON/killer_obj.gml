@@ -444,7 +444,7 @@ object_event_add
             sprint_acc_var = -1;
             stam_spawn_max_var = 0;
             // Acceleration
-            do_acc_var = true;
+            do_acc_var = 2; // OG Style
             acc_var = 0.1;
             frick_var = 0.05;
             // Autobrake (close enough)

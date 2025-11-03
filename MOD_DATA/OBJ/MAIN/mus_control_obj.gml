@@ -73,7 +73,8 @@ object_event_add
             {
                 curr_snd_var = local.mus;
                 fmod_inst_stop_scr(snd_var);
-                snd_var = fmod_snd_loop_scr(curr_snd_var);
+                if curr_snd_var != -1
+                { snd_var = fmod_snd_loop_scr(curr_snd_var); }
             }
             dur_var = irandom_range(dur_min_var,dur_max_var);
         }

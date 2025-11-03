@@ -234,7 +234,7 @@ object_event_add
         // Slender
         if slender_var
         {
-            if seen_var { slender_alpha_var += slender_rate_var*global.delta_time_var; }
+            if is_seen_var { slender_alpha_var += slender_rate_var*global.delta_time_var; }
             else { slender_alpha_var -= slender_rate_var*global.delta_time_var; }
             slender_alpha_var = median(0,1,slender_alpha_var);
         }
@@ -259,7 +259,7 @@ object_event_add
     else if slender_var
     {
         if slender_alpha_var >= 1 { spd_base_var = slender_spd_var; }
-        else if seen_var { spd_base_var = 0; }
+        else if is_seen_var { spd_base_var = 0; }
         else { spd_base_var += acc_var*global.delta_time_var; }
     }
     if do_warp_var && !enter_var

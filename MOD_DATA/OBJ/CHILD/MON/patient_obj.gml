@@ -344,7 +344,7 @@ object_event_add
 (argument0,ev_step,ev_step_normal,"
     if hang_var
     {
-        if seen_var == 1 && target_dist_var <= 200 // Look target is so weird
+        if is_seen_var == 1 && target_dist_var <= 200 // Look target is so weird
         {
             hang_var = false;
             visible = true;
@@ -361,7 +361,7 @@ object_event_add
     }
     else
     {
-        if seen_var == 1
+        if is_seen_var == 1
         {
             spd_mult_var *= seen_spd_mult_var;
             if tp_alarm_var > 0 && alarm_arr[9,0] <= 0 { set_alarm_scr(9,tp_alarm_var); }
@@ -376,7 +376,7 @@ object_event_add
         }
         if back_tp_alarm_var > 0
         {
-            if seen_var == 0
+            if is_seen_var == 0
             {
                 if alarm_arr[10,0] <= 0 { set_alarm_scr(10,back_tp_alarm_var); }
             }

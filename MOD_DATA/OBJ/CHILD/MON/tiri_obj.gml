@@ -145,6 +145,7 @@ object_event_add
             dmg_alarm_var = 180;
             delay_min_var = 90;
             delay_max_var = 180;
+            do_enter_var = true;
             snd_alarm_min_var = 180;
             snd_den_var = 1;
             shadow_hp_var = 1;
