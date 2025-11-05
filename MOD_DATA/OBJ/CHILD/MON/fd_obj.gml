@@ -97,7 +97,7 @@ object_event_add
     z_off_base_var = 7;
     flame_z_off_base_var = 19.2;
     w_var = w_base_var;
-    h_var = h_var;
+    h_var = h_base_var;
     z_off_var = z_off_var;
     flame_z_off_var = flame_z_off_base_var;
     // Seen
@@ -168,6 +168,11 @@ object_event_add
             hurt_alarm_var = 18;
             hurt_tp_var = 2;
             stun_var = true;
+            // Sound
+            snd_alarm_min_var = 90;
+            snd_alarm_max_var = 240;
+            snd_den_var = 1;
+            snd_dist_var = 500;
             break;
         }
     }
@@ -190,7 +195,6 @@ object_event_add
     with spr_flash_eff_obj
     { if par_var == other.id { instance_destroy(); }}
 ');
-// Room Start
 // Room Start Event
 object_event_add
 (argument0,ev_other,ev_room_start,'

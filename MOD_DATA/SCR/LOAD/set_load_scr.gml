@@ -64,3 +64,6 @@ texture_set_interpolation(global.anti_alias_var);
 
 global.save_list = ds_list_create();
 ds_list_clear(global.save_list);
+
+// Temporary lol
+global.js_chance_var = 5;

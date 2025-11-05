@@ -364,16 +364,27 @@ object_event_add
             hurt_snd_var = 3;
             break;
         }
+        case 3: // Old HD
+        {
+            // Weird
+            spd_base_var = 4/15; // 0.2r6
+            sprint_mult_var = 8;
+            stam_drain_var = stam_rate_var;
+            sprint_acc_var = 16/225;  // 0.07r1
+            acc_base_var = 11/675; // 0.01r629
+            local.set = true;
+        }
         case 2: // HD
         {
             do_sprint_var = true;
             do_stam_var = true;
-            spd_base_var = 16/45; // 0.3r5
             dur_var = irandom_range(10,15);
             dmg_alarm_var = 90;
             delay_min_var = 90;
             delay_max_var = 180;
             do_acc_var = true;
+            if !local.set
+            { spd_base_var = 16/45; } // 0.3r5
             // Autobrake (close enough)
             autobrake_var = true;
             autobrake_spd_var = 0;
@@ -381,42 +392,8 @@ object_event_add
             // Sound
             snd_alarm_min_var = 180;
             snd_alarm_max_var = 480;
-            snd_num_var = 1;
-            snd_den_var = 3;
-            breath_snd_num_var = 3;
-            breath_snd_den_var = 4;
             drag_snd_num_var = 1;
-            drag_snd_den_var = 3;
-            // Parry
-            do_hurt_var = true;
-            hurt_snd_var = 3;
-            break;
-        }
-        case 3: // Old HD
-        {
-            do_sprint_var = true;
-            do_stam_var = true;
-            dmg_alarm_var = 90;
-            delay_min_var = 90;
-            delay_max_var = 180;
-            do_acc_var = true;
-            // Weird
-            spd_base_var = 4/15; // 0.2r6
-            sprint_mult_var = 8;
-            stam_drain_var = stam_rate_var;
-            sprint_acc_var = 16/225;  // 0.07r1
-            acc_base_var = 11/675; // 0.01r629
-            // Autobrake (close enough)
-            autobrake_var = true;
-            autobrake_spd_var = 0;
-            autobrake_dir_var = 60;
-            // Sound
-            snd_num_var = 1;
-            snd_den_var = 3;
-            breath_snd_num_var = 3;
-            breath_snd_den_var = 4;
-            drag_snd_num_var = 1;
-            drag_snd_den_var = 3;
+            drag_snd_den_var = 1;
             // Parry
             do_hurt_var = true;
             hurt_snd_var = 3;

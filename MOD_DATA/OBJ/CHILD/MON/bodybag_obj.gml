@@ -141,7 +141,6 @@ object_event_add
             autobrake_dir_var = 60;
             break;
         }
-        
     }
     // Alarms
     alarm_len_var = 9;
@@ -179,6 +178,8 @@ object_event_add
 // Effect alarm
 object_event_add
 (argument0,ev_alarm,8,'
+    if inf_stam_var
+    { with player_obj { do_stam_var = false; }}
     with instance_create(0,0,spr_flash_eff_obj)
     {
         par_var = other.id;

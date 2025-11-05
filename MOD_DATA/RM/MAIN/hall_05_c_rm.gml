@@ -7,7 +7,7 @@ room_set_code
     argument0,"
     // Name
     ini_open(global.lang_var);
-    global.rm_name_var = ini_read_string('ROOM','hall','ROOM_hall')+' 5 C 25';
+    global.rm_name_var = ini_read_string('ROOM','hall','ROOM_hall')+' 5 C / 25';
     ini_close();
     // Spawn
     global.spawn_len_var = 2;

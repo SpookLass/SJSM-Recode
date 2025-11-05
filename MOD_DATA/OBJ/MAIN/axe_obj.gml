@@ -26,7 +26,7 @@ object_event_add
     coll_var[3] = global.axe_coll[3];
 ");
 object_event_add
-(argument0,ev_step,ev_step_normal,"
+(argument0,ev_step,ev_step_normal,'
     spr_id_var += spr_spd_var*global.delta_time_var;
     switch state_var
     {
@@ -96,7 +96,7 @@ object_event_add
                     if weapon_var
                     {
                         // p3dc_ray_scr(coll_var[0],x,y,z,local.xtmp,local.ytmp,local.ztmp,local.xvel,local.yvel,local.zvel)
-                        if p3dc_check_rot_scr(coll_var[0],x,y,z,other.coll_var[0],local.xtmp+local.xvel,local.ytmp+local.yvel,local.ztmp+local.zvel,0,0,0,0,local.ydir,local.zdir)
+                        if p3dc_check_rot_scr(coll_var[0],x,y,z,other.coll_var[0],local.xtmp+local.xvel,local.ytmp+local.yvel,local.ztmp+local.zvel,0,0,degtorad(direction),0,local.ydir,local.zdir)
                         {
                             hurt_weapon_var = other.id;
                             hurt_target_var = local.player;
@@ -121,7 +121,7 @@ object_event_add
             break;
         }
     }
-");
+');
 // Room Start
 object_event_add
 (argument0,ev_other,ev_room_start,"

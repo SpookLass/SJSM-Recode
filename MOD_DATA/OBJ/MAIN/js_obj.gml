@@ -12,11 +12,16 @@ global.jsr_coll[0] = prop_to_coll_scr(9,'',global.js_coll[2],0,global.js_coll[1]
 global.jsl_coll[0] = prop_to_coll_scr(9,'',-global.js_coll[2],0,global.js_coll[1],false,0,1);
 // Create event
 object_event_add
-(argument0,ev_create,0,"
-    if chance_num_var == 0
+(argument0,ev_create,0,'
+    if global.js_override_var
+    {
+        chance_num_var = global.js_override_num_var;
+        chance_den_var = global.js_override_den_var;
+    }
+    else if chance_num_var == 0
     {
         chance_num_var = 1;
-        chance_den_var = 5;
+        chance_den_var = global.js_chance_var;
     }
     if frac_chance_scr(chance_num_var,chance_den_var)
     {
@@ -116,7 +121,7 @@ object_event_add
         }
     }
     else { instance_destroy(); }
-");
+');
 // Destroy
 object_event_add
 (argument0,ev_destroy,0,"
@@ -163,8 +168,11 @@ object_event_add
         }
         with instance_create(0,0,player_freeze_obj) { player_var = other.player_var; }
     }
-    if snd_3d_var { inst_var = fmod_snd_3d_play_scr(snd_var); }
-    else { inst_var = fmod_snd_play_scr(snd_var); }
+    if !silent_var
+    {
+        if snd_3d_var { inst_var = fmod_snd_3d_play_scr(snd_var); }
+        else { inst_var = fmod_snd_play_scr(snd_var); }
+    }
     if rotate_var
     {
         direction = base_dir_var+jump_dir_var;

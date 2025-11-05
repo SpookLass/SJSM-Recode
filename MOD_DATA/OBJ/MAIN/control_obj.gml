@@ -234,7 +234,7 @@ object_event_add
             }
             case 8:
             {
-                local.zone = get_integer("Zone",global.zone_var);
+                local.zone = get_integer("Zone",global.zone_num_var);
                 zone_scr(local.zone);
                 break;
             }

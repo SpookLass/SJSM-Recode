@@ -29,7 +29,7 @@ object_event_add
 ");
 // Draw Event
 object_event_add
-(argument0,ev_draw,0,"
+(argument0,ev_draw,0,'
     d3d_transform_set_identity();
     if type_var == 5 { d3d_transform_add_rotation_z(point_direction(x,y,global.cam_x_var[view_current],global.cam_y_var[view_current])); }
     else { d3d_transform_add_rotation_z(direction); }
@@ -41,14 +41,15 @@ object_event_add
         {
             d3d_model_draw(mdl_var,0,0,0,tex_var);
             d3d_model_draw(mdl_02_var,0,0,0,tex_var);
-            draw_set_color(c_white);
+            draw_set_color(c_white); d3d_set_culling(true);
             if global.fog_dark_var { d3d_set_fog(false,c_black,0,0); }
             d3d_model_draw(mdl_var,0,0,0,tex_02_var);
             if global.fog_dark_var 
             { d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var); }
+            d3d_set_culling(false);
             break;
         }
     }
     d3d_transform_set_identity();
     draw_set_alpha(1);
-");
+');

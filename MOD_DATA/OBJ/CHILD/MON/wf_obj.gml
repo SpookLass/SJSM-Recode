@@ -182,8 +182,8 @@ object_event_add
             tp_spawn_var = 1;
             tp_type_var = 1; // Check sight
             // Draw
-            w_var = 12;
-            h_var = 16.4;
+            w_var = 9;
+            h_var = 12.3;
             z_off_base_var = 10;
             // Smaller Resolution
             res_w_var = 640;
@@ -310,8 +310,8 @@ object_event_add
             tp_alarm_var = 120;
             vanish_alarm_var = 600;
             // Draw
-            w_var = 12;
-            h_var = 16.4;
+            w_var = 9;
+            h_var = 12.3;
             z_off_base_var = 10;
             tex_var = sprite_get_texture(spr_var,0);
             break;
@@ -329,12 +329,6 @@ object_event_add
     global.ceil_bg_tex = background_get_texture(global.ceil_bg);
     global.light_wall_obj_spr = global.light_wall_spr;
     global.light_floor_obj_spr = global.light_floor_spr;
-    if res_var
-    {
-        global.res_override_var = false;
-        global.res_override_w_var = global.res_w_var;
-        global.res_override_h_var = global.res_h_var;
-    }
     if instance_number(object_index) <= 1
     {
         sprite_delete(spr_var);
@@ -350,12 +344,16 @@ object_event_add
         for (local.i=0; local.i<snd_len_var; local.i+=1;)
         { fmod_snd_free_scr(snd_arr[local.i,0]); }
         fmod_snd_free_scr(wake_snd_var[1]);
+        if no_fun_var { global.js_override_var = false; }
+        if res_var
+        {
+            global.res_override_var = false;
+            global.res_override_w_var = global.res_w_var;
+            global.res_override_h_var = global.res_h_var;
+        }
     }
     if zone_start_var > 0
-    {
-        ds_list_clear(global.rm_list_var);
-        global.zone_var = global.zone_arr[global.zone_num_var];
-    }
+    { zone_from_num_scr(global.zone_num_var); }
     with wf_eff_obj
     { if par_var == other.id { instance_destroy(); }}
 ');
@@ -417,8 +415,9 @@ object_event_add
     {
         if dur_start_var-dur_var == zone_start_var-1
         {
-            ds_list_clear(global.rm_list_var);
             global.zone_var = zone_list_var;
+            zone_reset_scr();
+            with door_trig_obj { event_user(0); }
         }
         if loop_var { door_trig_obj.rm_count_var = 0; }
         global.rm_name_var = string_replace(global.rm_name_var,"Long","My");
@@ -466,8 +465,8 @@ object_event_add
         with color_par_obj { instance_destroy(); }
         with torch_obj
         {
-            if other.no_fun_var { on_var = false; }
-            visible = false;
+            if other.no_fun_var { visible = false; }
+            on_var = false;
         }
         with instance_create(0,0,fog_par_obj)
         {
@@ -482,10 +481,14 @@ object_event_add
     }
     if no_fun_var
     {
-        
         with frame_obj { instance_destroy(); }
         with art_obj { instance_destroy(); }
         with web_obj { instance_destroy(); }
+        with js_obj { instance_destroy(); }
+        // No Jumpscares
+        global.js_override_var = true;
+        global.js_override_num_var = 0;
+        global.js_override_den_var = 1;
     }
 ');
 // Delay Alarm

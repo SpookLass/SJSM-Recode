@@ -22,13 +22,8 @@ object_event_add
     delay_var = 20;
     if rm_var == 0
     {
-        if ds_list_size(global.rm_list_var) <= 0
-        {
-            ds_list_copy(global.rm_list_var,global.zone_var);
-            ds_list_shuffle(global.rm_list_var);
-        }
-        rm_var = ds_list_find_value(global.rm_list_var,0);
-        ds_list_delete(global.rm_list_var,0);
+        zone_var = true;
+        event_user(0);
     }
     // Alarm
     alarm_len_var = 1;
@@ -89,6 +84,20 @@ object_event_add
     if local.active && local.remaining == 0
     { set_alarm_scr(0,delay_var); }
 ");
+// Recalculate Door
+object_event_add
+(argument0,ev_other,ev_user0,'
+    if zone_var
+    {
+        if ds_list_size(global.rm_list_var) <= 0
+        {
+            ds_list_copy(global.rm_list_var,global.zone_var);
+            ds_list_shuffle(global.rm_list_var);
+        }
+        rm_var = ds_list_find_value(global.rm_list_var,0);
+        ds_list_delete(global.rm_list_var,0);
+    }
+');
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,"

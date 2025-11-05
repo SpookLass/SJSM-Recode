@@ -1792,6 +1792,7 @@ if argument0
     }
 }
 // Room
+global.zone_num_var = 0;
+global.zone_var = global.zone_arr[global.zone_num_var];
 global.rm_list_var = ds_list_create();
-ds_list_clear(global.rm_list_var);
-global.zone_var = global.zone_arr[0];
+zone_reset_scr();

@@ -65,8 +65,9 @@ object_event_add
     vis_phase_var = true;
     // Other
     start_var = 17;
-    js_start_var = 4;
+    js_start_var = 3; // Gotta be 1 early because pain
     js_end_var = 15;
+    js_chance_var = 1;
     loop_start_var = 19;
     red_start_var = 4;
     red_end_var = 14;
@@ -84,11 +85,14 @@ object_event_add
         if id != other.id
         {
             other.bg_var = bg_var;
+            other.js_bg_01_var = js_bg_01_var;
+            other.js_bg_02_var = js_bg_02_var;
             other.mdl_var = mdl_var;
             for (local.i=0; local.i<other.head_len_var; local.i+=1;)
             { other.head_mdl_arr[local.i] = head_mdl_arr[local.i]; }
             other.wake_snd_var[1] = wake_snd_var[1];
             other.amb_mus_snd_var = amb_mus_snd_var;
+            other.zone_list_var = zone_list_var;
             local.loaded = true;
             break;
         }
@@ -97,6 +101,8 @@ object_event_add
     if !local.loaded
     {
         bg_var = background_add(vanilla_directory_const+"\3D\lisa_tex.png",false,false);
+        js_bg_01_var = background_add(vanilla_directory_const+"\TEX\SCARE_01C.png",false,false);
+        js_bg_02_var = background_add(vanilla_directory_const+"\TEX\SCARE_01B.png",false,false);
         wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\lisa_wake_snd.wav");
         amb_mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\LISA_AMB.mp3");
         chase_mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\LISA_AMB2.mp3");
@@ -108,6 +114,24 @@ object_event_add
         d3d_model_load(head_mdl_arr[1],main_directory_const+"\MDL\MON\lisa_head_02_mdl.gmmod");
         d3d_model_load(head_mdl_arr[2],main_directory_const+"\MDL\MON\lisa_head_03_mdl.gmmod");
         d3d_model_load(head_mdl_arr[3],main_directory_const+"\MDL\MON\lisa_head_04_mdl.gmmod");
+        // Zone
+        zone_list_var = ds_list_create();
+        ds_list_clear(zone_list_var);
+        ds_list_add(zone_list_var,hall_01_rm); ds_list_add(zone_list_var,hall_01_rm);
+        ds_list_add(zone_list_var,hall_02_a_rm); ds_list_add(zone_list_var,hall_02_a_rm);
+        ds_list_add(zone_list_var,hall_03_rm); ds_list_add(zone_list_var,hall_03_rm);
+        ds_list_add(zone_list_var,hall_05_a_rm); ds_list_add(zone_list_var,hall_05_a_rm);
+        ds_list_add(zone_list_var,hall_06_a_rm);
+        ds_list_add(zone_list_var,hall_06_b_rm);
+        ds_list_add(zone_list_var,hall_07_a_rm);
+        ds_list_add(zone_list_var,hall_07_b_rm);
+        ds_list_add(zone_list_var,hall_08_rm); ds_list_add(zone_list_var,hall_08_rm);
+        ds_list_add(zone_list_var,hall_09_a_rm);
+        ds_list_add(zone_list_var,hall_09_b_rm);
+        ds_list_add(zone_list_var,hall_10_a_rm);
+        ds_list_add(zone_list_var,hall_10_b_rm);
+        ds_list_add(zone_list_var,hall_11_a_rm);
+        ds_list_add(zone_list_var,hall_11_b_rm);
     }
     tex_var = background_get_texture(bg_var);
     mus_snd_var = -1;
@@ -138,6 +162,8 @@ object_event_add
             red_rand_var = true;
             cyan_rand_min_var = 55;
             cyan_rand_max_var = 155;
+            zone_end_var = 16;
+            js_chance_var = 3;
             break;
         }
         case 2: // HD
@@ -161,7 +187,8 @@ object_event_add
             vis_phase_end_var = -1;
             // Room stuffs
             start_var = 16;
-            js_start_var = 3;
+            zone_end_var = 15;
+            js_start_var = 2; // Gotta be 1 early because pain
             js_end_var = 16;
             loop_start_var = 19;
             red_start_var = 3;
@@ -170,9 +197,19 @@ object_event_add
             amb_start_var = 7;
             vis_phase_end_var = -1;
             mus_prio_var = -1;
+            js_chance_var = 3;
             break;
         }
     }
+    if zone_end_var > 0
+    {
+        global.zone_var = zone_list_var;
+        zone_reset_scr();
+        with door_trig_obj { event_user(0); }
+    }
+    global.js_override_var = true;
+    global.js_override_num_var = 0;
+    global.js_override_den_var = 1;
 ');
 // Destroy Event
 object_event_add
@@ -185,9 +222,13 @@ object_event_add
         fmod_snd_free_scr(chase_mus_snd_var);
         fmod_snd_free_scr(wake_snd_var[1]);
         d3d_model_destroy(mdl_var);
+        ds_list_destroy(zone_list_var);
         for (local.i=0; local.i<head_len_var; local.i+=1;)
         { d3d_model_destroy(head_mdl_arr[local.i]); }
+        global.js_override_var = false;
     }
+    if zone_end_var > 0
+    { zone_from_num_scr(global.zone_num_var); }
 ');
 // Room Start
 object_event_add
@@ -260,7 +301,31 @@ object_event_add
             }
         }
     }
-    
+    global.js_override_var = true;
+    if js_start_var > 0 && local.start >= js_start_var && local.start < js_end_var
+    {
+        global.js_override_num_var = 1;
+        global.js_override_den_var = js_chance_var;
+        with js_obj
+        {
+            store_tex_var = background_get_texture(other.js_bg_01_var);
+            store_tex_02_var = background_get_texture(other.js_bg_02_var);
+            tex_var = store_tex_var;
+            tex_02_var = store_tex_02_var;
+            silent_var = true;
+        }
+    }
+    else
+    {
+        global.js_override_num_var = 0;
+        global.js_override_den_var = 1;
+        with js_obj { instance_destroy(); }
+    }
+    if zone_end_var > 0 && local.start == zone_end_var
+    {
+        zone_from_num_scr(global.zone_num_var);
+        with door_trig_obj { event_user(0); }
+    }
 ');
 // Delay Alarm
 object_event_add

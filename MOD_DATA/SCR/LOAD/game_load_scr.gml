@@ -56,6 +56,7 @@ ds_list_add(global.mon_list,gc_obj);
 ds_list_add(global.mon_list,gel_obj);
 // ds_list_add(global.mon_list,gurgle_obj);
 ds_list_add(global.mon_list,killer_obj);
+ds_list_add(global.mon_list,lisa_obj);
 ds_list_add(global.mon_list,otto_obj);
 ds_list_add(global.mon_list,para_obj);
 ds_list_add(global.mon_list,patient_obj);
