@@ -14,7 +14,7 @@ object_event_add
 ");
 // Room End 
 object_event_add
-(argument0,ev_other,ev_room_end,"
+(argument0,ev_other,ev_room_end,'
     // Reset alarms
     reset_alarm_scr();
-");
+');

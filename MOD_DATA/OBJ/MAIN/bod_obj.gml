@@ -29,7 +29,12 @@ object_event_add
     {
         draw_set_color(image_blend); draw_set_alpha(image_alpha);
         d3d_transform_set_identity();
-        d3d_transform_add_rotation_z(point_direction(x,y,global.cam_x_var[view_current],global.cam_y_var[view_current]));
+        if rotate_var
+        {
+            d3d_transform_add_rotation_y(pitch_var);
+            d3d_transform_add_rotation_z(yaw_var);
+        }
+        else { d3d_transform_add_rotation_z(point_direction(x,y,global.cam_x_var[view_current],global.cam_y_var[view_current])); }
         d3d_transform_add_translation(x+x_off_var,y+y_off_var,z+z_off_var);
         d3d_draw_wall(0,w_var/2,h_var,0,-w_var/2,0,tex_var,1,1);
         d3d_transform_set_identity();

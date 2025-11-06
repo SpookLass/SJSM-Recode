@@ -217,10 +217,11 @@ object_event_add
         draw_set_valign(fa_bottom);
         if global.mon_hud_var && instance_exists(mon_par_obj)
         {
-            local.offset = bottom_var-((instance_number(mon_par_obj)-1)*36*scale_var);
+            with mon_par_obj { if !hide_var && string(name_var) != "0" { local.num += 1; }}
+            local.offset = bottom_var-((local.num-1)*36*scale_var);
             with mon_par_obj
             {
-                if string(name_var) != "0"
+                if !hide_var && string(name_var) != "0"
                 {
                     local.str = name_var;
                     if global.mon_hud_var == 2 { local.str += ": "+string(dur_var); }

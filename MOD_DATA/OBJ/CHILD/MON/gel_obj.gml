@@ -83,7 +83,7 @@ object_event_add
     }
     // Coward
     do_hurt_var = 2; // Reduces duration
-    hurt_die_var = 1;
+    hurt_die_var = 0;
     coward_var = true;
     coward_spd_var = 4/3; // 1.r3x
     hurt_alarm_var = 180;
@@ -174,7 +174,7 @@ object_event_add
 ');
 // Room Start Event
 object_event_add
-(argument0,ev_other,ev_room_start,"
+(argument0,ev_other,ev_room_start,'
     event_inherited();
     if do_slime_spawn_var
     {
@@ -205,7 +205,7 @@ object_event_add
             }
         }
     }
-");
+');
 // Destroy Event
 object_event_add
 (argument0,ev_destroy,0,"

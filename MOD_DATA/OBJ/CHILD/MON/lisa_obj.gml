@@ -1,5 +1,5 @@
 // Builtin Variables
-object_set_depth(argument0,-2);
+object_set_depth(argument0,-3);
 object_set_mask(argument0,noone);
 object_set_parent(argument0,echidna_obj);
 object_set_persistent(argument0,true);
@@ -63,16 +63,18 @@ object_event_add
     vis_spd_var = 6;
     seen_mult_var = vis_spd_var;
     vis_phase_var = true;
-    // Other
+    // Timing
     start_var = 17;
     js_start_var = 3; // Gotta be 1 early because pain
     js_end_var = 15;
-    js_chance_var = 1;
     loop_start_var = 19;
     red_start_var = 4;
     red_end_var = 14;
     vis_phase_end_var = 21;
     amb_start_var = 8;
+    // Other
+    hide_var = true;
+    js_chance_var = 1;
     red_rand_var = false;
     cyan_min_var = 55;
     cyan_max_var = 255;
@@ -148,8 +150,7 @@ object_event_add
         }
         case 0: // Recode
         {
-            dur_var = irandom_range(30,40);
-            if !local.set { loop_start_var = dur_var-10; }
+            dur_var = 35;
             delay_var = 90;
             dmg_alarm_var = 120;
             type_var = 2;
@@ -164,6 +165,16 @@ object_event_add
             cyan_rand_max_var = 155;
             zone_end_var = 16;
             js_chance_var = 3;
+            // Timing
+            start_var = 15;
+            js_start_var = 2; // Gotta be 1 early because pain
+            js_end_var = 15;
+            loop_start_var = 19; // Gotta be 1 early because pain
+            red_start_var = 1;
+            red_end_var = 15;
+            vis_phase_end_var = 19;
+            amb_start_var = 5;
+            if !local.set { loop_start_var = 19; }
             break;
         }
         case 2: // HD
@@ -240,6 +251,7 @@ object_event_add
     {
         if local.start == start_var
         {
+            hide_var = false;
             snd_var = fmod_snd_play_scr(wake_snd_var[1]);
             sub_var[0] = wake_snd_var[2];
             sub_var[1] = wake_snd_var[3];

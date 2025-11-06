@@ -154,7 +154,7 @@ object_event_add
     local.follow = id;
     for (local.i=0; local.i<bod_len_var; local.i+=1;)
     {
-        with instance_create(0,0,eel_bod_obj)
+        with instance_create(0,0,bod_obj)
         {
             bod_id_var = local.i;
             par_var = other.id;
@@ -172,7 +172,7 @@ object_event_add
 ');
 // Destroy Event
 object_event_add
-(argument0,ev_destroy,0,"
+(argument0,ev_destroy,0,'
     event_inherited();
     if instance_number(object_index) <= 1
     {
@@ -183,17 +183,17 @@ object_event_add
         for (local.i=0; local.i<snd_len_var; local.i+=1;)
         { fmod_snd_free_scr(snd_arr[local.i,0]); }
     }
-    with eel_bod_obj
+    with bod_obj
     {
         if par_var == other.id
         { instance_destroy(); }
     }
-");
+');
 // Room Start Event
 object_event_add
-(argument0,ev_other,ev_room_start,"
+(argument0,ev_other,ev_room_start,'
     event_inherited();
-    with eel_bod_obj
+    with bod_obj
     {
         if par_var == other.id
         {
@@ -203,12 +203,12 @@ object_event_add
             z = other.z;
         }
     }
-");
+');
 // Delay Alarm
 object_event_add
 (argument0,ev_alarm,0,"
     event_inherited();
-    with eel_bod_obj
+    with bod_obj
     {
         if par_var == other.id
         { on_var = true; }

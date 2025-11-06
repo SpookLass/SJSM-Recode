@@ -52,6 +52,13 @@ local.radius = global.mon_wide_coll[2]/2;
 global.mon_wide_coll[0] = p3dc_begin_mdl_scr();
 p3dc_add_cylinder_scr(-local.radius,-local.radius,global.mon_wide_coll[1]-0.01,local.radius,local.radius,0,true,8);
 p3dc_end_mdl_scr();
+// Short Monster
+global.mon_short_coll[1] = 9;
+global.mon_short_coll[2] = 8;
+local.radius = global.mon_short_coll[2]/2;
+global.mon_short_coll[0] = p3dc_begin_mdl_scr();
+p3dc_add_cylinder_scr(-local.radius,-local.radius,global.mon_short_coll[1]-0.01,local.radius,local.radius,0,true,8);
+p3dc_end_mdl_scr();
 // Slime Trigger
 global.slime_trig_coll[1] = 4;
 global.slime_trig_coll[2] = 24;

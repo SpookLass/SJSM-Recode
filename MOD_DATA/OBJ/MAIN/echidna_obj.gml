@@ -134,9 +134,12 @@ object_event_add
         delay_max_var = delay_var;
     }
     // Collision
-    coll_var[0] = global.mon_coll[0];
-    coll_var[1] = global.mon_coll[1];
-    coll_var[2] = global.mon_coll[2];
+    if coll_var[0] == 0
+    {
+        coll_var[0] = global.mon_coll[0];
+        coll_var[1] = global.mon_coll[1];
+        coll_var[2] = global.mon_coll[2];
+    }
     mon_coll_var = true;
     // Attack variables
     if atk_range_var == 0
@@ -457,7 +460,7 @@ object_event_add
             set_motion_3d_scr(0,true);
         }
     }
-    else if type_var > 0
+    else if type_var > 0 && !enter_var
     {
         // V3
         sight_type_var = 2;

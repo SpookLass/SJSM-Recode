@@ -210,17 +210,17 @@ object_event_add
     else { flame_color_var = c_white; }
     if hide_per_var
     {
-        with door_obj { visible = !other.hide_var; }
+        with door_obj { visible = !other.door_hide_var; }
         if hide_trig_var
         {
             with door_trig_obj 
             {
                 if do_txt_var >= 0
-                { do_txt_var = !other.hide_var; }
+                { do_txt_var = !other.door_hide_var; }
             }
         }
     }
-    else { hide_var = false; }
+    else { door_hide_var = false; }
 ');
 // Delay
 object_event_add
@@ -291,16 +291,16 @@ object_event_add
 // Door!
 object_event_add
 (argument0,ev_alarm,8,'
-    if frac_chance_scr(hide_chance_var-1,door_chance_var) || hide_var
+    if frac_chance_scr(hide_chance_var-1,door_chance_var) || door_hide_var
     {
-        hide_var = !hide_var;
-        with door_obj { visible = !other.hide_var; }
+        door_hide_var = !door_hide_var;
+        with door_obj { visible = !other.door_hide_var; }
         if hide_trig_var
         {
             with door_trig_obj 
             {
                 if do_txt_var >= 0
-                { do_txt_var = !other.hide_var; }
+                { do_txt_var = !other.door_hide_var; }
             }
         }
     }

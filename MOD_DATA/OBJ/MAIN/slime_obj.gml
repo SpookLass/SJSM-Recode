@@ -8,7 +8,7 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create Event
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
     // Collision
     coll_var[0] = global.slime_trig_coll[0];
     coll_var[1] = global.slime_trig_coll[1];
@@ -21,10 +21,10 @@ object_event_add
     spd_mult_var = 0.6;
     if instance_exists(color_par_obj) && global.color_var == 0
     { image_blend = color_par_obj.image_blend; }
-");
+');
 // Step Event
 object_event_add
-(argument0,ev_step,ev_step_normal,"
+(argument0,ev_step,ev_step_normal,'
     with player_obj
     {
         if on_floor_var
@@ -33,10 +33,10 @@ object_event_add
             { spd_mult_var *= other.spd_mult_var; }
         }
     }
-");
+');
 // Draw Event
 object_event_add
-(argument0,ev_draw,0,"
+(argument0,ev_draw,0,'
     draw_set_color(image_blend); draw_set_alpha(image_alpha);
     d3d_transform_set_identity();
     d3d_transform_set_rotation_z(direction);
@@ -45,4 +45,4 @@ object_event_add
     d3d_draw_floor(-local.radius,-local.radius,0,local.radius,local.radius,0,tex_var,1,1);
     d3d_transform_set_identity();
     draw_set_color(c_white); draw_set_alpha(1);
-");
+');
