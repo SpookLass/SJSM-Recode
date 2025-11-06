@@ -473,6 +473,8 @@ object_event_add
     type_button_arr[31,3] = "spooper";
     type_button_arr[32,3] = "wf";
         // Extra Settings
+    type_button_arr[4,2] = 4; // Bug
+    type_button_arr[4,4] = rouge_str_var;
     type_button_arr[5,2] = 4; // Ringu
     type_button_arr[5,4] = old_str_var;
     type_button_arr[6,2] = 4; // Bab

@@ -56,6 +56,7 @@ object_event_add
     snd_alarm_min_var = 80;
     snd_alarm_max_var = 240;
     snd_dist_var = 800;
+    loop_snd_dist_var = 600;
     // Hurt
     do_hurt_var = 2; // Damage
     hurt_alarm_var = 60;
@@ -108,6 +109,7 @@ object_event_add
             other.hole_bg_var = hole_bg_var;
             for (local.i=0; local.i<snd_len_var; local.i+=1;)
             { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
+            other.loop_snd_var = loop_snd_var;
             other.mus_snd_var = mus_snd_var;
             local.loaded = true;
             break;
@@ -125,17 +127,19 @@ object_event_add
         snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\bug_03_snd.wav",true);
         snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\bug_04_snd.wav",true);
         mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\bug_mus_snd.mp3");
+        loop_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\bug_loop_snd.wav",true);
+        fmod_snd_set_group_scr(loop_snd_var,snd_group_mon_const);
+        fmod_snd_set_minmax_dist_scr(loop_snd_var,0,loop_snd_dist_var);
     }
     spr_var = main_spr_var;
     hole_tex_var = background_get_texture(hole_bg_var);
     // Behavior
-    if global.bug_type_var == -1 { local.type = irandom(2); }
+    if global.bug_type_var == -1 { local.type = irandom(3); }
     else { local.type = global.bug_type_var; }
     switch local.type
     {
         case 0: // Recode
         {
-            spr_var = head_spr_var;
             spd_base_var = 1.2;
             hurt_alarm_var = 90;
             dmg_alarm_var = 60;
@@ -195,6 +199,26 @@ object_event_add
             autobrake_dir_var = 60;
             break;
         }
+        case 3: // Gone Rouge
+        {
+            do_acc_var = 2; // Classic
+            bod_len_var = 7;
+            dmg_alarm_var = 80;
+            hurt_alarm_var = 70;
+            stun_var = false;
+            do_hurt_var = 1;
+            do_coward_var = true;
+            stun_var = false;
+            spd_base_var = 1.75;
+            acc_var = 0.025;
+            frick_var = 0.025;
+            hole_spawn_den_var = 1;
+            hole_num_var = 4;
+            hole_den_var = 5;
+            hole_alarm_min_var = 5;
+            hole_alarm_max_var = 5;
+            break;
+        }
     }
     alarm_len_var = 9;
     local.follow = id;
@@ -236,6 +260,7 @@ object_event_add
         background_delete(hole_bg_var);
         for (local.i=0; local.i<snd_len_var; local.i+=1;)
         { fmod_snd_free_scr(snd_arr[local.i,0]); }
+        fmod_snd_free_scr(loop_snd_var);
         fmod_snd_free_scr(mus_snd_var);
     }
     with bug_bod_obj
@@ -254,6 +279,7 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_room_start,'
     event_inherited();
+    fmod_inst_stop_scr(loop_inst_var);
     with bug_bod_obj
     {
         if par_var == other.id
@@ -320,6 +346,7 @@ object_event_add
         if par_var == other.id
         { on_var = true; }
     }
+    loop_inst_var = fmod_snd_3d_loop_scr(loop_snd_var);
     if enter_var == 2
     {
         on_var = true;
@@ -336,6 +363,12 @@ object_event_add
     }
     else { event_inherited(); }
 ');
+// Hurt Alarm
+object_event_add
+(argument0,ev_alarm,3,'
+    event_inherited();
+    if do_acc_var > 1 { set_motion_3d_scr(0,true); }
+');
 // Determine target
 object_event_add
 (argument0,ev_other,ev_user6,'
@@ -348,6 +381,11 @@ object_event_add
         target_dist_var = point_distance_3d_scr(x,y,z,target_x_var,target_y_var,target_z_var);
     }
     else { event_inherited(); }
+');
+// Sound Event
+object_event_add
+(argument0,ev_other,ev_user9,'
+    fmod_inst_set_3d_pos_scr(loop_inst_var,x,y,z);
 ');
 // Hurt Event
 object_event_add

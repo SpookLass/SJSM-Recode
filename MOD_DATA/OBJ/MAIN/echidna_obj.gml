@@ -503,11 +503,11 @@ object_event_add
             }
             case 2: // Classic
             {
-                if spd_var < local.spd { local.spd = min(local.spd,spd_var+(acc_var*global.delta_time_var)); }
+                if abs(spd_var) < abs(local.spd) { local.spd = sign(local.spd)*min(abs(local.spd),abs(spd_var)+(acc_var*global.delta_time_var)); }
             }
             case 3: // Friction only
             {
-                if spd_var > local.spd { local.spd = max(local.spd,spd_var-(frick_var*global.delta_time_var)); }
+                if abs(spd_var) > abs(local.spd) { local.spd = sign(local.spd)*max(abs(local.spd),abs(spd_var)-(frick_var*global.delta_time_var)); }
             }
             default: { set_motion_scr(local.spd,true,local.yaw,true); break; }
         }
@@ -535,10 +535,13 @@ object_event_add
                 acc_3d_scr(global.delta_time_var,acc_var,frick_var,local.yaw,local.pitch,local.spd);
                 break;
             }
-            case 2:
+            case 2: // Classic
             {
-                if spd_var < local.spd { local.spd = min(local.spd,spd_var+(acc_var*global.delta_time_var)); }
-                else if spd_var > local.spd { local.spd = max(local.spd,spd_var-(frick_var*global.delta_time_var)); }
+                if abs(spd_var) < abs(local.spd) { local.spd = sign(local.spd)*min(abs(local.spd),abs(spd_var)+(acc_var*global.delta_time_var)); }
+            }
+            case 3: // Friction only
+            {
+                if abs(spd_var) > abs(local.spd) { local.spd = sign(local.spd)*max(abs(local.spd),abs(spd_var)-(frick_var*global.delta_time_var)); }
             }
             default: { set_motion_3d_scr(local.spd,true,local.yaw,true,local.pitch,true); break; }
         }
