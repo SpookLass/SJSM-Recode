@@ -488,7 +488,7 @@ object_event_add
             case 1: // Modern
             {
                 // Tried to add autobrake support, but it"s difficult without Unity source code
-                if autobrake_var && target_visible_var && spd_var > autobrake_spd_var
+                if local.spd > 0 && autobrake_var && target_visible_var && spd_var > autobrake_spd_var
                 && (target_dist_var <= autobrake_dist_var || autobrake_dist_var <= 0) 
                 {
                     if autobrake_dir_var > 0
