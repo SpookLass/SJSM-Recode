@@ -35,7 +35,7 @@ object_event_add
     h_var = 25.3;
     z_off_var = -0.3;
     // Special
-    do_attack_var = -1;
+    do_atk_var = -1;
     do_seen_var = true;
     seen_yaw_var = 30;
     min_dist_var = 16;
@@ -92,7 +92,7 @@ object_event_add
     {
         case 3: // Evil Clown
         {
-            do_attack_var = true;
+            do_atk_var = true;
             dmg_var = 30;
             dmg_alarm_var = 120;
             min_dist_var = 0;

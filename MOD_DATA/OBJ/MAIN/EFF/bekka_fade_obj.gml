@@ -11,7 +11,7 @@ object_event_add
 (argument0,ev_create,0,"
     //Defaults
     image_blend = c_black;
-    attack_var = false;
+    atk_var = false;
     dmg_var = 10;
     dmg_alarm_var = 30;
     mon_var = noone;
@@ -23,14 +23,14 @@ object_event_add
 // Alarm 0 Event
 object_event_add
 (argument0,ev_alarm,0,"
-    attack_var = true;
+    atk_var = true;
     image_alpha = 1;
 ");
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,"
     if alarm_arr[0,0] > 0 { image_alpha = 1-(alarm_arr[0,0]/alarm_arr[0,1]); }
-    if attack_var
+    if atk_var
     {
         local.dead = true;
         with player_obj
@@ -93,6 +93,6 @@ object_event_add
     );
     draw_set_color(c_white); draw_set_alpha(1);
     // Lazy
-    if attack_var && !irandom(2) { draw_background_ext(bg_var,-820,-141,4,4,0,c_white,1); }
+    if atk_var && !irandom(2) { draw_background_ext(bg_var,-820,-141,4,4,0,c_white,1); }
     d3d_set_hidden(true);
 ");

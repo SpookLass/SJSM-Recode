@@ -355,7 +355,7 @@ object_event_add
         // Reset Variables
         move_var = do_move_var;
         anim_var = do_anim_var;
-        attack_var = do_attack_var;
+        atk_var = do_atk_var;
         hurt_var = false;
         enter_var = type_var > 0;
         do_coll_var = false;

@@ -150,8 +150,10 @@ object_event_add
             acc_var = 16/675; // 0.02r370
             frick_var = acc_var;
             // Attack (I Hope)
+            atk_type_var = 2;
             atk_delay_var = 30;
             atk_range_var = 32; // 16 radius
+            atk_end_delay_var = dmg_alarm_var;
             atk_dist_var = 15;
             // Sound
             snd_alarm_min_var = 90;
@@ -267,7 +269,7 @@ object_event_add
         do_coll_var = true;
         slime_spawn_var = 1;
         move_var = false;
-        attack_var = false;
+        atk_var = false;
         set_alarm_scr(8,slime_alarm_var);
         set_alarm_scr(1,slime_alarm_var);
         set_alarm_scr(4,slime_alarm_var);

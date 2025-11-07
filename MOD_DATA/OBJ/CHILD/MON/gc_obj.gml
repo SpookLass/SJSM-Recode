@@ -549,7 +549,7 @@ object_event_add
         set_motion_3d_scr(0,true);
         move_var = false;
         anim_var = false;
-        attack_var = false;
+        atk_var = false;
         set_alarm_scr(1,dmg_stun_alarm_var);
         set_alarm_scr(2,dmg_stun_alarm_var);
         set_alarm_scr(4,dmg_stun_alarm_var);

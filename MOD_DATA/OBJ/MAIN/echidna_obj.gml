@@ -35,13 +35,26 @@ Draw
 
 Attack
 
-    do_attack_var: Whether the specimen should attack
-    attack_var: Whether the specimen can currently attack
+    atk_type_var:
+        0: Damage on contact
+        1: Damage after delay, then rapid attack
+        2: Damage after delay, then more delay after
+    atk_anim_var:
+        0: Do not animate when attacking
+        1: Animate start and end
+        2: Only animate start
+    atk_start_snd_var
+        0: None
+        1: Swing
+        2: Custom
+    do_atk_var: Whether the specimen should attack
+    atk_var: Whether the specimen can currently attack
     dmg_var: How much damage a monster deals per hit
     dmg_alarm_var: How much time before something can hit the player again (per player)
     atk_range_var: How far the specimen can reach while attacking
     atk_dist_var: How close the target should be before attempting to attack (If applicable)
     atk_delay_var: How long before the monster can start attacking
+    atk_end_delay_var: How long until the monster can try to attack again
 
 Movement
 
@@ -115,14 +128,16 @@ object_event_add
 object_event_add
 (argument0,ev_create,2,'
     if string(name_var) == "0" { name_var = "Unknown"; }
+    tone_var = c_white;
     // Gotta set type, delay, and duration
     dur_start_var = dur_var;
     enter_var = type_var > 0;
     if do_move_var == 0 { do_move_var = true; }
-    if do_attack_var == 0 { do_attack_var = true; }
+    if do_atk_var == 0 { do_atk_var = true; }
     if do_anim_var == 0 { do_anim_var = true; }
     if do_snd_var == 0 { do_snd_var = true; }
-    if do_enter_var == 0 { do_enter_var = type_var; }
+    if do_enter_var == 0 { do_enter_var = (type_var > 0); }
+    if do_door_var == 0 { do_door_var = (type_var == 1 && do_enter_var); }
     if color_var == 0 { color_var = true; }
     // Speed
     spd_mult_var = 1;
@@ -231,7 +246,7 @@ object_event_add
     // Reset Variables
     move_var = do_move_var;
     anim_var = do_anim_var;
-    attack_var = do_attack_var;
+    atk_var = do_atk_var;
     seen_var = do_seen_var;
     hurt_var = false;
     enter_var = do_enter_var;
@@ -267,20 +282,7 @@ object_event_add
         if move_var { event_user(0); }
         if anim_var { event_user(1); }
         if seen_var { event_user(5); }
-        if attack_var
-        {
-            if atk_delay_var > 0
-            {
-                if alarm_arr[7,0] <= 0 && instance_exists(target_var) && target_dist_var < atk_dist_var
-                {
-                    set_alarm_scr(7,atk_delay_var);
-                    set_alarm_scr(1,atk_delay_var);
-                    move_var = false;
-                    set_motion_3d_scr(0,true);
-                }
-            }
-            else { event_user(2); }
-        }
+        if atk_var { event_user(12); }
     }
     if do_snd_var { event_user(9); }
 ');
@@ -290,65 +292,6 @@ object_event_add
     event_inherited();
     if on_var && (do_coll_var || type_var <= 0) && mon_coll_var
     { event_user(10); }
-');
-// Draw Event
-object_event_add
-(argument0,ev_draw,0,'
-    if on_var || visible_var
-    {
-        draw_set_color(image_blend); draw_set_alpha(image_alpha);
-        d3d_transform_set_identity();
-        if do_mdl_var
-        {
-            // d3d_transform_add_rotation_y(pitch_var);
-            d3d_transform_add_rotation_z(yaw_var);
-            d3d_transform_add_translation(x+x_off_var,y+y_off_var,z+z_off_var);
-            d3d_model_draw(mdl_var,0,0,0,tex_var);
-        }
-        else
-        {
-            d3d_transform_add_rotation_z(point_direction(x,y,global.cam_x_var[view_current],global.cam_y_var[view_current]));
-            d3d_transform_add_translation(x+x_off_var,y+y_off_var,z+z_off_var);
-            if sil_var
-            {
-                d3d_set_hidden(false); draw_set_alpha(image_alpha*sil_alpha_var);
-                switch sil_type_var
-                {
-                    case 0:
-                    {
-                        d3d_draw_wall(-sil_dist_var,w_var/2,h_var,-sil_dist_var,-w_var/2,0,tex_var,1,1);
-                        break;
-                    }
-                    case 1:
-                    {
-                        d3d_set_fog(true,sil_color_var,0,0);
-                        d3d_draw_wall(-sil_dist_var,w_var/2,h_var,-sil_dist_var,-w_var/2,0,tex_var,1,1);
-                        d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var);
-                        break;
-                    }
-                    case 2:
-                    {
-                        draw_set_color(color_mult_scr(image_blend,sil_color_var));
-                        d3d_draw_wall(-sil_dist_var,w_var/2,h_var,-sil_dist_var,-w_var/2,0,tex_var,1,1);
-                        draw_set_color(image_blend);
-                        break;
-                    }
-                }
-                d3d_set_hidden(true); draw_set_alpha(image_alpha);
-            }
-            d3d_draw_wall(0,w_var/2,h_var,0,-w_var/2,0,tex_var,1,1);
-        }
-        d3d_transform_set_identity();
-        draw_set_color(c_white); draw_set_alpha(1);
-        if global.debug_var && type_var > 0
-        {
-            d3d_set_hidden(false);
-            if path_exists(path_var)
-            { draw_path(path_var,x,y,false); }
-            d3d_set_hidden(true);
-            // mp_grid_draw(grid_var);
-        }
-    }
 ');
 // Delay Alarm
 object_event_add
@@ -364,7 +307,7 @@ object_event_add
         }
         else { set_alarm_scr(6,irandom_range(snd_alarm_min_var,snd_alarm_max_var)); }
     }
-    if type_var == 1 && enter_var
+    if do_door_var
     {
         with global.spawn_arr[0,5] // Entrance door
         {
@@ -393,7 +336,7 @@ object_event_add
 // Attack Alarm
 object_event_add
 (argument0,ev_alarm,4,'
-    attack_var = do_attack_var;
+    atk_var = do_atk_var;
 ');
 // Anim Alarm (Different from Plus!!!)
 object_event_add
@@ -428,10 +371,32 @@ object_event_add
     }
     set_alarm_scr(6,irandom_range(snd_alarm_min_var,snd_alarm_max_var));
 ');
-// Attack alarm
+// Attack delay alarm
 object_event_add
 (argument0,ev_alarm,7,'
     event_user(2);
+    if atk_type_var > 1
+    {
+        atk_var = false;
+        set_alarm_scr(4,atk_end_delay_var);
+        if atk_type_var == 3
+        {
+            move_var = false;
+            set_alarm_scr(1,atk_end_delay_var);
+        }
+        if atk_anim_var == 2
+        {
+            spr_var = atk_end_spr_var;
+            anim_type_var = 1; // End on last
+            spr_id_var = 0;
+            set_alarm_scr(5,atk_end_delay_var);
+        }
+        else if atk_type_var == 3
+        {
+            anim_var = false;
+            set_alarm_scr(2,atk_end_delay_var);
+        }
+    }
 ');
 // Movement Event
 object_event_add
@@ -631,11 +596,23 @@ object_event_add
 // Uses attack_target_var as an argument, usually the player.
 object_event_add
 (argument0,ev_other,ev_user3,'
-    if atk_delay_var > 0
+    if atk_type_var == 1
     {
         set_alarm_scr(7,dmg_alarm_var);
         set_alarm_scr(1,dmg_alarm_var);
         move_var = false;
+        if atk_anim_var > 0
+        {
+            spr_var = atk_spr_var;
+            anim_type_var = 1; // End on last
+            spr_id_var = 0;
+            set_alarm_scr(5,dmg_alarm_var);
+        }
+        else
+        {
+            anim_var = false;
+            set_alarm_scr(2,dmg_alarm_var);
+        }
         set_motion_3d_scr(0,true);
     }
     fmod_snd_play_scr(claw_snd);
@@ -677,7 +654,7 @@ object_event_add
         if hp_var > 0 && hurt_hp_var > 0
         {
             hp_var -= hurt_hp_var;
-            if hurt_die_var == 1 && hp_var <= 0 { event_user(11); exit; }
+            if hurt_die_var == 2 && hp_var <= 0 { event_user(11); exit; }
             else { hp_var = max(1,hp_var); }
         }
     }
@@ -700,8 +677,21 @@ object_event_add
                 else { snd_var = fmod_snd_play_scr(hurt_snd_var[1]); }
                 sub_var[0] = hurt_snd_var[2];
                 sub_var[1] = hurt_snd_var[3];
+                if do_snd_var { set_alarm_scr(6,irandom_range(snd_alarm_min_var,snd_alarm_max_var)); }
                 break;
             }
+        }
+    }
+    // Push back
+    if hurt_dist_var > 0
+    {
+        local.dir = point_direction(hurt_target_var.x,hurt_target_var.y,x,y);
+        local.xtmp = x+lengthdir_x(hurt_dist_var,local.dir);
+        local.ytmp = y+lengthdir_y(hurt_dist_var,local.dir);
+        if !check_coll_scr(0,0,0,0,local.xtmp,local.ytmp,z)
+        {
+            x = local.xtmp;
+            y = local.ytmp;
         }
     }
     // You can set this to higher values to have custom stun behavior
@@ -710,7 +700,7 @@ object_event_add
         set_motion_3d_scr(0,true);
         move_var = false;
         anim_var = false;
-        attack_var = false;
+        atk_var = false;
         if hurt_alarm_var
         {
             set_alarm_scr(1,hurt_alarm_var);
@@ -861,4 +851,108 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user11,'
     instance_destroy();
+');
+// Attempt Attack
+object_event_add
+(argument0,ev_other,ev_user12,'
+    if atk_type_var > 0
+    {
+        if alarm_arr[7,0] <= 0 && instance_exists(target_var) && target_dist_var < atk_dist_var
+        {
+            set_alarm_scr(7,atk_delay_var);
+            set_alarm_scr(1,atk_delay_var);
+            move_var = false;
+            switch atk_start_snd_var
+            {
+                case 1: { fmod_snd_play_scr(choose(swing_01_snd,swing_02_snd,swing_03_snd,swing_04_snd)); break; }
+                case 2:
+                {
+                    if fmod_snd_is_3d_scr(atk_start_snd_var[1])
+                    {
+                        if fmod_inst_is_play_scr(snd_var) && fmod_inst_is_3d_scr(snd_var)
+                        { fmod_inst_stop_scr(snd_var); }
+                        snd_var = fmod_snd_3d_play_scr(atk_start_snd_var[1]);
+                    }
+                    else { snd_var = fmod_snd_play_scr(atk_start_snd_var[1]); }
+                    sub_var[0] = atk_start_snd_var[2];
+                    sub_var[1] = atk_start_snd_var[3];
+                    if do_snd_var { set_alarm_scr(6,irandom_range(snd_alarm_min_var,snd_alarm_max_var)); }
+                    break;
+                }
+            }
+            if atk_anim_var > 0
+            {
+                spr_var = atk_spr_var;
+                anim_type_var = 1; // End on last
+                spr_id_var = 0;
+                set_alarm_scr(5,atk_delay_var);
+            }
+            else
+            {
+                anim_var = false;
+                set_alarm_scr(2,atk_delay_var);
+            }
+            set_motion_3d_scr(0,true);
+        }
+    }
+    else { event_user(2); }
+');
+// Draw Event
+object_event_add
+(argument0,ev_draw,0,'
+    if on_var || visible_var
+    {
+        draw_set_color(color_mult_scr(image_blend,tone_var)); draw_set_alpha(image_alpha);
+        d3d_transform_set_identity();
+        if do_mdl_var
+        {
+            // d3d_transform_add_rotation_y(pitch_var);
+            d3d_transform_add_rotation_z(yaw_var);
+            d3d_transform_add_translation(x+x_off_var,y+y_off_var,z+z_off_var);
+            d3d_model_draw(mdl_var,0,0,0,tex_var);
+        }
+        else
+        {
+            d3d_transform_add_rotation_z(point_direction(x,y,global.cam_x_var[view_current],global.cam_y_var[view_current]));
+            d3d_transform_add_translation(x+x_off_var,y+y_off_var,z+z_off_var);
+            if sil_var
+            {
+                d3d_set_hidden(false); draw_set_alpha(image_alpha*sil_alpha_var);
+                switch sil_type_var
+                {
+                    case 0:
+                    {
+                        d3d_draw_wall(-sil_dist_var,w_var/2,h_var,-sil_dist_var,-w_var/2,0,tex_var,1,1);
+                        break;
+                    }
+                    case 1:
+                    {
+                        d3d_set_fog(true,sil_color_var,0,0);
+                        d3d_draw_wall(-sil_dist_var,w_var/2,h_var,-sil_dist_var,-w_var/2,0,tex_var,1,1);
+                        d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var);
+                        break;
+                    }
+                    case 2:
+                    {
+                        draw_set_color(color_mult_scr(image_blend,sil_color_var));
+                        d3d_draw_wall(-sil_dist_var,w_var/2,h_var,-sil_dist_var,-w_var/2,0,tex_var,1,1);
+                        draw_set_color(image_blend);
+                        break;
+                    }
+                }
+                d3d_set_hidden(true); draw_set_alpha(image_alpha);
+            }
+            d3d_draw_wall(0,w_var/2,h_var,0,-w_var/2,0,tex_var,1,1);
+        }
+        d3d_transform_set_identity();
+        draw_set_color(c_white); draw_set_alpha(1);
+        if global.debug_var && type_var > 0
+        {
+            d3d_set_hidden(false);
+            if path_exists(path_var)
+            { draw_path(path_var,x,y,false); }
+            d3d_set_hidden(true);
+            // mp_grid_draw(grid_var);
+        }
+    }
 ');

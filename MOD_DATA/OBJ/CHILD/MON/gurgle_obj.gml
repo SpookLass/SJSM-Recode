@@ -63,7 +63,7 @@ object_event_add
     // Alarms
     alarm_len_var = 10;
     // Charge
-    do_attack_var = -1;
+    do_atk_var = -1;
     charge_var = -1;
     charge_spd_var = 3;
     charge_alarm_var = 30;
@@ -131,7 +131,7 @@ object_event_add
             tex_var = sprite_get_texture(spr_var,sprite_get_number(spr_var)-1);
             charge_var = true;
             move_var = false;
-            attack_var = true;
+            atk_var = true;
             anim_var = false;
             set_alarm_scr(1,charge_alarm_var);
             set_alarm_scr(2,charge_alarm_var);

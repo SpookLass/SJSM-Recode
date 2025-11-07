@@ -89,6 +89,7 @@ object_event_add
     bod_wiggle_off_var = 5;
     rotate_var = false;
     // Animation
+    weird_alarm_var = 15;
     spd_anim_var = false;
     do_wiggle_var = false;
     wiggle_time_var=0;
@@ -217,10 +218,11 @@ object_event_add
             hole_den_var = 5;
             hole_alarm_min_var = 5;
             hole_alarm_max_var = 5;
+            hole_dur_var = false;
             break;
         }
     }
-    alarm_len_var = 9;
+    alarm_len_var = 10;
     local.follow = id;
     for (local.i=0; local.i<bod_len_var; local.i+=1;)
     {
@@ -368,6 +370,7 @@ object_event_add
 (argument0,ev_alarm,3,'
     event_inherited();
     if do_acc_var > 1 { set_motion_3d_scr(0,true); }
+    if stun_var { z_off_var = 0; }
 ');
 // Determine target
 object_event_add
@@ -396,6 +399,7 @@ object_event_add
         set_alarm_scr(8,hurt_alarm_var);
         set_motion_3d_scr(0,true);
     }
+    if stun_var { set_alarm_scr(9,weird_alarm_var); }
     event_inherited();
 ');
 // Attack Success
@@ -413,6 +417,11 @@ object_event_add
 object_event_add
 (argument0,ev_alarm,8,'
     coward_var = false;
+');
+// Weird Alarm
+object_event_add
+(argument0,ev_alarm,9,'
+    z_off_var = -1;
 ');
 // Hole Event
 object_event_add

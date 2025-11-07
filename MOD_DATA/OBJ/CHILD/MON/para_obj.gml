@@ -465,7 +465,7 @@ object_event_add
             set_motion_scr(0,true,yaw_var,false);
             move_var = false;
             anim_var = false;
-            attack_var = false;
+            atk_var = false;
             set_alarm_scr(1,state_delay_var);
             set_alarm_scr(2,state_delay_var);
             set_alarm_scr(4,state_delay_var);
