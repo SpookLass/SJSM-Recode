@@ -36,26 +36,30 @@ global.rm_hud_var = ini_read_real("MAIN","rm_hud",rm_hud_const);
 global.bar_hud_var = ini_read_real("MAIN","bar_hud",bar_hud_const);
 global.tps_hud_var = ini_read_real("MAIN","tps_hud",tps_hud_const);
 // Controls
-global.up_key_var = ini_read_real("CONTROL","up_key",87);
-global.down_key_var = ini_read_real("CONTROL","down_key",83);
-global.left_key_var = ini_read_real("CONTROL","left_key",65);
-global.right_key_var = ini_read_real("CONTROL","right_key",68);
-global.confirm_key_var = ini_read_real("CONTROL","confirm_key",69);
-global.back_key_var = ini_read_real("CONTROL","back_key",27);
-global.forward_key_var = ini_read_real("CONTROL","forward_key",87);
-global.backward_key_var = ini_read_real("CONTROL","backward_key",83);
-global.strafe_left_key_var = ini_read_real("CONTROL","strafe_left_key",65);
-global.strafe_right_key_var = ini_read_real("CONTROL","strafe_right_key",68);
-global.interact_key_var = ini_read_real("CONTROL","interact_key",69);
-global.sprint_key_var = ini_read_real("CONTROL","sprint_key",16);
-global.jump_key_var = ini_read_real("CONTROL","jump_key",32);
-global.crouch_key_var = ini_read_real("CONTROL","crouch_key",17);
-global.attack_key_var = ini_read_real("CONTROL","attack_key",17);
-global.pause_key_var = ini_read_real("CONTROL","pause_key",27);
-global.debug_key_var = ini_read_real("CONTROL","debug_key",45);
-global.turnaround_key_var = ini_read_real("CONTROL","turnaround_key",81);
-global.ff_key_var = ini_read_real("CONTROL","ff_key",70); // 190 or 71
-global.slow_key_var = ini_read_real("CONTROL","slow_key",82); // 188 or 70
+global.input_len_var = 20;
+for (local.i=0; local.i<4; local.i+=1;)
+{
+    global.input_key_arr[up_input_const,local.i] = ini_read_real("CONTROL","up_key_"+string(local.i),up_key_const); // 87
+    global.input_key_arr[down_input_const,local.i] = ini_read_real("CONTROL","down_key_"+string(local.i),down_key_const); // 83
+    global.input_key_arr[left_input_const,local.i] = ini_read_real("CONTROL","left_key_"+string(local.i),left_key_const); // 65
+    global.input_key_arr[right_input_const,local.i] = ini_read_real("CONTROL","right_key_"+string(local.i),right_key_const); // 68
+    global.input_key_arr[confirm_input_const,local.i] = ini_read_real("CONTROL","confirm_key_"+string(local.i),confirm_key_const); // 69, nice
+    global.input_key_arr[back_input_const,local.i] = ini_read_real("CONTROL","back_key_"+string(local.i),back_key_const); // 27
+    global.input_key_arr[forward_input_const,local.i] = ini_read_real("CONTROL","forward_key_"+string(local.i),forward_key_const); // 87
+    global.input_key_arr[backward_input_const,local.i] = ini_read_real("CONTROL","backward_key_"+string(local.i),backward_key_const); // 83
+    global.input_key_arr[strafe_left_input_const,local.i] = ini_read_real("CONTROL","strafe_left_key_"+string(local.i),strafe_left_key_const); // 65
+    global.input_key_arr[strafe_right_input_const,local.i] = ini_read_real("CONTROL","strafe_right_key_"+string(local.i),strafe_right_key_const); // 68
+    global.input_key_arr[interact_input_const,local.i] = ini_read_real("CONTROL","interact_key_"+string(local.i),interact_key_const); // 69
+    global.input_key_arr[sprint_input_const,local.i] = ini_read_real("CONTROL","sprint_key_"+string(local.i),sprint_key_const); // 16
+    global.input_key_arr[jump_input_const,local.i] = ini_read_real("CONTROL","jump_key_"+string(local.i),jump_key_const); // 32
+    global.input_key_arr[crouch_input_const,local.i] = ini_read_real("CONTROL","crouch_key_"+string(local.i),crouch_key_const); // 17
+    global.input_key_arr[attack_input_const,local.i] = ini_read_real("CONTROL","attack_key_"+string(local.i),attack_key_const); // -1 I think
+    global.input_key_arr[pause_input_const,local.i] = ini_read_real("CONTROL","pause_key_"+string(local.i),pause_key_const); // 27
+    global.input_key_arr[debug_input_const,local.i] = ini_read_real("CONTROL","debug_key_"+string(local.i),debug_key_const); // 45
+    global.input_key_arr[turnaround_input_const,local.i] = ini_read_real("CONTROL","turnaround_key_"+string(local.i),turnaround_key_const); // 81
+    global.input_key_arr[ff_input_const,local.i] = ini_read_real("CONTROL","ff_key_"+string(local.i),ff_key_const); // 70, 190, or 71
+    global.input_key_arr[slow_input_const,local.i] = ini_read_real("CONTROL","slow_key_"+string(local.i),slow_key_const); // 82, 188, or 70
+}
 ini_close();
 // Set stuff
 window_set_fullscreen(global.fullscreen_var);

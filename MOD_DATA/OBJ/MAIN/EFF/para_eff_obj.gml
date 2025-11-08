@@ -31,51 +31,13 @@ object_event_add
 (argument0,ev_draw,0,'
     if view_current == cam_id_var || cam_id_var == -1
     {
-        d3d_set_projection_ortho
-        (
-            view_xview[view_current],
-            view_yview[view_current],
-            view_xview[view_current]+view_wview[view_current],
-            view_yview[view_current]+view_hview[view_current],
-            0
-        );
+        d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
         d3d_set_hidden(false);
-        draw_sprite_stretched_ext
-        (
-            spr_var,2,
-            view_xview[view_current],
-            view_yview[view_current],
-            view_wview[view_current],
-            view_hview[view_current],
-            c_white,alpha_03_var
-        );
-        draw_sprite_stretched_ext
-        (
-            spr_var,1,
-            view_xview[view_current],
-            view_yview[view_current],
-            view_wview[view_current],
-            view_hview[view_current],
-            c_white,alpha_02_var
-        );
-        draw_sprite_stretched_ext
-        (
-            spr_var,0,
-            view_xview[view_current],
-            view_yview[view_current],
-            view_wview[view_current],
-            view_hview[view_current],
-            c_white,alpha_01_var
-        );
+        draw_sprite_stretched_ext(spr_var,2,0,0,view_wview[view_current],view_hview[view_current],c_white,alpha_03_var);
+        draw_sprite_stretched_ext(spr_var,1,0,0,view_wview[view_current],view_hview[view_current],c_white,alpha_02_var);
+        draw_sprite_stretched_ext(spr_var,0,0,0,view_wview[view_current],view_hview[view_current],c_white,alpha_01_var);
         draw_set_color(image_blend); draw_set_alpha(image_alpha);
-        draw_rectangle
-        (
-            view_xview[view_current],
-            view_yview[view_current],
-            view_xview[view_current]+view_wview[view_current],
-            view_yview[view_current]+view_hview[view_current],
-            false
-        );
+        draw_rectangle(0,0,view_xview[view_current]+view_wview[view_current],view_yview[view_current]+view_hview[view_current],false);
         draw_set_color(c_white); draw_set_alpha(1);
         d3d_set_hidden(true);
     }

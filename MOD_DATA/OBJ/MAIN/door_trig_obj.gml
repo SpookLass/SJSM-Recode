@@ -53,7 +53,7 @@ object_event_add
             {
                 other.visible = other.do_txt_var;
                 other.cam_id_var = cam_id_var
-                if global.interact_input_press_var == 1
+                if global.input_press_arr[interact_input_const,player_id_var] == 1
                 {
                     if !other.lock_var
                     {

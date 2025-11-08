@@ -92,5 +92,6 @@ d3d_set_hidden(false);
 draw_set_font(main_font);
 global.game_spd_var = 1;
 // Load
+global.player_len_var = 1;
 instance_create(0,0,global.control_obj);
 room_goto_scr(menu_rm);

@@ -76,7 +76,8 @@ global.wf_type_var = ini_read_real("BEHAVIOR","wf_type",global.default_type_var)
 global.js_type_var = ini_read_real("BEHAVIOR","js_type",global.default_type_var);
 ini_close();
 
-local.player = instance_create(0,0,global.player_obj);
+global.player_len_var = 1;
+local.player = instance_create(0,0,player_obj);
 local.hud = instance_create(0,0,global.hud_obj);
 local.hud.par_var = local.player;
 local.axe = instance_create(0,0,global.axe_obj);

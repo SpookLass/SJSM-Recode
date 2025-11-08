@@ -448,18 +448,18 @@ object_event_add
     local.scroll_rate = max(scroll_min_var,local.scroll_diff*scroll_rate_var)*global.true_delta_time_var;
     scroll_var += min(local.scroll_diff,local.scroll_rate)*sign(local.target_scroll-scroll_var);
     // Scroll
-    if global.up_input_press_var { button_state_var -= 1; }
-    if global.down_input_press_var { button_state_var += 1; }
+    if global.input_press_arr[up_input_const,0] { button_state_var -= 1; }
+    if global.input_press_arr[down_input_const,0] { button_state_var += 1; }
     button_state_var = mod_scr(button_state_var,button_len_var);
     // Confirm
-    if global.confirm_input_press_var
+    if global.input_press_arr[confirm_input_const,0]
     {
         switch button_arr[button_state_var,3]
         {
             case -3: // Reset to default
             {
                 if show_message_ext("Reset all settings? (CANNOT BE UNDONE)","YES","NO","") == 1 { event_user(1); }
-                global.confirm_input_var = 0;
+                global.input_arr[confirm_input_const,0] = 0;
                 break;
             }
             case -2: // Go Back
@@ -470,7 +470,7 @@ object_event_add
                     local.message = show_message_ext("You have unsaved changes, would you like to apply them?","YES","NO","CANCEL");
                     if local.message == 0 || local.message == 3 { local.dont = true; }
                     if local.message == 1 { event_user(0); }
-                    global.confirm_input_var = 0;
+                    global.input_arr[confirm_input_const,0] = 0;
                 }
                 if !local.dont
                 {
@@ -491,7 +491,7 @@ object_event_add
                 if set_var
                 {
                     if show_message_ext("Apply settings?","YES","NO","") == 1 { event_user(0); }
-                    global.confirm_input_var = 0;
+                    global.input_arr[confirm_input_const,0] = 0;
                 }
                 break;
             }
@@ -526,7 +526,7 @@ object_event_add
                     button_arr[button_state_var,0] = local.new;
                     set_var = true;
                 }
-                global.confirm_input_var = 0;
+                global.input_arr[confirm_input_const,0] = 0;
                 break;
             }
             case 2: 
@@ -542,7 +542,7 @@ object_event_add
                     button_arr[button_state_var,0] = local.new;
                     set_var = true;
                 }
-                global.confirm_input_var = 0;
+                global.input_arr[confirm_input_const,0] = 0;
                 break;
             }
             case 3: 
@@ -557,7 +557,7 @@ object_event_add
                     button_arr[button_state_var,0] = local.new;
                     set_var = true;
                 }
-                global.confirm_input_var = 0;
+                global.input_arr[confirm_input_const,0] = 0;
                 break;
             }
             case 4: 
@@ -572,7 +572,7 @@ object_event_add
                     button_arr[button_state_var,0] = local.new;
                     set_var = true;
                 }
-                global.confirm_input_var = 0;
+                global.input_arr[confirm_input_const,0] = 0;
                 break;
             }
             case 5:
@@ -583,14 +583,14 @@ object_event_add
                     button_arr[button_state_var,0] = local.new;
                     set_var = true;
                 }
-                global.confirm_input_var = 0;
+                global.input_arr[confirm_input_const,0] = 0;
                 break;
             }
         }
     }
-    if global.left_input_press_var || global.right_input_press_var
+    if global.input_press_arr[left_input_const,0] || global.input_press_arr[right_input_const,0]
 	{
-        local.add = global.right_input_press_var-global.left_input_press_var;
+        local.add = (global.input_press_arr[right_input_const,0] > 0)-(global.input_press_arr[left_input_const,0] > 0);
         switch button_arr[button_state_var,3]
         {
             case 0:

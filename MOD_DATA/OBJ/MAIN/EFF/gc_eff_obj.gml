@@ -48,43 +48,20 @@ object_event_add
 (argument0,ev_draw,0,'
     if view_current == cam_id_var || cam_id_var == -1
     {
-        d3d_set_projection_ortho
-        (
-            view_xview[view_current],
-            view_yview[view_current],
-            view_xview[view_current]+view_wview[view_current],
-            view_yview[view_current]+view_hview[view_current],
-            0
-        );
+        d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
         d3d_set_hidden(false);
         if old_var
         {
-            draw_background_stretched_ext
-            (
-                bg_var,
-                view_xview[view_current],
-                view_yview[view_current]-top_off_var,
-                view_wview[view_current],
-                view_hview[view_current]+top_off_var+bottom_off_var,
-                image_blend,image_alpha
-            );
+            draw_background_stretched_ext(bg_var,0,-top_off_var,view_wview[view_current],view_hview[view_current]+top_off_var+bottom_off_var,image_blend,image_alpha);
         }
         else
         {
+            draw_background_stretched_ext(bg_var,0,0,view_wview[view_current],view_hview[view_current],image_blend,image_alpha);
             draw_background_stretched_ext
             (
                 bg_var,
-                view_xview[view_current],
-                view_yview[view_current],
-                view_wview[view_current],
-                view_hview[view_current],
-                image_blend,image_alpha
-            );
-            draw_background_stretched_ext
-            (
-                bg_var,
-                view_xview[view_current]-(view_wview[view_current]*((scale_var-1)/2)),
-                view_yview[view_current]-(view_hview[view_current]*((scale_var-1)/2)),
+                -view_wview[view_current]*((scale_var-1)/2),
+                -view_hview[view_current]*((scale_var-1)/2),
                 view_wview[view_current]*scale_var,
                 view_hview[view_current]*scale_var,
                 image_blend,image_alpha

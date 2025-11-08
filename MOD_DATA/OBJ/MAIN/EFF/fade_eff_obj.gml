@@ -24,19 +24,27 @@ object_event_add
 (argument0,ev_alarm,0,"
     if !stay_var 
     { instance_destroy(); }
+    else
+    {
+        if invert_var == 1 { image_alpha = 1; }
+        else { image_alpha = 0; }
+    }
 ");
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,"
-    image_alpha = alarm_arr[0,0]/alarm_arr[0,1];
-    switch invert_var
+    if alarm_arr[0,0] > 0
     {
-        case 1: { image_alpha = 1-image_alpha; break; }
-        case 2:
+        image_alpha = alarm_arr[0,0]/alarm_arr[0,1];
+        switch invert_var
         {
-            image_alpha = image_alpha*2;
-            if image_alpha > 1 { image_alpha = 2-image_alpha; }
-            break;
+            case 1: { image_alpha = 1-image_alpha; break; }
+            case 2:
+            {
+                image_alpha = image_alpha*2;
+                if image_alpha > 1 { image_alpha = 2-image_alpha; }
+                break;
+            }
         }
     }
 ");
@@ -45,25 +53,9 @@ object_event_add
 (argument0,ev_draw,0,"
     if view_current == cam_id_var || cam_id_var == -1
     {
-        d3d_set_projection_ortho
-        (
-            view_xview[view_current],
-            view_yview[view_current],
-            view_xview[view_current]+view_wview[view_current],
-            view_yview[view_current]+view_hview[view_current],
-            0
-        );
-        d3d_set_hidden(false);
-        draw_set_color(image_blend); draw_set_alpha(image_alpha);
-        draw_rectangle
-        (
-            view_xview[view_current],
-            view_yview[view_current],
-            view_xview[view_current]+view_wview[view_current],
-            view_yview[view_current]+view_hview[view_current],
-            false
-        );
-        draw_set_color(c_white); draw_set_alpha(1);
-        d3d_set_hidden(true);
+        d3d_set_projection_ortho(0,0,1,1,0);
+        d3d_set_hidden(false); draw_set_color(image_blend); draw_set_alpha(image_alpha);
+        draw_rectangle(0,0,1,1,false);
+        draw_set_color(c_white); draw_set_alpha(1); d3d_set_hidden(true);
     }
 ");

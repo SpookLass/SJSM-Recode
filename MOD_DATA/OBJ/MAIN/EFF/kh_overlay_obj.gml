@@ -22,14 +22,10 @@ object_event_add
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,'
-    d3d_set_projection_ortho
-    (
-        view_xview[view_current],
-        view_yview[view_current],
-        view_xview[view_current]+view_wview[view_current],
-        view_yview[view_current]+view_hview[view_current],
-        0
-    );
+    if view_wview[view_current] >= view_hview[view_current]
+    { local.scale = view_hview[view_current]/720; }
+    else { local.scale = view_wview[view_current]/1280; }
+    d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
     d3d_set_hidden(false);
     local.ytmp = y+(global.cam_pitch_var[view_current]*16);
     if abs(yaw_prev_var[view_current]-global.cam_yaw_var[view_current]) > 180
@@ -39,7 +35,7 @@ object_event_add
     }
     local.xtmp = x_off_var[view_current]+(global.cam_yaw_var[view_current]*16);
     yaw_prev_var[view_current] = global.cam_yaw_var[view_current];
-    draw_background_tiled_ext(bg_var,local.xtmp/2,local.ytmp/2,image_xscale/2,image_yscale/2,image_blend,image_alpha/2);
-    draw_background_tiled_ext(bg_var,local.xtmp,local.ytmp,image_xscale,image_yscale,image_blend,image_alpha); 
+    draw_background_tiled_ext(bg_var,local.scale*local.xtmp/2,local.scale*local.ytmp/2,local.scale*image_xscale/2,local.scale*image_yscale/2,image_blend,image_alpha/2);
+    draw_background_tiled_ext(bg_var,local.scale*local.xtmp,local.scale*local.ytmp,local.scale*image_xscale,local.scale*image_yscale,image_blend,image_alpha); 
     d3d_set_hidden(true);
 ');

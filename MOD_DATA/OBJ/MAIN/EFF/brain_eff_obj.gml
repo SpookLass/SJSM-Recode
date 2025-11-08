@@ -55,24 +55,10 @@ object_event_add
 (argument0,ev_draw,0,'
     if view_current == cam_id_var || cam_id_var == -1
     {
-        d3d_set_projection_ortho
-        (
-            view_xview[view_current],
-            view_yview[view_current],
-            view_xview[view_current]+view_wview[view_current],
-            view_yview[view_current]+view_hview[view_current],
-            0
-        );
+        d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
         d3d_set_hidden(false);
         draw_set_color(image_blend); draw_set_alpha(image_alpha);
-        draw_rectangle
-        (
-            view_xview[view_current],
-            view_yview[view_current],
-            view_xview[view_current]+view_wview[view_current],
-            view_yview[view_current]+view_hview[view_current],
-            false
-        );
+        draw_rectangle(0,0,view_wview[view_current],view_hview[view_current],false);
         // Scale
         if view_wview[view_current] >= view_hview[view_current]
         { local.scale = view_hview[view_current]/720; }

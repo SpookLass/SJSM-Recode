@@ -16,7 +16,36 @@ if room_exists(argument0) && argument0 != 0
     room_set_view_enabled(argument0,true);
     for (local.i=0; local.i<8; local.i+=1;)
     { room_set_view(argument0,local.i,false,0,0,local.res_w,local.res_h,0,0,local.res_w,local.res_h,32,32,-1,-1,noone); }
-    room_set_view(argument0,0,true,0,0,local.res_w,local.res_h,0,0,local.res_w,local.res_h,32,32,-1,-1,noone);
+    switch global.player_len_var
+    {
+        case 2:
+        {
+            room_set_view(argument0,0,true,0,0,local.res_w/2,local.res_h,0,0,local.res_w/2,local.res_h,32,32,-1,-1,noone);
+            room_set_view(argument0,1,true,local.res_w/2,0,local.res_w/2,local.res_h,local.res_w/2,0,local.res_w/2,local.res_h,32,32,-1,-1,noone);
+            break;
+        }
+        case 3:
+        {
+            room_set_view(argument0,0,true,0,0,local.res_w,local.res_h/2,0,0,local.res_w,local.res_h/2,32,32,-1,-1,noone);
+            room_set_view(argument0,1,true,0,local.res_h/2,local.res_w/2,local.res_h/2,0,local.res_h/2,local.res_w/2,local.res_h/2,32,32,-1,-1,noone);
+            room_set_view(argument0,2,true,local.res_w/2,local.res_h/2,local.res_w/2,local.res_h/2,local.res_w/2,local.res_h/2,local.res_w/2,local.res_h/2,32,32,-1,-1,noone);
+            break;
+        }
+        case 4:
+        {
+            room_set_view(argument0,0,true,0,0,local.res_w/2,local.res_h/2,0,0,local.res_w/2,local.res_h/2,32,32,-1,-1,noone);
+            room_set_view(argument0,1,true,local.res_w/2,0,local.res_w/2,local.res_h/2,local.res_w/2,0,local.res_w/2,local.res_h/2,32,32,-1,-1,noone);
+            room_set_view(argument0,2,true,0,local.res_h/2,local.res_w/2,local.res_h/2,0,local.res_h/2,local.res_w/2,local.res_h/2,32,32,-1,-1,noone);
+            room_set_view(argument0,3,true,local.res_w/2,local.res_h/2,local.res_w/2,local.res_h/2,local.res_w/2,local.res_h/2,local.res_w/2,local.res_h/2,32,32,-1,-1,noone);
+            break;
+        }
+        default:
+        {
+            room_set_view(argument0,0,true,0,0,local.res_w,local.res_h,0,0,local.res_w,local.res_h,32,32,-1,-1,noone);
+            break;
+        }
+    }
+    
     room_goto(argument0)
 }
 else

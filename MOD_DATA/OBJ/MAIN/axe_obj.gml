@@ -125,7 +125,7 @@ object_event_add
 ');
 // Room Start
 object_event_add
-(argument0,ev_other,ev_room_start,"
+(argument0,ev_other,ev_room_start,'
     if view_wview[par_var.cam_id_var] >= view_hview[par_var.cam_id_var]
     { scale_var = view_hview[par_var.cam_id_var]/720; }
     else { scale_var = view_wview[par_var.cam_id_var]/1280; }
@@ -135,22 +135,15 @@ object_event_add
     bottom_var = view_hview[par_var.cam_id_var]-h_var;
     if !color_var || !instance_exists(color_par_obj) || global.color_var == 1
     { image_blend = c_white; }
-");
+');
 // Draw Event
 object_event_add
-(argument0,ev_draw,0,"
+(argument0,ev_draw,0,'
     if view_current == par_var.cam_id_var 
     {
-        d3d_set_projection_ortho
-        (
-            view_xview[view_current],
-            view_yview[view_current],
-            view_xview[view_current]+view_wview[view_current],
-            view_yview[view_current]+view_hview[view_current],
-            0
-        );
+        d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
         d3d_set_hidden(false);
         draw_sprite_stretched_ext(spr_var,floor(spr_id_var),right_var,bottom_var,w_var,h_var,image_blend,image_alpha);
         d3d_set_hidden(true);
     }
-");
+');

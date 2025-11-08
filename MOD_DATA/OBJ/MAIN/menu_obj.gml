@@ -625,7 +625,7 @@ object_event_add
             path_cloud_y_var = lerp_scr(720,0,alarm_arr[0,0]/alarm_arr[0,1]);
             path_cloud_x_var = (path_cloud_x_var+global.true_delta_time_var) mod 720;
             story_y_var = lerp_scr(-750,750,alarm_arr[0,0]/alarm_arr[0,1]); // -748, 752
-            if global.confirm_input_press_var
+            if global.input_press_arr[confirm_input_const,0]
             {
                 event_perform(ev_alarm,0);
                 set_alarm_scr(0,-1);
@@ -636,20 +636,20 @@ object_event_add
         {
             time_var = (time_var+global.true_delta_time_var) mod 120;
             str_alpha_var = (cos(2*time_var*pi/120)+1)/2;
-            if global.confirm_input_press_var
+            if global.input_press_arr[confirm_input_const,0]
             { state_var += 1; event_user(0); }
             break;
         }
         case 2: // Main
         {
-            local.swap = global.left_input_press_var || global.right_input_press_var;
+            local.swap = global.input_press_arr[left_input_const,0] || global.input_press_arr[right_input_const,0];
             if button_state_var < 4
             {
                 if local.swap { button_state_var = max(4,button_state_var+2); }
                 else
                 {
-                    if global.up_input_press_var { button_state_var -= 1; }
-                    if global.down_input_press_var { button_state_var += 1; }
+                    if global.input_press_arr[up_input_const,0] { button_state_var -= 1; }
+                    if global.input_press_arr[down_input_const,0] { button_state_var += 1; }
                     button_state_var = mod_scr(button_state_var,4);
                 }
             }
@@ -658,15 +658,15 @@ object_event_add
                 if local.swap { button_state_var -= 2; }
                 else
                 {
-                    if global.up_input_press_var { button_state_var -= 1; }
-                    if global.down_input_press_var { button_state_var += 1; }
+                    if global.input_press_arr[up_input_const,0] { button_state_var -= 1; }
+                    if global.input_press_arr[down_input_const,0] { button_state_var += 1; }
                     button_state_var = mod_scr(button_state_var-4,2)+4;
                 }
             }
             time_var = (time_var+global.true_delta_time_var) mod 160;
             str_scale_var = 0.8+(cos(2*time_var*pi/80)*0.2);
             name_y_var = 170+(sin(2*time_var*pi/160)*10)
-            if global.confirm_input_press_var
+            if global.input_press_arr[confirm_input_const,0]
             {
                 switch button_state_var
                 {
@@ -755,8 +755,8 @@ object_event_add
                     case 4:
                     {
                         state_var = 7;
-                        global.confirm_input_press_var = 0;
-                        global.confirm_input_var = 0;
+                        global.input_press_arr[confirm_input_const,0] = 0;
+                        global.input_arr[confirm_input_const,0] = 0;
                         instance_create(0,0,set_menu_obj);
                         event_user(0);
                         break;
@@ -786,11 +786,11 @@ object_event_add
             time_var = (time_var+global.true_delta_time_var) mod 80;
             str_scale_var = 0.8+(cos(2*time_var*pi/80)*0.2);
             // Scroll
-            if global.up_input_press_var { button_state_var -= 1; }
-            if global.down_input_press_var { button_state_var += 1; }
+            if global.input_press_arr[up_input_const,0] { button_state_var -= 1; }
+            if global.input_press_arr[down_input_const,0] { button_state_var += 1; }
             button_state_var = mod_scr(button_state_var,7);
             // Confirm
-            if global.confirm_input_press_var
+            if global.input_press_arr[confirm_input_const,0]
             {
                 switch button_state_var
                 {
@@ -823,7 +823,7 @@ object_event_add
                 }
             }
 			
-			if global.left_input_press_var
+			if global.input_press_arr[left_input_const,0]
 			{
 				switch button_state_var
 				{
@@ -865,7 +865,7 @@ object_event_add
 					}
 				}
 			}
-			if global.right_input_press_var
+			if global.input_press_arr[right_input_const,0]
 			{
 				switch button_state_var
 				{
@@ -929,72 +929,72 @@ object_event_add
             time_var = (time_var+global.true_delta_time_var) mod 80;
             str_scale_var = 0.8+(cos(2*time_var*pi/80)*0.2);
             // Scroll
-            if global.up_input_press_var { button_state_var -= 1; }
-            if global.down_input_press_var { button_state_var += 1; }
+            if global.input_press_arr[up_input_const,0] { button_state_var -= 1; }
+            if global.input_press_arr[down_input_const,0] { button_state_var += 1; }
             button_state_var = mod_scr(button_state_var,21);
             // Confirm
-            if global.confirm_input_press_var
+            if global.input_press_arr[confirm_input_const,0]
             {
                 switch button_state_var
                 {
                     case 7: // Multichase (minimum)
                     {
                         save_mult_min_var =  max(-2,get_integer("Chase Min",save_mult_min_var));
-                        global.confirm_input_var = 0; // Prevent persistent control issues
+                        global.input_arr[confirm_input_const,0] = 0; // Prevent persistent control issues
                         break;
                     }
                     case 8: // Multichase (maximum)
                     {
                         save_mult_max_var =  max(-2,get_integer("Chase Max",save_mult_max_var));
-                        global.confirm_input_var = 0;
+                        global.input_arr[confirm_input_const,0] = 0;
                         break;
                     }
                     case 9: // Multichase Start
                     {
                         save_mult_start_var =  max(-1,get_integer("Chase Start",save_mult_start_var));
-                        global.confirm_input_var = 0;
+                        global.input_arr[confirm_input_const,0] = 0;
                         break;
                     }
                     case 10: // Multichase End
                     {
                         save_mult_end_var =  max(-1,get_integer("Chase End",save_mult_end_var));
-                        global.confirm_input_var = 0;
+                        global.input_arr[confirm_input_const,0] = 0;
                         break;
                     }
                     case 12: // Count (minimum)
                     {
                         save_count_min_var = max(-1,get_integer("Count Min",save_count_min_var));
-                        global.confirm_input_var = 0;
+                        global.input_arr[confirm_input_const,0] = 0;
                         break;
                     }
                     case 13: // Count (maximum)
                     {
                         save_count_max_var = max(-1,get_integer("Count Max",save_count_max_var));
-                        global.confirm_input_var = 0;
+                        global.input_arr[confirm_input_const,0] = 0;
                         break;
                     }
                     case 14: // Count Start
                     {
                         save_count_start_var =  max(-1,get_integer("Count Start",save_count_start_var));
-                        global.confirm_input_var = 0;
+                        global.input_arr[confirm_input_const,0] = 0;
                         break;
                     }
                     case 15: // Count End
                     {
                         save_count_end_var =  max(-1,get_integer("Count End",save_count_end_var));
-                        global.confirm_input_var = 0;
+                        global.input_arr[confirm_input_const,0] = 0;
                         break;
                     }
                     case 17: // Monster Chance
                     {
                         save_chance_var =  max(-1,get_integer("Spawn Chance",save_chance_var));
-                        global.confirm_input_var = 0;
+                        global.input_arr[confirm_input_const,0] = 0;
                         break;
                     }
                     case 18: // Monster Chance Multiplier
                     {
                         save_chance_mult_var =  max(-1,get_integer("Spawn Chance",save_chance_mult_var));
-                        global.confirm_input_var = 0;
+                        global.input_arr[confirm_input_const,0] = 0;
                         break;
                     }
                     case 19: // Behavior
@@ -1012,9 +1012,9 @@ object_event_add
                 }
             }
             // Directions
-            if global.left_input_press_var == 1 || global.right_input_press_var == 1
+            if global.input_press_arr[left_input_const,0] == 1 || global.input_press_arr[right_input_const,0] == 1
             {
-                local.add = global.right_input_press_var-global.left_input_press_var;
+                local.add = (global.input_press_arr[right_input_const,0] == 1)-(global.input_press_arr[left_input_const,0] == 1);
                 switch button_state_var
                 {
                     case 0: // Crouch
@@ -1075,18 +1075,18 @@ object_event_add
             local.scroll_rate = max(scroll_min_var,local.scroll_diff*scroll_rate_var)*global.true_delta_time_var;
             scroll_var += min(local.scroll_diff,local.scroll_rate)*sign(local.target_scroll-scroll_var);
             // Scroll
-            if global.up_input_press_var { button_state_var -= 1; }
-            if global.down_input_press_var { button_state_var += 1; }
+            if global.input_press_arr[up_input_const,0] { button_state_var -= 1; }
+            if global.input_press_arr[down_input_const,0] { button_state_var += 1; }
             button_state_var = mod_scr(button_state_var,type_button_len_var);
             // Confirm
-            if global.confirm_input_press_var && button_state_var == type_button_len_var-1
+            if global.input_press_arr[confirm_input_const,0] && button_state_var == type_button_len_var-1
             {
                 state_var = 3;
                 event_user(0);
             }
-            if button_state_var != type_button_len_var-1 && (global.left_input_press_var || global.right_input_press_var)
+            if button_state_var != type_button_len_var-1 && (global.input_press_arr[left_input_const,0] || global.input_press_arr[right_input_const,0])
             {
-                local.add = global.right_input_press_var-global.left_input_press_var;
+                local.add = (global.input_press_arr[right_input_const,0] > 0)-(global.input_press_arr[left_input_const,0] > 0);
                 type_button_arr[button_state_var,0] = mod_scr(type_button_arr[button_state_var,0]+2+local.add,type_button_arr[button_state_var,2]+2)-2;
             }
             break;
@@ -1111,7 +1111,7 @@ object_event_add
             time_var = (time_var+global.true_delta_time_var) mod 80;
             str_scale_var = 0.8+(cos(2*time_var*pi/80)*0.2);
             // Scroll
-            if global.up_input_press_var
+            if global.input_press_arr[up_input_const,0]
 			{
 				button_state_var -= 1;
 				
@@ -1130,7 +1130,7 @@ object_event_add
 					ini_close();
 				}
 			}
-            if global.down_input_press_var
+            if global.input_press_arr[down_input_const,0]
 			{
 				button_state_var += 1;
 				
@@ -1151,7 +1151,7 @@ object_event_add
 			}
             button_state_var = mod_scr(button_state_var,1+ds_list_size(global.save_list));
             // Confirm
-            if global.confirm_input_press_var
+            if global.input_press_arr[confirm_input_const,0]
             {
                 switch button_state_var
                 {
@@ -1409,11 +1409,18 @@ object_event_add
                     else { execute_string("global."+type_button_arr[local.i,3]+"_type_var = "+string(type_button_arr[local.i,0])); }
                 }
 				
-				local.player = instance_create(0,0,global.player_obj);
-				local.hud = instance_create(0,0,global.hud_obj);
-				local.hud.par_var = local.player;
-				local.axe = instance_create(0,0,global.axe_obj);
-				local.axe.par_var = local.player;
+                global.player_len_var = 4;
+                for (local.i=0; local.i<global.player_len_var; local.i+=1;)
+                {
+                    local.player = instance_create(0,0,player_obj);
+                    global.player_arr[local.i] = local.player;
+                    local.player.player_id_var = local.i;
+                    local.player.cam_id_var = local.i;
+                    local.hud = instance_create(0,0,hud_obj);
+                    local.hud.par_var = local.player;
+                    local.axe = instance_create(0,0,axe_obj);
+                    local.axe.par_var = local.player;
+                }
 				instance_create(0,0,mus_control_obj);
                 global.count_var = get_count_scr();
                 if save_name_var == "1987" { instance_create(0,0,otter8_js_obj); }

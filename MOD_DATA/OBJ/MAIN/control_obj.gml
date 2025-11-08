@@ -21,6 +21,36 @@ object_event_add
 (argument0,ev_step,ev_step_begin,'
     // Get inputs
     // I know this looks bad, but keyboard_check_pressed doesnt persist between rooms
+    for (local.j=0; local.j<global.player_len_var; local.j+=1;)
+    {
+        for (local.i=0; local.i<global.input_len_var; local.i+=1;)
+        {
+            // Previous
+            global.input_prev_arr[local.i,local.j] = global.input_arr[local.i,local.j];
+            // Keyboard
+            if global.input_key_arr[local.i,local.j] > 0 
+            {
+                if keyboard_check_pressed(global.input_key_arr[local.i,local.j]) { global.input_arr[local.i,local.j] = true; }
+                if keyboard_check_released(global.input_key_arr[local.i,local.j]) { global.input_arr[local.i,local.j] = false; }
+            }
+            // Mouse
+            else if global.input_key_arr[local.i,local.j] > -6 
+            {
+                local.button = abs(global.input_key_arr[local.i,local.j]);
+                if mouse_check_button_pressed(local.button) { global.input_arr[local.i,local.j] = true; }
+                if mouse_check_button_released(local.button) { global.input_arr[local.i,local.j] = false; }
+            }
+            // Controller
+            else
+            {
+                local.button = abs(global.input_key_arr[local.i,local.j])-5;
+                global.input_arr[local.i,local.j] = joystick_check_button(local.j,local.button);
+            }
+            // Press
+            global.input_press_arr[local.i,local.j] = global.input_arr[local.i,local.j]-global.input_prev_arr[local.i,local.j];
+        }
+    }
+    /*
     global.forward_input_prev_var = global.forward_input_var;
     global.backward_input_prev_var = global.backward_input_var;
     global.strafe_left_input_prev_var = global.strafe_left_input_var;
@@ -113,20 +143,20 @@ object_event_add
     global.slow_input_press_var = global.slow_input_var-global.slow_input_prev_var;
     global.pause_input_press_var = global.pause_input_var-global.pause_input_prev_var;
     global.back_input_press_var = global.back_input_var-global.back_input_prev_var;
+    */
     // This is pause now
-    if global.pause_input_press_var == 1 && !instance_exists(pause_menu_obj) && global.draw_3d_var
+    if global.input_press_arr[pause_input_const,0] == 1 && !instance_exists(pause_menu_obj) && global.draw_3d_var
     {
         /*global.mouse_free_var = !global.mouse_free_var;
         action_set_cursor(-1,global.mouse_free_var);
         if !global.mouse_free_var { display_mouse_set(display_get_width()/2,display_get_height()/2); }*/
-        global.back_input_press_var = 0;
         instance_create(0,0,pause_menu_obj);
     }
     // Speed!
     if global.draw_3d_var
     {
-        if global.ff_input_press_var == 1 { global.game_spd_var = min(3,global.game_spd_var+0.25); fmod_group_set_pitch_scr(0,global.game_spd_var); }
-        if global.slow_input_press_var == 1 { global.game_spd_var = max(1,global.game_spd_var-0.25); fmod_group_set_pitch_scr(0,global.game_spd_var); }
+        if global.input_press_arr[ff_input_const,0] == 1 { global.game_spd_var = min(3,global.game_spd_var+0.25); fmod_group_set_pitch_scr(0,global.game_spd_var); }
+        if global.input_press_arr[slow_input_const,0] == 1 { global.game_spd_var = max(1,global.game_spd_var-0.25); fmod_group_set_pitch_scr(0,global.game_spd_var); }
     }
     else if global.game_spd_var != 1 { global.game_spd_var = 1; fmod_group_set_pitch_scr(0,global.game_spd_var); }
     // Delta Time
@@ -148,7 +178,7 @@ object_event_add
         }
     }
     // Check for debug
-    if global.debug_input_press_var == 1
+    if global.input_press_arr[debug_input_const,0] == 1
     {
         if !global.debug_unlock_var
         {
@@ -160,7 +190,7 @@ object_event_add
             else { show_error(string_repeat("3",3333),true); exit; }
             global.last_time_var = current_time;
             display_mouse_set(display_get_width()/2,display_get_height()/2);
-            global.debug_input_press_var = 0;
+            global.input_press_arr[debug_input_const,0] = 0;
         }
         global.debug_var = !global.debug_var;
     }

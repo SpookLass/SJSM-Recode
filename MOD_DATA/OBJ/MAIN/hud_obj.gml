@@ -88,14 +88,7 @@ object_event_add
 (argument0,ev_draw,0,'
     if view_current == par_var.cam_id_var 
     {
-        d3d_set_projection_ortho
-        (
-            view_xview[view_current],
-            view_yview[view_current],
-            view_xview[view_current]+view_wview[view_current],
-            view_yview[view_current]+view_hview[view_current],
-            0
-        );
+        d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
         d3d_set_hidden(false);
         // Taker!
         if par_var.alarm_arr[3,0] < par_var.alarm_arr[3,1]/2

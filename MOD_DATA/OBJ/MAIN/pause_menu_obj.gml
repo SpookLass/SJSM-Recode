@@ -9,6 +9,7 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,0,'
+    delay_var = true;
     store_spd_var = global.game_spd_var;
     global.game_spd_var = 0;
     global.mouse_free_var = true;
@@ -43,52 +44,56 @@ object_event_add
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_end,'
+    if delay_var { delay_var = false; }
+    else
+    {
+        if global.input_press_arr[up_input_const,0] { button_state_var -= 1; }
+        if global.input_press_arr[down_input_const,0] { button_state_var += 1; }
+        if global.input_press_arr[back_input_const,0]
+        {
+            instance_destroy();
+            fmod_snd_play_scr(confirm_snd);
+        }
+        if global.input_press_arr[confirm_input_const,0] //|| keyboard_check_pressed(vk_escape)
+        {
+            switch button_state_var
+            {
+                case 0: // Continue
+                {
+                    instance_destroy();
+                    fmod_snd_play_scr(confirm_snd);
+                    break;
+                }
+                case 1: // Settings
+                {
+
+                }
+                case 2: // Exit to Menu
+                {
+                    with all
+                    {
+                        if persistent && object_index != other.object_index && object_index != control_obj
+                        { instance_destroy(); }
+                    }
+                    fmod_all_stop_scr();
+                    room_goto_scr(menu_rm);
+                    break;
+                }
+                case 3: // Quit
+                {
+                    game_end();
+                    break;
+                }
+            }
+        }
+    }
     if alarm_arr[0,0] > 0
     {
         fmod_inst_set_vol_scr(mus_snd_var,1-(alarm_arr[0,0]/alarm_arr[0,1]));
     }
     time_var = (time_var+global.true_delta_time_var) mod 80;
     str_stretch_scale_var = str_base_scale_var+(cos(2*time_var*pi/80)*0.2*scale_var);
-    if global.up_input_press_var { button_state_var -= 1; }
-    if global.down_input_press_var { button_state_var += 1; }
     button_state_var = mod_scr(button_state_var,button_len_var);
-    if global.back_input_press_var
-    {
-        instance_destroy();
-        fmod_snd_play_scr(confirm_snd);
-    }
-    if global.confirm_input_press_var //|| keyboard_check_pressed(vk_escape)
-    {
-        switch button_state_var
-        {
-            case 0: // Continue
-            {
-                instance_destroy();
-                fmod_snd_play_scr(confirm_snd);
-                break;
-            }
-            case 1: // Settings
-            {
-
-            }
-            case 2: // Exit to Menu
-            {
-                with all
-                {
-                    if persistent && object_index != other.object_index && object_index != control_obj
-                    { instance_destroy(); }
-                }
-                fmod_all_stop_scr();
-                room_goto_scr(menu_rm);
-                break;
-            }
-            case 3: // Quit
-            {
-                game_end();
-                break;
-            }
-        }
-    }
     update_alarm_scr(global.true_delta_time_var);
 ');
 // Room End Event
@@ -141,14 +146,7 @@ object_event_add
 (argument0,ev_draw,0,'
     if view_current == cam_id_var 
     {
-        d3d_set_projection_ortho
-        (
-            view_xview[view_current],
-            view_yview[view_current],
-            view_xview[view_current]+view_wview[view_current],
-            view_yview[view_current]+view_hview[view_current],
-            0
-        );
+        d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
         d3d_set_hidden(false);
         // Color
         draw_set_blend_mode(bm_subtract);

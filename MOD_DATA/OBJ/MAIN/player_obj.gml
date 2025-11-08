@@ -10,6 +10,7 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,0,'
     event_inherited();
+    player_id_var = 0;
     // Collision
     do_coll_var = true;
     coll_var[0] = global.player_coll[0];
@@ -183,6 +184,13 @@ object_event_add
     x = global.spawn_arr[0,0];
     y = global.spawn_arr[0,1];
     z = global.spawn_arr[0,2];
+    if global.player_len_var > 1
+    {
+        local.dist = sqrt(128);
+        local.dir = (player_id_var*-90)+45;
+        x += lengthdir_x(local.dist,local.dir);
+        y += lengthdir_y(local.dist,local.dir);
+    }
     eye_yaw_var = global.spawn_arr[0,3];
     eye_pitch_var = 0;
     set_motion_3d_scr(0,false,eye_yaw_var,true,eye_pitch_var,true);
@@ -249,7 +257,7 @@ object_event_add
     {
         event_inherited();
         // Mouse
-        if !global.mouse_free_var
+        if !global.mouse_free_var && player_id_var == 0
         {
             if global.invert_yaw_var { local.mult = -1; } else { local.mult = 1; }
             eye_yaw_var = mod_scr(eye_yaw_var+(((display_get_width()/2)-display_mouse_get_x())*local.mult*global.sens_var/1600),360);
@@ -258,13 +266,13 @@ object_event_add
             display_mouse_set(display_get_width()/2,display_get_height()/2);
         }
         // Get inputs
-        local.input_dir_x = global.forward_input_var-global.backward_input_var;
-        local.input_dir_y = global.strafe_right_input_var-global.strafe_left_input_var;
+        local.input_dir_x = global.input_arr[forward_input_const,player_id_var]-global.input_arr[backward_input_const,player_id_var];
+        local.input_dir_y = global.input_arr[strafe_right_input_const,player_id_var]-global.input_arr[strafe_left_input_const,player_id_var];
         local.input_dir = radtodeg(arctan2(-local.input_dir_y,local.input_dir_x));
         if do_coll_var && grav_var > 0
         {
             // Jump!
-            if can_jump_var && global.jump_input_press_var && on_floor_var && (stam_var > jump_stam_var || !do_stam_var)
+            if can_jump_var && global.input_press_arr[jump_input_const,player_id_var] && on_floor_var && (stam_var > jump_stam_var || !do_stam_var)
             {
                 if do_stam_var
                 { stam_var -= jump_stam_var; }
@@ -287,7 +295,7 @@ object_event_add
                 {
                     if jump_hold_var
                     {
-                        if global.jump_input_press_var == -1 || z_spd_var <= 0
+                        if global.input_press_arr[jump_input_const,player_id_var] == -1 || z_spd_var <= 0
                         { jump_hold_var = false; }
                         else if do_stam_var { stam_var -= jump_stam_rate_var*global.delta_time_var; }
                     }
@@ -299,8 +307,8 @@ object_event_add
             // Crouch!
             if can_crouch_var
             {
-                if (global.crouch_input_press_var && crouch_toggle_var) 
-                || (global.crouch_input_var != crouch_var && !crouch_toggle_var)
+                if (global.input_press_arr[crouch_input_const,player_id_var] && crouch_toggle_var) 
+                || (global.input_arr[crouch_input_const,player_id_var] != crouch_var && !crouch_toggle_var)
                 {
                     local.znext = z;
                     if !on_floor_var
@@ -370,16 +378,16 @@ object_event_add
         }
         else
         {
-            local.input_dir_z = global.jump_input_var-global.crouch_input_var;
+            local.input_dir_z = global.input_arr[jump_input_const,player_id_var]-global.input_arr[crouch_input_const,player_id_var];
             local.input_dir_pitch = radtodeg(arctan2(local.input_dir_z,sqrt(sqr(local.input_dir_x)+sqr(local.input_dir_y))));
         }
         // Is the player active?
         active_var = abs(local.input_dir_x) || abs(local.input_dir_y) || abs(local.input_dir_z)
-        || global.sprint_input_var || global.jump_input_var || global.crouch_input_var;
+        || global.input_arr[sprint_input_const,player_id_var] || global.input_arr[jump_input_const,player_id_var] || global.input_arr[crouch_input_const,player_id_var];
         if active_var && !dead_var && !taker_spawn_var
         { set_alarm_scr(3,taker_alarm_var); }
         // Sprint
-        sprint_var = do_sprint_var && global.sprint_input_var && (stam_var > 0 || !do_stam_var);
+        sprint_var = do_sprint_var && global.input_arr[sprint_input_const,player_id_var] && (stam_var > 0 || !do_stam_var);
         // Calculate speed
         local.spd = 0;
         if local.input_dir_x != 0 || local.input_dir_y != 0 || local.input_dir_z != 0
@@ -476,7 +484,7 @@ object_event_add
                     start_stam_var = max(0,start_stam_var-(start_stam_rate_var*global.delta_time_var));
                     local.stam_rate = (-(stam_rate_var+start_stam_var)*local.real_spd)/(spd_base_var*sprint_spd_mult_var);
                 }
-                else if !global.sprint_input_var 
+                else if !global.input_arr[sprint_input_const,player_id_var]
                 {
                     start_stam_var = start_stam_base_var;
                     local.stam_rate = stam_rate_var*global.delta_time_var;
