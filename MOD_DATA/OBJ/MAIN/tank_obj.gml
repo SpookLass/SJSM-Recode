@@ -7,16 +7,16 @@ object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Prop collisions
-execute_string("global.tank_coll[0] = prop_to_coll_scr(0,tank_mdl_path);");
+execute_string('global.tank_coll[0] = prop_to_coll_scr(0,tank_mdl_path);');
 // Create event
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
     store_tex_var = sprite_get_texture(tank_spr,0);
     event_inherited();
     solid_var = true;
     mdl_var = tank_mdl;
     mdl_path_var = tank_mdl_path;
-    // For grid (I don't really know how wide it is)
+    // For grid (I dont really know how wide it is)
     w_var = 22;
     l_var = w_var;
     // Collisions
@@ -26,7 +26,7 @@ object_event_add
     tex_02_var = store_tex_02_var;
     mdl_02_var = tank_top_mdl;
     mdl_02_path_var = tank_top_mdl_path;
-");
+');
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,'

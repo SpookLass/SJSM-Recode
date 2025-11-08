@@ -70,7 +70,10 @@ object_event_add
             other.mdl_var = mdl_var;
             other.wall_bg_var = wall_bg_var;
             other.floor_bg_var = floor_bg_var;
+            other.light_wall_spr_var = light_wall_spr_var;
+            other.light_floor_spr_var = light_floor_spr_var;
             other.eff_bg_var = eff_bg_var;
+            other.fog_bg_var = fog_bg_var;
             for (local.i=0; local.i<snd_len_var; local.i+=1;)
             { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
             for (local.i=0; local.i<glitch_snd_len_var; local.i+=1;)
@@ -90,7 +93,10 @@ object_event_add
         d3d_model_load(mdl_var,main_directory_const+"\MDL\MON\gc_mdl.gmmod");
         wall_bg_var = background_add(vanilla_directory_const+"\TEX\HOS_21.png",false,false);
         floor_bg_var = background_add(vanilla_directory_const+"\TEX\HOS_14.png",false,false);
+        light_wall_spr_var = sprite_add(main_directory_const+"\SPR\MON\gc_light_wall_spr.png",2,false,false,0,0);
+        light_floor_spr_var = sprite_add(main_directory_const+"\SPR\MON\gc_light_floor_spr.png",2,false,false,0,0);
         eff_bg_var = background_add(vanilla_directory_const+"\TEX\sprites\EX_13_spr.png",false,false);
+        fog_bg_var = background_add(vanilla_directory_const+"\TEX\sprites\fog_spr.png",false,false);
         snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_01_snd.wav",true);
         snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_02_snd.wav",true);
         snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_03_snd.wav",true);
@@ -157,6 +163,8 @@ object_event_add
             seen_pitch_var = 5.856;
             move_type_var = 0;
             eff_old_var = false;
+            cam_end_var = -1;
+            fog_var = true;
             break;
         }
         case 6: // KH Recode
@@ -235,6 +243,7 @@ object_event_add
             dmg_var = 20;
             dmg_alarm_var = 120;
             eff_old_var = false;
+            fog_var = true;
             if !local.set
             {
                 spd_base_var = 44/45; // 0.9r7
@@ -273,6 +282,8 @@ object_event_add
     event_inherited();
     global.wall_bg_tex = background_get_texture(global.wall_bg);
     global.floor_bg_tex = background_get_texture(global.floor_bg);
+    global.light_wall_obj_spr = global.light_wall_spr;
+    global.light_floor_obj_spr = global.light_floor_spr;
     if instance_number(object_index) <= 1
     {
         fmod_snd_free_scr(mus_snd_var);
@@ -283,7 +294,10 @@ object_event_add
         background_delete(bg_var);
         background_delete(wall_bg_var);
         background_delete(floor_bg_var);
+        sprite_delete(light_wall_spr_var);
+        sprite_delete(light_floor_spr_var);
         background_delete(eff_bg_var);
+        background_delete(fog_bg_var);
         d3d_model_destroy(mdl_var);
         for (local.i=0; local.i<snd_len_var; local.i+=1;)
         { fmod_snd_free_scr(snd_arr[local.i,0]); }
@@ -292,7 +306,9 @@ object_event_add
     with player_obj
     { fov_var = global.fov_var; }
     with gc_eff_obj
-    { instance_destroy(); }
+    { if par_var == other.id { instance_destroy(); }}
+    with gc_fog_obj
+    { if par_var == other.id { instance_destroy(); }}
 ');
 // Room Start Event
 object_event_add
@@ -316,6 +332,8 @@ object_event_add
     // Effects
     global.wall_bg_tex = background_get_texture(wall_bg_var);
     global.floor_bg_tex = background_get_texture(floor_bg_var);
+    global.light_wall_obj_spr = light_wall_spr_var;
+    global.light_floor_obj_spr = light_floor_spr_var;
     with ceil_par_obj
     { visible = false; }
     with wall_par_obj
@@ -331,8 +349,17 @@ object_event_add
     {
         with instance_create(0,0,gc_eff_obj)
         {
+            par_var = other.id;
             bg_var = other.eff_bg_var;
             old_var = other.eff_old_var;
+        }
+    }
+    if fog_var && !instance_exists(gc_fog_obj)
+    {
+        with instance_create(0,0,gc_fog_obj)
+        {
+            par_var = other.id;
+            tex_var = background_get_texture(other.fog_bg_var);
         }
     }
 ');

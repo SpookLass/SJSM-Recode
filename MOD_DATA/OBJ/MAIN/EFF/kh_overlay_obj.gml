@@ -8,19 +8,20 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create Event
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
+    event_inherited();
     y_spd_var = -1;
     image_xscale = 4;
     image_yscale = 4;
-");
+');
 // Step Event
 object_event_add
-(argument0,ev_step,ev_step_normal,"
+(argument0,ev_step,ev_step_normal,'
     y = (y+(y_spd_var*global.delta_time_var)) mod (background_get_height(bg_var)*image_yscale);
-");
+');
 // Draw Event
 object_event_add
-(argument0,ev_draw,0,"
+(argument0,ev_draw,0,'
     d3d_set_projection_ortho
     (
         view_xview[view_current],
@@ -41,4 +42,4 @@ object_event_add
     draw_background_tiled_ext(bg_var,local.xtmp/2,local.ytmp/2,image_xscale/2,image_yscale/2,image_blend,image_alpha/2);
     draw_background_tiled_ext(bg_var,local.xtmp,local.ytmp,image_xscale,image_yscale,image_blend,image_alpha); 
     d3d_set_hidden(true);
-");
+');

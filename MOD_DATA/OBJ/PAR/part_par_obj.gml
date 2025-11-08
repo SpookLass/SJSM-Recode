@@ -22,7 +22,7 @@ part_arr
 */
 // Step
 object_event_add
-(argument0,ev_step,ev_step_normal,"
+(argument0,ev_step,ev_step_normal,'
     part_num = 0;
     for (local.i=0; local.i<part_len_var; local.i+=1;)
     {
@@ -51,10 +51,10 @@ object_event_add
             else { part_num += 1; }
         }
     }
-");
+');
 // Draw Event
 object_event_add
-(argument0,ev_draw,0,"
+(argument0,ev_draw,0,'
     for (local.i=0; local.i<part_len_var; local.i+=1;)
     {
         if part_arr[local.i,0]
@@ -70,4 +70,4 @@ object_event_add
             draw_set_color(c_white); draw_set_alpha(1);
         }
     }
-");
+');

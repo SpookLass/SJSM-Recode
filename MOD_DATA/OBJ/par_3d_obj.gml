@@ -11,4 +11,5 @@ object_event_add
 (argument0,ev_step,ev_step_end,"
     // Update movement (put here to not interfere with vanilla xprevious and yprevious)
     update_motion_scr(global.delta_time_var);
+    event_inherited();
 ");

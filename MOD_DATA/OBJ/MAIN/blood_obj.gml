@@ -8,7 +8,7 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create event
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
     store_tex_var = sprite_get_texture(blood_floor_spr,irandom(sprite_get_number(blood_floor_spr)-1));
     snap_var = 1;
     event_inherited();
@@ -18,4 +18,4 @@ object_event_add
     l_var = 28;
     image_alpha = 0.9;
     z += 0.15;
-");
+');

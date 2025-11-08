@@ -9,6 +9,7 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,0,'
+    event_inherited();
     // Collision
     do_coll_var = true;
     coll_var[0] = global.player_coll[0];

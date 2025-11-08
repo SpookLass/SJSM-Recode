@@ -8,7 +8,8 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create Event
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
+    event_inherited();
     // Animate
     spr_spd_var = 0.01;
     rand_rate_var = 30;
@@ -30,10 +31,10 @@ object_event_add
     // Start
     event_perform(ev_alarm,0);
     if strobe_var { set_alarm_scr(1,strobe_rate_var); }
-");
+');
 // Step Event
 object_event_add
-(argument0,ev_step,ev_step_normal,"
+(argument0,ev_step,ev_step_normal,'
     spr_id_var = (spr_id_var+(spr_spd_var*global.delta_time_var)) mod sprite_get_number(spr_var);
     if state_var { image_alpha += alpha_rate_var; }
     else { image_alpha -= alpha_rate_var; }
@@ -42,18 +43,18 @@ object_event_add
         image_alpha = median(alpha_min_var,alpha_max_var,image_alpha);
         // state_var = !state_var;
     }
-");
+');
 // Alarm 0 Event (Random)
 object_event_add
-(argument0,ev_alarm,0,"
+(argument0,ev_alarm,0,'
     if !irandom(1) { image_yscale = random_range(4,6); }
     else { spr_id_var = irandom(sprite_get_number(spr_var)-1); }
     if !irandom(2) { state_var = !state_var; }
     set_alarm_scr(0,rand_rate_var);
-");
+');
 // Alarm 1 Event (Strobe)
 object_event_add
-(argument0,ev_alarm,1,"
+(argument0,ev_alarm,1,'
     if strobe_var
     {
         if frac_chance_scr(1,strobe_chance_var)
@@ -67,10 +68,10 @@ object_event_add
         }
         set_alarm_scr(1,strobe_rate_var);
     }
-");
+');
 // Draw Event
 object_event_add
-(argument0,ev_draw,0,"
+(argument0,ev_draw,0,'
     d3d_set_projection_ortho
     (
         view_xview[view_current],
@@ -87,4 +88,4 @@ object_event_add
         image_angle,image_blend,image_alpha
     );
     d3d_set_hidden(true);
-");
+');

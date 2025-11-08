@@ -8,7 +8,8 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create Event
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
+    event_inherited();
     //Defaults
     image_blend = c_black;
     atk_var = false;
@@ -19,16 +20,16 @@ object_event_add
     // Alarm
     alarm_len_var = 1;
     set_alarm_scr(0,300);
-");
+');
 // Alarm 0 Event
 object_event_add
-(argument0,ev_alarm,0,"
+(argument0,ev_alarm,0,'
     atk_var = true;
     image_alpha = 1;
-");
+');
 // Step Event
 object_event_add
-(argument0,ev_step,ev_step_normal,"
+(argument0,ev_step,ev_step_normal,'
     if alarm_arr[0,0] > 0 { image_alpha = 1-(alarm_arr[0,0]/alarm_arr[0,1]); }
     if atk_var
     {
@@ -69,10 +70,10 @@ object_event_add
             }
         }
     }
-");
+');
 // Draw Event
 object_event_add
-(argument0,ev_draw,0,"
+(argument0,ev_draw,0,'
     d3d_set_projection_ortho
     (
         view_xview[view_current],
@@ -95,4 +96,4 @@ object_event_add
     // Lazy
     if atk_var && !irandom(2) { draw_background_ext(bg_var,-820,-141,4,4,0,c_white,1); }
     d3d_set_hidden(true);
-");
+');

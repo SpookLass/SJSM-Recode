@@ -9,6 +9,7 @@ object_set_visible(argument0,true);
 // Create
 object_event_add
 (argument0,ev_create,0,'
+    event_inherited();
     hp_max_var = 1;
     stam_max_var = 1;
     alarm_arr[3,1] = 1;

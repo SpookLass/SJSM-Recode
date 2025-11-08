@@ -8,7 +8,7 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create event
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
     store_tex_var = choose
     (
         art_01_bg_tex,
@@ -34,4 +34,4 @@ object_event_add
     h_var = 9.2;
     z = 15.4;
     dist_var = 0.3;
-");
+');

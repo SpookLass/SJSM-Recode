@@ -8,7 +8,8 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
+    event_inherited();
     z = 21.2;
     w_var = 3;
     l_var = 3;
@@ -21,10 +22,10 @@ object_event_add
     alarm_len_var = 1;
     set_alarm_scr(0,part_delay_var);
     image_blend = make_color_rgb(224,208,142);
-");
+');
 // Alarm 0
 object_event_add
-(argument0,ev_alarm,0,"
+(argument0,ev_alarm,0,'
     if torch_var.on_var
     {
         local.part = part_add_scr
@@ -50,10 +51,10 @@ object_event_add
         }
     }
     set_alarm_scr(0,part_delay_var);
-");
+');
 // Step
 object_event_add
-(argument0,ev_step,ev_step_normal,"
+(argument0,ev_step,ev_step_normal,'
     for (local.i=0; local.i<part_len_var; local.i+=1;)
     {
         if part_arr[local.i,0]
@@ -70,10 +71,10 @@ object_event_add
         }
     }
     event_inherited();
-");
+');
 // Draw Event
 object_event_add
-(argument0,ev_draw,0,"
+(argument0,ev_draw,0,'
     if global.fog_dark_var
     {
         d3d_set_fog(false,c_black,0,0);
@@ -81,4 +82,4 @@ object_event_add
         d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var);
     }
     else { event_inherited(); }
-");
+');

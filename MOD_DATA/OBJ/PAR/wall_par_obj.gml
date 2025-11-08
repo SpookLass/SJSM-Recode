@@ -8,7 +8,8 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create event
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
+    event_inherited();
     w_var = 32;
     h_var = 32;
     tex_w_var = 1;
@@ -18,10 +19,10 @@ object_event_add
     tex_var = store_tex_var;
     solid_var = true;
     color_var = true;
-");
+');
 // Draw Event
 object_event_add
-(argument0,ev_draw,0,"
+(argument0,ev_draw,0,'
     if tex_var == -1 { local.tex = wall_bg_tex; } 
     else { local.tex = tex_var; }
     local.tex_w = tex_w_var*w_var/32;
@@ -33,4 +34,4 @@ object_event_add
     d3d_draw_wall(0,-w_var/2,h_var,0,w_var/2,0,local.tex,local.tex_w,local.tex_h);
     d3d_transform_set_identity();
     draw_set_color(c_white); draw_set_alpha(1);
-");
+');

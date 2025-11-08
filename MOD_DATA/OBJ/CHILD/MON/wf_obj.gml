@@ -227,7 +227,7 @@ object_event_add
             // Effects
             eff_02_alarm_var = 12;
             face_dist_var = 0;
-            // Don"t set stuff
+            // Dont set stuff
             loop_var = false;
             res_var = false;
             attack_stun_var = false;
@@ -334,6 +334,8 @@ object_event_add
         sprite_delete(spr_var);
         background_delete(bg_var);
         sprite_delete(tex_spr_var);
+        sprite_delete(light_wall_spr_var);
+        sprite_delete(light_floor_spr_var);
         background_delete(door_bg_var);
         sprite_delete(eff_spr_var);
         background_delete(web_bg_var);

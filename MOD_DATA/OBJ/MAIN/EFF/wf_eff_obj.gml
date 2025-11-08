@@ -8,19 +8,20 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create Event
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
+    event_inherited();
     //Defaults
     spr_spd_var = 0.1;
     image_alpha = 0.01;
-");
+');
 // Step Event
 object_event_add
-(argument0,ev_step,ev_step_normal,"
+(argument0,ev_step,ev_step_normal,'
     spr_id_var = (spr_id_var+(spr_spd_var*global.delta_time_var)) mod sprite_get_number(spr_var);
-");
+');
 // Draw Event
 object_event_add
-(argument0,ev_draw,0,"
+(argument0,ev_draw,0,'
     d3d_set_projection_ortho
     (
         view_xview[view_current],
@@ -40,4 +41,4 @@ object_event_add
         image_blend,image_alpha
     );
     d3d_set_hidden(true);
-");
+');

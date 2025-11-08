@@ -1,5 +1,5 @@
 // Builtin Variables
-object_set_depth(argument0,0);
+object_set_depth(argument0,-1);
 object_set_mask(argument0,noone);
 object_set_parent(argument0,light_wall_par_obj);
 object_set_persistent(argument0,false);

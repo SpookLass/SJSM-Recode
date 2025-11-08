@@ -513,6 +513,8 @@ object_event_add
     type_button_arr[21,4] = yoshi_str_var;
     type_button_arr[21,5] = rouge_str_var;
     type_button_arr[21,6] = alt_str_var;
+    type_button_arr[23,2] = 4; // Woormy Charles
+    type_button_arr[23,4] = yoshi_str_var;
     type_button_arr[24,2] = 4; // Clown
     type_button_arr[24,4] = alt_str_var;
     type_button_arr[27,2] = 4; // Real Ringu

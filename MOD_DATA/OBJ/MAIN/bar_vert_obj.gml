@@ -7,10 +7,10 @@ object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Prop collisions
-execute_string("global.bar_vert_coll[0] = prop_to_coll_scr(0,bar_vert_mdl_path);");
+global.bar_vert_coll[0] = prop_to_coll_scr(0,bar_vert_mdl_path);
 // Create event
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
     store_tex_var = metal_02_bg_tex;
     event_inherited();
     solid_var = true;
@@ -21,4 +21,4 @@ object_event_add
     l_var = 32;
     // Collisions
     coll_var[0] = global.bar_vert_coll[0];
-");
+');

@@ -6,52 +6,22 @@ object_set_persistent(argument0,true);
 object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
-// Create Event
-object_event_add
-(argument0,ev_create,0,"
-    cam_id_var = -1;
-    anim_alarm_var = 1;
-    char_alarm_var = 6;
-    char_delay_var = 30;
-    str_alarm_min_var = 240;
-    str_alarm_max_var = 460;
-    str_wake_var = 'What are you hoping to accomplish?'
-    str_len_var = 9;
-    str_arr_var[0,0] = '1235.'
-    str_arr_var[0,1] = 'Give in.'
-    str_arr_var[0,2] = 'Worthless.'
-    str_arr_var[0,3] = "+'"'+"You won't get far."+'"'+"
-    str_arr_var[0,4] = 'Failure.'
-    str_arr_var[0,5] = 'Stop wasting time.'
-    str_arr_var[0,6] = 'Disappointment.'
-    str_arr_var[0,7] = "+'"'+"You're pathetic."+'"'+"
-    str_arr_var[0,8] = 'Weak.'
-    str_var = str_wake_var;
-    alarm_len_var = 2;
-    set_alarm_scr(0,anim_alarm_var);
-    set_alarm_scr(1,char_alarm_var);
-    char_var = 1;
-    str_draw_var = string_copy(str_var, 0, char_var);
-    str_color_var = c_white;
-    image_blend = c_black;
-    scale_min_var = 0.25;
-");
 // Room Start
 object_event_add
-(argument0,ev_other,ev_room_start,"
+(argument0,ev_other,ev_room_start,'
     visible = false;
     event_inherited();
     set_alarm_scr(1,irandom_range(str_alarm_min_var,str_alarm_max_var));
-");
+');
 // Anim
 object_event_add
-(argument0,ev_alarm,0,"
+(argument0,ev_alarm,0,'
     image_alpha = random_range(0.3,1);
     set_alarm_scr(0,anim_alarm_var);
-");
+');
 // String
 object_event_add
-(argument0,ev_alarm,1,"
+(argument0,ev_alarm,1,'
     if !visible
     {
         str_var = str_arr_var[0,irandom(str_len_var-1)];
@@ -79,10 +49,10 @@ object_event_add
             visible = false;
         }
     }
-");
+');
 // Draw Event
 object_event_add
-(argument0,ev_draw,0,"
+(argument0,ev_draw,0,'
     if view_current == cam_id_var || cam_id_var == -1
     {
         d3d_set_projection_ortho
@@ -114,4 +84,35 @@ object_event_add
         draw_set_halign(fa_left); draw_set_valign(fa_top); draw_set_color(c_white); draw_set_alpha(1);
         d3d_set_hidden(true);
     }
-");
+');
+// Create Event
+object_event_add
+(argument0,ev_create,0,'
+    event_inherited();
+    cam_id_var = -1;
+    anim_alarm_var = 1;
+    char_alarm_var = 6;
+    char_delay_var = 30;
+    str_alarm_min_var = 240;
+    str_alarm_max_var = 460;
+    str_wake_var = "What are you hoping to accomplish?"
+    str_len_var = 9;
+    str_arr_var[0,0] = "1235."
+    str_arr_var[0,1] = "Give in."
+    str_arr_var[0,2] = "Worthless."
+    str_arr_var[0,3] = "You won'+"'"+'t get far" // Breaks the editor lol
+    str_arr_var[0,4] = "Failure."
+    str_arr_var[0,5] = "Stop wasting time."
+    str_arr_var[0,6] = "Disappointment."
+    str_arr_var[0,7] = "You'+"'"+'re pathetic."
+    str_arr_var[0,8] = "Weak."
+    str_var = str_wake_var;
+    alarm_len_var = 2;
+    set_alarm_scr(0,anim_alarm_var);
+    set_alarm_scr(1,char_alarm_var);
+    char_var = 1;
+    str_draw_var = string_copy(str_var, 0, char_var);
+    str_color_var = c_white;
+    image_blend = c_black;
+    scale_min_var = 0.25;
+');

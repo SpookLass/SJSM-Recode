@@ -8,25 +8,26 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,false);
 // Create Event
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
+    event_inherited();
     player_var = noone;
     mult_var = 5;
     type_var = 0;
     // Alarm
     alarm_len_var = 1;
     set_alarm_scr(0,12);
-");
+');
 // Alarm 0 Event
 object_event_add
-(argument0,ev_alarm,0,"
+(argument0,ev_alarm,0,'
     with player_var // Can be singular player or player_obj
     { shake_var = 0; }
     instance_destroy();
-");
+');
 
 // Step Event
 object_event_add
-(argument0,ev_step,ev_step_normal,"
+(argument0,ev_step,ev_step_normal,'
     switch type_var
     {
         case 0: // constant
@@ -47,4 +48,4 @@ object_event_add
     }
     with player_var // Can be singular player or player_obj
     { shake_var = local.mult; }
-");
+');

@@ -9,6 +9,7 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,0,'
+    event_inherited();
     // Alarms
     alarm_len_var = 2;
     alarm_min_var = 160;

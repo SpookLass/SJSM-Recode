@@ -8,26 +8,27 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create Event
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
+    event_inherited();
     image_blend = make_color_rgb(251,255,143);
     image_alpha = 0;
     alpha_01_var = 0;
     alpha_02_var = 0;
     alpha_03_var = 0;
-");
+');
 // Step Event
 object_event_add
-(argument0,ev_step,ev_step_normal,"
+(argument0,ev_step,ev_step_normal,'
     if instance_exists(play_var) { per_var = play_var.hp_infect_var/play_var.hp_max_var; }
     else { per_var = 1; }
     image_alpha = per_var-0.5;
     alpha_01_var = per_var;
     alpha_02_var = per_var-0.2;
     alpha_03_var = per_var-0.4;
-");
+');
 // Draw Event
 object_event_add
-(argument0,ev_draw,0,"
+(argument0,ev_draw,0,'
     if view_current == cam_id_var || cam_id_var == -1
     {
         d3d_set_projection_ortho
@@ -78,4 +79,4 @@ object_event_add
         draw_set_color(c_white); draw_set_alpha(1);
         d3d_set_hidden(true);
     }
-");
+');

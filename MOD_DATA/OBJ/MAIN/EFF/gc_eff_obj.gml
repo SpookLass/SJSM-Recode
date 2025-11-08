@@ -8,7 +8,8 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create Event
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
+    event_inherited();
     //Defaults
     cam_id_var = -1;
     image_alpha = 0.5;
@@ -23,10 +24,10 @@ object_event_add
     sine_rate_var = 120;
     sine_base_var = 1;
     sine_mult_var = 1;
-");
+');
 // Step
 object_event_add
-(argument0,ev_step,ev_step_normal,"
+(argument0,ev_step,ev_step_normal,'
     if old_var
     { image_alpha = random_range(0.5,1); }
     else
@@ -34,17 +35,17 @@ object_event_add
         sine_time_var = (sine_time_var+global.delta_time_var) mod sine_rate_var;
         scale_var = sine_base_var+(sine_mult_var*(sin(2*sine_time_var*pi/sine_rate_var)+1)/2);
     }
-");
+');
 // Alarm 0 Event
 object_event_add
-(argument0,ev_alarm,0,"
+(argument0,ev_alarm,0,'
     top_off_var = random(20);
     bottom_off_var = random(20);
     set_alarm_scr(0,irandom_range(6,30));
-");
+');
 // Draw Event
 object_event_add
-(argument0,ev_draw,0,"
+(argument0,ev_draw,0,'
     if view_current == cam_id_var || cam_id_var == -1
     {
         d3d_set_projection_ortho
@@ -91,4 +92,4 @@ object_event_add
         }
         d3d_set_hidden(true);
     }
-");
+');

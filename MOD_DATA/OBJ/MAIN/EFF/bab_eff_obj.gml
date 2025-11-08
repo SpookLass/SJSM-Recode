@@ -9,6 +9,7 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,0,'
+    event_inherited();
     // Animate
     anim_alarm_min_var = 6;
     anim_alarm_max_var = 15;

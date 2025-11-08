@@ -9,6 +9,7 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,0,'
+    event_inherited();
     // Animate
     spr_var = static_01_spr;
     anim_var = !global.reduce_flash_var;

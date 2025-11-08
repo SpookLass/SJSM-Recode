@@ -9,6 +9,7 @@ object_set_visible(argument0,true);
 // Create
 object_event_add
 (argument0,ev_create,0,'
+    event_inherited();
     event_perform(ev_other,ev_room_start);
     
     ini_open(global.lang_var);

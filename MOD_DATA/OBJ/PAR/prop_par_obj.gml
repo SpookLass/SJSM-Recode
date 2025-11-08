@@ -25,7 +25,8 @@ snap_var
 */
 // Create event
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
+    event_inherited();
     tex_var = store_tex_var;
     tex_w_var = 1;
     tex_l_var = 1;
@@ -39,10 +40,10 @@ object_event_add
             case 2: { z = instance_nearest(x,y,ceil_par_obj).z; break; }
         }
     }
-");
+');
 // Draw Event
 object_event_add
-(argument0,ev_draw,0,"
+(argument0,ev_draw,0,'
     d3d_transform_set_identity();
     if type_var == 5 { d3d_transform_add_rotation_z(point_direction(x,y,global.cam_x_var[view_current],global.cam_y_var[view_current])); }
     else { d3d_transform_add_rotation_z(direction); }
@@ -88,4 +89,4 @@ object_event_add
     }
     d3d_transform_set_identity();
     draw_set_color(c_white); draw_set_alpha(1);
-");
+');

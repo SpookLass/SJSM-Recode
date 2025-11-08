@@ -6,10 +6,10 @@ object_set_persistent(argument0,false);
 object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
-
 // Create Event
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
+    event_inherited();
     x = 0;
     y = 0;
     z -= 1;
@@ -17,18 +17,16 @@ object_event_add
     mult_var = 12;
     store_tex_var = water_bg_tex;
     tex_var = store_tex_var;
-");
-
+');
 // Step Event
 object_event_add
-(argument0,ev_step,ev_step_normal,"
+(argument0,ev_step,ev_step_normal,'
     time_var = (time_var+global.delta_time_var) mod rate_var;
     y = sin((2*time_var*pi)/rate_var)*mult_var;
-");
-
+');
 // Draw Event
 object_event_add
-(argument0,ev_draw,0,"
+(argument0,ev_draw,0,'
     if global.fog_dark_var { d3d_set_fog(false,c_black,0,0); }
     d3d_transform_set_identity();
     d3d_transform_set_translation(x,y,z);
@@ -38,4 +36,4 @@ object_event_add
     draw_set_color(c_white); draw_set_alpha(1);
     if global.fog_dark_var 
     { d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var); }
-");
+');

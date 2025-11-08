@@ -9,6 +9,7 @@ object_set_visible(argument0,false);
 // Create Event
 object_event_add
 (argument0,ev_create,0,"
+    event_inherited();
     // Collision
     coll_var[0] = global.trig_coll[0];
     coll_var[1] = global.trig_coll[1];

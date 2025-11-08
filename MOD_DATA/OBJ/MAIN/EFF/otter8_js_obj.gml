@@ -9,6 +9,7 @@ object_set_visible(argument0,false);
 // Create Event
 object_event_add
 (argument0,ev_create,0,'
+    event_inherited();
     with object_index
     {
         if id != other.id

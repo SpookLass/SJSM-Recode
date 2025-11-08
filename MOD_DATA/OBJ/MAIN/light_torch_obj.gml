@@ -9,6 +9,7 @@ object_set_visible(argument0,true);
 // Create event
 object_event_add
 (argument0,ev_create,0,"
+    event_inherited();
     z = 21.2;
     h_var = 4.8;
     w_var = 3;

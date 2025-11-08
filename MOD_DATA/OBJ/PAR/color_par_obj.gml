@@ -8,9 +8,12 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create event
 object_event_add
-(argument0,ev_create,0,"event_user(0);");
+(argument0,ev_create,0,'
+    event_inherited();
+    event_user(0);
+');
 object_event_add
-(argument0,ev_other,ev_user0,"
+(argument0,ev_other,ev_user0,'
     light_color_var = light_color_scr(image_blend);
     if global.color_var < 2
     {
@@ -29,13 +32,13 @@ object_event_add
         }
         visible = false;
     }
-");
+');
 // Room Start event
 object_event_add
-(argument0,ev_other,ev_room_start,"event_user(0);");
+(argument0,ev_other,ev_room_start,'event_user(0);');
 // Draw event
 object_event_add
-(argument0,ev_draw,0,"
+(argument0,ev_draw,0,'
     if global.color_var // HD style
     {
         d3d_set_projection_ortho(0,0,1,1,0);
@@ -48,4 +51,4 @@ object_event_add
         draw_set_blend_mode(bm_normal);
         d3d_set_hidden(true);
     }
-");
+');

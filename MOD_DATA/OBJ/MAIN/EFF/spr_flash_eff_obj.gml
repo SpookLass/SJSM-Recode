@@ -8,7 +8,8 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create Event
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
+    event_inherited();
     //Defaults
     fade_var = false;
     cam_id_var = 0;
@@ -24,10 +25,10 @@ object_event_add
     alarm_len_var = 2;
     set_alarm_scr(0,irandom_range(30,60));
     set_alarm_scr(1,rand_rate_var);
-");
+');
 // Step Event
 object_event_add
-(argument0,ev_step,ev_step_normal,"
+(argument0,ev_step,ev_step_normal,'
     if anim_var 
     {
         spr_id_var = (spr_id_var+(spr_spd_var*global.delta_time_var)) mod sprite_get_number(spr_var);
@@ -37,7 +38,7 @@ object_event_add
         image_alpha = alarm_arr[0,0]/alarm_arr[0,1];
         if fade_var == 2 { image_alpha=1-image_alpha; }
     }
-");
+');
 // Alarm 0 Event
 object_event_add
 (argument0,ev_alarm,0,'
@@ -56,7 +57,7 @@ object_event_add
 ');
 // Draw Event
 object_event_add
-(argument0,ev_draw,0,"
+(argument0,ev_draw,0,'
     if view_current == cam_id_var || cam_id_var == -1
     {
         d3d_set_projection_ortho
@@ -79,4 +80,4 @@ object_event_add
         );
         d3d_set_hidden(true);
     }
-");
+');

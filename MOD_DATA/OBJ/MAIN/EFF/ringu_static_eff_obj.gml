@@ -8,7 +8,8 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create Event
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
+    event_inherited();
     //Defaults
     alarm_var = 250; // 420 for HD
     spr_var = static_01_spr;
@@ -38,15 +39,15 @@ object_event_add
     }
     // Room start
     event_perform(ev_other,ev_room_start);
-");
+');
 // Room End Event
 object_event_add
-(argument0,ev_other,ev_room_end,"
+(argument0,ev_other,ev_room_end,'
     if !per_var { event_inherited(); }
-");
+');
 // Room Start Event
 object_event_add
-(argument0,ev_other,ev_room_start,"
+(argument0,ev_other,ev_room_start,'
     if !per_var
     {
         set_alarm_scr(0,alarm_var);
@@ -61,10 +62,10 @@ object_event_add
     }
     if alarm_arr[0,0] <= 0
     { set_alarm_scr(0,alarm_var); }
-");
+');
 // Set fog
 object_event_add
-(argument0,ev_other,ev_user0,"
+(argument0,ev_other,ev_user0,'
     global.fog_var = fog_var;
     global.fog_color_var = fog_color_var;
     global.fog_start_var = fog_start_var;
@@ -72,18 +73,18 @@ object_event_add
     global.fog_dark_var = fog_dark_var;
     background_color = global.fog_color_var;
     d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var);
-");
+');
 // Alarm 0 Event
 object_event_add
-(argument0,ev_alarm,0,"
+(argument0,ev_alarm,0,'
     fmod_snd_play_scr(snd_var);
     with (ringu_real_obj)
     { event_perform(ev_other,ev_user15); }
     set_alarm_scr(0,alarm_var);
-");
+');
 // Step Event
 object_event_add
-(argument0,ev_step,ev_step_normal,"
+(argument0,ev_step,ev_step_normal,'
     event_inherited();
     y = (y+(y_spd_var*global.delta_time_var)) mod sprite_get_height(spr_var);
     spr_id_var = (spr_id_var+(spr_spd_var*global.delta_time_var)) mod sprite_get_number(spr_var);
@@ -95,10 +96,10 @@ object_event_add
         event_perform(ev_other,ev_user0);
     }
     else { image_alpha = 1.25*(1-local.per); }
-");
+');
 // Draw Event
 object_event_add
-(argument0,ev_draw,0,"
+(argument0,ev_draw,0,'
     if fog_var
     {
         d3d_set_fog(false,c_black,0,0);
@@ -142,4 +143,4 @@ object_event_add
         draw_sprite_tiled_ext(spr_var,spr_id_var,0,y,1,1,image_blend,image_alpha);
         d3d_set_hidden(true);
     }
-");
+');
