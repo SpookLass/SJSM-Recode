@@ -25,125 +25,35 @@ object_event_add
     {
         for (local.i=0; local.i<global.input_len_var; local.i+=1;)
         {
-            // Previous
-            global.input_prev_arr[local.i,local.j] = global.input_arr[local.i,local.j];
-            // Keyboard
-            if global.input_key_arr[local.i,local.j] > 0 
+            if global.input_key_arr[local.i,local.j] != 0
             {
-                if keyboard_check_pressed(global.input_key_arr[local.i,local.j]) { global.input_arr[local.i,local.j] = true; }
-                if keyboard_check_released(global.input_key_arr[local.i,local.j]) { global.input_arr[local.i,local.j] = false; }
+                // Previous
+                global.input_prev_arr[local.i,local.j] = global.input_arr[local.i,local.j];
+                // Keyboard
+                if global.input_key_arr[local.i,local.j] >= 1 
+                {
+                    if keyboard_check_pressed(global.input_key_arr[local.i,local.j]) { global.input_arr[local.i,local.j] = true; }
+                    if keyboard_check_released(global.input_key_arr[local.i,local.j]) { global.input_arr[local.i,local.j] = false; }
+                }
+                // Mouse
+                else if global.input_key_arr[local.i,local.j] >= -5
+                {
+                    local.button = abs(global.input_key_arr[local.i,local.j]);
+                    if mouse_check_button_pressed(local.button) { global.input_arr[local.i,local.j] = true; }
+                    if mouse_check_button_released(local.button) { global.input_arr[local.i,local.j] = false; }
+                }
+                // Controller
+                else
+                {
+                    local.tempid = max(local.j,1);
+                    local.button = abs(global.input_key_arr[local.i,local.j])-5;
+                    global.input_arr[local.i,local.j] = joystick_check_button(local.tempid,local.button);
+                }
+                // Press
+                global.input_press_arr[local.i,local.j] = global.input_arr[local.i,local.j]-global.input_prev_arr[local.i,local.j];
             }
-            // Mouse
-            else if global.input_key_arr[local.i,local.j] > -6 
-            {
-                local.button = abs(global.input_key_arr[local.i,local.j]);
-                if mouse_check_button_pressed(local.button) { global.input_arr[local.i,local.j] = true; }
-                if mouse_check_button_released(local.button) { global.input_arr[local.i,local.j] = false; }
-            }
-            // Controller
-            else
-            {
-                local.button = abs(global.input_key_arr[local.i,local.j])-5;
-                global.input_arr[local.i,local.j] = joystick_check_button(local.j,local.button);
-            }
-            // Press
-            global.input_press_arr[local.i,local.j] = global.input_arr[local.i,local.j]-global.input_prev_arr[local.i,local.j];
         }
     }
-    /*
-    global.forward_input_prev_var = global.forward_input_var;
-    global.backward_input_prev_var = global.backward_input_var;
-    global.strafe_left_input_prev_var = global.strafe_left_input_var;
-    global.strafe_right_input_prev_var = global.strafe_right_input_var;
-    global.sprint_input_prev_var = global.sprint_input_var;
-    global.jump_input_prev_var = global.jump_input_var;
-    global.crouch_input_prev_var = global.crouch_input_var;
-    global.interact_input_prev_var = global.interact_input_var;
-    global.up_input_prev_var = global.up_input_var;
-    global.down_input_prev_var = global.down_input_var;
-    global.left_input_prev_var = global.left_input_var;
-    global.right_input_prev_var = global.right_input_var;
-    global.confirm_input_prev_var = global.confirm_input_var;
-    global.debug_input_prev_var = global.debug_input_var;
-    global.ff_input_prev_var = global.ff_input_var;
-    global.slow_input_prev_var = global.slow_input_var;
-    global.pause_input_prev_var = global.pause_input_var;
-    global.back_input_prev_var = global.back_input_var;
-    if !global.controller_var
-    {
-        if keyboard_check_pressed(global.forward_key_var) { global.forward_input_var = true; }
-        if keyboard_check_released(global.forward_key_var) { global.forward_input_var = false; }
-        
-        if keyboard_check_pressed(global.backward_key_var) { global.backward_input_var = true; }
-        if keyboard_check_released(global.backward_key_var) { global.backward_input_var = false; }
-        
-        if keyboard_check_pressed(global.strafe_left_key_var) { global.strafe_left_input_var = true; }
-        if keyboard_check_released(global.strafe_left_key_var) { global.strafe_left_input_var = false; }
-        
-        if keyboard_check_pressed(global.strafe_right_key_var) { global.strafe_right_input_var = true; }
-        if keyboard_check_released(global.strafe_right_key_var) { global.strafe_right_input_var = false; }
-
-        if keyboard_check_pressed(global.sprint_key_var) { global.sprint_input_var = true; }
-        if keyboard_check_released(global.sprint_key_var) { global.sprint_input_var = false; }
-
-        if keyboard_check_pressed(global.jump_key_var) { global.jump_input_var = true; }
-        if keyboard_check_released(global.jump_key_var) { global.jump_input_var = false; }
-
-        if keyboard_check_pressed(global.crouch_key_var) { global.crouch_input_var = true; }
-        if keyboard_check_released(global.crouch_key_var) { global.crouch_input_var = false; }
-
-        if keyboard_check_pressed(global.interact_key_var) { global.interact_input_var = true; }
-        if keyboard_check_released(global.interact_key_var) { global.interact_input_var = false; }
-
-        if keyboard_check_pressed(global.up_key_var) { global.up_input_var = true; }
-        if keyboard_check_released(global.up_key_var) { global.up_input_var = false; }
-
-        if keyboard_check_pressed(global.down_key_var) { global.down_input_var = true; }
-        if keyboard_check_released(global.down_key_var) { global.down_input_var = false; }
-
-        if keyboard_check_pressed(global.left_key_var) { global.left_input_var = true; }
-        if keyboard_check_released(global.left_key_var) { global.left_input_var = false; }
-
-        if keyboard_check_pressed(global.right_key_var) { global.right_input_var = true; }
-        if keyboard_check_released(global.right_key_var) { global.right_input_var = false; }
-
-        if keyboard_check_pressed(global.confirm_key_var) { global.confirm_input_var = true; }
-        if keyboard_check_released(global.confirm_key_var) { global.confirm_input_var = false; }
-
-        if keyboard_check_pressed(global.debug_key_var) { global.debug_input_var = true; }
-        if keyboard_check_released(global.debug_key_var) { global.debug_input_var = false; }
-
-        if keyboard_check_pressed(global.ff_key_var) { global.ff_input_var = true; }
-        if keyboard_check_released(global.ff_key_var) { global.ff_input_var = false; }
-
-        if keyboard_check_pressed(global.slow_key_var) { global.slow_input_var = true; }
-        if keyboard_check_released(global.slow_key_var) { global.slow_input_var = false; }
-
-        if keyboard_check_pressed(global.pause_key_var) { global.pause_input_var = true; }
-        if keyboard_check_released(global.pause_key_var) { global.pause_input_var = false; }
-
-        if keyboard_check_pressed(global.back_key_var) { global.back_input_var = true; }
-        if keyboard_check_released(global.back_key_var) { global.back_input_var = false; }
-    }
-    global.forward_input_press_var = global.forward_input_var-global.forward_input_prev_var;
-    global.backward_input_press_var = global.backward_input_var-global.backward_input_prev_var;
-    global.strafe_left_input_press_var = global.strafe_left_input_var-global.strafe_left_input_prev_var;
-    global.strafe_right_input_press_var = global.strafe_right_input_var-global.strafe_right_input_prev_var;
-    global.sprint_input_press_var = global.sprint_input_var-global.sprint_right_input_prev_var;
-    global.jump_input_press_var = global.jump_input_var-global.jump_input_prev_var;
-    global.crouch_input_press_var = global.crouch_input_var-global.crouch_input_prev_var;
-    global.interact_input_press_var = global.interact_input_var-global.interact_input_prev_var;
-    global.up_input_press_var = global.up_input_var-global.up_input_prev_var;
-    global.down_input_press_var = global.down_input_var-global.down_input_prev_var;
-    global.left_input_press_var = global.left_input_var-global.left_input_prev_var;
-    global.right_input_press_var = global.right_input_var-global.right_input_prev_var;
-    global.confirm_input_press_var = global.confirm_input_var-global.confirm_input_prev_var;
-    global.debug_input_press_var = global.debug_input_var-global.debug_input_prev_var;
-    global.ff_input_press_var = global.ff_input_var-global.ff_input_prev_var;
-    global.slow_input_press_var = global.slow_input_var-global.slow_input_prev_var;
-    global.pause_input_press_var = global.pause_input_var-global.pause_input_prev_var;
-    global.back_input_press_var = global.back_input_var-global.back_input_prev_var;
-    */
     // This is pause now
     if global.input_press_arr[pause_input_const,0] == 1 && !instance_exists(pause_menu_obj) && global.draw_3d_var
     {

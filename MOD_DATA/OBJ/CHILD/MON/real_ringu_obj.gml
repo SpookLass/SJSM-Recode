@@ -194,8 +194,9 @@ object_event_add
             alarm_var = other.eff_alarm_var;
             snd_var = other.cam_snd_var;
             set_alarm_scr(0,alarm_var);
-            if fog_var { depth = 99; }
-            else { depth = -99; }
+            if fog_var { depth_base_var = 99; }
+            else { depth_base_var = -99; }
+            depth = depth_base_var;
             event_perform(ev_other,ev_room_start);
         } 
     }

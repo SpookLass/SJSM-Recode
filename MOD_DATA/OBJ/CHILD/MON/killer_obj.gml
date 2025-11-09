@@ -669,7 +669,7 @@ object_event_add
     with instance_create(0,0,fade_eff_obj)
     {
         image_blend = c_white;
-        cam_id_var = hurt_target_var.cam_id_var;
+        cam_id_var = other.hurt_target_var.cam_id_var;
         set_alarm_scr(0,8);
     }
 ');

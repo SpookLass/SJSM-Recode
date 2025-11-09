@@ -352,7 +352,7 @@ object_event_add
     event_inherited();
     with instance_create(0,0,spr_flash_eff_obj)
     {
-        par_var= other.id;
+        par_var = other.id;
         if !irandom(1) { spr_var = other.eff_spr_01_var; }
         else { spr_var = other.eff_spr_02_var; }
         spr_id_var = irandom(sprite_get_number(spr_var)-1);

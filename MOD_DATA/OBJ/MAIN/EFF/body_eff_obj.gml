@@ -77,11 +77,11 @@ object_event_add
     else { local.scale = view_wview[view_current]/1280; }
     d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
     d3d_set_hidden(false);
-    draw_sprite_ext
+    draw_sprite_tiled_ext
     (
         spr_var,floor(spr_id_var),
         x,y,local.scale*image_xscale,local.scale*image_yscale,
-        image_angle,image_blend,image_alpha
+        image_blend,image_alpha
     );
     d3d_set_hidden(true);
 ');

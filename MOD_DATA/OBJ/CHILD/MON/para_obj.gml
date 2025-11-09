@@ -328,9 +328,9 @@ object_event_add
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,'
-    if on_var
+    if on_var && state_var < 2
     {
-        if state_check_var && state_var < 2
+        if state_check_var
         {
             event_perform(ev_alarm,8);
             event_perform(ev_alarm,9);
@@ -348,8 +348,8 @@ object_event_add
                 spr_spd_var = 1;
                 rand_rate_var = 15;
                 set_alarm_scr(0,irandom_range(other.eff_min_var,other.eff_max_var));
-                // Set camera to player
-                cam_id_var = other.attack_target_var.cam_id_var;
+                // Set camera to everyone
+                cam_id_var = -1;
             }
         }
     }
@@ -380,8 +380,8 @@ object_event_add
                     snd_var = fmod_snd_play_scr(other.eff_snd_arr[irandom(other.eff_snd_len_var-1)]);
                     rand_rate_var = 15;
                     set_alarm_scr(0,irandom_range(other.state_eff_min_var,other.state_eff_max_var));
-                    // Set camera to player
-                    cam_id_var = other.attack_target_var.cam_id_var;
+                    // Set camera to everyone
+                    cam_id_var = -1;
                 }
                 event_perform(ev_other,ev_user15);
             }
@@ -413,8 +413,8 @@ object_event_add
                     snd_var = fmod_snd_play_scr(other.eff_snd_arr[irandom(other.eff_snd_len_var-1)]);
                     rand_rate_var = 15;
                     set_alarm_scr(0,irandom_range(other.state_eff_min_var,other.state_eff_max_var));
-                    // Set camera to player
-                    cam_id_var = other.attack_target_var.cam_id_var;
+                    // Set camera to everyone
+                    cam_id_var = -1;
                 }
                 event_perform(ev_other,ev_user15);
                 if state_dur_var > 0 && dur_var > state_dur_var

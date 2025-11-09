@@ -9,7 +9,6 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,0,'
-    event_inherited();
     //Defaults
     alarm_var = 250; // 420 for HD
     spr_var = static_01_spr;
@@ -37,6 +36,7 @@ object_event_add
         event_perform(ev_other,ev_user0);
         depth = 99;
     }
+    event_inherited();
     // Room start
     event_perform(ev_other,ev_room_start);
 ');

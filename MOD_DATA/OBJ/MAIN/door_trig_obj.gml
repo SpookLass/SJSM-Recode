@@ -18,6 +18,7 @@ object_event_add
     do_txt_var = true;
     txt_var = 'Open';
     txt_lock_var = 'Locked.';
+    shadow_off_var = 2;
     // Function
     rm_count_var = 1;
     delay_var = 20;
@@ -38,7 +39,7 @@ object_event_add
 ")
 // Step Event
 object_event_add
-(argument0,ev_step,ev_step_normal,"
+(argument0,ev_step,ev_step_normal,'
     visible = false;
     local.door = id;
     local.active = false;
@@ -84,26 +85,35 @@ object_event_add
     }
     if local.active && local.remaining == 0
     { set_alarm_scr(0,delay_var); }
-");
+');
 // Recalculate Door
 object_event_add
 (argument0,ev_other,ev_user0,'
     if zone_var
     {
-        if ds_list_size(global.rm_list_var) <= 0
+        local.set = false;
+        with door_trig_obj { if zone_var && rm_var != 0 { other.rm_var = rm_var; local.set = true; }}
+        if !local.set
         {
-            ds_list_copy(global.rm_list_var,global.zone_var);
-            ds_list_shuffle(global.rm_list_var);
+            if ds_list_size(global.rm_list_var) <= 0
+            {
+                ds_list_copy(global.rm_list_var,global.zone_var);
+                ds_list_shuffle(global.rm_list_var);
+            }
+            rm_var = ds_list_find_value(global.rm_list_var,0);
+            ds_list_delete(global.rm_list_var,0);
         }
-        rm_var = ds_list_find_value(global.rm_list_var,0);
-        ds_list_delete(global.rm_list_var,0);
     }
 ');
 // Draw Event
 object_event_add
-(argument0,ev_draw,0,"
+(argument0,ev_draw,0,'
     if view_current == cam_id_var 
     {
+        if view_wview[view_current] >= view_hview[view_current]
+        { local.scale = view_hview[view_current]/720; }
+        else { local.scale = view_wview[view_current]/1280; }
+
         if lock_var { local.txt = txt_lock_var; }
         else {local.txt = txt_var; }
 
@@ -113,16 +123,21 @@ object_event_add
         draw_set_halign(fa_center);
         draw_set_valign(fa_bottom);
 
-        draw_set_color(make_color_rgb(30,0,50));
-        draw_text_transformed(638,650,local.txt,1,1,0);
-        draw_text_transformed(636,652,local.txt,1,1,0);
+        local.xtmp = view_wview[view_current]/2;
+        local.ytmp = view_hview[view_current]*0.9;
 
+        local.shadow = shadow_off_var*local.scale;
+
+        draw_set_color(make_color_rgb(30,0,50));
+        draw_text_transformed(local.xtmp-(local.shadow*2),local.ytmp+(local.shadow*2),local.txt,local.scale,local.scale,0);
+        draw_text_transformed(local.xtmp-local.shadow,local.ytmp+local.shadow,local.txt,local.scale,local.scale,0);
+        
         draw_set_color(c_white);
-        draw_text_transformed(640,648,local.txt,1,1,0);
+        draw_text_transformed(local.xtmp,local.ytmp,local.txt,local.scale,local.scale,0);
 
         draw_set_halign(fa_left);
         draw_set_valign(fa_top);
 
         d3d_set_hidden(true);
     }
-");
+');

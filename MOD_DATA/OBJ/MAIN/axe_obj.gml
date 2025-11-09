@@ -8,7 +8,7 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
     event_inherited();
     power_var = 1;
     type_var = 0;
@@ -25,101 +25,106 @@ object_event_add
     coll_var[1] = global.axe_coll[1];
     coll_var[2] = global.axe_coll[2];
     coll_var[3] = global.axe_coll[3];
-");
+');
+// Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,'
-    spr_id_var += spr_spd_var*global.delta_time_var;
-    switch state_var
+    if par_var.on_var
     {
-        case 0:
+        spr_id_var += spr_spd_var*global.delta_time_var;
+        switch state_var
         {
-            if mouse_check_button_pressed(mb_left) && (par_var.stam_var > stam_start_var || stam_start_var <= 0 || !par_var.do_stam_var)
+            case 0:
             {
-                visible = true;
-                state_var = 1;
-                spr_var = spr_raise_var
-                spr_id_var = 0;
-                spr_spd_var = spr_spd_raise_var;
-                if par_var.do_stam_var
-                { par_var.stam_var -= stam_start_var; }
-            }
-            else { break; }
-        }
-        case 1:
-        {
-            if spr_id_var >= sprite_get_number(spr_var) || !mouse_check_button(mb_left)
-            {
-                spr_id_var = sprite_get_number(spr_var) - 1;
-                spr_spd_var = 0;
-                state_var = 2;
-            }
-            else { break; }
-        }
-        case 2:
-        {
-            if !mouse_check_button(mb_left)
-            {
-                // Do the attack thing!
-                spr_id_var = 0;
-                spr_var = spr_swing_var;
-                spr_spd_var = spr_spd_swing_var;
-                state_var = 3;
-                if par_var.do_stam_var
-                { par_var.stam_var -= stam_end_var; }
-                local.player = par_var;
-                local.xtmp = par_var.x;
-                local.ytmp = par_var.y;
-                local.ztmp = par_var.z+par_var.eye_h_var;
-                local.dist = (coll_var[2]-coll_var[3])/2;
-                local.xvel = lengthdir_x(lengthdir_x(local.dist,par_var.eye_yaw_var),par_var.eye_pitch_var);
-                local.yvel = lengthdir_x(lengthdir_y(local.dist,par_var.eye_yaw_var),par_var.eye_pitch_var);
-                local.zvel = -lengthdir_y(local.dist,par_var.eye_pitch_var);
-                local.ydir = degtorad(par_var.eye_pitch_var);
-                local.zdir = degtorad(par_var.eye_yaw_var);
-                p3dc_set_modrot_scr(0,local.ydir,local.zdir);
-                with enemy_par_obj
+                if global.input_press_arr[attack_input_const,par_var.player_id_var] && (par_var.stam_var > stam_start_var || stam_start_var <= 0 || !par_var.do_stam_var)
                 {
-                    if on_var && do_hurt_var && !hurt_var && !enter_var
+                    visible = true;
+                    state_var = 1;
+                    spr_var = spr_raise_var
+                    spr_id_var = 0;
+                    spr_spd_var = spr_spd_raise_var;
+                    if par_var.do_stam_var
+                    { par_var.stam_var -= stam_start_var; }
+                }
+                else { break; }
+            }
+            case 1:
+            {
+                if spr_id_var >= sprite_get_number(spr_var) || !global.input_arr[attack_input_const,par_var.player_id_var]
+                {
+                    spr_id_var = sprite_get_number(spr_var) - 1;
+                    spr_spd_var = 0;
+                    state_var = 2;
+                }
+                else { break; }
+            }
+            case 2:
+            {
+                if !global.input_arr[attack_input_const,par_var.player_id_var]
+                {
+                    // Do the attack thing!
+                    fmod_snd_play_scr(choose(swing_01_snd,swing_02_snd,swing_03_snd,swing_04_snd));
+                    spr_id_var = 0;
+                    spr_var = spr_swing_var;
+                    spr_spd_var = spr_spd_swing_var;
+                    state_var = 3;
+                    if par_var.do_stam_var
+                    { par_var.stam_var -= stam_end_var; }
+                    local.player = par_var;
+                    local.xtmp = par_var.x;
+                    local.ytmp = par_var.y;
+                    local.ztmp = par_var.z+par_var.eye_h_var;
+                    local.dist = (coll_var[2]-coll_var[3])/2;
+                    local.xvel = lengthdir_x(lengthdir_x(local.dist,par_var.eye_yaw_var),par_var.eye_pitch_var);
+                    local.yvel = lengthdir_x(lengthdir_y(local.dist,par_var.eye_yaw_var),par_var.eye_pitch_var);
+                    local.zvel = -lengthdir_y(local.dist,par_var.eye_pitch_var);
+                    local.ydir = degtorad(par_var.eye_pitch_var);
+                    local.zdir = degtorad(par_var.eye_yaw_var);
+                    p3dc_set_modrot_scr(0,local.ydir,local.zdir);
+                    with enemy_par_obj
                     {
-                        // p3dc_ray_scr(coll_var[0],x,y,z,local.xtmp,local.ytmp,local.ztmp,local.xvel,local.yvel,local.zvel)
-                        if p3dc_check_rot_scr(coll_var[0],x,y,z,other.coll_var[0],local.xtmp+local.xvel,local.ytmp+local.yvel,local.ztmp+local.zvel,0,0,0,0,local.ydir,local.zdir)
+                        if on_var && do_hurt_var && !hurt_var && !enter_var
                         {
-                            hurt_weapon_var = other.id;
-                            hurt_target_var = local.player;
-                            hurt_power_var = other.power_var;
-                            hurt_type_var = other.type_var;
-                            event_user(4);
+                            // p3dc_ray_scr(coll_var[0],x,y,z,local.xtmp,local.ytmp,local.ztmp,local.xvel,local.yvel,local.zvel)
+                            if p3dc_check_rot_scr(coll_var[0],x,y,z,other.coll_var[0],local.xtmp+local.xvel,local.ytmp+local.yvel,local.ztmp+local.zvel,0,0,0,0,local.ydir,local.zdir)
+                            {
+                                hurt_weapon_var = other.id;
+                                hurt_target_var = local.player;
+                                hurt_power_var = other.power_var;
+                                hurt_type_var = other.type_var;
+                                event_user(4);
+                            }
+                        }
+                    }
+                    with prop_par_obj
+                    {
+                        if weapon_var
+                        {
+                            // p3dc_ray_scr(coll_var[0],x,y,z,local.xtmp,local.ytmp,local.ztmp,local.xvel,local.yvel,local.zvel)
+                            if p3dc_check_rot_scr(coll_var[0],x,y,z,other.coll_var[0],local.xtmp+local.xvel,local.ytmp+local.yvel,local.ztmp+local.zvel,0,0,degtorad(direction),0,local.ydir,local.zdir)
+                            {
+                                hurt_weapon_var = other.id;
+                                hurt_target_var = local.player;
+                                hurt_power_var = other.power_var;
+                                hurt_type_var = other.type_var;
+                                event_user(4);
+                            }
                         }
                     }
                 }
-                with prop_par_obj
-                {
-                    if weapon_var
-                    {
-                        // p3dc_ray_scr(coll_var[0],x,y,z,local.xtmp,local.ytmp,local.ztmp,local.xvel,local.yvel,local.zvel)
-                        if p3dc_check_rot_scr(coll_var[0],x,y,z,other.coll_var[0],local.xtmp+local.xvel,local.ytmp+local.yvel,local.ztmp+local.zvel,0,0,degtorad(direction),0,local.ydir,local.zdir)
-                        {
-                            hurt_weapon_var = other.id;
-                            hurt_target_var = local.player;
-                            hurt_power_var = other.power_var;
-                            hurt_type_var = other.type_var;
-                            event_user(4);
-                        }
-                    }
-                }
+                break;
             }
-            break;
-        }
-        case 3:
-        {
-            if spr_id_var >= sprite_get_number(spr_var)
+            case 3:
             {
-                spr_id_var = sprite_get_number(spr_var) - 1;
-                spr_spd_var = 0;
-                visible = false;
-                state_var = 0;
+                if spr_id_var >= sprite_get_number(spr_var)
+                {
+                    spr_id_var = sprite_get_number(spr_var) - 1;
+                    spr_spd_var = 0;
+                    visible = false;
+                    state_var = 0;
+                }
+                break;
             }
-            break;
         }
     }
 ');

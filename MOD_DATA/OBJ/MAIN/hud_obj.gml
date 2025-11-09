@@ -111,14 +111,7 @@ object_event_add
             local.value = lerp_scr(0,255,local.per);
             draw_set_blend_mode(bm_subtract);
             draw_set_color(make_color_rgb(0,local.value,local.value));
-            draw_rectangle
-            (
-                view_xview[view_current],
-                view_yview[view_current],
-                view_xview[view_current]+view_wview[view_current],
-                view_yview[view_current]+view_hview[view_current],
-                false
-            );
+            draw_rectangle(0,0,view_wview[view_current],view_hview[view_current],false);
             draw_set_color(c_white);
             draw_set_blend_mode(bm_normal);
         }

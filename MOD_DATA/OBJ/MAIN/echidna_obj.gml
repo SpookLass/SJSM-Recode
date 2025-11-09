@@ -737,7 +737,7 @@ object_event_add
     }
     else { is_seen_var = -1; seen_per_var = -1; }
 ');
-// Determine target
+// Target Event
 object_event_add
 (argument0,ev_other,ev_user6,'
     if enter_var
@@ -755,7 +755,7 @@ object_event_add
         with (player_obj)
         {
             local.dist = point_distance_3d_scr(other.x,other.y,other.z,x,y,z);
-            if !dead_var && (other.target_var == noone || local.dist < other.target_dist_var)
+            if on_var && !in_door_var && !dead_var && (other.target_var == noone || local.dist < other.target_dist_var)
             {
                 other.target_var = id;
                 other.target_dist_var = local.dist;
