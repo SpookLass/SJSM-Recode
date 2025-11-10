@@ -1420,6 +1420,22 @@ object_event_add
                     local.hud.par_var = local.player;
                     local.axe = instance_create(0,0,axe_obj);
                     local.axe.par_var = local.player;
+                    if global.player_len_var > 1
+                    {
+                        local.render = instance_create(0,0,player_render_obj);
+                        local.render.par_var = local.player;
+                        if global.player_len_var <= 4
+                        {
+                            switch local.i
+                            {
+                                case 1: { local.render.image_blend = make_color_rgb(64,128,0); break; }
+                                case 2: { local.render.image_blend = make_color_rgb(128,64,0); break; }
+                                case 3: { local.render.image_blend = make_color_rgb(128,0,64); break; }
+                                default: { local.render.image_blend = make_color_rgb(64,0,128); break; }
+                            }
+                        }
+                        else { local.render.image_blend = make_color_hsv(255*local.i/global.player_len_var,255,128); }
+                    }
                 }
 				instance_create(0,0,mus_control_obj);
                 global.count_var = get_count_scr();

@@ -1,5 +1,5 @@
 // Builtin Variables
-object_set_depth(argument0,-2);
+object_set_depth(argument0,-3);
 object_set_mask(argument0,noone);
 object_set_parent(argument0,mon_par_obj);
 object_set_persistent(argument0,true);
@@ -225,6 +225,7 @@ object_event_add
     event_perform(ev_create,1);
     event_perform(ev_create,2);
     event_perform(ev_create,3);
+    event_inherited();
 ');
 // Destroy Event
 object_event_add

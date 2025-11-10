@@ -186,10 +186,32 @@ object_event_add
     z = global.spawn_arr[0,2];
     if global.player_len_var > 1
     {
-        local.dist = sqrt(128);
-        local.dir = (player_id_var*-90)+45;
-        x += lengthdir_x(local.dist,local.dir);
-        y += lengthdir_y(local.dist,local.dir);
+        switch global.player_len_var
+        {
+            case 2:
+            {
+                if player_id_var { y += 8; }
+                else { y -= 8; }
+                break;
+            }
+            case 4:
+            {
+                local.dist = sqrt(128);
+                local.dir = (player_id_var*-90)+45;
+                x += lengthdir_x(local.dist,local.dir);
+                y += lengthdir_y(local.dist,local.dir);
+                break;
+            }
+            default:
+            {
+                local.dist = 8;
+                local.dir = 360*player_id_var/global.player_len_var;
+                x += lengthdir_x(local.dist,local.dir);
+                y += lengthdir_y(local.dist,local.dir);
+                break;
+            }
+        }
+        
     }
     eye_yaw_var = global.spawn_arr[0,3];
     eye_pitch_var = 0;

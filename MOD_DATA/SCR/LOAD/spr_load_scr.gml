@@ -10,6 +10,8 @@ while (local.file != "")
     local.file = file_find_next();
 }
 file_find_close();
+// Player
+file_to_spr_scr(vanilla_directory_const+"\TEX\sprites\EX_03_spr.png","ghost_spr",3,false,false,0,0,argument0);
 // Spooky
 file_to_spr_scr(vanilla_directory_const+"\TEX\sprites\spooky_spr.png","spooky_spr",9,false,false,0,0,argument0);
 file_to_spr_scr(vanilla_directory_const+"\TEX\sprites\spooky2_spr.png","spooky_sad_spr",9,false,false,0,0,argument0);

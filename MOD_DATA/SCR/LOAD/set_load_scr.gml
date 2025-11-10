@@ -34,7 +34,7 @@ global.bar_hud_var = ini_read_real("MAIN","bar_hud",bar_hud_const);
 global.tps_hud_var = ini_read_real("MAIN","tps_hud",tps_hud_const);
 // Controls
 global.input_len_var = 24;
-for (local.i=0; local.i<4; local.i+=1;)
+for (local.i=0; local.i<8; local.i+=1;)
 {
     global.sens_var[local.i] = ini_read_real("CONTROL","sens_"+string(local.i),sens_const);
     global.invert_yaw_var[local.i] = ini_read_real("CONTROL","invert_yaw_"+string(local.i),invert_yaw_const);
