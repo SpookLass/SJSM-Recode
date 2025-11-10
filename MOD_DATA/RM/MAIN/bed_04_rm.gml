@@ -109,7 +109,7 @@ room_instance_add(argument0,320,208,ceil_2high_obj);
 room_instance_add(argument0,320,176,ceil_2high_obj);
 // Walls (Horizontal)
 room_instance_add(argument0,256,352,wall_hor_obj);
-room_instance_add(argument0,256,352,wall_manor_hor_obj);
+
 room_instance_add(argument0,192,160,wall_2high_hor_obj);
 room_instance_add(argument0,192,352,wall_2high_hor_obj);
 room_instance_add(argument0,224,352,wall_2high_hor_obj);
@@ -137,3 +137,5 @@ room_instance_add(argument0,192,208,bed_rand_obj);
 room_instance_add(argument0,256,168,drawer_rand_obj);
 room_instance_add(argument0,320,336,table_rand_obj);
 room_instance_add(argument0,336,272,painting_vert_obj);
+room_instance_add(argument0,256,352,window_01_high_hor_obj);
+room_instance_add(argument0,256,352,window_02_high_hor_obj);

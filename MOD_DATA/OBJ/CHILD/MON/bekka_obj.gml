@@ -292,7 +292,8 @@ object_event_add
                 if trig_type_var
                 {
                     event_user(6);
-                    if target_dist_var < trig_dist_var
+                    if instance_exists(target_var)
+                    && target_dist_var < trig_dist_var
                     { local.active = true; }
                 }
                 else
