@@ -371,6 +371,13 @@ object_event_add
     event_inherited();
     if do_acc_var > 1 { set_motion_3d_scr(0,true); }
     if stun_var { z_off_var = 0; }
+    if fmod_inst_is_play_scr(snd_var) && fmod_inst_is_3d_scr(snd_var)
+    { fmod_inst_stop_scr(snd_var); }
+    local.snd = irandom(snd_len_var-1);
+    snd_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0]);
+    sub_var[0] = snd_arr[local.snd,1];
+    sub_var[1] = snd_arr[local.snd,2];
+    set_alarm_scr(6,irandom_range(snd_alarm_min_var,snd_alarm_max_var));
 ');
 // Determine target
 object_event_add

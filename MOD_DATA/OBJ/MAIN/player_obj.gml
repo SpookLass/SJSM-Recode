@@ -97,6 +97,13 @@ object_event_add
     current_fov_var = fov_var;
     fov_rate_var = 0.2;
     fov_rate_min_var = 0.5;
+    // Flare
+    flare_yaw_var = 5.856;
+    flare_pitch_var = 5.856;
+    flare_rate_01_var = 0.01;
+    flare_rate_02_var = 0.02;
+    flare_dist_var = 120;
+    do_flare_per_var = true;
     // Door
     enter_delay_var = 20;
     // Shake
@@ -116,12 +123,16 @@ object_event_add
             back_var = true;
             normal_var = false;
             breath_do_var = false;
+            flare_pitch_var = 0;
+            do_flare_per_var = false;
             break;
         }
         case 2:
         {
+            breath_do_var = false;
             spd_base_var = 5/pf_ms_rate_const;
             sprint_spd_mult_var = 1.8;
+            do_flare_per_var = false;
             break;
         }
     }
@@ -664,6 +675,39 @@ object_event_add
                 }
             }
         }
+        // Lens flare
+        flare_per_var = 0;
+        with light_torch_obj
+        {
+            local.dist = point_distance_3d_scr(other.x,other.y,other.z,x,y,z);
+            if local.dist <= other.flare_dist_var
+            {
+                local.distper = local.dist/other.flare_dist_var;
+                if other.flare_yaw_var
+                {
+                    local.yaw = abs(deg_diff_scr(point_direction(other.x,other.y,x,y),other.eye_yaw_var));
+                    local.radius = w_var/2; local.angle = radtodeg(arctan2(local.radius,local.dist));
+                    local.seenyaw = (local.yaw <= other.flare_yaw_var+local.angle); local.yawper = (local.yaw+local.angle)/(other.flare_yaw_var+local.angle);
+                }
+                else { local.seenyaw = true; local.yawper = 0; }
+                if other.flare_pitch_var
+                {
+                    local.pitch = abs(deg_diff_scr(point_direction_3d_scr(other.x,other.y,other.z+other.eye_h_var,x,y,z),other.eye_pitch_var));
+                    local.height = h_var/2; local.angle = radtodeg(arctan2(local.height,local.dist));
+                    local.seenpitch = (local.pitch <= other.flare_pitch_var+local.angle); local.pitchper = (local.pitch+local.angle)/(other.flare_pitch_var+local.angle);
+                }
+                else { local.seenpitch = true; local.pitchper = 0; }
+                if local.seenpitch && local.seenyaw { other.flare_per_var = max(other.flare_per_var,1-max(local.yawper,local.pitchper,local.distper))}
+            }
+        }
+        if do_flare_per_var { local.target = flare_per_var; }
+        else { local.target = sign(flare_per_var); }
+        if flare_var != local.target
+        {
+            if flare_var < local.target { flare_var = min(local.target,flare_var+(flare_rate_01_var*global.delta_time_var)); }
+            else { flare_var = max(local.target,flare_var-(flare_rate_02_var*global.delta_time_var)); }
+        }
+        flare_var = median(0,1,flare_var);
         // Set camera and listener position
         cam_set_scr(cam_id_var,cam_x_var,cam_y_var,cam_z_var,cam_yaw_var,cam_pitch_var,current_fov_var,cam_roll_var);
         // Could put this in control, but needs extra camera boolean

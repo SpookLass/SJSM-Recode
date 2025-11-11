@@ -39,6 +39,7 @@ object_event_add
     for (local.i=0; local.i<snd_len_var; local.i+=1)
     { snd_arr[local.i,1] = local.sub; }
     wake_snd_var[2] = local.sub;
+    slime_snd_var[2] = local.sub;
     ini_close();
     type_var = 0;
     spd_base_var = 0.6;
@@ -64,6 +65,7 @@ object_event_add
             for (local.i=0; local.i<snd_len_var; local.i+=1;)
             { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
             other.wake_snd_var[1] = wake_snd_var[1];
+            other.slime_snd_var[1] = slime_snd_var[1];
             other.mus_snd_var = mus_snd_var;
             local.loaded = true;
             break;
@@ -79,6 +81,7 @@ object_event_add
         snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_03_snd.wav",true);
         snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_04_snd.wav",true);
         wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_wake_snd.wav");
+        slime_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_wake_snd.wav",true);
         mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_mus_snd.mp3");
     }
     // Coward
@@ -129,8 +132,7 @@ object_event_add
             hurt_snd_var = 1;
             coward_var = false;
             do_slime_spawn_var = true;
-            stun_var = true;
-            hurt_alarm_var = slime_alarm_var;
+            stun_var = 2;
             do_hurt_var = 1;
             break;
         }
@@ -164,11 +166,11 @@ object_event_add
             hurt_snd_var = 2;
             coward_var = false;
             do_slime_spawn_var = true;
-            stun_var = true;
-            hurt_alarm_var = slime_alarm_var;
+            stun_var = 2;
             do_hurt_var = 1;
             violence_var = 2;
             hurt_eff_var = true;
+            slime_snd_var[0] = true;
             break;
         }
     }
@@ -210,7 +212,7 @@ object_event_add
 ');
 // Destroy Event
 object_event_add
-(argument0,ev_destroy,0,"
+(argument0,ev_destroy,0,'
     event_inherited();
     if instance_number(object_index) <= 1
     {
@@ -219,21 +221,22 @@ object_event_add
         for (local.i=0; local.i<snd_len_var; local.i+=1;)
         { fmod_snd_free_scr(snd_arr[local.i,0]); }
         fmod_snd_free_scr(wake_snd_var[1]);
+        fmod_snd_free_scr(slime_snd_var[1]);
         fmod_snd_free_scr(mus_snd_var);
     }
     with slime_obj { if par_var = other.id { instance_destroy(); }}
-");
+');
 // Slime alarm
 object_event_add
-(argument0,ev_alarm,8,"
+(argument0,ev_alarm,8,'
     slime_spawn_var = false;
     h_var = h_base_var;
     z_off_var = z_off_base_var;
     slime_w_var = 0;
-");
+');
 // Step Event
 object_event_add
-(argument0,ev_step,ev_step_normal,"
+(argument0,ev_step,ev_step_normal,'
     event_inherited();
     switch slime_spawn_var
     {
@@ -256,10 +259,10 @@ object_event_add
             break;
         }
     }
-");
+');
 // Movement
 object_event_add
-(argument0,ev_other,ev_user0,"
+(argument0,ev_other,ev_user0,'
     if enter_var && do_slime_spawn_var && target_dist_var <= spd_base_var*spd_mult_var
     {
         enter_var = false;
@@ -274,13 +277,22 @@ object_event_add
         set_alarm_scr(1,slime_alarm_var);
         set_alarm_scr(4,slime_alarm_var);
         set_motion_scr(0,true);
+        // Stupid wake sound
+        if slime_snd_var[0]
+        {
+            if fmod_inst_is_play_scr(snd_var) && fmod_inst_is_3d_scr(snd_var)
+            { fmod_inst_stop_scr(snd_var); }
+            snd_var = fmod_snd_3d_play_scr(slime_snd_var[1]);
+            sub_var[0] = slime_snd_var[2];
+            sub_var[1] = slime_snd_var[3];
+        }
         // Slime Spawning
         event_user(6);
         local.bestdist = target_dist_var;
         local.slime = noone;
         with slime_obj
         {
-            if par_var = other.id
+            if par_var == other.id
             {
                 local.dist = point_distance_3d_scr(x,y,z,other.target_x_var,other.target_y_var,other.target_z_var);
                 if local.dist < local.bestdist
@@ -321,15 +333,13 @@ object_event_add
     }
     if coward_var && hurt_var { spd_mult_var *= -coward_spd_var; }
     event_inherited();
-");
+');
 // Hurt
 object_event_add
-(argument0,ev_other,ev_user4,"
+(argument0,ev_other,ev_user4,'
     event_inherited();
-    if do_slime_spawn_var && stun_var
+    if do_slime_spawn_var && stun_var == 2
     {
-        slime_spawn_var = 1;
-        set_alarm_scr(8,hurt_alarm_var);
         if hurt_eff_var
         {
             with instance_create(0,0,flash_eff_obj)
@@ -339,11 +349,68 @@ object_event_add
                 set_alarm_scr(0,18);
             }
         }
+        set_motion_3d_scr(0,true);
+        local.dist = check_ray_scr(x,y,z+(coll_var[2]/2),0,0,-1);
+        if local.dist < 10000000
+        {
+            slime_spawn_var = 3;
+            if slime_anim_var > 0
+            { h_var = 0; }
+            z_off_var = z_off_start_var;
+            slime_w_var = slime_w_base_var;
+            slime_angle_var = random(360);
+            // Snap to floor
+            z = local.dist-(coll_var[2]/2);
+            // Stun
+            move_var = false;
+            atk_var = false;
+            // Stop the alarms!
+            set_alarm_scr(1,-1);
+            set_alarm_scr(4,-1);
+            set_alarm_scr(8,-1);
+            set_alarm_scr(6,hurt_alarm_var+irandom_range(snd_alarm_min_var,snd_alarm_max_var));
+        }
+        else
+        {
+            on_var = false;
+            reset_alarm_scr();
+        }
     }
-");
+    else
+    {
+        if fmod_inst_is_play_scr(snd_var) && fmod_inst_is_3d_scr(snd_var)
+        { fmod_inst_stop_scr(snd_var); }
+        local.snd = irandom(snd_len_var-1);
+        snd_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0]);
+        sub_var[0] = snd_arr[local.snd,1];
+        sub_var[1] = snd_arr[local.snd,2];
+        set_alarm_scr(6,irandom_range(snd_alarm_min_var,snd_alarm_max_var));
+    }
+');
+// Hurt Alarm
+object_event_add
+(argument0,ev_alarm,3,'
+    event_inherited();
+    if do_slime_spawn_var && stun_var == 2
+    {
+        slime_spawn_var = 1;
+        set_alarm_scr(1,slime_alarm_var);
+        set_alarm_scr(4,slime_alarm_var);
+        set_alarm_scr(8,slime_alarm_var);
+        // Stupid wake sound
+        if slime_snd_var[0]
+        {
+            if fmod_inst_is_play_scr(snd_var) && fmod_inst_is_3d_scr(snd_var)
+            { fmod_inst_stop_scr(snd_var); }
+            snd_var = fmod_snd_3d_play_scr(slime_snd_var[1]);
+            sub_var[0] = slime_snd_var[2];
+            sub_var[1] = slime_snd_var[3];
+        }
+    }
+');
 // Draw
 object_event_add
-(argument0,ev_draw,0,"
+(argument0,ev_draw,0,'
     event_inherited();
     if slime_spawn_var > 0
     {
@@ -356,4 +423,4 @@ object_event_add
         d3d_transform_set_identity();
         draw_set_color(c_white); draw_set_alpha(1);
     }
-");
+');

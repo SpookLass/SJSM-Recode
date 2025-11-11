@@ -90,6 +90,13 @@ object_event_add
     {
         d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
         d3d_set_hidden(false);
+        // Flare
+        if par_var.flare_var > 0
+        {
+            draw_set_blend_mode(bm_add);
+            draw_background_stretched_ext(lens_01_bg,0,0,view_wview[view_current],view_hview[view_current],c_white,par_var.flare_var);
+            draw_set_blend_mode(bm_normal);
+        }
         // Taker!
         if par_var.alarm_arr[3,0] < par_var.alarm_arr[3,1]/2
         {
