@@ -1,6 +1,6 @@
 // execute_file(main_directory_const+"\SCR\LOAD\scr_load_scr.gml");
-execute_file(main_directory_const+"\SCR\LOAD\mod_load_scr.gml");
 execute_file(main_directory_const+"\SCR\LOAD\set_load_scr.gml");
+execute_file(main_directory_const+"\SCR\LOAD\mod_load_scr.gml");
 execute_file(main_directory_const+"\SCR\LOAD\spr_load_scr.gml");
 execute_file(main_directory_const+"\SCR\LOAD\bg_load_scr.gml");
 execute_file(main_directory_const+"\SCR\LOAD\snd_load_scr.gml");
@@ -15,9 +15,9 @@ sf_ini_scr();
 // Initialize mods
 for (local.i=0; local.i<ds_list_size(global.mod_list); local.i+=1;)
 {
-    local.dir = ds_list_find_valuee(global.mod_list,local.i);
+    local.dir = ds_list_find_value(global.mod_list,local.i);
     local.file = local.dir+"\SCR\LOAD\mod_load_scr.gml";
-    if file_exists(local.file) { execute-file(local.file); }
+    if file_exists(local.file) { execute_file(local.file); }
 }
 // Gay
 global.pride_len_var = 30;

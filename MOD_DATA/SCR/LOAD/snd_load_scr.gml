@@ -36,7 +36,7 @@ file_find_close();
 // Mod stuff
 for (local.i=0; local.i<ds_list_size(global.mod_list); local.i+=1;)
 {
-    local.dir = ds_list_find_valuee(global.mod_list,local.i);
+    local.dir = ds_list_find_value(global.mod_list,local.i);
     // Wave
     local.file = file_find_first(local.dir+"\SND\MAIN\*.wav",-1);
     while (local.file != "")
