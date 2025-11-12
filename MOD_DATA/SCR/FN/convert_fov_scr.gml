@@ -1,9 +1,11 @@
 /*
 Argument 0: FOV
-Argument 1: Return Type (0: Vertical, 1: Horizontal)
+Argument 1: Width
+Argument 2: Height
+Argument 3: Return Type (0: Vertical, 1: Horizontal)
 Returns the specified FOV. 
 Classic player sight sprite is 70 degrees horizontal
 Classic FOV is 50 degrees vertical
 */
-if argument1 { local.rate = 16/9; } else { local.rate = 9/16; }
+if argument3 { local.rate = argument1/argument2; } else { local.rate = argument2/argument1; }
 return 2*radtodeg(arctan(tan(degtorad(argument0)/2)*(local.rate)));

@@ -10,14 +10,23 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,0,'
     event_inherited();
-    y_spd_var = -1;
+    //Defaults
+    spr_var = static_01_spr;
+    spr_spd_var = 0.1;
+    image_blend = c_white;
+    image_alpha = 0.025;
     image_xscale = 4;
     image_yscale = 4;
+    // Overlay
+    overlay_var = false;
+    overlay_bg_var = noone;
+    overlay_alpha_var = 0.5; // 0.25 for flashlight 2
+    overlay_color_var = c_white;
 ');
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,'
-    y = (y+(y_spd_var*global.delta_time_var)) mod (background_get_height(bg_var)*image_yscale);
+    spr_id_var = (spr_id_var+(spr_spd_var*global.delta_time_var)) mod sprite_get_number(spr_var);
 ');
 // Draw Event
 object_event_add
@@ -27,15 +36,9 @@ object_event_add
     else { local.scale = view_wview[view_current]/1280; }
     d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
     d3d_set_hidden(false);
-    local.ytmp = y+(global.cam_pitch_var[view_current]*16);
-    if abs(yaw_prev_var[view_current]-global.cam_yaw_var[view_current]) > 180
-    {
-        if x_off_var[view_current] != 0 { x_off_var[view_current] = 0; }
-        else { x_off_var[view_current] = 5760/*background_get_width(bg_var)*image_xscale;*/ }
-    }
-    local.xtmp = x_off_var[view_current]+(global.cam_yaw_var[view_current]*16);
-    yaw_prev_var[view_current] = global.cam_yaw_var[view_current];
-    draw_background_tiled_ext(bg_var,local.scale*local.xtmp/2,local.scale*local.ytmp/2,local.scale*image_xscale/2,local.scale*image_yscale/2,image_blend,image_alpha/2);
-    draw_background_tiled_ext(bg_var,local.scale*local.xtmp,local.scale*local.ytmp,local.scale*image_xscale,local.scale*image_yscale,image_blend,image_alpha); 
-    d3d_set_hidden(true);
+    if overlay_var && background_exists(overlay_bg_var)
+    { draw_background_stretched_ext(overlay_bg_var,0,0,view_wview[view_current],view_hview[view_current],overlay_color_var,overlay_alpha_var); }
+    draw_set_blend_mode(bm_add);
+    draw_sprite_tiled_ext(spr_var,floor(spr_id_var),0,0,local.scale*image_xscale,local.scale*image_yscale,image_blend,image_alpha);
+    draw_set_blend_mode(bm_normal); d3d_set_hidden(true);
 ');

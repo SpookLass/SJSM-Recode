@@ -65,3 +65,30 @@ while (local.file != "")
     local.file = file_find_next();
 }
 file_find_close();
+// Mods (oh god what a mess)
+for (local.i=0; local.i<ds_list_size(global.mod_list); local.i+=1;)
+{
+    local.dir = ds_list_find_valuee(global.mod_list,local.i);
+    // Parent
+    local.file = file_find_first(local.dir+"\OBJ\PAR\*.gml",-1);
+    while (local.file != "")
+    {
+        file_to_obj_scr(local.dir+"\OBJ\PAR\"+local.file,filename_change_ext(local.file,""),argument0);
+        local.file = file_find_next();
+    }
+    file_find_close();
+    // Main
+    local.file = file_find_first(local.dir+"\OBJ\MAIN\*.gml",-1);
+    while (local.file != "")
+    {
+        file_to_obj_scr(local.dir+"\OBJ\MAIN\"+local.file,filename_change_ext(local.file,""),argument0);
+        local.file = file_find_next();
+    }
+    // Child
+    local.file = file_find_first(local.dir+"\OBJ\CHILD\*.gml",-1);
+    while (local.file != "")
+    {
+        file_to_obj_scr(local.dir+"\OBJ\CHILD\"+local.file,filename_change_ext(local.file,""),argument0);
+        local.file = file_find_next();
+    }
+}

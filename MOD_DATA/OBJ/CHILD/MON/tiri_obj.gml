@@ -174,7 +174,7 @@ object_event_add
         for (local.i=0; local.i<snd_len_var; local.i+=1;)
         { fmod_snd_free_scr(snd_arr[local.i,0]); }
     }
-    with kh_overlay_obj
+    with fog_overlay_obj
     { if par_var == other.id { instance_destroy(); }}
     with tiri_shadow_obj
     { if par_var == other.id { instance_destroy(); }}
@@ -205,13 +205,13 @@ object_event_add
         }
     }
     // Effects
-    if !instance_exists(kh_overlay_obj)
+    if !instance_exists(fog_overlay_obj)
     {
-        with instance_create(0,0,kh_overlay_obj) do
+        with instance_create(0,0,fog_overlay_obj) do
         {
             par_var = other.id;
             bg_var = other.bg_overlay_var;
-            y_spd_var = 1;
+            y_spd_var = 0.25;
             image_blend = other.overlay_color_var;
             image_alpha = other.overlay_alpha_var;
         }

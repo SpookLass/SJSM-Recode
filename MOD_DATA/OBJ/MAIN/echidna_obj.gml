@@ -188,6 +188,8 @@ object_event_add
             fmod_snd_set_group_scr(wake_snd_var[1],snd_group_mon_const);
         }
     }
+    if snd_delay_min_var == 0 { snd_delay_min_var = snd_alarm_min_var}
+    if snd_delay_max_var == 0 { snd_delay_max_var = snd_alarm_max_var}
     // Theme
     if mus_prio_var > amb_mus_prio_const
     {
@@ -306,7 +308,7 @@ object_event_add
             sub_var[0] = snd_arr[0,1];
             sub_var[1] = snd_arr[0,2];
         }
-        else { set_alarm_scr(6,irandom_range(snd_alarm_min_var,snd_alarm_max_var)); }
+        else { set_alarm_scr(6,irandom_range(snd_delay_min_var,snd_delay_max_var)); }
     }
     if do_door_var
     {
@@ -678,7 +680,7 @@ object_event_add
                 else { snd_var = fmod_snd_play_scr(hurt_snd_var[1]); }
                 sub_var[0] = hurt_snd_var[2];
                 sub_var[1] = hurt_snd_var[3];
-                if do_snd_var { set_alarm_scr(6,irandom_range(snd_alarm_min_var,snd_alarm_max_var)); }
+                if do_snd_var { set_alarm_scr(6,irandom_range(snd_delay_min_var,snd_delay_max_var)); }
                 break;
             }
         }
@@ -877,7 +879,7 @@ object_event_add
                     else { snd_var = fmod_snd_play_scr(atk_start_snd_var[1]); }
                     sub_var[0] = atk_start_snd_var[2];
                     sub_var[1] = atk_start_snd_var[3];
-                    if do_snd_var { set_alarm_scr(6,irandom_range(snd_alarm_min_var,snd_alarm_max_var)); }
+                    if do_snd_var { set_alarm_scr(6,irandom_range(snd_delay_min_var,snd_delay_max_var)); }
                     break;
                 }
             }

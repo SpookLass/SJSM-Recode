@@ -680,7 +680,7 @@ object_event_add
         with light_torch_obj
         {
             local.dist = point_distance_3d_scr(other.x,other.y,other.z,x,y,z);
-            if local.dist <= other.flare_dist_var
+            if local.dist <= other.flare_dist_var && visible
             {
                 local.distper = local.dist/other.flare_dist_var;
                 if other.flare_yaw_var

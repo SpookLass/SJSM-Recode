@@ -10,6 +10,18 @@ while (local.file != "")
     local.file = file_find_next();
 }
 file_find_close();
+// Mod stuff
+for (local.i=0; local.i<ds_list_size(global.mod_list); local.i+=1;)
+{
+    local.dir = ds_list_find_valuee(global.mod_list,local.i);
+    local.file = file_find_first(local.dir+"\SPR\MAIN\*.png",-1);
+    while (local.file != "")
+    {
+        file_to_spr_scr(local.dir+"\SPR\MAIN\"+local.file,filename_change_ext(local.file,""),1,false,false,0,0,argument0);
+        local.file = file_find_next();
+    }
+    file_find_close();
+}
 // Player
 file_to_spr_scr(vanilla_directory_const+"\TEX\sprites\EX_03_spr.png","ghost_spr",3,false,false,0,0,argument0);
 // Spooky

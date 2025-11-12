@@ -8,12 +8,12 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,false);
 // Create
 object_event_add // ev_create,0
-(argument0,ev_other,ev_room_start,"
+(argument0,ev_other,ev_room_start,'
     ds_list_clear(global.mon_curr_list);
     local.mons = 0;
     with mon_par_obj
     {
-        ds_list_add(global.mon_curr_list,object_index); 
+        ds_list_add(global.mon_curr_list,id);
         local.mons += 1;
         if intro_var || boss_var
         { local.nospawn = true; }
@@ -32,23 +32,21 @@ object_event_add // ev_create,0
                     if global.dupe_var == dupe_never_const || local.mon.dupe_var == dupe_never_const
                     || (global.dupe_var == dupe_canon_const && local.mon.dupe_var != dupe_canon_const)
                     {
-                        local.index = ds_list_find_index(global.mon_spawn_list,local.mon);
+                        local.index = ds_list_find_index(global.mon_spawn_list,local.mon.object_index);
                         if local.index != -1 { ds_list_delete(global.mon_spawn_list,local.index); }
                     }
                 }
                 local.size = ds_list_size(global.mon_spawn_list);
                 while local.size > 0 && local.mons < get_mult_scr()
                 {
-                    local.mon = ds_list_find_value(global.mon_spawn_list,irandom(local.size-1));
-                    ds_list_add(global.mon_curr_list,local.mon);
+                    local.mon = instance_create(0,0,ds_list_find_value(global.mon_spawn_list,irandom(local.size-1)));
                     if global.dupe_var == dupe_never_const || local.mon.dupe_var == dupe_never_const
                     || (global.dupe_var == dupe_canon_const && local.mon.dupe_var != dupe_canon_const)
                     {
-                        local.index = ds_list_find_index(global.mon_spawn_list,local.mon);
+                        local.index = ds_list_find_index(global.mon_spawn_list,local.mon.object_index);
                         if local.index != -1 { ds_list_delete(global.mon_spawn_list,local.index); }
                         local.size = ds_list_size(global.mon_spawn_list)
                     }
-                    instance_create(0,0,local.mon);
                     local.mons += 1;
                     if global.reset_spd_var > 0 && global.game_spd_var > 1
                     { global.game_spd_var = 1; fmod_group_set_pitch_scr(0,global.game_spd_var); }
@@ -64,18 +62,18 @@ object_event_add // ev_create,0
                     for (local.i=0; local.i<ds_list_size(global.mon_curr_list); local.i+=1;)
                     {
                         local.mon = ds_list_find_value(global.mon_curr_list,local.i);
-                        if local.mon.dupe_var < global.dupe_var
+                        if global.dupe_var == dupe_never_const || local.mon.dupe_var == dupe_never_const
+                        || (global.dupe_var == dupe_canon_const && local.mon.dupe_var != dupe_canon_const)
                         {
-                            local.index = ds_list_find_index(global.mon_spawn_list,local.mon);
+                            local.index = ds_list_find_index(global.mon_spawn_list,local.mon.object_index);
                             if local.index != -1 { ds_list_delete(global.mon_spawn_list,local.index); }
                         }
                     }
                     local.size = ds_list_size(global.mon_spawn_list);
                     if local.size > 0
                     {
-                        local.mon = ds_list_find_value(global.mon_spawn_list,irandom(local.size-1));
+                        local.mon = instance_create(0,0,ds_list_find_value(global.mon_spawn_list,irandom(local.size-1)));
                         ds_list_add(global.mon_curr_list,local.mon);
-                        instance_create(0,0,local.mon);
                         global.count_var = get_count_scr();
                         global.mon_fail_var = 0;
                         if global.reset_spd_var > 0 && global.game_spd_var > 1
@@ -87,7 +85,8 @@ object_event_add // ev_create,0
         }
         else { global.count_var = max(0,global.count_var-1); }
     }
-");
+    ds_list_sort(global.mon_curr_list,true);
+');
 // Try summon
 object_event_add
 (argument0,ev_other,ev_user0,"

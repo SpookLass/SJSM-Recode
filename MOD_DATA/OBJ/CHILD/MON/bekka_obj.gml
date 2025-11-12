@@ -183,7 +183,7 @@ object_event_add
         background_delete(bg_var);
         background_delete(bg_overlay_var);
     }
-    with kh_overlay_obj
+    with fog_overlay_obj
     { if par_var == other.id { instance_destroy(); }}
 ');
 // Room Start Event
@@ -192,9 +192,9 @@ object_event_add
     event_inherited();
     visible = true;
     // Effects
-    if !instance_exists(kh_overlay_obj)
+    if !instance_exists(fog_overlay_obj)
     {
-        with instance_create(0,0,kh_overlay_obj) do
+        with instance_create(0,0,fog_overlay_obj) do
         {
             par_var = other.id;
             image_blend = other.overlay_color_var;
@@ -389,7 +389,7 @@ object_event_add
     if instance_exists(target_var)
     {
         x = target_x_var+lengthdir_x(lengthdir_x(scare_dist_var,target_var.eye_yaw_var),target_var.eye_pitch_var);
-        y = target_y_var+lengthdir_y(lengthdir_y(scare_dist_var,target_var.eye_yaw_var),target_var.eye_pitch_var);
+        y = target_y_var+lengthdir_x(lengthdir_y(scare_dist_var,target_var.eye_yaw_var),target_var.eye_pitch_var);
         z = target_z_var-lengthdir_y(scare_dist_var,target_var.eye_pitch_var);
     }
     with instance_create(0,0,fade_eff_obj)

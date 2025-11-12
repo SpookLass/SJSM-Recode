@@ -209,21 +209,23 @@ object_event_add
         }
         // Monster list
         draw_set_valign(fa_bottom);
-        if global.mon_hud_var && instance_exists(mon_par_obj)
+        if global.mon_hud_var && ds_list_size(global.mon_curr_list) > 0
         {
-            with mon_par_obj { if !hide_var && string(name_var) != "0" { local.num += 1; }}
-            local.offset = bottom_var-((local.num-1)*36*scale_var);
-            with mon_par_obj
+            local.offset = bottom_var;
+            for (local.i=ds_list_size(global.mon_curr_list)-1; local.i>=0; local.i-=1;)
             {
-                if !hide_var && string(name_var) != "0"
+                with ds_list_find_value(global.mon_curr_list,local.i)
                 {
-                    local.str = name_var;
-                    if global.mon_hud_var == 2 { local.str += ": "+string(dur_var); }
-                    draw_set_color(make_color_rgb(30,0,50));
-                    draw_text_transformed(other.left_var-other.shadow_off_var,local.offset+other.shadow_off_var,local.str,other.scale_med_var,other.scale_med_var,0);
-                    draw_set_color(c_yellow);
-                    draw_text_transformed(other.left_var,local.offset,local.str,other.scale_med_var,other.scale_med_var,0);
-                    local.offset += other.scale_var*36;
+                    if !hide_var && string(name_var) != "0"
+                    {
+                        local.str = string(name_var);
+                        if global.mon_hud_var == 2 { local.str += ": "+string(dur_var); }
+                        draw_set_color(make_color_rgb(30,0,50));
+                        draw_text_transformed(other.left_var-other.shadow_off_var,local.offset+other.shadow_off_var,local.str,other.scale_med_var,other.scale_med_var,0);
+                        draw_set_color(c_yellow);
+                        draw_text_transformed(other.left_var,local.offset,local.str,other.scale_med_var,other.scale_med_var,0);
+                        local.offset -= other.scale_var*36;
+                    }
                 }
             }
         }

@@ -194,7 +194,7 @@ object_event_add
         fmod_snd_free_scr(mus_snd_var);
         fmod_snd_free_scr(wake_snd_var[1]);
     }
-    with kh_overlay_obj
+    with fog_overlay_obj
     { if par_var == other.id { instance_destroy(); }}
 ');
 // Room start
@@ -230,9 +230,9 @@ object_event_add
         x = global.spawn_arr[0,0];
         y = global.spawn_arr[0,1];
         z = global.spawn_arr[0,2];
-        if overlay_var && !instance_exists(kh_overlay_obj)
+        if overlay_var && !instance_exists(fog_overlay_obj)
         {
-            with instance_create(0,0,kh_overlay_obj) do
+            with instance_create(0,0,fog_overlay_obj) do
             {
                 par_var = other.id;
                 image_blend = other.overlay_color_var;
