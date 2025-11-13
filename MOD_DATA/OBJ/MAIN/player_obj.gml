@@ -311,14 +311,14 @@ object_event_add
             }
             case cam_joy_rs_const: // Joystick Right (Switch)
             {
-                if abs(joystick_zpos(local.tempid)) > 0.3 { local.change_x = joystick_zpos(local.tempid)*global.sens_var[player_id_var]/40; }
-                if abs(joystick_rpos(local.tempid)) > 0.3 { local.change_y = joystick_rpos(local.tempid)*global.sens_var[player_id_var]/40; }
+                if abs(joystick_zpos(local.tempid)) > 0.3 { local.yaw = -joystick_zpos(local.tempid)*global.sens_var[player_id_var]/40; }
+                if abs(joystick_rpos(local.tempid)) > 0.3 { local.pitch = -joystick_rpos(local.tempid)*global.sens_var[player_id_var]/40; }
                 break;
             }
             case cam_joy_l_const: // Joystick Left (should be universal)
             {
-                if abs(joystick_xpos(local.tempid)) > 0.3 { local.yaw = joystick_xpos(local.tempid)*global.sens_var[player_id_var]/40; }
-                if abs(joystick_ypos(local.tempid)) > 0.3 { local.pitch = joystick_ypos(local.tempid)*global.sens_var[player_id_var]/40; }
+                if abs(joystick_xpos(local.tempid)) > 0.3 { local.yaw = -joystick_xpos(local.tempid)*global.sens_var[player_id_var]/40; }
+                if abs(joystick_ypos(local.tempid)) > 0.3 { local.pitch = -joystick_ypos(local.tempid)*global.sens_var[player_id_var]/40; }
                 break;
             }
             case cam_dpad_const: // D-Pad
