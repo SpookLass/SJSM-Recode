@@ -293,8 +293,23 @@ object_event_add
 object_event_add
 (argument0,ev_step,ev_step_end,'
     event_inherited();
+    // Collide with other monsters
     if on_var && (do_coll_var || type_var <= 0) && mon_coll_var
     { event_user(10); }
+    // Camera stuff for possession
+    if possess_var
+    {
+        // Set camera and listener position
+        cam_set_scr(cam_id_var,x,y,z+18,eye_yaw_var,eye_pitch_var,global.fov_var,0);
+        // Could put this in control, but needs extra camera boolean
+        fmod_listen_pos_ex_scr
+        (
+            cam_id_var+1,
+            global.cam_x_var[cam_id_var],global.cam_y_var[cam_id_var],global.cam_z_var[cam_id_var],
+            global.cam_fx_var[cam_id_var],global.cam_fy_var[cam_id_var],global.cam_fz_var[cam_id_var],
+            global.cam_ux_var[cam_id_var],global.cam_uy_var[cam_id_var],global.cam_uz_var[cam_id_var],
+        );
+    }
 ');
 // Delay Alarm
 object_event_add
@@ -410,9 +425,9 @@ object_event_add
         else if is_seen_var == 0 && unseen_mult_var != 1 { spd_mult_var *= unseen_mult_var; }
     }
     local.spd = spd_base_var*spd_mult_var*spd_mult_per_var;
-    if target_dist_var <= local.spd
+    if enter_var
     {
-        if enter_var
+        if target_dist_var <= local.spd
         {
             x = target_x_var;
             y = target_y_var;
@@ -422,96 +437,255 @@ object_event_add
         }
         else
         {
+            local.yaw = point_direction(x,y,target_x_var,target_y_var);
+            local.pitch = point_direction_3d_scr(x,y,z,target_x_var,target_y_var,target_z_var);
+            eye_yaw_var = local.yaw;
+            eye_pitch_var = local.pitch;
+            set_motion_3d_scr(local.spd,true,local.yaw,true,local.pitch,true);
+        }
+    }
+    else
+    {
+        if possess_var
+        {
+            // Camera
+            switch global.input_cam_var[player_id_var]
+            {
+                case cam_mouse_const: // Mouse
+                {
+                    if !global.mouse_free_var
+                    {
+                        local.yaw = ((display_get_width()/2)-display_mouse_get_x())*global.sens_var[player_id_var]/1600;
+                        local.pitch = ((display_get_height()/2)-display_mouse_get_y())*global.sens_var[player_id_var]/1600;
+                        display_mouse_set(display_get_width()/2,display_get_height()/2);
+                    }
+                    break;
+                }
+                case cam_joy_r_const: // Joystick Right (Xbox)
+                {
+                    if abs(joystick_upos(local.tempid)) > 0.3 { local.yaw = -joystick_upos(local.tempid)*global.delta_time_var*global.sens_var[player_id_var]/40; }
+                    if abs(joystick_rpos(local.tempid)) > 0.3 { local.pitch = -joystick_rpos(local.tempid)*global.delta_time_var*global.sens_var[player_id_var]/40; }
+                    break;
+                }
+                case cam_joy_rs_const: // Joystick Right (Switch)
+                {
+                    if abs(joystick_zpos(local.tempid)) > 0.3 { local.yaw = -joystick_zpos(local.tempid)*global.delta_time_var*global.sens_var[player_id_var]/40; }
+                    if abs(joystick_rpos(local.tempid)) > 0.3 { local.pitch = -joystick_rpos(local.tempid)*global.delta_time_var*global.sens_var[player_id_var]/40; }
+                    break;
+                }
+                case cam_joy_l_const: // Joystick Left (should be universal)
+                {
+                    if abs(joystick_xpos(local.tempid)) > 0.3 { local.yaw = -joystick_xpos(local.tempid)*global.delta_time_var*global.sens_var[player_id_var]/40; }
+                    if abs(joystick_ypos(local.tempid)) > 0.3 { local.pitch = -joystick_ypos(local.tempid)*global.delta_time_var*global.sens_var[player_id_var]/40; }
+                    break;
+                }
+                case cam_dpad_const: // D-Pad
+                {
+                    if joystick_has_pov(1)
+                    {
+                        local.yaw = -lengthdir_y(1,joystick_pov(local.tempid))*global.delta_time_var*global.sens_var[player_id_var]/40;
+                        local.pitch = lengthdir_x(1,joystick_pov(local.tempid))*global.delta_time_var*global.sens_var[player_id_var]/40;
+                    }
+                    break;
+                }
+                case cam_button_const: // Keyboard / Button
+                {
+                    local.yaw = (global.input_arr[cam_left_input_const,player_id_var]-global.input_arr[cam_right_input_const,player_id_var])*global.delta_time_var*global.sens_var[player_id_var]/40;
+                    local.pitch = (global.input_arr[cam_up_input_const,player_id_var]-global.input_arr[cam_down_input_const,player_id_var])*global.delta_time_var*global.sens_var[player_id_var]/40;
+                    break;
+                }
+            }
+            if global.invert_yaw_var[player_id_var] { local.yaw *= -1; }
+            if global.invert_pitch_var[player_id_var] { local.pitch *= -1; }
+            eye_yaw_var = mod_scr(eye_yaw_var+local.yaw,360);
+            eye_pitch_var = median(-89.9,89.9,eye_pitch_var+local.pitch);
+        }
+        if target_dist_var <= local.spd && !possess_var
+        {
             x = target_x_var;
             y = target_y_var;
             z = target_z_var;
             set_motion_3d_scr(0,true);
         }
-    }
-    else if type_var > 0 && !enter_var
-    {
-        // V3
-        sight_type_var = 2;
-        event_user(8); // Check Sight
-        // V4
-        if !enter_var && !target_visible_var
+        else if type_var > 0 // Physical
         {
-            if mp_grid_path(grid_var,path_var,x,y,target_x_var,target_y_var,true)
+            // V3
+            sight_type_var = 2;
+            event_user(8); // Check Sight
+            // V4
+            if possess_var
             {
-                path_x_var = x;
-                path_y_var = y;
-            }
-            else { mp_grid_path(grid_var,path_var,path_x_var,path_y_var,target_x_var,target_y_var,true); }
-            local.yaw = point_direction
-            (
-                path_get_point_x(path_var,0),
-                path_get_point_y(path_var,0),
-                path_get_point_x(path_var,1),
-                path_get_point_y(path_var,1)
-            );
-        }
-        else { local.yaw = point_direction(x,y,target_x_var,target_y_var); }
-        switch do_acc_var
-        {
-            case 1: // Modern
-            {
-                // Tried to add autobrake support, but it"s difficult without Unity source code
-                if local.spd > 0 && autobrake_var && target_visible_var && spd_var > autobrake_spd_var
-                && (target_dist_var <= autobrake_dist_var || autobrake_dist_var <= 0) 
+                // Get inputs
+                local.tempid = max(player_id_var,1);
+                switch global.input_move_var[player_id_var]
                 {
-                    if autobrake_dir_var > 0
+                    case move_button_const:
                     {
-                        if abs(deg_diff_scr(local.yaw,yaw_var)) > autobrake_dir_var
-                        { local.spd = autobrake_spd_var; }
+                        local.input_dir_x = global.input_arr[forward_input_const,player_id_var]-global.input_arr[backward_input_const,player_id_var];
+                        local.input_dir_y = global.input_arr[strafe_right_input_const,player_id_var]-global.input_arr[strafe_left_input_const,player_id_var];
+                        break;
                     }
-                    else { local.spd = autobrake_spd_var; }
+                    case move_joy_l_const:
+                    {
+                        if abs(joystick_ypos(local.tempid)) > 0.3 { local.input_dir_x = -joystick_ypos(local.tempid); }
+                        if abs(joystick_xpos(local.tempid)) > 0.3 { local.input_dir_y = joystick_xpos(local.tempid); }
+                        break;
+                    }
+                    case move_joy_r_const:
+                    {
+                        if abs(joystick_ypos(local.tempid)) > 0.3 { local.input_dir_x = -joystick_rpos(local.tempid); }
+                        if abs(joystick_xpos(local.tempid)) > 0.3 { local.input_dir_y = joystick_upos(local.tempid); }
+                        break;
+                    }
+                    case move_joy_rs_const:
+                    {
+                        if abs(joystick_ypos(local.tempid)) > 0.3 { local.input_dir_x = -joystick_rpos(local.tempid); }
+                        if abs(joystick_xpos(local.tempid)) > 0.3 { local.input_dir_y = joystick_zpos(local.tempid); }
+                        break;
+                    }
+                    case move_dpad_const:
+                    {
+                        if joystick_has_pov(1)
+                        {
+                            local.input_dir_x = lengthdir_x(1,joystick_pov(local.tempid));
+                            local.input_dir_y = -lengthdir_y(1,joystick_pov(local.tempid));
+                        }
+                        break;
+                    }
                 }
-                acc_scr(global.delta_time_var,acc_var,frick_var,local.yaw,local.spd);
-                break;
+                if local.input_dir_x == 0 && local.input_dir_y == 0
+                { local.spd = 0; }
+                local.yaw = radtodeg(arctan2(-local.input_dir_y,local.input_dir_x))+eye_yaw_var;
             }
-            case 2: // Classic
+            else if !enter_var && !target_visible_var
             {
-                if abs(spd_var) < abs(local.spd) { local.spd = sign(local.spd)*min(abs(local.spd),abs(spd_var)+(acc_var*global.delta_time_var)); }
-            }
-            case 3: // Friction only
-            {
-                if abs(spd_var) > abs(local.spd) { local.spd = sign(local.spd)*max(abs(local.spd),abs(spd_var)-(frick_var*global.delta_time_var)); }
-            }
-            default: { set_motion_scr(local.spd,true,local.yaw,true); break; }
-        }
-    }
-    else
-    {
-        local.yaw = point_direction(x,y,target_x_var,target_y_var);
-        local.pitch = point_direction_3d_scr(x,y,z,target_x_var,target_y_var,target_z_var);
-        switch do_acc_var
-        {
-            case 1:
-            {
-                // Tried to add autobrake support, but it"s difficult without Unity source code
-                if autobrake_var && target_visible_var && spd_var > autobrake_spd_var
-                && (target_dist_var <= autobrake_dist_var || autobrake_dist_var <= 0) 
+                if mp_grid_path(grid_var,path_var,x,y,target_x_var,target_y_var,true)
                 {
-                    if autobrake_dir_var > 0
-                    {
-                        if abs(deg_diff_scr(local.yaw,yaw_var)) > autobrake_dir_var
-                        || abs(deg_diff_scr(local.pitch,pitch_var)) > autobrake_dir_var
-                        { local.spd = autobrake_spd_var; }
-                    }
-                    else { local.spd = autobrake_spd_var; }
+                    path_x_var = x;
+                    path_y_var = y;
                 }
-                acc_3d_scr(global.delta_time_var,acc_var,frick_var,local.yaw,local.pitch,local.spd);
-                break;
+                else { mp_grid_path(grid_var,path_var,path_x_var,path_y_var,target_x_var,target_y_var,true); }
+                local.yaw = point_direction
+                (
+                    path_get_point_x(path_var,0),
+                    path_get_point_y(path_var,0),
+                    path_get_point_x(path_var,1),
+                    path_get_point_y(path_var,1)
+                );
             }
-            case 2: // Classic
+            else { local.yaw = point_direction(x,y,target_x_var,target_y_var); }
+            switch do_acc_var
             {
-                if abs(spd_var) < abs(local.spd) { local.spd = sign(local.spd)*min(abs(local.spd),abs(spd_var)+(acc_var*global.delta_time_var)); }
+                case 1: // Modern
+                {
+                    // Tried to add autobrake support, but it"s difficult without Unity source code
+                    if local.spd > 0 && autobrake_var && target_visible_var && spd_var > autobrake_spd_var && !possess_var
+                    && (target_dist_var <= autobrake_dist_var || autobrake_dist_var <= 0) 
+                    {
+                        if autobrake_dir_var > 0
+                        {
+                            if abs(deg_diff_scr(local.yaw,yaw_var)) > autobrake_dir_var
+                            { local.spd = autobrake_spd_var; }
+                        }
+                        else { local.spd = autobrake_spd_var; }
+                    }
+                    acc_scr(global.delta_time_var,acc_var,frick_var,local.yaw,local.spd);
+                    break;
+                }
+                case 2: // Classic
+                {
+                    if abs(spd_var) < abs(local.spd) { local.spd = sign(local.spd)*min(abs(local.spd),abs(spd_var)+(acc_var*global.delta_time_var)); }
+                }
+                case 3: // Friction only
+                {
+                    if abs(spd_var) > abs(local.spd) { local.spd = sign(local.spd)*max(abs(local.spd),abs(spd_var)-(frick_var*global.delta_time_var)); }
+                }
+                default: { set_motion_scr(local.spd,true,local.yaw,true); break; }
             }
-            case 3: // Friction only
+        }
+        else // Incorporeal
+        {
+            if possess_var
             {
-                if abs(spd_var) > abs(local.spd) { local.spd = sign(local.spd)*max(abs(local.spd),abs(spd_var)-(frick_var*global.delta_time_var)); }
+                // Get inputs
+                local.tempid = max(player_id_var,1);
+                switch global.input_move_var[player_id_var]
+                {
+                    case move_button_const:
+                    {
+                        local.input_dir_x = global.input_arr[forward_input_const,player_id_var]-global.input_arr[backward_input_const,player_id_var];
+                        local.input_dir_y = global.input_arr[strafe_right_input_const,player_id_var]-global.input_arr[strafe_left_input_const,player_id_var];
+                        break;
+                    }
+                    case move_joy_l_const:
+                    {
+                        if abs(joystick_ypos(local.tempid)) > 0.3 { local.input_dir_x = -joystick_ypos(local.tempid); }
+                        if abs(joystick_xpos(local.tempid)) > 0.3 { local.input_dir_y = joystick_xpos(local.tempid); }
+                        break;
+                    }
+                    case move_joy_r_const:
+                    {
+                        if abs(joystick_ypos(local.tempid)) > 0.3 { local.input_dir_x = -joystick_rpos(local.tempid); }
+                        if abs(joystick_xpos(local.tempid)) > 0.3 { local.input_dir_y = joystick_upos(local.tempid); }
+                        break;
+                    }
+                    case move_joy_rs_const:
+                    {
+                        if abs(joystick_ypos(local.tempid)) > 0.3 { local.input_dir_x = -joystick_rpos(local.tempid); }
+                        if abs(joystick_xpos(local.tempid)) > 0.3 { local.input_dir_y = joystick_zpos(local.tempid); }
+                        break;
+                    }
+                    case move_dpad_const:
+                    {
+                        if joystick_has_pov(1)
+                        {
+                            local.input_dir_x = lengthdir_x(1,joystick_pov(local.tempid));
+                            local.input_dir_y = -lengthdir_y(1,joystick_pov(local.tempid));
+                        }
+                        break;
+                    }
+                }
+                local.input_dir_z = global.input_arr[jump_input_const,player_id_var]-global.input_arr[crouch_input_const,player_id_var];
+                if local.input_dir_x == 0 && local.input_dir_y == 0 && local.input_dir_z == 0
+                { local.spd = 0; }
+                local.input_dir = radtodeg(arctan2(-local.input_dir_y,local.input_dir_x));
+                local.yaw = local.input_dir+eye_yaw_var;
+                local.pitch = radtodeg(arctan2(local.input_dir_z,sqrt(sqr(local.input_dir_x)+sqr(local.input_dir_y))))+(eye_pitch_var*lengthdir_x(1,local.input_dir));
             }
-            default: { set_motion_3d_scr(local.spd,true,local.yaw,true,local.pitch,true); break; }
+            else
+            {
+                local.yaw = point_direction(x,y,target_x_var,target_y_var);
+                local.pitch = point_direction_3d_scr(x,y,z,target_x_var,target_y_var,target_z_var);
+            }
+            switch do_acc_var
+            {
+                case 1:
+                {
+                    // Tried to add autobrake support, but it"s difficult without Unity source code
+                    if autobrake_var && target_visible_var && spd_var > autobrake_spd_var
+                    && (target_dist_var <= autobrake_dist_var || autobrake_dist_var <= 0) 
+                    {
+                        if autobrake_dir_var > 0
+                        {
+                            if abs(deg_diff_scr(local.yaw,yaw_var)) > autobrake_dir_var
+                            || abs(deg_diff_scr(local.pitch,pitch_var)) > autobrake_dir_var
+                            { local.spd = autobrake_spd_var; }
+                        }
+                        else { local.spd = autobrake_spd_var; }
+                    }
+                    acc_3d_scr(global.delta_time_var,acc_var,frick_var,local.yaw,local.pitch,local.spd);
+                    break;
+                }
+                case 2: // Classic
+                {
+                    if abs(spd_var) < abs(local.spd) { local.spd = sign(local.spd)*min(abs(local.spd),abs(spd_var)+(acc_var*global.delta_time_var)); }
+                }
+                case 3: // Friction only
+                {
+                    if abs(spd_var) > abs(local.spd) { local.spd = sign(local.spd)*max(abs(local.spd),abs(spd_var)-(frick_var*global.delta_time_var)); }
+                }
+                default: { set_motion_3d_scr(local.spd,true,local.yaw,true,local.pitch,true); break; }
+            }
         }
     }
     spd_mult_var = 1;
@@ -549,7 +723,7 @@ object_event_add
     }
     tex_var = sprite_get_texture(spr_var,floor(spr_id_var));
 ');
-// Attack
+// Attack Event
 object_event_add
 (argument0,ev_other,ev_user2,'
     local.dead = true;
@@ -903,7 +1077,7 @@ object_event_add
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,'
-    if on_var || visible_var
+    if (on_var || visible_var) && (!possess_var || cam_id_var != view_current)
     {
         draw_set_color(color_mult_scr(image_blend,tone_var)); draw_set_alpha(image_alpha);
         d3d_transform_set_identity();

@@ -16,9 +16,9 @@ object_event_add
     window_h_var = window_get_height();
     event_perform(ev_other,ev_room_start);
 ");
-// Step event
-object_event_add
-(argument0,ev_step,ev_step_begin,'
+// Step Begin Event
+object_event_add(argument0,ev_step,ev_step_begin,'
+    joy_update_scr();
     // Get inputs
     // I know this looks bad, but keyboard_check_pressed doesnt persist between rooms
     for (local.j=0; local.j<global.player_len_var; local.j+=1;)
@@ -46,7 +46,7 @@ object_event_add
                 else
                 {
                     local.tempid = max(local.j,1);
-                    local.button = abs(global.input_key_arr[local.i,local.j])-5;
+                    local.button = abs(global.input_key_arr[local.i,local.j])-6;
                     global.input_arr[local.i,local.j] = joystick_check_button(local.tempid,local.button);
                 }
                 // Press
@@ -54,6 +54,10 @@ object_event_add
             }
         }
     }
+');
+// Step event
+object_event_add
+(argument0,ev_step,ev_step_begin,'
     // This is pause now
     if global.input_press_arr[pause_input_const,0] == 1 && !instance_exists(pause_menu_obj) && global.draw_3d_var
     {
@@ -301,6 +305,7 @@ object_event_add
 // Game end
 object_event_add
 (argument0,ev_other,ev_game_end,'
+    joy_free_scr();
     p3dc_free_scr();
     fmod_free_scr();
     fmod_unload_scr();

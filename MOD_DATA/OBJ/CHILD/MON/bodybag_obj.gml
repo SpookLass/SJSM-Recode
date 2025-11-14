@@ -263,7 +263,7 @@ object_event_add
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,'
-    if on_var || visible_var
+    if (on_var || visible_var) && (!possess_var || cam_id_var != view_current)
     {
         draw_set_color(image_blend); draw_set_alpha(image_alpha);
         d3d_transform_set_identity();

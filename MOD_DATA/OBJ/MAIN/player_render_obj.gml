@@ -34,6 +34,7 @@ object_event_add
         spr_id_var = (spr_id_var+(spr_spd_var*global.delta_time_var)) mod sprite_get_number(spr_var);
         tex_var = sprite_get_texture(spr_var,floor(spr_id_var));
     }
+    visible_var = (par_var.on_var && !par_var.possess_var);
 ');
 // Draw
 object_event_add

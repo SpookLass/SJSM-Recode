@@ -13,6 +13,8 @@ object_event_add
     side_tex_var = sky_01_bg_tex;
     top_tex_var = sky_02_bg_tex;
     dist_var = 16;
+    light_delay_min_var = 60;
+    light_delay_max_var = 240;
 ');
 // Destroy Event
 object_event_add

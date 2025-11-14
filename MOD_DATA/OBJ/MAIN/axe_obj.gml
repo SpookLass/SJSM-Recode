@@ -29,7 +29,7 @@ object_event_add
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,'
-    if par_var.on_var
+    if par_var.on_var && !par_var.dead_var
     {
         spr_id_var += spr_spd_var*global.delta_time_var;
         switch state_var

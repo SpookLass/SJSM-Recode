@@ -1,4 +1,5 @@
 // execute_file(main_directory_const+"\SCR\LOAD\scr_load_scr.gml");
+joy_ini_scr();
 execute_file(main_directory_const+"\SCR\LOAD\set_load_scr.gml");
 execute_file(main_directory_const+"\SCR\LOAD\mod_load_scr.gml");
 execute_file(main_directory_const+"\SCR\LOAD\spr_load_scr.gml");
