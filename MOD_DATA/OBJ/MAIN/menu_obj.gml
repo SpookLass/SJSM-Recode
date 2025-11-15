@@ -1408,7 +1408,7 @@ object_event_add
                     else { execute_string("global."+type_button_arr[local.i,3]+"_type_var = "+string(type_button_arr[local.i,0])); }
                 }
 				
-                global.player_len_var = 4;
+                global.player_len_var = 1;
                 for (local.i=0; local.i<global.player_len_var; local.i+=1;)
                 {
                     local.player = instance_create(0,0,player_obj);

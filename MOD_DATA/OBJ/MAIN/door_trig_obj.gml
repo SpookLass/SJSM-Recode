@@ -83,7 +83,7 @@ object_event_add
             }
         }
     }
-    if local.active && local.remaining == 0
+    if (local.active || global.player_len_var > 1) && local.remaining == 0 && !alarm_arr[0,0]
     { set_alarm_scr(0,delay_var); }
 ');
 // Recalculate Door

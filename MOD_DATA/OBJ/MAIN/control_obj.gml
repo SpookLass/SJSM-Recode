@@ -110,10 +110,15 @@ object_event_add
         global.debug_var = !global.debug_var;
     }
     // Debug commands
-    if global.debug_var && keyboard_check_pressed(ord("2"))
+    if global.debug_var && (keyboard_check_pressed(192) || (keyboard_lastkey >= 48 && keyboard_lastkey <= 57)) // Grave
     {
         fmod_update_take_over_when_lock_scr();
-        local.question = show_menu("Back|Restart Room|Next Room|Previous Room|Go To Room|Create Instance|Destroy Instance|Set Tex Set|Set Zone|Set Count|Set LV|Set Room|Toggle Invincibility|Toggle Noclip|Toggle Flight|Toggle Monster Spawn|Revive|Hide Debug|Hide Hud|Toggle X-ray|Save|Execute Code",0);
+        if keyboard_lastkey >= 48 && keyboard_lastkey <= 57
+        {
+            local.question = mod_scr(keyboard_lastkey-49,10)+1;
+            if keyboard_check(vk_lshift) { local.question += 10; }
+        }
+        else {local.question = show_menu("Back|Restart Room|Next Room|Previous Room|Go To Room|Create Instance|Destroy Instance|Set Tex Set|Set Zone|Set Count|Set LV|Set Room|Toggle Invincibility|Toggle Noclip|Toggle Flight|Toggle Monster Spawn|Revive|Hide Debug|Hide Hud|Toggle X-ray|Save|Execute Code",0);}
         switch(local.question)
         {
             case 1: { room_restart(); break; }
@@ -214,9 +219,9 @@ object_event_add
                 with mon_par_obj { possess_var = false; }
                 break;
             }
-            case 17: { global.hide_debug = !global.hide_debug; break; }
-            case 18: { global.hide_hud = !global.hide_hud; break; }
-            case 19: { global.xray = !global.xray; break; }
+            case 17: { global.hide_debug_var = !global.hide_debug_var; break; }
+            case 18: { global.hide_hud_var = !global.hide_hud_var; break; }
+            case 19: { global.xray_var = !global.xray_var; break; }
             case 20:
 			{
 				save_game_scr();

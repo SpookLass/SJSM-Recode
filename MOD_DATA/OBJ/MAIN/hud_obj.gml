@@ -86,7 +86,7 @@ object_event_add
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,'
-    if view_current == par_var.cam_id_var && !par_var.dead_var
+    if view_current == par_var.cam_id_var && !par_var.dead_var && !global.hide_hud_var
     {
         d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
         d3d_set_hidden(false);
@@ -252,7 +252,7 @@ object_event_add
         { draw_text_transformed(right_var,top_var*2,global.rm_name_var,scale_med_var,scale_med_var,0); }
         draw_set_color(c_white); draw_set_halign(fa_left);
         // Debug text
-        if global.debug_var
+        if global.debug_var && !global.hide_debug_var
         {
             local.str = "
 Position

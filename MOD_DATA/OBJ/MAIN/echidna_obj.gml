@@ -939,7 +939,7 @@ object_event_add
         with (player_obj)
         {
             local.dist = point_distance_3d_scr(other.x,other.y,other.z,x,y,z);
-            if on_var && !dead_var && (other.target_var == noone || local.dist < other.target_dist_var)// && !in_door_var
+            if on_var && !in_door_var && !dead_var && (other.target_var == noone || local.dist < other.target_dist_var)
             {
                 other.target_var = id;
                 other.target_dist_var = local.dist;

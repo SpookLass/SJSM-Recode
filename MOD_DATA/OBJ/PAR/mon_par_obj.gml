@@ -20,3 +20,9 @@ object_event_add
     }
     event_inherited();
 ');
+// Destroy
+object_event_add
+(argument0,ev_destroy,0,'
+    event_inherited();
+    global.mon_fail_var = 0;
+');
