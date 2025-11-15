@@ -583,7 +583,7 @@ object_event_add
             {
                 with mon_par_obj
                 {
-                    if on_var
+                    if on_var && !possess_var
                     {
                         if cyl_coll_scr(x,y,z,coll_var[2],coll_var[1],other.x,other.y,other.z,other.coll_var[2],other.coll_var[1])
                         {

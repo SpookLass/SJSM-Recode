@@ -47,14 +47,14 @@ object_event_add
     if delay_var { delay_var = false; }
     else
     {
-        if global.input_press_arr[up_input_const,0] { button_state_var -= 1; }
-        if global.input_press_arr[down_input_const,0] { button_state_var += 1; }
-        if global.input_press_arr[back_input_const,0]
+        if global.input_press_arr[up_input_const,player_id_var] { button_state_var -= 1; }
+        if global.input_press_arr[down_input_const,player_id_var] { button_state_var += 1; }
+        if global.input_press_arr[back_input_const,player_id_var]
         {
             instance_destroy();
             fmod_snd_play_scr(confirm_snd);
         }
-        if global.input_press_arr[confirm_input_const,0] //|| keyboard_check_pressed(vk_escape)
+        if global.input_press_arr[confirm_input_const,player_id_var] //|| keyboard_check_pressed(vk_escape)
         {
             switch button_state_var
             {
@@ -144,22 +144,15 @@ object_event_add
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,'
-    if view_current == cam_id_var 
+    d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
+    d3d_set_hidden(false);
+    // Color
+    draw_set_blend_mode(bm_subtract);
+    draw_set_color(c_white-image_blend);
+    draw_rectangle(0,0,view_wview[view_current],view_hview[view_current],false);
+    draw_set_blend_mode(bm_normal);
+    if view_current == cam_id_var
     {
-        d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
-        d3d_set_hidden(false);
-        // Color
-        draw_set_blend_mode(bm_subtract);
-        draw_set_color(c_white-image_blend);
-        draw_rectangle
-        (
-            view_xview[view_current],
-            view_yview[view_current],
-            view_xview[view_current]+view_wview[view_current],
-            view_yview[view_current]+view_hview[view_current],
-            false
-        );
-        draw_set_blend_mode(bm_normal);
         // Buttons
         draw_set_valign(fa_bottom);
         for (local.i=0; local.i<button_len_var; local.i+=1)

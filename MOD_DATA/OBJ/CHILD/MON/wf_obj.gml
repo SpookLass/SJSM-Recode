@@ -129,7 +129,7 @@ object_event_add
     eff_02_alarm_var = 20;
     eff_03_alarm_min_var = 6;
     eff_03_alarm_max_var = 40;
-    res_var = true;
+    res_var = (global.player_len_var <= 1);
     res_w_var = 640;
     res_h_var = 360;
     no_fun_var = true;

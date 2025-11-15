@@ -8,17 +8,17 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
     alarm_len_var = 1;
     window_x_var = window_get_x();
     window_y_var = window_get_y();
     window_w_var = window_get_width();
     window_h_var = window_get_height();
     event_perform(ev_other,ev_room_start);
-");
+');
 // Step Begin Event
 object_event_add(argument0,ev_step,ev_step_begin,'
-    joy_update_scr();
+    if global.player_len_var > 1 { joy_update_scr(); }
     // Get inputs
     // I know this looks bad, but keyboard_check_pressed doesnt persist between rooms
     for (local.j=0; local.j<global.player_len_var; local.j+=1;)
@@ -53,19 +53,20 @@ object_event_add(argument0,ev_step,ev_step_begin,'
                 global.input_press_arr[local.i,local.j] = global.input_arr[local.i,local.j]-global.input_prev_arr[local.i,local.j];
             }
         }
+        if global.input_press_arr[pause_input_const,local.j] == 1 && !instance_exists(pause_menu_obj) && global.draw_3d_var
+        {
+            with instance_create(0,0,pause_menu_obj)
+            {
+                cam_id_var = local.j;
+                player_id_var = local.j;
+                event_user(1);
+            }
+        }
     }
 ');
 // Step event
 object_event_add
 (argument0,ev_step,ev_step_begin,'
-    // This is pause now
-    if global.input_press_arr[pause_input_const,0] == 1 && !instance_exists(pause_menu_obj) && global.draw_3d_var
-    {
-        /*global.mouse_free_var = !global.mouse_free_var;
-        action_set_cursor(-1,global.mouse_free_var);
-        if !global.mouse_free_var { display_mouse_set(display_get_width()/2,display_get_height()/2); }*/
-        instance_create(0,0,pause_menu_obj);
-    }
     // Speed!
     if global.draw_3d_var
     {
@@ -207,8 +208,10 @@ object_event_add
                         do_coll_var = true;
                         grav_var = grav_const;
                         hp_var = hp_max_var;
+                        possess_var = false;
                     }
                 }
+                with mon_par_obj { possess_var = false; }
                 break;
             }
             case 17: { global.hide_debug = !global.hide_debug; break; }

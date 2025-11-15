@@ -241,6 +241,7 @@ object_event_add
         mus_prio_var = -1;
         with mus_control_obj { event_user(0); }
     }
+    global.player_arr[player_id_var].possess_var = false;
 ');
 // Room Start Event
 object_event_add
@@ -299,6 +300,11 @@ object_event_add
     // Camera stuff for possession
     if possess_var
     {
+        if global.input_press_arr[crouch_input_const,player_id_var]
+        {
+            global.player_arr[player_id_var].possess_var = false;
+            possess_var = false;
+        }
         // Set camera and listener position
         cam_set_scr(cam_id_var,x,y,z+18,eye_yaw_var,eye_pitch_var,global.fov_var,0);
         // Could put this in control, but needs extra camera boolean
@@ -449,6 +455,7 @@ object_event_add
         if possess_var
         {
             // Camera
+            local.tempid = max(player_id_var,1);
             switch global.input_cam_var[player_id_var]
             {
                 case cam_mouse_const: // Mouse

@@ -52,12 +52,13 @@ object_event_add
 // Jump alarm
 object_event_add
 (argument0,ev_alarm,0,'
-    if frac_chance_scr(chance_num_var,chance_den_var)
+    if frac_chance_scr(chance_num_var*global.player_len_var,chance_den_var)
     {
         visible = true
-        snd_var = fmod_snd_play_scr(js_snd_var)
+        snd_var = fmod_snd_play_scr(js_snd_var);
         spr_id_var = 0;
-        set_alarm_scr(1,anim_alarm_var)
+        set_alarm_scr(1,anim_alarm_var);
+        cam_id_var = irandom(global.player_len_var-1);
     }
     else { set_alarm_scr(0,chance_alarm_var); }
 ');
