@@ -246,7 +246,7 @@ object_event_add
                 snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_03_snd.wav",true);
                 breath_snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_breath_01_snd.wav",true);
                 breath_snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_breath_02_snd.wav",true);
-                wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\stab_11_snd.wav");
+                wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\stab_11_snd.wav",global.wake_3d_var);
                 charge_snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\stab_11_snd.wav",true);
                 break;
             }
@@ -263,7 +263,7 @@ object_event_add
                 snd_arr[8,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_hd_09_snd.wav",true);
                 breath_snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_breath_hd_01_snd.wav",true);
                 breath_snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_breath_hd_02_snd.wav",true);
-                wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\stab_11_snd.wav");
+                wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\stab_11_snd.wav",global.wake_3d_var);
                 charge_snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\stab_11_snd.wav",true);
                 break;
             }
@@ -276,7 +276,7 @@ object_event_add
                 breath_snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_breath_lass_01_snd.wav",true);
                 breath_snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_breath_lass_02_snd.wav",true);
                 breath_snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_breath_lass_03_snd.wav",true);
-                wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\stab_11_snd.wav");
+                wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\stab_11_snd.wav",global.wake_3d_var);
                 charge_snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\stab_11_snd.wav",true);
                 break;
             }
@@ -293,7 +293,7 @@ object_event_add
                 breath_snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_mumble_ryan_01_snd.wav",true);
                 breath_snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_mumble_ryan_02_snd.wav",true);
                 breath_snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_mumble_ryan_03_snd.wav",true);
-                wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_ryan_05_snd.wav");
+                wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_ryan_05_snd.wav",global.wake_3d_var);
                 charge_snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_charge_ryan_01_snd.wav",true);
                 charge_snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_charge_ryan_02_snd.wav",true);
                 charge_snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_charge_ryan_03_snd.wav",true);

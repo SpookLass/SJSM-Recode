@@ -80,7 +80,7 @@ object_event_add
         snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_02_snd.wav",true);
         snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_03_snd.wav",true);
         snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_04_snd.wav",true);
-        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_wake_snd.wav");
+        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_wake_snd.wav",global.wake_3d_var);
         slime_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_wake_snd.wav",true);
         mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_mus_snd.mp3");
     }

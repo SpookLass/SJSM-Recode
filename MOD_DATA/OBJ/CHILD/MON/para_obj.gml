@@ -110,7 +110,7 @@ object_event_add
         eff_snd_arr[3] = fmod_snd_add_scr(main_directory_const+"\SND\MON\dl_eff_03_snd.wav");
         for (local.i=0; local.i<eff_snd_len_var; local.i+=1;)
         { fmod_snd_set_group_scr(eff_snd_arr[local.i,0],snd_group_mon_const); }
-        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\para_wake_snd.wav");
+        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\para_wake_snd.wav",global.wake_3d_var);
         main_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\para_mus_snd.mp3");
         fmod_snd_set_group_scr(main_mus_snd_var,snd_group_mus_const);
         leech_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\para_leech_mus_snd.mp3");

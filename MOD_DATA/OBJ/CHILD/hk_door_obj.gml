@@ -11,7 +11,6 @@ object_event_add
 (argument0,ev_create,0,'
     event_inherited();
     color_var = false;
-    
     if global.color_var < 1
     { image_blend = color_par_obj.light_color_var; }
     else { image_blend = c_white; }

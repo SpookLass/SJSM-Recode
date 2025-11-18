@@ -62,7 +62,6 @@ object_event_add
             other.shadow_spr_var = shadow_spr_var;
             for (local.i=0; local.i<snd_len_var; local.i+=1;)
             { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
-            other.wake_snd_var[1] = wake_snd_var[1];
             other.mus_snd_var = mus_snd_var;
             local.loaded = true;
             break;
@@ -78,7 +77,6 @@ object_event_add
         snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\tiri_02_snd.wav",true);
         snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\tiri_03_snd.wav",true);
         snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\tiri_04_snd.wav",true);
-        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\tiri_wake_snd.wav");
         mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\TIRSIAK_AMB.mp3");
     }
     // Coward

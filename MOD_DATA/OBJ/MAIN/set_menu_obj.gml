@@ -418,6 +418,32 @@ object_event_add
     button_arr[button_len_var,11] = "LOCALE";
     button_len_var += 1;
 
+    button_arr[button_len_var,0] = global.rand_theme_var;
+    button_arr[button_len_var,1] = ini_read_string("SETTINGS","rand_theme","SETTINGS_rand_theme"); // Label
+    button_arr[button_len_var,2] = "Randomize when themes play." // Description
+    button_arr[button_len_var,3] = 0; // Type: Enum
+    button_arr[button_len_var,4] = true; // Wrap value
+    button_arr[button_len_var,5] = rand_theme_const; // Default value
+    button_arr[button_len_var,6] = false; // Minimum Value
+    button_arr[button_len_var,7] = true; // Maximum Value
+    button_arr[button_len_var,8] = "rand_theme"; // Global variable to modify
+    button_arr[button_len_var,9] = "OFF"; // Text for each option
+    button_arr[button_len_var,10] = "ON";
+    button_len_var += 1;
+
+    button_arr[button_len_var,0] = global.wake_3d_var;
+    button_arr[button_len_var,1] = ini_read_string("SETTINGS","wake_3d","SETTINGS_wake_3d"); // Label
+    button_arr[button_len_var,2] = "Wake sounds are attenuated." // Description
+    button_arr[button_len_var,3] = 0; // Type: Enum
+    button_arr[button_len_var,4] = true; // Wrap value
+    button_arr[button_len_var,5] = wake_3d_const; // Default value
+    button_arr[button_len_var,6] = false; // Minimum Value
+    button_arr[button_len_var,7] = true; // Maximum Value
+    button_arr[button_len_var,8] = "wake_3d"; // Global variable to modify
+    button_arr[button_len_var,9] = "OFF"; // Text for each option
+    button_arr[button_len_var,10] = "ON";
+    button_len_var += 1;
+
     button_arr[button_len_var,0] = 0;
     button_arr[button_len_var,1] = ini_read_string("SETTINGS","apply","SETTINGS_apply"); // Label
     button_arr[button_len_var,2] = "Apply your settings. If you do not do this, your settings will not apply. Some settings may require a reload."

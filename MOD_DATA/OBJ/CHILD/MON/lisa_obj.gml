@@ -105,7 +105,7 @@ object_event_add
         bg_var = background_add(vanilla_directory_const+"\3D\lisa_tex.png",false,false);
         js_bg_01_var = background_add(vanilla_directory_const+"\TEX\SCARE_01C.png",false,false);
         js_bg_02_var = background_add(vanilla_directory_const+"\TEX\SCARE_01B.png",false,false);
-        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\lisa_wake_snd.wav");
+        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\lisa_wake_snd.wav",,global.wake_3d_var);
         amb_mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\LISA_AMB.mp3");
         chase_mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\LISA_AMB2.mp3");
         mdl_var = d3d_model_create();

@@ -34,8 +34,9 @@ object_event_add
     local.mus = curr_snd_var;
     with mon_par_obj
     {
-        if mus_prio_var > other.curr_prio_var
-        || (mus_prio_var > amb_mus_prio_const && mus_prio_var == other.curr_prio_var && id > local.curr_id)
+        if (!global.rand_theme_var || !irandom(1) || mus_prio_var >= mb_mus_prio_const)
+        && (mus_prio_var > other.curr_prio_var
+        || (mus_prio_var > amb_mus_prio_const && mus_prio_var == other.curr_prio_var && id > local.curr_id))
         {
             local.curr_id = id;
             other.curr_prio_var = mus_prio_var;

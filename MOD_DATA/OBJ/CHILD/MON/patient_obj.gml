@@ -68,7 +68,7 @@ object_event_add
     if !local.loaded
     {
         spr_var = sprite_add(main_directory_const+"\SPR\MON\patient_spr.png",3,false,false,0,0); // vanilla_directory_const+"\3D\npc_6_tex.png"
-        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\patient_wake_snd.wav");
+        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\patient_wake_snd.wav",global.wake_3d_var);
         mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\patient_mus_snd.mp3");
         fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
         mdl_01_var = d3d_model_create();
@@ -253,21 +253,22 @@ object_event_add
 ");
 // Room End
 object_event_add
-(argument0,ev_other,ev_room_end,"
+(argument0,ev_other,ev_room_end,'
     if hang_var
     {
         hang_var = false;
         visible = true;
         seen_yaw_var = seen_yaw_02_var;
         seen_pitch_var = seen_pitch_02_var;
-        snd_var = fmod_snd_play_scr(wake_snd_var[1]);
+        if fmod_snd_is_3d_scr(wake_snd_var[1]) { snd_var = fmod_snd_3d_play_scr(wake_snd_var[1]); }
+        else { snd_var = fmod_snd_play_scr(wake_snd_var[1]); }
         sub_var[0] = wake_snd_var[2];
         sub_var[1] = wake_snd_var[3];
         do_anim_var = false;
         anim_var = false;
     }
     event_inherited();
-");
+');
 // Delay
 object_event_add
 (argument0,ev_alarm,0,"
@@ -330,18 +331,19 @@ object_event_add
 ");
 // Maybe scream?
 object_event_add
-(argument0,ev_alarm,12,"
+(argument0,ev_alarm,12,'
     if seen_rage_var == 2
     {
-        snd_var = fmod_snd_play_scr(wake_snd_var[1]);
+        if fmod_snd_is_3d_scr(wake_snd_var[1]) { snd_var = fmod_snd_3d_play_scr(wake_snd_var[1]); }
+        else { snd_var = fmod_snd_play_scr(wake_snd_var[1]); }
         sub_var[0] = wake_snd_var[2];
         sub_var[1] = wake_snd_var[3];
         rage_var = true;
     }
-");
+');
 // Step event
 object_event_add
-(argument0,ev_step,ev_step_normal,"
+(argument0,ev_step,ev_step_normal,'
     if hang_var
     {
         if is_seen_var == 1 && target_dist_var <= 200 // Look target is so weird
@@ -350,9 +352,10 @@ object_event_add
             visible = true;
             seen_yaw_var = seen_yaw_02_var;
             seen_pitch_var = seen_pitch_02_var;
-            snd_var = fmod_snd_play_scr(wake_snd_var[1]);
+            if fmod_snd_is_3d_scr(wake_snd_var[1]) { snd_var = fmod_snd_3d_play_scr(wake_snd_var[1]); }
+            else { snd_var = fmod_snd_play_scr(wake_snd_var[1]); }
             sub_var[0] = wake_snd_var[2];
-        sub_var[1] = wake_snd_var[3];
+            sub_var[1] = wake_snd_var[3];
             do_anim_var = false;
             anim_var = false;
             set_alarm_scr(11,fmod_inst_get_len_scr(snd_var)*milli_frame_rate_const/global.game_spd_var);
@@ -392,7 +395,7 @@ object_event_add
         if mdl_var == mdl_02_var { draw_yaw_var += 180; }
     }
     event_inherited();
-");
+');
 // Attack Success
 // Uses attack_target_var as an argument, usually the player.
 object_event_add

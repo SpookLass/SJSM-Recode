@@ -215,7 +215,8 @@ object_event_add
     // Play wake (or random sound if it doesn"t exist)
     if wake_snd_var[0] == 1
     {
-        snd_var = fmod_snd_play_scr(wake_snd_var[1]);
+        if fmod_snd_is_3d_scr(wake_snd_var[1]) { snd_var = fmod_snd_3d_play_scr(wake_snd_var[1]); }
+        else { snd_var = fmod_snd_play_scr(wake_snd_var[1]); }
         sub_var[0] = wake_snd_var[2];
         sub_var[1] = wake_snd_var[3];
     }

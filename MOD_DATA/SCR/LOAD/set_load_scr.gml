@@ -27,6 +27,8 @@ global.name_var = ini_read_real("MAIN","name",name_hd_const);
 global.lang_var = ini_read_string("MAIN","lang","en_us.ini");
 global.killer_voice_var = ini_read_real("MAIN","killer_voice",killer_voice_const);
 global.reset_spd_var = ini_read_real("MAIN","reset_spd",reset_spd_const);
+global.rand_theme_var = ini_read_real("MAIN","rand_theme",rand_theme_const);
+global.wake_3d_var = ini_read_real("MAIN","wake_3d",wake_3d_const);
 // Hud
 global.mon_hud_var = ini_read_real("MAIN","mon_hud",mon_hud_const);
 global.rm_hud_var = ini_read_real("MAIN","rm_hud",rm_hud_const);

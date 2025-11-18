@@ -82,7 +82,7 @@ object_event_add
         snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_03_snd.wav",true);
         snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_04_snd.wav",true);
         snd_arr[4,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_laugh_snd.wav",true);
-        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_real_wake_snd.wav");
+        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_real_wake_snd.wav",global.wake_3d_var);
         cam_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_cam_snd.wav");
         fmod_snd_set_group_scr(cam_snd_var,snd_group_mon_const);
         mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_real_mus_snd.mp3");
@@ -134,6 +134,12 @@ object_event_add
             state_seen_spd_var[1] = 1.1;
             state_chance_num_var = 2;
             state_chance_den_var = 3;
+            // Silhouette
+            sil_var = true;
+            sil_type_var = 1; // Pure color
+            sil_color_var = c_dkgray;
+            sil_alpha_var = 0.2;
+            sil_dist_var = 0.1;
             break;
         }
         case 3: // Old HD
