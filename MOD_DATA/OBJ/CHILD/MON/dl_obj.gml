@@ -47,6 +47,8 @@ object_event_add
     snd_den_var = 3;
     snd_alarm_min_var = 240;
     snd_alarm_max_var = 460;
+    snd_delay_min_var = 80;
+    snd_delay_max_var = 240;
     snd_dist_max_var = 600;
     eff_snd_len_var = 4;
     // Theme
@@ -139,8 +141,10 @@ object_event_add
             close_dist_var = 96;
             open_dist_var = 224/3; // 74.r6
             // Sound
-            snd_alarm_min_var = 360; // 60 at start
-            snd_alarm_max_var = 720; // 180 at start
+            snd_alarm_min_var = 360;
+            snd_alarm_max_var = 720;
+            snd_delay_min_var = 60;
+            snd_delay_max_var = 180;
             snd_den_var = 1;
             snd_dist_max_var = 500;
             break;

@@ -334,7 +334,7 @@ object_event_add
     if coward_var && hurt_var { spd_mult_var *= -coward_spd_var; }
     event_inherited();
 ');
-// Hurt
+// Hurt Event
 object_event_add
 (argument0,ev_other,ev_user4,'
     event_inherited();
@@ -368,7 +368,7 @@ object_event_add
             set_alarm_scr(1,-1);
             set_alarm_scr(4,-1);
             set_alarm_scr(8,-1);
-            set_alarm_scr(6,hurt_alarm_var+irandom_range(snd_alarm_min_var,snd_alarm_max_var));
+            set_alarm_scr(6,hurt_alarm_var+irandom_range(snd_delay_min_var,snd_delay_min_var));
         }
         else
         {
@@ -384,7 +384,7 @@ object_event_add
         snd_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0]);
         sub_var[0] = snd_arr[local.snd,1];
         sub_var[1] = snd_arr[local.snd,2];
-        set_alarm_scr(6,irandom_range(snd_alarm_min_var,snd_alarm_max_var));
+        set_alarm_scr(6,irandom_range(snd_delay_min_var,snd_delay_min_var));
     }
 ');
 // Hurt Alarm

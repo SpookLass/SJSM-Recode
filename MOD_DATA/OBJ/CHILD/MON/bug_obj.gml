@@ -9,6 +9,16 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,1,'
+    // Sounds
+    snd_len_var = 4;
+    snd_num_var = 1;
+    snd_den_var = 2;
+    snd_alarm_min_var = 80;
+    snd_alarm_max_var = 240;
+    snd_dist_max_var = 800;
+    loop_snd_var[0] = true;
+    loop_snd_dist_max_var = 600;
+    // Translations
     ini_open(global.lang_var);
     switch global.name_var
     {
@@ -34,11 +44,12 @@ object_event_add
             break;
         }
     }
+    loop_snd_var[2] = string_replace(ini_read_string("SUB","bug_loop","SUB_bug_loop"),"@n",name_var);
     local.sub = string_replace(ini_read_string("SUB","bug","SUB_bug"),"@n",name_var);
-    loop_sub_var[0] = string_replace(ini_read_string("SUB","bug_loop","SUB_bug_loop"),"@n",name_var);
     for (local.i=0; local.i<snd_len_var; local.i+=1)
     { snd_arr[local.i,1] = local.sub; }
     ini_close();
+    // Main
     type_var = 1;
     spd_base_var = 0.5;
     spr_spd_base_var = 1/3;
@@ -50,15 +61,6 @@ object_event_add
     dmg_alarm_var = 120;
     w_var = 16;
     h_var = 13;
-    // Sounds
-    snd_len_var = 4;
-    snd_num_var = 1;
-    snd_den_var = 2;
-    snd_alarm_min_var = 80;
-    snd_alarm_max_var = 240;
-    snd_dist_max_var = 800;
-    loop_snd_var[0] = true;
-    loop_snd_dist_max_var = 600;
     // Hurt
     do_hurt_var = 2; // Damage
     hurt_alarm_var = 60;
@@ -365,13 +367,6 @@ object_event_add
     event_inherited();
     if do_acc_var > 1 { set_motion_3d_scr(0,true); }
     if stun_var { z_off_var = 0; }
-    if fmod_inst_is_play_scr(snd_var) && fmod_inst_is_3d_scr(snd_var)
-    { fmod_inst_stop_scr(snd_var); }
-    local.snd = irandom(snd_len_var-1);
-    snd_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0]);
-    sub_var[0] = snd_arr[local.snd,1];
-    sub_var[1] = snd_arr[local.snd,2];
-    set_alarm_scr(6,irandom_range(snd_alarm_min_var,snd_alarm_max_var));
 ');
 // Determine target
 object_event_add
@@ -401,6 +396,15 @@ object_event_add
         set_motion_3d_scr(0,true);
     }
     if stun_var { set_alarm_scr(9,weird_alarm_var); }
+    // Play sound
+    if fmod_inst_is_play_scr(snd_var) && fmod_inst_is_3d_scr(snd_var)
+    { fmod_inst_stop_scr(snd_var); }
+    local.snd = irandom(snd_len_var-1);
+    snd_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0]);
+    sub_var[0] = snd_arr[local.snd,1];
+    sub_var[1] = snd_arr[local.snd,2];
+    set_alarm_scr(6,irandom_range(snd_delay_min_var,snd_delay_min_var));
+    // Inherited
     event_inherited();
 ');
 // Attack Success

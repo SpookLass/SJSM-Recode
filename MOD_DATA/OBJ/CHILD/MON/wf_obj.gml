@@ -41,7 +41,7 @@ object_event_add
     // Sounds
     do_snd_var = 1; // At least for now
     loop_snd_var[0] = true;
-    snd_dist_max_var = 600;
+    loop_snd_dist_max_var = 600;
     glitch_snd_len_var = 4;
     // Assets
         // Search for existing assets to save memory

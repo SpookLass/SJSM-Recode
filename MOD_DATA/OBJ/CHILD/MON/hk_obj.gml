@@ -12,6 +12,7 @@ object_event_add
     ini_open(global.lang_var);
     name_var = ini_read_string("NAME","hk","NAME_hk");
 	loop_snd_var[2] = string_replace(ini_read_string("SUB","hk","SUB_hk"),"@n",name_var);
+	hurt_snd_var[2] = string_replace(ini_read_string("SUB","hk_hurt","SUB_hk_hurt"),"@n",name_var);
 	snd_arr[local.i,1] = string_replace(ini_read_string("SUB","hk_breath","SUB_hk_breath"),"@n",name_var);
     ini_close();
     type_var = 0;

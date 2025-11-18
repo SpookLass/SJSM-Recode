@@ -81,17 +81,17 @@ object_event_add
     char_delay_var = 30;
     str_alarm_min_var = 240;
     str_alarm_max_var = 460;
-    str_wake_var = "What are you hoping to accomplish?"
+    ini_open(global.lang_var);
+    str_wake_var = ini_read_string("MON","brain_wake","MON_brain_wake");
     str_len_var = 9;
-    str_arr_var[0,0] = "1235."
-    str_arr_var[0,1] = "Give in."
-    str_arr_var[0,2] = "Worthless."
-    str_arr_var[0,3] = "You won'+"'"+'t get far" // Breaks the editor lol
-    str_arr_var[0,4] = "Failure."
-    str_arr_var[0,5] = "Stop wasting time."
-    str_arr_var[0,6] = "Disappointment."
-    str_arr_var[0,7] = "You'+"'"+'re pathetic."
-    str_arr_var[0,8] = "Weak."
+    for (local.i=0; local.i<str_len_var; local.i+=1;)
+    {
+        local.num = string(local.i+1);
+        if string_length(local.num) < 2 { local.num = "0"+local.num; }
+        local.str = "brain_"+local.num;
+        str_arr_var[0,local.i] = ini_read_string("MON",local.str,"MON_"+local.str);
+    }
+    ini_close();
     str_var = str_wake_var;
     alarm_len_var = 2;
     set_alarm_scr(0,anim_alarm_var);
