@@ -29,6 +29,7 @@ object_event_add
     d3d_transform_add_rotation_z(global.cam_yaw_var[view_current]);
     d3d_transform_add_translation(global.cam_x_var[view_current],global.cam_y_var[view_current],global.cam_z_var[view_current]);
     draw_set_color(image_blend); draw_set_alpha(image_alpha);
+    if fog_type_var == 1 { d3d_set_fog(false,c_black,0,0); }
     for (local.i=0; local.i<wall_num_var; local.i+=1;)
     {
         local.scale = tan(degtorad(global.cam_fov_var[view_current]/2));
@@ -39,4 +40,5 @@ object_event_add
     }
     d3d_transform_set_identity();
     draw_set_color(c_white); draw_set_alpha(1);
+    if fog_type_var == 1 { d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var); }
 ')

@@ -45,7 +45,7 @@ object_event_add
     snd_den_var = 2;
     snd_alarm_min_var = 80;
     snd_alarm_max_var = 240;
-    snd_dist_var = 600;
+    snd_dist_max_var = 600;
     wake_snd_var[0] = true;
     hurt_snd_var = 4;
     // Theme
@@ -172,7 +172,7 @@ object_event_add
             snd_alarm_min_var = 90;
             snd_alarm_max_var = 240;
             snd_den_var = 1;
-            snd_dist_var = 500;
+            snd_dist_max_var = 500;
             break;
         }
     }

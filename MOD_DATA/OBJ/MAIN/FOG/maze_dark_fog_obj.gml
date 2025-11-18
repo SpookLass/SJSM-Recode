@@ -14,5 +14,6 @@ object_event_add
     fog_start_var = 0;
     fog_end_var = 128;
     fog_dark_var = true;
+    prio_var = 5;
     event_inherited();
 ");

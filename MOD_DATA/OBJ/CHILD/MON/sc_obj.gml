@@ -35,7 +35,7 @@ object_event_add
             break;
         }
     }
-    snd_arr[0,1] = string_replace(ini_read_string("SUB","sc","SUB_sc"),"@n",name_var);
+    loop_snd_var[2] = string_replace(ini_read_string("SUB","sc","SUB_sc"),"@n",name_var);
     ini_close();
     type_var = 0;
     spd_base_var = 0.8;
@@ -49,15 +49,15 @@ object_event_add
     z_off_var = 5;
     do_anim_var = -1;
     // Sounds
-    snd_len_var = 1;
-    snd_loop_var = true;
-    snd_dist_var = 600;
+    loop_snd_var[0] = true;
+    loop_snd_dist_max_var = 600;
     // Seen
     do_seen_var = true;
     seen_yaw_var = 30;
     seen_pitch_var = 30;
     alpha_rate_var = 0.01;
     // Effects
+    fog_type_var = 0;
     fog_color_var = make_color_rgb(72,57,98);
     color_var = -1;
     dark_color_var = make_color_rgb(102,102,102);
@@ -95,8 +95,7 @@ object_event_add
             other.bg_var = bg_var;
             other.overlay_bg_var = overlay_bg_var;
             other.fog_bg_var = fog_bg_var;
-            for (local.i=0; local.i<snd_len_var; local.i+=1;)
-            { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
+            other.loop_snd_var[1] = loop_snd_var[1];
             other.mus_snd_var = mus_snd_var;
             local.loaded = true;
             break;
@@ -108,10 +107,10 @@ object_event_add
         bg_var = background_add(kh_directory_const+"\TEX\sprites\HOS_ex4.png",false,false);
         overlay_bg_var = background_add(main_directory_const+"\BG\KH\olga_bg.png",false,false);
         fog_bg_var = background_add(main_directory_const+"\BG\KH\sc_fog_bg.png",false,false);
-        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\sc_snd.wav",true);
-        fmod_snd_set_max_vol_scr(snd_arr[0,0],0.5);
+        loop_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\sc_snd.wav",true);
+        fmod_snd_set_max_vol_scr(loop_snd_var[1],0.5);
         mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\sc_mus_snd.mp3");
-        fmod_snd_set_minmax_dist_scr(hurt_snd_var[1],0,snd_dist_var);
+        fmod_snd_set_minmax_dist_scr(hurt_snd_var[1],0,snd_dist_max_var);
         fmod_snd_set_group_scr(hurt_snd_var[1],snd_group_mon_const);
     }
     tex_var = background_get_texture(bg_var);
@@ -125,6 +124,7 @@ object_event_add
             overlay_alpha_var = 0.25;
             fog_alpha_var = 0.25;
             fog_dist_min_var = 128;
+            fog_type_var = 1;
             break;
         }
         case 3: // Plus
@@ -146,8 +146,7 @@ object_event_add
         background_delete(overlay_bg_var);
         background_delete(fog_bg_var);
         fmod_snd_free_scr(mus_snd_var);
-        for (local.i=0; local.i<snd_len_var; local.i+=1;)
-        { fmod_snd_free_scr(snd_arr[local.i,0]); }
+        fmod_snd_free_scr(loop_snd_var[1]);
     }
     with kh_fog_obj { if par_var == other.id { instance_destroy(); }}
     with sc_overlay_obj { if par_var == other.id { instance_destroy(); }}
@@ -190,8 +189,6 @@ object_event_add
     {
         with color_par_obj
         { instance_destroy(); }
-        with fog_par_obj
-        { instance_destroy(); }
         with instance_create(0,0,color_par_obj)
         {
             image_blend = merge_color(c_white,other.dark_color_var,local.per);
@@ -199,9 +196,12 @@ object_event_add
         }
         if !instance_exists(kh_fog_obj)
         {
+            with fog_par_obj
+            { instance_destroy(); }
             with instance_create(0,0,kh_fog_obj)
             {
                 par_var = other.id;
+                fog_type_var = other.fog_type_var;
                 fog_color_var = c_black;//other.fog_color_var;
                 fog_end_var = lerp_scr(other.fog_dist_max_var,other.fog_dist_min_var,local.per);
                 image_blend = other.fog_color_var;

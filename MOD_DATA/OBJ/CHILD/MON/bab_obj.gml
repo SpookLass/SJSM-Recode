@@ -59,7 +59,7 @@ object_event_add
     snd_den_var = 2;
     snd_alarm_min_var = 80;
     snd_alarm_max_var = 240;
-    snd_dist_var = 800;
+    snd_dist_max_var = 800;
     hurt_snd_var = 4;
     // Special
     eff_var = true;
@@ -136,7 +136,7 @@ object_event_add
             snd_alarm_min_var = 90;
             snd_alarm_max_var = 240;
             snd_den_var = 1;
-            snd_dist_var = 500;
+            snd_dist_max_var = 500;
             // Movement
             spd_base_var = 34/45; // 0.7r5
             do_acc_var = true;

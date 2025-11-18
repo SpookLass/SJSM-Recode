@@ -20,13 +20,27 @@ object_event_add
     // Overlay
     overlay_var = false;
     overlay_bg_var = noone;
-    overlay_alpha_var = 0.5; // 0.25 for flashlight 2
+    overlay_alpha_var = 0.5; // 0.25 for flashlight 2, 0.35 for Hooked Doll
     overlay_color_var = c_white;
+    // Dollhouse
+    rand_rate_var = 1;
+    alarm_len_var = 1;
+    set_alarm_scr(0,rand_rate_var);
 ');
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,'
     spr_id_var = (spr_id_var+(spr_spd_var*global.delta_time_var)) mod sprite_get_number(spr_var);
+');
+// Rand alarm
+object_event_add
+(argument0,ev_alarm,0,'
+    if rand_var
+    {
+        x = random(sprite_get_width(spr_var));
+        y = random(sprite_get_height(spr_var));
+        set_alarm_scr(0,rand_rate_var);
+    }
 ');
 // Draw Event
 object_event_add
@@ -39,6 +53,6 @@ object_event_add
     if overlay_var && background_exists(overlay_bg_var)
     { draw_background_stretched_ext(overlay_bg_var,0,0,view_wview[view_current],view_hview[view_current],overlay_color_var,overlay_alpha_var); }
     draw_set_blend_mode(bm_add);
-    draw_sprite_tiled_ext(spr_var,floor(spr_id_var),0,0,local.scale*image_xscale,local.scale*image_yscale,image_blend,image_alpha);
+    draw_sprite_tiled_ext(spr_var,floor(spr_id_var),x*local.scale*image_xscale,y*local.scale*image_yscale,local.scale*image_xscale,local.scale*image_yscale,image_blend,image_alpha);
     draw_set_blend_mode(bm_normal); d3d_set_hidden(true);
 ');

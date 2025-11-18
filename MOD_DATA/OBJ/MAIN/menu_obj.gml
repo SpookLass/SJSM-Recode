@@ -435,7 +435,7 @@ object_event_add
     }
     type_button_arr[23,1] = string_upper(ini_read_string("NAME","wc","NAME_wc"));
     type_button_arr[24,1] = string_upper(ini_read_string("NAME","clown","NAME_clown"));
-    type_button_arr[25,1] = string_upper(ini_read_string("NAME","hd","NAME_hd"));
+    type_button_arr[25,1] = string_upper(ini_read_string("NAME","hk","NAME_hk"));
     type_button_arr[26,1] = string_upper(ini_read_string("NAME","frenzy","NAME_frenzy"));
     type_button_arr[33,1] = back_str_var;
         // Variable to write to
@@ -464,7 +464,7 @@ object_event_add
     type_button_arr[22,3] = "husk";
     type_button_arr[23,3] = "wc";
     type_button_arr[24,3] = "clown";
-    type_button_arr[25,3] = "hd";
+    type_button_arr[25,3] = "hk";
     type_button_arr[26,3] = "frenzy";
     type_button_arr[27,3] = "real_ringu";
     type_button_arr[28,3] = "tiri";

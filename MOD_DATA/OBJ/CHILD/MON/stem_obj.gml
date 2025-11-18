@@ -21,7 +21,7 @@ object_event_add
     snd_den_var = 1;
     snd_alarm_min_var = 200;
     snd_alarm_max_var = 400;
-    snd_dist_var = 600;
+    snd_dist_max_var = 600;
     // Translations
     ini_open(global.lang_var);
     switch global.name_var

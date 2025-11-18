@@ -26,7 +26,7 @@ object_event_add
             break;
         }
     }
-    snd_arr[0,1] = string_replace(ini_read_string("SUB","wf","SUB_wf"),"@n",name_var);
+    loop_snd_var[2] = string_replace(ini_read_string("SUB","wf","SUB_wf"),"@n",name_var);
     ini_close();
     type_var = 0;
     spr_spd_var = 1;
@@ -40,9 +40,8 @@ object_event_add
     z_off_var = 14;
     // Sounds
     do_snd_var = 1; // At least for now
-    snd_loop_var = true;
-    snd_dist_var = 600;
-    snd_len_var = 1;
+    loop_snd_var[0] = true;
+    snd_dist_max_var = 600;
     glitch_snd_len_var = 4;
     // Assets
         // Search for existing assets to save memory
@@ -60,7 +59,7 @@ object_event_add
             other.web_bg_var = web_bg_var;
             other.web_mdl_var = web_mdl_var;
             other.zone_list_var = zone_list_var;
-            other.snd_arr[0,0] = snd_arr[0,0];
+            other.loop_snd_var[1] = loop_snd_var[1];
             other.wake_snd_var[1] = wake_snd_var[1];
             for (local.i=0; local.i<glitch_snd_len_var; local.i+=1;)
             { other.glitch_snd_arr[local.i,0] = glitch_snd_arr[local.i,0]; }
@@ -93,7 +92,7 @@ object_event_add
         ds_list_add(zone_list_var,long_hall_11_rm);
         wake_snd_var[0] = true;
         wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\wf_wake_snd.mp3");
-        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\wf_snd.wav",true);
+        loop_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\wf_snd.wav",true);
         glitch_snd_arr[0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_01_snd.wav");
         glitch_snd_arr[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_02_snd.wav");
         glitch_snd_arr[2] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_03_snd.wav");
@@ -189,7 +188,7 @@ object_event_add
             res_w_var = 640;
             res_h_var = 480;
             // Dist
-            snd_dist_var = 600;
+            snd_dist_max_var = 600;
             break;
         }
         case 4: // Old HD
@@ -343,8 +342,7 @@ object_event_add
         ds_list_destroy(zone_list_var);
         for (local.i=0; local.i<glitch_snd_len_var; local.i+=1;)
         { fmod_snd_free_scr(glitch_snd_arr[local.i,0]); }
-        for (local.i=0; local.i<snd_len_var; local.i+=1;)
-        { fmod_snd_free_scr(snd_arr[local.i,0]); }
+        fmod_snd_free_scr(loop_snd_var[1]);
         fmod_snd_free_scr(wake_snd_var[1]);
         if no_fun_var { global.js_override_var = false; }
         if res_var
@@ -410,7 +408,7 @@ object_event_add
     {
         on_var = false; 
         set_alarm_scr(0,-1);
-        fmod_inst_stop_scr(snd_var);
+        fmod_inst_stop_scr(loop_inst_var);
     }
     // Zone
     if zone_start_var > 0 && dur_start_var-dur_var >= zone_start_var-1
@@ -725,7 +723,7 @@ object_event_add
     on_var = false;
     set_motion_3d_scr(0,true);
     set_alarm_scr(0,tp_alarm_var);
-    fmod_inst_stop_scr(snd_var);
+    fmod_inst_stop_scr(loop_inst_var);
 ');
 // Draw Event
 object_event_add

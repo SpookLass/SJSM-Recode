@@ -177,15 +177,23 @@ object_event_add
     // Sounds
     if do_snd_var
     {
-        for (local.i=0; local.i<snd_len_var; local.i+=1;)
+        if snd_dist_max_var > 0
         {
-            fmod_snd_set_minmax_dist_scr(snd_arr[local.i,0],0,snd_dist_var);
-            fmod_snd_set_group_scr(snd_arr[local.i,0],snd_group_mon_const);
+            for (local.i=0; local.i<snd_len_var; local.i+=1;)
+            {
+                fmod_snd_set_minmax_dist_scr(snd_arr[local.i,0],snd_dist_min_var,snd_dist_max_var);
+                fmod_snd_set_group_scr(snd_arr[local.i,0],snd_group_mon_const);
+            }
+            if wake_snd_var[0]
+            {
+                fmod_snd_set_minmax_dist_scr(wake_snd_var[1],snd_dist_min_var,snd_dist_max_var);
+                fmod_snd_set_group_scr(wake_snd_var[1],snd_group_mon_const);
+            }
         }
-        if wake_snd_var[0]
+        if loop_snd_var[0] && loop_snd_dist_max_var > 0
         {
-            fmod_snd_set_minmax_dist_scr(wake_snd_var[1],0,snd_dist_var);
-            fmod_snd_set_group_scr(wake_snd_var[1],snd_group_mon_const);
+            fmod_snd_set_minmax_dist_scr(loop_snd_var[1],loop_snd_dist_min_var,loop_snd_dist_max_var);
+            fmod_snd_set_group_scr(loop_snd_var[1],snd_group_mon_const);
         }
     }
     if snd_delay_min_var == 0 { snd_delay_min_var = snd_alarm_min_var}
@@ -211,7 +219,7 @@ object_event_add
         sub_var[0] = wake_snd_var[2];
         sub_var[1] = wake_snd_var[3];
     }
-    else if do_snd_var && !snd_loop_var
+    else if do_snd_var && !loop_snd_var[0]
     {
         local.snd = irandom(snd_len_var-1);
         snd_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0]);
@@ -267,8 +275,8 @@ object_event_add
     // Set target
     event_user(6);
     // Sound
-    if do_snd_var && snd_loop_var
-    { fmod_inst_stop_scr(snd_var); }
+    if do_snd_var && loop_snd_var[0]
+    { fmod_inst_stop_scr(loop_inst_var); }
     // Delay
     if delay_min_var > 0
     {
@@ -323,13 +331,8 @@ object_event_add
     on_var = true;
     if do_snd_var
     {
-        if snd_loop_var
-        {
-            snd_var = fmod_snd_3d_loop_scr(snd_arr[0,0]);
-            sub_var[0] = snd_arr[0,1];
-            sub_var[1] = snd_arr[0,2];
-        }
-        else { set_alarm_scr(6,irandom_range(snd_delay_min_var,snd_delay_max_var)); }
+        if loop_snd_var[0] { loop_inst_var = fmod_snd_3d_loop_scr(loop_snd_var[1]); }
+        set_alarm_scr(6,irandom_range(snd_delay_min_var,snd_delay_max_var));
     }
     if do_door_var
     {
@@ -384,7 +387,7 @@ object_event_add
 // Sound alarm
 object_event_add
 (argument0,ev_alarm,6,'
-    if do_snd_var && !snd_loop_var && frac_chance_scr(snd_num_var,snd_den_var)
+    if do_snd_var && frac_chance_scr(snd_num_var,snd_den_var)
     {
         if fmod_inst_is_play_scr(snd_var) && fmod_inst_is_3d_scr(snd_var)
         { fmod_inst_stop_scr(snd_var); }
@@ -872,7 +875,9 @@ object_event_add
         local.dir = point_direction(hurt_target_var.x,hurt_target_var.y,x,y);
         local.xtmp = x+lengthdir_x(hurt_dist_var,local.dir);
         local.ytmp = y+lengthdir_y(hurt_dist_var,local.dir);
-        if !check_coll_scr(0,0,0,0,local.xtmp,local.ytmp,z)
+        if do_coll_var { local.bool = !check_coll_scr(0,0,0,0,local.xtmp,local.ytmp,z); }
+        else { local.bool = true; }
+        if local.bool
         {
             x = local.xtmp;
             y = local.ytmp;
@@ -1002,6 +1007,7 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user9,'
     fmod_inst_set_3d_pos_scr(snd_var,x,y,z);
+    fmod_inst_set_3d_pos_scr(loop_inst_var,x,y,z);
 ');
 // Monster Collision
 object_event_add

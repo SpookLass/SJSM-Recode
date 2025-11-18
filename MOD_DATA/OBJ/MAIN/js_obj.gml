@@ -25,7 +25,7 @@ object_event_add
     }
     if frac_chance_scr(chance_num_var,chance_den_var)
     {
-        snd_dist_var = -1;
+        snd_dist_max_var = -1;
         snd_3d_var = false;
         freeze_var = true;
         rotate_var = false;
@@ -51,7 +51,7 @@ object_event_add
                 snd_3d_var = true;
                 freeze_var = false;
                 rotate_var = true;
-                snd_dist_var = 600;
+                snd_dist_max_var = 600;
                 break;
             }
         }
@@ -69,8 +69,8 @@ object_event_add
         store_tex_var = background_get_texture(bg_01_var);
         store_tex_02_var = background_get_texture(bg_02_var);
         tex_02_var = store_tex_02_var;
-        if snd_dist_var > 0
-        { fmod_snd_set_minmax_dist_scr(wake_snd_var[1],0,snd_dist_var); }
+        if snd_dist_max_var > 0
+        { fmod_snd_set_minmax_dist_scr(snd_var,0,snd_dist_max_var); }
         // Main
         event_inherited();
         solid_var = true;

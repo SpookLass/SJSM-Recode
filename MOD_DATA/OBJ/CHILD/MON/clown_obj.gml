@@ -46,7 +46,7 @@ object_event_add
     snd_den_var = 1;
     snd_alarm_min_var = 300;
     snd_alarm_max_var = 360;
-    snd_dist_var = 768; // Kinda, maybe 512
+    snd_dist_max_var = 768; // Kinda, maybe 512
     leave_snd_len_var = 2;
     // Assets
         // Search for existing assets to save memory

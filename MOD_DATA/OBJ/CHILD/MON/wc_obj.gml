@@ -15,7 +15,7 @@ object_event_add
     snd_den_var = 9;
     snd_alarm_min_var = 60;
     snd_alarm_max_var = 130;
-    snd_dist_var = 512;
+    snd_dist_max_var = 512;
     // Translations
     ini_open(global.lang_var);
     name_var = ini_read_string("NAME","wc","NAME_wc");
@@ -68,9 +68,13 @@ object_event_add
             other.atk_spr_var = atk_spr_var;
             other.atk_end_spr_var = atk_end_spr_var;
             other.dead_spr_var = dead_spr_var;
-            local.loaded = true;
+            other.atk_start_snd_var[1] = atk_start_snd_var[1];
+            other.hurt_snd_var[1] = hurt_snd_var[1];
+            other.dead_snd_var[0] = dead_snd_var[0];
+            other.mus_snd_var = mus_snd_var;
             for (local.i=0; local.i<snd_len_var; local.i+=1;)
             { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
+            local.loaded = true;
             break;
         }
     }

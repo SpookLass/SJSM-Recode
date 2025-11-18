@@ -38,7 +38,7 @@ object_event_add
     dmg_alarm_var = 60;
     // Sounds
     wake_snd_var[0] = 2;
-    snd_dist_var = 600;
+    snd_dist_max_var = 600;
     // Theme
     mus_prio_var = mon_mus_prio_const;
     // Render
@@ -194,7 +194,7 @@ object_event_add
             seen_yaw_var = 60;
             attack_tp_var = false;
             attack_alpha_var = 2;
-            snd_dist_var = 500;
+            snd_dist_max_var = 500;
             vis_phase_end_var = -1;
             // Room stuffs
             start_var = 16;

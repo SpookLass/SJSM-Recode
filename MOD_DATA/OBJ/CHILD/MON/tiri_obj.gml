@@ -48,7 +48,7 @@ object_event_add
     snd_den_var = 3;
     snd_alarm_min_var = 200;
     snd_alarm_max_var = 480;
-    snd_dist_var = 700;
+    snd_dist_max_var = 700;
     // Theme
     mus_prio_var = theme_mus_prio_const;
     // Assets
@@ -156,7 +156,7 @@ object_event_add
             snd_alarm_min_var = 180;
             snd_alarm_max_var = 480;
             snd_den_var = 1;
-            snd_dist_var = 500;
+            snd_dist_max_var = 500;
             break;
         }
     }

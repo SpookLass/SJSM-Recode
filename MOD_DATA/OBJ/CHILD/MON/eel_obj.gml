@@ -16,7 +16,7 @@ object_event_add
     snd_den_var = 2;
     snd_alarm_min_var = 80;
     snd_alarm_max_var = 240;
-    snd_dist_var = 600;
+    snd_dist_max_var = 600;
     hurt_snd_var = 4;
     // Translations
     ini_open(global.lang_var);
@@ -87,7 +87,7 @@ object_event_add
         snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\eel_04_snd.wav",true);
         wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\eel_wake_snd.wav");
         hurt_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\eel_hurt_snd.wav",true);
-        fmod_snd_set_minmax_dist_scr(hurt_snd_var[1],0,snd_dist_var);
+        fmod_snd_set_minmax_dist_scr(hurt_snd_var[1],0,snd_dist_max_var);
         fmod_snd_set_group_scr(hurt_snd_var[1],snd_group_mon_const);
         mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\eel_mus_snd.mp3");
     }

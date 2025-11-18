@@ -50,7 +50,7 @@ object_event_add
     snd_den_var = 2;
     snd_alarm_min_var = 80;
     snd_alarm_max_var = 240;
-    snd_dist_var = 600;
+    snd_dist_max_var = 600;
     hurt_snd_var = 4;
     // Theme
     mus_prio_var = theme_mus_prio_const;
@@ -81,7 +81,7 @@ object_event_add
         wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_wake_snd.wav");
         mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_mus_snd.mp3");
         hurt_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_laugh_snd.wav",true);
-        fmod_snd_set_minmax_dist_scr(hurt_snd_var[1],0,snd_dist_var);
+        fmod_snd_set_minmax_dist_scr(hurt_snd_var[1],0,snd_dist_max_var);
         fmod_snd_set_group_scr(hurt_snd_var[1],snd_group_mon_const);
     }
     // Laugh
@@ -118,7 +118,7 @@ object_event_add
             snd_alarm_min_var = 90;
             snd_alarm_max_var = 240;
             snd_den_var = 1;
-            snd_dist_var = 500;
+            snd_dist_max_var = 500;
             break;
         }
     }

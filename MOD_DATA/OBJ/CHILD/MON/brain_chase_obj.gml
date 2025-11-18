@@ -8,7 +8,7 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create Event
 object_event_add
-(argument0,ev_create,1,"
+(argument0,ev_create,1,'
     ini_open(global.lang_var);
     switch global.name_var
     {
@@ -17,15 +17,16 @@ object_event_add
         case name_num_og_const:
         case name_fanon_const:
         {
-            name_var = ini_read_string('NAME','brain','NAME_brain');
+            name_var = ini_read_string("NAME","brain","NAME_brain");
             break;
         }
         case name_num_hd_const:
         {
-            name_var = ini_read_string('NAME','brain_num','NAME_brain_num');
+            name_var = ini_read_string("NAME","brain_num","NAME_brain_num");
             break;
         }
     }
+    look_snd_var[2] = string_replace(ini_read_string("SUB","brain","SUB_brain"),"@n",name_var);
     ini_close();
     type_var = 0;
     spd_base_var = 0.8;
@@ -40,16 +41,15 @@ object_event_add
     target_spd_mult_var = 0.6;
     // Sounds
     do_snd_var = true;
-    snd_loop_var = true;
-    snd_dist_var = 600;
-    snd_len_var = 1;
+    loop_snd_var[0] = true;
+    loop_snd_dist_max_var = 600;
     // Assets
         // Search for existing assets to save memory
     with object_index
     {
         if id != other.id
         {
-            other.snd_arr[0,0] = snd_arr[0,0];
+            other.loop_snd_var[1] = loop_snd_var[1];
             local.loaded = true;
             break;
         }
@@ -57,7 +57,7 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
-        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+'\SND\MON\brain_loop_snd.wav',true);
+        loop_snd_var[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\brain_loop_snd.wav',true);
     }
     if global.mode_var == 0 || global.main_type_var == 2
     {
@@ -74,7 +74,7 @@ object_event_add
     z_off_rate_var=480;
     z_off_base_var=5;
     z_off_var = z_off_base_var;
-");
+');
 // Destroy
 object_event_add
 (argument0,ev_destroy,0,"
@@ -83,7 +83,7 @@ object_event_add
     if instance_number(object_index)
     {
         for (local.i=0; local.i<snd_len_var; local.i+=1;)
-        { fmod_snd_free_scr(snd_arr[local.i,0]); }
+        { fmod_snd_free_scr(loop_snd_var[1]); }
     }
 ");
 // Room Start

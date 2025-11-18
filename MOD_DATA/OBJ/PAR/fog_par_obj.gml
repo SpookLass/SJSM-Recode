@@ -9,6 +9,7 @@ object_set_visible(argument0,false);
 // Create
 object_event_add
 (argument0,ev_create,0,'
+    prio_var = 0;
     event_inherited();
     event_perform(ev_other,ev_user0);
 ');

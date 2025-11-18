@@ -11,7 +11,7 @@ object_event_add
 (argument0,ev_create,1,'
     // Sound
     snd_len_var = 4;
-    snd_dist_var = 500;
+    snd_dist_max_var = 500;
     snd_alarm_min = 90;
     snd_alarm_max = 240;
     glitch_snd_len_var = 4;

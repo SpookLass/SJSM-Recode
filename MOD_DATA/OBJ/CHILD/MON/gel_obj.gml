@@ -16,7 +16,7 @@ object_event_add
     snd_den_var = 2;
     snd_alarm_min_var = 80;
     snd_alarm_max_var = 240;
-    snd_dist_var = 600;
+    snd_dist_max_var = 600;
     // Translations
     ini_open(global.lang_var);
     switch global.name_var
@@ -161,7 +161,7 @@ object_event_add
             snd_alarm_min_var = 90;
             snd_alarm_max_var = 240;
             snd_den_var = 1;
-            snd_dist_var = 500;
+            snd_dist_max_var = 500;
             // Bools
             hurt_snd_var = 2;
             coward_var = false;

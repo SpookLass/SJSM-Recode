@@ -195,7 +195,7 @@ object_event_add
 object_event_add
 (argument0,ev_alarm,4,'
     turn_var = false;
-    eye_yaw_var = turn_yaw_var+180;
+    cam_yaw_var = turn_yaw_var+180;
     display_mouse_set(display_get_width()/2,display_get_height()/2);
 ');
 // Room End Event
@@ -316,12 +316,9 @@ object_event_add
             turn_var = true;
             turn_yaw_var = eye_yaw_var;
             set_alarm_scr(4,turn_alarm_var);
+            eye_yaw_var += 180;
         }
-        if turn_var
-        {
-            eye_yaw_var = lerp_scr(turn_yaw_var+180,turn_yaw_var,alarm_arr[4,0]/alarm_arr[4,1]);
-        }
-        else
+        if !turn_var
         {
             switch global.input_cam_var[player_id_var]
             {
@@ -705,7 +702,8 @@ object_event_add
         cam_x_var = x;
         cam_y_var = y;
         cam_z_var = z+eye_h_var+bob_var+breath_var;
-        cam_yaw_var = eye_yaw_var;
+        if turn_var { cam_yaw_var = lerp_scr(turn_yaw_var+180,turn_yaw_var,alarm_arr[4,0]/alarm_arr[4,1]); }
+        else { cam_yaw_var = eye_yaw_var; }
         cam_pitch_var = eye_pitch_var;
         cam_roll_var = 0;
         // Camera shake

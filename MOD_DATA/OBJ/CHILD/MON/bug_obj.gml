@@ -35,6 +35,7 @@ object_event_add
         }
     }
     local.sub = string_replace(ini_read_string("SUB","bug","SUB_bug"),"@n",name_var);
+    loop_sub_var[0] = string_replace(ini_read_string("SUB","bug_loop","SUB_bug_loop"),"@n",name_var);
     for (local.i=0; local.i<snd_len_var; local.i+=1)
     { snd_arr[local.i,1] = local.sub; }
     ini_close();
@@ -55,8 +56,9 @@ object_event_add
     snd_den_var = 2;
     snd_alarm_min_var = 80;
     snd_alarm_max_var = 240;
-    snd_dist_var = 800;
-    loop_snd_dist_var = 600;
+    snd_dist_max_var = 800;
+    loop_snd_var[0] = true;
+    loop_snd_dist_max_var = 600;
     // Hurt
     do_hurt_var = 2; // Damage
     hurt_alarm_var = 60;
@@ -110,7 +112,7 @@ object_event_add
             other.hole_bg_var = hole_bg_var;
             for (local.i=0; local.i<snd_len_var; local.i+=1;)
             { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
-            other.loop_snd_var = loop_snd_var;
+            other.loop_snd_var[1] = loop_snd_var[1];
             other.mus_snd_var = mus_snd_var;
             local.loaded = true;
             break;
@@ -128,9 +130,7 @@ object_event_add
         snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\bug_03_snd.wav",true);
         snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\bug_04_snd.wav",true);
         mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\bug_mus_snd.mp3");
-        loop_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\bug_loop_snd.wav",true);
-        fmod_snd_set_group_scr(loop_snd_var,snd_group_mon_const);
-        fmod_snd_set_minmax_dist_scr(loop_snd_var,0,loop_snd_dist_var);
+        loop_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\bug_loop_snd.wav",true);
     }
     spr_var = main_spr_var;
     hole_tex_var = background_get_texture(hole_bg_var);
@@ -262,7 +262,7 @@ object_event_add
         background_delete(hole_bg_var);
         for (local.i=0; local.i<snd_len_var; local.i+=1;)
         { fmod_snd_free_scr(snd_arr[local.i,0]); }
-        fmod_snd_free_scr(loop_snd_var);
+        fmod_snd_free_scr(loop_snd_var[1]);
         fmod_snd_free_scr(mus_snd_var);
     }
     with bug_bod_obj
@@ -348,19 +348,13 @@ object_event_add
         if par_var == other.id
         { on_var = true; }
     }
-    loop_inst_var = fmod_snd_3d_loop_scr(loop_snd_var);
     if enter_var == 2
     {
         on_var = true;
         if do_snd_var
         {
-            if snd_loop_var
-            {
-                snd_var = fmod_snd_3d_loop_scr(snd_arr[0,0]);
-                sub_var[0] = snd_arr[0,1];
-                sub_var[1] = snd_arr[0,2];
-            }
-            else { set_alarm_scr(6,irandom_range(snd_alarm_min_var,snd_alarm_max_var)); }
+            if loop_snd_var[0] { loop_inst_var = fmod_snd_3d_loop_scr(loop_snd_var[1]); }
+            set_alarm_scr(6,irandom_range(snd_delay_min_var,snd_delay_max_var));
         }
     }
     else { event_inherited(); }

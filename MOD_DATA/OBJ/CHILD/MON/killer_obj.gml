@@ -17,7 +17,7 @@ object_event_add
     snd_den_var = 2;
     snd_alarm_min_var = 240;
     snd_alarm_max_var = 240;
-    snd_dist_var = 600;
+    snd_dist_max_var = 600;
     // Charge sounds
     charge_snd_len_var = 1;
     // Breath sounds
@@ -123,6 +123,7 @@ object_event_add
             break;
         }
     }
+    loop_snd_var[2] = string_replace(ini_read_string("SUB","killer_creep","SUB_killer_creep"),"@n",name_var);
     drag_snd_arr[0,1] = ini_read_string("SUB","killer_drag","SUB_killer_drag");
     drag_snd_arr[1,1] = drag_snd_arr[0,1];
     drag_snd_arr[2,1] = drag_snd_arr[0,1];
@@ -207,7 +208,7 @@ object_event_add
             for (local.i=0; local.i<charge_snd_len_var; local.i+=1;)
             { other.charge_snd_arr[local.i,0] = charge_snd_arr[local.i,0]; }
             other.wake_snd_var[1] = wake_snd_var[1];
-            other.loop_snd_var[0] = loop_snd_var[0];
+            other.loop_snd_var[1] = loop_snd_var[1];
             other.hide_mus_snd_var = hide_mus_snd_var;
             other.main_mus_snd_var = main_mus_snd_var;
             local.loaded = true;
@@ -302,12 +303,10 @@ object_event_add
         drag_snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_drag_01_snd.wav",true);
         drag_snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_drag_02_snd.wav",true);
         drag_snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_drag_03_snd.wav",true);
-        loop_snd_var[0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_loop_snd.wav",true);
-        fmod_snd_set_minmax_dist_scr(loop_snd_var[0],0,snd_dist_var);
-        fmod_snd_set_group_scr(loop_snd_var[0],snd_group_mon_const);
+        loop_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_loop_snd.wav",true);
         for (local.i=0; local.i<breath_snd_len_var; local.i+=1;)
         {
-            fmod_snd_set_minmax_dist_scr(breath_snd_arr[local.i,0],0,snd_dist_var);
+            fmod_snd_set_minmax_dist_scr(breath_snd_arr[local.i,0],0,snd_dist_max_var);
             fmod_snd_set_group_scr(breath_snd_arr[local.i,0],snd_group_mon_const);
         }
         for (local.i=0; local.i<drag_snd_len_var; local.i+=1;)
@@ -317,7 +316,7 @@ object_event_add
         }
         for (local.i=0; local.i<charge_snd_len_var; local.i+=1;)
         {
-            fmod_snd_set_minmax_dist_scr(charge_snd_arr[local.i,0],0,snd_dist_var);
+            fmod_snd_set_minmax_dist_scr(charge_snd_arr[local.i,0],0,snd_dist_max_var);
             fmod_snd_set_group_scr(charge_snd_arr[local.i,0],snd_group_mon_const);
         }
         hide_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_hide_mus_snd.mp3");
@@ -477,7 +476,7 @@ object_event_add
         for (local.i=0; local.i<snd_len_var; local.i+=1;)
         { fmod_snd_free_scr(snd_arr[local.i,0]); }
         fmod_snd_free_scr(wake_snd_var[1]);
-        fmod_snd_free_scr(loop_snd_var[0]);
+        fmod_snd_free_scr(loop_snd_var[1]);
         if do_turn_var
         {
             for (local.i=0; local.i<16; local.i+=1;)
@@ -506,8 +505,8 @@ object_event_add
             delay_max_var = delay_min_var;
         }
     }
+    loop_snd_var[0] = false;
     event_inherited();
-    snd_loop_var = false;
     if do_stam_var
     {
         if !stam_per_var
@@ -598,8 +597,8 @@ object_event_add
     if scary_var
     {
         stam_var = 0;
-        snd_loop_var = false;
-        fmod_inst_stop_scr(snd_var);
+        loop_snd_var[0] = false;
+        fmod_inst_stop_scr(loop_inst_var);
     }
     if dmg_stun_var > 0
     {
@@ -620,15 +619,14 @@ object_event_add
     { set_alarm_scr(8,drag_snd_alarm_var); }
     if scary_var
     {
-        snd_var = fmod_snd_3d_loop_scr(loop_snd_var[0]);
-        sub_var = loop_snd_var[1];
-        snd_loop_var = true;
+        loop_inst_var = fmod_snd_3d_loop_scr(loop_snd_var[1]);
+        loop_snd_var[0] = true;
     }
 ');
 // Sound alarm
 object_event_add
 (argument0,ev_alarm,6,'
-    if do_snd_var && !snd_loop_var && frac_chance_scr(snd_num_var,snd_den_var)
+    if do_snd_var && !loop_snd_var[0] && frac_chance_scr(snd_num_var,snd_den_var)
     {
         if fmod_inst_is_play_scr(snd_var) && fmod_inst_is_3d_scr(snd_var)
         { fmod_inst_stop_scr(snd_var); }

@@ -129,17 +129,29 @@ object_event_add
             with echidna_obj
             {
                 local.dist = point_distance_3d_scr(x,y,z,global.cam_x_var[view_current],global.cam_y_var[view_current],global.cam_z_var[view_current])
-                if local.dist < snd_dist_var && fmod_inst_is_play_scr(snd_var)
-                && string(sub_var[0]) != "0" && (sub_var[1] || global.sub_var > 1)
+                if local.dist < snd_dist_max_var && fmod_inst_is_play_scr(snd_var)
+                && string(sub_var[0]) != "0" && (sub_var[1] || global.sub_var > 1) 
+                {
+                    local.bool = true;
+                    local.str = sub_var[0];
+                    draw_set_alpha(1-((local.dist-snd_dist_min_var)/(snd_dist_max_var-snd_dist_min_var)));
+                }
+                else if local.dist < loop_snd_dist_max_var && fmod_inst_is_play_scr(loop_inst_var)
+                && string(loop_snd_var[2]) != "0" && (loop_snd_var[3] || global.sub_var > 1)
+                {
+                    local.bool = true;
+                    local.str = loop_snd_var[2];
+                    draw_set_alpha(1-((local.dist-loop_snd_dist_min_var)/(loop_snd_dist_max_var-loop_snd_dist_min_var)));
+                }
+                if local.bool
                 {
                     local.dir = global.cam_yaw_var[view_current]-point_direction(x,y,global.cam_x_var[view_current],global.cam_y_var[view_current]);
                     local.xtmp = other.center_var-lengthdir_x(other.sub_hor_var,local.dir-90);
                     local.ytmp = other.sub_bottom_var-other.sub_vert_var+lengthdir_y(other.sub_vert_var,local.dir-90); // 624
-                    draw_set_alpha(1-(local.dist/snd_dist_var));
                     draw_set_color(make_color_rgb(30,0,50));
-                    draw_text_ext_transformed(local.xtmp-2,local.ytmp+2,sub_var[0],-1,other.sub_w_var,other.scale_med_var,other.scale_med_var,0);
+                    draw_text_ext_transformed(local.xtmp-2,local.ytmp+2,local.str,-1,other.sub_w_var,other.scale_med_var,other.scale_med_var,0);
                     draw_set_color(c_white);
-                    draw_text_ext_transformed(local.xtmp,local.ytmp,sub_var[0],-1,other.sub_w_var,other.scale_med_var,other.scale_med_var,0);
+                    draw_text_ext_transformed(local.xtmp,local.ytmp,local.str,-1,other.sub_w_var,other.scale_med_var,other.scale_med_var,0);
                 }
             }
             draw_set_halign(fa_left); draw_set_valign(fa_top); draw_set_alpha(1);

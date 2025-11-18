@@ -47,7 +47,7 @@ object_event_add
     snd_den_var = 3;
     snd_alarm_min_var = 240;
     snd_alarm_max_var = 460;
-    snd_dist_var = 600;
+    snd_dist_max_var = 600;
     eff_snd_len_var = 4;
     // Theme
     mus_prio_var = theme_mus_prio_const;
@@ -144,7 +144,7 @@ object_event_add
             snd_alarm_min_var = 360; // 60 at start
             snd_alarm_max_var = 720; // 180 at start
             snd_den_var = 1;
-            snd_dist_var = 500;
+            snd_dist_max_var = 500;
             break;
         }
         case 4: // Gone Rouge
