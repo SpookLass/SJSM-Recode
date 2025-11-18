@@ -26,7 +26,7 @@ object_event_add
             break;
         }
     }
-    look_snd_var[2] = string_replace(ini_read_string("SUB","brain","SUB_brain"),"@n",name_var);
+    loop_snd_var[2] = string_replace(ini_read_string("SUB","brain","SUB_brain"),"@n",name_var);
     ini_close();
     type_var = 0;
     spd_base_var = 0.8;
@@ -57,7 +57,7 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
-        loop_snd_var[1] = fmod_snd_add_scr(main_directory_const+'\SND\MON\brain_loop_snd.wav',true);
+        loop_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\brain_loop_snd.wav",true);
     }
     if global.mode_var == 0 || global.main_type_var == 2
     {

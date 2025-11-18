@@ -128,7 +128,8 @@ object_event_add
             draw_set_halign(fa_center); draw_set_valign(fa_bottom);
             with echidna_obj
             {
-                local.dist = point_distance_3d_scr(x,y,z,global.cam_x_var[view_current],global.cam_y_var[view_current],global.cam_z_var[view_current])
+                local.dist = point_distance_3d_scr(x,y,z,global.cam_x_var[view_current],global.cam_y_var[view_current],global.cam_z_var[view_current]);
+                local.bool = false;
                 if local.dist < snd_dist_max_var && fmod_inst_is_play_scr(snd_var)
                 && string(sub_var[0]) != "0" && (sub_var[1] || global.sub_var > 1) 
                 {

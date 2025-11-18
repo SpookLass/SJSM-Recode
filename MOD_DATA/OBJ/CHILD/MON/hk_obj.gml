@@ -103,7 +103,7 @@ object_event_add
 	spd_anim_var = false;
 	spr_spd_min_var = spr_spd_var;
 	spr_spd_max_var = spr_spd_var;
-	// Fog
+	// Effects
 	eff_color_var = make_color_rgb(97,97,106);
 	fog_end_var = 64;
 	do_fog_var = true;
@@ -113,6 +113,7 @@ object_event_add
 	wall_start_var = 24;
 	wall_end_var = 64;
 	fog_color_var = make_color_rgb(0,107,168);
+	door_var = false;
 	// Teleport
 	tp_type_var = 1;
 	tp_alarm_min_var = 600;
@@ -134,16 +135,22 @@ object_event_add
 		{
 			do_look_snd_var = true;
 			spd_anim_var = true;
-			spr_spd_min_var = 0.125;
-			seen_pitch_var = 40.5;
 			eff_color_var = make_color_rgb(211,77,98); // 110 45 60
 			fog_type_var = 1;
 			fog_end_var = 72;
+			door_var = true;
+			// Seen
+			seen_pitch_var = 40.5;
+			seen_dist_var = 128;
+			spd_min_var = 0.5;
+			spd_max_var = 1.2;
+			spr_spd_min_var = 0.125;
+			spr_spd_max_var = 0.5;
 			// Get away
 			hurt_dist_var = 16;
 			// Teleport
 			tp_type_var = 0;
-			tp_dist_min_var = 42;
+			tp_dist_min_var = 96;
 			break;
 		}
 		case 2:
@@ -181,6 +188,7 @@ object_event_add
 			wall_alpha_var = 0.09;
 			wall_start_var = 26;
 			wall_end_var = 72;
+			door_var = true;
 			// Render
 			base_w_var = 29;
 			base_h_var = 29;
@@ -203,6 +211,8 @@ object_event_add
 			tp_type_var = 0;
 			tp_alarm_min_var = 420;
 			tp_alarm_max_var = 600;
+			tp_dist_min_var = 160;
+			tp_dist_max_var = 400;
             break;
         }
     }
@@ -294,6 +304,7 @@ object_event_add
 	with kh_fog_obj { if par_var == other.id { instance_destroy(); }}
 	with kh_overlay_obj { if par_var == other.id { instance_destroy(); }}
 	with hk_eff_obj { if par_var == other.id { instance_destroy(); }}
+	with dh_eff_obj { if par_var == other.id { instance_destroy(); }}
 ');
 // Room Start Event
 object_event_add
@@ -349,6 +360,40 @@ object_event_add
 			bg_var = other.static_bg_var;
 		}
 	}
+	if !instance_exists(dh_eff_obj)
+	{
+		with instance_create(0,0,dh_eff_obj)
+		{ par_var = other.id; }
+	}
+	if !instance_exists(hk_door_obj)
+	{
+		local.par = id;
+		with door_obj
+		{
+			local.door = id;
+			with instance_create(x,y,hk_door_obj)
+			{
+				par_var = local.par;
+				z = local.door.z;
+				direction = local.door.direction;
+				mdl_02_var = local.par.lamp_mdl_var;
+				store_tex_02_var = background_get_texture(local.par.lamp_bg_var);
+				tex_02_var = store_tex_02_var;
+			}
+			local.flr = instance_nearest(x,y,floor_par_obj);
+			if local.flr.tex_var == -1 && !instance_position(local.flr.x,local.flr.y,light_floor_par_obj)
+			{
+				with instance_create(local.flr.x,local.flr.y,light_floor_par_obj)
+				{
+					z = local.flr.z;
+					direction = local.flr.direction;
+					if global.color_var < 1
+    				{ image_blend = color_par_obj.light_color_var; }
+				}
+			}
+			instance_destroy();
+		}
+	}
 	event_perform(ev_alarm,8);
 ');
 
@@ -359,6 +404,10 @@ object_event_add
     {
 		case 0:
         {
+			yaw_var = global.spawn_arr[0,3];
+			x = global.spawn_arr[0,0]-lengthdir_x(32,yaw_var);
+			y = global.spawn_arr[0,1]-lengthdir_y(32,yaw_var);
+			z = global.spawn_arr[0,2];
 			for (local.i=0; local.i<tp_attempt_var; local.i+=1;)
 			{
 				local.flr = instance_find(floor_par_obj,irandom(instance_number(floor_par_obj)-1));
@@ -367,25 +416,22 @@ object_event_add
 				local.ztmp = local.flr.z;
 				local.dist = tp_dist_max_var;
 				with player_obj { local.dist = min(local.dist,point_distance_3d_scr(local.xtmp,local.ytmp,local.ztmp,x,y,z));}
-				if local.dist >= tp_dist_min_var { break; }
-			}
-			if local.i == tp_attempt_var-1
-			{
-				yaw_var = global.spawn_arr[0,3];
-				x = global.spawn_arr[0,0]-lengthdir_x(32,yaw_var);
-				y = global.spawn_arr[0,1]-lengthdir_y(32,yaw_var);
-				z = global.spawn_arr[0,2];
-			}
-			else
-			{
-				x = local.xtmp;
-				y = local.ytmp;
-				z = local.ztmp;
+				if local.dist >= tp_dist_min_var && local.dist <= tp_dist_max_var
+				{
+					x = local.xtmp;
+					y = local.ytmp;
+					z = local.ztmp;
+					break;
+				}
 			}
             break;
         }
 		case 1:
         {
+			yaw_var = global.spawn_arr[0,3];
+			x = global.spawn_arr[0,0]-lengthdir_x(32,yaw_var);
+			y = global.spawn_arr[0,1]-lengthdir_y(32,yaw_var);
+			z = global.spawn_arr[0,2];
 			if global.mark_len_var > 0
 			{
 				for (local.i=0; local.i<tp_attempt_var; local.i+=1;)
@@ -396,28 +442,14 @@ object_event_add
 					local.ztmp = global.mark_arr[local.mark_choice,2];
 					local.dist = tp_dist_max_var;
 					with player_obj { local.dist = min(local.dist,point_distance_3d_scr(local.xtmp,local.ytmp,local.ztmp,x,y,z));}
-					if local.dist >= tp_dist_min_var { break; }
+					if local.dist >= tp_dist_min_var && local.dist <= tp_dist_max_var
+					{
+						x = local.xtmp;
+						y = local.ytmp;
+						z = local.ztmp;
+						break;
+					}
 				}
-				if local.i == tp_attempt_var-1
-				{
-					yaw_var = global.spawn_arr[0,3];
-					x = global.spawn_arr[0,0]-lengthdir_x(32,yaw_var);
-					y = global.spawn_arr[0,1]-lengthdir_y(32,yaw_var);
-					z = global.spawn_arr[0,2];
-				}
-				else
-				{
-					x = local.xtmp;
-					y = local.ytmp;
-					z = local.ztmp;
-				}
-			}
-			else
-			{
-				yaw_var = global.spawn_arr[0,3];
-				x = global.spawn_arr[0,0]-lengthdir_x(32,yaw_var);
-				y = global.spawn_arr[0,1]-lengthdir_y(32,yaw_var);
-				z = global.spawn_arr[0,2];
 			}
             break;
         }
