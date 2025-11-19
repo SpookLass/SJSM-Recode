@@ -267,6 +267,7 @@ object_event_add
             x = global.spawn_arr[0,0];
             y = global.spawn_arr[0,1];
             enter_var = false;
+            do_coll_var = true;
         }
     }
     else

@@ -285,6 +285,7 @@ object_event_add
         set_alarm_scr(0,irandom_range(delay_min_var,delay_max_var));
     }
     else { event_perform(ev_alarm,0); }
+    if wander_var { event_user(13); }
 ');
 // Step Event
 object_event_add
@@ -517,6 +518,7 @@ object_event_add
             y = target_y_var;
             z = target_z_var;
             set_motion_3d_scr(0,true);
+            if wander_var { event_user(13); }
         }
         else if type_var > 0 // Physical
         {
@@ -899,7 +901,7 @@ object_event_add
         }
     }
 ');
-// Calculate Seen
+// Seen Event
 object_event_add
 (argument0,ev_other,ev_user5,'
     if instance_exists(target_var)
@@ -936,6 +938,14 @@ object_event_add
         target_x_var = global.spawn_arr[target_spawn_var,0];
         target_y_var = global.spawn_arr[target_spawn_var,1];
         target_z_var = global.spawn_arr[target_spawn_var,2];
+        target_dist_var = point_distance_3d_scr(x,y,z,target_x_var,target_y_var,target_z_var);
+    }
+    else if wander_var
+    {
+        target_var = noone;
+        target_x_var = wander_x_var;
+        target_y_var = wander_y_var;
+        target_z_var = wander_z_var;
         target_dist_var = point_distance_3d_scr(x,y,z,target_x_var,target_y_var,target_z_var);
     }
     else
@@ -996,7 +1006,7 @@ object_event_add
             (
                 local.xtmp,local.ytmp,local.ztmp,
                 local.xvec,local.yvec,local.zvec
-            )
+            );
             if sight_type_var == 2
             { local.dist = min(local.dist,local.newdist); }
             else { local.dist = max(local.dist,local.newdist); }
@@ -1087,6 +1097,24 @@ object_event_add
         }
     }
     else { event_user(2); }
+');
+// Wander Event
+object_event_add
+(argument0,ev_other,ev_user13,'
+    for (local.i=0; local.i<wander_attempt_var; local.i+=1;)
+    {
+        local.flr = instance_find(floor_par_obj,irandom(instance_number(floor_par_obj)-1));
+        local.xtmp = local.flr.x+random_range(-local.flr.w_var/2,local.flr.w_var/2);
+        local.ytmp = local.flr.y+random_range(-local.flr.h_var/2,local.flr.h_var/2);
+        local.ztmp = local.flr.z;
+        if !check_coll_scr(0,0,0,0,local.xtmp,local.ytmp,local.ztmp)
+        {
+            wander_x_var = local.xtmp;
+            wander_y_var = local.ytmp;
+            wander_z_var = local.ztmp;
+            break;
+        }
+    }
 ');
 // Draw Event
 object_event_add

@@ -55,8 +55,12 @@ object_event_add
     hurt_dist_var = 5;
     hurt_snd_var = 4;
     // Special
+    do_wander_var = false;
     do_rise_var = true;
     rise_alarm_var = 112;
+    wander_attempt_var = 30;
+    sight_dist_var = 128/3;
+    sight_yaw_var = 60;
     // Assets
         // Search for existing assets to save memory
     with object_index
@@ -117,6 +121,7 @@ object_event_add
         }
         case 2: // HD
         {
+            do_wander_var = true;
             dmg_var = 15;
             hp_var = 10;
             hurt_dist_var = 19.2;
@@ -171,6 +176,7 @@ object_event_add
     spr_var = main_spr_var;
     spr_id_var = 0;
     rise_var = false;
+    if do_wander_var { wander_var = true; }
     event_inherited();
     if do_rise_var
     {
@@ -211,23 +217,45 @@ object_event_add
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,'
-    event_inherited();
-    if on_var && rise_var
+    if on_var
     {
-        event_user(6);
-        sight_type_var = 1;
-        event_user(8);
-        if target_visible_var
+        if rise_var
         {
-            anim_var = do_anim_var;
-            rise_var = false;
-            spr_id_var = 0;
-            anim_type_var = 1;
-            set_alarm_scr(1,rise_alarm_var);
-            set_alarm_scr(5,rise_alarm_var);
-            set_alarm_scr(6,rise_alarm_var+irandom_range(snd_alarm_min_var,snd_alarm_max_var));
+            event_user(6);
+            sight_type_var = 1;
+            event_user(8);
+            if target_visible_var
+            {
+                anim_var = do_anim_var;
+                rise_var = false;
+                spr_id_var = 0;
+                anim_type_var = 1;
+                set_alarm_scr(1,rise_alarm_var);
+                set_alarm_scr(5,rise_alarm_var);
+                set_alarm_scr(6,rise_alarm_var+irandom_range(snd_alarm_min_var,snd_alarm_max_var));
+            }
+        }
+        else if wander_var
+        {
+            spd_mult_var *= wander_mult_var;
+            with player_obj
+            {
+                local.dist = point_distance_3d_scr(x,y,z,other.x,other.y,other.z);
+                local.yaw = abs(deg_diff_scr(point_direction(other.x,other.y,x,y),other.yaw_var));
+                local.radius = coll_var[2]/2; local.angle = radtodeg(arctan2(local.radius,local.dist));
+                if local.yaw <= seen_yaw_var+local.angle || local.dist < other.sight_dist_var
+                {
+                    local.xvec = (x-other.x)/local.dist;
+                    local.yvec = (y-other.y)/local.dist;
+                    local.zvec = (z-other.z)/local.dist;
+                    local.ztmp = other.z+(other.coll_var[1]/2);
+                    if local.dist < check_ray_scr(other.x,other.y,local.ztmp,local.xvec,local.yvec,local.zvec)
+                    { other.wander_var = false; break; }
+                }
+            }
         }
     }
+    event_inherited();
 ');
 // Attack Success
 // Sets the variable read by the attack delay, should only make them vulnerable when they fail the attack
