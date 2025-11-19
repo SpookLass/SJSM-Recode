@@ -58,10 +58,11 @@ object_event_add
         // Search for existing assets to save memory
     with object_index
     {
-        if id != other.id
+        if id != other.id && object_index == other.object_index
         {
             other.spr_var = spr_var;
             other.slime_bg_var = slime_bg_var;
+            other.overlay_var = overlay_var;
             for (local.i=0; local.i<snd_len_var; local.i+=1;)
             { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
             other.wake_snd_var[1] = wake_snd_var[1];
@@ -76,6 +77,7 @@ object_event_add
     {
         spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS_01_spr.png",5,false,false,0,0);
         slime_bg_var = background_add(main_directory_const+"\BG\MON\gel_slime_bg.png",false,false);
+        overlay_bg_var = background_add(vanilla_directory_const+"\TEX\sprites\MS_02_spr.png",false,false);
         snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_01_snd.wav",true);
         snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_02_snd.wav",true);
         snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_03_snd.wav",true);
@@ -218,6 +220,7 @@ object_event_add
     {
         sprite_delete(spr_var);
         background_delete(slime_bg_var);
+        background_delete(overlay_bg_var);
         for (local.i=0; local.i<snd_len_var; local.i+=1;)
         { fmod_snd_free_scr(snd_arr[local.i,0]); }
         fmod_snd_free_scr(wake_snd_var[1]);

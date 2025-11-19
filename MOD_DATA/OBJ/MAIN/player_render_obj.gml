@@ -43,6 +43,7 @@ object_event_add
     {
         if tint_var { d3d_set_fog(true,image_blend,0,0); }
         else { draw_set_color(image_blend); }
+        if global.cam_type_var[view_current] != cam_alive_const { d3d_set_hidden(false); }
         draw_set_alpha(image_alpha);
         d3d_transform_set_identity();
         d3d_transform_add_rotation_z(point_direction(par_var.x,par_var.y,global.cam_x_var[view_current],global.cam_y_var[view_current]));
@@ -51,6 +52,7 @@ object_event_add
         d3d_transform_set_identity();
         if tint_var { d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var); }
         else { draw_set_color(c_white); }
+        if global.cam_type_var[view_current] != cam_alive_const { d3d_set_hidden(true); }
         draw_set_alpha(1);
     }
 ');

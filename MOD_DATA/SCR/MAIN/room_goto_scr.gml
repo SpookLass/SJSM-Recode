@@ -15,7 +15,8 @@ if room_exists(argument0) && argument0 != 0
     }
     room_set_view_enabled(argument0,true);
     for (local.i=0; local.i<8; local.i+=1;)
-    { room_set_view(argument0,local.i,false,0,0,local.res_w,local.res_h,0,0,local.res_w,local.res_h,32,32,-1,-1,noone); }
+    { room_set_view(argument0,local.i,false,0,0,0,0,0,0,0,0,32,32,-1,-1,noone); }
+    // room_set_view(argument0,local.i,false,0,0,local.res_w,local.res_h,0,0,local.res_w,local.res_h,32,32,-1,-1,noone);
     switch global.player_len_var
     {
         case 2:
@@ -95,7 +96,8 @@ if room_exists(argument0) && argument0 != 0
             break;
         }
     }
-    
+    room_set_width(argument0,local.res_w);
+    room_set_height(argument0,local.res_h);
     room_goto(argument0)
 }
 else

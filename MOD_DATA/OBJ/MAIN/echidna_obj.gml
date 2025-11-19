@@ -315,7 +315,7 @@ object_event_add
             possess_var = false;
         }
         // Set camera and listener position
-        cam_set_scr(cam_id_var,x,y,z+18,eye_yaw_var,eye_pitch_var,global.fov_var,0);
+        cam_set_scr(cam_id_var,x,y,z+18,eye_yaw_var,eye_pitch_var,global.fov_var,0,cam_mon_const);
         // Could put this in control, but needs extra camera boolean
         fmod_listen_pos_ex_scr
         (

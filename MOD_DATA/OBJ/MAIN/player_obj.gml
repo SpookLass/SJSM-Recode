@@ -619,6 +619,7 @@ object_event_add
                         {
                             possess_var = true;
                             other.possess_var = true;
+                            other.mon_var = id;
                             player_id_var = other.player_id_var;
                             cam_id_var = other.cam_id_var;
                         }
@@ -761,7 +762,7 @@ object_event_add
         }
         flare_var = median(0,1,flare_var);
         // Set camera and listener position
-        cam_set_scr(cam_id_var,cam_x_var,cam_y_var,cam_z_var,cam_yaw_var,cam_pitch_var,current_fov_var,cam_roll_var);
+        cam_set_scr(cam_id_var,cam_x_var,cam_y_var,cam_z_var,cam_yaw_var,cam_pitch_var,current_fov_var,cam_roll_var,dead_var);
         // Could put this in control, but needs extra camera boolean
         fmod_listen_pos_ex_scr
         (

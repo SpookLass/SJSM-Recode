@@ -33,17 +33,20 @@ object_event_add
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,'
-    local.alpha = 0;
-    with hk_obj { if is_seen_var && view_current == target_var.cam_id_var { local.alpha = max(local.alpha,static_alpha_var); }}
-    if local.alpha > 0
+    if global.cam_type_var[view_current] == cam_alive_const
     {
-        if view_wview[view_current] >= view_hview[view_current]
-        { local.scale = view_hview[view_current]/720; }
-        else { local.scale = view_wview[view_current]/1280; }
-        d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
-        d3d_set_hidden(false);
-        if old_var { draw_set_color(c_red); draw_rectangle(0,0,view_wview[view_current],view_hview[view_current],false); draw_set_color(c_white); }
-        draw_background_tiled_ext(bg_var,x*local.scale*image_xscale,y*local.scale*image_yscale,local.scale*image_xscale,local.scale*image_yscale,image_blend,local.alpha);
-        draw_set_blend_mode(bm_normal); d3d_set_hidden(true);
+        local.alpha = 0;
+        with hk_obj { if is_seen_var && view_current == target_var.cam_id_var { local.alpha = max(local.alpha,static_alpha_var); }}
+        if local.alpha > 0
+        {
+            if view_wview[view_current] >= view_hview[view_current]
+            { local.scale = view_hview[view_current]/720; }
+            else { local.scale = view_wview[view_current]/1280; }
+            d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
+            d3d_set_hidden(false);
+            if old_var { draw_set_color(c_red); draw_rectangle(0,0,view_wview[view_current],view_hview[view_current],false); draw_set_color(c_white); }
+            draw_background_tiled_ext(bg_var,x*local.scale*image_xscale,y*local.scale*image_yscale,local.scale*image_xscale,local.scale*image_yscale,image_blend,local.alpha);
+            draw_set_blend_mode(bm_normal); d3d_set_hidden(true);
+        }
     }
 ');

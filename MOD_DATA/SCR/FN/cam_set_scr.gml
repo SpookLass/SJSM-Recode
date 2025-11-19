@@ -7,6 +7,7 @@ Argument 4: Camera Yaw
 Argument 5: Camera Pitch
 Argument 6: FOV (vertical)
 Argument 7: Camera Roll
+Argument 8: Type (Alive, Dead, Monster)
 Stores camera variables for use in other functions, like cam_draw_scr and cam_snd_scr
 */
 global.cam_x_var[argument0] = argument1;
@@ -21,6 +22,7 @@ global.cam_fy_var[argument0] = (cos(degtorad(global.cam_pitch_var[argument0]))*-
 global.cam_fz_var[argument0] = sin(degtorad(global.cam_pitch_var[argument0]));
 global.cam_ux_var[argument0] = 0;
 global.cam_uy_var[argument0] = 0;
+global.cam_type_var[argument0] = argument8;
 if global.cam_roll_var[argument0] == 0
 { global.cam_uz_var[argument0] = 1; }
 else if global.cam_roll_var[argument0] == 180

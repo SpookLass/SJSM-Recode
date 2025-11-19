@@ -41,8 +41,11 @@ object_event_add
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,'
-    d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
-    d3d_set_hidden(false);
-    draw_sprite_stretched_ext(spr_var,floor(spr_id_var),0,0,view_wview[view_current],view_hview[view_current],image_blend,image_alpha);
-    d3d_set_hidden(true);
+    if global.cam_type_var[view_current] == cam_alive_const
+    {
+        d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
+        d3d_set_hidden(false);
+        draw_sprite_stretched_ext(spr_var,floor(spr_id_var),0,0,view_wview[view_current],view_hview[view_current],image_blend,image_alpha);
+        d3d_set_hidden(true);
+    }
 ');

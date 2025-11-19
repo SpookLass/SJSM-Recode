@@ -58,7 +58,7 @@ object_event_add
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,'
-    if view_current == cam_id_var || cam_id_var == -1
+    if global.cam_type_var[view_current] == cam_alive_const && (view_current == cam_id_var || cam_id_var == -1)
     {
         d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
         d3d_set_hidden(false);

@@ -389,8 +389,28 @@ object_event_add
     button_arr[button_len_var,8] = "lang"; // Global variable to modify
     button_len_var += 1;
 
+    switch global.name_var
+    {
+        case name_og_const:
+        {
+            local.name = ini_read_string("NAME","killer_og","NAME_killer_og");
+            break;
+        }
+        case name_hd_const:
+        case name_fanon_const:
+        {
+            local.name = ini_read_string("NAME","killer_hd","NAME_killer_hd");
+            break;
+        }
+        case name_num_og_const:
+        case name_num_hd_const:
+        {
+            local.name = ini_read_string("NAME","killer_num","NAME_killer_num");
+            break;
+        }
+    }
     button_arr[button_len_var,0] = global.killer_voice_var;
-    button_arr[button_len_var,1] = ini_read_string("SETTINGS","killer_voice","SETTINGS_killer_voice"); // Label
+    button_arr[button_len_var,1] = string_replace(ini_read_string("SETTINGS","killer_voice","SETTINGS_killer_voice"),"@n",string_upper(local.name)); // Label
     button_arr[button_len_var,2] = "The voice used for @n." // Description
     button_arr[button_len_var,3] = 0; // Type: Enum
     button_arr[button_len_var,4] = true; // Wrap value
