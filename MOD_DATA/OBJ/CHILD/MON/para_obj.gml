@@ -68,6 +68,8 @@ object_event_add
     do_warn_var = false;
     warn_var = false;
     warn_dist_var = 320/3;
+    check_all_var = false;
+    check_path_var = false;
     // Theme
     mus_prio_var = theme_mus_prio_const;
     // Assets
@@ -193,6 +195,8 @@ object_event_add
             acc_var = 0.16;
             frick_var = acc_var;
             do_hurt_var = 1;
+            check_all_var = true;
+            check_path_var = true;
             // Autobrake
             autobrake_var = true;
             autobrake_spd_var = 1;
@@ -398,8 +402,20 @@ object_event_add
         // Technically doesnt check for if they entered in OG, but Im lazy
         if !enter_var
         {
-            local.target_dist = target_dist_var;
-            with (echidna_obj) { if target_dist_var < local.target_dist && target_dist_var > 0 { local.target_dist = target_dist_var; }}
+            if check_path_var { local.target_dist = path_get_length(path_var); }
+            else { local.target_dist = target_dist_var; }
+            if check_all_var
+            {
+                with (echidna_obj)
+                {
+                    if target_dist_var > 0
+                    {
+                        if other.check_path_var && type_var > 0 && instance_exists(target_var) { local.dist = path_get_length(path_var); }
+                        else { local.dist = target_dist_var; }
+                        if local.dist < local.target_dist && local.dist > 0 { local.target_dist = local.dist; }
+                    }
+                }
+            }
             if local.target_dist >= state_dist_var[2] && frac_chance_scr(1,state_chance_var[2])
             {
                 state_var = 2;

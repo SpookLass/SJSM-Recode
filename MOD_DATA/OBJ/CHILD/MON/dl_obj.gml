@@ -290,11 +290,11 @@ object_event_add
         else 
         {
             if possess_var
-            { local.bool = global.input_press_arr[confirm_input_const,player_id_var]; }
+            { local.bool = (global.input_press_arr[confirm_input_const,player_id_var] && target_dist_var > 0); }
             else
             {
                 if type_var > 0 { local.dist = path_get_length(path_var); }
-                else { local.dist = target_dist_var; }
+                else { local.dist = target_dist_var; } 
                 local.bool = (local.dist >= warp_dist_var && target_dist_var > 0)
             }
             if local.bool

@@ -1,8 +1,534 @@
 // Builtin Variables
 object_set_depth(argument0,-3);
 object_set_mask(argument0,noone);
-object_set_parent(argument0,mon_par_obj);
+object_set_parent(argument0,echidna_obj);
 object_set_persistent(argument0,true);
 object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
+// Create Event
+object_event_add
+(argument0,ev_create,1,'
+    ini_open(global.lang_var);
+    switch global.name_var
+    {
+        case name_og_const:
+        case name_hd_const:
+        case name_fanon_const:
+        case name_num_og_const:
+        {
+            name_var = ini_read_string("NAME","spooper","NAME_spooper");
+            break;
+        }
+        case name_num_hd_const:
+        {
+            name_var = ini_read_string("NAME","spooper_num","NAME_spooper_num");
+            break;
+        }
+    }
+    ini_close();
+    type_var = 0;
+    spd_base_var = 3;
+    spr_spd_var = 1/3;
+    anim_type_var = 3;
+    dur_var = irandom_range(24,31);
+    delay_var = 0;
+    do_atk_var = -1;
+    dmg_var = 0.01;
+    w_var = 20;
+    h_var = 20;
+    z_off_var = 3;
+    // Special
+    do_seen_var = true;
+    seen_dist_var = 8;
+    seen_yaw_var = 30;
+    seen_fade_var = false;
+    seen_fade_rate_var = 0.02;
+    hp_max_var = 6;
+    hp_var = hp_max_var;
+    door_type_var = 1;
+    hp_dur_var = true;
+    shake_type_var = 1;
+    shake_var = 1;
+    anim_spd_var = 1;
+    // Teleport
+    tp_type_var = 1;
+    tp_off_var = 300;
+    tp_dist_min_var = 200;
+    tp_dist_max_var = tp_dist_min_var;
+    tp_seen_var = false;
+    // Puke
+    alarm_len_var = 9;
+    puke_delay_min_var = 60;
+    puke_delay_max_var = 240;
+    puke_alarm_01_var = 40;
+    puke_alarm_02_var = 180;
+    puke_alarm_03_var = 125;
+    puke_dmg_var = 10;
+    puke_slow_var = 0;
+    puke_turn_var = true;
+    // Mark
+    mark_seen_yaw_var = 30;
+    mark_seen_dist_var = 64;
+    // Dark
+    fog_start_var = 2;
+    fog_end_var = 128;
+    // Timing
+    mark_start_var = 1;
+    mark_chance_var = 3;
+    door_chance_var = 0;
+    goo_start_var = 5;
+    goo_chance_var = 2;
+    drain_start_var = 7;
+    dark_start_var = 7;
+    dark_chance_var = 3;
+    puke_start_var = 9;
+    puke_chance_var = 5;
+    // Assets
+        // Search for existing assets to save memory
+    with object_index
+    {
+        if id != other.id
+        {
+            other.spr_var = spr_var;
+            other.door_spr_var = door_spr_var;
+            other.tex_spr_var = tex_spr_var;
+            other.light_wall_spr_var = light_wall_spr_var;
+            other.light_floor_spr_var = light_floor_spr_var;
+            other.puke_bg_var = puke_bg_var;
+            other.fetus_bg_var = fetus_bg_var;
+            other.puke_snd_var = puke_snd_var;
+            other.choke_01_snd_var = choke_01_snd_var;
+            other.choke_02_snd_var = choke_02_snd_var;
+            other.mus_snd_var = mus_snd_var;
+            local.loaded = true;
+            break;
+        }
+    }
+        // If no existing assets were found, load them
+    if !local.loaded
+    {
+        spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS27_01_spr.png",3,false,false,0,0);
+        door_spr_var = sprite_add(vanilla_directory_const+"\3D\spooper_tex.png",6,false,false,0,0);
+        tex_spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS27_04_spr.png",3,false,false,0,0);
+        light_wall_spr_var = sprite_add(main_directory_const+"\SPR\MON\spooper_light_wall_spr.png",2,false,false,0,0);
+        light_floor_spr_var = sprite_add(main_directory_const+"\SPR\MON\spooper_light_floor_spr.png",2,false,false,0,0);
+        puke_bg_var = background_add(vanilla_directory_const+"\TEX\sprites\MS27_02_spr.png",false,false);
+        fetus_bg_var = background_add(vanilla_directory_const+"\TEX\sprites\MS27_03_spr.png",false,false);
+        mdl_var = d3d_model_create();
+        d3d_model_load(mdl_var,main_directory_const+"\MDL\MON\spooper_mdl.gmmod");
+        puke_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\spooper_puke_snd.wav");
+        choke_01_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\spooper_choke_01_snd.wav");
+        choke_02_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\spooper_choke_02_snd.wav");
+        mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\SPOOPER_AMB.mp3");
+    }
+    fetus_tex_var = background_get_texture(fetus_bg_var);
+    // Behavior
+    if global.spooper_type_var == -1 { local.type = irandom(2); }
+    else { local.type = global.spooper_type_var; }
+    switch local.type
+    {
+        case 0: // Recode
+        {
+            seen_pitch_var = 30;
+            mark_seen_pitch_var = 30;
+            seen_dist_var = 64;
+            seen_fade_var = true;
+            dmg_min_var = 10;
+            door_type_var = 0;
+            shake_type_var = 0;
+            do_atk_var = true;
+            drain_start_var = -1;
+            goo_chance_var = 1;
+            mark_start_var = -1;
+            spd_base_var = 0.4;
+            tp_seen_var = true;
+            puke_slow_var = 0.5;
+            puke_alarm_02_var = 120;
+            puke_alarm_03_var = 72;
+            door_chance_var = 3;
+            break;
+        }
+        case 3: // Old HD
+        {
+            dmg_var = 1/12;
+            local.set = true;
+        }
+        case 2: // HD
+        {
+            seen_yaw_var = 60;
+            seen_dist_var = 32/3;
+            if !local.set { dmg_var = 1/300; }
+            spd_base_var = 16/45;
+            door_type_var = 2;
+            tp_off_var = 320;
+            tp_dist_min_var = 640/3;
+            tp_dist_max_var = tp_dist_min_var;
+            shake_var = 32/15;
+            shake_type_var = 0;
+            puke_slow_var = 0.3;
+            puke_turn_var = false;
+            puke_alarm_02_var = 120;
+            puke_alarm_03_var = 72;
+            break;
+        }
+    }
+');
+// Destroy Event
+object_event_add
+(argument0,ev_destroy,0,'
+    event_inherited();
+    global.wall_bg_tex = background_get_texture(global.wall_bg);
+    global.floor_bg_tex = background_get_texture(global.floor_bg);
+    global.ceil_bg_tex = background_get_texture(global.ceil_bg);
+    global.light_wall_obj_spr = global.light_wall_spr;
+    global.light_floor_obj_spr = global.light_floor_spr;
+    if instance_number(object_index) <= 1
+    {
+        sprite_delete(spr_var);
+        sprite_delete(door_spr_var);
+        sprite_delete(tex_spr_var);
+        sprite_delete(light_wall_spr_var);
+        sprite_delete(light_floor_spr_var);
+        background_delete(puke_bg_var);
+        background_delete(fetus_bg_var);
+        d3d_model_destroy(mdl_var);
+        fmod_snd_free_scr(choke_01_snd_var);
+        fmod_snd_free_scr(choke_02_snd_var);
+        fmod_snd_free_scr(puke_snd_var);
+        fmod_snd_free_scr(mus_snd_var);
+    }
+    with spooper_puke_obj { if par_var == other.id { instance_destroy(); }}
+    with spooper_fetus_obj { if par_var == other.id { instance_destroy(); }}
+    with spooper_door_obj { if par_var == other.id { instance_destroy(); }}
+    with spooper_mark_obj { if par_var == other.id { instance_destroy(); }}
+');
+// Room Start Event
+object_event_add
+(argument0,ev_other,ev_room_start,'
+    event_inherited();
+    if hp_var > 0
+    {
+        if !instance_exists(spooper_door_obj)
+        {
+            local.tex = sprite_get_texture(door_spr_var,hp_max_var-hp_var);
+            local.spawns = max(global.spawn_len_var,global.spawn_len_extra_var);
+            for (local.i=1; local.i<local.spawns; local.i+=1;)
+            {
+                if door_type_var == 1 { local.i = irandom_range(1,local.spawns-1); }
+                if global.spawn_arr[local.i,4].lock_var == false
+                {
+                    with global.spawn_arr[local.i,4]
+                    {
+                        lock_var = true;
+                        spooper_var = true;
+                    }
+                    if !local.spawn || door_type_var != 2
+                    {
+                        with instance_create(global.spawn_arr[local.i,0]-lengthdir_x(8,global.spawn_arr[local.i,3]),global.spawn_arr[local.i,1]-lengthdir_y(8,global.spawn_arr[local.i,3]),spooper_door_obj)
+                        {
+                            z = global.spawn_arr[local.i,2];
+                            direction = global.spawn_arr[local.i,3]+180;
+                            par_var = other.id;
+                            mdl_var = other.mdl_var;
+                            store_tex_var = local.tex;
+                            tex_var = store_tex_var;
+                            tp_var = (other.door_type_var == 2);
+                            spawn_var = local.i;
+                        }
+                        local.spawn = 2;
+                    }
+                }
+                if door_type_var == 1 { break; }
+            }
+        }
+        on_var = false;
+        set_motion_3d_scr(0,true);
+        reset_alarm_scr();
+    }
+    else
+    {
+        local.start = dur_start_var-dur_var;
+        if local.start >= mark_start_var && frac_chance_scr(1,mark_chance_var)
+        {
+            if door_chance_var > 0 && global.spawn_len_var > 1 { local.door = frac_chance_scr(1,door_chance_var); }
+            if local.door
+            {
+                local.spawn = irandom_range(1,global.spawn_len_var-1);
+                with instance_create(global.spawn_arr[local.i,0]-lengthdir_x(8,global.spawn_arr[local.i,3]),global.spawn_arr[local.i,1]-lengthdir_y(8,global.spawn_arr[local.i,3]),spooper_mark_obj)
+                {
+                    z = global.spawn_arr[local.i,2];
+                    direction = global.spawn_arr[local.i,3]+180;
+                    par_var = other.id;
+                    mdl_var = other.mdl_var;
+                    store_tex_var = local.tex;
+                    tex_var = store_tex_var;
+                    seen_yaw_var = other.mark_seen_yaw_var;
+                    seen_pitch_var = other.mark_seen_pitch_var;
+                    seen_dist_var = other.mark_seen_dist_var;
+                }
+            }
+            else if global.mark_len_var
+            {
+                local.mark = irandom(global.mark_len_var-1);
+                local.tex = sprite_get_texture(door_spr_var,sprite_get_number(door_spr_var)-1);
+                with instance_create(global.mark_arr[local.mark,0],global.mark_arr[local.mark,1],spooper_mark_obj)
+                {
+                    z = global.mark_arr[local.mark,2];
+                    direction = point_direction(x,y,global.spawn_arr[0,0],global.spawn_arr[0,1])+180;
+                    par_var = other.id;
+                    mdl_var = other.mdl_var;
+                    store_tex_var = local.tex;
+                    tex_var = store_tex_var;
+                    seen_yaw_var = other.mark_seen_yaw_var;
+                    seen_pitch_var = other.mark_seen_pitch_var;
+                    seen_dist_var = other.mark_seen_dist_var;
+                }
+            }
+        }
+        if local.start >= goo_start_var && frac_chance_scr(1,goo_chance_var)
+        { event_user(14); }
+        else
+        {
+            on_var = false;
+            set_motion_3d_scr(0,true);
+            reset_alarm_scr();
+        }
+        if local.start >= puke_start_var && frac_chance_scr(global.player_len_var,puke_chance_var) && instance_number(mon_par_obj) <= 1 && !do_atk_var
+        { set_alarm_scr(8,irandom_range(puke_delay_min_var,puke_delay_max_var)); }
+        if local.start >= dark_start_var && frac_chance_scr(1,dark_chance_var) && !instance_exists(maze_dark_color_obj)
+        {
+            with (torch_obj) { on_var = false; }
+            with (color_par_obj) { instance_destroy(); }
+            with (fog_par_obj) { instance_destroy(); }
+            instance_create(0,0,dark_color_obj);
+            with instance_create(0,0,fog_par_obj)
+            {
+                fog_var = true;
+                fog_color_var = c_black;
+                fog_start_var = 2;
+                fog_end_var = 128;
+                fog_dark_var = true;
+                event_user(0);
+            }
+        }
+        global.wall_bg_tex = sprite_get_texture(tex_spr_var,0);
+        global.floor_bg_tex = sprite_get_texture(tex_spr_var,1);
+        global.ceil_bg_tex = sprite_get_texture(tex_spr_var,2);
+        global.light_wall_obj_spr = light_wall_spr_var;
+        global.light_floor_obj_spr = light_floor_spr_var;
+    }
+');
+// Room End Event
+object_event_add
+(argument0,ev_other,ev_room_end,'
+    if hp_dur_var && hp_var > 0 { reset_alarm_scr(); }
+    else { event_inherited(); }
+');
+// Step Event
+object_event_add
+(argument0,ev_step,ev_step_normal,'
+    event_inherited();
+    if on_var
+    {
+        if is_seen_var == 1 && target_dist_var <= seen_dist_var
+        {
+            if seen_fade_var
+            { image_alpha -= seen_fade_rate_var*global.delta_time_var; }
+            if !seen_fade_var || image_alpha <= 0
+            {
+                if tp_seen_var { event_user(14); }
+                else
+                {
+                    on_var = false;
+                    set_motion_3d_scr(0,true);
+                    reset_alarm_scr();
+                }
+            }
+        }
+    }
+    if hp_var <= 0 && dur_start_var-dur_var >= drain_start_var
+    {
+        if dmg_min_var > 0
+        {
+            local.min = dmg_min_var;
+            local.dokill = false;
+        }
+        else
+        {
+            local.min = dmg_var;
+            local.dokill = true;
+        }
+        with player_obj
+        {
+            heal_var = false;
+            if !dead_var && !hurt_var && !in_door_var && !invuln_var && on_var
+            {
+                if hp_var > local.min { hp_var -= other.dmg_var*global.delta_time_var; }
+                else if local.dokill
+                {
+                    hp_var = 0;
+                    dead_var = true;
+                    do_coll_var = false;
+                    grav_var = false;
+                    if local.kill == 0
+                    { local.kill = true; }
+                }
+            }
+            if !dead_var { local.kill = -1; }
+        }
+        if local.kill && local.dokill
+        {
+            global.dead_mon_var = object_index;
+            instance_destroy();
+            room_goto_scr(dead_rm_var);
+        }
+    }
+');
+// Anim Event
+object_event_add
+(argument0,ev_other,ev_user1,'
+    event_inherited();
+    anim_prog_var -= anim_spd_var*global.delta_time_var;
+    if anim_prog_var <= 0
+    {
+        anim_prog_var = 1;
+        if shake_type_var == 1
+        {
+            x_off_var = random_range(-shake_var,shake_var);
+            y_off_var = random_range(-shake_var,shake_var);
+            z_off_var = z_off_base_var+random_range(-shake_var,shake_var);
+        }
+        else
+        {
+            local.shake = shake_var*random(1);
+            local.yaw = random(360);
+            local.pitch = random_range(-90,90);
+            x_off_var = lengthdir_x(lengthdir_x(local.shake,local.yaw),local.pitch);
+            y_off_var = lengthdir_x(lengthdir_y(local.shake,local.yaw),local.pitch);
+            z_off_var = -lengthdir_y(local.shake,local.pitch);
+        }
+        visible = frac_chance_scr(1,2);
+    }
+');
+// Puke Alarm
+object_event_add
+(argument0,ev_alarm,8,'
+    local.player = global.player_arr[irandom(global.player_len_var-1)];
+    if !local.player.dead_var
+    {
+        if puke_turn_var
+        {
+            with local.player
+            {
+                turn_var = true;
+                turn_yaw_var = eye_yaw_var;
+                turn_pitch_var = eye_pitch_var;
+                eye_pitch_var = -80;
+                set_alarm_scr(4,other.puke_alarm_01_var);
+            }
+        }
+        with instance_create(0,0,player_freeze_obj)
+        {
+            player_var = local.player;
+            set_alarm_scr(0,other.puke_alarm_01_var)
+        }
+        fmod_snd_play_scr(choose(choke_01_snd_var,choke_02_snd_var));
+        with instance_create(0,0,spooper_puke_obj)
+        {
+            par_var = other.id;
+            player_var = local.player;
+            cam_id_var = local.player.cam_id_var;
+            dmg_var = other.puke_dmg_var;
+            bg_var = other.puke_bg_var;
+            fetus_tex_var = other.fetus_tex_var;
+            snd_var = other.puke_snd_var;
+            alarm_02_var = other.puke_alarm_02_var;
+            alarm_03_var = local.spooper.puke_alarm_03_var;
+            slow_var = local.spooper.puke_slow_var;
+            set_alarm_scr(0,other.puke_alarm_01_var);
+        }
+    }
+');
+// Attack Event
+object_event_add
+(argument0,ev_other,ev_user2,'
+    local.spooper = id;
+    with player_obj
+    {
+        if !dead_var && !hurt_var && !in_door_var && !invuln_var && on_var
+        {
+            // p3dc_check_scr(coll_var[0],x,y,z,other.coll_var[0],other.x,other.y,other.z)
+            if cyl_coll_scr(x,y,z,coll_var[2],coll_var[1],other.x,other.y,other.z,other.atk_range_var,other.coll_var[1])
+            {
+                // Turn
+                if other.puke_turn_var
+                {
+                    turn_var = true;
+                    turn_yaw_var = eye_yaw_var;
+                    turn_pitch_var = eye_pitch_var;
+                    eye_pitch_var = -80;
+                    set_alarm_scr(4,other.puke_alarm_01_var);
+                }
+                // Vomit
+                local.player = id;
+                with instance_create(0,0,player_freeze_obj)
+                {
+                    player_var = local.player;
+                    set_alarm_scr(0,local.spooper.puke_alarm_01_var)
+                }
+                fmod_snd_play_scr(choose(other.choke_01_snd_var,other.choke_02_snd_var));
+                with instance_create(0,0,spooper_puke_obj)
+                {
+                    par_var = local.spooper;
+                    player_var = local.player;
+                    cam_id_var = local.player.cam_id_var;
+                    dmg_var = local.spooper.puke_dmg_var;
+                    bg_var = local.spooper.puke_bg_var;
+                    fetus_tex_var = local.spooper.fetus_tex_var;
+                    snd_var = local.spooper.puke_snd_var;
+                    alarm_02_var = local.spooper.puke_alarm_02_var;
+                    alarm_03_var = local.spooper.puke_alarm_03_var;
+                    slow_var = local.spooper.puke_slow_var;
+                    set_alarm_scr(0,local.spooper.puke_alarm_01_var);
+                }
+                local.success = true;
+            }
+        }
+    }
+    if local.success
+    {
+        if tp_seen_var { event_user(14); }
+        else
+        {
+            on_var = false;
+            set_motion_3d_scr(0,true);
+            reset_alarm_scr();
+        }
+    }
+');
+// Teleport Event
+object_event_add
+(argument0,ev_other,ev_user14,'
+    local.dir = random(360);
+    local.dist = random_range(tp_dist_min_var,tp_dist_max_var);
+    x = target_x_var+lengthdir_x(local.dist,local.dir);
+    y = target_y_var+lengthdir_y(local.dist,local.dir);
+    if tp_type_var == 1
+    {
+        local.dir = target_var.yaw_var;
+        x += lengthdir_x(tp_off_var,local.dir);
+        y += lengthdir_y(tp_off_var,local.dir);
+    }
+');
+// Begin Event
+object_event_add
+(argument0,ev_other,ev_user15,'
+    mus_prio_var = mb_mus_prio_const;
+    global.wall_bg_tex = sprite_get_texture(tex_spr_var,0);
+    global.floor_bg_tex = sprite_get_texture(tex_spr_var,1);
+    global.ceil_bg_tex = sprite_get_texture(tex_spr_var,2);
+    global.light_wall_obj_spr = light_wall_spr_var;
+    global.light_floor_obj_spr = light_floor_spr_var;
+    with mus_control_obj { event_user(0); }
+');

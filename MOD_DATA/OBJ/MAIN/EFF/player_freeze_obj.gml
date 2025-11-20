@@ -21,7 +21,6 @@ object_event_add
 (argument0,ev_alarm,0,'
     instance_destroy();
 ');
-
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,'

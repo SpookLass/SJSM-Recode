@@ -410,4 +410,7 @@ execute_string
     global.room_mon_coll = global."+local.rm_name+"_mon_coll;
     global.room_float_coll = global."+local.rm_name+"_float_coll;
 ");
-p3dc_split_mdl_scr(global.room_coll,ceil(room_width/32)*32,ceil(room_height/32)*32,ceil(room_width/32),ceil(room_height/32),6);
+local.cell = ceil(global.rm_size_var/32);
+local.size = local.cell*32;
+p3dc_split_mdl_scr(global.room_coll,local.size,local.size,local.cell,local.cell,6);
+// p3dc_split_mdl_scr(global.room_coll,ceil(room_width/32)*32,ceil(room_height/32)*32,ceil(room_width/32),ceil(room_height/32),6);

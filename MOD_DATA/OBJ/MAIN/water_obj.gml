@@ -31,7 +31,7 @@ object_event_add
     d3d_transform_set_identity();
     d3d_transform_set_translation(x,y,z);
     draw_set_color(image_blend); draw_set_alpha(image_alpha);
-    d3d_draw_floor(-32,-32,0,room_width+32,room_height+32,0,tex_var,(room_width/32)+2,(room_height/32)+2);
+    d3d_draw_floor(-32,-32,0,global.rm_size_var+32,global.rm_size_var+32,0,tex_var,(global.rm_size_var/32)+2,(global.rm_size_var/32)+2);
     d3d_transform_set_identity();
     draw_set_color(c_white); draw_set_alpha(1);
     if global.fog_dark_var 
