@@ -5,7 +5,7 @@ object_set_parent(argument0,fog_par_obj);
 object_set_persistent(argument0,false);
 object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
-object_set_visible(argument0,false);
+object_set_visible(argument0,true);
 // Create event
 object_event_add
 (argument0,ev_create,0,"

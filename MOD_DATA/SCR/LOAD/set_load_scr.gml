@@ -39,6 +39,7 @@ global.input_len_var = 24;
 for (local.i=0; local.i<8; local.i+=1;)
 {
     global.sens_var[local.i] = ini_read_real("CONTROL","sens_"+string(local.i),sens_const);
+    global.joy_sens_var[local.i] = ini_read_real("CONTROL","joy_sens_"+string(local.i),joy_sens_const);
     global.invert_yaw_var[local.i] = ini_read_real("CONTROL","invert_yaw_"+string(local.i),invert_yaw_const);
     global.invert_pitch_var[local.i] = ini_read_real("CONTROL","invert_pitch_"+string(local.i),invert_pitch_const);
     global.input_cam_var[local.i] = ini_read_real("CONTROL","cam_"+string(local.i),cond_scr(local.i==0,cam_const,cam_joy_r_const)); // Mouse, Joystick (R and L), Button, and D-Pad

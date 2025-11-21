@@ -250,7 +250,18 @@ object_event_add
         mus_prio_var = -1;
         with mus_control_obj { event_user(0); }
     }
-    if possess_var { global.player_arr[player_id_var].possess_var = false; }
+    if possess_var
+    {
+        with global.player_arr[player_id_var]
+        {
+            possess_var = false;
+            x = other.x;
+            y = other.y;
+            z = other.z;
+            eye_yaw_var = other.eye_yaw_var;
+            eye_pitch_var = other.eye_pitch_var;
+        }
+    }
 ');
 // Room Start Event
 object_event_add
@@ -314,7 +325,15 @@ object_event_add
     {
         if global.input_press_arr[crouch_input_const,player_id_var]
         {
-            global.player_arr[player_id_var].possess_var = false;
+            with global.player_arr[player_id_var]
+            {
+                possess_var = false;
+                x = other.x;
+                y = other.y;
+                z = other.z;
+                eye_yaw_var = other.eye_yaw_var;
+                eye_pitch_var = other.eye_pitch_var;
+            }
             possess_var = false;
         }
         // Set camera and listener position
@@ -484,57 +503,8 @@ object_event_add
         if possess_var
         {
             // Camera
-            local.tempid = max(player_id_var,1);
-            switch global.input_cam_var[player_id_var]
-            {
-                case cam_mouse_const: // Mouse
-                {
-                    if !global.mouse_free_var
-                    {
-                        local.yaw = ((display_get_width()/2)-display_mouse_get_x())*global.sens_var[player_id_var]/1600;
-                        local.pitch = ((display_get_height()/2)-display_mouse_get_y())*global.sens_var[player_id_var]/1600;
-                        display_mouse_set(display_get_width()/2,display_get_height()/2);
-                    }
-                    break;
-                }
-                case cam_joy_r_const: // Joystick Right (Xbox)
-                {
-                    if abs(joystick_upos(local.tempid)) > 0.3 { local.yaw = -joystick_upos(local.tempid)*global.delta_time_var*global.sens_var[player_id_var]/40; }
-                    if abs(joystick_rpos(local.tempid)) > 0.3 { local.pitch = -joystick_rpos(local.tempid)*global.delta_time_var*global.sens_var[player_id_var]/40; }
-                    break;
-                }
-                case cam_joy_rs_const: // Joystick Right (Switch)
-                {
-                    if abs(joystick_zpos(local.tempid)) > 0.3 { local.yaw = -joystick_zpos(local.tempid)*global.delta_time_var*global.sens_var[player_id_var]/40; }
-                    if abs(joystick_rpos(local.tempid)) > 0.3 { local.pitch = -joystick_rpos(local.tempid)*global.delta_time_var*global.sens_var[player_id_var]/40; }
-                    break;
-                }
-                case cam_joy_l_const: // Joystick Left (should be universal)
-                {
-                    if abs(joystick_xpos(local.tempid)) > 0.3 { local.yaw = -joystick_xpos(local.tempid)*global.delta_time_var*global.sens_var[player_id_var]/40; }
-                    if abs(joystick_ypos(local.tempid)) > 0.3 { local.pitch = -joystick_ypos(local.tempid)*global.delta_time_var*global.sens_var[player_id_var]/40; }
-                    break;
-                }
-                case cam_dpad_const: // D-Pad
-                {
-                    if joystick_has_pov(1)
-                    {
-                        local.yaw = -lengthdir_y(1,joystick_pov(local.tempid))*global.delta_time_var*global.sens_var[player_id_var]/40;
-                        local.pitch = lengthdir_x(1,joystick_pov(local.tempid))*global.delta_time_var*global.sens_var[player_id_var]/40;
-                    }
-                    break;
-                }
-                case cam_button_const: // Keyboard / Button
-                {
-                    local.yaw = (global.input_arr[cam_left_input_const,player_id_var]-global.input_arr[cam_right_input_const,player_id_var])*global.delta_time_var*global.sens_var[player_id_var]/40;
-                    local.pitch = (global.input_arr[cam_up_input_const,player_id_var]-global.input_arr[cam_down_input_const,player_id_var])*global.delta_time_var*global.sens_var[player_id_var]/40;
-                    break;
-                }
-            }
-            if global.invert_yaw_var[player_id_var] { local.yaw *= -1; }
-            if global.invert_pitch_var[player_id_var] { local.pitch *= -1; }
-            eye_yaw_var = mod_scr(eye_yaw_var+local.yaw,360);
-            eye_pitch_var = median(-89.9,89.9,eye_pitch_var+local.pitch);
+            eye_yaw_var = mod_scr(eye_yaw_var+input_yaw_scr(player_id_var),360);
+            eye_pitch_var = median(-89.9,89.9,eye_pitch_var+input_pitch_scr(player_id_var));
         }
         if target_dist_var <= local.spd && !possess_var
         {
@@ -553,43 +523,8 @@ object_event_add
             if possess_var
             {
                 // Get inputs
-                local.tempid = max(player_id_var,1);
-                switch global.input_move_var[player_id_var]
-                {
-                    case move_button_const:
-                    {
-                        local.input_dir_x = global.input_arr[forward_input_const,player_id_var]-global.input_arr[backward_input_const,player_id_var];
-                        local.input_dir_y = global.input_arr[strafe_right_input_const,player_id_var]-global.input_arr[strafe_left_input_const,player_id_var];
-                        break;
-                    }
-                    case move_joy_l_const:
-                    {
-                        if abs(joystick_ypos(local.tempid)) > 0.3 { local.input_dir_x = -joystick_ypos(local.tempid); }
-                        if abs(joystick_xpos(local.tempid)) > 0.3 { local.input_dir_y = joystick_xpos(local.tempid); }
-                        break;
-                    }
-                    case move_joy_r_const:
-                    {
-                        if abs(joystick_ypos(local.tempid)) > 0.3 { local.input_dir_x = -joystick_rpos(local.tempid); }
-                        if abs(joystick_xpos(local.tempid)) > 0.3 { local.input_dir_y = joystick_upos(local.tempid); }
-                        break;
-                    }
-                    case move_joy_rs_const:
-                    {
-                        if abs(joystick_ypos(local.tempid)) > 0.3 { local.input_dir_x = -joystick_rpos(local.tempid); }
-                        if abs(joystick_xpos(local.tempid)) > 0.3 { local.input_dir_y = joystick_zpos(local.tempid); }
-                        break;
-                    }
-                    case move_dpad_const:
-                    {
-                        if joystick_has_pov(1)
-                        {
-                            local.input_dir_x = lengthdir_x(1,joystick_pov(local.tempid));
-                            local.input_dir_y = -lengthdir_y(1,joystick_pov(local.tempid));
-                        }
-                        break;
-                    }
-                }
+                local.input_dir_x = input_x_scr(player_id_var);
+                local.input_dir_y = input_y_scr(player_id_var);
                 if local.input_dir_x == 0 && local.input_dir_y == 0
                 { local.spd = 0; }
                 local.yaw = radtodeg(arctan2(-local.input_dir_y,local.input_dir_x))+eye_yaw_var;
@@ -645,44 +580,9 @@ object_event_add
             if possess_var
             {
                 // Get inputs
-                local.tempid = max(player_id_var,1);
-                switch global.input_move_var[player_id_var]
-                {
-                    case move_button_const:
-                    {
-                        local.input_dir_x = global.input_arr[forward_input_const,player_id_var]-global.input_arr[backward_input_const,player_id_var];
-                        local.input_dir_y = global.input_arr[strafe_right_input_const,player_id_var]-global.input_arr[strafe_left_input_const,player_id_var];
-                        break;
-                    }
-                    case move_joy_l_const:
-                    {
-                        if abs(joystick_ypos(local.tempid)) > 0.3 { local.input_dir_x = -joystick_ypos(local.tempid); }
-                        if abs(joystick_xpos(local.tempid)) > 0.3 { local.input_dir_y = joystick_xpos(local.tempid); }
-                        break;
-                    }
-                    case move_joy_r_const:
-                    {
-                        if abs(joystick_ypos(local.tempid)) > 0.3 { local.input_dir_x = -joystick_rpos(local.tempid); }
-                        if abs(joystick_xpos(local.tempid)) > 0.3 { local.input_dir_y = joystick_upos(local.tempid); }
-                        break;
-                    }
-                    case move_joy_rs_const:
-                    {
-                        if abs(joystick_ypos(local.tempid)) > 0.3 { local.input_dir_x = -joystick_rpos(local.tempid); }
-                        if abs(joystick_xpos(local.tempid)) > 0.3 { local.input_dir_y = joystick_zpos(local.tempid); }
-                        break;
-                    }
-                    case move_dpad_const:
-                    {
-                        if joystick_has_pov(1)
-                        {
-                            local.input_dir_x = lengthdir_x(1,joystick_pov(local.tempid));
-                            local.input_dir_y = -lengthdir_y(1,joystick_pov(local.tempid));
-                        }
-                        break;
-                    }
-                }
-                local.input_dir_z = global.input_arr[jump_input_const,player_id_var]-global.input_arr[crouch_input_const,player_id_var];
+                local.input_dir_x = input_x_scr(player_id_var);
+                local.input_dir_y = input_y_scr(player_id_var);
+                local.input_dir_z = input_z_scr(player_id_var);
                 if local.input_dir_x == 0 && local.input_dir_y == 0 && local.input_dir_z == 0
                 { local.spd = 0; }
                 local.input_dir = radtodeg(arctan2(-local.input_dir_y,local.input_dir_x));
@@ -928,30 +828,45 @@ object_event_add
 // Seen Event
 object_event_add
 (argument0,ev_other,ev_user5,'
-    if instance_exists(target_var)
+    switch seen_type_var
     {
-        if seen_yaw_var > 0
+        case 0: // Target Only
         {
-            target_eye_yaw_var = target_var.eye_yaw_var;
-            local.yaw = abs(deg_diff_scr(point_direction(target_x_var,target_y_var,x,y),target_eye_yaw_var));
-            local.radius = coll_var[2]/2; local.angle = radtodeg(arctan2(local.radius,target_dist_var));
-            local.seenyaw = (local.yaw <= seen_yaw_var+local.angle); local.yawper = (local.yaw+local.angle)/(seen_yaw_var+local.angle);
+            if instance_exists(target_var)
+            {
+                seen_per_var = seen_scr(seen_yaw_var,seen_pitch_var,target_var.eye_yaw_var,target_var.eye_pitch_var,target_x_var,target_y_var,target_z_var,false);
+                is_seen_var = (seen_per_var > 0)
+            }
+            else { is_seen_var = -1; seen_per_var = -1; }
+            break;
         }
-        else { local.seenyaw = true; local.yawper = 0; }
-        if seen_pitch_var > 0
+        case 1: // All players
         {
-            local.height = coll_var[1]/2; local.angle = radtodeg(arctan2(local.height,target_dist_var));
-            target_eye_pitch_var = target_var.eye_pitch_var;
-            target_eye_h_var = target_var.eye_h_var;
-            local.pitch = abs(deg_diff_scr(point_direction_3d_scr(target_x_var,target_y_var,target_z_var+target_eye_h_var,x,y,z+local.height),target_eye_pitch_var));
-            local.seenpitch = (local.pitch <= seen_pitch_var+local.angle); local.pitchper = (local.pitch+local.angle)/(seen_pitch_var+local.angle);
+            is_seen_var = -1;
+            seen_per_var = -1;
+            if on_var && !enter_var
+            {
+                with player_obj
+                {
+                    if on_var && !dead_var && !in_door_var
+                    {
+                        local.per = seen_scr
+                        (
+                            other.seen_yaw_var,other.seen_pitch_var,
+                            eye_yaw_var,eye_pitch_var,
+                            x,y,z,
+                            false,
+                            other.coll_var[1],other.coll_var[2],
+                            other.x,other.y,other.z
+                        );
+                        other.seen_per_var = max(local.per,other.seen_per_var);
+                        other.is_seen_var = (other.seen_per_var > 0)
+                    }
+                }
+            }
+            break;
         }
-        else { local.seenpitch = true; local.pitchper = 0; }
-        if local.seenyaw && local.seenpitch
-        { is_seen_var = true; seen_per_var = 1-max(local.yawper,local.pitchper); }
-        else { is_seen_var = false; seen_per_var = 0; }
     }
-    else { is_seen_var = -1; seen_per_var = -1; }
 ');
 // Target Event
 object_event_add

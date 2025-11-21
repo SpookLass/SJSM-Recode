@@ -51,6 +51,7 @@ object_event_add
     // Movement
     do_seen_var = true;
     do_seen_mult_var = true; // Experimental!
+    seen_type_var = 1;
     seen_yaw_var = 30;
     unseen_mult_var = 30;
     frick_var = 0.2;

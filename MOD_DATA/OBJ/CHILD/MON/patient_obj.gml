@@ -79,6 +79,7 @@ object_event_add
     }
     // Seen
     do_seen_var = true;
+    seen_type_var = 1;
     seen_spd_mult_var = 0.02;
     tp_alarm_var = 220;
     tp_sight_var = false;

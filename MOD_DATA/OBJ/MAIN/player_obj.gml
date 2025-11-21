@@ -322,94 +322,14 @@ object_event_add
         }
         if !turn_var
         {
-            switch global.input_cam_var[player_id_var]
-            {
-                case cam_mouse_const: // Mouse
-                {
-                    if !global.mouse_free_var
-                    {
-                        local.yaw = ((display_get_width()/2)-display_mouse_get_x())*global.sens_var[player_id_var]/1600;
-                        local.pitch = ((display_get_height()/2)-display_mouse_get_y())*global.sens_var[player_id_var]/1600;
-                        display_mouse_set(display_get_width()/2,display_get_height()/2);
-                    }
-                    break;
-                }
-                case cam_joy_r_const: // Joystick Right (Xbox)
-                {
-                    if abs(joystick_upos(local.tempid)) > 0.3 { local.yaw = -joystick_upos(local.tempid)*global.delta_time_var*global.sens_var[player_id_var]/40; }
-                    if abs(joystick_rpos(local.tempid)) > 0.3 { local.pitch = -joystick_rpos(local.tempid)*global.delta_time_var*global.sens_var[player_id_var]/40; }
-                    break;
-                }
-                case cam_joy_rs_const: // Joystick Right (Switch)
-                {
-                    if abs(joystick_zpos(local.tempid)) > 0.3 { local.yaw = -joystick_zpos(local.tempid)*global.delta_time_var*global.sens_var[player_id_var]/40; }
-                    if abs(joystick_rpos(local.tempid)) > 0.3 { local.pitch = -joystick_rpos(local.tempid)*global.delta_time_var*global.sens_var[player_id_var]/40; }
-                    break;
-                }
-                case cam_joy_l_const: // Joystick Left (should be universal)
-                {
-                    if abs(joystick_xpos(local.tempid)) > 0.3 { local.yaw = -joystick_xpos(local.tempid)*global.delta_time_var*global.sens_var[player_id_var]/40; }
-                    if abs(joystick_ypos(local.tempid)) > 0.3 { local.pitch = -joystick_ypos(local.tempid)*global.delta_time_var*global.sens_var[player_id_var]/40; }
-                    break;
-                }
-                case cam_dpad_const: // D-Pad
-                {
-                    if joystick_has_pov(1)
-                    {
-                        local.yaw = -lengthdir_y(1,joystick_pov(local.tempid))*global.delta_time_var*global.sens_var[player_id_var]/40;
-                        local.pitch = lengthdir_x(1,joystick_pov(local.tempid))*global.delta_time_var*global.sens_var[player_id_var]/40;
-                    }
-                    break;
-                }
-                case cam_button_const: // Keyboard / Button
-                {
-                    local.yaw = (global.input_arr[cam_left_input_const,player_id_var]-global.input_arr[cam_right_input_const,player_id_var])*global.delta_time_var*global.sens_var[player_id_var]/40;
-                    local.pitch = (global.input_arr[cam_up_input_const,player_id_var]-global.input_arr[cam_down_input_const,player_id_var])*global.delta_time_var*global.sens_var[player_id_var]/40;
-                    break;
-                }
-            }
+            eye_yaw_var += input_yaw_scr(player_id_var);
+            eye_pitch_var += input_pitch_scr(player_id_var);
         }
-        if global.invert_yaw_var[player_id_var] { local.yaw *= -1; }
-        if global.invert_pitch_var[player_id_var] { local.pitch *= -1; }
-        eye_yaw_var = mod_scr(eye_yaw_var+local.yaw,360);
-        eye_pitch_var = median(-89.9,89.9,eye_pitch_var+local.pitch);
+        eye_yaw_var = mod_scr(eye_yaw_var,360);
+        eye_pitch_var = median(-89.9,89.9,eye_pitch_var);
         // Get inputs
-        switch global.input_move_var[player_id_var]
-        {
-            case move_button_const:
-            {
-                local.input_dir_x = global.input_arr[forward_input_const,player_id_var]-global.input_arr[backward_input_const,player_id_var];
-                local.input_dir_y = global.input_arr[strafe_right_input_const,player_id_var]-global.input_arr[strafe_left_input_const,player_id_var];
-                break;
-            }
-            case move_joy_l_const:
-            {
-                if abs(joystick_ypos(local.tempid)) > 0.3 { local.input_dir_x = -joystick_ypos(local.tempid); }
-                if abs(joystick_xpos(local.tempid)) > 0.3 { local.input_dir_y = joystick_xpos(local.tempid); }
-                break;
-            }
-            case move_joy_r_const:
-            {
-                if abs(joystick_ypos(local.tempid)) > 0.3 { local.input_dir_x = -joystick_rpos(local.tempid); }
-                if abs(joystick_xpos(local.tempid)) > 0.3 { local.input_dir_y = joystick_upos(local.tempid); }
-                break;
-            }
-            case move_joy_rs_const:
-            {
-                if abs(joystick_ypos(local.tempid)) > 0.3 { local.input_dir_x = -joystick_rpos(local.tempid); }
-                if abs(joystick_xpos(local.tempid)) > 0.3 { local.input_dir_y = joystick_zpos(local.tempid); }
-                break;
-            }
-            case move_dpad_const:
-            {
-                if joystick_has_pov(1)
-                {
-                    local.input_dir_x = lengthdir_x(1,joystick_pov(local.tempid));
-                    local.input_dir_y = -lengthdir_y(1,joystick_pov(local.tempid));
-                }
-                break;
-            }
-        }
+        local.input_dir_x = input_x_scr(player_id_var);
+        local.input_dir_y = input_y_scr(player_id_var);
         local.input_dir = radtodeg(arctan2(-local.input_dir_y,local.input_dir_x));
         // Extra movement handling
         if do_coll_var && grav_var > 0
@@ -521,7 +441,7 @@ object_event_add
         }
         else
         {
-            local.input_dir_z = global.input_arr[jump_input_const,player_id_var]-global.input_arr[crouch_input_const,player_id_var];
+            local.input_dir_z = input_z_scr(player_id_var);
             local.input_dir_pitch = radtodeg(arctan2(local.input_dir_z,sqrt(sqr(local.input_dir_x)+sqr(local.input_dir_y))));
         }
         // Is the player active?
@@ -558,6 +478,7 @@ object_event_add
         if !do_coll_var || grav_var <= 0
         {
             on_floor_var = true;
+            if global.input_move_var[player_id_var] != move_button_const { local.spd *= median(0,1,sqrt(sqr(local.input_dir_x)+sqr(local.input_dir_y)+sqr(local.input_dir_z))); }
             if back_var { local.spd *= lerp_scr(1,back_spd_mult_var,abs(local.input_dir)/180); }
             acc_3d_scr(global.delta_time_var,local.acc,local.frick,local.input_dir+eye_yaw_var,local.input_dir_pitch+(eye_pitch_var*lengthdir_x(1,local.input_dir)),local.spd);
         }
@@ -590,21 +511,18 @@ object_event_add
         }
         else if normal_var
         {
+            if global.input_move_var[player_id_var] != move_button_const { local.spd *= median(0,1,sqrt(sqr(local.input_dir_x)+sqr(local.input_dir_y))); }
             if back_var { local.spd *= lerp_scr(1,back_spd_mult_var,abs(local.input_dir)/180); }
             acc_scr(global.delta_time_var,local.acc,local.frick,local.input_dir+eye_yaw_var,local.spd);
         }
         else
         {
+            local.forspd = local.spd;
+            local.sidespd = local.spd;
             if back_var
             {
-                if local.input_dir_x { local.forspd = local.spd; }
-                else { local.forspd = local.spd * back_spd_mult_var;}
-                local.sidespd = local.spd*(back_spd_mult_var+1)*0.5;
-            }
-            else
-            {
-                local.forspd = local.spd;
-                local.sidespd = local.spd;
+                if local.input_dir_x < 0 { local.forspd *= back_spd_mult_var;}
+                local.sidespd *= (back_spd_mult_var+1)/2;
             }
             acc_odd_scr(global.delta_time_var,local.acc,local.frick,local.input_dir_x,local.input_dir_y,local.forspd,local.sidespd,eye_yaw_var);
         }

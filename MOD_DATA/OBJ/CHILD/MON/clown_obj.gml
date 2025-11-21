@@ -37,6 +37,7 @@ object_event_add
     // Special
     do_atk_var = -1;
     do_seen_var = true;
+    seen_type_var = 1;
     seen_yaw_var = 30;
     min_dist_var = 16;
     // Sounds
