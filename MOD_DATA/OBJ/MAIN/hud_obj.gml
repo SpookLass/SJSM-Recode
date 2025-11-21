@@ -336,7 +336,7 @@ Taker
                 }
                 case para_obj:
                 {
-                    local.per = par_var.mon_var.target_dist_var/state_dist_var[2];
+                    local.per = par_var.mon_var.target_dist_var/par_var.mon_var.state_dist_var[2];
                     draw_sprite_stretched_ext(par_var.mon_var.spr_overlay_var,2,0,0,view_wview[view_current],view_hview[view_current],c_white,local.per-0.4);
                     draw_sprite_stretched_ext(par_var.mon_var.spr_overlay_var,1,0,0,view_wview[view_current],view_hview[view_current],c_white,local.per-0.2);
                     draw_sprite_stretched_ext(par_var.mon_var.spr_overlay_var,0,0,0,view_wview[view_current],view_hview[view_current],c_white,local.per);
@@ -362,6 +362,13 @@ Taker
                     draw_rectangle(0,0,view_wview[view_current],view_hview[view_current],false);
                     draw_set_color(c_white);
                     draw_set_blend_mode(bm_normal);
+                    // Other
+                    draw_background_ext(bar_bg,91*scale_var,57*scale_var,scale_var,scale_var,0,c_white,1);
+                    local.width = background_get_width(bar_stam_bg)*par_var.mon_var.stam_var/par_var.mon_var.stam_max_var;
+                    draw_background_part_ext(bar_stam_bg,background_get_width(bar_stam_bg)-local.width,0,local.width,20,99*scale_var,96*scale_var,scale_var,scale_var,c_white,1);
+                    local.width = background_get_width(bar_hp_bg)*median(0,1,par_var.mon_var.dur_var/par_var.mon_var.dur_start_var);
+                    draw_background_part_ext(bar_hp_bg,background_get_width(bar_hp_bg)-local.width,0,local.width,27,99*scale_var,62*scale_var,scale_var,scale_var,c_white,1);
+                    draw_background_ext(bar_icon_bg,37*scale_var,34*scale_var,scale_var,scale_var,0,c_white,1);
                     break;
                 }
             }

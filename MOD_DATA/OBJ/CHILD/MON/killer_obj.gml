@@ -349,10 +349,25 @@ object_event_add
     z_off_base_var = 0;
     sprint_z_off_var = -1;
     // Behavior
-    if global.killer_type_var == -1 { local.type = irandom(6); }
+    if global.killer_type_var == -1 { local.type = irandom(7); }
     else { local.type = global.killer_type_var; }
     switch local.type
     {
+        case 7: // Player 9
+        {
+            spd_base_var = 1;
+            frick_var = 0.5;
+            acc_var = 0.8;
+            stam_rate_var = 0.5;
+            stam_drain_var = 5/9; // Kinda simulates stam start?
+            sprint_acc_var = 0.8;
+            acc_base_var = 0.8;
+            sprint_mult_var = 2.5;
+            stam_per_var = global.stam_per_var;
+            stam_spawn_min_var = 100;
+            stam_spawn_max_var = 100;
+            do_acc_var = true;
+        }
         case 0: // Recode
         {
             do_sprint_var = true;
@@ -548,8 +563,8 @@ object_event_add
         {
             if do_stam_var { stam_var -= stam_drain_var*global.delta_time_var; }
             if stam_var <= 0
+            || (global.input_press_arr[sprint_input_const,player_id_var] == -1 && possess_var)
             {
-                stam_var = 0;
                 sprint_var = false;
                 spr_spd_var = spr_spd_base_var;
                 h_var = h_base_var;
@@ -565,9 +580,10 @@ object_event_add
         else
         {
             if do_stam_var { stam_var += stam_rate_var*global.delta_time_var; }
-            if stam_var >= stam_max_var || (!do_stam_var && !scary_var)
+            if (stam_var >= stam_max_var && !possess_var)
+            || (!do_stam_var && !scary_var)
+            || (global.input_press_arr[sprint_input_const,player_id_var] == 1 && possess_var)
             {
-                stam_var = stam_max_var;
                 sprint_var = true;
                 spd_mult_var *= sprint_mult_var;
                 spr_spd_var = sprint_spr_spd_var;
@@ -587,6 +603,7 @@ object_event_add
                 sub_var[1] = charge_snd_arr[local.index,2];
             }
         }
+        stam_var = median(0,stam_max_var,stam_var);
     }
     event_inherited();
 ');

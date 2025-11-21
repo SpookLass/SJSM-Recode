@@ -488,11 +488,12 @@ object_event_add
     type_button_arr[9,6] = yoshi_str_var;
     type_button_arr[11,2] = 4; // Eel
     type_button_arr[11,4] = yoshi_str_var;
-    type_button_arr[14,2] = 7; // Killer
+    type_button_arr[14,2] = 8; // Killer
     type_button_arr[14,4] = old_str_var;
     type_button_arr[14,5] = yoshi_str_var;
     type_button_arr[14,6] = rouge_str_var;
-    type_button_arr[14,7] = alt_str_var;
+    type_button_arr[14,7] = alt_str_var+" 1";
+    type_button_arr[14,8] = alt_str_var+" 2";
     type_button_arr[17,2] = 6; // Bodybag
     type_button_arr[17,4] = kh_str_var;
     type_button_arr[17,5] = old_str_var;

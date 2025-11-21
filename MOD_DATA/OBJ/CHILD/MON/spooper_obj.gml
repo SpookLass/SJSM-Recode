@@ -211,6 +211,7 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_room_start,'
     event_inherited();
+    image_alpha = 1;
     if hp_var > 0
     {
         if !instance_exists(spooper_door_obj)
@@ -257,6 +258,7 @@ object_event_add
         if local.start >= mark_start_var && frac_chance_scr(1,mark_chance_var)
         {
             if door_chance_var > 0 && global.spawn_len_var > 1 { local.door = frac_chance_scr(1,door_chance_var); }
+            local.tex = sprite_get_texture(door_spr_var,sprite_get_number(door_spr_var)-1);
             if local.door
             {
                 local.spawn = irandom_range(1,global.spawn_len_var-1);
@@ -276,7 +278,6 @@ object_event_add
             else if global.mark_len_var
             {
                 local.mark = irandom(global.mark_len_var-1);
-                local.tex = sprite_get_texture(door_spr_var,sprite_get_number(door_spr_var)-1);
                 with instance_create(global.mark_arr[local.mark,0],global.mark_arr[local.mark,1],spooper_mark_obj)
                 {
                     z = global.mark_arr[local.mark,2];
@@ -342,6 +343,7 @@ object_event_add
             { image_alpha -= seen_fade_rate_var*global.delta_time_var; }
             if !seen_fade_var || image_alpha <= 0
             {
+                image_alpha = 1;
                 if tp_seen_var { event_user(14); }
                 else
                 {

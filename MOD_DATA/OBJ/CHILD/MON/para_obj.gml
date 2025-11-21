@@ -188,7 +188,7 @@ object_event_add
             // state_dmg_alarm_var[2] = 60;
             state_dmg_var[2] = 20;
             state_rm_var = true;
-            state_dur_var = 8;
+            state_dur_var = 10;
             state_eff_min_var = 6;
             state_eff_max_var = 6;
             state_miniboss_var = true;

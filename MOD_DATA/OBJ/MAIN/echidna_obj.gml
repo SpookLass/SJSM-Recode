@@ -250,7 +250,7 @@ object_event_add
         mus_prio_var = -1;
         with mus_control_obj { event_user(0); }
     }
-    global.player_arr[player_id_var].possess_var = false;
+    if possess_var { global.player_arr[player_id_var].possess_var = false; }
 ');
 // Room Start Event
 object_event_add
