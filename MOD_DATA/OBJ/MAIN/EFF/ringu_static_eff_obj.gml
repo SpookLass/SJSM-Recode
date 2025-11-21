@@ -78,8 +78,8 @@ object_event_add
 object_event_add
 (argument0,ev_alarm,0,'
     fmod_snd_play_scr(snd_var);
-    with (ringu_real_obj)
-    { event_perform(ev_other,ev_user15); }
+    with (real_ringu_obj)
+    { event_user(15); }
     set_alarm_scr(0,alarm_var);
 ');
 // Step Event
@@ -93,7 +93,7 @@ object_event_add
     {
         fog_start_var = fog_max_start_var*local.per;
         fog_end_var = fog_max_end_var*local.per;
-        event_perform(ev_other,ev_user0);
+        event_user(0);
     }
     else { image_alpha = 1.25*(1-local.per); }
 ');

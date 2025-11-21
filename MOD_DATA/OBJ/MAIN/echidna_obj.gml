@@ -273,6 +273,8 @@ object_event_add
     y = global.spawn_arr[0,1]-lengthdir_y(32,yaw_var);
     z = global.spawn_arr[0,2];
     set_motion_3d_scr(0,true,yaw_var,true,0,true);
+    eye_yaw_var = yaw_var;
+    eye_pitch_var = 0;
     // Set target
     event_user(6);
     // Sound
@@ -344,6 +346,17 @@ object_event_add
             {
                 event_user(0);
             }
+        }
+    }
+    if possess_var && !do_enter_var
+    {
+        with instance_create(0,0,fade_eff_obj)
+        {
+            image_blend = c_black; 
+            set_alarm_scr(0,20); 
+            invert_var = false;
+            stay_var = false;
+            cam_id_var = other.cam_id_var;
         }
     }
 ');
@@ -445,6 +458,17 @@ object_event_add
             z = target_z_var;
             do_coll_var = true;
             enter_var = false;
+            if possess_var
+            {
+                with instance_create(0,0,fade_eff_obj)
+                {
+                    image_blend = c_black; 
+                    set_alarm_scr(0,20); 
+                    invert_var = false;
+                    stay_var = false;
+                    cam_id_var = other.cam_id_var;
+                }
+            }
         }
         else
         {

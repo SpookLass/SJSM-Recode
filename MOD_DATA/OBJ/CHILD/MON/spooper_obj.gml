@@ -26,18 +26,19 @@ object_event_add
             break;
         }
     }
+    txt_lock_var = ini_read_string("UI","spooper","UI_spooper");
     ini_close();
     type_var = 0;
     spd_base_var = 3;
     spr_spd_var = 1/3;
     anim_type_var = 3;
-    dur_var = irandom_range(24,31);
     delay_var = 0;
     do_atk_var = -1;
     dmg_var = 0.01;
     w_var = 20;
     h_var = 20;
     z_off_var = 3;
+    dupe_var = dupe_never_const;
     // Special
     do_seen_var = true;
     seen_dist_var = 8;
@@ -97,10 +98,12 @@ object_event_add
             other.light_floor_spr_var = light_floor_spr_var;
             other.puke_bg_var = puke_bg_var;
             other.fetus_bg_var = fetus_bg_var;
+            other.mdl_var = mdl_var;
             other.puke_snd_var = puke_snd_var;
             other.choke_01_snd_var = choke_01_snd_var;
             other.choke_02_snd_var = choke_02_snd_var;
             other.mus_snd_var = mus_snd_var;
+            other.dur_var = dur_var;
             local.loaded = true;
             break;
         }
@@ -121,6 +124,7 @@ object_event_add
         choke_01_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\spooper_choke_01_snd.wav");
         choke_02_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\spooper_choke_02_snd.wav");
         mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\SPOOPER_AMB.mp3");
+        dur_var = irandom_range(24,31);
     }
     fetus_tex_var = background_get_texture(fetus_bg_var);
     // Behavior
@@ -222,6 +226,7 @@ object_event_add
                     {
                         lock_var = true;
                         spooper_var = true;
+                        txt_lock_var = other.txt_lock_var;
                     }
                     if !local.spawn || door_type_var != 2
                     {
@@ -349,39 +354,44 @@ object_event_add
     }
     if hp_var <= 0 && dur_start_var-dur_var >= drain_start_var
     {
-        if dmg_min_var > 0
+        local.drain = true;
+        with spooper_obj { if id < other.id { local.drain = false; }}
+        if local.drain
         {
-            local.min = dmg_min_var;
-            local.dokill = false;
-        }
-        else
-        {
-            local.min = dmg_var;
-            local.dokill = true;
-        }
-        with player_obj
-        {
-            heal_var = false;
-            if !dead_var && !hurt_var && !in_door_var && !invuln_var && on_var
+            if dmg_min_var > 0
             {
-                if hp_var > local.min { hp_var -= other.dmg_var*global.delta_time_var; }
-                else if local.dokill
-                {
-                    hp_var = 0;
-                    dead_var = true;
-                    do_coll_var = false;
-                    grav_var = false;
-                    if local.kill == 0
-                    { local.kill = true; }
-                }
+                local.min = dmg_min_var;
+                local.dokill = false;
             }
-            if !dead_var { local.kill = -1; }
-        }
-        if local.kill && local.dokill
-        {
-            global.dead_mon_var = object_index;
-            instance_destroy();
-            room_goto_scr(dead_rm_var);
+            else
+            {
+                local.min = dmg_var;
+                local.dokill = true;
+            }
+            with player_obj
+            {
+                heal_var = false;
+                if !dead_var && !hurt_var && !in_door_var && !invuln_var && on_var
+                {
+                    if hp_var > local.min { hp_var -= other.dmg_var*global.delta_time_var; }
+                    else if local.dokill
+                    {
+                        hp_var = 0;
+                        dead_var = true;
+                        do_coll_var = false;
+                        grav_var = false;
+                        if local.kill == 0
+                        { local.kill = true; }
+                    }
+                }
+                if !dead_var { local.kill = -1; }
+            }
+            if local.kill && local.dokill
+            {
+                global.dead_mon_var = object_index;
+                instance_destroy();
+                room_goto_scr(dead_rm_var);
+            }
         }
     }
 ');

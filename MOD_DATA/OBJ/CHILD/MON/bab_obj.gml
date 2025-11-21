@@ -80,6 +80,7 @@ object_event_add
         {
             other.new_spr_var = new_spr_var;
             other.old_spr_var = old_spr_var;
+            other.overlay_spr_var = overlay_spr_var;
             other.flesh_spr_var = flesh_spr_var;
             other.eff_spr_var = eff_spr_var;
             for (local.i=0; local.i<snd_len_var; local.i+=1;)
@@ -94,6 +95,7 @@ object_event_add
     {
         new_spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS4_01_spr.png",16,false,false,0,0);
         old_spr_var = sprite_add(main_directory_const+"\SPR\MON\bab_old_spr.png",11,false,false,0,0);
+        overlay_spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS4_04_spr.png",2,false,false,0,0);
         flesh_spr_var = sprite_add(main_directory_const+"\SPR\MON\bab_flesh_spr.png",4,false,false,0,0);
         eff_spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS4_03_spr.png",4,false,false,0,0);
         snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\bab_01_snd.wav",true);
@@ -187,6 +189,7 @@ object_event_add
     {
         sprite_delete(new_spr_var);
         sprite_delete(old_spr_var);
+        sprite_delete(overlay_spr_var);
         sprite_delete(flesh_spr_var);
         sprite_delete(eff_spr_var);
         fmod_snd_free_scr(mus_snd_var);

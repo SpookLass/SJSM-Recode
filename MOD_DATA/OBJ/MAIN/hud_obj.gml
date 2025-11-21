@@ -307,10 +307,69 @@ Taker
                     draw_set_color(c_white);
                     draw_set_blend_mode(bm_normal);*/
                     draw_set_blend_mode(bm_add);
-                    draw_background_stretched_ext(par_var.mon_var.overlay_bg_var,view_wview[view_current]*-0.15,0,view_wview[view_current]*2.15,view_hview[view_current],c_gray,1);
+                    draw_background_stretched_ext(par_var.mon_var.overlay_bg_var,view_wview[view_current]*-0.15,0,view_wview[view_current]*2.15,view_hview[view_current],c_white,0.5);
                     draw_set_blend_mode(bm_normal);
                     break;
                 }
+                case bug_obj:
+                {
+                    draw_set_blend_mode(bm_add);
+                    draw_set_color(make_color_rgb(45,43,3));
+                    draw_rectangle(0,0,view_wview[view_current],view_hview[view_current],false);
+                    draw_set_color(c_white);
+                    draw_set_blend_mode(bm_normal);
+                    break;
+                }
+                case ringu_obj:
+                {
+                    draw_set_blend_mode(bm_add);
+                    draw_sprite_tiled_ext(spr_var,spr_id_var,0,y,1,1,image_blend,0.625);
+                    draw_set_blend_mode(bm_normal);
+                    break;
+                }
+                case bab_obj:
+                {
+                    draw_set_blend_mode(bm_add);
+                    draw_sprite_stretched_ext(par_var.mon_var.overlay_spr_var,0,0,0,view_wview[view_current],view_hview[view_current],c_white,0.25);
+                    draw_set_blend_mode(bm_normal);
+                    break;
+                }
+                case para_obj:
+                {
+                    local.per = par_var.mon_var.target_dist_var/state_dist_var[2];
+                    draw_sprite_stretched_ext(par_var.mon_var.spr_overlay_var,2,0,0,view_wview[view_current],view_hview[view_current],c_white,local.per-0.4);
+                    draw_sprite_stretched_ext(par_var.mon_var.spr_overlay_var,1,0,0,view_wview[view_current],view_hview[view_current],c_white,local.per-0.2);
+                    draw_sprite_stretched_ext(par_var.mon_var.spr_overlay_var,0,0,0,view_wview[view_current],view_hview[view_current],c_white,local.per);
+                    if par_var.mon_var.state_var == 2 // Leech
+                    {
+                        draw_set_color(c_red); draw_set_alpha(local.per-0.5);
+                        draw_rectangle(0,0,view_xview[view_current]+view_wview[view_current],view_yview[view_current]+view_hview[view_current],false);
+                        draw_set_color(c_white); draw_set_alpha(1);
+                    }
+                    break;
+                }
+                case fd_obj:
+                {
+                    draw_set_blend_mode(bm_add);
+                    draw_background_stretched_ext(lens_02_bg,0,0,view_wview[view_current],view_hview[view_current],c_white,0.5);
+                    draw_set_blend_mode(bm_normal);
+                    break;
+                }
+                case killer_obj:
+                {
+                    draw_set_blend_mode(bm_add);
+                    draw_set_color(make_color_rgb(63,0,0));
+                    draw_rectangle(0,0,view_wview[view_current],view_hview[view_current],false);
+                    draw_set_color(c_white);
+                    draw_set_blend_mode(bm_normal);
+                    break;
+                }
+            }
+            if !par_var.mon_var.on_var || par_var.mon_var.enter_var
+            {
+                draw_set_color(c_black);
+                draw_rectangle(0,0,view_wview[view_current],view_hview[view_current],false);
+                draw_set_color(c_white);
             }
             d3d_set_hidden(true);
         }

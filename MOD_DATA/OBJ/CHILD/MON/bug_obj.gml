@@ -283,7 +283,6 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_room_start,'
     event_inherited();
-    fmod_inst_stop_scr(loop_inst_var);
     with bug_bod_obj
     {
         if par_var == other.id
@@ -355,6 +354,7 @@ object_event_add
         on_var = true;
         if do_snd_var
         {
+            fmod_inst_stop_scr(loop_inst_var);
             if loop_snd_var[0] { loop_inst_var = fmod_snd_3d_loop_scr(loop_snd_var[1]); }
             set_alarm_scr(6,irandom_range(snd_delay_min_var,snd_delay_max_var));
         }
@@ -380,11 +380,6 @@ object_event_add
         target_dist_var = point_distance_3d_scr(x,y,z,target_x_var,target_y_var,target_z_var);
     }
     else { event_inherited(); }
-');
-// Sound Event
-object_event_add
-(argument0,ev_other,ev_user9,'
-    fmod_inst_set_3d_pos_scr(loop_inst_var,x,y,z);
 ');
 // Hurt Event
 object_event_add

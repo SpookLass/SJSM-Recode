@@ -23,7 +23,7 @@ if argument1 == 0 { local.coll = coll_var[0]; }
 else { local.coll = argument1; }
 if argument2 == 0 { local.coll_height = coll_var[1]; }
 else { local.coll_height = argument2; }
-if local.coll_width == 0 { local.coll_width = coll_var[2]; }
+if argument3 == 0 { local.coll_width = coll_var[2]; }
 else { local.coll_width = argument3; }
 // Position
 if argument4 != 0 || argument5 != 0 || argument6 != 0
