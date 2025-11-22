@@ -18,6 +18,7 @@ type_var
     7: Better Block. Uses w_var, l_var, h_var, tex_w_var, tex_l_var, and tex_h_var.
     8: Offset Plane. Uses w_var, h_var, tex_w_var, tex_h_var, and radius_var. Origin is south.
     9: Jumpscare. Duplicate of Offset Plane with front and back sprites. Uses dist_var
+    10: Single Plane. Uses w_var, h_var, dist_var, tex_w_var, and tex_h_var. Like double plane, but only one.
 snap_var
     0: No snap
     1: Snap to floor
@@ -86,6 +87,11 @@ object_event_add
         {
             d3d_draw_wall(dist_var,0,h_var,dist_var,w_var,0,local.tex,tex_w_var,tex_h_var*sign(h_var));
             d3d_draw_wall(-dist_var,0,h_var,-dist_var,w_var,0,tex_02_var,tex_w_var,tex_h_var*sign(h_var));
+            break;
+        }
+        case 10:
+        {
+            d3d_draw_wall(dist_var,w_var/2,h_var,dist_var,-w_var/2,0,local.tex,tex_w_var,tex_h_var*sign(h_var));
             break;
         }
     }

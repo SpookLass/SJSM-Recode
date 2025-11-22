@@ -100,6 +100,7 @@ switch argument0
         break;
     }
     case 6:
+    case 10:
     {
         local.width = argument2/2;
         p3dc_add_wall_scr

@@ -28,9 +28,22 @@ object_event_add
             light_var.z += other.h_var;
         }
     }
-    else if !irandom(1) && !instance_exists(enemy_par_obj)
+    else
     {
-        with instance_create(x,y,note_obj)
-        { z += other.h_var; }
+        if global.note_override_var
+        {
+            local.num = global.note_override_num_var;
+            local.den = global.note_override_den_var;
+        }
+        else
+        {
+            local.num = !instance_exists(enemy_par_obj);
+            local.den = 2;
+        }
+        if frac_chance_scr(local.num,local.den) && is_string(note_scr()) && !instance_exists(note_obj)
+        {
+            with instance_create(x,y,note_obj)
+            { z += other.h_var; }
+        }
     }
 ');

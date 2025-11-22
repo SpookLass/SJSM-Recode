@@ -402,7 +402,8 @@ object_event_add
         // Technically doesnt check for if they entered in OG, but Im lazy
         if !enter_var
         {
-            if check_path_var { local.target_dist = path_get_length(path_var); }
+            if check_path_var && mp_grid_path(grid_var,path_var,x,y,target_x_var,target_y_var,true)
+            { local.target_dist = path_get_length(path_var); }
             else { local.target_dist = target_dist_var; }
             if check_all_var
             {

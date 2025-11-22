@@ -1,30 +1,37 @@
 ini_open(global.lang_var);
-if global.mode_var == 0
+if global.note_override_var { return global.note_override_str_var; }
+else if global.mode_var == 0
 {
-    switch global.note_var
+    if global.rm_count_var < 20 || global.note_var > 17 || global.note_var != 7 { return -1; }
+    else
     {
-        case 0: { return ini_read_string("NOTE","story_a_01","NOTE_story_a_01"); }
-        case 1: { return ini_read_string("NOTE","story_a_02","NOTE_story_a_02"); }
-        case 2: { return ini_read_string("NOTE","story_a_03","NOTE_story_a_03"); }
-        case 3: { return ini_read_string("NOTE","story_a_04","NOTE_story_a_04"); }
-        case 4: { return ini_read_string("NOTE","story_a_05","NOTE_story_a_05"); }
-        case 5: { return ini_read_string("NOTE","story_a_06","NOTE_story_a_06"); }
-        case 6: { return ini_read_string("NOTE","story_a_07","NOTE_story_a_07"); }
-        case 7: { return ini_read_string("NOTE","story_b_01","NOTE_story_b_01"); }
-        case 8: { return ini_read_string("NOTE","story_b_02","NOTE_story_b_02"); }
-        case 9: { return ini_read_string("NOTE","story_b_03","NOTE_story_b_03"); }
-        case 10: { return ini_read_string("NOTE","story_b_04","NOTE_story_b_04"); }
-        case 11: { return ini_read_string("NOTE","story_b_05","NOTE_story_b_05"); }
-        case 12: { return ini_read_string("NOTE","story_b_06","NOTE_story_b_06"); }
-        case 13: { return ini_read_string("NOTE","story_c_01","NOTE_story_c_01"); }
-        case 14: { return ini_read_string("NOTE","story_c_02","NOTE_story_c_02"); }
-        case 15: { return ini_read_string("NOTE","story_c_03","NOTE_story_c_03"); }
-        case 16: { return ini_read_string("NOTE","story_c_04","NOTE_story_c_04"); }
-        case 17: { return ini_read_string("NOTE","story_c_05","NOTE_story_c_05"); }
+        switch global.note_var
+        {
+            case 0: { return ini_read_string("NOTE","story_a_01","NOTE_story_a_01"); }
+            case 1: { return ini_read_string("NOTE","story_a_02","NOTE_story_a_02"); }
+            case 2: { return ini_read_string("NOTE","story_a_03","NOTE_story_a_03"); }
+            case 3: { return ini_read_string("NOTE","story_a_04","NOTE_story_a_04"); }
+            case 4: { return ini_read_string("NOTE","story_a_05","NOTE_story_a_05"); }
+            case 5: { return ini_read_string("NOTE","story_a_06","NOTE_story_a_06"); }
+            case 6: { return ini_read_string("NOTE","story_a_07","NOTE_story_a_07"); }
+            case 7: { return ini_read_string("NOTE","story_b_01","NOTE_story_b_01"); }
+            case 8: { return ini_read_string("NOTE","story_b_02","NOTE_story_b_02"); }
+            case 9: { return ini_read_string("NOTE","story_b_03","NOTE_story_b_03"); }
+            case 10: { return ini_read_string("NOTE","story_b_04","NOTE_story_b_04"); }
+            case 11: { return ini_read_string("NOTE","story_b_05","NOTE_story_b_05"); }
+            case 12: { return ini_read_string("NOTE","story_b_06","NOTE_story_b_06"); }
+            case 13: { return ini_read_string("NOTE","story_c_01","NOTE_story_c_01"); }
+            case 14: { return ini_read_string("NOTE","story_c_02","NOTE_story_c_02"); }
+            case 15: { return ini_read_string("NOTE","story_c_03","NOTE_story_c_03"); }
+            case 16: { return ini_read_string("NOTE","story_c_04","NOTE_story_c_04"); }
+            case 17: { return ini_read_string("NOTE","story_c_05","NOTE_story_c_05"); }
+            default: { return ini_read_string("NOTE","default","NOTE_default"); }
+        }
     }
 }
 else
 {
+    global.note_var = mod_scr(global.note_var,43);
     switch global.note_var
     {
         case 0: { return ini_read_string("NOTE","em_a_01","NOTE_em_a_01"); }

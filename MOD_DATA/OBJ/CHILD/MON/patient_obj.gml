@@ -200,7 +200,7 @@ object_event_add
 ');
 // Room start
 object_event_add
-(argument0,ev_other,ev_room_start,"
+(argument0,ev_other,ev_room_start,'
     event_inherited();
     draw_yaw_var = yaw_var;
     if hang_var
@@ -251,7 +251,7 @@ object_event_add
     draw_y_var = y;
     draw_z_var = z;
     event_user(14);
-");
+');
 // Room End
 object_event_add
 (argument0,ev_other,ev_room_end,'
@@ -272,14 +272,14 @@ object_event_add
 ');
 // Delay
 object_event_add
-(argument0,ev_alarm,0,"
+(argument0,ev_alarm,0,'
     event_inherited();
     if inv_move_var { move_var = false; }
     event_perform(ev_alarm,8);
-");
+');
 // Random anim
 object_event_add
-(argument0,ev_alarm,8,"
+(argument0,ev_alarm,8,'
     if seen_rage_var
     {
         if alarm_arr[12,0] <= 0 || rage_var { local.chance = true; }
@@ -294,25 +294,25 @@ object_event_add
     // Become visible
     else { event_user(14); }
     set_alarm_scr(8,irandom_range(rand_alarm_min_var,rand_alarm_max_var));
-");
+');
 // Animation
 object_event_add
-(argument0,ev_other,ev_user1,"
+(argument0,ev_other,ev_user1,'
     spr_prog_var -= spr_spd_var*global.delta_time_var;
     if spr_prog_var <= 0
     {
         spr_prog_var = 1;
         visible = frac_chance_scr(1,2);
     }
-");
+');
 // Teleport Alarm
 object_event_add
-(argument0,ev_alarm,9,"
+(argument0,ev_alarm,9,'
     event_user(15);
-");
+');
 // Teleport Behind Alarm
 object_event_add
-(argument0,ev_alarm,10,"
+(argument0,ev_alarm,10,'
     local.xvel = -lengthdir_x(1,target_eye_yaw_var);
     local.yvel = -lengthdir_y(1,target_eye_yaw_var);
     if check_ray_scr(target_x_var,target_y_var,target_z_var+(target_var.coll_var[1]/2),local.xvel,local.yvel,0) > 32+(coll_var[2]/2)
@@ -323,13 +323,13 @@ object_event_add
         // Become visible
         event_user(14);
     }
-");
+');
 // Play Theme
 object_event_add
-(argument0,ev_alarm,11,"
+(argument0,ev_alarm,11,'
     mus_prio_var = theme_mus_prio_const;
     with mus_control_obj { event_user(0); }
-");
+');
 // Maybe scream?
 object_event_add
 (argument0,ev_alarm,12,'
@@ -404,6 +404,9 @@ object_event_add
     event_inherited();
     // Become visible
     event_user(14);
+    if alarm_arr[9,0] > 0 { set_alarm_scr(9,-1); }
+    if alarm_arr[12,0] > 0 { set_alarm_scr(12,-1); }
+    if seen_rage_var == 2 { rage_var = false; }
 ');
 // Hurt Event
 object_event_add
@@ -462,7 +465,7 @@ object_event_add
 ');
 // Teleport
 object_event_add
-(argument0,ev_other,ev_user15,"
+(argument0,ev_other,ev_user15,'
     // Originally anywhere in the room (0-1280 x 0-720 y)
     if type_var > 0
     {
@@ -496,10 +499,10 @@ object_event_add
     }
     // Become visible
     event_user(14);
-");
+');
 // Draw Event
 object_event_add
-(argument0,ev_draw,0,"
+(argument0,ev_draw,0,'
     if (on_var || visible_var) && (!possess_var || cam_id_var != view_current)
     {
         draw_set_color(image_blend); draw_set_alpha(image_alpha);
@@ -528,4 +531,4 @@ object_event_add
             // mp_grid_draw(grid_var);
         }
     }
-");
+');

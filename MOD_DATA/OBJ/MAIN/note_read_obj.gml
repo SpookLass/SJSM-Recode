@@ -20,8 +20,8 @@ object_event_add
         d3d_set_projection_ortho(0,0,view_wview[par_var.cam_id_var],view_hview[par_var.cam_id_var],0);
         d3d_set_hidden(false);
         local.scale = view_hview[par_var.cam_id_var]/720;
-        local.xtmp = (view_wview[par_var.cam_id_var]/2)-300;
-        local.ytmp = (view_hview[par_var.cam_id_var]/2)-340;
+        local.xtmp = (view_wview[par_var.cam_id_var]/2)-(300*local.scale);
+        local.ytmp = (view_hview[par_var.cam_id_var]/2)-(340*local.scale);
         draw_surface_ext(surf_var,local.xtmp,local.ytmp,local.scale,local.scale,0,image_blend,image_alpha);
         d3d_set_hidden(true);
     }

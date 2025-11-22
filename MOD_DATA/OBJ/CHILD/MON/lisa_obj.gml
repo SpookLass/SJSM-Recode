@@ -28,7 +28,15 @@ object_event_add
         }
     }
     wake_snd_var[2] = string_replace(ini_read_string("SUB","lisa","SUB_lisa"),"@n",name_var);
+    note_str_len_var = 6;
+    note_str_arr[0] = ini_read_string("NOTE","lisa_01","NOTE_lisa_01");
+    note_str_arr[1] = ini_read_string("NOTE","lisa_02","NOTE_lisa_02");
+    note_str_arr[2] = ini_read_string("NOTE","lisa_03","NOTE_lisa_03");
+    note_str_arr[3] = ini_read_string("NOTE","lisa_04","NOTE_lisa_04");
+    note_str_arr[4] = ini_read_string("NOTE","lisa_05","NOTE_lisa_05");
+    note_str_arr[5] = ini_read_string("NOTE","lisa_06","NOTE_lisa_06");
     ini_close();
+    // Main
     type_var = 0;
     spd_base_var = 0.1;
     spr_spd_var = 1;
@@ -66,9 +74,9 @@ object_event_add
     vis_phase_var = true;
     // Timing
     start_var = 17;
-    js_start_var = 3; // Gotta be 1 early because pain
+    js_start_var = 4;
     js_end_var = 15;
-    loop_start_var = 19;
+    loop_start_var = 19; // Gotta be 1 early because pain
     red_start_var = 4;
     red_end_var = 14;
     vis_phase_end_var = 21;
@@ -166,10 +174,10 @@ object_event_add
             cyan_rand_min_var = 55;
             cyan_rand_max_var = 155;
             zone_end_var = 16;
-            js_chance_var = 3;
+            js_chance_var = 2;
             // Timing
             start_var = 15;
-            js_start_var = 2; // Gotta be 1 early because pain
+            js_start_var = 3;
             js_end_var = 15;
             loop_start_var = 19; // Gotta be 1 early because pain
             red_start_var = 1;
@@ -201,9 +209,9 @@ object_event_add
             // Room stuffs
             start_var = 16;
             zone_end_var = 15;
-            js_start_var = 2; // Gotta be 1 early because pain
+            js_start_var = 3;
             js_end_var = 16;
-            loop_start_var = 19;
+            loop_start_var = 19; // Gotta be 1 early because pain
             red_start_var = 3;
             red_end_var = -1;
             red_rand_var = true;
@@ -239,6 +247,7 @@ object_event_add
         for (local.i=0; local.i<head_len_var; local.i+=1;)
         { d3d_model_destroy(head_mdl_arr[local.i]); }
         global.js_override_var = false;
+        global.note_override_var = false;
     }
     if zone_end_var > 0
     { zone_from_num_scr(global.zone_num_var); }
@@ -325,8 +334,6 @@ object_event_add
     global.js_override_var = true;
     if js_start_var > 0 && local.start >= js_start_var && local.start < js_end_var
     {
-        global.js_override_num_var = 1;
-        global.js_override_den_var = js_chance_var;
         with js_obj
         {
             store_tex_var = background_get_texture(other.js_bg_01_var);
@@ -336,16 +343,38 @@ object_event_add
             silent_var = true;
         }
     }
-    else
-    {
-        global.js_override_num_var = 0;
-        global.js_override_den_var = 1;
-        with js_obj { instance_destroy(); }
-    }
+    else  { with js_obj { instance_destroy(); }}
     if zone_end_var > 0 && local.start == zone_end_var
     {
         zone_from_num_scr(global.zone_num_var);
         with door_trig_obj { event_user(0); }
+    }
+');
+// Room End Event
+object_event_add
+(argument0,ev_other,ev_room_end,'
+    event_inherited();
+    local.start = dur_start_var-dur_var;
+    if js_start_var > 0 && local.start >= js_start_var && local.start < js_end_var
+    {
+        if instance_exists(note_obj)
+        {
+            with note_obj
+            { if read_var { other.note_var += 1; }}
+        }
+        global.note_override_var = true;
+        global.note_override_num_var = 1;
+        global.note_override_den_var = 1;
+        global.note_override_str_var = note_str_arr[mod_scr(note_var,note_str_len_var)];
+        global.js_override_num_var = 1;
+        global.js_override_den_var = js_chance_var;
+    }
+    else
+    {
+        if js_end_var > 0 && local.start == js_end_var
+        { global.note_override_var = false; }
+        global.js_override_num_var = 0;
+        global.js_override_den_var = 1;
     }
 ');
 // Delay Alarm

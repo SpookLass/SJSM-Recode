@@ -82,7 +82,7 @@ object_event_add
         base_dir_var += 180;
         jump_dir_var = -90;
         direction = base_dir_var;
-        dist_var = 0.05;
+        dist_var = 0.1;
         tex_w_var = -1;
         // Special
         delay_var = 10;
@@ -119,12 +119,38 @@ object_event_add
             x += lengthdir_x(32,base_dir_var-90);
             y += lengthdir_y(32,base_dir_var-90);
         }
+        // Note
+        if global.note_override_var
+        {
+            local.num = global.note_override_num_var;
+            local.den = global.note_override_den_var;
+        }
+        else
+        {
+            local.num = !instance_exists(enemy_par_obj);
+            local.den = 2;
+        }
+        if frac_chance_scr(local.num,local.den) && is_string(note_scr()) && !instance_exists(note_obj)
+        {
+            local.xtmp = x+lengthdir_x(w_var/2,base_dir_var-90);
+            local.ytmp = y+lengthdir_y(w_var/2,base_dir_var-90);
+            with instance_create(local.xtmp,local.ytmp,note_js_obj)
+            {
+                par_var = other.id;
+                z = other.z+(other.h_var/2)-(h_var/2);
+                other.note_var = id;
+                visible = false;
+            }
+        }
+        else { note_var = noone; }
     }
     else { instance_destroy(); }
 ');
 // Destroy
 object_event_add
 (argument0,ev_destroy,0,'
+    if note_var != 0 && instance_exists(note_var)
+    { with note_var { instance_destroy(); }}
     event_user(0);
 ');
 // Room end event
@@ -178,25 +204,57 @@ object_event_add
         direction = base_dir_var+jump_dir_var;
         set_alarm_scr(0,delay_var);
     }
+    if note_var != 0 && instance_exists(note_var)
+    {
+        with note_var
+        {
+            visible = true;
+            if other.rotate_var
+            {
+                direction = other.direction;
+                x = other.x+lengthdir_x(other.w_var/2,other.direction-90);
+                y = other.y+lengthdir_y(other.w_var/2,other.direction-90);
+            }
+        }
+        
+    }
 ');
 // Step Event
 object_event_add
-(argument0,ev_step,ev_step_normal,"
+(argument0,ev_step,ev_step_normal,'
     if alarm_arr[0,0] > 0
     {
         direction = lerp_scr(base_dir_var,base_dir_var+jump_dir_var,alarm_arr[0,0]/alarm_arr[0,1]);
+        if note_var != 0 && instance_exists(note_var)
+        {
+            with note_var
+            {
+                direction = other.direction;
+                x = other.x+lengthdir_x(other.w_var/2,other.direction-90);
+                y = other.y+lengthdir_y(other.w_var/2,other.direction-90);
+            }
+        }
     }
     if snd_3d_var && fmod_inst_is_play_scr(inst_var)
     { fmod_inst_set_3d_pos_scr(inst_var,x+lengthdir_x(w_var/2,direction-90),y+lengthdir_y(w_var/2,direction-90),z+(h_var/2)); }
-");
+');
 // Alarm
 object_event_add
-(argument0,ev_alarm,0,"
+(argument0,ev_alarm,0,'
     direction = base_dir_var;
-");
+    if note_var != 0 && instance_exists(note_var)
+    {
+        with note_var
+        {
+            direction = other.direction;
+            x = other.x+lengthdir_x(other.w_var/2,other.direction-90);
+            y = other.y+lengthdir_y(other.w_var/2,other.direction-90);
+        }
+    }
+');
 // Die
 object_event_add
-(argument0,ev_other,ev_user4,"
+(argument0,ev_other,ev_user4,'
     if !hit_var
     {
         hit_var = true;
@@ -206,5 +264,10 @@ object_event_add
         fmod_inst_stop_scr(inst_var);
         fmod_snd_play_scr(choose(card_01_snd,card_02_snd,card_03_snd,card_04_snd));
         hurt_target_var.violence_var += 1;
+        if note_var != 0 && instance_exists(note_var)
+        {
+            with note_var
+            { instance_destroy(); }
+        }
     }
-");
+');

@@ -17,7 +17,13 @@ object_event_add
     str_margin_y_var = 96;
     str_scale_var = 0.4;
     str_color_var = c_black;
-    story_var = true;
+    story_var = !global.note_override_var;
+    // Sound
+    snd_len_var = 4;
+    snd_arr[0] = paper_01_snd;
+    snd_arr[1] = paper_02_snd;
+    snd_arr[2] = paper_03_snd;
+    snd_arr[3] = paper_04_snd;
     // Surface
     surf_w_var = 600;
     surf_h_var = 680;
@@ -54,6 +60,8 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user2,'
     if read_var && story_var { global.note_var += 1; }
+    with note_read_obj { if par_var == other.id { instance_destroy(); }}
+    with trig_obj { if par_var == other.id { instance_destroy(); }}
     surface_free(surf_var);
 ');
 // Redraw Surface
@@ -85,7 +93,10 @@ object_event_add
         par_var = other.id;
         player_id_var = other.player_id_var;
         cam_id_var = other.cam_id_var;
+        image_blend = other.image_blend;
+        image_alpha = other.image_alpha;
     }
+    fmod_snd_play_scr(snd_arr[irandom(snd_len_var-1)]);
 ');
 // Put down note
 object_event_add
@@ -94,6 +105,7 @@ object_event_add
     trig_var.on_var = true;
     cam_id_var = -1;
     with note_read_obj { if par_var == other.id { instance_destroy(); }}
+    fmod_snd_play_scr(snd_arr[irandom(snd_len_var-1)]);
 ');
 // Draw Event
 object_event_add
