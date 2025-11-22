@@ -74,6 +74,8 @@ object_event_add
     // Dark
     fog_start_var = 2;
     fog_end_var = 128;
+    color_prio_var = 1;
+    fog_prio_var = 1;
     // Timing
     mark_start_var = 1;
     mark_chance_var = 3;
@@ -302,20 +304,25 @@ object_event_add
         }
         if local.start >= puke_start_var && frac_chance_scr(global.player_len_var,puke_chance_var) && instance_number(mon_par_obj) <= 1 && !do_atk_var
         { set_alarm_scr(8,irandom_range(puke_delay_min_var,puke_delay_max_var)); }
-        if local.start >= dark_start_var && frac_chance_scr(1,dark_chance_var) && !instance_exists(maze_dark_color_obj)
+        if local.start >= dark_start_var && frac_chance_scr(1,dark_chance_var)
         {
-            with (torch_obj) { on_var = false; }
-            with (color_par_obj) { instance_destroy(); }
-            with (fog_par_obj) { instance_destroy(); }
-            instance_create(0,0,dark_color_obj);
-            with instance_create(0,0,fog_par_obj)
+            with (torch_obj) { if !gold_var { on_var = false; }}
+            with color_par_obj { if prio_var < other.color_prio_var { instance_destroy(); }}
+            if !instance_exists(color_par_obj)
+            { with instance_create(0,0,dark_color_obj) { prio_var = other.color_prio_var; }}
+            with fog_par_obj { if prio_var < other.fog_prio_var { instance_destroy(); }}
+            if !instance_exists(fog_par_obj)
             {
-                fog_var = true;
-                fog_color_var = c_black;
-                fog_start_var = 2;
-                fog_end_var = 128;
-                fog_dark_var = true;
-                event_user(0);
+                with instance_create(0,0,fog_par_obj)
+                {
+                    prio_var = other.fog_prio_var;
+                    fog_var = true;
+                    fog_color_var = c_black;
+                    fog_start_var = 2;
+                    fog_end_var = 128;
+                    fog_dark_var = true;
+                    event_user(0);
+                }
             }
         }
         global.wall_bg_tex = sprite_get_texture(tex_spr_var,0);

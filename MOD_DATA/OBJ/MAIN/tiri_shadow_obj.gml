@@ -14,7 +14,7 @@ global.tiri_shadow_coll[2] = 24; // 16
 global.tiri_shadow_coll[0] = prop_to_coll_scr(5,'',global.tiri_shadow_coll[2],0,global.tiri_shadow_coll[1],true,8);
 // Create event
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
     event_inherited();
     solid_var = true;
     type_var = 5; // Billboard
@@ -30,10 +30,10 @@ object_event_add
     weapon_var = true;
     weapon_alarm_var = 6;
     alarm_len_var = 1;
-");
+');
 // Weapon
 object_event_add
-(argument0,ev_other,ev_user4,"
+(argument0,ev_other,ev_user4,'
     hp_var -= 1;
     if hp_var <= 0
     {
@@ -49,10 +49,21 @@ object_event_add
         set_alarm_scr(0,weapon_alarm_var);
     }
     fmod_snd_play_scr(choose(axe_hit_01_snd,axe_hit_02_snd));
-");
+');
 // Alarm
 object_event_add
-(argument0,ev_alarm,0,"
+(argument0,ev_alarm,0,'
     tex_var = store_tex_var;
     weapon_var = true;
-")
+');
+// Draw
+object_event_add
+(argument0,ev_draw,0,'
+    if global.fog_dark_var
+    {
+        d3d_set_fog(true,image_blend,0,0);
+        event_inherited();
+        d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var);
+    }
+    else { event_inherited(); }
+');

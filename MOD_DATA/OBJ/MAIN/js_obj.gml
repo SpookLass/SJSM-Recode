@@ -124,17 +124,17 @@ object_event_add
 ');
 // Destroy
 object_event_add
-(argument0,ev_destroy,0,"
+(argument0,ev_destroy,0,'
     event_user(0);
-");
+');
 // Room end event
 object_event_add
-(argument0,ev_other,ev_room_end,"
+(argument0,ev_other,ev_room_end,'
     event_user(0);
-");
+');
 // Delete background
 object_event_add
-(argument0,ev_other,ev_user0,"
+(argument0,ev_other,ev_user0,'
     if bg_load_var
     {
         background_delete(bg_01_var);
@@ -142,10 +142,10 @@ object_event_add
         fmod_snd_free_scr(snd_var);
         bg_load_var = false;
     }
-");
+');
 // Jumpscare!
 object_event_add
-(argument0,ev_other,ev_user1,"
+(argument0,ev_other,ev_user1,'
     visible = true;
     switch freeze_var
     {
@@ -178,7 +178,7 @@ object_event_add
         direction = base_dir_var+jump_dir_var;
         set_alarm_scr(0,delay_var);
     }
-");
+');
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,"

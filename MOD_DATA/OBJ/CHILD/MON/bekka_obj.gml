@@ -82,6 +82,8 @@ object_event_add
     dark_color_var = make_color_rgb(38,38,42);
     bright_var = false;
     exit_fade_alarm_var = 18;
+    color_prio_var = 2;
+    fog_prio_var = 2;
     // The door!
     enter_spawn_var = true;
     exit_spawn_var = false;
@@ -203,24 +205,31 @@ object_event_add
         }
     }
     // Make sure the room isnt golden
-    if dark_var && !instance_exists(maze_dark_color_obj)
+    if dark_var
     {
-        with (torch_obj) { on_var = false; }
-        with (color_par_obj) { instance_destroy(); }
-        with (fog_par_obj) { instance_destroy(); }
-        with instance_create(0,0,color_par_obj)
+        with (torch_obj) { if !gold_var { on_var = false; }}
+        with color_par_obj { if prio_var < other.color_prio_var { instance_destroy(); }}
+        if !instance_exists(color_par_obj)
         {
-            image_blend = other.dark_color_var;
-            event_perform(ev_create,0);
+            with instance_create(0,0,color_par_obj)
+            {
+                prio_var = other.color_prio_var;
+                image_blend = other.dark_color_var;
+                event_perform(ev_create,0);
+            }
         }
-        with instance_create(0,0,fog_par_obj)
+        with fog_par_obj { if prio_var < other.fog_prio_var { instance_destroy(); }}
+        if !instance_exists(fog_par_obj)
         {
-            fog_var = true;
-            fog_color_var = c_black;
-            fog_start_var = 2;
-            fog_end_var = 128;
-            fog_dark_var = true;
-            event_user(0);
+            with instance_create(0,0,fog_par_obj)
+            {
+                fog_var = true;
+                fog_color_var = c_black;
+                fog_start_var = 2;
+                fog_end_var = 128;
+                fog_dark_var = true;
+                event_user(0);
+            }
         }
     }
     // Spawn at exit
@@ -230,7 +239,7 @@ object_event_add
         // Mayas idea
         if derand_var { local.active = (dur_start_var-dur_var) mod exit_chance_var; }
         else { local.active = frac_chance_scr(1,exit_chance_var); }
-        if local.active && !instance_exists(maze_dark_color_obj)
+        if local.active
         {
             // Wait
             state_var = 1;

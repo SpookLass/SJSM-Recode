@@ -115,6 +115,8 @@ object_event_add
 	wall_end_var = 64;
 	fog_color_var = make_color_rgb(0,107,168);
 	door_var = false;
+	color_prio_var = 2;
+    fog_prio_var = 2;
 	// Teleport
 	tp_type_var = 1;
 	tp_alarm_min_var = 600;
@@ -311,32 +313,33 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_room_start,'
     event_inherited();
-	if !instance_exists(maze_dark_color_obj)
+	with color_par_obj { if prio_var < other.color_prio_var { instance_destroy(); }}
+	if !instance_exists(color_par_obj)
 	{
-		with color_par_obj { instance_destroy(); }
 		with instance_create(0,0,color_par_obj)
 		{
+			prio_var = other.color_prio_var
 			image_blend = other.eff_color_var;
 			event_user(0);
 		}
-		if !instance_exists(kh_fog_obj)
-        {
-            with fog_par_obj
-            { instance_destroy(); }
-            with instance_create(0,0,kh_fog_obj)
-            {
-                par_var = other.id;
-				fog_type_var = other.fog_type_var
-                fog_color_var = c_black;//other.fog_color_var;
-                fog_end_var = other.fog_end_var;
-                image_blend = other.fog_color_var;
-                image_alpha = other.wall_alpha_var;
-				wall_num_var = other.wall_num_var;
-				wall_start_var = other.wall_start_var;
-				wall_end_var = other.wall_end_var;
-                event_user(0);
-            }
-        }
+	}
+	with fog_par_obj { if prio_var < other.fog_prio_var { instance_destroy(); }}
+	if !instance_exists(fog_par_obj)
+	{
+		with instance_create(0,0,kh_fog_obj)
+		{
+			prio_var = other.fog_prio_var;
+			par_var = other.id;
+			fog_type_var = other.fog_type_var
+			fog_color_var = c_black;//other.fog_color_var;
+			fog_end_var = other.fog_end_var;
+			image_blend = other.fog_color_var;
+			image_alpha = other.wall_alpha_var;
+			wall_num_var = other.wall_num_var;
+			wall_start_var = other.wall_start_var;
+			wall_end_var = other.wall_end_var;
+			event_user(0);
+		}
 	}
 	if !instance_exists(kh_overlay_obj)
 	{

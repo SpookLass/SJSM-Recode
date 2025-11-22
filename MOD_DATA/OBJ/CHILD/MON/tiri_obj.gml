@@ -91,6 +91,8 @@ object_event_add
     do_fog_var = true;
     fog_color_01_var = eff_color_var;
     fog_color_02_var = c_teal;
+    color_prio_var = 2;
+    fog_prio_var = 3;
     // Shadows
     shadow_hp_var = 3;
     shadow_scale_var = 16;
@@ -179,7 +181,7 @@ object_event_add
 ");
 // Room Start Event
 object_event_add
-(argument0,ev_other,ev_room_start,"
+(argument0,ev_other,ev_room_start,'
     coward_var = false;
     event_inherited();
     // Shadow animals
@@ -198,6 +200,7 @@ object_event_add
                 h_var = other.shadow_scale_var;
                 tex_var = store_tex_var;
                 hp_var = other.shadow_hp_var;
+                image_blend = other.fog_color_01_var;
             }
             global.mark_arr[local.i,3] = true;
         }
@@ -214,30 +217,34 @@ object_event_add
             image_alpha = other.overlay_alpha_var;
         }
     }
-    // Make sure the room isn't golden
-    if !instance_exists(maze_dark_color_obj)
-    {
-        with (torch_obj) { on_var = false; }
-        with (color_par_obj) { instance_destroy(); }
+    // Color
+    with color_par_obj { if prio_var < other.color_prio_var { instance_destroy(); }}
+	if !instance_exists(color_par_obj)
+	{
         switch gay_var
         {
-            case 1: { instance_create(0,0,trans_color_obj); break; }
-            case 2: { instance_create(0,0,transfem_color_obj); break; }
+            case 1: { with instance_create(0,0,trans_color_obj) { prio_var = other.color_prio_var; } break; }
+            case 2: { with instance_create(0,0,transfem_color_obj) { prio_var = other.color_prio_var; } break; }
             default:
             {
                 with instance_create(0,0,color_par_obj)
                 {
+                    prio_var = other.color_prio_var;
                     image_blend = other.eff_color_var;
                     event_perform(ev_create,0);
                 }
                 break;
             }
         }
-        if do_fog_var
+    }
+    if do_fog_var
+    {
+        with fog_par_obj { if prio_var < other.fog_prio_var { instance_destroy(); }}
+        if !instance_exists(fog_par_obj)
         {
-            with (fog_par_obj) { instance_destroy(); }
             with instance_create(0,0,fog_par_obj)
             {
+                prio_var = other.fog_prio_var;
                 fog_var = true;
                 fog_color_var = other.fog_color_01_var;
                 fog_start_var = 2;
@@ -247,7 +254,7 @@ object_event_add
             }
         }
     }
-");
+');
 // Movement
 object_event_add
 (argument0,ev_other,ev_user0,"

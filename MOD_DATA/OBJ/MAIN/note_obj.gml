@@ -1,0 +1,102 @@
+// Builtin Variables
+object_set_depth(argument0,-2);
+object_set_mask(argument0,noone);
+object_set_parent(argument0,prop_par_obj);
+object_set_persistent(argument0,false);
+object_set_solid(argument0,false);
+object_set_sprite(argument0,noone);
+object_set_visible(argument0,true);
+// Create event
+object_event_add
+(argument0,ev_create,0,'
+    bg_var = note_bg;
+    cam_id_var = -1;
+    // String
+    str_var = note_scr();
+    str_margin_x_var = 30;
+    str_margin_y_var = 96;
+    str_scale_var = 0.4;
+    str_color_var = c_black;
+    story_var = true;
+    // Surface
+    surf_w_var = 600;
+    surf_h_var = 680;
+    surf_var = surface_create(surf_w_var,surf_h_var);
+    event_user(1);
+    store_tex_var = surface_get_texture(surf_var);
+    // Trigger
+    with instance_create(x,y,note_trig_obj)
+    {
+        par_var = other.id;
+        z = other.z;
+        str_var = "Read";
+        other.trig_var = id;
+    }
+    // Prop
+    event_inherited();
+    solid_var = false;
+    type_var = 4; // Floor
+    w_var = 3;
+    l_var = 4;
+    z += 0.1;
+');
+// Destroy Event
+object_event_add
+(argument0,ev_destroy,0,'
+    event_user(2);
+');
+// Room end event
+object_event_add
+(argument0,ev_other,ev_room_end,'
+    event_user(2);
+');
+// Delete Event
+object_event_add
+(argument0,ev_other,ev_user2,'
+    if read_var && story_var { global.note_var += 1; }
+    surface_free(surf_var);
+');
+// Redraw Surface
+object_event_add
+(argument0,ev_other,ev_user1,'
+    surface_set_target(surf_var);
+    draw_clear_alpha(c_black,0);
+    d3d_set_projection_ortho(0,0,surf_w_var,surf_h_var,0);
+    d3d_set_hidden(false);
+    d3d_set_fog(false,c_black,0,0);
+    draw_background_stretched(bg_var,0,0,surf_w_var,surf_h_var);
+    draw_set_color(str_color_var);
+    draw_text_ext_transformed(str_margin_x_var,str_margin_y_var,str_var,-1,(surf_w_var-(str_margin_x_var*2))/str_scale_var,str_scale_var,str_scale_var,0);
+    draw_set_color(c_white);
+    d3d_set_hidden(true);
+    d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var);
+    surface_reset_target();
+');
+// Pick up note
+object_event_add
+(argument0,ev_other,ev_user0,'
+    global.input_press_arr[interact_input_const,player_id_var] = 0;
+    trig_var.on_var = false;
+    read_var = true;
+    player_id_var = interact_target_var.player_id_var;
+    cam_id_var = interact_target_var.cam_id_var;
+    with instance_create(0,0,note_read_obj)
+    {
+        par_var = other.id;
+        player_id_var = other.player_id_var;
+        cam_id_var = other.cam_id_var;
+    }
+');
+// Put down note
+object_event_add
+(argument0,ev_other,ev_user3,'
+    global.input_press_arr[interact_input_const,player_id_var] = 0;
+    trig_var.on_var = true;
+    cam_id_var = -1;
+    with note_read_obj { if par_var == other.id { instance_destroy(); }}
+');
+// Draw Event
+object_event_add
+(argument0,ev_draw,0,'
+    if cam_id_var != view_current { event_inherited(); }
+');

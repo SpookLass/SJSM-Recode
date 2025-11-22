@@ -21,9 +21,16 @@ local.radius = global.player_crouch_coll[2]/2;
 global.player_crouch_coll[0] = p3dc_begin_mdl_scr();
 p3dc_add_cylinder_scr(-local.radius,-local.radius,global.player_crouch_coll[1]-0.01,local.radius,local.radius,0,true,8);
 p3dc_end_mdl_scr();
+// Door Trigger
+global.door_trig_coll[1] = 20;
+global.door_trig_coll[2] = 16;
+local.radius = global.door_trig_coll[2]/2;
+global.door_trig_coll[0] = p3dc_begin_mdl_scr();
+p3dc_add_block_scr(-local.radius,-local.radius,global.door_trig_coll[1],local.radius,local.radius,0,true,8);
+p3dc_end_mdl_scr();
 // Trigger
 global.trig_coll[1] = 20;
-global.trig_coll[2] = 16;
+global.trig_coll[2] = 24;
 local.radius = global.trig_coll[2]/2;
 global.trig_coll[0] = p3dc_begin_mdl_scr();
 p3dc_add_block_scr(-local.radius,-local.radius,global.trig_coll[1],local.radius,local.radius,0,true,8);

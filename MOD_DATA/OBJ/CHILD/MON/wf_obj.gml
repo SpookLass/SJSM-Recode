@@ -154,6 +154,8 @@ object_event_add
     loop_var = true;
     attack_stun_var = true;
     exit_spawn_var = true;
+    color_prio_var = 1;
+    fog_prio_var = 1;
     // Behavior
     if global.wf_type_var == -1 { local.type = irandom(8); }
     else { local.type = global.wf_type_var; }
@@ -459,25 +461,36 @@ object_event_add
             spr_var = other.eff_spr_var;
         }
     }
-    if do_fog_var && !instance_exists(maze_dark_color_obj)
+    if do_fog_var
     {
         with (fog_par_obj) { instance_destroy(); }
         with color_par_obj { instance_destroy(); }
         with torch_obj
         {
+            if !gold_var
+            {
+
+            }
             if other.no_fun_var { visible = false; }
             on_var = false;
         }
-        with instance_create(0,0,fog_par_obj)
+        with color_par_obj { if prio_var < other.color_prio_var { instance_destroy(); }}
+        if !instance_exists(color_par_obj)
+        { with instance_create(0,0,bright_color_obj) { prio_var = other.color_prio_var; }}
+        with fog_par_obj { if prio_var < other.fog_prio_var { instance_destroy(); }}
+        if !instance_exists(fog_par_obj)
         {
-            fog_var = true;
-            fog_color_var = c_black;
-            fog_start_var = 0;
-            fog_end_var = 96;
-            fog_dark_var = true;
-            event_user(0);
+            with instance_create(0,0,fog_par_obj)
+            {
+                prio_var = other.fog_prio_var;
+                fog_var = true;
+                fog_color_var = c_black;
+                fog_start_var = 0;
+                fog_end_var = 96;
+                fog_dark_var = true;
+                event_user(0);
+            }
         }
-        instance_create(0,0,bright_color_obj); 
     }
     if no_fun_var
     {

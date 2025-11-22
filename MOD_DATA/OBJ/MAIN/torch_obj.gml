@@ -19,7 +19,7 @@ object_event_add
     local.light.z += z;
     local.light.gold_var = gold_var;
     local.light.color_var = !gold_var;
-    local.light.torch_var = id;
+    local.light.par_var = id;
     if auto_var { event_perform(ev_other,ev_user0); }
     // Gold
     door_var = noone;
@@ -63,7 +63,7 @@ object_event_add
             local.light.z = other.z;
             local.light.gold_var = other.gold_var;
             local.light.color_var = !gold_var;
-            local.light.torch_var = other.id;
+            local.light.par_var = other.id;
         }
     }
     with floor_par_obj
@@ -81,7 +81,7 @@ object_event_add
             local.light.z = z;
             local.light.gold_var = other.gold_var;
             local.light.color_var = !gold_var;
-            local.light.torch_var = other.id;
+            local.light.par_var = other.id;
         }
     }
 ");

@@ -8,16 +8,18 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,false);
 // Create Event
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
     event_inherited();
     // Collision
-    coll_var[0] = global.trig_coll[0];
-    coll_var[1] = global.trig_coll[1];
-    coll_var[2] = global.trig_coll[2];
+    coll_var[0] = global.door_trig_coll[0];
+    coll_var[1] = global.door_trig_coll[1];
+    coll_var[2] = global.door_trig_coll[2];
     // Text
     do_txt_var = true;
-    txt_var = 'Open';
-    txt_lock_var = 'Locked.';
+    ini_open(global.lang_var)
+    txt_var = ini_read_string("UI","open","UI_open");
+    txt_lock_var = ini_read_string("UI","lock","UI_lock");
+    ini_close();
     shadow_off_var = 2;
     // Function
     rm_count_var = 1;
@@ -29,14 +31,14 @@ object_event_add
     }
     // Alarm
     alarm_len_var = 1;
-");
+');
 // Alarm 0 Event
 object_event_add
-(argument0,ev_alarm,0,"
+(argument0,ev_alarm,0,'
     if room_exists(rm_var) && rm_var != 0 { room_goto_scr(rm_var); }
-    else { show_error('Room '+string(rm_var)+' does not exist!',false); room_goto_scr(hall_01_rm); }
+    else { show_error("Room "+string(rm_var)+" does not exist!",false); room_goto_scr(hall_01_rm); }
     global.rm_count_var += rm_count_var;
-")
+')
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,'

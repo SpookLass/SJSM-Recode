@@ -88,10 +88,60 @@ object_event_add
 (argument0,ev_draw,0,'
     if view_current == par_var.cam_id_var && !global.hide_hud_var
     {
+        d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
+        d3d_set_hidden(false);
+        // TPS
+        if global.tps_hud_var
+        {
+            local.str = tps_str_var+": "+string(fps)+" | "+fps_str_var+": "+string(global.fps_curr_var);
+            draw_set_color(make_color_rgb(30,0,50));
+            draw_text_transformed(0,scale_var,local.str,scale_small_var,scale_small_var,0); // 106 138
+            draw_set_color(c_yellow);
+            draw_text_transformed(scale_var,0,local.str,scale_small_var,scale_small_var,0); // 107 137
+        }
+        // Monster Sub
+        if global.sub_var > 0
+        {
+            draw_set_halign(fa_center); draw_set_valign(fa_bottom);
+            local.index = noone;
+            if par_var.possess_var { local.index = par_var.mon_var; }
+            with echidna_obj
+            {
+                if id != local.index
+                {
+                    local.dist = point_distance_3d_scr(x,y,z,global.cam_x_var[view_current],global.cam_y_var[view_current],global.cam_z_var[view_current]);
+                    local.bool = false;
+                    if local.dist < snd_dist_max_var && fmod_inst_is_play_scr(snd_var)
+                    && string(sub_var[0]) != "0" && (sub_var[1] || global.sub_var > 1) 
+                    {
+                        local.bool = true;
+                        local.str = sub_var[0];
+                        draw_set_alpha(1-((local.dist-snd_dist_min_var)/(snd_dist_max_var-snd_dist_min_var)));
+                    }
+                    else if local.dist < loop_snd_dist_max_var && fmod_inst_is_play_scr(loop_inst_var)
+                    && string(loop_snd_var[2]) != "0" && (loop_snd_var[3] || global.sub_var > 1)
+                    {
+                        local.bool = true;
+                        local.str = loop_snd_var[2];
+                        draw_set_alpha(1-((local.dist-loop_snd_dist_min_var)/(loop_snd_dist_max_var-loop_snd_dist_min_var)));
+                    }
+                    if local.bool
+                    {
+                        local.dir = global.cam_yaw_var[view_current]-point_direction(x,y,global.cam_x_var[view_current],global.cam_y_var[view_current]);
+                        local.xtmp = other.center_var-lengthdir_x(other.sub_hor_var,local.dir-90);
+                        local.ytmp = other.sub_bottom_var-other.sub_vert_var+lengthdir_y(other.sub_vert_var,local.dir-90); // 624
+                        draw_set_color(make_color_rgb(30,0,50));
+                        draw_text_ext_transformed(local.xtmp-2,local.ytmp+2,local.str,-1,other.sub_w_var,other.scale_med_var,other.scale_med_var,0);
+                        draw_set_color(c_white);
+                        draw_text_ext_transformed(local.xtmp,local.ytmp,local.str,-1,other.sub_w_var,other.scale_med_var,other.scale_med_var,0);
+                    }
+                }
+            }
+            draw_set_halign(fa_left); draw_set_valign(fa_top); draw_set_alpha(1);
+        }
+        // Main
         if !par_var.dead_var
         {
-            d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
-            d3d_set_hidden(false);
             // Flare
             if par_var.flare_var > 0
             {
@@ -124,41 +174,6 @@ object_event_add
                 draw_set_color(c_white);
                 draw_set_blend_mode(bm_normal);
             }
-            // Monster Sub
-            if global.sub_var > 0
-            {
-                draw_set_halign(fa_center); draw_set_valign(fa_bottom);
-                with echidna_obj
-                {
-                    local.dist = point_distance_3d_scr(x,y,z,global.cam_x_var[view_current],global.cam_y_var[view_current],global.cam_z_var[view_current]);
-                    local.bool = false;
-                    if local.dist < snd_dist_max_var && fmod_inst_is_play_scr(snd_var)
-                    && string(sub_var[0]) != "0" && (sub_var[1] || global.sub_var > 1) 
-                    {
-                        local.bool = true;
-                        local.str = sub_var[0];
-                        draw_set_alpha(1-((local.dist-snd_dist_min_var)/(snd_dist_max_var-snd_dist_min_var)));
-                    }
-                    else if local.dist < loop_snd_dist_max_var && fmod_inst_is_play_scr(loop_inst_var)
-                    && string(loop_snd_var[2]) != "0" && (loop_snd_var[3] || global.sub_var > 1)
-                    {
-                        local.bool = true;
-                        local.str = loop_snd_var[2];
-                        draw_set_alpha(1-((local.dist-loop_snd_dist_min_var)/(loop_snd_dist_max_var-loop_snd_dist_min_var)));
-                    }
-                    if local.bool
-                    {
-                        local.dir = global.cam_yaw_var[view_current]-point_direction(x,y,global.cam_x_var[view_current],global.cam_y_var[view_current]);
-                        local.xtmp = other.center_var-lengthdir_x(other.sub_hor_var,local.dir-90);
-                        local.ytmp = other.sub_bottom_var-other.sub_vert_var+lengthdir_y(other.sub_vert_var,local.dir-90); // 624
-                        draw_set_color(make_color_rgb(30,0,50));
-                        draw_text_ext_transformed(local.xtmp-2,local.ytmp+2,local.str,-1,other.sub_w_var,other.scale_med_var,other.scale_med_var,0);
-                        draw_set_color(c_white);
-                        draw_text_ext_transformed(local.xtmp,local.ytmp,local.str,-1,other.sub_w_var,other.scale_med_var,other.scale_med_var,0);
-                    }
-                }
-                draw_set_halign(fa_left); draw_set_valign(fa_top); draw_set_alpha(1);
-            }
             // Health and Stamina bars
             if global.bar_hud_var != bar_hud_old_const
             {
@@ -176,15 +191,6 @@ object_event_add
                     draw_background_part_ext(bar_hp_ex_bg,background_get_width(bar_hp_ex_bg)-local.width,0,local.width,27,99*scale_var,62*scale_var,scale_var,scale_var,c_white,1);
                 }
                 draw_background_ext(bar_icon_bg,37*scale_var,34*scale_var,scale_var,scale_var,0,c_white,1);
-            }
-            // TPS
-            if global.tps_hud_var
-            {
-                local.str = tps_str_var+": "+string(fps)+" | "+fps_str_var+": "+string(global.fps_curr_var);
-                draw_set_color(make_color_rgb(30,0,50));
-                draw_text_transformed(0,scale_var,local.str,scale_small_var,scale_small_var,0); // 106 138
-                draw_set_color(c_yellow);
-                draw_text_transformed(scale_var,0,local.str,scale_small_var,scale_small_var,0); // 107 137
             }
             // Health counter
             switch (global.bar_hud_var)
@@ -289,9 +295,8 @@ Clear Time
     Clear Time: "+string(par_var.rm_clear_time_var)+"
 Taker
     Taker: "+string(par_var.alarm_arr[3,0])+" / "+string(par_var.alarm_arr[3,1])
-            draw_text_transformed(0,128*scale_var,local.str,scale_small_var,scale_small_var,0);
+                draw_text_transformed(0,128*scale_var,local.str,scale_small_var,scale_small_var,0);
             }
-            d3d_set_hidden(true);
         }
         else if par_var.possess_var
         {
@@ -378,7 +383,7 @@ Taker
                 draw_rectangle(0,0,view_wview[view_current],view_hview[view_current],false);
                 draw_set_color(c_white);
             }
-            d3d_set_hidden(true);
         }
+        d3d_set_hidden(true);
     }
 ');

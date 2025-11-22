@@ -68,6 +68,8 @@ object_event_add
     overlay_alpha_var = 0.5;
     fog_alpha_var = 0.5;
     start_var = 10;
+    color_prio_var = 2;
+    fog_prio_var = 2;
     // Silhoette
     sil_var = true;
     sil_type_var = 1; // Pure color
@@ -185,29 +187,29 @@ object_event_add
             image_alpha = other.fog_alpha_var*local.per;
         }
     }
-    if !instance_exists(maze_dark_color_obj)
-    {
-        with color_par_obj
-        { instance_destroy(); }
+    with color_par_obj { if prio_var < other.color_prio_var { instance_destroy(); }}
+	if !instance_exists(color_par_obj)
+	{
         with instance_create(0,0,color_par_obj)
         {
+            prio_var = other.color_prio_var
             image_blend = merge_color(c_white,other.dark_color_var,local.per);
             event_perform(ev_create,0);
         }
-        if !instance_exists(kh_fog_obj)
+    }
+    with fog_par_obj { if prio_var < other.fog_prio_var { instance_destroy(); }}
+	if !instance_exists(fog_par_obj)
+	{
+        with instance_create(0,0,kh_fog_obj)
         {
-            with fog_par_obj
-            { instance_destroy(); }
-            with instance_create(0,0,kh_fog_obj)
-            {
-                par_var = other.id;
-                fog_type_var = other.fog_type_var;
-                fog_color_var = c_black;//other.fog_color_var;
-                fog_end_var = lerp_scr(other.fog_dist_max_var,other.fog_dist_min_var,local.per);
-                image_blend = other.fog_color_var;
-                image_alpha = other.wall_alpha_var*local.per;
-                event_user(0);
-            }
+            prio_var = other.fog_prio_var;
+            par_var = other.id;
+            fog_type_var = other.fog_type_var;
+            fog_color_var = c_black;//other.fog_color_var;
+            fog_end_var = lerp_scr(other.fog_dist_max_var,other.fog_dist_min_var,local.per);
+            image_blend = other.fog_color_var;
+            image_alpha = other.wall_alpha_var*local.per;
+            event_user(0);
         }
     }
 ');

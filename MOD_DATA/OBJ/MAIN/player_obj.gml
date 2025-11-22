@@ -529,7 +529,7 @@ object_event_add
         // Possession
         if dead_var && !possess_var
         {
-            if global.input_press_arr[confirm_input_const,player_id_var]
+            if global.input_press_arr[interact_input_const,player_id_var]
             {
                 with mon_par_obj
                 {

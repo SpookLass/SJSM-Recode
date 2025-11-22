@@ -26,7 +26,7 @@ object_event_add
 // Alarm 0
 object_event_add
 (argument0,ev_alarm,0,'
-    if torch_var.on_var
+    if par_var.on_var
     {
         local.part = part_add_scr
         (

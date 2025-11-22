@@ -81,6 +81,7 @@ object_event_add
     cyan_max_var = 255;
     cyan_rand_min_var = 51;
     cyan_rand_max_var = 178.5;
+    color_prio_var = 3;
     // Assets
         // Search for existing assets to save memory
     with object_index
@@ -284,34 +285,40 @@ object_event_add
     }
     if loop_start_var > 0 && local.start >= loop_start_var
     { door_trig_obj.rm_count_var = 0; }
-    if red_start_var > 0 && local.start >= red_start_var && !instance_exists(maze_dark_color_obj)
+    if red_start_var > 0 && local.start >= red_start_var
     {
-        with color_par_obj { instance_destroy(); }
-        if red_end_var > red_start_var && local.start < red_end_var
+        with color_par_obj { if prio_var < other.color_prio_var { instance_destroy(); }}
+        if !instance_exists(color_par_obj)
         {
-            local.per = (local.start-red_start_var)/(red_end_var-red_start_var);
-            local.cyan = round(lerp_scr(cyan_max_var,cyan_min_var,local.per));
-            with instance_create(0,0,color_par_obj)
+            if red_end_var > red_start_var && local.start < red_end_var
             {
-                image_blend = make_color_rgb(255,local.cyan,local.cyan);
-                event_perform(ev_create,0);
+                local.per = (local.start-red_start_var)/(red_end_var-red_start_var);
+                local.cyan = round(lerp_scr(cyan_max_var,cyan_min_var,local.per));
+                with instance_create(0,0,color_par_obj)
+                {
+                    prio_var = other.color_prio_var;
+                    image_blend = make_color_rgb(255,local.cyan,local.cyan);
+                    event_perform(ev_create,0);
+                }
             }
-        }
-        else if red_rand_var
-        {
-            local.cyan = round(lerp_scr(cyan_rand_min_var,cyan_rand_max_var,random(1)));
-            with instance_create(0,0,color_par_obj)
+            else if red_rand_var
             {
-                image_blend = make_color_rgb(255,local.cyan,local.cyan);
-                event_perform(ev_create,0);
+                local.cyan = round(lerp_scr(cyan_rand_min_var,cyan_rand_max_var,random(1)));
+                with instance_create(0,0,color_par_obj)
+                {
+                    prio_var = other.color_prio_var;
+                    image_blend = make_color_rgb(255,local.cyan,local.cyan);
+                    event_perform(ev_create,0);
+                }
             }
-        }
-        else
-        {
-            with instance_create(0,0,color_par_obj)
+            else
             {
-                image_blend = make_color_rgb(255,other.cyan_min_var,other.cyan_min_var);
-                event_perform(ev_create,0);
+                with instance_create(0,0,color_par_obj)
+                {
+                    prio_var = other.color_prio_var;
+                    image_blend = make_color_rgb(255,other.cyan_min_var,other.cyan_min_var);
+                    event_perform(ev_create,0);
+                }
             }
         }
     }
