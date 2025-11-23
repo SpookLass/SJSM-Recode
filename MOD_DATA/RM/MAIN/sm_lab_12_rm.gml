@@ -1,7 +1,7 @@
 /*
 Argument 0: Room Variable (same for all rooms)
 */
-// Spawn spots// Name
+// Spawn spots
 room_set_code
 (
     argument0,"

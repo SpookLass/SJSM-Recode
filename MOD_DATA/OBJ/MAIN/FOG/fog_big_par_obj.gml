@@ -9,13 +9,8 @@ object_set_visible(argument0,true);
 // Create event
 object_event_add
 (argument0,ev_create,0,'
-    fog_var = true;
-    fog_color_var = c_black;
-    fog_base_start_var = 80;
-    fog_base_end_var = 320;
-    fog_start_var = fog_base_start_var; // OG: 32, HD: 106.r6
+    fog_start_var = fog_base_start_var;
     fog_end_var = fog_base_end_var; // OG: 200, HD: 320?
-    fog_dark_var = true;
     event_inherited();
 ');
 // Draw event
