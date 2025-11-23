@@ -8,7 +8,7 @@ room_set_code
     "
     // Name
     ini_open(global.lang_var);
-	global.rm_name_var = ini_read_string('ROOM','thin','ROOM_thin')+' 2';
+	global.rm_name_var = ini_read_string('ROOM','thin','ROOM_thin')+' 2 '+ini_read_string('ROOM','old','ROOM_old');
 	ini_close();
     global.spawn_len_var = 2;
     // Spawn 0 (entrance)

@@ -8,7 +8,7 @@ room_set_code
     "
     // Name
     ini_open(global.lang_var);
-	global.rm_name_var = ini_read_string('ROOM','thin','ROOM_thin')+' 7';
+	global.rm_name_var = ini_read_string('ROOM','thin','ROOM_thin')+' 7 '+ini_read_string('ROOM','old','ROOM_old');
 	ini_close();
     global.spawn_len_var = 2;
     // Spawn 0 (entrance)
@@ -23,13 +23,13 @@ room_set_code
     // Marks (Slime spawners)
     global.mark_len_var = 0;
     global.mark_arr[0,0] = 248;
-    global.mark_arr[0,1] = 226;
+    global.mark_arr[0,1] = 222;
     global.mark_arr[0,2] = 0;
     global.mark_arr[1,0] = 225;
-    global.mark_arr[1,1] = 293;
+    global.mark_arr[1,1] = 289;
     global.mark_arr[1,2] = 0;
     global.mark_arr[2,0] = 256;
-    global.mark_arr[2,1] = 321;
+    global.mark_arr[2,1] = 317;
     global.mark_arr[2,2] = 0;
     // 3D Draw
     d3d_start();
@@ -102,35 +102,35 @@ room_instance_add(argument0,272,400,ceil_low_obj);
 room_instance_add(argument0,240,400,ceil_low_obj);
 room_instance_add(argument0,208,400,ceil_low_obj);
 // Walls (Horizontal)
-room_instance_add(argument0,176,132,wall_hor_obj);
-room_instance_add(argument0,208,132,wall_hor_obj);
-room_instance_add(argument0,240,132,wall_hor_obj);
-room_instance_add(argument0,176,156,wall_hor_obj);
-room_instance_add(argument0,208,156,wall_hor_obj);
-room_instance_add(argument0,272,196,wall_hor_obj);
-room_instance_add(argument0,208,220,wall_hor_obj);
-room_instance_add(argument0,208,412,wall_hor_obj);
-room_instance_add(argument0,240,412,wall_hor_obj);
-room_instance_add(argument0,272,412,wall_hor_obj);
+room_instance_add(argument0,176,136,wall_hor_obj);
+room_instance_add(argument0,208,136,wall_hor_obj);
+room_instance_add(argument0,240,136,wall_hor_obj);
+room_instance_add(argument0,176,152,wall_hor_obj);
+room_instance_add(argument0,208,152,wall_hor_obj);
+room_instance_add(argument0,272,200,wall_hor_obj);
+room_instance_add(argument0,208,216,wall_hor_obj);
+room_instance_add(argument0,208,408,wall_hor_obj);
+room_instance_add(argument0,240,408,wall_hor_obj);
+room_instance_add(argument0,272,408,wall_hor_obj);
 // Walls (Vertical)
 room_instance_add(argument0,160,144,wall_vert_obj);
-room_instance_add(argument0,224,172,wall_vert_obj);
-room_instance_add(argument0,224,204,wall_vert_obj);
-room_instance_add(argument0,256,148,wall_vert_obj);
-room_instance_add(argument0,256,180,wall_vert_obj);
-room_instance_add(argument0,192,236,wall_vert_obj);
-room_instance_add(argument0,192,268,wall_vert_obj);
-room_instance_add(argument0,192,300,wall_vert_obj);
-room_instance_add(argument0,192,332,wall_vert_obj);
-room_instance_add(argument0,192,364,wall_vert_obj);
-room_instance_add(argument0,192,396,wall_vert_obj);
-room_instance_add(argument0,288,212,wall_vert_obj);
-room_instance_add(argument0,288,244,wall_vert_obj);
-room_instance_add(argument0,288,276,wall_vert_obj);
-room_instance_add(argument0,288,308,wall_vert_obj);
-room_instance_add(argument0,288,340,wall_vert_obj);
-room_instance_add(argument0,288,372,wall_vert_obj);
-room_instance_add(argument0,288,404,wall_vert_obj);
+room_instance_add(argument0,256,152,wall_vert_obj);
+room_instance_add(argument0,256,184,wall_vert_obj);
+room_instance_add(argument0,224,168,wall_vert_obj);
+room_instance_add(argument0,224,200,wall_vert_obj);
+room_instance_add(argument0,288,216,wall_vert_obj);
+room_instance_add(argument0,288,248,wall_vert_obj);
+room_instance_add(argument0,288,280,wall_vert_obj);
+room_instance_add(argument0,192,232,wall_vert_obj);
+room_instance_add(argument0,192,264,wall_vert_obj);
+room_instance_add(argument0,192,296,wall_vert_obj);
+room_instance_add(argument0,192,328,wall_vert_obj);
+room_instance_add(argument0,192,360,wall_vert_obj);
+room_instance_add(argument0,192,392,wall_vert_obj);
+room_instance_add(argument0,288,312,wall_vert_obj);
+room_instance_add(argument0,288,344,wall_vert_obj);
+room_instance_add(argument0,288,376,wall_vert_obj);
+room_instance_add(argument0,288,408,wall_vert_obj);
 // Props
-room_instance_add(argument0,208,236,chair_rand_obj);
-room_instance_add(argument0,211,261,chair_rand_obj);
+room_instance_add(argument0,208,232,chair_rand_obj);
+room_instance_add(argument0,211,257,chair_rand_obj);
