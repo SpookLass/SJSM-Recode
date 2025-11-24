@@ -488,15 +488,15 @@ object_event_add
     // Text Stretch
     time_var = (time_var+global.true_delta_time_var) mod 80;
     str_scale_var = 0.8+(cos(2*time_var*pi/80)*0.2);
-    // Lerp
-    local.target_scroll = -96*button_state_var;
-    local.scroll_diff = abs(local.target_scroll-scroll_var);
-    local.scroll_rate = max(scroll_min_var,local.scroll_diff*scroll_rate_var)*global.true_delta_time_var;
-    scroll_var += min(local.scroll_diff,local.scroll_rate)*sign(local.target_scroll-scroll_var);
     // Scroll
     if global.input_press_arr[up_input_const,0] { button_state_var -= 1; }
     if global.input_press_arr[down_input_const,0] { button_state_var += 1; }
     button_state_var = mod_scr(button_state_var,button_len_var);
+    // Lerp
+    local.target_scroll = -96*median(2,button_len_var-2,button_state_var);
+    local.scroll_diff = abs(local.target_scroll-scroll_var);
+    local.scroll_rate = max(scroll_min_var,local.scroll_diff*scroll_rate_var)*global.true_delta_time_var;
+    scroll_var += min(local.scroll_diff,local.scroll_rate)*sign(local.target_scroll-scroll_var);
     // Confirm
     if global.input_press_arr[confirm_input_const,0]
     {
@@ -549,7 +549,7 @@ object_event_add
                     button_arr[button_state_var,0] = mod_scr
                     (
                         button_arr[button_state_var,0]-button_arr[button_state_var,6],
-                        button_arr[button_state_var,7]+1
+                        button_arr[button_state_var,7]-button_arr[button_state_var,6]+1
                     )+button_arr[button_state_var,6];
                 }
                 else
@@ -648,7 +648,7 @@ object_event_add
                     button_arr[button_state_var,0] = mod_scr
                     (
                         button_arr[button_state_var,0]-button_arr[button_state_var,6],
-                        button_arr[button_state_var,7]+1
+                        button_arr[button_state_var,7]-button_arr[button_state_var,6]+1
                     )+button_arr[button_state_var,6];
                 }
                 else
@@ -748,6 +748,7 @@ object_event_add
             draw_set_color(c_yellow);
             draw_text_transformed(96,local.ytmp,button_arr[local.i,1],0.75,0.75,0);
             
+            local.str = 0;
             switch button_arr[local.i,3]
             {
                 case 0: { local.str = string(button_arr[local.i,button_arr[local.i,0]+9]); break; }
@@ -760,9 +761,8 @@ object_event_add
                     local.str = string(button_arr[local.i,0]);
                     break;
                 }
-                default: { local.str = "0"; break; }
             }
-            if local.str != "0"
+            if is_string(local.str)
             {
                 draw_set_color(str_bg_select_color_var);
                 draw_text_transformed(496,local.ytmp+4,local.str,0.75,0.75,0);
@@ -781,6 +781,7 @@ object_event_add
     draw_text_transformed(local.xtmp,local.ytmp,button_arr[button_state_var,1],str_scale_var,0.75,0);
     draw_set_halign(fa_left); 
     
+    local.str = 0;
     switch button_arr[button_state_var,3]
     {
         case 0: { local.str = string(button_arr[button_state_var,button_arr[button_state_var,0]+9]); break; }
@@ -793,9 +794,8 @@ object_event_add
             local.str = string(button_arr[button_state_var,0]);
             break;
         }
-        default: { local.str = "0"; break; }
     }
-    if local.str != "0"
+    if is_string(local.str)
     {
         draw_set_color(str_bg_select_color_var);
         draw_text_transformed(496,local.ytmp+4,local.str,0.75,0.75,0);

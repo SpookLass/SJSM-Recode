@@ -10,7 +10,7 @@ object_set_visible(argument0,false);
 object_event_add
 (argument0,ev_create,0,"
     // I'm gonna                                  !
-    if frac_chance_scr(1,3333) && !instance_exists(mon_par_obj)
+    if frac_chance_scr(1,33333) && !instance_exists(mon_par_obj)
     {
         instance_create(3,3,w_mus_obj);
         with player_obj

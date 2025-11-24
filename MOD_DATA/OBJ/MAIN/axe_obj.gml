@@ -144,7 +144,7 @@ object_event_add
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,'
-    if view_current == par_var.cam_id_var 
+    if view_current == par_var.cam_id_var && par_var.on_var && !par_var.dead_var
     {
         d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
         d3d_set_hidden(false);

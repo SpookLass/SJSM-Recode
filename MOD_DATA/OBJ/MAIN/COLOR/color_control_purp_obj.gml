@@ -9,8 +9,24 @@ object_set_visible(argument0,false);
 // Create event
 object_event_add
 (argument0,ev_create,0,"
+    // I'm gonna                                  !
+    if frac_chance_scr(1,33333) && !instance_exists(mon_par_obj)
+    {
+        instance_create(3,3,w_mus_obj);
+        with player_obj
+        {
+            local.eff = instance_create(3,3,w_eff_obj);
+            local.eff.par_var = id;
+            local.player = id;
+            with hud_obj
+            {
+                if par_var == local.player
+                { par_var = local.eff; }
+            }
+        }
+    }
     // I'm gonna plusinate!
-    if current_month == 6 && !irandom(31)
+    else if current_month == 6 && !irandom(31)
     { instance_create(0,0,global.pride_arr[irandom(global.pride_len_var-1)]); }
     else if !irandom(63)
     {

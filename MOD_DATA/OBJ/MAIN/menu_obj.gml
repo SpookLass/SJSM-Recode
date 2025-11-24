@@ -240,30 +240,304 @@ object_event_add
     button_str_arr[3,4] = ini_read_string("MENU","custom","MENU_custom");
     button_str_arr[3,5] = ini_read_string("MENU","customize","MENU_customize");
     button_str_arr[3,6] = back_str_var;
-        // Ditto (Customize)
-    button_str_arr[4,0] = ini_read_string("MENU","crouch","MENU_crouch");
-    button_str_arr[4,1] = ini_read_string("MENU","jump","MENU_jump");
-    button_str_arr[4,2] = ini_read_string("MENU","stam_per","MENU_stam_per");
-    button_str_arr[4,3] = ini_read_string("MENU","fall","MENU_fall");
-    button_str_arr[4,4] = ini_read_string("MENU","lock","MENU_lock");
-    button_str_arr[4,5] = ini_read_string("MENU","dmg_shake","MENU_dmg_shake");
-    button_str_arr[4,6] = ini_read_string("MENU","mult_type","MENU_mult_type");
-    button_str_arr[4,7] = ini_read_string("MENU","mult_min","MENU_mult_min");
-    button_str_arr[4,8] = ini_read_string("MENU","mult_max","MENU_mult_max");
-    button_str_arr[4,9] = ini_read_string("MENU","mult_start","MENU_mult_start");
-    button_str_arr[4,10] = ini_read_string("MENU","mult_end","MENU_mult_end");
-    button_str_arr[4,11] = ini_read_string("MENU","mult_type","MENU_mult_type");
-    button_str_arr[4,12] = ini_read_string("MENU","count_min","MENU_count_min");
-    button_str_arr[4,13] = ini_read_string("MENU","count_max","MENU_count_max");
-    button_str_arr[4,14] = ini_read_string("MENU","count_start","MENU_count_start");
-    button_str_arr[4,15] = ini_read_string("MENU","count_end","MENU_count_end");
-    button_str_arr[4,16] = ini_read_string("MENU","dupe","MENU_dupe");
-    button_str_arr[4,17] = ini_read_string("MENU","chance","MENU_chance");
-    button_str_arr[4,18] = ini_read_string("MENU","chance_mult","MENU_chance_mult");
-    button_str_arr[4,19] = ini_read_string("MENU","type","MENU_type");
-    button_str_arr[4,20] = back_str_var;
     	//Load Saves
 	button_str_arr[6,0] = back_str_var;
+    // Custom
+        // Ditto (Customize)
+    custom_button_len_var = 0;
+        /*
+        Default Values start at 9 plus the max value to prevent array conflicts. Max value is assumed 0 if not clamped
+        If no value is specified, the first value is assumed default
+        */
+        // Crouch
+    custom_button_arr[custom_button_len_var,1] = ini_read_string("MENU","crouch","MENU_crouch"); // Label
+    custom_button_arr[custom_button_len_var,2] = "Temp"; // Description
+    custom_button_arr[custom_button_len_var,3] = 0; // Type (Enum / Boolean)
+    custom_button_arr[custom_button_len_var,4] = true; // Wrap Value
+    custom_button_arr[custom_button_len_var,5] = true; // Max Value (min is always -1)
+    custom_button_arr[custom_button_len_var,6] = "crouch"; // Global variable to modify
+    custom_button_arr[custom_button_len_var,7] = false; // Behavior / Difficulty
+    custom_button_arr[custom_button_len_var,8] = off_str_var; // Text for options (start at 0)
+    custom_button_arr[custom_button_len_var,9] = on_str_var;
+    custom_button_arr[custom_button_len_var,10] = "true"; // Recode
+    custom_button_arr[custom_button_len_var,11] = "false"; // OG
+    custom_button_arr[custom_button_len_var,12] = "false"; // HD
+    custom_button_len_var += 1;
+        // Jump
+    custom_button_arr[custom_button_len_var,1] = ini_read_string("MENU","jump","MENU_jump");
+    custom_button_arr[custom_button_len_var,2] = "Temp"; // Description
+    custom_button_arr[custom_button_len_var,3] = 0; // Type (Enum / Boolean)
+    custom_button_arr[custom_button_len_var,4] = true; // Wrap Value
+    custom_button_arr[custom_button_len_var,5] = true; // Max Value (min is always -1)
+    custom_button_arr[custom_button_len_var,6] = "jump"; // Global variable to modify
+    custom_button_arr[custom_button_len_var,7] = false; // Behavior / Difficulty
+    custom_button_arr[custom_button_len_var,8] = off_str_var; // Text for options (start at 0)
+    custom_button_arr[custom_button_len_var,9] = on_str_var;
+    custom_button_arr[custom_button_len_var,10] = "true"; // Recode
+    custom_button_arr[custom_button_len_var,11] = "false"; // OG
+    custom_button_arr[custom_button_len_var,12] = "false"; // HD
+    custom_button_len_var += 1;
+        // Stamina Persist
+    custom_button_arr[custom_button_len_var,1] = ini_read_string("MENU","stam_per","MENU_stam_per");
+    custom_button_arr[custom_button_len_var,2] = "Temp"; // Description
+    custom_button_arr[custom_button_len_var,3] = 0; // Type (Enum / Boolean)
+    custom_button_arr[custom_button_len_var,4] = true; // Wrap Value
+    custom_button_arr[custom_button_len_var,5] = true; // Max Value (min is always -1)
+    custom_button_arr[custom_button_len_var,6] = "stam_per"; // Global variable to modify
+    custom_button_arr[custom_button_len_var,7] = true; // Behavior / Difficulty
+    custom_button_arr[custom_button_len_var,8] = off_str_var; // Text for options (start at 0)
+    custom_button_arr[custom_button_len_var,9] = on_str_var;
+    custom_button_arr[custom_button_len_var,10] = "false"; // Default
+    custom_button_arr[custom_button_len_var,11] = "false"; // OG
+    custom_button_arr[custom_button_len_var,12] = "false"; // HD
+    custom_button_arr[custom_button_len_var,13] = "false"; // Easiest
+    custom_button_arr[custom_button_len_var,14] = "false"; // Easy
+    custom_button_arr[custom_button_len_var,15] = "false"; // Normal
+    custom_button_arr[custom_button_len_var,16] = "true"; // Hard
+    custom_button_arr[custom_button_len_var,17] = "true"; // Hardest
+    custom_button_arr[custom_button_len_var,18] = "true"; // :)
+    custom_button_len_var += 1;
+        // Fall
+    custom_button_arr[custom_button_len_var,1] = ini_read_string("MENU","fall","MENU_fall");
+    custom_button_arr[custom_button_len_var,2] = "Temp"; // Description
+    custom_button_arr[custom_button_len_var,3] = 0; // Type (Enum / Boolean)
+    custom_button_arr[custom_button_len_var,4] = true; // Wrap Value
+    custom_button_arr[custom_button_len_var,5] = true; // Max Value (min is always -1)
+    custom_button_arr[custom_button_len_var,6] = "fall"; // Global variable to modify
+    custom_button_arr[custom_button_len_var,7] = true; // Behavior / Difficulty
+    custom_button_arr[custom_button_len_var,8] = off_str_var; // Text for options (start at 0)
+    custom_button_arr[custom_button_len_var,9] = on_str_var;
+    custom_button_arr[custom_button_len_var,10] = "false"; // Default
+    custom_button_arr[custom_button_len_var,11] = "false"; // OG
+    custom_button_arr[custom_button_len_var,12] = "false"; // HD
+    custom_button_arr[custom_button_len_var,13] = "false"; // Easiest
+    custom_button_arr[custom_button_len_var,14] = "false"; // Easy
+    custom_button_arr[custom_button_len_var,15] = "false"; // Normal
+    custom_button_arr[custom_button_len_var,16] = "false"; // Hard
+    custom_button_arr[custom_button_len_var,17] = "true"; // Hardest
+    custom_button_arr[custom_button_len_var,18] = "true"; // :)
+    custom_button_len_var += 1;
+        // Lock
+    custom_button_arr[custom_button_len_var,1] = ini_read_string("MENU","lock","MENU_lock");
+    custom_button_arr[custom_button_len_var,2] = "Temp"; // Description
+    custom_button_arr[custom_button_len_var,3] = 0; // Type (Enum / Boolean)
+    custom_button_arr[custom_button_len_var,4] = true; // Wrap Value
+    custom_button_arr[custom_button_len_var,5] = 3; // Max Value (min is always -1)
+    custom_button_arr[custom_button_len_var,6] = "lock"; // Global variable to modify
+    custom_button_arr[custom_button_len_var,7] = true; // Behavior / Difficulty
+    custom_button_arr[custom_button_len_var,8] = off_str_var; // Text for options (start at 0)
+    custom_button_arr[custom_button_len_var,9] = alone_str_var;
+    custom_button_arr[custom_button_len_var,10] = on_str_var;
+    custom_button_arr[custom_button_len_var,11] = evil_str_var;
+    custom_button_arr[custom_button_len_var,12] = "2"; // Default
+    custom_button_arr[custom_button_len_var,13] = "3"; // OG (Not Gold)
+    custom_button_arr[custom_button_len_var,14] = "3"; // HD (Not Gold)
+    custom_button_arr[custom_button_len_var,15] = "false"; // Easiest (never)
+    custom_button_arr[custom_button_len_var,16] = "1"; // Easy (only alone)
+    custom_button_arr[custom_button_len_var,17] = "2"; // Normal
+    custom_button_arr[custom_button_len_var,18] = "2"; // Hard
+    custom_button_arr[custom_button_len_var,19] = "2"; // Hardest
+    custom_button_arr[custom_button_len_var,20] = "3"; // :) (Not Gold)
+    custom_button_len_var += 1;
+        // Damage Shake
+    custom_button_arr[custom_button_len_var,1] = ini_read_string("MENU","dmg_shake","MENU_dmg_shake");
+    custom_button_arr[custom_button_len_var,2] = "Temp"; // Description
+    custom_button_arr[custom_button_len_var,3] = 0; // Type (Enum / Boolean)
+    custom_button_arr[custom_button_len_var,4] = true; // Wrap Value
+    custom_button_arr[custom_button_len_var,5] = true; // Max Value (min is always -1)
+    custom_button_arr[custom_button_len_var,6] = "dmg_shake"; // Global variable to modify
+    custom_button_arr[custom_button_len_var,7] = true; // Behavior / Difficulty
+    custom_button_arr[custom_button_len_var,8] = off_str_var; // Text for options (start at 0)
+    custom_button_arr[custom_button_len_var,9] = on_str_var;
+    custom_button_arr[custom_button_len_var,10] = "false"; // Default
+    custom_button_arr[custom_button_len_var,11] = "true"; // OG
+    custom_button_arr[custom_button_len_var,12] = "false"; // HD
+    custom_button_arr[custom_button_len_var,13] = "false"; // Easiest
+    custom_button_arr[custom_button_len_var,14] = "false"; // Easy
+    custom_button_arr[custom_button_len_var,15] = "false"; // Normal
+    custom_button_arr[custom_button_len_var,16] = "false"; // Hard
+    custom_button_arr[custom_button_len_var,17] = "true"; // Hardest
+    custom_button_arr[custom_button_len_var,18] = "true"; // :)
+    custom_button_len_var += 1;
+        // Multi Type
+    custom_button_arr[custom_button_len_var,1] = ini_read_string("MENU","mult_type","MENU_mult_type");
+    custom_button_arr[custom_button_len_var,2] = "Temp"; // Description
+    custom_button_arr[custom_button_len_var,3] = 0; // Type (Enum / Boolean)
+    custom_button_arr[custom_button_len_var,4] = true; // Wrap Value
+    custom_button_arr[custom_button_len_var,5] = 3; // Max Value (min is always -1)
+    custom_button_arr[custom_button_len_var,6] = "mult_type"; // Global variable to modify
+    custom_button_arr[custom_button_len_var,7] = true; // Behavior / Difficulty
+    custom_button_arr[custom_button_len_var,8] = max_str_var; // Text for options (start at 0)
+    custom_button_arr[custom_button_len_var,9] = min_str_var;
+    custom_button_arr[custom_button_len_var,10] = taper_str_var;
+    custom_button_arr[custom_button_len_var,11] = always_str_var;
+    custom_button_arr[custom_button_len_var,12] = "0"; // Default
+    custom_button_arr[custom_button_len_var,13] = "1"; // OG
+    custom_button_arr[custom_button_len_var,14] = "0"; // HD
+    custom_button_arr[custom_button_len_var,15] = "1"; // Easiest
+    custom_button_arr[custom_button_len_var,16] = "1"; // Easy
+    custom_button_arr[custom_button_len_var,17] = "0"; // Normal
+    custom_button_arr[custom_button_len_var,18] = "0"; // Hard
+    custom_button_arr[custom_button_len_var,19] = "3"; // Hardest
+    custom_button_arr[custom_button_len_var,20] = "3"; // :)
+    custom_button_len_var += 1;
+        // Multichase min
+    custom_button_arr[custom_button_len_var,1] = ini_read_string("MENU","mult_min","MENU_mult_min");
+    custom_button_arr[custom_button_len_var,2] = "Temp"; // Description
+    custom_button_arr[custom_button_len_var,3] = 1; // Type (Number)
+    custom_button_arr[custom_button_len_var,4] = false; // Wrap Value
+    custom_button_arr[custom_button_len_var,6] = "mult_min"; // Global variable to modify
+    custom_button_arr[custom_button_len_var,7] = true; // Behavior / Difficulty
+    custom_button_arr[custom_button_len_var,8] = off_str_var; // Text for options (start at 0)
+    custom_button_arr[custom_button_len_var,9] = "1"; // Default
+    custom_button_arr[custom_button_len_var,12] = "0"; // Easiest
+    custom_button_arr[custom_button_len_var,17] = "5"; // :)
+    custom_button_len_var += 1;
+        // Multichase max
+    custom_button_arr[custom_button_len_var,1] = ini_read_string("MENU","mult_max","MENU_mult_max");
+    custom_button_arr[custom_button_len_var,2] = "Temp"; // Description
+    custom_button_arr[custom_button_len_var,3] = 1; // Type (Number)
+    custom_button_arr[custom_button_len_var,4] = false; // Wrap Value
+    custom_button_arr[custom_button_len_var,6] = "mult_max"; // Global variable to modify
+    custom_button_arr[custom_button_len_var,7] = true; // Behavior / Difficulty
+    custom_button_arr[custom_button_len_var,8] = off_str_var; // Text for options (start at 0)
+    custom_button_arr[custom_button_len_var,9] = "5"; // Default
+    custom_button_arr[custom_button_len_var,12] = "0"; // Easiest
+    custom_button_arr[custom_button_len_var,17] = "5"; // :)
+    custom_button_len_var += 1;
+        // Multichase start
+    custom_button_arr[custom_button_len_var,1] = ini_read_string("MENU","mult_start","MENU_mult_start");
+    custom_button_arr[custom_button_len_var,2] = "Temp"; // Description
+    custom_button_arr[custom_button_len_var,3] = 1; // Type (Number)
+    custom_button_arr[custom_button_len_var,4] = false; // Wrap Value
+    custom_button_arr[custom_button_len_var,6] = "mult_start"; // Global variable to modify
+    custom_button_arr[custom_button_len_var,7] = true; // Behavior / Difficulty
+    custom_button_arr[custom_button_len_var,9] = "0"; // Default
+    custom_button_len_var += 1;
+        // Multichase end
+    custom_button_arr[custom_button_len_var,1] = ini_read_string("MENU","mult_end","MENU_mult_end");
+    custom_button_arr[custom_button_len_var,2] = "Temp"; // Description
+    custom_button_arr[custom_button_len_var,3] = 1; // Type (Number)
+    custom_button_arr[custom_button_len_var,4] = false; // Wrap Value
+    custom_button_arr[custom_button_len_var,6] = "mult_end"; // Global variable to modify
+    custom_button_arr[custom_button_len_var,7] = true; // Behavior / Difficulty
+    custom_button_arr[custom_button_len_var,9] = "1000"; // Default
+    custom_button_len_var += 1;
+        // Count type
+    custom_button_arr[custom_button_len_var,1] = ini_read_string("MENU","count_type","MENU_count_type");
+    custom_button_arr[custom_button_len_var,2] = "Temp"; // Description
+    custom_button_arr[custom_button_len_var,3] = 0; // Type (Enum / Boolean)
+    custom_button_arr[custom_button_len_var,4] = true; // Wrap Value
+    custom_button_arr[custom_button_len_var,5] = 4; // Max Value (min is always -1)
+    custom_button_arr[custom_button_len_var,6] = "count_type"; // Global variable to modify
+    custom_button_arr[custom_button_len_var,7] = true; // Behavior / Difficulty
+    custom_button_arr[custom_button_len_var,8] = rand_str_var; // Text for options (start at 0)
+    custom_button_arr[custom_button_len_var,9] = max_str_var;
+    custom_button_arr[custom_button_len_var,10] = min_str_var;
+    custom_button_arr[custom_button_len_var,11] = taper_str_var;
+    custom_button_arr[custom_button_len_var,12] = taper_str_var+" "+rand_str_var;
+    custom_button_arr[custom_button_len_var,13] = "0"; // Default
+    custom_button_arr[custom_button_len_var,14] = "1"; // OG
+    custom_button_arr[custom_button_len_var,15] = "2"; // HD
+    custom_button_arr[custom_button_len_var,16] = "1"; // Easiest
+    custom_button_arr[custom_button_len_var,17] = "1"; // Easy
+    custom_button_arr[custom_button_len_var,18] = "0"; // Normal
+    custom_button_arr[custom_button_len_var,19] = "2"; // Hard
+    custom_button_arr[custom_button_len_var,20] = "2"; // Hardest
+    custom_button_arr[custom_button_len_var,21] = "2"; // :)
+    custom_button_len_var += 1;
+        // Count min
+    custom_button_arr[custom_button_len_var,1] = ini_read_string("MENU","count_min","MENU_count_min");
+    custom_button_arr[custom_button_len_var,2] = "Temp"; // Description
+    custom_button_arr[custom_button_len_var,3] = 1; // Type (Number)
+    custom_button_arr[custom_button_len_var,4] = false; // Wrap Value
+    custom_button_arr[custom_button_len_var,6] = "count_min"; // Global variable to modify
+    custom_button_arr[custom_button_len_var,7] = true; // Behavior / Difficulty
+    custom_button_arr[custom_button_len_var,8] = off_str_var; // Text for options (start at 0)
+    custom_button_arr[custom_button_len_var,9] = "0"; // Default
+    custom_button_arr[custom_button_len_var,12] = "20"; // Easiest
+    custom_button_arr[custom_button_len_var,17] = "0"; // :)
+    custom_button_len_var += 1;
+        // Count max
+    custom_button_arr[custom_button_len_var,1] = ini_read_string("MENU","count_max","MENU_count_max");
+    custom_button_arr[custom_button_len_var,2] = "Temp"; // Description
+    custom_button_arr[custom_button_len_var,3] = 1; // Type (Number)
+    custom_button_arr[custom_button_len_var,4] = false; // Wrap Value
+    custom_button_arr[custom_button_len_var,6] = "count_max"; // Global variable to modify
+    custom_button_arr[custom_button_len_var,7] = true; // Behavior / Difficulty
+    custom_button_arr[custom_button_len_var,8] = off_str_var; // Text for options (start at 0)
+    custom_button_arr[custom_button_len_var,9] = "20"; // Default
+    custom_button_arr[custom_button_len_var,12] = "20"; // Easiest
+    custom_button_arr[custom_button_len_var,17] = "0"; // :)
+    custom_button_len_var += 1;
+        // Count start
+    custom_button_arr[custom_button_len_var,1] = ini_read_string("MENU","count_start","MENU_count_start");
+    custom_button_arr[custom_button_len_var,2] = "Temp"; // Description
+    custom_button_arr[custom_button_len_var,3] = 1; // Type (Number)
+    custom_button_arr[custom_button_len_var,4] = false; // Wrap Value
+    custom_button_arr[custom_button_len_var,6] = "count_start"; // Global variable to modify
+    custom_button_arr[custom_button_len_var,7] = true; // Behavior / Difficulty
+    custom_button_arr[custom_button_len_var,9] = "0"; // Default
+    custom_button_len_var += 1;
+        // Count end
+    custom_button_arr[custom_button_len_var,1] = ini_read_string("MENU","count_end","MENU_count_end");
+    custom_button_arr[custom_button_len_var,2] = "Temp"; // Description
+    custom_button_arr[custom_button_len_var,3] = 1; // Type (Number)
+    custom_button_arr[custom_button_len_var,4] = false; // Wrap Value
+    custom_button_arr[custom_button_len_var,6] = "count_end"; // Global variable to modify
+    custom_button_arr[custom_button_len_var,7] = true; // Behavior / Difficulty
+    custom_button_arr[custom_button_len_var,9] = "1000"; // Default
+    custom_button_len_var += 1;
+        // Dupe
+    custom_button_arr[custom_button_len_var,1] = ini_read_string("MENU","dupe","MENU_dupe");
+    custom_button_arr[custom_button_len_var,2] = "Temp"; // Description
+    custom_button_arr[custom_button_len_var,3] = 0; // Type (Enum / Boolean)
+    custom_button_arr[custom_button_len_var,4] = true; // Wrap Value
+    custom_button_arr[custom_button_len_var,5] = 2; // Max Value (min is always -1)
+    custom_button_arr[custom_button_len_var,6] = "dupe"; // Global variable to modify
+    custom_button_arr[custom_button_len_var,7] = true; // Behavior / Difficulty
+    custom_button_arr[custom_button_len_var,8] = always_str_var; // Text for options (start at 0)
+    custom_button_arr[custom_button_len_var,9] = canon_str_var;
+    custom_button_arr[custom_button_len_var,10] = never_str_var;
+    custom_button_arr[custom_button_len_var,11] = "dupe_canon_const"; // Default
+    custom_button_arr[custom_button_len_var,12] = "dupe_always_const"; // OG
+    custom_button_arr[custom_button_len_var,13] = "dupe_always_const"; // HD
+    custom_button_arr[custom_button_len_var,14] = "dupe_never_const"; // Easiest
+    custom_button_arr[custom_button_len_var,15] = "dupe_canon_const"; // Easy
+    custom_button_arr[custom_button_len_var,16] = "dupe_canon_const"; // Normal
+    custom_button_arr[custom_button_len_var,17] = "dupe_canon_const"; // Hard
+    custom_button_arr[custom_button_len_var,18] = "dupe_always_const"; // Hardest
+    custom_button_arr[custom_button_len_var,19] = "dupe_always_const"; // :)
+    custom_button_len_var += 1;
+        // Chance
+    custom_button_arr[custom_button_len_var,1] = ini_read_string("MENU","chance","MENU_chance");
+    custom_button_arr[custom_button_len_var,2] = "Temp"; // Description
+    custom_button_arr[custom_button_len_var,3] = 1; // Type (Number)
+    custom_button_arr[custom_button_len_var,4] = false; // Wrap Value
+    custom_button_arr[custom_button_len_var,6] = "mon_chance"; // Global variable to modify
+    custom_button_arr[custom_button_len_var,7] = true; // Behavior / Difficulty
+    custom_button_arr[custom_button_len_var,9] = "mon_chance_const"; // Default
+    custom_button_len_var += 1;
+        // Chance Mult
+    custom_button_arr[custom_button_len_var,1] = ini_read_string("MENU","chance_mult","MENU_chance_mult");
+    custom_button_arr[custom_button_len_var,2] = "Temp"; // Description
+    custom_button_arr[custom_button_len_var,3] = 1; // Type (Number)
+    custom_button_arr[custom_button_len_var,4] = false; // Wrap Value
+    custom_button_arr[custom_button_len_var,6] = "mon_chance_mult"; // Global variable to modify
+    custom_button_arr[custom_button_len_var,7] = true; // Behavior / Difficulty
+    custom_button_arr[custom_button_len_var,9] = "mon_chance_mult_const"; // Default
+    custom_button_len_var += 1;
+        // Behavior
+    custom_button_arr[custom_button_len_var,1] = ini_read_string("MENU","type","MENU_type");
+    custom_button_arr[custom_button_len_var,3] = -1; // Type (Behavior)
+    custom_button_len_var += 1;
+        // Back
+    custom_button_arr[custom_button_len_var,1] = back_str_var;
+    custom_button_arr[custom_button_len_var,3] = -2; // Type (Back)
+    custom_button_len_var += 1;
+        // Defaults
+    for (local.i=0; local.i<custom_button_len_var; local.i+=1)
+    { custom_button_arr[local.i,0] = -1; }
     // Behavior
         // Defaults
     type_button_len_var = 34;
@@ -549,6 +823,7 @@ object_event_add
 	menuscroll_focal_var = 0;
 
     // Sorry menuscroll, youre getting REPLACED
+    do_scroll_focal_var = true;
     scroll_var = 0;
     scroll_rate_var = 0.2;
     scroll_min_var = 0.5;
@@ -563,26 +838,6 @@ object_event_add
 	save_custom_var = false;
 	save_rm_var = hall_01_rm;
 	
-    save_crouch_var = -1;
-    save_jump_var = -1;
-	save_stam_per_var=-1;
-	save_fall_var=-1;
-	save_lock_var=-1;
-	save_dmg_shake_var=-1;
-	save_mult_type_var=-1;
-	save_mult_min_var=-1;
-	save_mult_max_var=-1;
-	save_mult_start_var=-1;
-	save_mult_end_var=-1;
-	save_count_type_var=-1;
-	save_count_min_var=-1;
-	save_count_max_var=-1;
-	save_count_start_var=-1;
-	save_count_end_var=-1;
-    save_dupe_var = -1;
-    save_chance_var = -1;
-    save_chance_mult_var = -1;
-	
 	save_type_var=0;
 	for (local.i=0; local.i<type_button_len_var-1; local.i+=1;)
     { type_button_arr[local.i,0] = -1; }
@@ -594,7 +849,6 @@ object_event_add
 	ds_list_read(global.save_list,ini_read_string("SAVES","SAVES","2F01000000000000"));
 
 	ini_close();
-	
 ');
 // Room End
 object_event_add
@@ -691,25 +945,8 @@ object_event_add
 						save_custom_var = false;
 						save_room = hall_01_rm;
 						
-                        save_crouch_var = -1;
-                        save_jump_var = -1;
-						save_stam_per_var=-1;
-						save_fall_var=-1;
-						save_lock_var=-1;
-						save_dmg_shake_var=-1;
-						save_mult_type_var=-1;
-						save_mult_min_var=-1;
-						save_mult_max_var=-1;
-						save_mult_start_var=-1;
-						save_mult_end_var=-1;
-						save_count_type_var=-1;
-						save_count_min_var=-1;
-						save_count_max_var=-1;
-						save_count_start_var=-1;
-						save_count_end_var=-1;
-						save_dupe_var = -1;
-                        save_chance_var = -1;
-                        save_mon_chance_var = -1;
+                        for (local.i=0; local.i<custom_button_len_var; local.i+=1)
+                        { custom_button_arr[local.i,0] = -1; }
 						
 						save_type_var=0;
 						for (local.i=0; local.i<type_button_len_var-1; local.i+=1;)
@@ -773,16 +1010,6 @@ object_event_add
 			
 			if subbgalpha_var < 1
 			subbgalpha_var += (0.04*global.true_delta_time_var);
-			
-			if button_state_var < (menuscroll_focal_var-1)
-			menuscroll_focal_var -= 1;
-			
-			if button_state_var > (menuscroll_focal_var+1)
-			menuscroll_focal_var += 1;
-			
-			menuscroll_var = 96*(menuscroll_focal_var-2);
-			menuscroll_lerp_var = menuscroll_lerp_var + (menuscroll_var - menuscroll_lerp_var) * (0.2*global.true_delta_time_var)
-			
             // Text Stretch
             time_var = (time_var+global.true_delta_time_var) mod 80;
             str_scale_var = 0.8+(cos(2*time_var*pi/80)*0.2);
@@ -790,6 +1017,17 @@ object_event_add
             if global.input_press_arr[up_input_const,0] { button_state_var -= 1; }
             if global.input_press_arr[down_input_const,0] { button_state_var += 1; }
             button_state_var = mod_scr(button_state_var,7);
+            // Lerp
+            if do_scroll_focal_var
+            {
+                scroll_focal_var = median(button_state_var-2,button_state_var+2,scroll_focal_var);
+                local.state = scroll_focal_var
+            }
+            else { local.state = button_state_var; }
+            local.target_scroll = -96*median(0,2,local.state-2);
+            local.scroll_diff = abs(local.target_scroll-scroll_var);
+            local.scroll_rate = max(scroll_min_var,local.scroll_diff*scroll_rate_var)*global.true_delta_time_var;
+            scroll_var += min(local.scroll_diff,local.scroll_rate)*sign(local.target_scroll-scroll_var);
             // Confirm
             if global.input_press_arr[confirm_input_const,0]
             {
@@ -823,91 +1061,37 @@ object_event_add
 					}
                 }
             }
-			
-			if global.input_press_arr[left_input_const,0]
-			{
-				switch button_state_var
+			if global.input_press_arr[left_input_const,0] || global.input_press_arr[right_input_const,0]
+            {
+                local.add = (global.input_press_arr[right_input_const,0] > 0)-(global.input_press_arr[left_input_const,0] > 0);
+                switch button_state_var
 				{
-					// mode
-					case 1:
-					{
-						save_mode_var -= 1;
-						
-						if save_mode_var < 0
-						save_mode_var = 2;
-						break;
-					}
-					
-					case 2:
-					{
-						save_diff_var -= 1;
-						
-						if save_diff_var < 0
-						save_diff_var = 4;
-						break;
-					}
-					
-					case 3:
-					{
-						save_type_var -= 1;
-						
-						if save_type_var < 0
-						save_type_var = 2;
-						break;
-					}
-					
-					case 4:
-					{
-						save_custom_var -= 1;
-						
-						if save_custom_var < 0
-						save_custom_var = 1;
-						break;
-					}
-				}
-			}
-			if global.input_press_arr[right_input_const,0]
-			{
-				switch button_state_var
-				{
-					// mode
-					case 1:
-					{
-						save_mode_var += 1;
-						
-						if save_mode_var > 2
-						save_mode_var = 0;
-						break;
-					}
-					
-					case 2:
-					{
-						save_diff_var += 1;
-						
-						if save_diff_var > 4
-						save_diff_var = 0;
-						break;
-					}
-					
-					case 3:
-					{
-						save_type_var += 1;
-						
-						if save_type_var > 2
-						save_type_var = 0;
-						break;
-					}
-					
-					case 4:
-					{
-						save_custom_var += 1;
-						
-						if save_custom_var > 1
-						save_custom_var = 0;
-						break;
-					}
-				}
-			}
+                    case 1:
+                    {
+                        save_mode_var = mod_scr(save_mode_var+local.add,3);
+                        break;
+                    }
+                    case 2:
+                    {
+                        if save_custom_var { local.md = 6; }
+                        else { local.md = 5; }
+                        save_diff_var = mod_scr(save_diff_var+local.add,local.md);
+                        break;
+                    }
+                    case 3:
+                    {
+                        save_type_var = mod_scr(save_type_var+local.add,3);
+                        break;
+                    }
+                    case 4:
+                    {
+                        save_custom_var = mod_scr(save_custom_var+local.add,2);
+                        if !save_custom_var && save_diff_var == 5
+                        { save_diff_var = mod_scr(save_diff_var,5); }
+                        break;
+                    }
+                }
+            }
 			break;
         }
         case 4: // Customize
@@ -917,145 +1101,88 @@ object_event_add
 			
 			if subbgalpha_var < 1
 			subbgalpha_var += (0.04*global.true_delta_time_var);
-			
-			if button_state_var < (menuscroll_focal_var-1)
-			menuscroll_focal_var -= 1;
-			
-			if button_state_var > (menuscroll_focal_var+1)
-			menuscroll_focal_var += 1;
-			
-			menuscroll_var = 96*(menuscroll_focal_var-2);
-			menuscroll_lerp_var = menuscroll_lerp_var + (menuscroll_var - menuscroll_lerp_var) * (0.2*global.true_delta_time_var);
             // Text Stretch
             time_var = (time_var+global.true_delta_time_var) mod 80;
             str_scale_var = 0.8+(cos(2*time_var*pi/80)*0.2);
             // Scroll
             if global.input_press_arr[up_input_const,0] { button_state_var -= 1; }
             if global.input_press_arr[down_input_const,0] { button_state_var += 1; }
-            button_state_var = mod_scr(button_state_var,21);
+            button_state_var = mod_scr(button_state_var,custom_button_len_var);
+            // Lerp
+            if do_scroll_focal_var
+            {
+                scroll_focal_var = median(button_state_var-2,button_state_var+2,scroll_focal_var);
+                local.state = scroll_focal_var
+            }
+            else { local.state = button_state_var; }
+            local.target_scroll = -96*median(0,custom_button_len_var-5,local.state-2);
+            local.scroll_diff = abs(local.target_scroll-scroll_var);
+            local.scroll_rate = max(scroll_min_var,local.scroll_diff*scroll_rate_var)*global.true_delta_time_var;
+            scroll_var += min(local.scroll_diff,local.scroll_rate)*sign(local.target_scroll-scroll_var);
             // Confirm
             if global.input_press_arr[confirm_input_const,0]
             {
-                switch button_state_var
+                switch custom_button_arr[button_state_var,3]
                 {
-                    case 7: // Multichase (minimum)
+                    case -2: // Back
                     {
-                        save_mult_min_var =  max(-2,get_integer("Chase Min",save_mult_min_var));
-                        global.input_arr[confirm_input_const,0] = 0; // Prevent persistent control issues
+                        state_var = 3;
+                        event_user(0);
                         break;
                     }
-                    case 8: // Multichase (maximum)
-                    {
-                        save_mult_max_var =  max(-2,get_integer("Chase Max",save_mult_max_var));
-                        global.input_arr[confirm_input_const,0] = 0;
-                        break;
-                    }
-                    case 9: // Multichase Start
-                    {
-                        save_mult_start_var =  max(-1,get_integer("Chase Start",save_mult_start_var));
-                        global.input_arr[confirm_input_const,0] = 0;
-                        break;
-                    }
-                    case 10: // Multichase End
-                    {
-                        save_mult_end_var =  max(-1,get_integer("Chase End",save_mult_end_var));
-                        global.input_arr[confirm_input_const,0] = 0;
-                        break;
-                    }
-                    case 12: // Count (minimum)
-                    {
-                        save_count_min_var = max(-1,get_integer("Count Min",save_count_min_var));
-                        global.input_arr[confirm_input_const,0] = 0;
-                        break;
-                    }
-                    case 13: // Count (maximum)
-                    {
-                        save_count_max_var = max(-1,get_integer("Count Max",save_count_max_var));
-                        global.input_arr[confirm_input_const,0] = 0;
-                        break;
-                    }
-                    case 14: // Count Start
-                    {
-                        save_count_start_var =  max(-1,get_integer("Count Start",save_count_start_var));
-                        global.input_arr[confirm_input_const,0] = 0;
-                        break;
-                    }
-                    case 15: // Count End
-                    {
-                        save_count_end_var =  max(-1,get_integer("Count End",save_count_end_var));
-                        global.input_arr[confirm_input_const,0] = 0;
-                        break;
-                    }
-                    case 17: // Monster Chance
-                    {
-                        save_chance_var =  max(-1,get_integer("Spawn Chance",save_chance_var));
-                        global.input_arr[confirm_input_const,0] = 0;
-                        break;
-                    }
-                    case 18: // Monster Chance Multiplier
-                    {
-                        save_chance_mult_var =  max(-1,get_integer("Spawn Chance",save_chance_mult_var));
-                        global.input_arr[confirm_input_const,0] = 0;
-                        break;
-                    }
-                    case 19: // Behavior
+                    case -1: // Behavior
                     {
                         state_var = 5;
                         event_user(0);
                         break;
                     }
-                    case 20: // Back
-					{
-						state_var = 3;
-                        event_user(0);
-						break;
-					}
+                    case 0: // Enum
+                    {
+                        custom_button_arr[button_state_var,0] += 1;
+                        if custom_button_arr[button_state_var,4]
+                        { 
+                            custom_button_arr[button_state_var,0] = mod_scr
+                            (
+                                custom_button_arr[button_state_var,0]+1,
+                                custom_button_arr[button_state_var,5]+2
+                            )-1;
+                        }
+                        else { custom_button_arr[button_state_var,0] = median(custom_button_arr[button_state_var,0],-1,custom_button_arr[button_state_var,5]); }
+                        break;
+                    }
+                    case 1: // Number
+                    {
+                        custom_button_arr[button_state_var,0] = max(get_integer(custom_button_arr[button_state_var,2],custom_button_arr[button_state_var,0]),-1);
+                        global.input_arr[confirm_input_const,0] = 0;
+                        break;
+                    }
                 }
             }
-            // Directions
-            if global.input_press_arr[left_input_const,0] == 1 || global.input_press_arr[right_input_const,0] == 1
+            if global.input_press_arr[left_input_const,0] || global.input_press_arr[right_input_const,0]
             {
-                local.add = (global.input_press_arr[right_input_const,0] == 1)-(global.input_press_arr[left_input_const,0] == 1);
-                switch button_state_var
+                local.add = (global.input_press_arr[right_input_const,0] > 0)-(global.input_press_arr[left_input_const,0] > 0);
+                switch custom_button_arr[button_state_var,3]
                 {
-                    case 0: // Crouch
-                    { save_crouch_var = mod_scr(save_crouch_var+1+local.add,3)-1; break; }
-                    case 1: // Jump
-                    { save_jump_var = mod_scr(save_jump_var+1+local.add,3)-1; break; }
-                    case 2: // Persistent Stamina
-                    { save_stam_per_var = mod_scr(save_stam_per_var+1+local.add,3)-1; break; }
-                    case 3: // Fall
-                    { save_fall_var = mod_scr(save_fall_var+1+local.add,3)-1; break; }
-                    case 4: // Lock
-                    { save_lock_var = mod_scr(save_lock_var+1+local.add,5)-1; break; }
-                    case 5: // Damage Shake
-                    { save_dmg_shake_var = mod_scr(save_dmg_shake_var+1+local.add,3)-1; break; }
-                    case 6: // Multichase Type
-                    { save_mult_type_var = mod_scr(save_mult_type_var+1+local.add,5)-1; break; }
-                    case 7: // Multichase (minimum)
-                    { save_mult_min_var =  max(-2,save_mult_min_var+local.add); break; }
-                    case 8: // Multichase (maximum)
-                    { save_mult_max_var =  max(-2,save_mult_max_var+local.add); break; }
-                    case 9: // Multichase Start
-                    { save_mult_start_var =  max(-1,save_mult_start_var+local.add); break; }
-                    case 10: // Multichase End
-                    { save_mult_end_var =  max(-1,save_mult_end_var+local.add); break; }
-                    case 11: // Count Type
-                    { save_count_type_var = mod_scr(save_count_type_var+1+local.add,6)-1; break; }
-                    case 12: // Count (minimum)
-                    { save_count_min_var = max(-1,save_count_min_var+local.add); break; }
-                    case 13: // Count (maximum)
-                    { save_count_max_var = max(-1,save_count_max_var+local.add); break; }
-                    case 14: // Count Start
-                    { save_count_start_var =  max(-1,save_count_start_var+local.add); break; }
-                    case 15: // Count End
-                    { save_count_end_var =  max(-1,save_count_end_var+local.add); break; }
-                    case 16: // Dupe
-                    { save_dupe_var = mod_scr(save_dupe_var+1+local.add,4)-1; break; }
-                    case 17: // Monster Chance
-                    { save_chance_var =  max(-1,save_chance_var+local.add); break; }
-                    case 18: // Monster Chance Multiplier
-                    { save_chance_mult_var =  max(-1,save_chance_mult_var+local.add); break; }
+                    case 0:
+                    {
+                        custom_button_arr[button_state_var,0] += local.add;
+                        if custom_button_arr[button_state_var,4]
+                        { 
+                            custom_button_arr[button_state_var,0] = mod_scr
+                            (
+                                custom_button_arr[button_state_var,0]+1,
+                                custom_button_arr[button_state_var,5]+2
+                            )-1;
+                        }
+                        else { custom_button_arr[button_state_var,0] = median(custom_button_arr[button_state_var,0],-1,custom_button_arr[button_state_var,5]); }
+                        break;
+                    }
+                    case 1: 
+                    {
+                        custom_button_arr[button_state_var,0] += local.add;
+                        custom_button_arr[button_state_var,0] = max(custom_button_arr[button_state_var,0],-1);
+                        break;
+                    }
                 }
             }
             break;
@@ -1070,15 +1197,21 @@ object_event_add
             // Text Stretch
             time_var = (time_var+global.true_delta_time_var) mod 80;
             str_scale_var = 0.8+(cos(2*time_var*pi/80)*0.2);
-            // Lerp
-            local.target_scroll = -96*button_state_var;
-            local.scroll_diff = abs(local.target_scroll-scroll_var);
-            local.scroll_rate = max(scroll_min_var,local.scroll_diff*scroll_rate_var)*global.true_delta_time_var;
-            scroll_var += min(local.scroll_diff,local.scroll_rate)*sign(local.target_scroll-scroll_var);
             // Scroll
             if global.input_press_arr[up_input_const,0] { button_state_var -= 1; }
             if global.input_press_arr[down_input_const,0] { button_state_var += 1; }
             button_state_var = mod_scr(button_state_var,type_button_len_var);
+            // Lerp
+            if do_scroll_focal_var
+            {
+                scroll_focal_var = median(button_state_var-2,button_state_var+2,scroll_focal_var);
+                local.state = scroll_focal_var
+            }
+            else { local.state = button_state_var; }
+            local.target_scroll = -96*median(0,type_button_len_var-5,local.state-2);
+            local.scroll_diff = abs(local.target_scroll-scroll_var);
+            local.scroll_rate = max(scroll_min_var,local.scroll_diff*scroll_rate_var)*global.true_delta_time_var;
+            scroll_var += min(local.scroll_diff,local.scroll_rate)*sign(local.target_scroll-scroll_var);
             // Confirm
             if global.input_press_arr[confirm_input_const,0] && button_state_var == type_button_len_var-1
             {
@@ -1098,15 +1231,6 @@ object_event_add
 			
 			if subbgalpha_var < 1
 			subbgalpha_var += (0.04*global.true_delta_time_var);
-			
-			if button_state_var < (menuscroll_focal_var-1)
-			menuscroll_focal_var -= 1;
-			
-			if button_state_var > (menuscroll_focal_var+1)
-			menuscroll_focal_var += 1;
-			
-			menuscroll_var = 96*(menuscroll_focal_var-2);
-			menuscroll_lerp_var = menuscroll_lerp_var + (menuscroll_var - menuscroll_lerp_var) * (0.2*global.true_delta_time_var)
 			
             // Text Stretch
             time_var = (time_var+global.true_delta_time_var) mod 80;
@@ -1151,6 +1275,17 @@ object_event_add
 				}
 			}
             button_state_var = mod_scr(button_state_var,1+ds_list_size(global.save_list));
+            // Lerp
+            if do_scroll_focal_var
+            {
+                scroll_focal_var = median(button_state_var-2,button_state_var+2,scroll_focal_var);
+                local.state = scroll_focal_var
+            }
+            else { local.state = button_state_var; }
+            local.target_scroll = -96*median(0,ds_list_size(global.save_list)-4,local.state-2);
+            local.scroll_diff = abs(local.target_scroll-scroll_var);
+            local.scroll_rate = max(scroll_min_var,local.scroll_diff*scroll_rate_var)*global.true_delta_time_var;
+            scroll_var += min(local.scroll_diff,local.scroll_rate)*sign(local.target_scroll-scroll_var);
             // Confirm
             if global.input_press_arr[confirm_input_const,0]
             {
@@ -1249,167 +1384,56 @@ object_event_add
                 global.main_type_var = save_type_var;
                 global.custom_var = save_custom_var;
 				
-				// Settings
-                if global.main_type_var == 1 { global.diff_var = 5; } // OG
-                else if global.main_type_var == 2 { global.diff_var = 6; } // HD
+				// Difficulty
+                if global.main_type_var == 1 { global.diff_var = -2; } // OG
+                else if global.main_type_var == 2 { global.diff_var = -1; } // HD
+                else if save_diff_var == 5 && !global.custom_var { global.diff_var = 4; }
                 else { global.diff_var = save_diff_var; }
-                
-                if save_jump_var == -1 || !save_custom_var { global.jump_var = (save_type_var == 0); }
-                else { global.jump_var = save_jump_var; }
 
-                if save_crouch_var == -1 || !save_custom_var { global.crouch_var = (save_type_var == 0); }
-                else { global.crouch_var = save_crouch_var; }
-
-				if save_stam_per_var == -1 || !save_custom_var
-                { global.stam_per_var = (global.diff_var == 3 || global.diff_var == 4); } // Hard & Hardest
-                else { global.stam_per_var = save_stam_per_var; }
-
-				if save_fall_var == -1 || !save_custom_var
-                { global.fall_var = (global.diff_var == 4); } // Hardest
-                else { global.fall_var = save_fall_var; }
-
-				if save_lock_var == -1 || !save_custom_var
-                { global.lock_var = 1; } // Not sure yet
-                else { global.lock_var = save_lock_var; }
-
-                if save_dmg_shake_var == -1 || !save_custom_var
-				{ global.dmg_shake_var = (global.diff_var == 5 || global.diff_var == 4); } // Hardest & OG
-                else { global.dmg_shake_var = save_dmg_shake_var; }
-
-                if save_mult_type_var == -1 || !save_custom_var
+                // Custom stuff
+                for (local.i=0; local.i<custom_button_len_var-1; local.i+=1;)
                 {
-                    switch global.diff_var
+                    if custom_button_arr[local.i,3] >= 0
                     {
-                        case 0: // Easiest
-                        case 1: // Easy
-                        case 5: // OG
+                        // Default
+                        if custom_button_arr[local.i,0] == -1 || !global.custom_var
                         {
-                            global.mult_type_var = 1;
-                            break;
+                            // Starts at 9 plus the max value to avoid array conflicts
+                            if custom_button_arr[local.i,7] // Difficulty based
+                            {
+
+                                // Starts at 12 because -3 is default, -2 is OG, and -1 is HD
+                                local.index = 12+global.diff_var+custom_button_arr[local.i,5];
+                                if !is_string(custom_button_arr[local.i,local.index]) { local.index = 9+custom_button_arr[local.i,5]; }
+                            }
+                            else // Type based
+                            {
+                                local.index = 9+global.main_type_var+custom_button_arr[local.i,5];
+                                if !is_string(custom_button_arr[local.i,local.index]) { local.index = 9+custom_button_arr[local.i,5]; }
+                            }
+                            local.value = custom_button_arr[local.i,local.index]
+                            execute_string("global."+custom_button_arr[local.i,6]+"_var = "+local.value);
                         }
-                        case 2: // Normal
-                        case 3: // Hard
-                        case 6: // HD
-                        {
-                            global.mult_type_var = 0;
-                            break;
-                        }
-                        case 4: // Hardest
-                        {
-                            global.mult_type_var = 3;
-                            break;
-                        }
+                        else { execute_string("global."+custom_button_arr[local.i,6]+"_var = "+string(custom_button_arr[local.i,0])); }
                     }
                 }
-				else { global.mult_type_var = save_mult_type_var; }
-
-				if  save_mult_min_var == -1 || !save_custom_var
-                {
-                    if save_diff_var == 0 { global.mult_min_var = 0; }
-                    else { global.mult_min_var = 1; }
-                }
-                else { global.mult_min_var = save_mult_min_var; }
-
-				if save_mult_max_var == -1 || !save_custom_var
-                { global.mult_max_var = 5; }
-                else { global.mult_max_var = save_mult_max_var; }
-
-				if save_mult_start_var == -1 || !save_custom_var
-                { global.mult_start_var = 0; }
-                else { global.mult_start_var = save_mult_start_var; }
-
-				if save_mult_end_var || !save_custom_var
-                { global.mult_end_var = 1000; }
-                else { global.mult_end_var = save_mult_end_var; }
-
-                if save_count_type_var == -1 || !save_custom_var
-                {
-                    switch global.diff_var
-                    {
-                        case 2: // Normal
-                        {
-                            global.count_type_var = 0;
-                            break;
-                        }
-                        case 0: // Easiest
-                        case 1: // Easy
-                        case 5: // OG
-                        {
-                            global.count_type_var = 1;
-                            break;
-                        }
-                        case 3: // Hard
-                        case 4: // Hardest
-                        case 6: // HD
-                        {
-                            global.count_type_var = 2;
-                            break;
-                        }
-                    }
-                }
-				else { global.count_type_var = save_count_type_var; }
-
-				if save_count_min_var == -1 || !save_custom_var
-                { global.count_min_var = 0; }
-                else { global.count_min_var = save_count_min_var; }
-
-				if save_count_max_var == -1 || !save_custom_var
-                { global.count_max_var = 20; }
-                else { global.count_max_var = save_count_max_var; }
-
-				if save_count_start_var == -1 || !save_custom_var
-                { global.count_start_var = 0; }
-                else { global.count_start_var = save_count_start_var; }
-
-				if save_count_end_var == -1 || !save_custom_var
-                { global.count_end_var = 1000; }
-                else { global.count_end_var = save_count_end_var; }
-
-                if save_dupe_var == -1 || !save_custom_var
-                {
-                    if global.diff_var == 4 || global.diff_var == 6 { global.dupe_var = dupe_always_const; }
-                    else { global.dupe_var = dupe_canon_const; }
-                }
-                else { global.dupe_var = save_dupe_var; }
-
-                if save_chance_var == -1 || !save_custom_var
-                { global.mon_chance_var = mon_chance_const; }
-                else { global.mon_chance_var = save_chance_var; }
-
-                if save_chance_mult_var == -1 || !save_custom_var
-                {
-                    switch global.diff_var
-                    {
-                        case 0: // Easiest
-                        case 1: // Easy
-                        case 2: // Normal
-                        case 5: // OG
-                        {
-                            global.mon_chance_mult_var = mon_chance_mult_const;
-                            break;
-                        }
-                        case 3: // Hard
-                        case 4: // Hardest
-                        case 6: // HD
-                        {
-                            global.mon_chance_mult_var = 0;
-                            break;
-                        }
-                    }
-                }
-                else { global.mon_chance_mult_var = save_chance_mult_var; }
 
 				// Behavior stuff
                 for (local.i=0; local.i<type_button_len_var-1; local.i+=1;)
                 {
-                    if type_button_arr[local.i,0] == -1 || !save_custom_var
-                    { execute_string("global."+type_button_arr[local.i,3]+"_type_var = "+string(save_type_var)); }
+                    if type_button_arr[local.i,0] == -1 || !global.custom_var
+                    {
+                        if global.diff_var == 5 { local.type = -1; }
+                        else { local.type = save_type_var; }
+                        execute_string("global."+type_button_arr[local.i,3]+"_type_var = "+string(local.type));
+                    }
                     else if type_button_arr[local.i,0] < 0
                     { execute_string("global."+type_button_arr[local.i,3]+"_type_var = -1;"); }
                     else { execute_string("global."+type_button_arr[local.i,3]+"_type_var = "+string(type_button_arr[local.i,0])); }
                 }
 				
-                global.player_len_var = 3;
+                // Boot it up!
+                global.player_len_var = 1;
                 for (local.i=0; local.i<global.player_len_var; local.i+=1;)
                 {
                     local.player = instance_create(0,0,player_obj);
@@ -1533,12 +1557,12 @@ object_event_add
 			
 			draw_background_tiled_ext(sub_bg_arr[sub_bg_var],0,subbgscroll_var*-1,1,1,make_color_rgb(70,0,90),subbgalpha_var);
 			
-			draw_set_color(str_bg_color_var);
-			draw_text_transformed(706,24,"CREATE SAVE FILE",0.95,0.95,0);
-			draw_text_transformed(708,22,"CREATE SAVE FILE",0.95,0.95,0);
+			draw_set_halign(fa_right); draw_set_color(str_bg_color_var);
+			draw_text_transformed(1280-24,24,"NEW SAVE",0.95,0.95,0);
+			draw_text_transformed(1280-22,22,"NEW SAVE",0.95,0.95,0);
 			draw_set_color(c_yellow);
-			draw_text_transformed(710,20,"CREATE SAVE FILE",0.95,0.95,0);
-			draw_set_color(c_white);
+			draw_text_transformed(1280-20,20,"NEW SAVE",0.95,0.95,0);
+			draw_set_color(c_white); draw_set_halign(fa_left)
 			
 			local.stat_display_var = "";
 			
@@ -1546,7 +1570,7 @@ object_event_add
             {
                 if local.i != button_state_var
                 {
-                    local.ytmp = 192+(96*local.i)-(menuscroll_lerp_var);
+                    local.ytmp = 144+(96*local.i)+scroll_var;
                     draw_set_color(str_bg_color_var);
                     draw_text_transformed(92,local.ytmp+4,button_str_arr[state_var,local.i],0.75,0.75,0);
                     draw_text_transformed(94,local.ytmp+2,button_str_arr[state_var,local.i],0.75,0.75,0);
@@ -1567,14 +1591,21 @@ object_event_add
 						}
 						case 2:
 						{
-							switch save_diff_var
-							{
-                                case 0: { local.stat_display_var = easiest_str_var; break; }
-								case 1: { local.stat_display_var = easy_str_var; break; }
-								case 2: { local.stat_display_var = normal_str_var; break; }
-								case 3: { local.stat_display_var = hard_str_var; break; }
-								case 4: { local.stat_display_var = hardest_str_var; break; }
-							}
+                            if save_type_var == 1 { local.stat_display_var = og_str_var; }
+                            else if save_type_var == 2 { local.stat_display_var = hd_str_var; }
+                            else
+                            {
+                                switch save_diff_var
+                                {
+                                    case 0: { local.stat_display_var = easiest_str_var; break; }
+                                    case 1: { local.stat_display_var = easy_str_var; break; }
+                                    case 2: { local.stat_display_var = normal_str_var; break; }
+                                    case 3: { local.stat_display_var = hard_str_var; break; }
+                                    case 4: { local.stat_display_var = hardest_str_var; break; }
+                                    case 5: { local.stat_display_var = evil_str_var; break; }
+                                }
+                            }
+							
 							break;
 						}
 						case 3:
@@ -1607,7 +1638,7 @@ object_event_add
                 }
             }
             local.xtmp = 96+(string_width(button_str_arr[state_var,button_state_var])*0.375);
-            local.ytmp = 192+(96*button_state_var)-(menuscroll_lerp_var);
+            local.ytmp = 144+(96*button_state_var)+scroll_var;
             draw_set_halign(fa_center); draw_set_color(str_bg_select_color_var);
             draw_text_transformed(local.xtmp-4,local.ytmp+4,button_str_arr[state_var,button_state_var],str_scale_var,0.75,0);
             draw_text_transformed(local.xtmp-2,local.ytmp+2,button_str_arr[state_var,button_state_var],str_scale_var,0.75,0);
@@ -1636,6 +1667,7 @@ object_event_add
                         case 2: { local.stat_display_var = normal_str_var; break; }
                         case 3: { local.stat_display_var = hard_str_var; break; }
                         case 4: { local.stat_display_var = hardest_str_var; break; }
+                        case 5: { local.stat_display_var = evil_str_var; break; }
                     }
                     break;
                 }
@@ -1675,407 +1707,99 @@ object_event_add
 			
 			draw_background_tiled_ext(sub_bg_arr[sub_bg_var],0,subbgscroll_var*-1,1,1,make_color_rgb(70,0,90),subbgalpha_var);
 			
-			draw_set_color(str_bg_color_var);
-			draw_text_transformed(706,24,"CUSTOMIZE SAVE FILE",0.95,0.95,0);
-			draw_text_transformed(708,22,"CUSTOMIZE SAVE FILE",0.95,0.95,0);
+			draw_set_halign(fa_right); draw_set_color(str_bg_color_var);
+			draw_text_transformed(1280-24,24,"CUSTOMIZE",0.95,0.95,0);
+			draw_text_transformed(1280-22,22,"CUSTOMIZE",0.95,0.95,0);
 			draw_set_color(c_yellow);
-			draw_text_transformed(710,20,"CUSTOMIZE SAVE FILE",0.95,0.95,0);
-			draw_set_color(c_white);
+			draw_text_transformed(1280-20,20,"CUSTOMIZE",0.95,0.95,0);
+			draw_set_color(c_white); draw_set_halign(fa_left); 
 			
-			local.stat_display_var = "";
-			
-            for (local.i=0; local.i<21; local.i+=1)
+            for (local.i=0; local.i<custom_button_len_var; local.i+=1)
             {
                 if local.i != button_state_var
                 {
-                    local.ytmp = 192+(96*local.i)-(menuscroll_lerp_var);
+                    local.ytmp = 144+(96*local.i)+scroll_var
                     draw_set_color(str_bg_color_var);
-                    draw_text_transformed(92,local.ytmp+4,button_str_arr[state_var,local.i],0.75,0.75,0);
-                    draw_text_transformed(94,local.ytmp+2,button_str_arr[state_var,local.i],0.75,0.75,0);
+                    draw_text_transformed(92,local.ytmp+4,custom_button_arr[local.i,1],0.75,0.75,0);
+                    draw_text_transformed(94,local.ytmp+2,custom_button_arr[local.i,1],0.75,0.75,0);
                     draw_set_color(c_yellow);
-                    draw_text_transformed(96,local.ytmp,button_str_arr[state_var,local.i],0.75,0.75,0);
-					
-					switch local.i
-					{
+                    draw_text_transformed(96,local.ytmp,custom_button_arr[local.i,1],0.75,0.75,0);
+                    
+                    local.str = 0;
+                    switch custom_button_arr[local.i,3]
+                    {
                         case 0:
                         {
-                            switch save_crouch_var
-                            {
-                                case -1: { local.stat_display_var = def_str_var; break; }
-                                case 0: { local.stat_display_var = off_str_var; break; }
-                                case 1: { local.stat_display_var = on_str_var; break; }
-                            }
+                            if custom_button_arr[local.i,0] == -1 { local.str = def_str_var; }
+                            else { local.str = custom_button_arr[local.i,custom_button_arr[local.i,0]+8]; }
                             break;
                         }
-						case 1:
-						{	
-							switch save_jump_var
-                            {
-                                case -1: { local.stat_display_var = def_str_var; break; }
-                                case 0: { local.stat_display_var = off_str_var; break; }
-                                case 1: { local.stat_display_var = on_str_var; break; }
-                            }
-							break;
-						}
-                        case 2:
-						{	
-							switch save_stam_per_var
-                            {
-                                case -1: { local.stat_display_var = def_str_var; break; }
-                                case 0: { local.stat_display_var = off_str_var; break; }
-                                case 1: { local.stat_display_var = on_str_var; break; }
-                            }
-							break;
-						}
-                        case 3:
-						{	
-							switch save_fall_var
-                            {
-                                case -1: { local.stat_display_var = def_str_var; break; }
-                                case 0: { local.stat_display_var = off_str_var; break; }
-                                case 1: { local.stat_display_var = on_str_var; break; }
-                            }
-							break;
-						}
-                        case 4:
-						{	
-							switch save_lock_var
-                            {
-                                case -1: { local.stat_display_var = def_str_var; break; }
-                                case 0: { local.stat_display_var = off_str_var; break; }
-                                case 1: { local.stat_display_var = on_str_var; break; }
-                                case 2: { local.stat_display_var = alone_str_var; break; }
-                                case 3: { local.stat_display_var = evil_str_var; break; }
-                            }
-							break;
-						}
-                        case 5:
-						{	
-							switch save_dmg_shake_var
-                            {
-                                case -1: { local.stat_display_var = def_str_var; break; }
-                                case 0: { local.stat_display_var = off_str_var; break; }
-                                case 1: { local.stat_display_var = on_str_var; break; }
-                            }
-							break;
-						}
-                        case 6:
+                        case 1:
                         {
-                            switch save_mult_type_var
-                            {
-                                case -1: { local.stat_display_var = def_str_var; break; }
-                                case 0: { local.stat_display_var = max_str_var; break; }
-                                case 1: { local.stat_display_var = min_str_var; break; }
-                                case 2: { local.stat_display_var = taper_str_var; break; }
-                                case 3: { local.stat_display_var = always_str_var; break; }
-                            }
+                            if custom_button_arr[local.i,0] == -1 { local.str = def_str_var; }
+                            else if is_string(custom_button_arr[local.i,custom_button_arr[local.i,0]+8])
+                            { local.str = custom_button_arr[local.i,custom_button_arr[local.i,0]+8]; }
+                            else { local.str = string(custom_button_arr[local.i,0]); }
                             break;
                         }
-                        case 7:
-                        {
-                            switch save_mult_min_var
-                            {
-                                case -2: { local.stat_display_var = inf_str_var; break; }
-                                case -1: { local.stat_display_var = def_str_var; break; }
-                                default: { local.stat_display_var = string(save_mult_min_var); break; }
-                            }
-                            break;
-                        }
-                        case 8:
-                        {
-                            switch save_mult_max_var
-                            {
-                                case -2: { local.stat_display_var = inf_str_var; break; }
-                                case -1: { local.stat_display_var = def_str_var; break; }
-                                default: { local.stat_display_var = string(save_mult_max_var); break; }
-                            }
-                            break;
-                        }
-                        case 9:
-                        {
-                            if save_mult_start_var == -1 { local.stat_display_var = def_str_var; }
-                            else { local.stat_display_var = string(save_mult_start_var);}
-                            break;
-                        }
-                        case 10:
-                        {
-                            if save_mult_end_var == -1 { local.stat_display_var = def_str_var; }
-                            else { local.stat_display_var = string(save_mult_end_var);}
-                            break;
-                        }
-                        case 11:
-                        {
-                            switch save_count_type_var
-                            {
-                                case -1: { local.stat_display_var = def_str_var; break; }
-                                case 0: { local.stat_display_var = rand_str_var; break; }
-                                case 1: { local.stat_display_var = max_str_var; break; }
-                                case 2: { local.stat_display_var = min_str_var; break; }
-                                case 3: { local.stat_display_var = taper_str_var+" "+rand_str_var; break; }
-                                case 4: { local.stat_display_var = taper_str_var; break; }
-                            }
-                            break;
-                        }
-                        case 12:
-                        {
-                            if save_count_min_var == -1 { local.stat_display_var = def_str_var; }
-                            else { local.stat_display_var = string(save_count_min_var);}
-                            break;
-                        }
-                        case 13:
-                        {
-                            if save_count_max_var == -1 { local.stat_display_var = def_str_var; }
-                            else { local.stat_display_var = string(save_count_max_var);}
-                            break;
-                        }
-                        case 14:
-                        {
-                            if save_count_start_var == -1 { local.stat_display_var = def_str_var; }
-                            else { local.stat_display_var = string(save_count_start_var);}
-                            break;
-                        }
-                        case 15:
-                        {
-                            if save_count_end_var == -1 { local.stat_display_var = def_str_var; }
-                            else { local.stat_display_var = string(save_count_end_var); }
-                            break;
-                        }
-                        case 16:
-                        {
-                            switch save_dupe_var
-                            {
-                                case -1: { local.stat_display_var = def_str_var; break; }
-                                case dupe_never_const: { local.stat_display_var = never_str_var; break; }
-                                case dupe_always_const: { local.stat_display_var = always_str_var; break; }
-                                case dupe_canon_const: { local.stat_display_var = canon_str_var; break; }
-                            }
-                            break;
-                        }
-                        case 17:
-                        {
-                            if save_chance_var == -1 { local.stat_display_var = def_str_var; }
-                            else { local.stat_display_var = string(save_chance_var); }
-                            break;
-                        }
-                        case 18:
-                        {
-                            if save_chance_mult_var == -1 { local.stat_display_var = def_str_var; }
-                            else { local.stat_display_var = string(save_chance_mult_var); }
-                            break;
-                        }
-						default: { local.stat_display_var = ""; break; }
-					}
-					
-					if local.stat_display_var != ""
-					{
-						draw_set_color(str_bg_color_var);
-						draw_text_transformed(496,local.ytmp+4,string(local.stat_display_var),0.75,0.75,0);
-						draw_text_transformed(498,local.ytmp+2,string(local.stat_display_var),0.75,0.75,0);
-						draw_set_color(c_yellow);
-						draw_text_transformed(500,local.ytmp,string(local.stat_display_var),0.75,0.75,0);
-					}
+                    }
+                    if is_string(local.str)
+                    {
+                        draw_set_color(str_bg_select_color_var);
+                        draw_text_transformed(496,local.ytmp+4,local.str,0.75,0.75,0);
+                        draw_text_transformed(498,local.ytmp+2,local.str,0.75,0.75,0);
+                        draw_set_color(c_white);
+                        draw_text_transformed(500,local.ytmp,local.str,0.75,0.75,0);
+                    }
                 }
             }
-            local.xtmp = 96+(string_width(button_str_arr[state_var,button_state_var])*0.375);
-            local.ytmp = 192+(96*button_state_var)-(menuscroll_lerp_var);
+            local.xtmp = 96+(string_width(custom_button_arr[button_state_var,1])*0.375);
+            local.ytmp = 144+(96*button_state_var)+scroll_var;
             draw_set_halign(fa_center); draw_set_color(str_bg_select_color_var);
-            draw_text_transformed(local.xtmp-4,local.ytmp+4,button_str_arr[state_var,button_state_var],str_scale_var,0.75,0);
-            draw_text_transformed(local.xtmp-2,local.ytmp+2,button_str_arr[state_var,button_state_var],str_scale_var,0.75,0);
+            draw_text_transformed(local.xtmp-4,local.ytmp+4,custom_button_arr[button_state_var,1],str_scale_var,0.75,0);
+            draw_text_transformed(local.xtmp-2,local.ytmp+2,custom_button_arr[button_state_var,1],str_scale_var,0.75,0);
             draw_set_color(c_white);
-            draw_text_transformed(local.xtmp,local.ytmp,button_str_arr[state_var,button_state_var],str_scale_var,0.75,0);
-            draw_set_halign(fa_left); 
-			
-			switch button_state_var
-			{
+            draw_text_transformed(local.xtmp,local.ytmp,custom_button_arr[button_state_var,1],str_scale_var,0.75,0);
+            draw_set_halign(fa_left);
+
+            local.str = 0;
+            switch custom_button_arr[button_state_var,3]
+            {
                 case 0:
                 {
-                    switch save_crouch_var
-                    {
-                        case -1: { local.stat_display_var = def_str_var; break; }
-                        case 0: { local.stat_display_var = off_str_var; break; }
-                        case 1: { local.stat_display_var = on_str_var; break; }
-                    }
+                    if custom_button_arr[button_state_var,0] == -1 { local.str = def_str_var; }
+                    else { local.str = custom_button_arr[button_state_var,custom_button_arr[button_state_var,0]+8]; }
                     break;
                 }
                 case 1:
-                {	
-                    switch save_jump_var
-                    {
-                        case -1: { local.stat_display_var = def_str_var; break; }
-                        case 0: { local.stat_display_var = off_str_var; break; }
-                        case 1: { local.stat_display_var = on_str_var; break; }
-                    }
-                    break;
-                }
-                case 2:
-                {	
-                    switch save_stam_per_var
-                    {
-                        case -1: { local.stat_display_var = def_str_var; break; }
-                        case 0: { local.stat_display_var = off_str_var; break; }
-                        case 1: { local.stat_display_var = on_str_var; break; }
-                    }
-                    break;
-                }
-                case 3:
-                {	
-                    switch save_fall_var
-                    {
-                        case -1: { local.stat_display_var = def_str_var; break; }
-                        case 0: { local.stat_display_var = off_str_var; break; }
-                        case 1: { local.stat_display_var = on_str_var; break; }
-                    }
-                    break;
-                }
-                case 4:
-                {	
-                    switch save_lock_var
-                    {
-                        case -1: { local.stat_display_var = def_str_var; break; }
-                        case 0: { local.stat_display_var = off_str_var; break; }
-                        case 1: { local.stat_display_var = on_str_var; break; }
-                        case 2: { local.stat_display_var = alone_str_var; break; }
-                        case 3: { local.stat_display_var = evil_str_var; break; }
-                    }
-                    break;
-                }
-                case 5:
-                {	
-                    switch save_dmg_shake_var
-                    {
-                        case -1: { local.stat_display_var = def_str_var; break; }
-                        case 0: { local.stat_display_var = off_str_var; break; }
-                        case 1: { local.stat_display_var = on_str_var; break; }
-                    }
-                    break;
-                }
-                case 6:
                 {
-                    switch save_mult_type_var
-                    {
-                        case -1: { local.stat_display_var = def_str_var; break; }
-                        case 0: { local.stat_display_var = max_str_var; break; }
-                        case 1: { local.stat_display_var = min_str_var; break; }
-                        case 2: { local.stat_display_var = taper_str_var; break; }
-                        case 3: { local.stat_display_var = always_str_var; break; }
-                    }
+                    if custom_button_arr[button_state_var,0] == -1 { local.str = def_str_var; }
+                    else if is_string(custom_button_arr[button_state_var,custom_button_arr[button_state_var,0]+8])
+                    { local.str = custom_button_arr[button_state_var,custom_button_arr[button_state_var,0]+8]; }
+                    else { local.str = string(custom_button_arr[button_state_var,0]); }
                     break;
                 }
-                case 7:
-                {
-                    switch save_mult_min_var
-                    {
-                        case -2: { local.stat_display_var = inf_str_var; break; }
-                        case -1: { local.stat_display_var = def_str_var; break; }
-                        default: { local.stat_display_var = string(save_mult_min_var); break; }
-                    }
-                    break;
-                }
-                case 8:
-                {
-                    switch save_mult_max_var
-                    {
-                        case -2: { local.stat_display_var = inf_str_var; break; }
-                        case -1: { local.stat_display_var = def_str_var; break; }
-                        default: { local.stat_display_var = string(save_mult_max_var); break; }
-                    }
-                    break;
-                }
-                case 9:
-                {
-                    if save_mult_start_var == -1 { local.stat_display_var = def_str_var; }
-                    else { local.stat_display_var = string(save_mult_start_var);}
-                    break;
-                }
-                case 10:
-                {
-                    if save_mult_end_var == -1 { local.stat_display_var = def_str_var; }
-                    else { local.stat_display_var = string(save_mult_end_var);}
-                    break;
-                }
-                case 11:
-                {
-                    switch save_count_type_var
-                    {
-                        case -1: { local.stat_display_var = def_str_var; break; }
-                        case 0: { local.stat_display_var = rand_str_var; break; }
-                        case 1: { local.stat_display_var = max_str_var; break; }
-                        case 2: { local.stat_display_var = min_str_var; break; }
-                        case 3: { local.stat_display_var = taper_str_var+" "+rand_str_var; break; }
-                        case 4: { local.stat_display_var = taper_str_var; break; }
-                    }
-                    break;
-                }
-                case 12:
-                {
-                    if save_count_min_var == -1 { local.stat_display_var = def_str_var; }
-                    else { local.stat_display_var = string(save_count_min_var); }
-                    break;
-                }
-                case 13:
-                {
-                    if save_count_max_var == -1 { local.stat_display_var = def_str_var; }
-                    else { local.stat_display_var = string(save_count_max_var); }
-                    break;
-                }
-                case 14:
-                {
-                    if save_count_start_var == -1 { local.stat_display_var = def_str_var; }
-                    else { local.stat_display_var = string(save_count_start_var); }
-                    break;
-                }
-                case 15:
-                {
-                    if save_count_end_var == -1 { local.stat_display_var = def_str_var; }
-                    else { local.stat_display_var = string(save_count_end_var); }
-                    break;
-                }
-                case 16:
-                {
-                    switch save_dupe_var
-                    {
-                        case -1: { local.stat_display_var = def_str_var; break; }
-                        case dupe_never_const: { local.stat_display_var = never_str_var; break; }
-                        case dupe_always_const: { local.stat_display_var = always_str_var; break; }
-                        case dupe_canon_const: { local.stat_display_var = canon_str_var; break; }
-                    }
-                    break;
-                }
-                case 17:
-                {
-                    if save_chance_var == -1 { local.stat_display_var = def_str_var; }
-                    else { local.stat_display_var = string(save_chance_var); }
-                    break;
-                }
-                case 18:
-                {
-                    if save_chance_mult_var == -1 { local.stat_display_var = def_str_var; }
-                    else { local.stat_display_var = string(save_chance_mult_var); }
-                    break;
-                }
-                default: { local.stat_display_var = ""; break; }
-			}
-			
-			if local.stat_display_var != ""
-			{
-				draw_set_color(str_bg_select_color_var);
-				draw_text_transformed(496,local.ytmp+4,string(local.stat_display_var),0.75,0.75,0);
-				draw_text_transformed(498,local.ytmp+2,string(local.stat_display_var),0.75,0.75,0);
-				draw_set_color(c_white);
-				draw_text_transformed(500,local.ytmp,string(local.stat_display_var),0.75,0.75,0);
-			}
+            }
+            if is_string(local.str)
+            {
+                draw_set_color(str_bg_select_color_var);
+                draw_text_transformed(496,local.ytmp+4,local.str,0.75,0.75,0);
+                draw_text_transformed(498,local.ytmp+2,local.str,0.75,0.75,0);
+                draw_set_color(c_white);
+                draw_text_transformed(500,local.ytmp,local.str,0.75,0.75,0);
+            }
 
             break;
         }
-        case 5:
+        case 5: // Behavior
         {
             draw_background_tiled_ext(sub_bg_arr[sub_bg_var],0,subbgscroll_var*-1,1,1,make_color_rgb(70,0,90),subbgalpha_var);
 			
 			draw_set_halign(fa_right); draw_set_color(str_bg_color_var);
-			draw_text_transformed(1256,24,"CUSTOMIZE BEHAVIOR",0.95,0.95,0);
-			draw_text_transformed(1258,22,"CUSTOMIZE BEHAVIOR",0.95,0.95,0);
+			draw_text_transformed(1280-24,24,"BEHAVIOR",0.95,0.95,0);
+			draw_text_transformed(1280-22,22,"BEHAVIOR",0.95,0.95,0);
 			draw_set_color(c_yellow);
-			draw_text_transformed(1260,20,"CUSTOMIZE BEHAVIOR",0.95,0.95,0);
+			draw_text_transformed(1280-20,20,"BEHAVIOR",0.95,0.95,0);
 			draw_set_color(c_white); draw_set_halign(fa_left);
     
             for (local.i=0; local.i<type_button_len_var; local.i+=1)
@@ -2146,12 +1870,12 @@ object_event_add
         {			
 			draw_background_tiled_ext(sub_bg_arr[sub_bg_var],0,subbgscroll_var*-1,1,1,make_color_rgb(70,0,90),subbgalpha_var);
 			
-			draw_set_color(str_bg_color_var);
-			draw_text_transformed(756,24,"LOAD SAVE FILE",0.95,0.95,0);
-			draw_text_transformed(758,22,"LOAD SAVE FILE",0.95,0.95,0);
+			draw_set_halign(fa_right); draw_set_color(str_bg_color_var);
+			draw_text_transformed(1280-24,24,"LOAD SAVE",0.95,0.95,0);
+			draw_text_transformed(1280-22,22,"LOAD SAVE",0.95,0.95,0);
 			draw_set_color(c_yellow);
-			draw_text_transformed(760,20,"LOAD SAVE FILE",0.95,0.95,0);
-			
+			draw_text_transformed(1280-20,20,"LOAD SAVE",0.95,0.95,0);
+			draw_set_halign(fa_left); 
 			
 			local.stat_display_var = "";
 			
@@ -2271,7 +1995,7 @@ object_event_add
             {
                 if local.i != button_state_var
                 {
-                    local.ytmp = 192+(96*local.i)-(menuscroll_lerp_var);
+                    local.ytmp = 144+(96*local.i)+scroll_var
                     draw_set_color(str_bg_color_var);
                     draw_text_transformed(92,local.ytmp+4,button_str_arr[state_var,local.i],0.75,0.75,0);
                     draw_text_transformed(94,local.ytmp+2,button_str_arr[state_var,local.i],0.75,0.75,0);
@@ -2281,7 +2005,7 @@ object_event_add
 			}
 			
 			local.xtmp = 96+(string_width(button_str_arr[state_var,button_state_var])*0.375);
-            local.ytmp = 192+(96*button_state_var)-(menuscroll_lerp_var);
+            local.ytmp = 144+(96*button_state_var)+scroll_var;
             draw_set_halign(fa_center); draw_set_color(str_bg_select_color_var);
             draw_text_transformed(local.xtmp-4,local.ytmp+4,button_str_arr[state_var,button_state_var],str_scale_var,0.75,0);
             draw_text_transformed(local.xtmp-2,local.ytmp+2,button_str_arr[state_var,button_state_var],str_scale_var,0.75,0);
