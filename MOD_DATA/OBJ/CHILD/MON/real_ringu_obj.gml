@@ -107,9 +107,10 @@ object_event_add
     state_spr_spd_var[1] = 1/3;
     state_w_var[1] = 13.6;
     // Effect
+    fog_prio_var = 3;
     eff_fog_var = false;
-    eff_fog_start_var = 128;
-    eff_fog_end_var = 256;
+    eff_fog_start_var = 560/3; // 186.r6
+    eff_fog_end_var = 1120/3; // 373.r3
     eff_alarm_var = 250;
     eff_per_var = false;
     // Random
@@ -126,6 +127,8 @@ object_event_add
             seen_pitch_var = 30;
             dmg_var = 40;
             eff_fog_var = true;
+            eff_fog_start_var = 128;
+            eff_fog_end_var = 256;
             eff_alarm_var = 256;
             eff_per_var = false;
             state_spd_var[0] = 0.85;
@@ -153,8 +156,6 @@ object_event_add
             dur_var = irandom_range(10,15);
             seen_yaw_var = 60;
             eff_fog_var = true;
-            eff_fog_start_var = 560/3; // 186.r6
-            eff_fog_end_var = 1120/3; // 373.r3
             eff_alarm_var = 420;
             eff_per_var = true;
             state_chance_num_var = 1;
@@ -186,28 +187,43 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_room_start,'
     event_inherited();
-    if !instance_exists(ringu_static_eff_obj)
+    if eff_fog_var
+    {
+        if !instance_exists(ringu_fog_eff_obj)
+        {
+            with fog_par_obj { if prio_var < other.fog_prio_var { instance_destroy(); }}
+            if !instance_exists(fog_par_obj)
+            {
+                with instance_create(0,0,ringu_fog_eff_obj)
+                {
+                    par_var = other.id;
+                    // Fog
+                    fog_max_start_var = other.eff_fog_start_var;
+                    fog_max_end_var = other.eff_fog_end_var;
+                    fog_start_var = fog_max_start_var;
+                    fog_end_var = fog_max_end_var;
+                    event_user(0);
+                    // Alarm
+                    alarm_arr[0,2] = other.eff_per_var;
+                    alarm_var = other.eff_alarm_var;
+                    set_alarm_scr(0,alarm_var);
+                    // Sound
+                    snd_var = other.cam_snd_var;
+                }
+            }
+        }
+    }
+    else if !instance_exists(ringu_static_eff_obj)
     {
         with instance_create(0,0,ringu_static_eff_obj) 
         {
             par_var = other.id;
-            fog_var = other.eff_fog_var;
-            fog_max_start_var = other.eff_fog_start_var;
-            fog_max_end_var = other.eff_fog_end_var;
-            fog_start_var = fog_max_start_var;
-            fog_end_var = fog_max_end_var;
-            per_var = other.eff_per_var;
+            alarm_arr[0,2] = other.eff_per_var;
             alarm_var = other.eff_alarm_var;
-            snd_var = other.cam_snd_var;
             set_alarm_scr(0,alarm_var);
-            if fog_var { depth_base_var = 99; }
-            else { depth_base_var = -99; }
-            depth = depth_base_var;
-            event_perform(ev_other,ev_room_start);
+            snd_var = other.cam_snd_var;
         } 
     }
-    if eff_fog_var && !destroy_var // stupid bug
-    { with (fog_par_obj) { instance_destroy(); }}
     state_var = 0;
     event_perform(ev_other,ev_user14);
 ');
