@@ -18,7 +18,7 @@ Returns the seen percentage.
 // Collision
 if argument8 == 0 { local.height = coll_var[1]/2; }
 else { local.height = argument8/2; }
-if argument9 { local.radius = coll_var[2]/2; }
+if argument9 == 0 { local.radius = coll_var[2]/2; }
 else { local.radius = argument9/2; }
 // Position
 if argument10 != 0 || argument11 != 0 || argument12 != 0
@@ -39,14 +39,14 @@ if argument0 > 0
 {
     local.yaw = abs(deg_diff_scr(point_direction(argument4,argument5,local.xtmp,local.ytmp),argument2));
     local.angle = radtodeg(arctan2(local.radius,local.dist));
-    local.yawper = (local.yaw+local.angle)/(argument0+local.angle);
+    local.yawper = (local.yaw-local.angle)/argument0; // Should be less than 1 if local.yaw+local.angle < argument0
 }
 else { local.yawper = 0; }
 if argument1 > 0
 {
     local.pitch = abs(deg_diff_scr(point_direction_3d_scr(argument4,argument5,argument6,local.xtmp,local.ytmp,local.ztmp),argument3));
     local.angle = radtodeg(arctan2(local.height,local.dist));
-    local.pitchper = (local.pitch+local.angle)/(argument1+local.angle);
+    local.pitchper = (local.pitch-local.angle)/argument1;
 }
 else { local.pitchper = 0; }
 // Return

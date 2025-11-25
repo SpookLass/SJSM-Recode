@@ -102,6 +102,7 @@ object_event_add
     flame_z_off_var = flame_z_off_base_var;
     // Seen
     do_seen_var = true;
+    seen_type_var = 1;
     seen_yaw_var = 5.856;
     seen_dist_var = 120;
     seen_spd_mult_var = 2;

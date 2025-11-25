@@ -8,7 +8,8 @@ Argument 12: Texture
 Argument 13 and 14: Sprite and Sprite speed
 Argument 15: Time (-1 for eternal, although not recommended)
 */
-for (local.i=0; local.i<part_len_var; local.i+=1;)
+local.len = min(part_len_var,global.max_part_var/instance_number(part_par_obj));
+for (local.i=0; local.i<local.len; local.i+=1;)
 {
     if !part_arr[local.i,0]
     {

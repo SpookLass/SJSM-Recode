@@ -13,7 +13,7 @@ object_event_add
 (argument0,ev_create,0,"
     store_tex_var = -1;
     event_inherited();
-    solid_var = false;
+    solid_var = true;
     mdl_var = window_02_mdl;
     mdl_path_var = window_02_mdl_path;
     no_grid_var = true;

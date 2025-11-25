@@ -24,7 +24,8 @@ part_arr
 object_event_add
 (argument0,ev_step,ev_step_normal,'
     part_num = 0;
-    for (local.i=0; local.i<part_len_var; local.i+=1;)
+    local.len = min(part_len_var,global.max_part_var/instance_number(part_par_obj));
+    for (local.i=0; local.i<local.len; local.i+=1;)
     {
         if part_arr[local.i,0]
         {
@@ -55,7 +56,8 @@ object_event_add
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,'
-    for (local.i=0; local.i<part_len_var; local.i+=1;)
+    local.len = min(part_len_var,global.max_part_var/instance_number(part_par_obj));
+    for (local.i=0; local.i<local.len; local.i+=1;)
     {
         if part_arr[local.i,0]
         {

@@ -834,7 +834,15 @@ object_event_add
         {
             if instance_exists(target_var)
             {
-                seen_per_var = seen_scr(seen_yaw_var,seen_pitch_var,target_var.eye_yaw_var,target_var.eye_pitch_var,target_x_var,target_y_var,target_z_var,false);
+                seen_per_var = seen_scr
+                (
+                    seen_yaw_var,
+                    seen_pitch_var,
+                    target_var.eye_yaw_var,
+                    target_var.eye_pitch_var,
+                    target_x_var,target_y_var,target_z_var+target_var.eye_h_var,
+                    false
+                );
                 is_seen_var = (seen_per_var > 0)
             }
             else { is_seen_var = -1; seen_per_var = -1; }
@@ -854,7 +862,7 @@ object_event_add
                         (
                             other.seen_yaw_var,other.seen_pitch_var,
                             eye_yaw_var,eye_pitch_var,
-                            x,y,z,
+                            x,y,z+eye_h_var,
                             false,
                             other.coll_var[1],other.coll_var[2],
                             other.x,other.y,other.z
