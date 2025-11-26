@@ -148,9 +148,3 @@ room_instance_add(argument0,288,144,wall_pit_vert_obj);
 room_instance_add(argument0,352,144,wall_pit_vert_obj);
 // Props
 room_instance_add(argument0,352,144,bar_vert_obj);
-/*room_instance_add(argument0,304,128,wall_cave_horr_obj);
-room_instance_add(argument0,336,128,wall_cave_horr_obj);
-room_instance_add(argument0,336,160,wall_cave_horr_obj);
-room_instance_add(argument0,304,160,wall_cave_horr_obj);
-room_instance_add(argument0,288,144,wall_cave_vert_obj);
-room_instance_add(argument0,352,144,wall_cave_vert_obj);*/

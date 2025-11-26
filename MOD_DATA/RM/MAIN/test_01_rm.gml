@@ -26,27 +26,38 @@ room_set_code
     global.spawn_arr[3,2] = 0;
     global.spawn_arr[3,3] = 180;
     // Doors
-    local.unlock = spawn_create_scr(true,true);
-    
-    local.torch = instance_create(112,32,torch_gold_north_obj);
-    local.torch.door_var = global.spawn_arr[1,4];
-    local.torch = instance_create(176,32,torch_gold_north_obj);
-    local.torch.door_var = global.spawn_arr[1,4];
-
-    local.torch = instance_create(112,256,torch_gold_south_obj);
-    local.torch.door_var = global.spawn_arr[2,4];
-    local.torch = instance_create(176,256,torch_gold_south_obj);
-    local.torch.door_var = global.spawn_arr[2,4];
-
-    local.torch = instance_create(256,112,torch_gold_east_obj);
-    local.torch.door_var = global.spawn_arr[3,4];
-    local.torch = instance_create(256,176,torch_gold_east_obj);
-    local.torch.door_var = global.spawn_arr[3,4];
+    local.lock = lock_scr();
+    local.gold = gold_scr(local.lock);
+    local.unlock = spawn_create_scr(true,local.lock);
+    // Gold Effects
+    if local.gold
+    {
+        instance_create(0,0,maze_dark_color_obj);
+        instance_create(0,0,maze_dark_fog_obj);
+        // Torch 1
+        local.torch = instance_create(112,32,torch_gold_north_obj);
+        local.torch.door_var = global.spawn_arr[1,4];
+        local.torch = instance_create(176,32,torch_gold_north_obj);
+        local.torch.door_var = global.spawn_arr[1,4];
+        // Torch 2
+        local.torch = instance_create(112,256,torch_gold_south_obj);
+        local.torch.door_var = global.spawn_arr[2,4];
+        local.torch = instance_create(176,256,torch_gold_south_obj);
+        local.torch.door_var = global.spawn_arr[2,4];
+        // Torch 3
+        local.torch = instance_create(256,112,torch_gold_east_obj);
+        local.torch.door_var = global.spawn_arr[3,4];
+        local.torch = instance_create(256,176,torch_gold_east_obj);
+        local.torch.door_var = global.spawn_arr[3,4];
+    }
+    else
+    {
+        instance_create(0,0,color_control_02_obj);
+        instance_create(0,0,fog_01_obj);
+    }
     // 3D Draw
     d3d_start();
     global.draw_3d_var = true;
-    // Objects
-    // if frac_chance_scr(5,9) { instance_create(0,0,dark_color_obj); }
 ");
 // Room settings
 room_set_width(argument0,1280);
@@ -57,8 +68,6 @@ for (local.i=0; local.i<8; local.i+=1;)
 { room_set_view(argument0,local.i,false,0,0,1280,720,0,0,1280,720,32,32,-1,-1,noone); }
 room_set_view(argument0,0,true,0,0,1280,720,0,0,1280,720,32,32,-1,-1,noone);
 // Effects
-room_instance_add(argument0,0,0,maze_dark_fog_obj);
-room_instance_add(argument0,0,0,maze_dark_color_obj);
 room_instance_add(argument0,0,0,rand_mon_spawn_obj);
 // Floors
 room_instance_add(argument0,48,112,floor_obj);

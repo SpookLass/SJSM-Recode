@@ -8,8 +8,8 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,false);
 // Create event
 object_event_add
-(argument0,ev_create,0,"
-    // I'm gonna                                  !
+(argument0,ev_create,0,'
+    // Im gonna                                  !
     if frac_chance_scr(1,33333) && !instance_exists(mon_par_obj)
     {
         instance_create(3,3,w_mus_obj);
@@ -25,7 +25,7 @@ object_event_add
             }
         }
     }
-    // I'm gonna plusinate!
+    // Im gonna plusinate!
     else if !irandom(63)
     {
         local.len = 0;
@@ -36,4 +36,4 @@ object_event_add
         if local.len > 0 { instance_create(0,0,local.arr[irandom(local.len-1)]); }
     }
     else { instance_create(0,0,dark_color_obj); }
-");
+');

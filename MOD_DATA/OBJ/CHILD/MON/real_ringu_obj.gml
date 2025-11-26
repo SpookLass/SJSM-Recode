@@ -229,7 +229,7 @@ object_event_add
 ');
 // Destroy Event
 object_event_add
-(argument0,ev_destroy,0,"
+(argument0,ev_destroy,0,'
     event_inherited();
     if instance_number(object_index) <= 1
     {
@@ -241,9 +241,18 @@ object_event_add
         { fmod_snd_free_scr(snd_arr[local.i,0]); }
         if wake_snd_var[0] { fmod_snd_free_scr(wake_snd_var[1]); }
     }
-    with ringu_static_eff_obj
-    { if par_var == other.id { instance_destroy(); }}
-");
+    if eff_fog_var
+    {
+        with ringu_fog_eff_obj
+        { if par_var == other.id { instance_destroy(); }}
+    }
+    else
+    {
+        with ringu_static_eff_obj
+        { if par_var == other.id { instance_destroy(); }}
+    }
+
+');
 // Hurt Event
 object_event_add
 (argument0,ev_other,ev_user4,"

@@ -36,50 +36,73 @@ room_set_code
     d3d_start();
     global.draw_3d_var = true;
     // Doors
-    local.unlock = spawn_create_scr(true,true);
-    for (local.i=1; local.i<global.spawn_len_var; local.i+=1;)
+    local.lock = lock_scr();
+    local.gold = gold_scr(local.lock);
+    local.unlock = spawn_create_scr(true,local.lock);
+    // Bars
+    if local.lock
     {
-        if local.i != local.unlock
+        for (local.i=1; local.i<global.spawn_len_var; local.i+=1;)
         {
-            // Bars
-            switch local.i
+            if local.i != local.unlock
             {
-                case 1: { local.xtmp = 336; local.ytmp = 128; break; }
-                case 2: { local.xtmp = 432; local.ytmp = 128; break; }
-                case 3: { local.xtmp = 336; local.ytmp = 384; break; }
-                case 4: { local.xtmp = 432; local.ytmp = 384; break; }
+                // Bars
+                switch local.i
+                {
+                    case 1: { local.xtmp = 336; local.ytmp = 128; break; }
+                    case 2: { local.xtmp = 432; local.ytmp = 128; break; }
+                    case 3: { local.xtmp = 336; local.ytmp = 384; break; }
+                    case 4: { local.xtmp = 432; local.ytmp = 384; break; }
+                }
+                instance_create(local.xtmp,local.ytmp,bar_vert_obj);
             }
-            instance_create(local.xtmp,local.ytmp,bar_vert_obj);
         }
     }
-    local.left = local.unlock <= 2;
-    local.right = local.unlock >= 3;
-    // Left
-    local.torch = instance_create(256,208,torch_gold_north_obj);
-    local.torch.on_var = local.left;
-    local.torch = instance_create(320,208,torch_gold_north_obj);
-    local.torch.on_var = local.left;
-    local.torch = instance_create(448,208,torch_gold_north_obj);
-    local.torch.on_var = local.left;
-    // LL
-    local.torch = instance_create(304,128,torch_gold_west_obj);
-    local.torch.door_var = global.spawn_arr[1,4];
-    // LR
-    local.torch = instance_create(464,128,torch_gold_east_obj);
-    local.torch.door_var = global.spawn_arr[2,4];
-    // Right
-    local.torch = instance_create(256,304,torch_gold_south_obj);
-    local.torch.on_var = local.right;
-    local.torch = instance_create(320,304,torch_gold_south_obj);
-    local.torch.on_var = local.right;
-    local.torch = instance_create(448,304,torch_gold_south_obj);
-    local.torch.on_var = local.right;
-    // RL
-    local.torch = instance_create(304,384,torch_gold_west_obj);
-    local.torch.door_var = global.spawn_arr[3,4];
-    // RR
-    local.torch = instance_create(464,384,torch_gold_east_obj);
-    local.torch.door_var = global.spawn_arr[4,4];
+    // Gold effects
+    if local.gold
+    {
+        instance_create(0,0,maze_dark_color_obj);
+        instance_create(0,0,maze_dark_fog_obj);
+        local.left = local.unlock <= 2;
+        local.right = local.unlock >= 3;
+        // Left
+        local.torch = instance_create(256,208,torch_gold_north_obj);
+        local.torch.on_var = local.left;
+        local.torch = instance_create(320,208,torch_gold_north_obj);
+        local.torch.on_var = local.left;
+        local.torch = instance_create(448,208,torch_gold_north_obj);
+        local.torch.on_var = local.left;
+        // LL
+        local.torch = instance_create(304,128,torch_gold_west_obj);
+        local.torch.door_var = global.spawn_arr[1,4];
+        // LR
+        local.torch = instance_create(464,128,torch_gold_east_obj);
+        local.torch.door_var = global.spawn_arr[2,4];
+        // Right
+        local.torch = instance_create(256,304,torch_gold_south_obj);
+        local.torch.on_var = local.right;
+        local.torch = instance_create(320,304,torch_gold_south_obj);
+        local.torch.on_var = local.right;
+        local.torch = instance_create(448,304,torch_gold_south_obj);
+        local.torch.on_var = local.right;
+        // RL
+        local.torch = instance_create(304,384,torch_gold_west_obj);
+        local.torch.door_var = global.spawn_arr[3,4];
+        // RR
+        local.torch = instance_create(464,384,torch_gold_east_obj);
+        local.torch.door_var = global.spawn_arr[4,4];
+    }
+    else
+    {
+        instance_create(0,0,color_control_bright_obj);
+        instance_create(0,0,fog_01_obj);
+        instance_create(256,208,torch_north_obj);
+        instance_create(320,208,torch_north_obj);
+        instance_create(256,304,torch_south_obj);
+        instance_create(320,304,torch_south_obj);
+        instance_create(448,208,torch_north_obj);
+        instance_create(448,304,torch_south_obj);
+    }
 ");
 // Room settings
 room_set_width(argument0,1280);
@@ -90,8 +113,6 @@ for (local.i=0; local.i<8; local.i+=1;)
 { room_set_view(argument0,local.i,false,0,0,1280,720,0,0,1280,720,32,32,-1,-1,noone); }
 room_set_view(argument0,0,true,0,0,1280,720,0,0,1280,720,32,32,-1,-1,noone);
 // Effects
-room_instance_add(argument0,0,0,maze_dark_fog_obj);
-room_instance_add(argument0,0,0,maze_dark_color_obj);
 room_instance_add(argument0,0,0,rand_mon_spawn_obj);
 // Floors
 room_instance_add(argument0,224,256,floor_obj);
