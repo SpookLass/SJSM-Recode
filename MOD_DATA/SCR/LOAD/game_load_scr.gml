@@ -1,3 +1,18 @@
+// Set variables
+window_set_color(make_color_rgb(30,0,50));
+texture_set_repeat(true);
+action_set_cursor(-1,false);
+draw_set_color(c_white);
+draw_set_alpha(1);
+d3d_set_lighting(false);
+d3d_set_culling(false);
+d3d_set_hidden(false);
+draw_set_font(main_font);
+splash_set_close_button(false);
+global.game_spd_var = 1;
+// Draw Text
+draw_set_halign(fa_center); draw_set_valign(fa_bottom);
+set_automatic_draw(false);
 // execute_file(main_directory_const+"\SCR\LOAD\scr_load_scr.gml");
 joy_ini_scr();
 execute_file(main_directory_const+"\SCR\LOAD\set_load_scr.gml");
@@ -92,18 +107,9 @@ global.mon_spawn_list = ds_list_create();
 ds_list_clear(global.mon_spawn_list);
 global.mon_curr_list = ds_list_create();
 ds_list_clear(global.mon_curr_list);
-// Set variables
-window_set_color(make_color_rgb(30,0,50));
-texture_set_repeat(true);
-action_set_cursor(-1,false);
-draw_set_color(c_white);
-draw_set_alpha(1);
-d3d_set_lighting(false);
-d3d_set_culling(false);
-d3d_set_hidden(false);
-draw_set_font(main_font);
-global.game_spd_var = 1;
+// Stop drawing text
+draw_set_halign(fa_left); draw_set_valign(fa_top);
 // Load
 global.player_len_var = 1;
 instance_create(0,0,global.control_obj);
-room_goto_scr(menu_rm);
+room_goto_scr(splash_rm);

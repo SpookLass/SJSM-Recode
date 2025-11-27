@@ -9,12 +9,18 @@ fmod_set_group_vol_scr(snd_group_mon_const,global.mon_vol_var/100);
 fmod_set_group_vol_scr(snd_group_mus_const,global.mus_vol_var/100);
 fmod_set_group_vol_scr(snd_group_voice_const,global.voice_vol_var/100);
 // Get the first file in the main directory
+local.i = 0;
 // Wave
 local.file = file_find_first(main_directory_const+"\SND\MAIN\*.wav",-1);
 while (local.file != "")
 {
     file_to_snd_scr(main_directory_const+"\SND\MAIN\"+local.file,filename_change_ext(local.file,""),false,snd_group_sfx_const,argument0);
     local.file = file_find_next();
+    local.i += 1;
+    // Draw
+    draw_clear_alpha(c_black,0);
+    draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading sounds ("+string(local.i)+")...",1,1,0);
+    screen_refresh();
 }
 file_find_close();
 // MP3
@@ -23,6 +29,11 @@ while (local.file != "")
 {
     file_to_snd_scr(main_directory_const+"\SND\MAIN\"+local.file,filename_change_ext(local.file,""),false,snd_group_sfx_const,argument0);
     local.file = file_find_next();
+    local.i += 1;
+    // Draw
+    draw_clear_alpha(c_black,0);
+    draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading sounds ("+string(local.i)+")...",1,1,0);
+    screen_refresh();
 }
 file_find_close();
 // OGG
@@ -31,37 +42,17 @@ while (local.file != "")
 {
     file_to_snd_scr(main_directory_const+"\SND\MAIN\"+local.file,filename_change_ext(local.file,""),false,snd_group_sfx_const,argument0);
     local.file = file_find_next();
+    local.i += 1;
+    // Draw
+    draw_clear_alpha(c_black,0);
+    draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading sounds ("+string(local.i)+")...",1,1,0);
+    screen_refresh();
 }
 file_find_close();
-// Mod stuff
-for (local.i=0; local.i<ds_list_size(global.mod_list); local.i+=1;)
-{
-    local.dir = ds_list_find_value(global.mod_list,local.i);
-    // Wave
-    local.file = file_find_first(local.dir+"\SND\MAIN\*.wav",-1);
-    while (local.file != "")
-    {
-        file_to_snd_scr(local.dir+"\SND\MAIN\"+local.file,filename_change_ext(local.file,""),false,snd_group_sfx_const,argument0);
-        local.file = file_find_next();
-    }
-    file_find_close();
-    // MP3
-    local.file = file_find_first(local.dir+"\SND\MAIN\*.mp3",-1);
-    while (local.file != "")
-    {
-        file_to_snd_scr(local.dir+"\SND\MAIN\"+local.file,filename_change_ext(local.file,""),false,snd_group_sfx_const,argument0);
-        local.file = file_find_next();
-    }
-    file_find_close();
-    // OGG
-    local.file = file_find_first(local.dir+"\SND\MAIN\*.ogg",-1);
-    while (local.file != "")
-    {
-        file_to_snd_scr(local.dir+"\SND\MAIN\"+local.file,filename_change_ext(local.file,""),false,snd_group_sfx_const,argument0);
-        local.file = file_find_next();
-    }
-    file_find_close();
-}
+// Draw
+draw_clear_alpha(c_black,0);
+draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading ambience...",1,1,0);
+screen_refresh();
 // Manual
 file_to_snd_scr(vanilla_directory_const+"\SND\AMB\AMB_01.mp3","amb_mus_01_snd",false,snd_group_mus_const,argument0);
 file_to_snd_scr(vanilla_directory_const+"\SND\AMB\AMB_02.mp3","amb_mus_02_snd",false,snd_group_mus_const,argument0);
@@ -74,3 +65,52 @@ file_to_snd_scr(vanilla_directory_const+"\SND\AMB\AMB_08.mp3","amb_mus_08_snd",f
 file_to_snd_scr(vanilla_directory_const+"\SND\AMB\AMB_09.mp3","amb_mus_09_snd",false,snd_group_mus_const,argument0);
 file_to_snd_scr(vanilla_directory_const+"\SND\AMB\AMB_10.mp3","amb_mus_10_snd",false,snd_group_mus_const,argument0);
 file_to_snd_scr(vanilla_directory_const+"\SND\AMB\AMB_11.mp3","amb_mus_11_snd",false,snd_group_mus_const,argument0);
+// Mod stuff
+for (local.i=0; local.i<ds_list_size(global.mod_list); local.i+=1;)
+{
+    local.dir = ds_list_find_value(global.mod_list,local.i);
+    local.i = 0;
+    // Wave
+    local.file = file_find_first(local.dir+"\SND\MAIN\*.wav",-1);
+    while (local.file != "")
+    {
+        file_to_snd_scr(local.dir+"\SND\MAIN\"+local.file,filename_change_ext(local.file,""),false,snd_group_sfx_const,argument0);
+        local.file = file_find_next();
+        local.i += 1;
+        // Draw
+        draw_clear_alpha(c_black,0);
+        draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading mod sounds ("+string(local.i)+")...",1,1,0);
+        screen_refresh();
+    }
+    file_find_close();
+    // MP3
+    local.file = file_find_first(local.dir+"\SND\MAIN\*.mp3",-1);
+    while (local.file != "")
+    {
+        file_to_snd_scr(local.dir+"\SND\MAIN\"+local.file,filename_change_ext(local.file,""),false,snd_group_sfx_const,argument0);
+        local.file = file_find_next();
+        local.i += 1;
+        // Draw
+        draw_clear_alpha(c_black,0);
+        draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading mod sounds ("+string(local.i)+")...",1,1,0);
+        screen_refresh();
+    }
+    file_find_close();
+    // OGG
+    local.file = file_find_first(local.dir+"\SND\MAIN\*.ogg",-1);
+    while (local.file != "")
+    {
+        file_to_snd_scr(local.dir+"\SND\MAIN\"+local.file,filename_change_ext(local.file,""),false,snd_group_sfx_const,argument0);
+        local.file = file_find_next();
+        local.i += 1;
+        // Draw
+        draw_clear_alpha(c_black,0);
+        draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading mod sounds ("+string(local.i)+")...",1,1,0);
+        screen_refresh();
+    }
+    file_find_close();
+}
+// Draw
+draw_clear_alpha(c_black,0);
+draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loaded sounds!",1,1,0);
+screen_refresh();

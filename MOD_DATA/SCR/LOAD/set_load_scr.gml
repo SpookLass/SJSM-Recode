@@ -1,3 +1,8 @@
+// Draw
+draw_clear_alpha(c_black,0);
+draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading settings...",1,1,0);
+screen_refresh();
+// Load
 ini_open("settings.ini");
 global.fov_var = ini_read_real("MAIN","fov",fov_const);
 global.fps_var = ini_read_real("MAIN","fps",fps_const);
@@ -34,10 +39,27 @@ global.mon_hud_var = ini_read_real("MAIN","mon_hud",mon_hud_const);
 global.rm_hud_var = ini_read_real("MAIN","rm_hud",rm_hud_const);
 global.bar_hud_var = ini_read_real("MAIN","bar_hud",bar_hud_const);
 global.tps_hud_var = ini_read_real("MAIN","tps_hud",tps_hud_const);
-// Controls
+// Controls & Multiplayer
 global.input_len_var = 24;
 for (local.i=0; local.i<8; local.i+=1;)
 {
+    // Multiplayer
+    global.player_name_var[local.i] = ini_read_string("MULTIPLAYER","name_"+string(local.i),"PLAYER "+string(local.i));
+    switch local.i
+    {
+        case 0: { local.color = make_color_rgb(127,0,255); break; }
+        case 1: { local.color = make_color_rgb(127,255,0); break; }
+        case 2: { local.color = make_color_rgb(255,127,0); break; }
+        case 3: { local.color = make_color_rgb(255,0,127); break; }
+        case 4: { local.color = make_color_rgb(0,255,127); break; }
+        case 5: { local.color = make_color_rgb(0,127,255); break; }
+        case 6: { local.color = make_color_rgb(255,255,255); break; }
+        case 7: { local.color = make_color_rgb(0,0,0); break; }
+    }
+    global.player_color_var[local.i] = ini_read_real("MULTIPLAYER","color_"+string(local.i),local.color);
+    global.player_spr_var[local.i] = ini_read_real("MULTIPLAYER","spr_"+string(local.i),0);
+    global.player_spr_id_var[local.i] = ini_read_real("MULTIPLAYER","spr_id_"+string(local.i),irandom(2));
+    // Controls
     global.sens_var[local.i] = ini_read_real("CONTROL","sens_"+string(local.i),sens_const);
     global.joy_sens_var[local.i] = ini_read_real("CONTROL","joy_sens_"+string(local.i),joy_sens_const);
     global.invert_yaw_var[local.i] = ini_read_real("CONTROL","invert_yaw_"+string(local.i),invert_yaw_const);
@@ -75,9 +97,11 @@ ini_close();
 window_set_fullscreen(global.fullscreen_var);
 set_synchronization(global.vsync_var);
 texture_set_interpolation(global.anti_alias_var);
-
 global.save_list = ds_list_create();
 ds_list_clear(global.save_list);
-
 // Temporary lol
 global.js_chance_var = 5;
+// Draw (hope this works)
+draw_clear_alpha(c_black,0);
+draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loaded settings!",1,1,0);
+screen_refresh();

@@ -2,27 +2,24 @@
 Argument 0: Print
 */
 // Get the first file in the main directory
+local.i = 0;
 local.file = file_find_first(main_directory_const+"\BG\MAIN\*.png",-1);
 // Not sure why, but it doesn't include the path.
 while (local.file != "")
 {
     file_to_bg_scr(main_directory_const+"\BG\MAIN\"+local.file,filename_change_ext(local.file,""),false,false,argument0);
     local.file = file_find_next();
+    local.i += 1;
+    // Draw
+    draw_clear_alpha(c_black,0);
+    draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading textures ("+string(local.i)+")...",1,1,0);
+    screen_refresh();
 }
 file_find_close();
-// Mod stuff
-for (local.i=0; local.i<ds_list_size(global.mod_list); local.i+=1;)
-{
-    local.dir = ds_list_find_value(global.mod_list,local.i);
-    local.file = file_find_first(local.dir+"\BG\MAIN\*.png",-1);
-    while (local.file != "")
-    {
-        file_to_bg_scr(local.dir+"\BG\MAIN\"+local.file,filename_change_ext(local.file,""),false,false,argument0);
-        local.file = file_find_next();
-    }
-    file_find_close();
-}
 // Time for the manual stuff
+draw_clear_alpha(c_black,0);
+draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading vanilla textures...",1,1,0);
+screen_refresh();
 // Replaceable
 file_to_bg_scr(vanilla_directory_const+"\TEX\WALL_01.png","wall_bg",false,false,argument0);
 file_to_bg_scr(vanilla_directory_const+"\TEX\FLOOR_01.png","floor_bg",false,false,argument0);
@@ -97,3 +94,25 @@ file_to_bg_scr(vanilla_directory_const+"\MAT\ART\ART_12.png","art_12_bg",false,f
 file_to_bg_scr(vanilla_directory_const+"\MAT\ART\ART_13.png","art_13_bg",false,false,argument0);
 file_to_bg_scr(vanilla_directory_const+"\MAT\ART\ART_14.png","art_14_bg",false,false,argument0);
 file_to_bg_scr(vanilla_directory_const+"\MAT\ART\ART_15.png","art_15_bg",false,false,argument0);
+// Mod stuff
+for (local.i=0; local.i<ds_list_size(global.mod_list); local.i+=1;)
+{
+    local.dir = ds_list_find_value(global.mod_list,local.i);
+    local.i = 0;
+    local.file = file_find_first(local.dir+"\BG\MAIN\*.png",-1);
+    while (local.file != "")
+    {
+        file_to_bg_scr(local.dir+"\BG\MAIN\"+local.file,filename_change_ext(local.file,""),false,false,argument0);
+        local.file = file_find_next();
+        local.i += 1;
+        // Draw
+        draw_clear_alpha(c_black,0);
+        draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading mod textures ("+string(local.i)+")...",1,1,0);
+        screen_refresh();
+    }
+    file_find_close();
+}
+// Draw
+draw_clear_alpha(c_black,0);
+draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loaded textures!",1,1,0);
+screen_refresh();

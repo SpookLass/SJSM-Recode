@@ -1433,7 +1433,7 @@ object_event_add
                 }
 				
                 // Boot it up!
-                global.player_len_var = 1;
+                global.player_len_var = 2;
                 for (local.i=0; local.i<global.player_len_var; local.i+=1;)
                 {
                     local.player = instance_create(0,0,player_obj);
@@ -1446,19 +1446,12 @@ object_event_add
                     local.axe.par_var = local.player;
                     if global.player_len_var > 1
                     {
-                        local.render = instance_create(0,0,player_render_obj);
-                        local.render.par_var = local.player;
-                        if global.player_len_var <= 4
+                        with instance_create(0,0,player_render_obj)
                         {
-                            switch local.i
-                            {
-                                case 1: { local.render.image_blend = make_color_rgb(64,128,0); break; }
-                                case 2: { local.render.image_blend = make_color_rgb(128,64,0); break; }
-                                case 3: { local.render.image_blend = make_color_rgb(128,0,64); break; }
-                                default: { local.render.image_blend = make_color_rgb(64,0,128); break; }
-                            }
+                            player_id_var = local.i;
+                            par_var = local.player;
+                            event_user(0);
                         }
-                        else { local.render.image_blend = make_color_hsv(255*local.i/global.player_len_var,255,128); }
                     }
                 }
 				instance_create(0,0,mus_control_obj);

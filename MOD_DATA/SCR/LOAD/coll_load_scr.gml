@@ -88,3 +88,7 @@ global.rm_size_var = 1280;
 global.grid_snap_var = 4;
 global.phys_grid = mp_grid_create(0,0,global.rm_size_var/global.grid_snap_var,global.rm_size_var/global.grid_snap_var,global.grid_snap_var,global.grid_snap_var);
 global.float_grid = mp_grid_create(0,0,global.rm_size_var/global.grid_snap_var,global.rm_size_var/global.grid_snap_var,global.grid_snap_var,global.grid_snap_var);
+// Draw
+draw_clear_alpha(c_black,0);
+draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loaded collisions!",1,1,0);
+screen_refresh();

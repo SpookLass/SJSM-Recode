@@ -1,6 +1,10 @@
 /*
 Argument 0: Print
 */
+// Draw
+draw_clear_alpha(c_black,0);
+draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading endless zones...",1,1,0);
+screen_refresh();
 global.zone_len_var = 10;
 // Zone 0: Basic
 global.zone_arr[0] = ds_list_create();
@@ -1091,6 +1095,10 @@ ds_list_add(global.zone_arr[11],w_hall_12_rm);
 ds_list_add(global.zone_arr[11],w_hall_13_rm);
 ds_list_add(global.zone_arr[11],w_hall_14_rm);
 ds_list_add(global.zone_arr[11],w_hall_15_rm);
+// Draw
+draw_clear_alpha(c_black,0);
+draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading story zones...",1,1,0);
+screen_refresh();
 // Story Zones
 global.story_zone_len_var = 11; // Will be 12
 // Story Zone 0: 0-50
@@ -1796,3 +1804,7 @@ global.zone_num_var = 0;
 global.zone_var = global.zone_arr[global.zone_num_var];
 global.rm_list_var = ds_list_create();
 zone_reset_scr();
+// Draw
+draw_clear_alpha(c_black,0);
+draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loaded zones!",1,1,0);
+screen_refresh();

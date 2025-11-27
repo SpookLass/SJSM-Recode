@@ -16,8 +16,12 @@ while file_exists(vanilla_directory_const+"\TEX\FLOOR_"+local.index_str+'.png')
     global.tex_arr[global.tex_len_var,4] = vanilla_directory_const+"\TEX\WALL_"+local.index_str+"L0.png";
     if argument0 { show_message("Added tex set "+local.index_str+" at index "+string(global.tex_len_var)); }
     global.tex_len_var += 1;
+    // Draw
+    draw_clear_alpha(c_black,0);
+    draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading texture sets ("+string(local.index)+")...",1,1,0);
+    screen_refresh();
+    // Index
     local.index += 1;
-    
     if local.index < 10 { local.index_str = '0'+string(local.index); }
     else { local.index_str = string(local.index); }
 }
@@ -36,8 +40,16 @@ while file_exists(vanilla_directory_const+"\EM\TEX\EM_FLOOR_"+local.index_str+'.
     global.tex_arr[global.tex_len_var,4] = vanilla_directory_const+"\EM\TEX\EM_WALL_"+local.index_str+"L0.png";
     if argument0 { show_message("Added tex set EM"+local.index_str+" at index "+string(global.tex_len_var)); }
     global.tex_len_var += 1;
+    // Draw
+    draw_clear_alpha(c_black,0);
+    draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading endless texture sets ("+string(local.index)+")...",1,1,0);
+    screen_refresh();
+    // Index
     local.index += 1;
-    
     if local.index < 10 { local.index_str = '0'+string(local.index); }
     else { local.index_str = string(local.index); }
 }
+// Draw
+draw_clear_alpha(c_black,0);
+draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loaded texture sets!",1,1,0);
+screen_refresh();

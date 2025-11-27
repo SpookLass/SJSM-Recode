@@ -15,8 +15,8 @@ object_event_add
     rand_rate_var = 30;
     state_var = !irandom(1);
     // Scale
-    image_xscale = 4;
-    image_yscale = random_range(4,6);
+    image_xscale = 1;
+    image_yscale = random_range(1,1.5);
     // Alpha
     alpha_min_var = 0;
     alpha_max_var = 0.7;
@@ -47,7 +47,7 @@ object_event_add
 // Alarm 0 Event (Random)
 object_event_add
 (argument0,ev_alarm,0,'
-    if !irandom(1) { image_yscale = random_range(4,6); }
+    if !irandom(1) { image_yscale = random_range(1,1.5); }
     else { spr_id_var = irandom(sprite_get_number(spr_var)-1); }
     if !irandom(2) { state_var = !state_var; }
     set_alarm_scr(0,rand_rate_var);
@@ -74,15 +74,15 @@ object_event_add
 (argument0,ev_draw,0,'
     if global.cam_type_var[view_current] == cam_alive_const
     {
-        if view_wview[view_current] >= view_hview[view_current]
-        { local.scale = view_hview[view_current]/720; }
-        else { local.scale = view_wview[view_current]/1280; }
         d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
         d3d_set_hidden(false);
-        draw_sprite_tiled_ext
+        draw_sprite_stretched_ext
         (
             spr_var,floor(spr_id_var),
-            x,y,local.scale*image_xscale,local.scale*image_yscale,
+            -view_wview[view_current]*((image_xscale-1)/2),
+            -view_hview[view_current]*((image_yscale-1)/2),
+            view_wview[view_current]*image_xscale,
+            view_hview[view_current]*image_yscale,
             image_blend,image_alpha
         );
         d3d_set_hidden(true);
