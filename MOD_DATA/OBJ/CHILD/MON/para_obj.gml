@@ -403,15 +403,16 @@ object_event_add
         if !enter_var
         {
             if check_path_var && mp_grid_path(grid_var,path_var,x,y,target_x_var,target_y_var,true)
-            { local.target_dist = path_get_length(path_var); }
+            { local.target_dist = max(target_dist_var,path_get_length(path_var)); }
             else { local.target_dist = target_dist_var; }
             if check_all_var
             {
                 with (echidna_obj)
                 {
-                    if target_dist_var > 0
+                    if on_var && !enter_var
                     {
-                        if other.check_path_var && type_var > 0 && instance_exists(target_var) { local.dist = path_get_length(path_var); }
+                        if other.check_path_var && type_var > 0 
+                        { local.dist = max(target_dist_var,path_get_length(path_var)); }
                         else { local.dist = target_dist_var; }
                         if local.dist < local.target_dist && local.dist > 0 { local.target_dist = local.dist; }
                     }

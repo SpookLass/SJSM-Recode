@@ -207,7 +207,8 @@ object_event_add
     // Make sure the room isnt golden
     if dark_var
     {
-        with (torch_obj) { if !gold_var { on_var = false; }}
+        with torch_obj { if !gold_var { on_var = false; }}
+        with candle_obj { if !gold_var { on_var = false; }}
         with color_par_obj { if prio_var < other.color_prio_var { instance_destroy(); }}
         if !instance_exists(color_par_obj)
         {

@@ -527,6 +527,15 @@ object_event_add
     custom_button_arr[custom_button_len_var,7] = true; // Behavior / Difficulty
     custom_button_arr[custom_button_len_var,9] = "mon_chance_mult_const"; // Default
     custom_button_len_var += 1;
+        // Chance Mult
+    custom_button_arr[custom_button_len_var,1] = ini_read_string("MENU","js_chance","MENU_js_chance");
+    custom_button_arr[custom_button_len_var,2] = "Temp"; // Description
+    custom_button_arr[custom_button_len_var,3] = 1; // Type (Number)
+    custom_button_arr[custom_button_len_var,4] = false; // Wrap Value
+    custom_button_arr[custom_button_len_var,6] = "js_chance"; // Global variable to modify
+    custom_button_arr[custom_button_len_var,7] = false; // Behavior / Difficulty
+    custom_button_arr[custom_button_len_var,9] = "js_chance_const"; // Default
+    custom_button_len_var += 1;
         // Behavior
     custom_button_arr[custom_button_len_var,1] = ini_read_string("MENU","type","MENU_type");
     custom_button_arr[custom_button_len_var,3] = -1; // Type (Behavior)
@@ -1433,7 +1442,7 @@ object_event_add
                 }
 				
                 // Boot it up!
-                global.player_len_var = 2;
+                global.player_len_var = 1;
                 for (local.i=0; local.i<global.player_len_var; local.i+=1;)
                 {
                     local.player = instance_create(0,0,player_obj);

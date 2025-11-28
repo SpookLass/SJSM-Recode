@@ -463,17 +463,17 @@ object_event_add
     }
     if do_fog_var
     {
-        with (fog_par_obj) { instance_destroy(); }
+        with fog_par_obj { instance_destroy(); }
         with color_par_obj { instance_destroy(); }
         with torch_obj
         {
             if !gold_var
             {
-
+                if other.no_fun_var { visible = false; }
+                on_var = false;
             }
-            if other.no_fun_var { visible = false; }
-            on_var = false;
         }
+        with candle_obj { if !gold_var { on_var = false; }}
         with color_par_obj { if prio_var < other.color_prio_var { instance_destroy(); }}
         if !instance_exists(color_par_obj)
         { with instance_create(0,0,bright_color_obj) { prio_var = other.color_prio_var; }}

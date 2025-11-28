@@ -40,6 +40,7 @@ global.count_end_var = ini_read_real("SETTING","count_end",1000);
 global.dupe_var = ini_read_real("SETTING","dupe",dupe_canon_const);
 global.mon_chance_var = ini_read_real("SETTING","mon_chance",mon_chance_const);
 global.mon_chance_mult_var = ini_read_real("SETTING","mon_chance_mult",mon_chance_mult_const);
+global.js_chance_var = ini_read_real("SETTING","js_chance",js_chance_const);
 // Behavior stuff
 global.default_type_var = ini_read_real("BEHAVIOR","type",0);
 global.player_type_var = ini_read_real("BEHAVIOR","player_type",global.default_type_var);
@@ -52,6 +53,7 @@ global.pup_type_var = ini_read_real("BEHAVIOR","pup_type",global.default_type_va
 global.flesh_type_var = ini_read_real("BEHAVIOR","flesh_type",global.default_type_var);
 global.dl_type_var = ini_read_real("BEHAVIOR","dl_type",global.default_type_var);
 global.taker_type_var = ini_read_real("BEHAVIOR","taker_type",global.default_type_var);
+global.eel_type_var = ini_read_real("BEHAVIOR","eel_type",global.default_type_var);
 global.para_type_var = ini_read_real("BEHAVIOR","para_type",global.default_type_var);
 global.fd_type_var = ini_read_real("BEHAVIOR","fd_type",global.default_type_var);
 global.killer_type_var = ini_read_real("BEHAVIOR","killer_type",global.default_type_var);

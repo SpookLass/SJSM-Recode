@@ -39,7 +39,7 @@ object_event_add
 object_event_add
 (argument0,ev_alarm,0,'
     fmod_snd_play_scr(snd_var);
-    with (real_ringu_obj)
+    with real_ringu_obj
     { event_user(15); }
     set_alarm_scr(0,alarm_var);
 ');

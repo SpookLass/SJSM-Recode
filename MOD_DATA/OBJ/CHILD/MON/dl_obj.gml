@@ -293,9 +293,9 @@ object_event_add
             { local.bool = (global.input_press_arr[confirm_input_const,player_id_var] && target_dist_var > 0); }
             else
             {
-                if type_var > 0 { local.dist = path_get_length(path_var); }
+                if type_var > 0 { local.dist = max(target_dist_var,path_get_length(path_var)); }
                 else { local.dist = target_dist_var; } 
-                local.bool = (local.dist >= warp_dist_var && target_dist_var > 0)
+                local.bool = (local.dist >= warp_dist_var && local.dist > 0)
             }
             if local.bool
             {
@@ -322,28 +322,31 @@ object_event_add
     /*local.xvec = (x-target_x_var)/target_dist_var;
     local.yvec = (y-target_y_var)/target_dist_var;
     local.zvec = (z-target_z_var)/target_dist_var;*/
+    temp_var = -1;
     local.dist_2d = point_distance(start_x_var,start_y_var,target_x_var,target_y_var);
-    local.xvec = (start_x_var-target_x_var)/local.dist_2d;
-    local.yvec = (start_y_var-target_y_var)/local.dist_2d;
-    local.zvec = 0;
-    // Calculate warp
-    local.dist = check_ray_scr(target_x_var,target_y_var,target_z_var+(target_var.coll_var[1]/2),local.xvec,local.yvec,local.zvec);
-    local.dir = point_direction(target_x_var,target_y_var,start_x_var,start_y_var);
-    local.xtmp = target_x_var+lengthdir_x(local.dist-coll_var[2],local.dir);
-    local.ytmp = target_y_var+lengthdir_y(local.dist-coll_var[2],local.dir);
-    local.ztmp = target_z_var;
-    if target_dist_var > local.dist
+    if local.dist_2d > 0 // Still not sure whats causing this
     {
-        if !check_coll_scr(-1,0,0,0,local.xtmp,local.ytmp,local.ztmp)
+        local.xvec = (start_x_var-target_x_var)/local.dist_2d;
+        local.yvec = (start_y_var-target_y_var)/local.dist_2d;
+        local.zvec = 0;
+        // Calculate warp
+        local.dist = check_ray_scr(target_x_var,target_y_var,target_z_var+(target_var.coll_var[1]/2),local.xvec,local.yvec,local.zvec);
+        local.dir = point_direction(target_x_var,target_y_var,start_x_var,start_y_var);
+        local.xtmp = target_x_var+lengthdir_x(local.dist-coll_var[2],local.dir);
+        local.ytmp = target_y_var+lengthdir_y(local.dist-coll_var[2],local.dir);
+        local.ztmp = target_z_var;
+        if target_dist_var > local.dist
         {
-            warp_x_var = local.xtmp;
-            warp_y_var = local.ytmp;
-            warp_z_var = local.ztmp;
-            temp_var = true;
+            if !check_coll_scr(-1,0,0,0,local.xtmp,local.ytmp,local.ztmp)
+            {
+                warp_x_var = local.xtmp;
+                warp_y_var = local.ytmp;
+                warp_z_var = local.ztmp;
+                temp_var = true;
+            }
+            else { temp_var = false; }
         }
-        else { temp_var = false; }
     }
-    else { temp_var = -1; }
 ');
 // Warp alarm
 object_event_add

@@ -11,12 +11,12 @@ object_event_add
 (argument0,ev_create,0,'
     event_inherited();
     // Bounding Box
-    w_var = 128;
-    l_var = 128;
+    w_var = 256;
+    l_var = 256;
     h_var = 128;
     // Particles
     part_len_var = 100;
-    part_spawn_var = 1;
+    part_spawn_var = 4;
     do_coll_var = true;
     // Ring
     do_ring_var = false;

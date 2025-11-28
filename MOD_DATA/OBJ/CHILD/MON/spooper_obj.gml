@@ -27,6 +27,7 @@ object_event_add
         }
     }
     txt_lock_var = ini_read_string("UI","spooper","UI_spooper");
+    loop_snd_var[2] = string_replace(ini_read_string("SUB","spooper","SUB_spooper"),"@n",name_var);
     ini_close();
     type_var = 0;
     spd_base_var = 3;
@@ -39,6 +40,10 @@ object_event_add
     h_var = 20;
     z_off_var = 3;
     dupe_var = dupe_never_const;
+    // Sounds
+    do_snd_var = false;
+    loop_snd_var[0] = true;
+    loop_snd_dist_max_var = 600;
     // Special
     do_seen_var = true;
     seen_dist_var = 8;
@@ -104,6 +109,7 @@ object_event_add
             other.puke_snd_var = puke_snd_var;
             other.choke_01_snd_var = choke_01_snd_var;
             other.choke_02_snd_var = choke_02_snd_var;
+            other.loop_snd_var[1] = loop_snd_var[1];
             other.mus_snd_var = mus_snd_var;
             other.dur_var = dur_var;
             local.loaded = true;
@@ -126,6 +132,7 @@ object_event_add
         choke_01_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\spooper_choke_01_snd.wav");
         choke_02_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\spooper_choke_02_snd.wav");
         mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\SPOOPER_AMB.mp3");
+        loop_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\spooper_loop_snd.wav",true);
         dur_var = irandom_range(24,31);
     }
     fetus_tex_var = background_get_texture(fetus_bg_var);
@@ -153,6 +160,13 @@ object_event_add
             puke_alarm_02_var = 120;
             puke_alarm_03_var = 72;
             door_chance_var = 3;
+            do_snd_var = true;
+            // Silhouette
+            sil_var = true;
+            sil_type_var = 1; // Pure color
+            sil_color_var = make_color_rgb(59,1,21);
+            sil_alpha_var = 0.2;
+            sil_dist_var = 0.1;
             break;
         }
         case 3: // Old HD
@@ -202,6 +216,7 @@ object_event_add
         fmod_snd_free_scr(choke_01_snd_var);
         fmod_snd_free_scr(choke_02_snd_var);
         fmod_snd_free_scr(puke_snd_var);
+        fmod_snd_free_scr(loop_snd_var[1]);
         fmod_snd_free_scr(mus_snd_var);
     }
     with spooper_puke_obj { if par_var == other.id { instance_destroy(); }}
@@ -253,6 +268,7 @@ object_event_add
         on_var = false;
         set_motion_3d_scr(0,true);
         reset_alarm_scr();
+        fmod_inst_stop_scr(loop_inst_var);
     }
     else
     {
@@ -301,12 +317,14 @@ object_event_add
             on_var = false;
             set_motion_3d_scr(0,true);
             reset_alarm_scr();
+            fmod_inst_stop_scr(loop_inst_var);
         }
         if local.start >= puke_start_var && frac_chance_scr(global.player_len_var,puke_chance_var) && instance_number(mon_par_obj) <= 1 && !do_atk_var
         { set_alarm_scr(8,irandom_range(puke_delay_min_var,puke_delay_max_var)); }
         if local.start >= dark_start_var && frac_chance_scr(1,dark_chance_var)
         {
-            with (torch_obj) { if !gold_var { on_var = false; }}
+            with torch_obj { if !gold_var { on_var = false; }}
+            with candle_obj { if !gold_var { on_var = false; }}
             with color_par_obj { if prio_var < other.color_prio_var { instance_destroy(); }}
             if !instance_exists(color_par_obj)
             { with instance_create(0,0,dark_color_obj) { prio_var = other.color_prio_var; }}
@@ -357,6 +375,7 @@ object_event_add
                     on_var = false;
                     set_motion_3d_scr(0,true);
                     reset_alarm_scr();
+                    fmod_inst_stop_scr(loop_inst_var);
                 }
             }
         }
@@ -523,6 +542,7 @@ object_event_add
             on_var = false;
             set_motion_3d_scr(0,true);
             reset_alarm_scr();
+            fmod_inst_stop_scr(loop_inst_var);
         }
     }
 ');

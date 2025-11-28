@@ -42,6 +42,7 @@ ini_write_real("SETTING","count_end",global.count_end_var);
 ini_write_real("SETTING","dupe",global.dupe_var);
 ini_write_real("SETTING","mon_chance",global.mon_chance_var);
 ini_write_real("SETTING","mon_chance_mult",global.mon_chance_mult_var);
+ini_write_real("SETTING","js_chance",global.js_chance_var);
 // Behavior stuff
 ini_write_real("BEHAVIOR","type",global.default_type_var);
 ini_write_real("BEHAVIOR","player_type",global.player_type_var);
@@ -54,6 +55,7 @@ ini_write_real("BEHAVIOR","pup_type",global.pup_type_var);
 ini_write_real("BEHAVIOR","flesh_type",global.flesh_type_var);
 ini_write_real("BEHAVIOR","dl_type",global.dl_type_var);
 ini_write_real("BEHAVIOR","taker_type",global.taker_type_var);
+ini_write_real("BEHAVIOR","eel_type",global.eel_type_var);
 ini_write_real("BEHAVIOR","para_type",global.para_type_var);
 ini_write_real("BEHAVIOR","fd_type",global.fd_type_var);
 ini_write_real("BEHAVIOR","killer_type",global.killer_type_var);

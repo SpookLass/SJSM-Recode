@@ -99,8 +99,6 @@ set_synchronization(global.vsync_var);
 texture_set_interpolation(global.anti_alias_var);
 global.save_list = ds_list_create();
 ds_list_clear(global.save_list);
-// Temporary lol
-global.js_chance_var = 5;
 // Draw (hope this works)
 draw_clear_alpha(c_black,0);
 draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loaded settings!",1,1,0);
