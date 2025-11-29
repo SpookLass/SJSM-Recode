@@ -284,7 +284,11 @@ object_event_add
         clear_time_var = path_get_length(path_var)/local.spd;
         walk_clear_time_var = path_get_length(path_var)/spd_base_var;
     } 
-    else { clear_time_var = -1; }
+    else
+    {
+        clear_time_var = -1;
+        walk_clear_time_var = -1;
+    }
     // Start room
     taker_spawn_var = false;
     if !global.stam_per_var

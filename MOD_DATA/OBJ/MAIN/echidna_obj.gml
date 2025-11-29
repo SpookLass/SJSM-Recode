@@ -474,8 +474,8 @@ object_event_add
             x = target_x_var;
             y = target_y_var;
             z = target_z_var;
-            do_coll_var = true;
             enter_var = false;
+            if type_var > 0 { do_coll_var = true; }
             if possess_var
             {
                 with instance_create(0,0,fade_eff_obj)

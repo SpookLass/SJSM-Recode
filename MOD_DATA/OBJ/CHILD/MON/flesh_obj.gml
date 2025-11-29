@@ -35,6 +35,7 @@ object_event_add
     path_prec_var = 32;
     dupe_var = dupe_never_const;
     alarm_len_var = 1;
+    color_var = true;
     // Fog
     fog_color_var = make_color_rgb(135,10,24);
     fog_prio_var = 2;
@@ -71,6 +72,7 @@ object_event_add
         light_floor_spr_var = sprite_add(main_directory_const+"\SPR\MON\flesh_light_floor_spr.png",2,false,false,0,0);
         overlay_bg_var = background_add(main_directory_const+"\BG\MON\flesh_overlay_bg.png",false,false);
         mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\flesh_mus_snd.mp3");
+        fmod_snd_set_loop_point_scr(mus_snd_var,5/22,9/11); // Ohhh 9/11
         fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
     }
     // Behavior
@@ -131,6 +133,9 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_room_start,'
     event_inherited();
+    // Color
+    if !color_var || !instance_exists(color_par_obj) || global.color_var == 1
+    { image_blend = c_white; }
     // Reset Position
     yaw_var = global.spawn_arr[0,3];
     x = global.spawn_arr[0,0]-lengthdir_x(32,yaw_var);
@@ -156,17 +161,20 @@ object_event_add
                     local.per = local.i/local.check;
                     local.xtmp = path_get_x(path_var,local.per);
                     local.ytmp = path_get_y(path_var,local.per);
-                    local.dist = point_line_dist_scr(other.x,other.y,other.yaw_var,local.xtmp,local.ytmp);
-                    if local.nerf { local.time = walk_clear_time_var; } else { local.time = clear_time_var; }
-                    local.newdelay = (local.time*local.per)-(local.dist/other.spd_base_var);
+                    local.dist = point_line_dist_scr(other.x,other.y,other.yaw_var+90,local.xtmp,local.ytmp);
+                    local.fleshtime = local.dist/other.spd_base_var;
+                    if local.nerf { local.time = walk_clear_time_var*local.per; }
+                    else { local.time = clear_time_var*local.per; }
+                    local.newdelay = local.time-local.fleshtime;
                     local.delay = max(local.delay,local.newdelay);
                     /*show_message("Percentage: "+string(local.per)+"
 X: "+string(local.xtmp)+"
 Y: "+string(local.ytmp)+"
 Flesh Distance: "+string(local.dist)+"
 Flesh Time: "+string(local.fleshtime)+"
-Player Time: "+string(local.playertime)+"
-Difference: "+string(local.newdelay)+"");*/
+Player Time: "+string(local.time)+"
+Difference: "+string(local.newdelay)+"
+");*/
                 }
             }
         }
@@ -200,6 +208,28 @@ Difference: "+string(local.newdelay)+"");*/
             fog_end_var = other.fog_end_var;
             fog_dark_var = false;
             event_user(0);
+        }
+    }
+    // Skybox
+    fog_immune_var = instance_exists(skybox_par_obj);
+    if fog_immune_var
+    {
+        with skybox_par_obj { instance_destroy(); }
+        with rain_part_obj { instance_destroy(); }
+        with instance_create(0,0,skybox_par_obj)
+        {
+            dist_var = 320;
+            side_tex_var = other.tex_var;
+            top_tex_var = other.tex_var;
+            bottom_tex_var = other.tex_var;
+            top_tex_w_var *= 10;
+            top_tex_h_var *= 10;
+            bottom_tex_w_var *= 10;
+            bottom_tex_h_var *= 10;
+            side_tex_w_var *= 10;
+            side_tex_h_var *= 10;
+            type_var = 1;
+            step_var = 12;
         }
     }
     // Delay
@@ -256,13 +286,15 @@ object_event_add
 (argument0,ev_draw,0,'
     if on_var
     {
+        if fog_immune_var { d3d_set_fog(false,c_black,0,0); }
         draw_set_color(image_blend); draw_set_alpha(image_alpha);
         d3d_transform_set_identity();
         d3d_transform_add_rotation_y(angle_var);
         d3d_transform_add_rotation_z(yaw_var);
         d3d_transform_add_translation(x,y,z);
-        d3d_draw_wall(0,-320,320,0,320,-320,tex_var,20,20);
+        d3d_draw_wall(0,320,320,0,-320,-320,tex_var,20,20);
         d3d_transform_set_identity();
         draw_set_color(c_white); draw_set_alpha(1);
+        if fog_immune_var { d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var); }
     }
 ');

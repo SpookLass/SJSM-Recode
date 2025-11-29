@@ -11,6 +11,7 @@ object_event_add
 (argument0,ev_create,0,'
     event_inherited();
     side_tex_var = sky_01_bg_tex;
+    bottom_tex_var = sky_02_bg_tex;
     top_tex_var = sky_02_bg_tex;
     dist_var = 16;
     light_delay_min_var = 60;

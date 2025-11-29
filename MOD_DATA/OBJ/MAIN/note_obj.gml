@@ -93,6 +93,7 @@ object_event_add
         par_var = other.id;
         player_id_var = other.player_id_var;
         cam_id_var = other.cam_id_var;
+        surf_var = other.surf_var;
         image_blend = other.image_blend;
         image_alpha = other.image_alpha;
     }
