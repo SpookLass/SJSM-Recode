@@ -130,7 +130,6 @@ object_event_add
     if string(name_var) == "0" { name_var = "Unknown"; }
     tone_var = c_white;
     // Gotta set type, delay, and duration
-    dur_start_var = dur_var;
     enter_var = type_var > 0;
     if do_move_var == 0 { do_move_var = true; }
     if do_atk_var == 0 { do_atk_var = true; }

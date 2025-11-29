@@ -62,7 +62,7 @@ object_event_add
         // Search for existing assets to save memory
     with object_index
     {
-        if id != other.id
+        if id != other.id && object_index == other.object_index
         {
             other.spr_var = spr_var;
             local.loaded = true;
@@ -92,24 +92,22 @@ object_event_add
         }
         case 3: // Old HD
         {
-            dmg_var = 60;
-            spr_spd_var = 1/15;
-            delay_min_var = 90;
-            delay_max_var = 180;
-            spd_base_var = 28/45; // 0.6r2
-            do_acc_var = true;
-            dmg_alarm_var = 180;
-            atk_stun_var = 0;
-            acc_var = 16/675; // 0.02r370
-            frick_var = acc_var;
-            break;
+            if local.set
+            {
+                dmg_var = 60;
+                delay_min_var = 90;
+                delay_max_var = 180;
+            }
         }
         case 2: // HD
         {
-            dmg_var = 15;
+            if !local.set
+            {
+                dmg_var = 15;
+                delay_min_var = 120;
+                delay_max_var = 240;
+            }
             spr_spd_var = 1/15;
-            delay_min_var = 120;
-            delay_max_var = 240;
             spd_base_var = 28/45; // 0.6r2
             do_acc_var = true;
             dmg_alarm_var = 180;
@@ -124,7 +122,8 @@ object_event_add
 object_event_add
 (argument0,ev_destroy,0,"
     event_inherited();
-    if instance_number(object_index) <= 1
+    with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
+    if !local.bool
     {
         sprite_delete(spr_var);
         for (local.i=0; local.i<snd_len_var; local.i+=1;)

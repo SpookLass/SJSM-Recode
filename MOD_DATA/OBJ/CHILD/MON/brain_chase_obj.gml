@@ -47,7 +47,7 @@ object_event_add
         // Search for existing assets to save memory
     with object_index
     {
-        if id != other.id
+        if id != other.id && object_index == other.object_index
         {
             other.loop_snd_var[1] = loop_snd_var[1];
             other.mus_snd_var = mus_snd_var;
@@ -89,7 +89,8 @@ object_event_add
 (argument0,ev_destroy,0,'
     event_inherited();
     with brain_eff_obj { if par_var == other.id { instance_destroy(); }}
-    if instance_number(object_index) <= 1
+    with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
+    if !local.bool
     {
         fmod_snd_free_scr(loop_snd_var[1]);
         fmod_snd_free_scr(mus_snd_var);

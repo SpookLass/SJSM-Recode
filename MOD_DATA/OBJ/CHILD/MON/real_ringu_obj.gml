@@ -59,7 +59,7 @@ object_event_add
         // Search for existing assets to save memory
     with object_index
     {
-        if id != other.id
+        if id != other.id && object_index == other.object_index
         {
             other.state_spr_var[0] = state_spr_var[0];
             other.state_spr_var[1] = state_spr_var[1];
@@ -231,7 +231,8 @@ object_event_add
 object_event_add
 (argument0,ev_destroy,0,'
     event_inherited();
-    if instance_number(object_index) <= 1
+    with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
+    if !local.bool
     {
         sprite_delete(state_spr_var[0]);
         sprite_delete(state_spr_var[1]);

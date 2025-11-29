@@ -281,9 +281,10 @@ object_event_add
             else { local.spd = spd_base_var*sprint_spd_mult_var; }
         }
         else { local.spd = spd_base_var; }
-        rm_clear_time_var = path_get_length(path_var)/local.spd;
+        clear_time_var = path_get_length(path_var)/local.spd;
+        walk_clear_time_var = path_get_length(path_var)/spd_base_var;
     } 
-    else { rm_clear_time_var = -1; }
+    else { clear_time_var = -1; }
     // Start room
     taker_spawn_var = false;
     if !global.stam_per_var

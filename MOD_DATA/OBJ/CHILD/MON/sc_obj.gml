@@ -92,7 +92,7 @@ object_event_add
         // Search for existing assets to save memory
     with object_index
     {
-        if id != other.id
+        if id != other.id && object_index == other.object_index
         {
             other.bg_var = bg_var;
             other.overlay_bg_var = overlay_bg_var;
@@ -142,7 +142,8 @@ object_event_add
 object_event_add
 (argument0,ev_destroy,0,'
     event_inherited();
-    if instance_number(object_index) <= 1
+    with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
+    if !local.bool
     {
         background_delete(bg_var);
         background_delete(overlay_bg_var);

@@ -114,7 +114,9 @@ object_event_add
         scale_time_var = (scale_time_var+global.delta_time_var) mod scale_rate_var;
         scale_var = scale_base_var+(sin(2*scale_time_var*pi/scale_rate_var)*scale_mult_var/2);
         path_speed = 10*global.delta_time_var;
+        // Draw Surface
         surface_set_target(surf_var);
+        draw_clear_alpha(c_black,0);
         d3d_set_projection_ortho(0,0,256,256,0);
         d3d_set_hidden(false);
         d3d_set_fog(false,c_black,0,0);

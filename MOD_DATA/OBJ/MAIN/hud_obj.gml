@@ -292,7 +292,7 @@ Looking
     Eye Pitch: "+string(par_var.eye_pitch_var)+"
 Clear Time
     Room Size: "+string(path_get_length(par_var.path_var))+"
-    Clear Time: "+string(par_var.rm_clear_time_var)+"
+    Clear Time: "+string(par_var.clear_time_var)+"
 Taker
     Taker: "+string(par_var.alarm_arr[3,0])+" / "+string(par_var.alarm_arr[3,1])
                 draw_text_transformed(0,128*scale_var,local.str,scale_small_var,scale_small_var,0);

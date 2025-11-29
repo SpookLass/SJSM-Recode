@@ -1,5 +1,5 @@
 // Builtin Variables
-object_set_depth(argument0,100);
+object_set_depth(argument0,101);
 object_set_mask(argument0,noone);
 object_set_parent(argument0,par_obj);
 object_set_persistent(argument0,true);
@@ -286,6 +286,7 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_room_start,'
     // Fix Delta
+    global.true_delta_time_var = 0;
     global.delta_time_var = 0;
     global.last_time_var = current_time;
     // FPS

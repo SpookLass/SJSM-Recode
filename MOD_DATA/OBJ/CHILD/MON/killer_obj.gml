@@ -177,7 +177,7 @@ object_event_add
     // Search for existing assets to save memory
     with object_index
     {
-        if id != other.id
+        if id != other.id && object_index == other.object_index
         {
             
             other.spr_arr_var[0,0] = spr_arr_var[0,0];
@@ -478,7 +478,8 @@ object_event_add
 object_event_add
 (argument0,ev_destroy,0,'
     event_inherited();
-    if instance_number(object_index) <= 1
+    with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
+    if !local.bool
     {
         fmod_snd_free_scr(main_mus_snd_var);
         fmod_snd_free_scr(hide_mus_snd_var);
@@ -509,14 +510,14 @@ object_event_add
 (argument0,ev_other,ev_room_start,'
     if scary_var
     {
-        if player_obj.rm_clear_time_var == -1
+        if player_obj.clear_time_var == -1
         {
             delay_min_var = 3600+(delay_var*instance_number(mon_par_obj));
             delay_max_var = delay_min_var;
         }
         else
         {
-            delay_min_var = player_obj.rm_clear_time_var+(delay_var*instance_number(mon_par_obj));
+            delay_min_var = player_obj.clear_time_var+(delay_var*instance_number(mon_par_obj));
             delay_max_var = delay_min_var;
         }
     }
