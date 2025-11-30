@@ -29,6 +29,16 @@ object_event_add
     set_alarm_scr(3,240);
     inst_var = fmod_snd_play_scr(kira_snd_var);
 ');
+// Room End
+object_event_add
+(argument0,ev_other,ev_room_end,'
+    sprite_delete(kira_spr_var);
+    sprite_delete(recode_spr_var);
+    sprite_delete(fmod_spr_var);
+    background_delete(warn_bg_var);
+    fmod_snd_free_scr(kira_snd_var);
+    fmod_snd_free_scr(amg_snd_var);
+');
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,'

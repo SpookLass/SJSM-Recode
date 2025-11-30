@@ -66,9 +66,9 @@ file_to_snd_scr(vanilla_directory_const+"\SND\AMB\AMB_09.mp3","amb_mus_09_snd",f
 file_to_snd_scr(vanilla_directory_const+"\SND\AMB\AMB_10.mp3","amb_mus_10_snd",false,snd_group_mus_const,argument0);
 file_to_snd_scr(vanilla_directory_const+"\SND\AMB\AMB_11.mp3","amb_mus_11_snd",false,snd_group_mus_const,argument0);
 // Mod stuff
-for (local.i=0; local.i<ds_list_size(global.mod_list); local.i+=1;)
+for (local.j=0; local.j<ds_list_size(global.mod_list); local.j+=1;)
 {
-    local.dir = ds_list_find_value(global.mod_list,local.i);
+    local.dir = ds_list_find_value(global.mod_list,local.j);
     local.i = 0;
     // Wave
     local.file = file_find_first(local.dir+"\SND\MAIN\*.wav",-1);

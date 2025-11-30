@@ -30,34 +30,50 @@ object_event_add
 // Room Start Event
 object_event_add
 (argument0,ev_other,ev_room_start,'
-    if !alarm_arr[0,2]
+    on_var = true;
+    with fog_par_obj
     {
-        set_alarm_scr(0,alarm_var);
-        // Reset
-        fog_start_var = fog_max_start_var;
-        fog_end_var = fog_max_end_var;
-        event_user(0);
+        if prio_var > other.prio_var { other.on_var = false; break; }
+        else { instance_destroy(); }
     }
-    else if alarm_arr[0,0] <= 0
-    { set_alarm_scr(0,alarm_var); }
+    visible = on_var;
+    if on_var
+    {
+        if !alarm_arr[0,2]
+        {
+            set_alarm_scr(0,alarm_var);
+            // Reset
+            fog_start_var = fog_max_start_var;
+            fog_end_var = fog_max_end_var;
+            event_user(0);
+        }
+        else if alarm_arr[0,0] <= 0
+        { set_alarm_scr(0,alarm_var); }
+    }
 ');
 // Alarm 0 Event
 object_event_add
 (argument0,ev_alarm,0,'
-    fmod_snd_play_scr(snd_var);
-    with real_ringu_obj
-    { event_user(15); }
-    set_alarm_scr(0,alarm_var);
+    if on_var
+    {
+        fmod_snd_play_scr(snd_var);
+        with real_ringu_obj
+        { event_user(15); }
+        set_alarm_scr(0,alarm_var);
+    }
 ');
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,'
-    event_inherited();
-    spr_id_var = (spr_id_var+(spr_spd_var*global.delta_time_var)) mod sprite_get_number(spr_var);
-    local.per = alarm_arr[0,0]/alarm_arr[0,1];
-    fog_start_var = fog_max_start_var*local.per;
-    fog_end_var = fog_max_end_var*local.per;
-    event_user(0);
+    if on_var
+    {
+        event_inherited();
+        spr_id_var = (spr_id_var+(spr_spd_var*global.delta_time_var)) mod sprite_get_number(spr_var);
+        local.per = alarm_arr[0,0]/alarm_arr[0,1];
+        fog_start_var = fog_max_start_var*local.per;
+        fog_end_var = fog_max_end_var*local.per;
+        event_user(0);
+    }
 ');
 // Draw Event
 object_event_add

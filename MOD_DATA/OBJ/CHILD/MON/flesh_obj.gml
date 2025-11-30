@@ -89,6 +89,8 @@ object_event_add
         }
         case 2: // HD
         {
+            delay_var = 0;
+            spd_base_var = 44/225; // 0.19r5
             break;
         }
     }
@@ -128,6 +130,7 @@ object_event_add
     }
     with flesh_tex_obj { if par_var == other.id { instance_destroy(); }}
     with flesh_eff_obj { if par_var == other.id { instance_destroy(); }}
+    with skybox_par_obj { if par_var == other.id { instance_destroy(); }}
 ');
 // Room Start Event
 object_event_add
@@ -218,22 +221,25 @@ Difference: "+string(local.newdelay)+"
         with rain_part_obj { instance_destroy(); }
         with instance_create(0,0,skybox_par_obj)
         {
+            par_var = other.id;
+            image_blend = other.image_blend;
             dist_var = 320;
             side_tex_var = other.tex_var;
             top_tex_var = other.tex_var;
             bottom_tex_var = other.tex_var;
-            top_tex_w_var *= 10;
-            top_tex_h_var *= 10;
-            bottom_tex_w_var *= 10;
-            bottom_tex_h_var *= 10;
-            side_tex_w_var *= 10;
-            side_tex_h_var *= 10;
+            top_tex_w_var *= 20;
+            top_tex_h_var *= 20;
+            bottom_tex_w_var *= 20;
+            bottom_tex_h_var *= 20;
+            side_tex_w_var *= 20;
+            side_tex_h_var *= 20;
             type_var = 1;
             step_var = 12;
         }
     }
     // Delay
-    set_alarm_scr(0,local.delay);
+    if local.delay <= 0 { event_perform(ev_alarm,0); }
+    else { set_alarm_scr(0,local.delay); }
 ');
 // Step
 object_event_add

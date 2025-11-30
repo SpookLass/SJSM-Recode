@@ -268,6 +268,11 @@ object_event_add
         fmod_snd_free_scr(loop_snd_var[1]);
         fmod_snd_free_scr(mus_snd_var);
     }
+    with hole_obj
+    {
+        if par_var == other.id
+        { instance_destroy(); }
+    }
     with bug_bod_obj
     {
         if par_var == other.id
@@ -432,7 +437,7 @@ object_event_add
     x = hole_x_var;
     y = hole_y_var;
     z = hole_z_var+32;
-    set_alarm_scr(0,hole_alarm_min_var,hole_alarm_max_var);
+    set_alarm_scr(0,irandom_range(hole_alarm_min_var,hole_alarm_max_var));
     with bug_bod_obj
     {
         if par_var == other.id

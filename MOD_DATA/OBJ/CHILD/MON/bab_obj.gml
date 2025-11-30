@@ -60,7 +60,6 @@ object_event_add
     snd_alarm_min_var = 80;
     snd_alarm_max_var = 240;
     snd_dist_max_var = 800;
-    hurt_snd_var = 4;
     // Special
     eff_var = true;
     eff_alpha_min_var = 0.2;

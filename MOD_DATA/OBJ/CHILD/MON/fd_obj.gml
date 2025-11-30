@@ -78,7 +78,6 @@ object_event_add
         snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\fd_02_snd.wav",true);
         snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\fd_03_snd.wav",true);
         snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\fd_04_snd.wav",true);
-        mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_mus_snd.mp3");
         wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\fd_wake_snd.wav",global.wake_3d_var);
         hurt_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\fd_hurt_snd.wav",true);
         mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\fd_mus_snd.mp3");
@@ -110,9 +109,11 @@ object_event_add
     spr_spd_base_var = 0.25;
     spr_spd_var = spr_spd_base_var;
     // Door vanish
+    hide_reset_var = false;
     hide_alarm_min_var = 160;
     hide_alarm_max_var = 320;
-    hide_chance_var = 2;
+    hide_num_var = 1;
+    hide_den_var = 2;
     hide_trig_var = true;
     hide_per_var = true;
     alarm_len_var = 9;
@@ -137,6 +138,7 @@ object_event_add
     {
         case 0:
         {
+            hide_reset_var = true;
             seen_pitch_var = 5.856;
             flame_var = true;
             dmg_var = 30;
@@ -154,6 +156,7 @@ object_event_add
         }
         case 2: // HD
         {
+            hide_reset_var = true; // Not certain on this
             flame_var = true;
             spd_base_var = 8/9; // 0.r8
             do_seen_var = false;
@@ -245,7 +248,7 @@ object_event_add
             flame_z_off_var = lerp_scr(flame_z_off_base_var*20,flame_z_off_base_var,local.per)
         }
     }
-    if is_seen_var == 1 && target_dist_var < seen_dist_var
+    if seen_var && is_seen_var == 1 && target_dist_var < seen_dist_var
     {
         if move_var { spd_mult_var *= seen_spd_mult_var; }
         spr_spd_var = spr_spd_seen_var;
@@ -293,7 +296,7 @@ object_event_add
 // Door!
 object_event_add
 (argument0,ev_alarm,8,'
-    if frac_chance_scr(hide_chance_var-1,door_chance_var) || door_hide_var
+    if frac_chance_scr(hide_num_var,hide_den_var) || (door_hide_var && hide_reset_var)
     {
         door_hide_var = !door_hide_var;
         with door_obj { visible = !other.door_hide_var; }
@@ -351,7 +354,7 @@ object_event_add
 ');
 // Draw
 object_event_add
-(argument0,ev_draw,0,"
+(argument0,ev_draw,0,'
     event_inherited();
     if flame_var && (on_var || visible_var)
     {
@@ -367,4 +370,4 @@ object_event_add
         if global.fog_dark_var 
         { d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var); }
     }
-")
+');

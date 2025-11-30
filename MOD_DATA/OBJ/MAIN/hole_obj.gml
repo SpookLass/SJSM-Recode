@@ -35,7 +35,7 @@ object_event_add
         if local.trigger
         {
             on_var = false;
-            with bug_obj
+            with echidna_obj
             {
                 if do_hole_var && !hole_var && !on_var && frac_chance_scr(hole_spawn_num_var,hole_spawn_den_var)
                 {
@@ -50,7 +50,7 @@ object_event_add
             with hole_obj { if on_var { local.last = false; }}
             if local.last
             {
-                with bug_obj
+                with echidna_obj
                 {
                     if do_hole_var && !hole_var && !on_var && door_var
                     {

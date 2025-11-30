@@ -94,6 +94,7 @@ object_event_add
     // Seen
     do_seen_var = true;
     seen_yaw_var = 30;
+    seen_type_var = 1;
     // State
     state_var = 0;
     state_chance_num_var = 175;
@@ -191,25 +192,23 @@ object_event_add
     {
         if !instance_exists(ringu_fog_eff_obj)
         {
-            with fog_par_obj { if prio_var < other.fog_prio_var { instance_destroy(); }}
-            if !instance_exists(fog_par_obj)
+            with instance_create(0,0,ringu_fog_eff_obj)
             {
-                with instance_create(0,0,ringu_fog_eff_obj)
-                {
-                    par_var = other.id;
-                    // Fog
-                    fog_max_start_var = other.eff_fog_start_var;
-                    fog_max_end_var = other.eff_fog_end_var;
-                    fog_start_var = fog_max_start_var;
-                    fog_end_var = fog_max_end_var;
-                    event_user(0);
-                    // Alarm
-                    alarm_arr[0,2] = other.eff_per_var;
-                    alarm_var = other.eff_alarm_var;
-                    set_alarm_scr(0,alarm_var);
-                    // Sound
-                    snd_var = other.cam_snd_var;
-                }
+                par_var = other.id;
+                prio_var = other.fog_prio_var;
+                // Fog
+                fog_max_start_var = other.eff_fog_start_var;
+                fog_max_end_var = other.eff_fog_end_var;
+                fog_start_var = fog_max_start_var;
+                fog_end_var = fog_max_end_var;
+                // Alarm
+                alarm_arr[0,2] = other.eff_per_var;
+                alarm_var = other.eff_alarm_var;
+                set_alarm_scr(0,alarm_var);
+                // Sound
+                snd_var = other.cam_snd_var;
+                // Room Start
+                event_perform(ev_other,ev_room_start);
             }
         }
     }
