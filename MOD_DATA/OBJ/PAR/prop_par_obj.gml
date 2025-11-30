@@ -28,6 +28,7 @@ snap_var
 object_event_add
 (argument0,ev_create,0,'
     event_inherited();
+    reflect_var = true;
     tex_var = store_tex_var;
     tex_w_var = 1;
     tex_l_var = 1;
@@ -48,13 +49,47 @@ object_event_add
     if tex_var == -1 { local.tex = wall_bg_tex; } 
     else { local.tex = tex_var; }
     d3d_transform_set_identity();
-    if type_var == 5 { d3d_transform_add_rotation_z(point_direction(x,y,global.cam_x_var[view_current],global.cam_y_var[view_current])); }
-    else { d3d_transform_add_rotation_z(direction); }
-    d3d_transform_add_translation(x,y,z);
+    // Check if billboard
+    if type_var == 5
+    {
+        // Reflection handling (more complex for billboarded sprites)
+        local.xtmp = x;
+        local.ytmp = y;
+        local.ztmp = z;
+        if global.reflect_var
+        {
+            switch (global.reflect_axis_var)
+            {
+                case 0: { local.xtmp = global.reflect_pos_var-local.xtmp; d3d_transform_add_scaling(-1,1,1); break; }
+                case 1: { local.ytmp = global.reflect_pos_var-local.ytmp; d3d_transform_add_scaling(1,-1,1); break; }
+                case 2: { local.ztmp = global.reflect_pos_var-local.ztmp; d3d_transform_add_scaling(1,1,-1); break; }
+            }
+        }
+        // Transformations
+        d3d_transform_add_rotation_z(point_direction(local.xtmp,local.ytmp,global.cam_x_var[view_current],global.cam_y_var[view_current]));
+        d3d_transform_add_translation(local.xtmp,local.ytmp,local.ztmp);
+    }
+    else
+    {
+        d3d_transform_add_rotation_z(direction);
+        d3d_transform_add_translation(x,y,z)
+        // Reflection handling
+        if global.reflect_var
+        {
+            switch (global.reflect_axis_var)
+            {
+                case 0: { d3d_transform_add_scaling(-1,1,1); d3d_transform_add_translation(global.reflect_pos_var,0,0); break; }
+                case 1: { d3d_transform_add_scaling(1,-1,1); d3d_transform_add_translation(0,global.reflect_pos_var,0); break; }
+                case 2: { d3d_transform_add_scaling(1,1,-1); d3d_transform_add_translation(0,0,global.reflect_pos_var); break; }
+            }
+        }
+    }
+    // Draw
     draw_set_alpha(image_alpha);
     if color_var == 2
     { draw_set_color(color_mult_scr(image_blend,tone_var)); }
     else { draw_set_color(image_blend); }
+    // Prop types
     switch type_var
     {
         case 0: { d3d_model_draw(mdl_var,0,0,0,local.tex); break; }
@@ -95,6 +130,7 @@ object_event_add
             break;
         }
     }
+    // Reset
     d3d_transform_set_identity();
     draw_set_color(c_white); draw_set_alpha(1);
 ');

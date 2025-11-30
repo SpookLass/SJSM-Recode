@@ -9,6 +9,7 @@ object_set_visible(argument0,false);
 // Create event
 object_event_add
 (argument0,ev_create,0,"
+    event_inherited();
     // I'm gonna                                  !
     if frac_chance_scr(1,33333) && !instance_exists(mon_par_obj)
     {

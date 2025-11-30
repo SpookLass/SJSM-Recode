@@ -264,13 +264,23 @@ object_event_add
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,'
-    if (on_var || visible_var) && (!possess_var || cam_id_var != view_current)
+    if (on_var || visible_var) && (!possess_var || cam_id_var != view_current || global.reflect_var)
     {
         draw_set_color(image_blend); draw_set_alpha(image_alpha);
         d3d_transform_set_identity();
         d3d_transform_add_rotation_y(mdl_pitch_var);
         d3d_transform_add_rotation_z(mdl_yaw_var);
         d3d_transform_add_translation(x+x_off_var,y+y_off_var,z+z_off_var);
+        // Reflection Handing
+        if global.reflect_var
+        {
+            switch (global.reflect_axis_var)
+            {
+                case 0: { d3d_transform_add_scaling(-1,1,1); d3d_transform_add_translation(global.reflect_pos_var,0,0); break; }
+                case 1: { d3d_transform_add_scaling(1,-1,1); d3d_transform_add_translation(0,global.reflect_pos_var,0); break; }
+                case 2: { d3d_transform_add_scaling(1,1,-1); d3d_transform_add_translation(0,0,global.reflect_pos_var); break; }
+            }
+        }
         d3d_model_draw(mdl_var,0,0,0,tex_var);
         d3d_transform_set_identity();
         draw_set_color(c_white); draw_set_alpha(1);

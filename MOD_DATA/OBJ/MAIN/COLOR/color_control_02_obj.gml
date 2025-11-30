@@ -8,8 +8,9 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,false);
 // Create event
 object_event_add
-(argument0,ev_create,0,"
-    // I'm gonna                                  !
+(argument0,ev_create,0,'
+    event_inherited();
+    // Im gonna                                  !
     if frac_chance_scr(1,33333) && !instance_exists(mon_par_obj)
     {
         instance_create(3,3,w_mus_obj);
@@ -25,7 +26,7 @@ object_event_add
             }
         }
     }
-    // I'm gonna plusinate!
+    // Im gonna plusinate!
     else if !irandom(63)
     {
         local.len = 0;
@@ -36,5 +37,10 @@ object_event_add
         if local.len > 0 { instance_create(0,0,local.arr[irandom(local.len-1)]); }
     }
     else if frac_chance_scr(2,3) { instance_create(0,0,choose(dark_color_obj,dark_rand_color_obj)); }
-    if frac_chance_scr(4,9) { with (torch_obj) { on_var = false; } }
-");
+');
+// Room Start
+// Despite the depth being super low, it still doesnt run last, weird
+object_event_add
+(argument0,ev_other,ev_room_start,'
+    if frac_chance_scr(4,9) { with torch_obj { on_var = false; } }
+');

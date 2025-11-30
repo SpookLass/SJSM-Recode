@@ -138,6 +138,7 @@ object_event_add
     if do_enter_var == 0 { do_enter_var = (type_var > 0); }
     if do_door_var == 0 { do_door_var = (type_var == 1 && do_enter_var); }
     if color_var == 0 { color_var = true; }
+    if reflect_var == 0 { reflect_var = true; }
     // Speed
     spd_mult_var = 1;
     spd_mult_per_var = 1;
@@ -1047,13 +1048,14 @@ object_event_add
 // Wander Event
 object_event_add
 (argument0,ev_other,ev_user13,'
+    // Find applicable floor to wander to
     for (local.i=0; local.i<wander_attempt_var; local.i+=1;)
     {
         local.flr = instance_find(floor_par_obj,irandom(instance_number(floor_par_obj)-1));
         local.xtmp = local.flr.x+random_range(-local.flr.w_var/2,local.flr.w_var/2);
         local.ytmp = local.flr.y+random_range(-local.flr.h_var/2,local.flr.h_var/2);
         local.ztmp = local.flr.z;
-        if !check_coll_scr(0,0,0,0,local.xtmp,local.ytmp,local.ztmp)
+        if do_coll_var && !check_coll_scr(0,0,0,0,local.xtmp,local.ytmp,local.ztmp)
         {
             wander_x_var = local.xtmp;
             wander_y_var = local.ytmp;
@@ -1065,21 +1067,77 @@ object_event_add
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,'
-    if (on_var || visible_var) && (!possess_var || cam_id_var != view_current)
+    if (on_var || visible_var) && (!possess_var || cam_id_var != view_current || global.reflect_var)
     {
+        // Set variables
         draw_set_color(color_mult_scr(image_blend,tone_var)); draw_set_alpha(image_alpha);
         d3d_transform_set_identity();
+        // Draw Model
         if do_mdl_var
         {
             // d3d_transform_add_rotation_y(pitch_var);
             d3d_transform_add_rotation_z(yaw_var);
             d3d_transform_add_translation(x+x_off_var,y+y_off_var,z+z_off_var);
+            // Reflection Handing
+            if global.reflect_var
+            {
+                switch (global.reflect_axis_var)
+                {
+                    case 0: { d3d_transform_add_scaling(-1,1,1); d3d_transform_add_translation(global.reflect_pos_var,0,0); break; }
+                    case 1: { d3d_transform_add_scaling(1,-1,1); d3d_transform_add_translation(0,global.reflect_pos_var,0); break; }
+                    case 2: { d3d_transform_add_scaling(1,1,-1); d3d_transform_add_translation(0,0,global.reflect_pos_var); break; }
+                }
+            }
             d3d_model_draw(mdl_var,0,0,0,tex_var);
+            // Draw silhoette
+            if sil_var
+            {
+                d3d_set_hidden(false); draw_set_alpha(image_alpha*sil_alpha_var);
+                switch sil_type_var
+                {
+                    case 0:
+                    {
+                        d3d_model_draw(mdl_var,0,0,0,tex_var);
+                        break;
+                    }
+                    case 1:
+                    {
+                        d3d_set_fog(true,sil_color_var,0,0);
+                        d3d_model_draw(mdl_var,0,0,0,tex_var);
+                        d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var);
+                        break;
+                    }
+                    case 2:
+                    {
+                        draw_set_color(color_mult_scr(image_blend,sil_color_var));
+                        d3d_model_draw(mdl_var,0,0,0,tex_var);
+                        draw_set_color(image_blend);
+                        break;
+                    }
+                }
+                d3d_set_hidden(true); draw_set_alpha(image_alpha);
+            }
         }
+        // Draw Wall
         else
         {
-            d3d_transform_add_rotation_z(point_direction(x,y,global.cam_x_var[view_current],global.cam_y_var[view_current]));
-            d3d_transform_add_translation(x+x_off_var,y+y_off_var,z+z_off_var);
+            // Get position
+            local.xtmp = x+x_off_var;
+            local.ytmp = y+y_off_var;
+            local.ztmp = z+z_off_var;
+            // Reflection handling (more complex for billboarded sprites)
+            if global.reflect_var
+            {
+                switch (global.reflect_axis_var)
+                {
+                    case 0: { local.xtmp = global.reflect_pos_var-local.xtmp; d3d_transform_add_scaling(-1,1,1); break; }
+                    case 1: { local.ytmp = global.reflect_pos_var-local.ytmp; d3d_transform_add_scaling(1,-1,1); break; }
+                    case 2: { local.ztmp = global.reflect_pos_var-local.ztmp; d3d_transform_add_scaling(1,1,-1); break; }
+                }
+            }
+            d3d_transform_add_rotation_z(point_direction(local.xtmp,local.ytmp,global.cam_x_var[view_current],global.cam_y_var[view_current]));
+            d3d_transform_add_translation(local.xtmp,local.ytmp,local.ztmp);
+            // Draw silhoette
             if sil_var
             {
                 d3d_set_hidden(false); draw_set_alpha(image_alpha*sil_alpha_var);
@@ -1109,8 +1167,10 @@ object_event_add
             }
             d3d_draw_wall(0,w_var/2,h_var,0,-w_var/2,0,tex_var,1,1);
         }
+        // Reset
         d3d_transform_set_identity();
         draw_set_color(c_white); draw_set_alpha(1);
+        // Draw path (if applicable)
         if global.debug_var && type_var > 0
         {
             d3d_set_hidden(false);

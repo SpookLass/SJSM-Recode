@@ -121,6 +121,12 @@ object_event_add
             inv_limit_var = 30;
             weird_var = true;
             weird_chance_var = 16;
+            // Silhouette (Lazy)
+            sil_var = true;
+            sil_type_var = 1; // Pure color
+            sil_color_var = c_black;
+            sil_alpha_var = 0.2;
+            sil_dist_var = 0.1;
             break;
         }
         case 2:
@@ -504,25 +510,54 @@ object_event_add
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,'
-    if (on_var || visible_var) && (!possess_var || cam_id_var != view_current)
+    if (on_var || visible_var) && (!possess_var || cam_id_var != view_current || global.reflect_var)
     {
         draw_set_color(image_blend); draw_set_alpha(image_alpha);
         d3d_transform_set_identity();
-        if do_mdl_var
+        d3d_transform_add_rotation_z(draw_yaw_var);
+        d3d_transform_add_translation(draw_x_var+x_off_var,draw_y_var+y_off_var,draw_z_var+z_off_var);
+        // Reflection Handing
+        if global.reflect_var
         {
-            // d3d_transform_add_rotation_y(pitch_var);
-            d3d_transform_add_rotation_z(draw_yaw_var);
-            d3d_transform_add_translation(draw_x_var+x_off_var,draw_y_var+y_off_var,draw_z_var+z_off_var);
-            d3d_model_draw(mdl_var,0,0,0,tex_var);
+            switch (global.reflect_axis_var)
+            {
+                case 0: { d3d_transform_add_scaling(-1,1,1); d3d_transform_add_translation(global.reflect_pos_var,0,0); break; }
+                case 1: { d3d_transform_add_scaling(1,-1,1); d3d_transform_add_translation(0,global.reflect_pos_var,0); break; }
+                case 2: { d3d_transform_add_scaling(1,1,-1); d3d_transform_add_translation(0,0,global.reflect_pos_var); break; }
+            }
         }
-        else
+        d3d_model_draw(mdl_var,0,0,0,tex_var);
+        // Draw silhoette
+        if sil_var
         {
-            d3d_transform_add_rotation_z(point_direction(x,y,global.cam_x_var[view_current],global.cam_y_var[view_current]));
-            d3d_transform_add_translation(draw_x_var+x_off_var,draw_y_var+y_off_var,draw_z_var+z_off_var);
-            d3d_draw_wall(0,w_var/2,h_var,0,-w_var/2,0,tex_var,1,1);
+            d3d_set_hidden(false); draw_set_alpha(image_alpha*sil_alpha_var);
+            switch sil_type_var
+            {
+                case 0:
+                {
+                    d3d_model_draw(mdl_var,0,0,0,tex_var);
+                    break;
+                }
+                case 1:
+                {
+                    d3d_set_fog(true,sil_color_var,0,0);
+                    d3d_model_draw(mdl_var,0,0,0,tex_var);
+                    d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var);
+                    break;
+                }
+                case 2:
+                {
+                    draw_set_color(color_mult_scr(image_blend,sil_color_var));
+                    d3d_model_draw(mdl_var,0,0,0,tex_var);
+                    draw_set_color(image_blend);
+                    break;
+                }
+            }
+            d3d_set_hidden(true); draw_set_alpha(image_alpha);
         }
         d3d_transform_set_identity();
         draw_set_color(c_white); draw_set_alpha(1);
+        // Draw Path
         if global.debug_var && type_var > 0
         {
             d3d_set_hidden(false);

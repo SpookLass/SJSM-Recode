@@ -8,7 +8,7 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
     store_tex_var = torch_bg_tex;
     event_inherited();
     mdl_var = torch_mdl;
@@ -23,19 +23,19 @@ object_event_add
     if auto_var { event_perform(ev_other,ev_user0); }
     // Gold
     door_var = noone;
-");
+');
 // Step
 object_event_add
-(argument0,ev_step,ev_step_normal,"
+(argument0,ev_step,ev_step_normal,'
     if gold_var
     {
         if instance_exists(door_var) 
         { on_var = !door_var.lock_var; }
     }
-");
+');
 // Draw
 object_event_add
-(argument0,ev_draw,0,"
+(argument0,ev_draw,0,'
     if gold_var && on_var && global.fog_dark_var
     {
         d3d_set_fog(false,c_black,0,0);
@@ -43,10 +43,10 @@ object_event_add
         d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var);
     }
     else { event_inherited(); }
-");
+');
 // User
 object_event_add
-(argument0,ev_other,ev_user0,"
+(argument0,ev_other,ev_user0,'
     local.xtmp = x+lengthdir_x(-16,direction+90);
     local.ytmp = y+lengthdir_y(-16,direction+90);
     local.ztmp = z+16;
@@ -84,4 +84,4 @@ object_event_add
             local.light.par_var = other.id;
         }
     }
-");
+');

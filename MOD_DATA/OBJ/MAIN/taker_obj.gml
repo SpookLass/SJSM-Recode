@@ -63,7 +63,7 @@ object_event_add
     y = global.spawn_arr[0,1]-lengthdir_y(32,yaw_var);
     z = global.spawn_arr[0,2];
 ");
-// Step Event
+// Delay Alarm
 object_event_add
 (argument0,ev_alarm,0,"
     on_var = true;

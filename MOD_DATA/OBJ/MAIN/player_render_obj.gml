@@ -12,6 +12,7 @@ object_event_add
     event_inherited();
     image_alpha = 0.5;
     str_color_var = c_dkgray;
+    reflect_var = true;
 ');
 // Destroy Event
 object_event_add
@@ -75,24 +76,47 @@ object_event_add
 // Draw
 object_event_add
 (argument0,ev_draw,0,'
-    if view_current != par_var.cam_id_var && (!par_var.dead_var || global.cam_type_var[view_current] == cam_dead_const)
+    if (view_current != par_var.cam_id_var || global.reflect_var) && (!par_var.dead_var || global.cam_type_var[view_current] == cam_dead_const)
     {
+        // Color types
         if tint_var { d3d_set_fog(true,image_blend,0,0); }
         else { draw_set_color(image_blend); }
+        // Visible to ghosts
         if global.cam_type_var[view_current] != cam_alive_const { d3d_set_hidden(false); }
+        // Draw
         draw_set_alpha(image_alpha);
         d3d_transform_set_identity();
-        d3d_transform_add_rotation_z(point_direction(par_var.x,par_var.y,global.cam_x_var[view_current],global.cam_y_var[view_current]));
-        d3d_transform_add_translation(par_var.x,par_var.y,par_var.z);
+        // Reflection handling (more complex for billboarded sprites)
+        local.xtmp = par_var.x;
+        local.ytmp = par_var.y;
+        local.ztmp = par_var.z;
+        if global.reflect_var
+        {
+            switch (global.reflect_axis_var)
+            {
+                case 0: { local.xtmp = global.reflect_pos_var-local.xtmp; d3d_transform_add_scaling(-1,1,1); break; }
+                case 1: { local.ytmp = global.reflect_pos_var-local.ytmp; d3d_transform_add_scaling(1,-1,1); break; }
+                case 2: { local.ztmp = global.reflect_pos_var-local.ztmp; d3d_transform_add_scaling(1,1,-1); break; }
+            }
+        }
+        // Draw
+        d3d_transform_add_rotation_z(point_direction(local.xtmp,local.ytmp,global.cam_x_var[view_current],global.cam_y_var[view_current]));
+        d3d_transform_add_translation(local.xtmp,local.ytmp,local.ztmp);
         d3d_draw_wall(0,w_01_var/2,par_var.coll_var[1]+2,0,-w_01_var/2,0,tex_01_var,1,1);
-        d3d_transform_set_identity();
+        // Reset
         if tint_var { d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var); }
         draw_set_color(image_blend); draw_set_alpha(1);
-        local.ztmp = par_var.z+par_var.coll_var[1]+(h_02_var/2)+2;
-        d3d_transform_add_rotation_y(point_direction_3d_scr(par_var.x,par_var.y,local.ztmp,global.cam_x_var[view_current],global.cam_y_var[view_current],global.cam_z_var[view_current]));
-        d3d_transform_add_rotation_z(point_direction(par_var.x,par_var.y,global.cam_x_var[view_current],global.cam_y_var[view_current]));
-        d3d_transform_add_translation(par_var.x,par_var.y,local.ztmp);
-        d3d_draw_wall(0,w_02_var/2,h_02_var/2,0,-w_02_var/2,-h_02_var/2,tex_02_var,1,1);
+        // Name Tag
+        if !global.reflect_var // Dont even bother, no point
+        {
+            d3d_transform_set_identity();
+            local.ztmp2 = par_var.z+par_var.coll_var[1]+(h_02_var/2)+2;
+            d3d_transform_add_rotation_y(point_direction_3d_scr(local.xtmp,local.ytmp,local.ztmp2,global.cam_x_var[view_current],global.cam_y_var[view_current],global.cam_z_var[view_current]));
+            d3d_transform_add_rotation_z(point_direction(local.xtmp,local.ytmp,global.cam_x_var[view_current],global.cam_y_var[view_current]));
+            d3d_transform_add_translation(local.xtmp,local.ytmp,local.ztmp2);
+            d3d_draw_wall(0,w_02_var/2,h_02_var/2,0,-w_02_var/2,-h_02_var/2,tex_02_var,1,1);
+        }
+        // Reset 2
         d3d_transform_set_identity();
         draw_set_color(c_white);
         if global.cam_type_var[view_current] != cam_alive_const { d3d_set_hidden(true); }

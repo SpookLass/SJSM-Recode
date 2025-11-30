@@ -8,8 +8,14 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,false);
 // Create event
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
+    event_inherited();
     // Vanilla stuff, nothing fancy
     if frac_chance_scr(5,9) { instance_create(0,0,dark_color_obj); }
-    if frac_chance_scr(4,9) { with (torch_obj) { on_var = false; } }
-");
+');
+// Room Start
+// Despite the depth being super low, it still doesnt run last, weird
+object_event_add
+(argument0,ev_other,ev_room_start,'
+    if frac_chance_scr(4,9) { with torch_obj { on_var = false; } }
+');

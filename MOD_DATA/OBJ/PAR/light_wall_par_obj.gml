@@ -10,6 +10,7 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,0,'
     event_inherited();
+    reflect_var = true;
     w_var = 32;
     h_var = 32;
     tex_w_var = 1;
@@ -29,17 +30,41 @@ object_event_add
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,'
+    // Texture
     if spr_var == -1 { local.tex = sprite_get_texture(light_wall_obj_spr,spr_id_var); }
     else { local.tex = sprite_get_texture(spr_var,spr_id_var); }
     local.tex_w = tex_w_var*w_var/32;
     local.tex_h = tex_h_var*(texture_get_width(local.tex)/texture_get_height(local.tex))*h_var/32;
-    if global.fog_dark_var { d3d_set_fog(false,c_black,0,0); }
+    // Transformations
     d3d_transform_set_identity();
     d3d_transform_add_rotation_z(direction);
     d3d_transform_add_translation(x,y,z);
+    // Reflection Handling
+    if global.reflect_var
+    {
+        switch (global.reflect_axis_var)
+        {
+            case 0:
+            {
+                if x == global.reflect_pos_var && direction mod 180 == 90 { exit; }
+                d3d_transform_add_scaling(-1,1,1); d3d_transform_add_translation(global.reflect_pos_var,0,0);
+                break;
+            }
+            case 1:
+            {
+                if y == global.reflect_pos_var && direction mod 180 == 0 { exit; }
+                d3d_transform_add_scaling(1,-1,1); d3d_transform_add_translation(0,global.reflect_pos_var,0);
+                break;
+            }
+            case 2: { d3d_transform_add_scaling(1,1,-1); d3d_transform_add_translation(0,0,global.reflect_pos_var); break; }
+        }
+    }
+    // Draw
     draw_set_color(image_blend); draw_set_alpha(image_alpha);
+    if global.fog_dark_var { d3d_set_fog(false,c_black,0,0); }
     d3d_draw_wall(0.1,-w_var/2,h_var,0.1,w_var/2,0,local.tex,local.tex_w,local.tex_h);
     d3d_draw_wall(-0.1,-w_var/2,h_var,-0.1,w_var/2,0,local.tex,local.tex_w,local.tex_h);
+    // Reset
     d3d_transform_set_identity();
     draw_set_color(c_white); draw_set_alpha(1);
     if global.fog_dark_var

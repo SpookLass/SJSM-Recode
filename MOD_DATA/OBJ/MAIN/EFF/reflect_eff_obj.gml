@@ -1,0 +1,28 @@
+// Builtin Variables
+object_set_depth(argument0,4);
+object_set_mask(argument0,noone);
+object_set_parent(argument0,par_obj);
+object_set_persistent(argument0,true);
+object_set_solid(argument0,false);
+object_set_sprite(argument0,noone);
+object_set_visible(argument0,true);
+// Create Event
+object_event_add
+(argument0,ev_create,0,'
+    reflect_axis_var = 2;
+    event_inherited();
+');
+// Room Start (temp)
+object_event_add
+(argument0,ev_other,ev_room_start,'
+    floor_par_obj.image_alpha = 0.5;
+');
+// Draw Event
+object_event_add
+(argument0,ev_draw,0,'
+    global.reflect_var = true;
+    global.reflect_pos_var = reflect_pos_var;
+    global.reflect_axis_var = reflect_axis_var;
+    with par_var { if reflect_var && object_index != other.object_index && visible { event_perform(ev_draw,0); }}
+    global.reflect_var = false;
+');
