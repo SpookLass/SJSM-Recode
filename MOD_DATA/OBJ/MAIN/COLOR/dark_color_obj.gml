@@ -8,7 +8,7 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create event
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
     image_blend = make_color_rgb(97,97,106);
     event_inherited();
-");
+');

@@ -33,8 +33,11 @@ object_event_add
     on_var = true;
     with fog_par_obj
     {
-        if prio_var > other.prio_var { other.on_var = false; break; }
-        else { instance_destroy(); }
+        if id != other.id
+        {
+            if prio_var > other.prio_var { other.on_var = false; break; }
+            else { instance_destroy(); }
+        }
     }
     visible = on_var;
     if on_var
