@@ -34,7 +34,7 @@ room_set_code
     d3d_start();
     global.draw_3d_var = true;
     // Doors
-    local.unlock = spawn_create_scr(true,true);
+    global.unlock_var = spawn_create_scr(true,true);
 ")
 
 // Room settings

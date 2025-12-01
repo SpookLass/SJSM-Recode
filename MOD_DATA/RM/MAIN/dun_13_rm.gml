@@ -38,13 +38,13 @@ room_set_code
     // Doors
     local.lock = lock_scr();
     local.gold = gold_scr(local.lock);
-    local.unlock = spawn_create_scr(true,local.lock);
+    global.unlock_var = spawn_create_scr(true,local.lock);
     // Bars
     if local.lock
     {
         for (local.i=1; local.i<global.spawn_len_var; local.i+=1;)
         {
-            if local.i != local.unlock
+            if local.i != global.unlock_var
             {
                 // Bars
                 switch local.i
@@ -63,8 +63,8 @@ room_set_code
     {
         instance_create(0,0,maze_dark_color_obj);
         instance_create(0,0,maze_dark_fog_obj);
-        local.left = local.unlock <= 2;
-        local.right = local.unlock >= 3;
+        local.left = global.unlock_var <= 2;
+        local.right = global.unlock_var >= 3;
         // Left
         local.torch = instance_create(256,208,torch_gold_north_obj);
         local.torch.on_var = local.left;

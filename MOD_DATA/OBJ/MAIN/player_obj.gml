@@ -273,21 +273,23 @@ object_event_add
     view_visible[cam_id_var] = true;
     view_enabled = true;
     // Clear time
-    if mp_grid_path(grid_var,path_var,x,y,global.spawn_arr[1,0],global.spawn_arr[1,1],true)
+    clear_time_var = -1;
+    walk_clear_time_var = -1;
+    if global.spawn_len_var > 0
     {
-        if do_sprint_var
+        if global.unlock_var > 0 { local.spawn = global.unlock_var; }
+        else { local.spawn = irandom_range(1,global.spawn_len_var-1); }
+        if mp_grid_path(grid_var,path_var,x,y,global.spawn_arr[local.spawn,0],global.spawn_arr[local.spawn,1],true)
         {
-            if do_stam_var { local.spd = spd_base_var*(1+sprint_spd_mult_var)*9/19; }
-            else { local.spd = spd_base_var*sprint_spd_mult_var; }
-        }
-        else { local.spd = spd_base_var; }
-        clear_time_var = path_get_length(path_var)/local.spd;
-        walk_clear_time_var = path_get_length(path_var)/spd_base_var;
-    } 
-    else
-    {
-        clear_time_var = -1;
-        walk_clear_time_var = -1;
+            if do_sprint_var
+            {
+                if do_stam_var { local.spd = spd_base_var*(1+sprint_spd_mult_var)*9/19; }
+                else { local.spd = spd_base_var*sprint_spd_mult_var; }
+            }
+            else { local.spd = spd_base_var; }
+            clear_time_var = path_get_length(path_var)/local.spd;
+            walk_clear_time_var = path_get_length(path_var)/spd_base_var;
+        } 
     }
     // Start room
     taker_spawn_var = false;

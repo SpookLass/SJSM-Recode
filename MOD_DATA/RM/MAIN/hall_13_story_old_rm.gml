@@ -35,9 +35,9 @@ room_set_code
     global.mark_arr[2,1] = 176;
     global.mark_arr[2,2] = 0;
     // Doors
-    local.unlock = spawn_create_scr(true,true);
-    local.unlock = irandom_range(1,global.spawn_len_var-1);
-    if local.unlock == 1 { global.mark_arr[0,1] = 176; }
+    global.unlock_var = spawn_create_scr(true,true);
+    global.unlock_var = irandom_range(1,global.spawn_len_var-1);
+    if global.unlock_var == 1 { global.mark_arr[0,1] = 176; }
     else { global.mark_arr[0,1] = 112; }
     // 3D Draw
     d3d_start();

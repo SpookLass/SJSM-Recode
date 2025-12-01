@@ -217,7 +217,8 @@ object_event_add
         move_var = false;
         atk_var = false;
         anim_var = do_anim_var;
-        local.spawn = irandom_range(1,global.spawn_len_var-1);
+        if global.unlock_var > 0 { local.spawn = global.unlock_var; }
+        else { local.spawn = irandom_range(1,global.spawn_len_var-1); }
         x = global.spawn_arr[local.spawn,0];
         y = global.spawn_arr[local.spawn,1];
         z = global.spawn_arr[local.spawn,2];

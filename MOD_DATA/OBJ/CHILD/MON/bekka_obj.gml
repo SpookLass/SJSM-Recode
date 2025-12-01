@@ -249,7 +249,8 @@ object_event_add
             set_alarm_scr(0,-1);
             move_var = false;
             // Reset Position
-            local.spawn = irandom_range(1,global.spawn_len_var-1);
+            if global.unlock_var > 0 { local.spawn = global.unlock_var; }
+            else { local.spawn = irandom_range(1,global.spawn_len_var-1); }
             yaw_var = global.spawn_arr[local.spawn,3];
             x = global.spawn_arr[local.spawn,0]-lengthdir_x(exit_dist_var,yaw_var);
             y = global.spawn_arr[local.spawn,1]-lengthdir_y(exit_dist_var,yaw_var);

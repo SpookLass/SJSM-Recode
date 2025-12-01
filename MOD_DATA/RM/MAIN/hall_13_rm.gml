@@ -37,8 +37,8 @@ room_set_code
     // Doors
     local.lock = lock_scr();
     local.gold = gold_scr(local.lock);
-    local.unlock = spawn_create_scr(true,local.lock);
-    if local.unlock == 1 { global.mark_arr[0,1] = 176; }
+    global.unlock_var = spawn_create_scr(true,local.lock);
+    if global.unlock_var == 1 { global.mark_arr[0,1] = 176; }
     else { global.mark_arr[0,1] = 112; }
     // Gold Effects
     if local.gold
