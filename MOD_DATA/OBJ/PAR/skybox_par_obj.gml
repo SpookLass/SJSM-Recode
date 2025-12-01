@@ -37,6 +37,11 @@ object_event_add
             d3d_draw_cylinder(-dist_var,-dist_var,dist_var,dist_var,dist_var,-dist_var,side_tex_var,4*side_tex_w_var,side_tex_h_var,false,step_var);
             break;
         }
+        case 2:
+        {
+            d3d_draw_ellipsoid(-dist_var,-dist_var,dist_var,dist_var,dist_var,-dist_var,side_tex_var,4*side_tex_w_var,side_tex_h_var,step_var);
+            break;
+        }
     }
 ');
 // Draw Event

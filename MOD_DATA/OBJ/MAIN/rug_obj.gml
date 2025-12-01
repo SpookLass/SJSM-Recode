@@ -8,12 +8,13 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create event
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
+    snap_var = 1; // Snap to floor
     store_tex_var = rug_bg_tex;
     event_inherited();
     solid_var = false;
     type_var = 4; // Floor
     w_var = 32;
     l_var = 24;
-    z = 0.1;
-");
+    dist_var = 0.1;
+');

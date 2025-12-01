@@ -45,6 +45,7 @@ object_event_add
         spr_spd_var = 0.1;
         h_01_var = 20;
         w_01_var = 7.5;
+        spooky_var = true;
     }
     else
     {

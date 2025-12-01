@@ -226,7 +226,6 @@ object_event_add
     {
         global.zone_var = zone_list_var;
         zone_reset_scr();
-        with door_trig_obj { event_user(0); }
     }
     global.js_override_var = true;
     global.js_override_num_var = 0;
@@ -346,10 +345,7 @@ object_event_add
     }
     else  { with js_obj { instance_destroy(); }}
     if zone_end_var > 0 && local.start == zone_end_var
-    {
-        zone_from_num_scr(global.zone_num_var);
-        with door_trig_obj { event_user(0); }
-    }
+    { zone_from_num_scr(global.zone_num_var); }
 ');
 // Room End Event
 object_event_add

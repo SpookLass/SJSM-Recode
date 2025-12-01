@@ -19,6 +19,7 @@ type_var
     8: Offset Plane. Uses w_var, h_var, tex_w_var, tex_h_var, and radius_var. Origin is south.
     9: Jumpscare. Duplicate of Offset Plane with front and back sprites. Uses dist_var
     10: Single Plane. Uses w_var, h_var, dist_var, tex_w_var, and tex_h_var. Like double plane, but only one.
+    11: Cross. Uses w_var, h_var, tex_w_var, and tex_h_var. Useful if you want Minecraft grass I guess.
 snap_var
     0: No snap
     1: Snap to floor
@@ -72,7 +73,7 @@ object_event_add
     else
     {
         d3d_transform_add_rotation_z(direction);
-        d3d_transform_add_translation(x,y,z)
+        d3d_transform_add_translation(x,y,z);
         // Reflection handling
         if global.reflect_var
         {
@@ -96,7 +97,7 @@ object_event_add
         case 1: { d3d_draw_wall(0,-w_var/2,h_var,0,w_var/2,0,local.tex,tex_w_var,tex_h_var*sign(h_var)); break; }
         case 2: { d3d_draw_block(-w_var/2,-l_var/2,h_var,w_var/2,l_var/2,0,local.tex,tex_w_var,tex_h_var*sign(h_var)); break; }
         case 3: { d3d_draw_cylinder(-w_var/2,-l_var/2,h_var,w_var/2,l_var/2,0,local.tex,tex_w_var,tex_h_var*sign(h_var),close_var,step_var); break; }
-        case 4: { d3d_draw_floor(-w_var/2,-l_var/2,0,w_var/2,l_var/2,0,local.tex,tex_w_var,tex_h_var); break; }
+        case 4: { d3d_draw_floor(-w_var/2,-l_var/2,dist_var,w_var/2,l_var/2,dist_var,local.tex,tex_w_var,tex_h_var); break; }
         case 5: { d3d_draw_wall(0,w_var/2,h_var,0,-w_var/2,0,local.tex,tex_w_var,tex_h_var*sign(h_var)); break; }
         case 6:
         {
@@ -127,6 +128,12 @@ object_event_add
         case 10:
         {
             d3d_draw_wall(dist_var,w_var/2,h_var,dist_var,-w_var/2,0,local.tex,tex_w_var,tex_h_var*sign(h_var));
+            break;
+        }
+        case 11:
+        {
+            d3d_draw_wall(0,-w_var/2,h_var,0,w_var/2,0,local.tex,tex_w_var,tex_h_var*sign(h_var));
+            d3d_draw_wall(-w_var/2,0,h_var,w_var/2,0,0,local.tex,tex_w_var,tex_h_var*sign(h_var));
             break;
         }
     }

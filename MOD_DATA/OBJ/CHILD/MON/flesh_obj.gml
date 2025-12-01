@@ -36,6 +36,9 @@ object_event_add
     dupe_var = dupe_never_const;
     alarm_len_var = 1;
     color_var = true;
+    // Zone
+    zone_var = true;
+    zone_start_var = 0;
     // Fog
     fog_color_var = make_color_rgb(135,10,24);
     fog_prio_var = 2;
@@ -57,6 +60,7 @@ object_event_add
             other.light_floor_spr_var = light_floor_spr_var;
             other.overlay_bg_var = overlay_bg_var;
             other.mus_snd_var = mus_snd_var;
+            other.zone_list_var = zone_list_var;
             local.loaded = true;
             break;
         }
@@ -65,16 +69,37 @@ object_event_add
     if !local.loaded
     {
         bg_var = background_add(main_directory_const+"\BG\MON\flesh_bg.png",false,false);
+        // Textures
         wall_bg_var = background_add(vanilla_directory_const+"\TEX\mobile\MB5_01_tex.png",false,false);
         floor_bg_var = background_add(vanilla_directory_const+"\TEX\mobile\MB5_04_tex.png",false,false);
         ceil_bg_var = background_add(vanilla_directory_const+"\TEX\mobile\MB5_06_tex.png",false,false);
         light_wall_spr_var = sprite_add(main_directory_const+"\SPR\MON\flesh_light_wall_spr.png",2,false,false,0,0);
         light_floor_spr_var = sprite_add(main_directory_const+"\SPR\MON\flesh_light_floor_spr.png",2,false,false,0,0);
+        // Special Textures
+        wall_spr_var = sprite_add(vanilla_directory_const+"\TEX\mobile\MB5_EX_01_spr.png",5,false,false,0,0);
+        arrow_bg_var = background_add(main_directory_const+"\BG\RM\mad_arrow_03_bg.png",false,false);
+        arrow_base_bg_var = background_add(main_directory_const+"\BG\RM\mad_arrow_base_03_bg.png",false,false);
+        // Overlay
         overlay_bg_var = background_add(main_directory_const+"\BG\MON\flesh_overlay_bg.png",false,false);
+        // Music
         mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\flesh_mus_snd.mp3");
         fmod_snd_set_loop_point_scr(mus_snd_var,5/22,9/11); // Ohhh 9/11
         fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
+        // Zone
+        zone_list_var = ds_list_create();
+        ds_list_clear(zone_list_var);
+        ds_list_add(zone_list_var,flesh_02_rm);
+        ds_list_add(zone_list_var,flesh_03_rm);
+        ds_list_add(zone_list_var,flesh_04_rm);
+        ds_list_add(zone_list_var,flesh_05_rm);
+        ds_list_add(zone_list_var,flesh_06_rm);
+        ds_list_add(zone_list_var,flesh_07_rm);
+        ds_list_add(zone_list_var,flesh_08_rm);
+        ds_list_add(zone_list_var,flesh_09_rm);
+        ds_list_add(zone_list_var,flesh_10_rm);
     }
+    arrow_tex_var = background_get_texture(arrow_bg_var);
+    arrow_base_tex_var = background_get_texture(arrow_base_bg_var);
     // Behavior
     if global.flesh_type_var == -1 { local.type = irandom(2); }
     else { local.type = global.flesh_type_var; }
@@ -106,6 +131,12 @@ object_event_add
     event_inherited();
     // Room Start
     event_perform(ev_other,ev_room_start);
+    // Zone
+    if zone_var && zone_start_var <= 0
+    {
+        global.zone_var = zone_list_var;
+        zone_reset_scr();
+    }
 ');
 // Destroy Event
 object_event_add
@@ -125,12 +156,40 @@ object_event_add
         background_delete(ceil_bg_var);
         sprite_delete(light_wall_spr_var);
         sprite_delete(light_floor_spr_var);
+        background_delete(arrow_bg_var);
+        background_delete(arrow_base_bg_var);
+        sprite_delete(wall_spr_var);
         background_delete(overlay_bg_var);
         fmod_snd_free_scr(mus_snd_var);
+        ds_list_destroy(zone_list_var);
     }
     with flesh_tex_obj { if par_var == other.id { instance_destroy(); }}
     with flesh_eff_obj { if par_var == other.id { instance_destroy(); }}
     with skybox_par_obj { if par_var == other.id { instance_destroy(); }}
+    with flesh_wall_obj
+    {
+        if par_var == other.id
+        {
+            local.wall = id;
+            with instance_create(0,0,wall_par_obj)
+            {
+                z = local.wall.z;
+                direction = local.wall.direction;
+                h_var = local.wall.h_var;
+                w_var = local.wall.w_var;
+            }
+            instance_destroy();
+        }
+    }
+    with flesh_arrow_obj
+    {
+        if par_var == other.id
+        {
+            on_var = false;
+            visible = false;
+        }
+    }
+    zone_from_num_scr(global.zone_num_var);
 ');
 // Room Start Event
 object_event_add
@@ -189,6 +248,35 @@ Difference: "+string(local.newdelay)+"
     global.ceil_bg_tex = background_get_texture(ceil_bg_var);
     global.light_wall_obj_spr = light_wall_spr_var;
     global.light_floor_obj_spr = light_floor_spr_var;
+    // Walls
+    local.par = id;
+    with wall_mon_obj
+    {
+        local.wall = id;
+        with instance_create(x,y,flesh_wall_obj)
+        {
+            par_var = local.par;
+            spr_var = local.par.wall_spr_var;
+            z = local.wall.z;
+            direction = local.wall.direction;
+            h_var = local.wall.h_var;
+            w_var = local.wall.w_var;
+            event_perform(ev_alarm,0);
+        }
+        instance_destroy();
+    }
+    // Arrow
+    with flesh_arrow_obj
+    {
+        par_var = other.id;
+        store_tex_var = other.arrow_tex_var;
+        tex_var = store_tex_var;
+        store_tex_02_var = other.arrow_base_tex_var;
+        tex_02_var = store_tex_02_var;
+        on_var = true;
+        visible = true;
+        event_user(0);
+    }
     // Effect
     if !instance_exists(flesh_eff_obj)
     {
@@ -233,8 +321,21 @@ Difference: "+string(local.newdelay)+"
             bottom_tex_h_var *= 20;
             side_tex_w_var *= 20;
             side_tex_h_var *= 20;
-            type_var = 1;
+            type_var = 2;
             step_var = 12;
+        }
+    }
+    // Zone
+    if zone_var
+    {
+        if dur_var == 1
+        {
+            zone_from_num_scr(global.zone_num_var);
+        }
+        else if zone_start_var > 0 && dur_start_var-dur_var == zone_start_var-1
+        {
+            global.zone_var = zone_list_var;
+            zone_reset_scr();
         }
     }
     // Delay
@@ -298,7 +399,7 @@ object_event_add
         d3d_transform_add_rotation_y(angle_var);
         d3d_transform_add_rotation_z(yaw_var);
         d3d_transform_add_translation(x,y,z);
-        d3d_draw_wall(0,320,320,0,-320,-320,tex_var,20,20);
+        d3d_draw_wall(0,640,320,0,-640,-320,tex_var,40,20);
         d3d_transform_set_identity();
         draw_set_color(c_white); draw_set_alpha(1);
         if fog_immune_var { d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var); }

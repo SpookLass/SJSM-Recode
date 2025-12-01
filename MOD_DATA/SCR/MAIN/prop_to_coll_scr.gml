@@ -128,6 +128,29 @@ switch argument0
         );
         break;
     }
+    case 11:
+    {
+        local.width = argument2/2;
+        p3dc_add_wall_scr
+        (
+            0,
+            -local.width,
+            argument4,
+            0,
+            local.width,
+            0
+        );
+        p3dc_add_wall_scr
+        (
+            -local.width,
+            0,
+            argument4,
+            local.width,
+            0,
+            0
+        );
+        break;
+    }
 }
 p3dc_end_mdl_scr();
 return local.collmod;

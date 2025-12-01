@@ -24,9 +24,10 @@ object_event_add
     // Function
     rm_count_var = 1;
     delay_var = 20;
+    zone_var = -1;
     if rm_var == 0
     {
-        zone_var = true;
+        zone_var = global.zone_var;
         event_user(0);
     }
     // Alarm
@@ -91,10 +92,17 @@ object_event_add
 // Recalculate Door
 object_event_add
 (argument0,ev_other,ev_user0,'
-    if zone_var
+    if zone_var >= 0
     {
         local.set = false;
-        with door_trig_obj { if zone_var && rm_var != 0 { other.rm_var = rm_var; local.set = true; }}
+        with door_trig_obj
+        {
+            if zone_var == other.zone_var && rm_var != 0 && id != other.id
+            {
+                other.rm_var = rm_var;
+                local.set = true;
+            }
+        }
         if !local.set
         {
             if ds_list_size(global.rm_list_var) <= 0

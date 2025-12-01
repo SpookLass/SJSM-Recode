@@ -10,7 +10,6 @@ room_set_code
     ini_open(global.lang_var);
     global.rm_name_var = ini_read_string('ROOM','brain','ROOM_brain');
     ini_close();
-    global.rm_name_var = 'Brain Room 1'
     // Spawns
     global.spawn_len_var = 2;
     // Spawn 0 (entrance)

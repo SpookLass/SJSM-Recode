@@ -420,7 +420,6 @@ object_event_add
         {
             global.zone_var = zone_list_var;
             zone_reset_scr();
-            with door_trig_obj { event_user(0); }
         }
         if loop_var { door_trig_obj.rm_count_var = 0; }
         global.rm_name_var = string_replace(global.rm_name_var,"Long","My");
