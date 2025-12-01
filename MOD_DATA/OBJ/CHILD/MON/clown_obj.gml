@@ -135,17 +135,8 @@ object_event_add
     {
         with door_trig_obj
         {
-            local.door = id
-            with instance_create(x,y,clown_door_trig_obj)
-            {
-                z = local.door.z;
-                do_txt_var = local.door.do_txt_var;
-                txt_var = local.door.txt_var;
-                txt_lock_var = local.door.txt_lock_var;
-                rm_count_var = local.door.rm_count_var;
-                delay_var = local.door.delay_var;
-                rm_var = local.door.rm_var;
-            }
+            par_var = other.id;
+            instance_change(clown_door_trig_obj,true);
             instance_destroy();
         }
     }

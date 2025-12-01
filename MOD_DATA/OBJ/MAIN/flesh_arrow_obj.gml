@@ -20,17 +20,33 @@ object_event_add
     l_var = 18;
     dist_var = 4;
     // Base
+    tex_w_02_var = 1;
+    tex_h_02_var = 1;
     w_02_var = 16;
     l_02_var = 16;
     dist_02_var = 1;
+    // Bob
+    dist_base_var = dist_var;
+    bob_var = true;
+    bob_time_var = 0;
+    bob_mult_var = 1; // 16/15 1.0r6
+    bob_rate_var=1800;
     // Special
-    turn_rate_var = 1;
+    turn_rate_var = 0;
 ');
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,'
-    if on_var && turn_rate_var > 0
-    { direction = turn_scr(direction,target_dir_var,turn_rate_var*global.delta_time_var); }
+    if on_var
+    {
+        if turn_rate_var > 0
+        { direction = turn_scr(direction,target_dir_var,turn_rate_var*global.delta_time_var); }
+        if bob_var
+        {
+            bob_time_var = (bob_time_var+global.delta_time_var) mod bob_rate_var;
+            dist_var = dist_base_var+(sin(2*bob_time_var*pi/bob_rate_var)*bob_mult_var/2);
+        }
+    }
 ');
 // Calculate Path
 object_event_add

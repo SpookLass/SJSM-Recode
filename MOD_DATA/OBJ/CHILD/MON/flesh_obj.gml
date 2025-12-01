@@ -58,6 +58,7 @@ object_event_add
             other.ceil_bg_var = ceil_bg_var;
             other.light_wall_spr_var = light_wall_spr_var;
             other.light_floor_spr_var = light_floor_spr_var;
+            other.door_bg_var = door_bg_var;
             other.overlay_bg_var = overlay_bg_var;
             other.mus_snd_var = mus_snd_var;
             other.zone_list_var = zone_list_var;
@@ -75,10 +76,11 @@ object_event_add
         ceil_bg_var = background_add(vanilla_directory_const+"\TEX\mobile\MB5_06_tex.png",false,false);
         light_wall_spr_var = sprite_add(main_directory_const+"\SPR\MON\flesh_light_wall_spr.png",2,false,false,0,0);
         light_floor_spr_var = sprite_add(main_directory_const+"\SPR\MON\flesh_light_floor_spr.png",2,false,false,0,0);
+        door_bg_var = background_add(vanilla_directory_const+"\TEX\mobile\MB5_09_tex.png",false,false);
         // Special Textures
         wall_spr_var = sprite_add(vanilla_directory_const+"\TEX\mobile\MB5_EX_01_spr.png",5,false,false,0,0);
-        arrow_bg_var = background_add(main_directory_const+"\BG\RM\mad_arrow_03_bg.png",false,false);
-        arrow_base_bg_var = background_add(main_directory_const+"\BG\RM\mad_arrow_base_03_bg.png",false,false);
+        arrow_bg_var = background_add(main_directory_const+"\BG\MON\flesh_arrow_bg.png",false,false);
+        arrow_base_bg_var = background_add(main_directory_const+"\BG\MON\flesh_arrow_base_bg.png",false,false);
         // Overlay
         overlay_bg_var = background_add(main_directory_const+"\BG\MON\flesh_overlay_bg.png",false,false);
         // Music
@@ -100,6 +102,7 @@ object_event_add
     }
     arrow_tex_var = background_get_texture(arrow_bg_var);
     arrow_base_tex_var = background_get_texture(arrow_base_bg_var);
+    door_tex_var = background_get_texture(door_bg_var);
     // Behavior
     if global.flesh_type_var == -1 { local.type = irandom(2); }
     else { local.type = global.flesh_type_var; }
@@ -110,6 +113,7 @@ object_event_add
             angle_var = 5;
             smart_var = true;
             dmg_var = 0.5;
+            arrow_var = true;
             break;
         }
         case 2: // HD
@@ -156,6 +160,7 @@ object_event_add
         background_delete(ceil_bg_var);
         sprite_delete(light_wall_spr_var);
         sprite_delete(light_floor_spr_var);
+        background_delete(door_bg_var);
         background_delete(arrow_bg_var);
         background_delete(arrow_base_bg_var);
         sprite_delete(wall_spr_var);
@@ -166,27 +171,45 @@ object_event_add
     with flesh_tex_obj { if par_var == other.id { instance_destroy(); }}
     with flesh_eff_obj { if par_var == other.id { instance_destroy(); }}
     with skybox_par_obj { if par_var == other.id { instance_destroy(); }}
+    with mad_door_obj
+    {
+        if par_var == other.id
+        {
+            local.door = id;
+            with instance_create(x,y,door_obj)
+            {
+                z = local.door.z;
+                direction = local.door.direction;
+                image_blend = local.door.image_blend;
+            }
+            instance_destroy();
+        }
+    }
     with flesh_wall_obj
     {
         if par_var == other.id
         {
             local.wall = id;
-            with instance_create(0,0,wall_par_obj)
+            with instance_create(x,y,wall_par_obj)
             {
                 z = local.wall.z;
-                direction = local.wall.direction;
-                h_var = local.wall.h_var;
                 w_var = local.wall.w_var;
+                h_var = local.wall.h_var;
+                direction = local.wall.direction;
+                image_blend = local.wall.image_blend;
             }
             instance_destroy();
         }
     }
-    with flesh_arrow_obj
+    if arrow_var
     {
-        if par_var == other.id
+        with flesh_arrow_obj
         {
-            on_var = false;
-            visible = false;
+            if par_var == other.id
+            {
+                on_var = false;
+                visible = false;
+            }
         }
     }
     zone_from_num_scr(global.zone_num_var);
@@ -248,34 +271,51 @@ Difference: "+string(local.newdelay)+"
     global.ceil_bg_tex = background_get_texture(ceil_bg_var);
     global.light_wall_obj_spr = light_wall_spr_var;
     global.light_floor_obj_spr = light_floor_spr_var;
-    // Walls
+    // Door
     local.par = id;
+    if dur_var > 1
+    {
+        with door_obj
+        {
+            local.door = id;
+            with instance_create(x,y,mad_door_obj)
+            {
+                z = local.door.z;
+                direction = local.door.direction;
+                image_blend = local.door.image_blend;
+                par_var = local.par;
+                store_tex_var = local.par.door_tex_var;
+                tex_var = store_tex_var;
+            }
+            instance_destroy();
+        }
+        with door_trig_obj
+        {
+            snd_len_var = 1;
+            snd_arr[0] = door_m_02_snd;
+        }
+    }
+    // Walls
     with wall_mon_obj
     {
-        local.wall = id;
-        with instance_create(x,y,flesh_wall_obj)
-        {
-            par_var = local.par;
-            spr_var = local.par.wall_spr_var;
-            z = local.wall.z;
-            direction = local.wall.direction;
-            h_var = local.wall.h_var;
-            w_var = local.wall.w_var;
-            event_perform(ev_alarm,0);
-        }
-        instance_destroy();
+        spr_var = other.wall_spr_var;
+        par_var = other.id;
+        instance_change(flesh_wall_obj,true);
     }
     // Arrow
-    with flesh_arrow_obj
+    if arrow_var
     {
-        par_var = other.id;
-        store_tex_var = other.arrow_tex_var;
-        tex_var = store_tex_var;
-        store_tex_02_var = other.arrow_base_tex_var;
-        tex_02_var = store_tex_02_var;
-        on_var = true;
-        visible = true;
-        event_user(0);
+        with flesh_arrow_obj
+        {
+            par_var = other.id;
+            store_tex_var = other.arrow_tex_var;
+            tex_var = store_tex_var;
+            store_tex_02_var = other.arrow_base_tex_var;
+            tex_02_var = store_tex_02_var;
+            on_var = true;
+            visible = true;
+            event_user(0);
+        }
     }
     // Effect
     if !instance_exists(flesh_eff_obj)

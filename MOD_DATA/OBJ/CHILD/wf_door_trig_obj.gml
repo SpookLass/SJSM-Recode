@@ -6,43 +6,6 @@ object_set_persistent(argument0,false);
 object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
 object_set_visible(argument0,false);
-// Create Event
-object_event_add
-(argument0,ev_create,0,'
-    clown_delay_var = 60;
-    // Inherited
-    event_inherited();
-    // Alarm
-    alarm_len_var = 2;
-');
-// Alarm 1 Event
-object_event_add
-(argument0,ev_alarm,1,'
-    local.bestdoor = id;
-    local.bestnum = player_var;
-    with door_trig_obj
-    {
-        if player_var > local.bestnum
-        {
-            local.bestdoor = id;
-            local.bestnum = player_var;
-        }
-    }
-    with local.bestdoor
-    { set_alarm_scr(0,delay_var); }
-    global.in_door_var = true;
-    // Play sound
-    fmod_snd_play_scr(snd_arr[irandom(snd_len_var-1)]);
-    // Thingy
-    with instance_create(0,0,fade_eff_obj)
-    {
-        image_blend = c_black; 
-        set_alarm_scr(0,other.delay_var); 
-        invert_var = true;
-        stay_var = true;
-        cam_id_var = other.player_id_var.cam_id_var;
-    }
-');
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,'
@@ -71,21 +34,30 @@ object_event_add
                         local.active = true;
                         local.player = id;
                         local.remaining -= 1;
-                        if local.remaining != 0
+                        with instance_create(0,0,fade_eff_obj)
                         {
+                            image_blend = c_black;
+                            image_alpha = 0;
+                            set_alarm_scr(0,local.door.delay_var);
+                            invert_var = true;
+                            stay_var = true;
+                            cam_id_var = local.player.cam_id_var;
+                        }
+                        other.player_var += 1;
+                        // WHY (te Face)
+                        if !irandom(1) && instance_exists(local.door.par_var)
+                        {
+                            fmod_snd_play_scr(local.door.par_var.glitch_snd_arr[irandom(local.door.par_var.glitch_snd_len_var-1)]);
                             with instance_create(0,0,fade_eff_obj)
                             {
-                                image_blend = c_black;
-                                image_alpha = 0;
-                                set_alarm_scr(0,local.door.delay_var); 
-                                invert_var = true;
-                                stay_var = true;
+                                if !irandom(1) { image_blend = c_black; }
+                                else { image_blend = c_red; }
+                                set_alarm_scr(0,local.door.par_var.eff_02_alarm_var); 
+                                invert_var = 2;
+                                stay_var = false;
                                 cam_id_var = local.player.cam_id_var;
                             }
-                            fmod_snd_play_scr(choose(door_01_snd,door_02_snd,door_03_snd,door_04_snd));
                         }
-                        else { other.player_id_var = local.player; }
-                        other.player_var += 1;
                     }
                     else if !instance_exists(txt_obj)
                     {
@@ -101,16 +73,20 @@ object_event_add
     if !global.in_door_var && local.remaining == 0
     && (local.active || global.player_len_var > 1 || !global.debug_var) // Dont go in single player if not opened (testing)
     {
-        if instance_exists(clown_obj)
+        local.bestdoor = id;
+        local.bestnum = player_var;
+        with door_trig_obj
         {
-            with clown_obj
+            if player_var > local.bestnum
             {
-                if dur_var == 1
-                { event_user(15); }
+                local.bestdoor = id;
+                local.bestnum = player_var;
             }
-            set_alarm_scr(1,clown_delay_var);
         }
-        else { event_perform(ev_alarm,0); }
+        with local.bestdoor
+        { set_alarm_scr(0,delay_var); }
         global.in_door_var = true;
+        // Play sound
+        fmod_snd_play_scr(snd_arr[irandom(snd_len_var-1)]);
     }
 ');

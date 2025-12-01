@@ -440,6 +440,15 @@ object_event_add
             }
         }
     }
+    // Damn Doors
+    with door_trig_obj
+    {
+        if object_index != wf_door_trig_obj
+        {
+            par_var = other.id;
+            instance_change(wf_door_trig_obj,true);
+        }
+    }
     // Effects
     if res_var
     {
@@ -628,7 +637,6 @@ object_event_add
         // Flashing effects
         if frac_chance_scr(1,flash_chance_var) && seen_flash_var && (flash_agg_var <= 0 || seen_agg_var > flash_agg_var)
         {
-            fmod_snd_play_scr(glitch_snd_arr[irandom(glitch_snd_len_var-1)]);
             // Make sure not to blind the player
             if !instance_exists(color_par_obj)
             || color_get_red(color_par_obj.image_blend) > 96
@@ -649,6 +657,7 @@ object_event_add
                 case 1:
                 case 2:
                 {
+                    fmod_snd_play_scr(glitch_snd_arr[irandom(glitch_snd_len_var-1)]);
                     with instance_create(0,0,fade_eff_obj)
                     {
                         if local.rand == 2 { image_blend = c_black; }
@@ -656,13 +665,13 @@ object_event_add
                         set_alarm_scr(0,other.eff_02_alarm_var); 
                         invert_var = 2;
                         stay_var = false;
-                        cam_id_var = -1;
+                        cam_id_var = other.target_var.cam_id_var;
                     }
                     break;
                 }
                 case 3:
                 {
-                    // Turn everything red (need to code that)
+                    // Turn everything red
                     with instance_create(0,0,color_flash_eff_obj)
                     {
                         image_blend = c_red; 

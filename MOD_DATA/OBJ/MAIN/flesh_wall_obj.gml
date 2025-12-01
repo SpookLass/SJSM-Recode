@@ -13,6 +13,7 @@ object_event_add
     alarm_len_var = 1;
     alarm_min_var = 60;
     alarm_max_var = 120;
+    event_perform(ev_alarm,0);
 ');
 // Alarm
 object_event_add
