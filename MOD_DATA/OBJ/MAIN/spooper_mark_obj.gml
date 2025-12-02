@@ -38,26 +38,18 @@ object_event_add
                 local.bestdist = local.dist;
                 local.player = id;
             }
-            if local.dist < other.seen_dist_var
-            {
-                if other.seen_yaw_var > 0
-                {
-                    local.yaw = abs(deg_diff_scr(point_direction(x,y,other.x,other.y),eye_yaw_var));
-                    local.radius = other.coll_var[2]/2; local.angle = radtodeg(arctan2(local.radius,local.dist));
-                    local.seenyaw = (local.yaw <= other.seen_yaw_var+local.angle);
-                }
-                else { local.seenyaw = true;  }
-                if other.seen_pitch_var > 0
-                {
-                    local.height = other.coll_var[1]/2; local.angle = radtodeg(arctan2(local.height,local.dist));
-                    local.pitch = abs(deg_diff_scr(point_direction_3d_scr(x,y,z+eye_h_var,other.x,other.y,other.z+local.height),eye_pitch_var));
-                    local.seenpitch = (local.pitch <= other.seen_pitch_var+local.angle);
-                }
-                else { local.seenpitch = true; }
-            }
+            local.seen = seen_scr
+            (
+                other.seen_yaw_var,other.seen_pitch_var,other.seen_dist_var,
+                eye_yaw_var,eye_pitch_var,
+                x,y,z+eye_h_var,
+                false,false,
+                other.coll_var[1],other.coll_var[2],
+                other.x,other.y,other.z
+            ) > 0;
         }
     }
-    if local.seenyaw && local.seenpitch { instance_destroy(); exit; }
+    if local.seen { instance_destroy(); exit; }
     if instance_exists(local.player)
     {
         // Turning

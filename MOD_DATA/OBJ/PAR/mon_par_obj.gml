@@ -6,11 +6,35 @@ object_set_persistent(argument0,true);
 object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
+// Create Start
+    // Loading specimen specific settings
+object_event_add
+(argument0,ev_create,1,'');
+// Create Normal Event
+    // Default settings
+object_event_add
+(argument0,ev_create,2,'
+    dur_start_var = dur_var;
+    // Theme
+    if mus_prio_var > amb_mus_prio_const
+    {
+        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
+        with mus_control_obj { event_user(0); }
+    }
+');
+// Create End Event
+    // Startup
+object_event_add
+(argument0,ev_create,3,'
+    event_perform(ev_other,ev_room_start);
+');
 // Create Event
 object_event_add
 (argument0,ev_create,0,'
+    event_perform(ev_create,1);
+    event_perform(ev_create,2);
+    event_perform(ev_create,3);
     event_inherited();
-    dur_start_var = dur_var;
 ')
 // Room End Event
 object_event_add

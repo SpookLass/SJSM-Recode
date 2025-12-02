@@ -363,7 +363,7 @@ object_event_add
     event_inherited();
     if on_var
     {
-        if is_seen_var == 1 && target_dist_var <= seen_dist_var
+        if is_seen_var == 1
         {
             if seen_fade_var
             { image_alpha -= seen_fade_rate_var*global.delta_time_var; }

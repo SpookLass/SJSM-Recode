@@ -9,6 +9,7 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,0,'
+    event_inherited();
     // Collision
     coll_var[0] = global.slime_trig_coll[0];
     coll_var[1] = global.slime_trig_coll[1];
@@ -27,7 +28,7 @@ object_event_add
 (argument0,ev_step,ev_step_normal,'
     with player_obj
     {
-        if on_floor_var
+        if on_floor_var && !dead_var && !hurt_var && !in_door_var && !invuln_var && on_var
         {
             if cyl_coll_scr(x,y,z,coll_var[2],coll_var[1],other.x,other.y,other.z,other.coll_var[2],other.coll_var[1])
             { spd_mult_var *= other.spd_mult_var; }

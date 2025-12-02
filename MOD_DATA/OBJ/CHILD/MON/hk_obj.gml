@@ -236,7 +236,7 @@ object_event_add
 		local.dmg = dmg_rate_var/target_dist_var;
 		target_var.hp_var -= local.dmg*global.delta_time_var;
 	}
-	if target_dist_var < seen_dist_var && is_seen_var == 1
+	if is_seen_var == 1
 	{
 		w_var = base_w_var + random_range(-shake_var,shake_var);
 		h_var = base_h_var + random_range(-shake_var,shake_var);

@@ -593,7 +593,7 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user5,'
     event_inherited();
-    if is_seen_var == true && (seen_dist_var <= 0 || target_dist_var >= seen_dist_var)
+    if is_seen_var == 1
     {
         if !do_seen_agg_var { seen_var = false; }
         else { seen_agg_var += global.delta_time_var; }

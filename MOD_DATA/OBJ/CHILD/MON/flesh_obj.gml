@@ -8,7 +8,7 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create Event
 object_event_add
-(argument0,ev_create,0,'
+(argument0,ev_create,1,'
     ini_open(global.lang_var);
     switch global.name_var
     {
@@ -86,7 +86,6 @@ object_event_add
         // Music
         mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\flesh_mus_snd.mp3");
         fmod_snd_set_loop_point_scr(mus_snd_var,5/22,9/11); // Ohhh 9/11
-        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
         // Zone
         zone_list_var = ds_list_create();
         ds_list_clear(zone_list_var);
@@ -130,11 +129,6 @@ object_event_add
         bg_var = other.bg_var;
         other.tex_var = tex_var;
     }
-    with mus_control_obj { event_user(0); }
-    // Inherit
-    event_inherited();
-    // Room Start
-    event_perform(ev_other,ev_room_start);
     // Zone
     if zone_var && zone_start_var <= 0
     {

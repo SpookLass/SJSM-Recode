@@ -104,7 +104,9 @@ object_event_add
     seen_type_var = 1;
     seen_yaw_var = 5.856;
     seen_dist_var = 120;
-    seen_spd_mult_var = 2;
+    do_seen_mult_var = true;
+    seen_mult_var = 2;
+    unseen_mult_var = 1;
     spr_spd_seen_var = 1;
     spr_spd_base_var = 0.25;
     spr_spd_var = spr_spd_base_var;
@@ -248,9 +250,8 @@ object_event_add
             flame_z_off_var = lerp_scr(flame_z_off_base_var*20,flame_z_off_base_var,local.per)
         }
     }
-    if seen_var && is_seen_var == 1 && target_dist_var < seen_dist_var
+    if seen_var && is_seen_var == 1
     {
-        if move_var { spd_mult_var *= seen_spd_mult_var; }
         spr_spd_var = spr_spd_seen_var;
         anim_type_var = 3;
     }

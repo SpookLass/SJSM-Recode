@@ -119,10 +119,6 @@ Seen
     do_seen_mult_var: Whether the monster should automatically apply speed based on whether they are spotted by the player
 
 */
-// Create Start
-    // Loading specimen specific settings
-object_event_add
-(argument0,ev_create,1,'');
 // Create Normal Event
     // Default settings
 object_event_add
@@ -155,7 +151,7 @@ object_event_add
         coll_var[1] = global.mon_coll[1];
         coll_var[2] = global.mon_coll[2];
     }
-    mon_coll_var = true;
+    if mon_coll_var == 0 { mon_coll_var = true; }
     // Attack variables
     if atk_range_var == 0
     { atk_range_var = coll_var[2]; }
@@ -198,21 +194,17 @@ object_event_add
     }
     if snd_delay_min_var == 0 { snd_delay_min_var = snd_alarm_min_var}
     if snd_delay_max_var == 0 { snd_delay_max_var = snd_alarm_max_var}
-    // Theme
-    if mus_prio_var > amb_mus_prio_const
-    {
-        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
-        with mus_control_obj { event_user(0); }
-    }
     // Alarms
     if alarm_len_var == 0
     { alarm_len_var = 8; }
+    // Inherit
+    event_inherited();
 ');
 // Create End Event
     // Startup
 object_event_add
 (argument0,ev_create,3,'
-    // Play wake (or random sound if it doesn"t exist)
+    // Play wake (or random sound if it doesnt exist)
     if wake_snd_var[0] == 1
     {
         if fmod_snd_is_3d_scr(wake_snd_var[1]) { snd_var = fmod_snd_3d_play_scr(wake_snd_var[1]); }
@@ -227,15 +219,7 @@ object_event_add
         sub_var[0] = snd_arr[local.snd,1];
         sub_var[1] = snd_arr[local.snd,2];
     }
-    // Room start
-    event_perform(ev_other,ev_room_start);
-');
-// Create Event
-object_event_add
-(argument0,ev_create,0,'
-    event_perform(ev_create,1);
-    event_perform(ev_create,2);
-    event_perform(ev_create,3);
+    // Inherit
     event_inherited();
 ');
 // Destroy Event
@@ -836,12 +820,11 @@ object_event_add
             {
                 seen_per_var = seen_scr
                 (
-                    seen_yaw_var,
-                    seen_pitch_var,
+                    seen_yaw_var,seen_pitch_var,seen_dist_var,
                     target_var.eye_yaw_var,
                     target_var.eye_pitch_var,
                     target_x_var,target_y_var,target_z_var+target_var.eye_h_var,
-                    false
+                    false,false
                 );
                 is_seen_var = (seen_per_var > 0)
             }
@@ -860,15 +843,15 @@ object_event_add
                     {
                         local.per = seen_scr
                         (
-                            other.seen_yaw_var,other.seen_pitch_var,
+                            other.seen_yaw_var,other.seen_pitch_var,other.seen_dist_var,
                             eye_yaw_var,eye_pitch_var,
                             x,y,z+eye_h_var,
-                            false,
+                            false,false,
                             other.coll_var[1],other.coll_var[2],
                             other.x,other.y,other.z
                         );
                         other.seen_per_var = max(local.per,other.seen_per_var);
-                        other.is_seen_var = (other.seen_per_var > 0)
+                        other.is_seen_var = (other.seen_per_var > 0);
                     }
                 }
             }

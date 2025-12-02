@@ -77,7 +77,7 @@ object_event_add
             for (local.i=0; local.i<snd_len_var; local.i+=1;)
             { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
             for (local.i=0; local.i<glitch_snd_len_var; local.i+=1;)
-            { other.glitch_snd_arr[local.i,0] = glitch_snd_arr[local.i,0]; }
+            { other.glitch_snd_arr[local.i] = glitch_snd_arr[local.i]; }
             for (local.i=0; local.i<dmg_snd_len_var; local.i+=1;)
             { other.dmg_snd_arr[local.i,0] = dmg_snd_arr[local.i,0]; }
             other.mus_snd_var = mus_snd_var;
@@ -289,7 +289,7 @@ object_event_add
     {
         fmod_snd_free_scr(mus_snd_var);
         for (local.i=0; local.i<glitch_snd_len_var; local.i+=1;)
-        { fmod_snd_free_scr(glitch_snd_arr[local.i,0]); }
+        { fmod_snd_free_scr(glitch_snd_arr[local.i]); }
         for (local.i=0; local.i<dmg_snd_len_var; local.i+=1;)
         { fmod_snd_free_scr(dmg_snd_arr[local.i,0]); }
         background_delete(bg_var);

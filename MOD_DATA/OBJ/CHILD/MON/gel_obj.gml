@@ -415,7 +415,6 @@ object_event_add
 // Draw
 object_event_add
 (argument0,ev_draw,0,'
-    event_inherited();
     if slime_spawn_var > 0
     {
         draw_set_color(image_blend); draw_set_alpha(slime_alpha_var);
@@ -427,4 +426,5 @@ object_event_add
         d3d_transform_set_identity();
         draw_set_color(c_white); draw_set_alpha(1);
     }
+    event_inherited();
 ');
