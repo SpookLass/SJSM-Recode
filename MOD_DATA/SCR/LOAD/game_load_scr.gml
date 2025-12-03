@@ -24,6 +24,7 @@ execute_file(main_directory_const+"\SCR\LOAD\snd_load_scr.gml");
 execute_file(main_directory_const+"\SCR\LOAD\mdl_load_scr.gml");
 execute_file(main_directory_const+"\SCR\LOAD\coll_load_scr.gml");
 execute_file(main_directory_const+"\SCR\LOAD\part_load_scr.gml");
+shader_load_scr();
 execute_file(main_directory_const+"\SCR\LOAD\obj_load_scr.gml");
 execute_file(main_directory_const+"\SCR\LOAD\rm_load_scr.gml");
 execute_file(main_directory_const+"\SCR\LOAD\zone_load_scr.gml");
