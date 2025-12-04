@@ -9,6 +9,7 @@ object_set_visible(argument0,false);
 // Create
 object_event_add
 (argument0,ev_create,0,'
+    event_inherited();
     dur_min_var = 8;
     dur_max_var = 15;
     dur_var = irandom_range(dur_min_var,dur_max_var);

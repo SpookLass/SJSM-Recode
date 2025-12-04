@@ -127,11 +127,11 @@ object_event_add
         case 1:
         {
             back_var = true;
-            normal_var = false;
             breath_do_var = false;
             flare_pitch_var = 0;
             do_flare_per_var = false;
             heal_safe_var = 1;
+            // normal_var = false;
             break;
         }
         case 2:

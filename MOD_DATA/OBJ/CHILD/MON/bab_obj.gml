@@ -343,24 +343,27 @@ object_event_add
 // Ambience Alarm
 object_event_add
 (argument0,ev_alarm,10,'
-    // Find center of players
-    local.xtmp = 0; local.ytmp = 0; local.ztmp = 0;
-    for (local.i=0; local.i<global.player_len_var; local.i+=1;)
+    if frac_chance_scr(amb_num_var,amb_den_var)
     {
-        local.xtmp += global.player_arr[local.i].x;
-        local.ytmp += global.player_arr[local.i].y;
-        local.ztmp += global.player_arr[local.i].z;
+        // Find center of players
+        local.xtmp = 0; local.ytmp = 0; local.ztmp = 0;
+        for (local.i=0; local.i<global.player_len_var; local.i+=1;)
+        {
+            local.xtmp += global.player_arr[local.i].x;
+            local.ytmp += global.player_arr[local.i].y;
+            local.ztmp += global.player_arr[local.i].z;
+        }
+        local.xtmp /= global.player_len_var; 
+        local.ytmp /= global.player_len_var; 
+        local.ztmp /= global.player_len_var;
+        // Add random
+        local.yaw = random(360); local.pitch = random_range(-90,90); local.dist = random_range(amb_dist_min_var,amb_dist_max_var);
+        local.xtmp += lengthdir_x(lengthdir_x(local.dist,local.yaw),local.pitch);
+        local.ytmp += target_y_var+lengthdir_x(lengthdir_y(local.dist,local.yaw),local.pitch);
+        local.ztmp -= target_z_var-lengthdir_y(local.dist,local.pitch);
+        // Play Sound
+        fmod_snd_3d_play_scr(snd_amb_arr[irandom(snd_amb_len_var-1),0],local.xtmp,local.ytmp,local.ztmp);
     }
-    local.xtmp /= global.player_len_var; 
-    local.ytmp /= global.player_len_var; 
-    local.ztmp /= global.player_len_var;
-    // Add random
-    local.yaw = random(360); local.pitch = random_range(-90,90); local.dist = random_range(amb_dist_min_var,amb_dist_max_var);
-    local.xtmp += lengthdir_x(lengthdir_x(local.dist,local.yaw),local.pitch);
-    local.ytmp += target_y_var+lengthdir_x(lengthdir_y(local.dist,local.yaw),local.pitch);
-    local.ztmp -= target_z_var-lengthdir_y(local.dist,local.pitch);
-    // Play Sound
-    fmod_snd_3d_play_scr(snd_amb_arr[irandom(snd_amb_len_var-1),0],local.xtmp,local.ytmp,local.ztmp);
     set_alarm_scr(10,random_range(amb_alarm_min_var,amb_alarm_max_var));
 ');
 // Trail Alarm

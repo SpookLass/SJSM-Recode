@@ -171,9 +171,11 @@ object_event_add
             tp_dist_min_var = 0;
             tp_dist_max_var = 32/3; // 10.r6
             violence_var = 2;
+            do_hurt_var = 2;
             hurt_dur_var = 1;
             hurt_tp_var = false;
             hurt_multi_var = true;
+            hurt_die_var = 0;
             break;
         }
         case 3:
