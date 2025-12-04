@@ -54,6 +54,7 @@ object_event_add
     w_var = 10;
     h_var = 20;
     spr_spd_var = 1;
+    fog_prio_var = 2;
     // Collision
     coll_var[0] = global.mon_wide_coll[0];
     coll_var[1] = global.mon_wide_coll[1];
@@ -354,12 +355,17 @@ object_event_add
             old_var = other.eff_old_var;
         }
     }
-    if fog_var && !instance_exists(gc_fog_obj)
+    if fog_var
     {
-        with instance_create(0,0,gc_fog_obj)
+        with fog_par_obj { if prio_var < other.fog_prio_var { instance_destroy(); }}
+        if !instance_exists(fog_par_obj)
         {
-            par_var = other.id;
-            tex_var = background_get_texture(other.fog_bg_var);
+            with instance_create(0,0,gc_fog_obj)
+            {
+                par_var = other.id;
+                prio_var = other.fog_prio_var;
+                tex_var = background_get_texture(other.fog_bg_var);
+            }
         }
     }
 ');

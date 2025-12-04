@@ -57,14 +57,22 @@ object_event_add
 // Room Start
 object_event_add
 (argument0,ev_other,ev_room_start,'
-    on_var = false;
+    if !per_var { on_var = false; }
+    else if on_var
+    {
+        spr_id_var = irandom(sprite_get_number(spr_var)-1);
+        set_alarm_scr(1,irandom_range(rand_alarm_min_var,rand_alarm_max_var));
+        with floor_par_obj { tex_var = other.tex_var; }
+        with ceil_par_obj { tex_var = other.tex_var; }
+        with wall_par_obj { tex_var = other.tex_var; }
+        with prop_par_obj
+        {
+            if other.door_var || (object_index != door_obj && !object_is_ancestor(object_index,door_obj))
+            tex_var = other.tex_var;
+        }
+    }
     if alarm_arr[0,0] <= 0
     { set_alarm_scr(0,irandom_range(alarm_min_var,alarm_max_var)); }
-');
-// Room End
-object_event_add
-(argument0,ev_other,ev_room_end,'
-    if !per_var { event_inherited(); }
 ');
 // Alarm 0 Event
 object_event_add

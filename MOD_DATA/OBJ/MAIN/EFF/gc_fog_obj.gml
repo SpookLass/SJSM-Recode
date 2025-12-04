@@ -28,15 +28,20 @@ object_event_add
 // Draw
 object_event_add
 (argument0,ev_draw,0,'
-    d3d_transform_set_identity();
-    d3d_transform_add_rotation_z(direction);
-    d3d_transform_add_translation(global.cam_x_var[view_current],global.cam_y_var[view_current],global.cam_z_var[view_current]);
-    draw_set_color(global.fog_color_var); draw_set_alpha(image_alpha);
-    for (local.i=0; local.i<num_var; local.i+=1;)
+    if global.cam_type_var[view_current] == cam_alive_const
     {
-        local.size = lerp_scr(fog_end_var,fog_start_var,local.i/num_var);
-        d3d_draw_ellipsoid(-local.size,-local.size,-local.size,local.size,local.size,local.size,tex_var,4,4,step_var);
+        d3d_set_fog(false,c_black,0,0);
+        d3d_transform_set_identity();
+        d3d_transform_add_rotation_z(direction);
+        d3d_transform_add_translation(global.cam_x_var[view_current],global.cam_y_var[view_current],global.cam_z_var[view_current]);
+        draw_set_color(global.fog_color_var); draw_set_alpha(image_alpha);
+        for (local.i=0; local.i<num_var; local.i+=1;)
+        {
+            local.size = lerp_scr(fog_end_var,fog_start_var,local.i/num_var);
+            d3d_draw_ellipsoid(-local.size,-local.size,-local.size,local.size,local.size,local.size,tex_var,4,4,step_var);
+        }
+        d3d_transform_set_identity();
+        draw_set_color(c_white); draw_set_alpha(1);
     }
-    d3d_transform_set_identity();
-    draw_set_color(c_white); draw_set_alpha(1);
-')
+    event_inherited();
+');

@@ -142,6 +142,7 @@ object_event_add
         case 0: // Mod
         {
             do_ascend_var = true;
+            temp_hd_var = true;
             tp_sight_var = true;
             type_var = 2;
             delay_var = 90;
@@ -150,6 +151,10 @@ object_event_add
             visible_var = true;
             hurt_tp_var = false;
             hurt_multi_var = true;
+            tp_dist_min_var = 0;
+            tp_dist_max_var = 16;
+            ascend_alarm_var = 60;
+            descend_alarm_var = 30;
             break;
         }
         case 2: // HD
@@ -164,14 +169,20 @@ object_event_add
             dmg_alarm_var = 180;
             atk_range_var = 32;
             tp_dist_min_var = 0;
-            tp_dist_max_var = 32/3;
+            tp_dist_max_var = 32/3; // 10.r6
             violence_var = 2;
             hurt_dur_var = 1;
             hurt_tp_var = false;
             hurt_multi_var = true;
             break;
         }
-        case 3: // Hellgate
+        case 3:
+        {
+            tp_alarm_var = -1;
+            delay_var = 60;
+            break;
+        }
+        case 4: // Hellgate
         {
             spd_base_var = 4;
             seen_delay_var = 15;
@@ -180,15 +191,11 @@ object_event_add
             tp_alarm_var = 530;
             break;
         }
-        case 4: // "True" Hellgate
+        case 5: // HD Hellgate
         {
-            seen_delay_var = 15;
-            seen_start_delay_var = 120;
-            delay_var = 60;
-            dmg_var = 8;
-            tp_alarm_var = 530;
             break;
         }
+        
     }
     // Base
     w_var = w_base_var;
@@ -366,7 +373,7 @@ object_event_add
                         set_alarm_scr(6,-1);
                         if do_ascend_var
                         {
-                            ascend_agg_var -= global.delta_time_var/seen_delay_var;
+                            ascend_agg_var -= global.delta_time_var/descend_alarm_var;
                             state_var = 1;
                             if ascend_agg_var <= 0
                             {
@@ -392,7 +399,7 @@ object_event_add
                     {
                         if do_ascend_var
                         {
-                            ascend_agg_var += global.delta_time_var/seen_delay_var;
+                            ascend_agg_var += global.delta_time_var/ascend_alarm_var;
                             state_var = 1;
                             if ascend_agg_var >= 1
                             {
@@ -419,8 +426,11 @@ object_event_add
                 if do_ascend_var && state_var == 1
                 { z_off_var = lerp_scr(0,ascend_z_var,ascend_agg_var); }
                 // Teleport
-                if !local.active { if alarm_arr[8,0] <= 0 { set_alarm_scr(8,tp_alarm_var); }}
-                else if alarm_arr[8,0] > 0 { set_alarm_scr(8,-1); }
+                if tp_alarm_var > 0
+                {
+                    if !local.active { if alarm_arr[8,0] <= 0 { set_alarm_scr(8,tp_alarm_var); }}
+                    else if alarm_arr[8,0] > 0 { set_alarm_scr(8,-1); }
+                }
             }
         }
         else if do_ascend_var && !hd_var && alarm_arr[0,0] > 0
@@ -457,13 +467,27 @@ object_event_add
 // Teleport alarm
 object_event_add
 (argument0,ev_alarm,8,'
-    event_user(15);
+    if temp_hd_var && !hd_var
+    {
+        // I hope this works
+        hd_var = true;
+        state_var = 1;
+        atk_var = false;
+        set_alarm_scr(4,ascend_alarm_var);
+        set_alarm_scr(8,ascend_alarm_var);
+    }
+    else { event_user(15); }
 ');
 // Coming Down (HD)
 object_event_add
 (argument0,ev_alarm,9,'
     z_off_var = 0;
     state_var = 0;
+    if temp_hd_var
+    {
+        hd_var = false;
+        ascend_agg_var = 0;
+    }
 ');
 // Teleport
 object_event_add
@@ -504,7 +528,7 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user4,'
     if hurt_tp_var && frac_chance_scr(hurt_tp_num_var,hurt_tp_den_var)
-    { event_user(15); }
+    { event_perform(ev_alarm,8); }
     else
     {
         reset_alarm_scr();
