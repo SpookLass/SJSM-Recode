@@ -23,6 +23,8 @@ object_event_add
     snd_den_var = 3;
     snd_alarm_min_var = 30;
     snd_alarm_max_var = 30;
+    snd_delay_min_var = -1;
+    snd_delay_max_var = -1;
     snd_dist_max_var = 600;
     // Translations
     ini_open(global.lang_var);
@@ -91,6 +93,9 @@ object_event_add
     hurt_w_var = 20;
     hurt_h_var = 10;
     hurt_anim_alarm_var = 15;
+    hurt_up_var = false;
+    hurt_alarm_min_var = 240;
+    hurt_alarm_max_var = 480;
     // HD Stuff
     ascend_z_var = 128;
     ascend_alarm_var = 36;
@@ -135,17 +140,18 @@ object_event_add
     spr_var = spr_base_var;
     tex_var = sprite_get_texture(spr_var,irandom(sprite_get_number(spr_var)));
     // Behavior
-    if global.pup_type_var == -1 { local.type = irandom(4); }
+    if global.pup_type_var == -1 { local.type = irandom(6); }
     else { local.type = global.pup_type_var; }
     switch local.type
     {
         case 0: // Mod
         {
+            spd_base_var = 4;
             do_ascend_var = true;
             temp_hd_var = true;
             tp_sight_var = true;
             type_var = 2;
-            delay_var = 90;
+            delay_var = 60;
             dmg_var = 30;
             seen_pitch_var = 30;
             visible_var = true;
@@ -156,6 +162,13 @@ object_event_add
             ascend_alarm_var = 60;
             descend_alarm_var = 30;
             break;
+        }
+        case 5: // HD Hellgate
+        {
+            do_hurt_var = 1;
+            start_alarm_var = -1;
+            hurt_up_var = true;
+            local.set = true;
         }
         case 2: // HD
         {
@@ -171,14 +184,18 @@ object_event_add
             tp_dist_min_var = 0;
             tp_dist_max_var = 32/3; // 10.r6
             violence_var = 2;
-            do_hurt_var = 2;
-            hurt_dur_var = 1;
             hurt_tp_var = false;
             hurt_multi_var = true;
             hurt_die_var = 0;
+            hurt_alarm_max_var = 240;
+            if !local.set
+            {
+                do_hurt_var = 2;
+                hurt_dur_var = 1;
+            }
             break;
         }
-        case 3:
+        case 3: // Old
         {
             tp_alarm_var = -1;
             delay_var = 60;
@@ -186,18 +203,15 @@ object_event_add
         }
         case 4: // Hellgate
         {
+            hurt_tp_den_var = 2;
             spd_base_var = 4;
             seen_delay_var = 15;
             seen_start_delay_var = 120;
             delay_var = 60;
             tp_alarm_var = 530;
+            hurt_up_var = true;
             break;
         }
-        case 5: // HD Hellgate
-        {
-            break;
-        }
-        
     }
     // Base
     w_var = w_base_var;
@@ -223,6 +237,7 @@ object_event_add
     spr_id_var = irandom(sprite_get_number(spr_var));
     tex_var = sprite_get_texture(spr_var,spr_id_var);
     down_var = false;
+    visible_var = (do_ascend_var && !temp_hd_var);
 ');
 // Destroy Event
 object_event_add
@@ -244,36 +259,36 @@ object_event_add
 object_event_add
 (argument0,ev_alarm,0,'
     event_inherited();
-    visible_var = do_ascend_var;
+    if temp_hd_var { hd_var = true; }
     if hd_var
     {
         state_var = 3;
-        set_alarm_scr(4,start_alarm_var);
-        set_alarm_scr(8,start_alarm_var);
+        if start_alarm_var > 0
+        {
+            set_alarm_scr(4,start_alarm_var);
+            set_alarm_scr(8,start_alarm_var);
+        }
+    }
+    else if do_ascend_var
+    {
+        ascend_agg_var = 0;
+        z_off_var = 0;
+        state_var = false;
+    }
+    else if seen_start_delay_var > 0
+    {
+        set_alarm_scr(1,seen_start_delay_var);
+        set_alarm_scr(2,seen_start_delay_var);
+        set_alarm_scr(4,seen_start_delay_var);
+        set_alarm_scr(6,seen_start_delay_var);
+        state_var = 2;
     }
     else
     {
-        if do_ascend_var
-        {
-            ascend_agg_var = 0;
-            z_off_var = 0;
-            state_var = false;
-        }
-        else if seen_start_delay_var > 0
-        {
-            set_alarm_scr(1,seen_start_delay_var);
-            set_alarm_scr(2,seen_start_delay_var);
-            set_alarm_scr(4,seen_start_delay_var);
-            set_alarm_scr(6,seen_start_delay_var);
-            state_var = 2;
-        }
-        else
-        {
-            move_var = do_move_var;
-            anim_var = do_anim_var;
-            atk_var = do_atk_var;
-            state_var = false;
-        }
+        move_var = do_move_var;
+        anim_var = do_anim_var;
+        atk_var = do_atk_var;
+        state_var = false;
     }
 ');
 // Step event
@@ -342,7 +357,7 @@ object_event_add
                         local.start = true;
                         with player_obj
                         {
-                            if point_distance_3d_scr(x,y,z,global.spawn_arr[0,0],global.spawn_arr[1,0],global.spawn_arr[2,0]) < other.start_dist_var
+                            if point_distance_3d_scr(x,y,z,global.spawn_arr[0,0],global.spawn_arr[0,1],global.spawn_arr[0,2]) < other.start_dist_var
                             { local.start = false; }
                         }
                         if local.start
@@ -473,6 +488,11 @@ object_event_add
     {
         // I hope this works
         hd_var = true;
+        set_motion_3d_scr(0,true);
+        move_var = false;
+        anim_var = false;
+        set_alarm_scr(6,-1);
+        // Ascend
         state_var = 1;
         atk_var = false;
         set_alarm_scr(4,ascend_alarm_var);
@@ -489,6 +509,37 @@ object_event_add
     {
         hd_var = false;
         ascend_agg_var = 0;
+    }
+    // Sound (I think? HDs code here sucks)
+    if fmod_inst_is_play_scr(snd_var) && fmod_inst_is_3d_scr(snd_var)
+    { fmod_inst_stop_scr(snd_var); }
+    local.snd = irandom(snd_len_var-1);
+    snd_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0]);
+    sub_var[0] = snd_arr[local.snd,1];
+    sub_var[1] = snd_arr[local.snd,2];
+');
+// GET UP
+object_event_add
+(argument0,ev_alarm,10,'
+    w_var = w_base_var;
+    h_var = h_base_var;
+    spr_var = spr_base_var;
+    spr_id_var = irandom(sprite_get_number(spr_var));
+    tex_var = sprite_get_texture(spr_var,spr_id_var);
+    down_var = false;
+    hurt_var = false;
+    if hd_var
+    {
+        state_var = 1;
+        atk_var = false;
+        set_alarm_scr(4,ascend_alarm_var);
+        set_alarm_scr(8,ascend_alarm_var);
+    }
+    else
+    {
+        state_var = 0;
+        anim_type_var = 3;
+        event_perform(ev_alarm,8);
     }
 ');
 // Teleport
@@ -549,10 +600,21 @@ object_event_add
         tex_var = sprite_get_texture(spr_var,spr_id_var);
         set_alarm_scr(5,hurt_anim_alarm_var);
         z_off_var = 0;
+        // Hellgate
+        if hurt_up_var
+        { set_alarm_scr(10,irandom_range(hurt_alarm_min_var,hurt_alarm_max_var)); }
+        // Can hit multiple times
         if !hurt_multi_var
         {
             hurt_var = true;
             set_alarm_scr(3,-1);
         }
+        // Sound
+        if fmod_inst_is_play_scr(snd_var) && fmod_inst_is_3d_scr(snd_var)
+        { fmod_inst_stop_scr(snd_var); }
+        local.snd = irandom(snd_len_var-1);
+        snd_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0]);
+        sub_var[0] = snd_arr[local.snd,1];
+        sub_var[1] = snd_arr[local.snd,2];
     }
 ');

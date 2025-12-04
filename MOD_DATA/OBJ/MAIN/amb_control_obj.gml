@@ -2,7 +2,7 @@
 object_set_depth(argument0,99);
 object_set_mask(argument0,noone);
 object_set_parent(argument0,par_obj);
-object_set_persistent(argument0,true);
+object_set_persistent(argument0,false);
 object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
 object_set_visible(argument0,false);
@@ -12,6 +12,8 @@ object_event_add
     event_inherited();
     alarm_min_var = 400;
     alarm_max_var = 600;
+    dist_min_var = 32/3; // 10.r6
+    dist_max_var = 320/3; // 106.r6
     num_var = 1;
     den_var = 3;
     snd_len_var = 32;
@@ -67,7 +69,7 @@ object_event_add
         local.ytmp /= global.player_len_var; 
         local.ztmp /= global.player_len_var;
         // Add random
-        local.yaw = random(360); local.pitch = random_range(-90,90); local.dist = random_range(amb_dist_min_var,amb_dist_max_var);
+        local.yaw = random(360); local.pitch = random_range(-90,90); local.dist = random_range(dist_min_var,dist_max_var);
         local.xtmp += lengthdir_x(lengthdir_x(local.dist,local.yaw),local.pitch);
         local.ytmp += target_y_var+lengthdir_x(lengthdir_y(local.dist,local.yaw),local.pitch);
         local.ztmp -= target_z_var-lengthdir_y(local.dist,local.pitch);

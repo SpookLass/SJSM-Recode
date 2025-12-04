@@ -762,9 +762,10 @@ object_event_add
     type_button_arr[5,4] = old_str_var;
     type_button_arr[6,2] = 4; // Bab
     type_button_arr[6,4] = old_str_var;
-    type_button_arr[7,2] = 5; // Puppet
-    type_button_arr[7,4] = dh_str_var;
-    type_button_arr[7,5] = dh_str_var+" "+mod_str_var;
+    type_button_arr[7,2] = 6; // Puppet
+    type_button_arr[7,4] = old_str_var;
+    type_button_arr[7,5] = dh_str_var;
+    type_button_arr[7,6] = dh_str_var+" "+hd_str_var;
     type_button_arr[9,2] = 6; // Deer Lord
     type_button_arr[9,4] = old_str_var;
     type_button_arr[9,5] = rouge_str_var;
