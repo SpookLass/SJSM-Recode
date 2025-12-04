@@ -70,6 +70,7 @@ object_event_add
     warn_dist_var = 320/3;
     check_all_var = false;
     check_path_var = false;
+    atk_range_var = 48;
     // Theme
     mus_prio_var = theme_mus_prio_const;
     // Assets
@@ -197,6 +198,7 @@ object_event_add
             do_hurt_var = 1;
             check_all_var = true;
             check_path_var = true;
+            atk_range_var = coll_var[2];
             // Autobrake
             autobrake_var = true;
             autobrake_spd_var = 1;
@@ -236,6 +238,7 @@ object_event_add
             state_eff_max_var = 6;
             acc_var = 8/225; // 0.03r5
             frick_var = acc_var;
+            atk_range_var = 128/3; // 42.r6
             // Autobrake (close enough)
             autobrake_var = true;
             autobrake_spd_var = 0;

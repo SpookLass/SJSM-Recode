@@ -39,6 +39,7 @@ object_event_add
     delay_var = 120;
     dmg_var = 45;
     dmg_alarm_var = 120;
+    atk_range_var = 48;
     // Sounds
     snd_len_var = 4;
     snd_num_var = 1;
@@ -148,6 +149,7 @@ object_event_add
             hurt_alarm_var = 18;
             hurt_tp_var = 2;
             stun_var = true;
+            atk_range_var = coll_var[2];
             // Silhouette
             sil_var = true;
             sil_type_var = 1; // Pure color
@@ -174,6 +176,7 @@ object_event_add
             hurt_alarm_var = 18;
             hurt_tp_var = 2;
             stun_var = true;
+            atk_range_var = 64/3; // 21.r3
             // Sound
             snd_alarm_min_var = 90;
             snd_alarm_max_var = 240;

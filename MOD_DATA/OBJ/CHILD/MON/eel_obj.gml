@@ -54,6 +54,7 @@ object_event_add
     h_var = 12;
     z_off_var = 4;
     dupe_var = dupe_canon_const;
+    atk_range_var = 48;
     // Scream
     do_hurt_var = true;
     violence_var = 3;
@@ -124,6 +125,7 @@ object_event_add
         case 0: // Recode
         {
             bod_form_var = true;
+            atk_range_var = coll_var[2];
             break;
         }
         case 3: // Remodeled

@@ -53,6 +53,7 @@ object_event_add
     w_01_var = 7;
     w_02_var = 3.5;
     h_var = 20;
+    atk_range_var = 48;
     // Sounds
     snd_len_var = 4;
     snd_num_var = 1;
@@ -117,6 +118,7 @@ object_event_add
             flesh_door_var = false;
             w_01_var = 7.7; // 7
             w_02_var = 2.8; // 3.5
+            atk_range_var = coll_var[2];
             break;
         }
         case 2: // HD
@@ -133,6 +135,7 @@ object_event_add
             flesh_alarm_min_var = 180;
             flesh_alarm_max_var = 180;
             flesh_per_var = true;
+            atk_range_var = 128/3; // 42.r6
             // Sound
             snd_alarm_min_var = 90;
             snd_alarm_max_var = 240;

@@ -43,6 +43,7 @@ object_event_add
     w_var = 10;
     h_var = 20;
     z_off_var = 2;
+    atk_range_var = 48;
     // Sounds
     snd_len_var = 4;
     wake_snd_var[0] = true;
@@ -95,6 +96,7 @@ object_event_add
         case 0:
         {
             dmg_var = 30;
+            atk_range_var = coll_var[2];
             // Silhouette
             sil_var = true;
             sil_type_var = 1; // Pure color
@@ -114,6 +116,7 @@ object_event_add
             delay_min_var = 90;
             delay_max_var = 180;
             do_enter_var = true;
+            atk_range_var = 32;
             // Sound
             snd_alarm_min_var = 90;
             snd_alarm_max_var = 240;

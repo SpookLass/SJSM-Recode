@@ -51,7 +51,7 @@ Attack
     atk_var: Whether the specimen can currently attack
     dmg_var: How much damage a monster deals per hit
     dmg_alarm_var: How much time before something can hit the player again (per player)
-    atk_range_var: How far the specimen can reach while attacking
+    atk_range_var: How far the specimen can reach while attacking (diameter)
     atk_dist_var: How close the target should be before attempting to attack (If applicable)
     atk_delay_var: How long before the monster can start attacking
     atk_end_delay_var: How long until the monster can try to attack again
@@ -623,12 +623,14 @@ object_event_add
         }
         case 1: // End on last
         {
-            spr_id_var = sprite_get_number(spr_var)*(1-(alarm_arr[5,0]/alarm_arr[5,1]));
+            if alarm_arr[5,0] > 0
+            { spr_id_var = sprite_get_number(spr_var)*(1-(alarm_arr[5,0]/alarm_arr[5,1])); }
             break;
         }
         case 2: // End on first
         {
-            spr_id_var = sprite_get_number(spr_var)*alarm_arr[5,0]/alarm_arr[5,1];
+            if alarm_arr[5,0] > 0
+            { spr_id_var = sprite_get_number(spr_var)*alarm_arr[5,0]/alarm_arr[5,1]; }
             break;
         }
         case 3: // Random (scuffed)

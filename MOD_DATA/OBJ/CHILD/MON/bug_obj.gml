@@ -61,6 +61,7 @@ object_event_add
     dmg_alarm_var = 120;
     w_var = 16;
     h_var = 13;
+    atk_range_var = 33.6;
     // Hurt
     do_hurt_var = 2; // Damage
     hurt_alarm_var = 60;
@@ -162,6 +163,7 @@ object_event_add
             bod_len_var = 10;
             do_wiggle_var = true;
             spd_anim_var = true;
+            atk_range_var = coll_var[2];
             // Autobrake
             autobrake_var = true;
             autobrake_spd_var = 0.5;
@@ -196,6 +198,7 @@ object_event_add
             bod_len_var = 10;
             do_wiggle_var = true;
             spd_anim_var = true;
+            atk_range_var = 32;
             // Autobrake (close enough)
             autobrake_var = true;
             autobrake_spd_var = 0;

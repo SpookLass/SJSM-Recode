@@ -41,6 +41,7 @@ object_event_add
     w_var = 10;
     h_var = 24.28;
     z_off_var = 0;
+    atk_range_var = 48;
     // Sounds
     snd_len_var = 4;
     snd_num_var = 1;
@@ -114,6 +115,7 @@ object_event_add
             dmg_alarm_var = 120;
             do_warp_var = true;
             delay_var = 60;
+            atk_range_var = coll_var[2];
             // Effect
             eff_min_var = 15;
             eff_max_var = 30;
@@ -137,6 +139,7 @@ object_event_add
                 delay_min_var = 60;
                 delay_max_var = 120;
             }
+            atk_range_var = 32;
             // Cloak
             close_dist_var = 96;
             open_dist_var = 224/3; // 74.r6

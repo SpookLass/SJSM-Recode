@@ -724,7 +724,7 @@ object_event_add
         case 0:
         case 1:
         {
-            if tp_type_var == 1 { local.dir = random_range(target_eye_yaw_var+seen_yaw_var,target_eye_yaw_var+360-seen_yaw_var); }
+            if tp_type_var == 1 { local.dir = random_range(target_var.eye_yaw_var+seen_yaw_var,target_var.eye_yaw_var+360-seen_yaw_var); }
             else { local.dir = random(360); }
             local.dist = random_range(tp_dist_min_var,tp_dist_max_var);
             x = target_x_var+lengthdir_x(local.dist,local.dir);

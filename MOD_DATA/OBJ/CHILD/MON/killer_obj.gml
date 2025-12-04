@@ -135,6 +135,7 @@ object_event_add
     dmg_var = 45;
     dmg_alarm_var = 30;
     h_var = 22;
+    atk_range_var = 48;
     // Theme
     mus_prio_var = mon_mus_prio_const;
     // Sprite stuff
@@ -367,12 +368,14 @@ object_event_add
             stam_spawn_min_var = 100;
             stam_spawn_max_var = 100;
             do_acc_var = true;
+            atk_range_var = coll_var[2];
         }
         case 0: // Recode
         {
             do_sprint_var = true;
             do_stam_var = true;
             dmg_var = 30;
+            atk_range_var = coll_var[2];
             // Parry
             do_hurt_var = true;
             hurt_snd_var = 3;
@@ -399,6 +402,7 @@ object_event_add
             do_acc_var = true;
             if !local.set
             { spd_base_var = 16/45; } // 0.3r5
+            atk_range_var = 128/3; // 42.r6
             // Autobrake (close enough)
             autobrake_var = true;
             autobrake_spd_var = 0;
@@ -458,6 +462,7 @@ object_event_add
             scary_var = true;
             sprint_mult_var = 24; // WOW!
             dmg_var = 30;
+            atk_range_var = coll_var[2];
             break;
         }
     }

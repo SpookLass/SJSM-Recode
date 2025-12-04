@@ -321,8 +321,8 @@ object_event_add
 // Teleport Behind Alarm
 object_event_add
 (argument0,ev_alarm,10,'
-    local.xvel = -lengthdir_x(1,target_eye_yaw_var);
-    local.yvel = -lengthdir_y(1,target_eye_yaw_var);
+    local.xvel = -lengthdir_x(1,target_var.eye_yaw_var);
+    local.yvel = -lengthdir_y(1,target_var.eye_yaw_var);
     if check_ray_scr(target_x_var,target_y_var,target_z_var+(target_var.coll_var[1]/2),local.xvel,local.yvel,0) > 32+(coll_var[2]/2)
     {
         x = target_x_var+(local.xvel*32);
@@ -498,7 +498,7 @@ object_event_add
     }
     else
     {
-        if tp_sight_var { local.dir = random_range(target_eye_yaw_var+seen_yaw_var,target_eye_yaw_var+360-seen_yaw_var); }
+        if tp_sight_var { local.dir = random_range(target_var.eye_yaw_var+seen_yaw_var,target_var.eye_yaw_var+360-seen_yaw_var); }
         else { local.dir = random(360); }
         local.dist = random_range(tp_dist_min_var,tp_dist_max_var);
         x = target_x_var+lengthdir_x(local.dist,local.dir);

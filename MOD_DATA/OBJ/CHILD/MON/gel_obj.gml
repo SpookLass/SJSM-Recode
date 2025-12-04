@@ -52,6 +52,32 @@ object_event_add
     h_var = 20;
     z_off_var = 2;
     dupe_var = dupe_canon_const;
+    atk_range_var = 48;
+    // Coward
+    do_hurt_var = 2; // Reduces duration
+    hurt_die_var = 0;
+    coward_var = true;
+    coward_spd_var = 4/3; // 1.r3x
+    hurt_alarm_var = 180;
+    hurt_dur_var = 3;
+    violence_var = 3;
+    hurt_eff_var = false;
+    // Slime
+    slime_var = true;
+    do_slime_spawn_var = false;
+    slime_alarm_var = 60;
+    slime_anim_var = 0;
+    slime_angle_var = random(360);
+    slime_z_off_var = 0.15;
+    slime_alpha_var = 0.8;
+    slime_w_base_var = 28;
+    slime_spawn_spd_mult_var = 1;
+    slime_spd_mult_var = 2/3; // 0.r6x
+    slime_num_var = 1;
+    slime_den_var = 3;
+    h_base_var = 20;
+    z_off_base_var = 2;
+    z_off_start_var = -h_base_var;
     // Theme
     mus_prio_var = mon_mus_prio_const;
     // Assets
@@ -86,32 +112,7 @@ object_event_add
         slime_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_wake_snd.wav",true);
         mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_mus_snd.mp3");
     }
-    // Coward
-    do_hurt_var = 2; // Reduces duration
-    hurt_die_var = 0;
-    coward_var = true;
-    coward_spd_var = 4/3; // 1.r3x
-    hurt_alarm_var = 180;
-    hurt_dur_var = 3;
-    violence_var = 3;
-    hurt_eff_var = false;
-    // Slime
-    slime_var = true;
-    do_slime_spawn_var = false;
-    slime_alarm_var = 60;
     slime_tex_var = background_get_texture(slime_bg_var);
-    slime_anim_var = 0;
-    slime_angle_var = random(360);
-    slime_z_off_var = 0.15;
-    slime_alpha_var = 0.8;
-    slime_w_base_var = 28;
-    slime_spawn_spd_mult_var = 1;
-    slime_spd_mult_var = 2/3; // 0.r6x
-    slime_num_var = 1;
-    slime_den_var = 3;
-    h_base_var = 20;
-    z_off_base_var = 2;
-    z_off_start_var = -h_base_var;
     // Behavior
     if global.gel_type_var == -1 { local.type = irandom(2); }
     else { local.type = global.gel_type_var; }
@@ -124,6 +125,7 @@ object_event_add
             z_off_start_var = 0;
             slime_anim_var = 2;
             slime_spd_mult_var = 0.5;
+            atk_range_var = coll_var[2];
             // Move slower dangit
             slime_spawn_spd_mult_var = 0.5; // 0.5r3 for full accuracy
             delay_var = 0;

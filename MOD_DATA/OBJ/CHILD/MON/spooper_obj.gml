@@ -399,7 +399,7 @@ object_event_add
             }
             with player_obj
             {
-                heal_var = false;
+                heal_mult_var = 0;
                 if !dead_var && !hurt_var && !in_door_var && !invuln_var && on_var
                 {
                     if hp_var > local.min { hp_var -= other.dmg_var*global.delta_time_var; }

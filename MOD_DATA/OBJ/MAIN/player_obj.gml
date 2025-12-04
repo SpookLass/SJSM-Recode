@@ -25,6 +25,7 @@ object_event_add
     heal_var = true;
     heal_delay_var = 0;
     heal_safe_var = 10;
+    heal_mult_var = 1;
     // Speed
     spd_base_var = 1;
     spd_mult_var = 1;
