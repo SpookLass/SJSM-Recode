@@ -20,6 +20,7 @@ object_event_add
     image_alpha = 0.8;
     w_var = 28;
     spd_mult_var = 0.6;
+    tp_var = true;
     if instance_exists(color_par_obj) && global.color_var == 0
     { image_blend = color_par_obj.image_blend; }
 ');

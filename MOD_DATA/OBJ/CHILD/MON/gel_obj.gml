@@ -298,7 +298,7 @@ object_event_add
         local.slime = noone;
         with slime_obj
         {
-            if par_var == other.id
+            if par_var == other.id && tp_var
             {
                 local.dist = point_distance_3d_scr(x,y,z,other.target_x_var,other.target_y_var,other.target_z_var);
                 if local.dist < local.bestdist

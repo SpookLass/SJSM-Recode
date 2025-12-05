@@ -6,13 +6,6 @@ object_set_persistent(argument0,true);
 object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
-/*
-state_var
-    0: Down
-    1: Going down
-    2: Up
-    3: Going up
-*/
 // Create Event
 object_event_add
 (argument0,ev_create,1,'
@@ -173,6 +166,7 @@ object_event_add
         case 2: // HD
         {
             hd_var = true;
+            hd_snd_var = true;
             delay_var = 0;
             do_anim_var = -1;
             do_move_var = -1;
@@ -511,12 +505,15 @@ object_event_add
         ascend_agg_var = 0;
     }
     // Sound (I think? HDs code here sucks)
-    if fmod_inst_is_play_scr(snd_var) && fmod_inst_is_3d_scr(snd_var)
-    { fmod_inst_stop_scr(snd_var); }
-    local.snd = irandom(snd_len_var-1);
-    snd_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0]);
-    sub_var[0] = snd_arr[local.snd,1];
-    sub_var[1] = snd_arr[local.snd,2];
+    if hd_snd_var
+    {
+        if fmod_inst_is_play_scr(snd_var) && fmod_inst_is_3d_scr(snd_var)
+        { fmod_inst_stop_scr(snd_var); }
+        local.snd = irandom(snd_len_var-1);
+        snd_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0]);
+        sub_var[0] = snd_arr[local.snd,1];
+        sub_var[1] = snd_arr[local.snd,2];
+    }
 ');
 // GET UP
 object_event_add
@@ -581,7 +578,10 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user4,'
     if hurt_tp_var && frac_chance_scr(hurt_tp_num_var,hurt_tp_den_var)
-    { event_perform(ev_alarm,8); }
+    {
+        if down_var { event_perform(ev_alarm,10); }
+        else { event_perform(ev_alarm,8); }
+    }
     else
     {
         reset_alarm_scr();
@@ -610,11 +610,14 @@ object_event_add
             set_alarm_scr(3,-1);
         }
         // Sound
-        if fmod_inst_is_play_scr(snd_var) && fmod_inst_is_3d_scr(snd_var)
-        { fmod_inst_stop_scr(snd_var); }
-        local.snd = irandom(snd_len_var-1);
-        snd_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0]);
-        sub_var[0] = snd_arr[local.snd,1];
-        sub_var[1] = snd_arr[local.snd,2];
+        if hd_snd_var
+        {
+            if fmod_inst_is_play_scr(snd_var) && fmod_inst_is_3d_scr(snd_var)
+            { fmod_inst_stop_scr(snd_var); }
+            local.snd = irandom(snd_len_var-1);
+            snd_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0]);
+            sub_var[0] = snd_arr[local.snd,1];
+            sub_var[1] = snd_arr[local.snd,2];
+        }
     }
 ');

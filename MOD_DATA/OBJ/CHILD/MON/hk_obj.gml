@@ -152,7 +152,7 @@ object_event_add
 			// Get away
 			hurt_dist_var = 16;
 			// Teleport
-			tp_type_var = 0;
+			tp_type_var = 2;
 			tp_dist_min_var = 96;
 			break;
 		}
