@@ -285,8 +285,8 @@ object_event_add
     global.floor_bg_tex = background_get_texture(global.floor_bg);
     global.light_wall_obj_spr = global.light_wall_spr;
     global.light_floor_obj_spr = global.light_floor_spr;
-    with object_index { if id != other.id && object_index == other.object_index { local.num += 1; }}
-    if local.num <= 0
+    with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
+    if !local.bool
     {
         fmod_snd_free_scr(mus_snd_var);
         for (local.i=0; local.i<glitch_snd_len_var; local.i+=1;)
