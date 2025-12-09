@@ -22,6 +22,8 @@ object_event_add
 (argument0,ev_create,0,'
     set_var = false;
 
+    bg_scroll_var = 0;
+    do_scroll_focal_var = true;
     scroll_var = 0;
     scroll_rate_var = 0.2;
     scroll_min_var = 0.5;
@@ -485,6 +487,7 @@ object_event_add
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,'
+    bg_scroll_var += global.true_delta_time_var;
     // Text Stretch
     time_var = (time_var+global.true_delta_time_var) mod 80;
     str_scale_var = 0.8+(cos(2*time_var*pi/80)*0.2);
@@ -493,7 +496,13 @@ object_event_add
     if global.input_press_arr[down_input_const,0] { button_state_var += 1; }
     button_state_var = mod_scr(button_state_var,button_len_var);
     // Lerp
-    local.target_scroll = -96*median(2,button_len_var-2,button_state_var);
+    if do_scroll_focal_var
+    {
+        scroll_focal_var = median(button_state_var-2,button_state_var+2,scroll_focal_var);
+        local.state = scroll_focal_var
+    }
+    else { local.state = button_state_var; }
+    local.target_scroll = -96*median(0,button_len_var-5,local.state-2);
     local.scroll_diff = abs(local.target_scroll-scroll_var);
     local.scroll_rate = max(scroll_min_var,local.scroll_diff*scroll_rate_var)*global.true_delta_time_var;
     scroll_var += min(local.scroll_diff,local.scroll_rate)*sign(local.target_scroll-scroll_var);
@@ -724,16 +733,14 @@ object_event_add
 // Draw
 object_event_add
 (argument0,ev_draw,0,'
-    local.scrolly_var = 0;
+    draw_bg_tiled_stretch_scr(settings_bg,bg_scroll_var,0,512,0,2);
     
-    draw_background_tiled_ext(settings_bg,0,0,1,1,c_white,1);
-    
-    draw_set_color(str_bg_color_var);
-    draw_text_transformed(706,24,"SETTINGS",0.95,0.95,0);
-    draw_text_transformed(708,22,"SETTINGS",0.95,0.95,0);
-    draw_set_color(c_yellow);
-    draw_text_transformed(710,20,"SETTINGS",0.95,0.95,0);
-    draw_set_color(c_white);
+    draw_str_shadow_scr
+    (
+        "SETTINGS",
+        -20,20,0.95,0.95,0.125,fa_right,fa_top,
+        -4,4,str_bg_color_var,c_yellow,2,0
+    );
     
     local.stat_display_var = "";
     
@@ -741,12 +748,12 @@ object_event_add
     {
         if local.i != button_state_var
         {
-            local.ytmp = 192+(96*local.i)+scroll_var
-            draw_set_color(str_bg_color_var);
-            draw_text_transformed(92,local.ytmp+4,button_arr[local.i,1],0.75,0.75,0);
-            draw_text_transformed(94,local.ytmp+2,button_arr[local.i,1],0.75,0.75,0);
-            draw_set_color(c_yellow);
-            draw_text_transformed(96,local.ytmp,button_arr[local.i,1],0.75,0.75,0);
+            draw_str_shadow_scr
+            (
+                button_arr[local.i,1],
+                96,144+(96*local.i)+scroll_var,0.75,0.75,0.125,fa_left,fa_top,
+                -4,4,str_bg_color_var,c_yellow,2,0
+            );
             
             local.str = 0;
             switch button_arr[local.i,3]
@@ -764,22 +771,23 @@ object_event_add
             }
             if is_string(local.str)
             {
-                draw_set_color(str_bg_select_color_var);
-                draw_text_transformed(496,local.ytmp+4,local.str,0.75,0.75,0);
-                draw_text_transformed(498,local.ytmp+2,local.str,0.75,0.75,0);
-                draw_set_color(c_white);
-                draw_text_transformed(500,local.ytmp,local.str,0.75,0.75,0);
+                draw_str_shadow_scr
+                (
+                    local.str,
+                    500,144+(96*local.i)+scroll_var,0.75,0.75,0.125,fa_left,fa_top,
+                    -4,4,str_bg_color_var,c_yellow,2,0
+                );
             }
         }
     }
-    local.xtmp = 96+(string_width(button_arr[button_state_var,1])*0.375);
-    local.ytmp = 192+(96*button_state_var)+scroll_var;
-    draw_set_halign(fa_center); draw_set_color(str_bg_select_color_var);
-    draw_text_transformed(local.xtmp-4,local.ytmp+4,button_arr[button_state_var,1],str_scale_var,0.75,0);
-    draw_text_transformed(local.xtmp-2,local.ytmp+2,button_arr[button_state_var,1],str_scale_var,0.75,0);
-    draw_set_color(c_white);
-    draw_text_transformed(local.xtmp,local.ytmp,button_arr[button_state_var,1],str_scale_var,0.75,0);
-    draw_set_halign(fa_left); 
+    local.ytmp = 144+(96*button_state_var)+scroll_var;
+    draw_spr_stretch_scr(select_spr,0,96,local.ytmp,132,0,fa_left,fa_top);
+    draw_str_select_scr
+    (
+        button_arr[button_state_var,1],
+        96,local.ytmp,str_scale_var,0.75,0.125,fa_left,fa_top,
+        -4,4,str_bg_select_color_var,c_white,2,0,0.75
+    );
     
     local.str = 0;
     switch button_arr[button_state_var,3]
@@ -797,10 +805,11 @@ object_event_add
     }
     if is_string(local.str)
     {
-        draw_set_color(str_bg_select_color_var);
-        draw_text_transformed(496,local.ytmp+4,local.str,0.75,0.75,0);
-        draw_text_transformed(498,local.ytmp+2,local.str,0.75,0.75,0);
-        draw_set_color(c_white);
-        draw_text_transformed(500,local.ytmp,local.str,0.75,0.75,0);
+        draw_str_shadow_scr
+        (
+            local.str,
+            500,144+(96*button_state_var)+scroll_var,0.75,0.75,0.125,fa_left,fa_top,
+            -4,4,str_bg_select_color_var,c_white,2,0
+        );
     }
 ');

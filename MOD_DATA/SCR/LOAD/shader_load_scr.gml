@@ -4,14 +4,6 @@ draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"L
 screen_refresh();
 // Initialize
 shader_ini_scr();
-// Normal (for resetting)
-globalvar normal_ps;
-normal_ps = shader_ps_create_scr
-('
-      ps.1.4
-      texld r0, t0      // Load texture associated with stage 0, at coordinates t0
-      mul   r0, r0,v0   // Multiply texture by vertex values
-');
 // Grayscale
 globalvar grayscale_ps;
 grayscale_ps = shader_ps_create_scr

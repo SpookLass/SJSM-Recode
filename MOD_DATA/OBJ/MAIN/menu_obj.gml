@@ -1578,142 +1578,75 @@ object_event_add
 object_event_add
 (argument0,ev_draw,0,'
     if story_prog_var > 0
-    { local.ytmp = -story_prog_var*view_hview[view_current]*2; }
+    { local.ytmp = -story_prog_var*1440; }
     else { local.ytmp = 0; }
     local.width = view_hview[view_current]*16/9;
-    draw_background_scr(bg_var,640,0,1280,720,fa_center,fa_top,view_wview[view_current],view_hview[view_current],true);
-    //draw_background_stretched(bg_var,0,local.ytmp,local.width,view_hview[view_current]);
-    draw_background_stretched_ext(light_01_bg_var,0,local.ytmp,local.width,view_hview[view_current],c_white,light_alpha_01_var);
-    draw_background_stretched_ext(light_02_bg_var,0,local.ytmp,local.width,view_hview[view_current],c_white,light_alpha_02_var);
-    local.cloudwidth = background_get_width(cloud_bg_var);
-    draw_background_part_ext
-    (
-        cloud_bg_var,
-        (1-cloud_prog_var)*local.cloudwidth,0,
-        cloud_prog_var*local.cloudwidth,background_get_height(cloud_bg_var),
-        0,local.ytmp+(scale_var*18),scale_var,scale_var,c_white,1
-    );
-    draw_background_ext(cloud_bg_var,cloud_prog_var*local.cloudwidth,local.ytmp+(scale_var*18),scale_var,scale_var,0,c_white,1);
+    draw_bg_fit_scr(bg_var,0,local.ytmp);
+    draw_bg_fit_ext_scr(light_01_bg_var,0,local.ytmp,0,c_white,light_alpha_01_var);
+    draw_bg_fit_ext_scr(light_02_bg_var,0,local.ytmp,0,c_white,light_alpha_02_var);
+    draw_bg_tiled_stretch_scr(cloud_bg_var,cloud_prog_var*1243,18+local.ytmp,1243,0,0); // Stretch X, Tile X
     if flash_var { draw_rectangle(0,0,view_wview[view_current],view_hview[view_current],false); }
     switch state_var
     {
         case 0: // Story
         {
-            draw_background_stretched(path_bg_var,0,local.ytmp+view_hview[view_current],local.width,view_hview[view_current]);
-            // Path Clouds
-            local.cloudwidth = background_get_width(path_cloud_bg_var);
-            local.cloudheight = background_get_height(path_cloud_bg_var);
-            local.scale = scale_var*(720/background_get_height(path_cloud_bg_var))
-            local.firstwidth = path_cloud_prog_var*local.cloudwidth;
-            local.lastwidth = (view_wview[view_current]/local.scale) mod local.cloudwidth;
-            local.num = ceil((view_wview[view_current]/local.scale)/local.cloudwidth)-1;
-            local.cloudx = 0;
-            local.cloudy = lerp_scr(view_hview[view_current],0,story_prog_var);
-            for (local.i=0; local.i<=local.num; local.i+=1;)
-            {
-                switch local.i
-                {
-                    case 0:
-                    {
-                        // First Cloud
-                        draw_background_part_ext
-                        (
-                            path_cloud_bg_var,
-                            local.cloudwidth-local.firstwidth,0,local.firstwidth,local.cloudheight,
-                            local.cloudx,local.cloudy,local.scale,local.scale,c_white,1
-                        );
-                        local.cloudx += local.firstwidth*local.scale;
-                        break;
-                    }
-                    case local.num:
-                    {
-                        // Last Cloud
-                        draw_background_part_ext
-                        (
-                            path_cloud_bg_var,
-                            0,0,local.lastwidth,local.cloudheight,
-                            local.cloudx,local.cloudy,
-                            local.scale,local.scale,c_white,1
-                        );
-                        break;
-                    }
-                    default:
-                    {
-                        // Between
-                        draw_background_ext
-                        (
-                            path_cloud_bg_var,local.cloudx,local.cloudy,
-                            local.scale,local.scale,0,c_white,1
-                        );
-                        local.cloudx += local.cloudwidth*local.scale;
-                        break;
-                    }
-                }
-            }
+            draw_bg_fit_scr(path_bg_var,0,local.ytmp+720);
+            draw_bg_tiled_stretch_scr(path_cloud_bg_var,path_cloud_prog_var*720,lerp_scr(720,0,story_prog_var),720,0,0);
             // Text
-            draw_text_transformed(64*scale_var,64*scale_var,skip_str_var,scale_skip_var,scale_skip_var,0);
-            draw_set_halign(fa_center); draw_set_color(c_red);
-            local.height = view_hview[view_current]*25/24;
-            local.ytmp = lerp_scr(-local.height,local.height,story_prog_var)
-            draw_text_ext_transformed(center_var,local.ytmp,story_str_var,86/scale_story_var,860/scale_story_var,scale_story_var,scale_story_var,0); // 860, 86
-            draw_set_halign(fa_left); draw_set_color(c_white);
+            draw_str_scr(skip_str_var,64,64,0.3,0.3,0.125,fa_left,fa_top,0);
+            draw_set_color(c_red);
+            local.ytmp = lerp_scr(-750,750,story_prog_var);
+            draw_str_ext_scr(story_str_var,0,local.ytmp,0.4,0.4,0.125,fa_center,fa_top,86,860,0);
+            draw_set_color(c_white);
             break;
         }
         case 1: // Press Confirm
         {
-            draw_set_alpha(str_alpha_var); draw_set_halign(fa_center);
-            draw_set_color(str_bg_color_var);
-            draw_text_transformed(638,602,confirm_str_var,0.75,0.75,0);
-            draw_text_transformed(636,604,confirm_str_var,0.75,0.75,0);
-            draw_set_color(c_yellow);
-            draw_text_transformed(640,600,confirm_str_var,0.75,0.75,0);
-            draw_set_color(c_white); draw_set_alpha(1); draw_set_halign(fa_left);
+            draw_set_alpha(str_alpha_var);
+            draw_str_shadow_scr(confirm_str_var,0,-96,0.75,0.75,0.125,fa_center,fa_bottom,-4,4,str_bg_color_var,c_yellow,2,0);
+            draw_set_alpha(1);
             break;
         }
         case 2: // Main
         {
-            local.scale = 172800/(sprite_get_height(title_spr_var)*view_hview[view_current])
-            draw_sprite_ext(title_spr_var,0,393,name_y_var,local.scale,local.scale,0,c_white,1);
+            draw_spr_stretch_scr(title_spr_var,0,393,name_y_var,666,0,fa_left,fa_top);
             for (local.i=0; local.i<4; local.i+=1)
             {
                 if local.i != button_state_var
                 {
-                    local.ytmp = 336+(96*local.i);
-                    draw_set_color(str_bg_color_var);
-                    draw_text_transformed(92,local.ytmp+4,button_str_arr[state_var,local.i],0.75,0.75,0);
-                    draw_text_transformed(94,local.ytmp+2,button_str_arr[state_var,local.i],0.75,0.75,0);
-                    draw_set_color(c_yellow);
-                    draw_text_transformed(96,local.ytmp,button_str_arr[state_var,local.i],0.75,0.75,0);
+                    draw_str_shadow_scr
+                    (
+                        button_str_arr[state_var,local.i],
+                        96,336+(96*local.i),0.75,0.75,0.125,fa_left,fa_top,
+                        -4,4,str_bg_color_var,c_yellow,2,0
+                    );
                 }
             }
             if button_state_var < 4
             {
-                local.xtmp = 96+(string_width(button_str_arr[state_var,button_state_var])*0.375);
                 local.ytmp = 336+(96*button_state_var);
-                draw_set_halign(fa_center);
-				draw_set_color(str_bg_select_color_var);
-                draw_text_transformed(local.xtmp-4,local.ytmp+4,button_str_arr[state_var,button_state_var],str_scale_var,0.75,0);
-                draw_text_transformed(local.xtmp-2,local.ytmp+2,button_str_arr[state_var,button_state_var],str_scale_var,0.75,0);
-                draw_set_color(c_white);
-                draw_text_transformed(local.xtmp,local.ytmp,button_str_arr[state_var,button_state_var],str_scale_var,0.75,0);
-                draw_set_halign(fa_left); 
+                draw_spr_stretch_scr(select_spr,0,96,local.ytmp,132,0,fa_left,fa_top);
+                draw_str_select_scr
+                (
+                    button_str_arr[state_var,button_state_var],
+                    96,local.ytmp,str_scale_var,0.75,0.125,fa_left,fa_top,
+                    -4,4,str_bg_select_color_var,c_white,2,0,0.75
+                );
             }
-            draw_sprite(set_spr_var,button_state_var == 4,1175,534);
-            draw_sprite(set_spr_var,button_state_var == 5,1175,630);
+            draw_spr_stretch_scr(set_spr_var,button_state_var == 4,-105,-183,81,0,fa_right,fa_bottom);
+            draw_spr_stretch_scr(set_spr_var,button_state_var == 5,-105,-90,81,0,fa_right,fa_bottom);
             break;
         }
         case 3: // Save Creation
         {
-			local.scrolly_var = 0;
+            draw_bg_tiled_stretch_ext_scr(sub_bg_arr[sub_bg_var],0,subbgscroll_var*-1,512,0,2,0,make_color_rgb(70,0,90),subbgalpha_var);
 			
-			draw_background_tiled_ext(sub_bg_arr[sub_bg_var],0,subbgscroll_var*-1,1,1,make_color_rgb(70,0,90),subbgalpha_var);
-			
-			draw_set_halign(fa_right); draw_set_color(str_bg_color_var);
-			draw_text_transformed(1280-24,24,"NEW SAVE",0.95,0.95,0);
-			draw_text_transformed(1280-22,22,"NEW SAVE",0.95,0.95,0);
-			draw_set_color(c_yellow);
-			draw_text_transformed(1280-20,20,"NEW SAVE",0.95,0.95,0);
-			draw_set_color(c_white); draw_set_halign(fa_left)
+            draw_str_shadow_scr
+            (
+                "NEW SAVE",
+                -20,20,0.95,0.95,0.125,fa_right,fa_top,
+                -4,4,str_bg_color_var,c_yellow,2,0
+            );
 			
 			local.stat_display_var = "";
 			
@@ -1721,14 +1654,14 @@ object_event_add
             {
                 if local.i != button_state_var
                 {
-                    local.ytmp = 144+(96*local.i)+scroll_var;
-                    draw_set_color(str_bg_color_var);
-                    draw_text_transformed(92,local.ytmp+4,button_str_arr[state_var,local.i],0.75,0.75,0);
-                    draw_text_transformed(94,local.ytmp+2,button_str_arr[state_var,local.i],0.75,0.75,0);
-                    draw_set_color(c_yellow);
-                    draw_text_transformed(96,local.ytmp,button_str_arr[state_var,local.i],0.75,0.75,0);
-					
-					switch local.i
+                    draw_str_shadow_scr
+                    (
+                        button_str_arr[state_var,local.i],
+                        96,144+(96*local.i)+scroll_var,0.75,0.75,0.125,fa_left,fa_top,
+                        -4,4,str_bg_color_var,c_yellow,2,0
+                    );
+
+                    switch local.i
 					{
 						case 1:
 						{	
@@ -1780,25 +1713,26 @@ object_event_add
 					
 					if local.stat_display_var != ""
 					{
-						draw_set_color(str_bg_color_var);
-						draw_text_transformed(496,local.ytmp+4,string(local.stat_display_var),0.75,0.75,0);
-						draw_text_transformed(498,local.ytmp+2,string(local.stat_display_var),0.75,0.75,0);
-						draw_set_color(c_yellow);
-						draw_text_transformed(500,local.ytmp,string(local.stat_display_var),0.75,0.75,0);
+                        draw_str_shadow_scr
+                        (
+                            string(local.stat_display_var),
+                            500,144+(96*local.i)+scroll_var,0.75,0.75,0.125,fa_left,fa_top,
+                            -4,4,str_bg_color_var,c_yellow,2,0
+                        );
 					}
                 }
             }
-            local.xtmp = 96+(string_width(button_str_arr[state_var,button_state_var])*0.375);
             local.ytmp = 144+(96*button_state_var)+scroll_var;
-            draw_set_halign(fa_center); draw_set_color(str_bg_select_color_var);
-            draw_text_transformed(local.xtmp-4,local.ytmp+4,button_str_arr[state_var,button_state_var],str_scale_var,0.75,0);
-            draw_text_transformed(local.xtmp-2,local.ytmp+2,button_str_arr[state_var,button_state_var],str_scale_var,0.75,0);
-            draw_set_color(c_white);
-            draw_text_transformed(local.xtmp,local.ytmp,button_str_arr[state_var,button_state_var],str_scale_var,0.75,0);
-            draw_set_halign(fa_left); 
-			
-			switch button_state_var
-			{
+            draw_spr_stretch_scr(select_spr,0,96,local.ytmp,132,0,fa_left,fa_top);
+            draw_str_select_scr
+            (
+                button_str_arr[state_var,button_state_var],
+                96,local.ytmp,str_scale_var,0.75,0.125,fa_left,fa_top,
+                -4,4,str_bg_select_color_var,c_white,2,0,0.75
+            );
+
+            switch button_state_var
+            {
                 case 1:
                 {	
                     switch save_mode_var
@@ -1811,15 +1745,21 @@ object_event_add
                 }
                 case 2:
                 {
-                    switch save_diff_var
+                    if save_type_var == 1 { local.stat_display_var = og_str_var; }
+                    else if save_type_var == 2 { local.stat_display_var = hd_str_var; }
+                    else
                     {
-                        case 0: { local.stat_display_var = easiest_str_var; break; }
-                        case 1: { local.stat_display_var = easy_str_var; break; }
-                        case 2: { local.stat_display_var = normal_str_var; break; }
-                        case 3: { local.stat_display_var = hard_str_var; break; }
-                        case 4: { local.stat_display_var = hardest_str_var; break; }
-                        case 5: { local.stat_display_var = evil_str_var; break; }
+                        switch save_diff_var
+                        {
+                            case 0: { local.stat_display_var = easiest_str_var; break; }
+                            case 1: { local.stat_display_var = easy_str_var; break; }
+                            case 2: { local.stat_display_var = normal_str_var; break; }
+                            case 3: { local.stat_display_var = hard_str_var; break; }
+                            case 4: { local.stat_display_var = hardest_str_var; break; }
+                            case 5: { local.stat_display_var = evil_str_var; break; }
+                        }
                     }
+                    
                     break;
                 }
                 case 3:
@@ -1839,42 +1779,40 @@ object_event_add
                     break;
                 }
                 default: { local.stat_display_var = ""; }
-			}
-			
-			if local.stat_display_var != ""
-			{
-				draw_set_color(str_bg_select_color_var);
-				draw_text_transformed(496,local.ytmp+4,string(local.stat_display_var),0.75,0.75,0);
-				draw_text_transformed(498,local.ytmp+2,string(local.stat_display_var),0.75,0.75,0);
-				draw_set_color(c_white);
-				draw_text_transformed(500,local.ytmp,string(local.stat_display_var),0.75,0.75,0);
-			}
-			
+            }
+            
+            if local.stat_display_var != ""
+            {
+                draw_str_shadow_scr
+                (
+                    string(local.stat_display_var),
+                    500,144+(96*button_state_var)+scroll_var,0.75,0.75,0.125,fa_left,fa_top,
+                    -4,4,str_bg_select_color_var,c_white,2,0
+                );
+            }
 			break;
         }
         case 4: // Customize
         {
-            local.scrolly_var = 0;
+			draw_bg_tiled_stretch_ext_scr(sub_bg_arr[sub_bg_var],0,subbgscroll_var*-1,512,0,2,0,make_color_rgb(70,0,90),subbgalpha_var);
 			
-			draw_background_tiled_ext(sub_bg_arr[sub_bg_var],0,subbgscroll_var*-1,1,1,make_color_rgb(70,0,90),subbgalpha_var);
-			
-			draw_set_halign(fa_right); draw_set_color(str_bg_color_var);
-			draw_text_transformed(1280-24,24,"CUSTOMIZE",0.95,0.95,0);
-			draw_text_transformed(1280-22,22,"CUSTOMIZE",0.95,0.95,0);
-			draw_set_color(c_yellow);
-			draw_text_transformed(1280-20,20,"CUSTOMIZE",0.95,0.95,0);
-			draw_set_color(c_white); draw_set_halign(fa_left); 
+            draw_str_shadow_scr
+            (
+                "CUSTOMIZE",
+                -20,20,0.95,0.95,0.125,fa_right,fa_top,
+                -4,4,str_bg_color_var,c_yellow,2,0
+            );
 			
             for (local.i=0; local.i<custom_button_len_var; local.i+=1)
             {
                 if local.i != button_state_var
                 {
-                    local.ytmp = 144+(96*local.i)+scroll_var
-                    draw_set_color(str_bg_color_var);
-                    draw_text_transformed(92,local.ytmp+4,custom_button_arr[local.i,1],0.75,0.75,0);
-                    draw_text_transformed(94,local.ytmp+2,custom_button_arr[local.i,1],0.75,0.75,0);
-                    draw_set_color(c_yellow);
-                    draw_text_transformed(96,local.ytmp,custom_button_arr[local.i,1],0.75,0.75,0);
+                    draw_str_shadow_scr
+                    (
+                        custom_button_arr[local.i,1],
+                        96,144+(96*local.i)+scroll_var,0.75,0.75,0.125,fa_left,fa_top,
+                        -4,4,str_bg_color_var,c_yellow,2,0
+                    );
                     
                     local.str = 0;
                     switch custom_button_arr[local.i,3]
@@ -1896,22 +1834,24 @@ object_event_add
                     }
                     if is_string(local.str)
                     {
-                        draw_set_color(str_bg_select_color_var);
-                        draw_text_transformed(496,local.ytmp+4,local.str,0.75,0.75,0);
-                        draw_text_transformed(498,local.ytmp+2,local.str,0.75,0.75,0);
-                        draw_set_color(c_white);
-                        draw_text_transformed(500,local.ytmp,local.str,0.75,0.75,0);
+                        draw_str_shadow_scr
+                        (
+                            local.str,
+                            500,144+(96*local.i)+scroll_var,0.75,0.75,0.125,fa_left,fa_top,
+                            -4,4,str_bg_color_var,c_yellow,2,0
+                        );
                     }
                 }
             }
-            local.xtmp = 96+(string_width(custom_button_arr[button_state_var,1])*0.375);
+
             local.ytmp = 144+(96*button_state_var)+scroll_var;
-            draw_set_halign(fa_center); draw_set_color(str_bg_select_color_var);
-            draw_text_transformed(local.xtmp-4,local.ytmp+4,custom_button_arr[button_state_var,1],str_scale_var,0.75,0);
-            draw_text_transformed(local.xtmp-2,local.ytmp+2,custom_button_arr[button_state_var,1],str_scale_var,0.75,0);
-            draw_set_color(c_white);
-            draw_text_transformed(local.xtmp,local.ytmp,custom_button_arr[button_state_var,1],str_scale_var,0.75,0);
-            draw_set_halign(fa_left);
+            draw_spr_stretch_scr(select_spr,0,96,local.ytmp,132,0,fa_left,fa_top);
+            draw_str_select_scr
+            (
+                custom_button_arr[button_state_var,1],
+                96,local.ytmp,str_scale_var,0.75,0.125,fa_left,fa_top,
+                -4,4,str_bg_select_color_var,c_white,2,0,0.75
+            );
 
             local.str = 0;
             switch custom_button_arr[button_state_var,3]
@@ -1933,36 +1873,36 @@ object_event_add
             }
             if is_string(local.str)
             {
-                draw_set_color(str_bg_select_color_var);
-                draw_text_transformed(496,local.ytmp+4,local.str,0.75,0.75,0);
-                draw_text_transformed(498,local.ytmp+2,local.str,0.75,0.75,0);
-                draw_set_color(c_white);
-                draw_text_transformed(500,local.ytmp,local.str,0.75,0.75,0);
+                draw_str_shadow_scr
+                (
+                    local.str,
+                    500,144+(96*button_state_var)+scroll_var,0.75,0.75,0.125,fa_left,fa_top,
+                    -4,4,str_bg_select_color_var,c_white,2,0
+                );
             }
-
             break;
         }
         case 5: // Behavior
         {
-            draw_background_tiled_ext(sub_bg_arr[sub_bg_var],0,subbgscroll_var*-1,1,1,make_color_rgb(70,0,90),subbgalpha_var);
+            draw_bg_tiled_stretch_ext_scr(sub_bg_arr[sub_bg_var],0,subbgscroll_var*-1,512,0,2,0,make_color_rgb(70,0,90),subbgalpha_var);
 			
-			draw_set_halign(fa_right); draw_set_color(str_bg_color_var);
-			draw_text_transformed(1280-24,24,"BEHAVIOR",0.95,0.95,0);
-			draw_text_transformed(1280-22,22,"BEHAVIOR",0.95,0.95,0);
-			draw_set_color(c_yellow);
-			draw_text_transformed(1280-20,20,"BEHAVIOR",0.95,0.95,0);
-			draw_set_color(c_white); draw_set_halign(fa_left);
+			draw_str_shadow_scr
+            (
+                "BEHAVIOR",
+                -20,20,0.95,0.95,0.125,fa_right,fa_top,
+                -4,4,str_bg_color_var,c_yellow,2,0
+            );
     
             for (local.i=0; local.i<type_button_len_var; local.i+=1)
             {
                 if local.i != button_state_var
                 {
-                    local.ytmp = 192+(96*local.i)+scroll_var
-                    draw_set_color(str_bg_color_var);
-                    draw_text_transformed(92,local.ytmp+4,type_button_arr[local.i,1],0.75,0.75,0);
-                    draw_text_transformed(94,local.ytmp+2,type_button_arr[local.i,1],0.75,0.75,0);
-                    draw_set_color(c_yellow);
-                    draw_text_transformed(96,local.ytmp,type_button_arr[local.i,1],0.75,0.75,0);
+                    draw_str_shadow_scr
+                    (
+                        type_button_arr[local.i,1],
+                        96,144+(96*local.i)+scroll_var,0.75,0.75,0.125,fa_left,fa_top,
+                        -4,4,str_bg_color_var,c_yellow,2,0
+                    );
                     
                     if local.i != type_button_len_var-1
                     {
@@ -1978,22 +1918,23 @@ object_event_add
                             }
                         }
                         else { local.str = string(type_button_arr[local.i,type_button_arr[local.i,0]+1]); }
-                        draw_set_color(str_bg_select_color_var);
-                        draw_text_transformed(496,local.ytmp+4,local.str,0.75,0.75,0);
-                        draw_text_transformed(498,local.ytmp+2,local.str,0.75,0.75,0);
-                        draw_set_color(c_white);
-                        draw_text_transformed(500,local.ytmp,local.str,0.75,0.75,0);
+                        draw_str_shadow_scr
+                        (
+                            local.str,
+                            500,144+(96*local.i)+scroll_var,0.75,0.75,0.125,fa_left,fa_top,
+                            -4,4,str_bg_color_var,c_yellow,2,0
+                        );
                     }
                 }
             }
-            local.xtmp = 96+(string_width(type_button_arr[button_state_var,1])*0.375);
-            local.ytmp = 192+(96*button_state_var)+scroll_var;
-            draw_set_halign(fa_center); draw_set_color(str_bg_select_color_var);
-            draw_text_transformed(local.xtmp-4,local.ytmp+4,type_button_arr[button_state_var,1],str_scale_var,0.75,0);
-            draw_text_transformed(local.xtmp-2,local.ytmp+2,type_button_arr[button_state_var,1],str_scale_var,0.75,0);
-            draw_set_color(c_white);
-            draw_text_transformed(local.xtmp,local.ytmp,type_button_arr[button_state_var,1],str_scale_var,0.75,0);
-            draw_set_halign(fa_left);
+            local.ytmp = 144+(96*button_state_var)+scroll_var;
+            draw_spr_stretch_scr(select_spr,0,96,local.ytmp,132,0,fa_left,fa_top);
+            draw_str_select_scr
+            (
+                type_button_arr[button_state_var,1],
+                96,local.ytmp,str_scale_var,0.75,0.125,fa_left,fa_top,
+                -4,4,str_bg_select_color_var,c_white,2,0,0.75
+            );
 
             if button_state_var != type_button_len_var-1
             {
@@ -2009,17 +1950,18 @@ object_event_add
                     }
                 }
                 else { local.str = string(type_button_arr[button_state_var,type_button_arr[button_state_var,0]+1]); }
-                draw_set_color(str_bg_select_color_var);
-                draw_text_transformed(496,local.ytmp+4,local.str,0.75,0.75,0);
-                draw_text_transformed(498,local.ytmp+2,local.str,0.75,0.75,0);
-                draw_set_color(c_white);
-                draw_text_transformed(500,local.ytmp,local.str,0.75,0.75,0);
+                draw_str_shadow_scr
+                (
+                    local.str,
+                    500,144+(96*button_state_var)+scroll_var,0.75,0.75,0.125,fa_left,fa_top,
+                    -4,4,str_bg_select_color_var,c_white,2,0
+                );
             }
             break;
         }
 		case 6: // Save Loads
         {			
-			draw_background_tiled_ext(sub_bg_arr[sub_bg_var],0,subbgscroll_var*-1,1,1,make_color_rgb(70,0,90),subbgalpha_var);
+			draw_bg_tiled_stretch_ext_scr(sub_bg_arr[sub_bg_var],0,subbgscroll_var*-1,512,0,2,0,make_color_rgb(70,0,90),subbgalpha_var);
 			
 			draw_set_halign(fa_right); draw_set_color(str_bg_color_var);
 			draw_text_transformed(1280-24,24,"LOAD SAVE",0.95,0.95,0);
@@ -2168,7 +2110,7 @@ object_event_add
 		}
 		case 12: // Name Entry
         {
-			draw_background_tiled_ext(sub_bg_arr[sub_bg_var],0,subbgscroll_var*-1,1,1,make_color_rgb(70,0,90),subbgalpha_var);
+			draw_bg_tiled_stretch_ext_scr(sub_bg_arr[sub_bg_var],0,subbgscroll_var*-1,512,0,2,0,make_color_rgb(70,0,90),subbgalpha_var);
 			
 			draw_set_color(c_black);
 			draw_set_alpha(0.5);
