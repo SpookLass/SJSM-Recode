@@ -641,7 +641,6 @@ object_event_add
             cam_yaw_var = eye_yaw_var;
             cam_pitch_var = eye_pitch_var;
         }
-        cam_roll_var = 0;
         // Camera shake
         if shake_var > 0
         {
@@ -698,6 +697,7 @@ object_event_add
         flare_var = median(0,1,flare_var);
         // Set camera and listener position
         cam_set_scr(cam_id_var,cam_x_var,cam_y_var,cam_z_var,cam_yaw_var,cam_pitch_var,current_fov_var,cam_roll_var,dead_var);
+        cam_roll_var = 0;
         // Could put this in control, but needs extra camera boolean
         fmod_listen_pos_ex_scr
         (

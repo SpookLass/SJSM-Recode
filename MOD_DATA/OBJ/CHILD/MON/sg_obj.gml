@@ -183,7 +183,11 @@ object_event_add
 // Room Start
 object_event_add
 (argument0,ev_other,ev_room_start,'
-    if do_wander_var { wander_var = true; }
+    if do_wander_var
+    {
+        event_user(13); // Not doing automatically for some reason
+        wander_var = true;
+    }
     event_inherited();
     // Spawn
     for (local.i=0; local.i<spawn_attempt_var; local.i+=1;)

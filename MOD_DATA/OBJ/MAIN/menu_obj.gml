@@ -47,76 +47,7 @@ Menu and button States
         Saves
         Back
     7: Settings
-        Gameplay
-        1: TPS
-        2: Game Speed
-        3: Crouch Toggle
-        4: Mouse Sensitivity
-        5: Collision Precision
-        6: Invert Mouse
-        7: Controller
-        8: Controls
-        Visual
-        9: FPS
-        10: Vsync
-        11: Anti-Alias
-        12: Fullscreen
-        13: Resolution Width
-        14: Resolution height
-        15: Color Type (OG, HD)
-        16: Max particles
-        Audio
-        17: Volume
-        18: Sound Volume
-        19: Music Volume
-        20: Subtitles (Dialogue, Off, Always)
-        Misc
-        21: Erase Scores
-        22: Fix Resolution'
-        23: Back
-    8: Controls
-        Menu
-        0: Up
-        1: Down
-        2: Left
-        3: Right
-        4: Confirm
-        5: Back
-        6: Pause
-        Gameplay
-        7: Forward
-        8: Backward
-        9: Strafe Left
-        10: Strafe Right
-        11: Interact
-        12: Sprint
-        13: Jump
-        14: Crouch
-        15: Attack
-        16: Quick turnaround
-    9: Config
-        0: Mode (Story, Endless, Modded')
-        1: Difficulty (Easy', Normal, Hard, Harder, Hardest)
-        2: Behavior (Recode, OG, HD, Modded')
-        3: Custom
-        4: Customize (Grayed out if not custom)
-        5: Back
-    10: Custom Config
-        0: Can crouch
-        1: Can jump
-        2: Persistent Stamina
-        3: Fall of ledges
-        4: Lock Doors (On, Off, alone, evil)
-        5: Damage shake
-        6: Multichase type (Constant, Taper)
-        7-10: Multichase min, max, start, and end (Max, start and end grayed out if not taper)
-        11: Count type (Constant, Taper)
-        12-15: Count min, max, start, and end (Max, start, and end grayed out if not taper)
-        16: Behavior
-        17: Back
-    11: Config Behavior
-        Behaviors (Recode, OG, HD, Modded')
-        Back
+    8: Post Confirm
 	12: Save Name Entry
 */
 // Create Event
@@ -172,11 +103,46 @@ object_event_add
     set_spr_var = sprite_add(main_directory_const+"\SPR\UI\settings_spr.png",2,false,false,0,0);
     sprite_set_offset(set_spr_var,sprite_get_width(set_spr_var)/2,sprite_get_height(set_spr_var)/2);
     if !irandom(7)
-    { local.path = vanilla_directory_const+"\TEX\menu\"+choose("name_uhh_spr2","name_uhh_spr3","name_uhh_spr4")+".png" }
-    else { local.path = vanilla_directory_const+"\TEX\menu\name_uhh_spr.png" }
-    name_spr_var = sprite_add(local.path,1,false,false,0,0);
-    sprite_set_offset(name_spr_var,sprite_get_width(name_spr_var)/2,sprite_get_height(name_spr_var)/2);
+    {
+        switch (irandom(6))
+        {
+            case 0:
+            {
+                title_spr_var = execute_file(main_directory_const+"\SPR\UI\menu_title_hd_spr.gml",main_directory_const+"\SPR\UI\menu_title_hd_spr.png");
+                break;
+            }
+            case 1:
+            {
+                title_spr_var = execute_file(main_directory_const+"\SPR\UI\menu_title_old_01_spr.gml",main_directory_const+"\SPR\UI\menu_title_old_spr.png");
+                title_old_var = true;
+                break;
+            }
+            default:
+            {
+                local.path = vanilla_directory_const+"\TEX\menu\"+choose("name_uhh_spr","name_uhh_spr2","name_uhh_spr3","name_uhh_spr4")+".png";
+                title_spr_var = sprite_add(local.path,1,false,false,0,0);
+                sprite_set_offset(title_spr_var,sprite_get_width(title_spr_var)/2,sprite_get_height(title_spr_var)/2);
+                break;
+            }
+        }
+        
+    }
+    else
+    {
+        title_spr_var = execute_file(main_directory_const+"\SPR\UI\menu_title_spr.gml",main_directory_const+"\SPR\UI\menu_title_spr.png");
+    }
     name_y_var = 170;
+    // Sounds
+    select_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\menu_select_snd.wav");
+    confirm_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\menu_confirm_snd.wav");
+    popup_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\menu_popup_snd.wav");
+    start_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\menu_start_snd.wav");
+    fmod_snd_set_group_scr(start_snd_var,snd_group_mus_const);
+    story_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\story_mus_snd.mp3");
+    fmod_snd_set_group_scr(story_mus_snd_var,snd_group_mus_const);
+    menu_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\menu_mus_snd.mp3");
+    fmod_snd_set_group_scr(menu_mus_snd_var,snd_group_mus_const);
+    fmod_snd_set_loop_point_scr(menu_mus_snd,6/71,70/71);
     // Text
     ini_open(global.lang_var);
     skip_str_var = "Press Confirm to Skip."; // Maybe get a string of the key?
@@ -815,30 +781,38 @@ object_event_add
     type_button_arr[32,7] = alt_str_var+" 2";
     type_button_arr[32,8] = imscared_str_var+" "+mod_str_var;
     ini_close();
-    // Alarms
-    alarm_len_var = 1;
-    set_alarm_scr(0,3000);
+    for (local.i=0; local.i<type_button_len_var-1; local.i+=1;)
+    { type_button_arr[local.i,0] = -1; }
     // States
     state_var = 0;
-    // Other
+    // Draw Control
     image_alpha = 0;
-    y = -1440;
-    path_y_var = -720;
-    path_cloud_y_var = 0;
-    story_y_var = 750;
+    story_prog_var = 1;
     str_scale_var = 0.8;
-	
-	menuscroll_var = 0;
-	menuscroll_lerp_var = 0;
-	menuscroll_focal_var = 0;
-
-    // Sorry menuscroll, youre getting REPLACED
+    cloud_alarm_var = 1243;
+    path_cloud_alarm_var = 720;
+    // Lightning
+    light_fade_min_var = 9;
+    light_fade_max_var = 18;
+    light_alarm_min_var = 60;
+    light_alarm_max_var = 240;
+    light_delay_min_var = 20;
+    light_delay_max_var = 60;
+    light_num_var = 1;
+    light_den_var = 3;
+    light_double_num_var = 1;
+    light_double_den_var = 4;
+    spook_num_var = 1;
+    spook_den_var = 6;
+    spook_alpha_max_var = 0.2;
+    spook_alarm_var = 25;
+    flash_alarm_var = 3;
+    // Button Scroll
     do_scroll_focal_var = true;
     scroll_var = 0;
     scroll_rate_var = 0.2;
     scroll_min_var = 0.5;
-	
-	// Save Variables
+	// Default Save Variables
 	save_name_var = "";
 	save_violence_var = 0;
 	save_rm_count_var = 0;
@@ -847,18 +821,34 @@ object_event_add
 	save_diff_var = 2;
 	save_custom_var = false;
 	save_rm_var = hall_01_rm;
-	
 	save_type_var=0;
-	for (local.i=0; local.i<type_button_len_var-1; local.i+=1;)
-    { type_button_arr[local.i,0] = -1; }
-	
+    // Save List
 	ds_list_clear(global.save_list);
-	
-	ini_open("saves.ini");
-					
+	ini_open("saves.ini");		
 	ds_list_read(global.save_list,ini_read_string("SAVES","SAVES","2F01000000000000"));
-
 	ini_close();
+    // Scale
+    scale_min_var = 0.125;
+    if view_wview[0] >= view_hview[0]
+    { scale_var = view_hview[0]/720; }
+    else { scale_var = view_wview[0]/1280; }
+    scale_var = max(scale_var,scale_min_var);
+    left_var = 54*scale_var;
+    right_var = view_wview[0]-(54*scale_var);
+    top_var = 54*scale_var;
+    bottom_var = view_hview[0]-(54*scale_var);
+    shadow_off_var = 2*scale_var;
+    scale_big_var = max(0.75*scale_var,scale_min_var);
+    scale_med_var = max(0.5*scale_var,scale_min_var);
+    scale_small_var = max(0.25*scale_var,scale_min_var);
+    center_var = view_wview[0]/2;
+    scale_story_var = max(0.4*scale_var,scale_min_var);
+    scale_skip_var = max(0.3*scale_var,scale_min_var);
+    // Alarms
+    alarm_len_var = 11;
+    set_alarm_scr(0,3000);
+    set_alarm_scr(9,cloud_alarm_var);
+    set_alarm_scr(10,path_cloud_alarm_var);
 ');
 // Room End
 object_event_add
@@ -870,8 +860,13 @@ object_event_add
     background_delete(path_bg_var);
     background_delete(path_cloud_bg_var);
     sprite_delete(set_spr_var);
-    sprite_delete(name_spr_var);
-	
+    sprite_delete(title_spr_var);
+	fmod_snd_free_scr(menu_mus_snd_var);
+	fmod_snd_free_scr(story_mus_snd_var);
+	fmod_snd_free_scr(popup_snd_var);
+	fmod_snd_free_scr(confirm_snd_var);
+    fmod_snd_free_scr(select_snd_var);
+	fmod_snd_free_scr(start_snd_var);
     for (local.i=0; local.i<sub_bg_len_var; local.i+=1;)
     { background_delete(sub_bg_arr[local.i]); }
 ');
@@ -881,15 +876,16 @@ object_event_add
     event_inherited();
 	
     x = (x-global.true_delta_time_var) mod background_get_width(cloud_bg_var);
+    if alarm_arr[4,0] > 0 { light_alpha_01_var = alarm_arr[4,0]/alarm_arr[4,1]; }
+    if alarm_arr[6,0] > 0 { light_alpha_02_var = alarm_arr[6,0]/alarm_arr[6,1]; }
+    if alarm_arr[7,0] > 0 { spook_alpha_var = spook_alpha_max_var*alarm_arr[7,0]/alarm_arr[7,1]; }
+    if alarm_arr[9,0] > 0 { cloud_prog_var = alarm_arr[9,0]/alarm_arr[9,1]; }
     switch state_var
     {
         case 0: // Story
         {
-            y = lerp_scr(0,-1440,alarm_arr[0,0]/alarm_arr[0,1]);
-            path_y_var = lerp_scr(720,-720,alarm_arr[0,0]/alarm_arr[0,1]);
-            path_cloud_y_var = lerp_scr(720,0,alarm_arr[0,0]/alarm_arr[0,1]);
-            path_cloud_x_var = (path_cloud_x_var+global.true_delta_time_var) mod 720;
-            story_y_var = lerp_scr(-750,750,alarm_arr[0,0]/alarm_arr[0,1]); // -748, 752
+            if alarm_arr[0,0] > 0 { story_prog_var = alarm_arr[0,0]/alarm_arr[0,1]; }
+            if alarm_arr[10,0] > 0 { path_cloud_prog_var = alarm_arr[10,0]/alarm_arr[10,1]; }
             if global.input_press_arr[confirm_input_const,0]
             {
                 event_perform(ev_alarm,0);
@@ -902,7 +898,21 @@ object_event_add
             time_var = (time_var+global.true_delta_time_var) mod 120;
             str_alpha_var = (cos(2*time_var*pi/120)+1)/2;
             if global.input_press_arr[confirm_input_const,0]
-            { state_var += 1; event_user(0); }
+            {
+                state_var = 8;
+                event_user(0);
+                inst_var = fmod_snd_play_scr(menu_mus_snd_var); // start_snd_var
+                set_alarm_scr(1,80);
+            }
+            break;
+        }
+        case 8: // Post Confirm
+        {
+            if global.input_press_arr[confirm_input_const,0]
+            {
+                event_perform(ev_alarm,1);
+                set_alarm_scr(1,-1);
+            }
             break;
         }
         case 2: // Main
@@ -939,10 +949,6 @@ object_event_add
 					{
 						state_var = 3;
 						event_user(0);
-						
-						menuscroll_focal_var = 2;
-						menuscroll_var = 0;
-						menuscroll_lerp_var = 0;
 						
 						sub_bg_var = irandom_range(0,sub_bg_len_var-1);
 						
@@ -984,10 +990,6 @@ object_event_add
 							
 							state_var = 6;
 							event_user(0);
-							
-							menuscroll_focal_var = 2;
-							menuscroll_var = 0;
-							menuscroll_lerp_var = 0;
 							
 							sub_bg_var = irandom_range(0,sub_bg_len_var-1);
 						}
@@ -1475,40 +1477,185 @@ object_event_add
 		}
     }
 ');
-// Alarm 0
+// Story to confirm
 object_event_add
 (argument0,ev_alarm,0,'
     state_var += 1;
-    y = 0;
-    path_y_var = 720;
-    path_cloud_y_var = 0;
+    story_prog_var = 0;
     event_user(0);
+');
+// Post Confirm to menu
+object_event_add
+(argument0,ev_alarm,1,'
+    /*fmod_inst_stop_scr(inst_var);
+    inst_var = fmod_snd_play_scr(menu_mus_snd_var);
+    fmod_inst_set_pos_scr(inst_var,6/71);*/
+    state_var = 2;
+    event_user(0);
+    event_perform(ev_alarm,3);
+    set_alarm_scr(5,irandom_range(light_delay_min_var,light_delay_max_var));
+    set_alarm_scr(2,light_alarm_max_var);
+');
+// Lightning Alarm
+object_event_add
+(argument0,ev_alarm,2,'
+    if frac_chance_scr(light_num_var,light_den_var)
+    { set_alarm_scr(3,irandom_range(light_delay_min_var,light_delay_max_var)); }
+    if frac_chance_scr(light_double_num_var,light_double_den_var)
+    { set_alarm_scr(5,irandom_range(light_delay_min_var,light_delay_max_var)); }
+    set_alarm_scr(2,irandom_range(light_alarm_min_var,light_alarm_max_var))
+');
+// Lightning 01 Alarm
+object_event_add
+(argument0,ev_alarm,3,'
+    light_alpha_01_var = 1;
+    if frac_chance_scr(spook_num_var,spook_den_var)
+    {
+        spook_alpha_var = 0.2;
+        set_alarm_scr(7,spook_alarm_var);
+    }
+    if !global.reduce_flash_var
+    {
+        flash_var = true;
+        set_alarm_scr(8,flash_alarm_var);
+    }
+    fmod_snd_play_scr(choose(lightning_01_snd,lightning_02_snd,lightning_03_snd,lightning_04_snd));
+    set_alarm_scr(4,irandom_range(light_fade_min_var,light_fade_max_var));
+');
+// Lightning 01 Fade Alarm
+object_event_add
+(argument0,ev_alarm,4,'
+    light_alpha_01_var = 0;
+');
+// Lightning 02 Alarm
+object_event_add
+(argument0,ev_alarm,5,'
+    light_alpha_02_var = 1;
+    if !global.reduce_flash_var
+    {
+        flash_var = true;
+        set_alarm_scr(8,flash_alarm_var);
+    }
+    fmod_snd_play_scr(choose(lightning_01_snd,lightning_02_snd,lightning_03_snd,lightning_04_snd));
+    set_alarm_scr(6,irandom_range(light_fade_min_var,light_fade_max_var));
+');
+// Lightning 02 Fade Alarm
+object_event_add
+(argument0,ev_alarm,6,'
+    light_alpha_02_var = 0;
+    set_alarm_scr(3,light_delay_min_var);
+');
+// Spooky Fade Alarm
+object_event_add
+(argument0,ev_alarm,7,'
+    spook_alpha_var = 0;
+');
+// Flash
+object_event_add
+(argument0,ev_alarm,8,'
+    flash_var = false;
+');
+// Cloud Alarm
+object_event_add
+(argument0,ev_alarm,9,'
+    cloud_prog_var = 0;
+    set_alarm_scr(9,cloud_alarm_var)
+');
+// Path Cloud Alarm
+object_event_add
+(argument0,ev_alarm,10,'
+    path_cloud_prog_var = 0;
+    set_alarm_scr(10,path_cloud_alarm_var)
 ');
 // Reset state
 object_event_add
 (argument0,ev_other,ev_user0,'
     time_var = 0;
     button_state_var = 0;
+    scroll_var = 0;
 ');
 // Draw
 object_event_add
 (argument0,ev_draw,0,'
-    draw_background_stretched(bg_var,0,y,1280,720);
-    // draw_background_stretched_ext(light_bg_var,0,y,1280,720,c_white,image_alpha);
-    draw_background(cloud_bg_var,x,y+18);
-    draw_background(cloud_bg_var,x+background_get_width(cloud_bg_var),y+18);
+    if story_prog_var > 0
+    { local.ytmp = -story_prog_var*view_hview[view_current]*2; }
+    else { local.ytmp = 0; }
+    local.width = view_hview[view_current]*16/9;
+    draw_background_scr(bg_var,640,0,1280,720,fa_center,fa_top,view_wview[view_current],view_hview[view_current],true);
+    //draw_background_stretched(bg_var,0,local.ytmp,local.width,view_hview[view_current]);
+    draw_background_stretched_ext(light_01_bg_var,0,local.ytmp,local.width,view_hview[view_current],c_white,light_alpha_01_var);
+    draw_background_stretched_ext(light_02_bg_var,0,local.ytmp,local.width,view_hview[view_current],c_white,light_alpha_02_var);
+    local.cloudwidth = background_get_width(cloud_bg_var);
+    draw_background_part_ext
+    (
+        cloud_bg_var,
+        (1-cloud_prog_var)*local.cloudwidth,0,
+        cloud_prog_var*local.cloudwidth,background_get_height(cloud_bg_var),
+        0,local.ytmp+(scale_var*18),scale_var,scale_var,c_white,1
+    );
+    draw_background_ext(cloud_bg_var,cloud_prog_var*local.cloudwidth,local.ytmp+(scale_var*18),scale_var,scale_var,0,c_white,1);
+    if flash_var { draw_rectangle(0,0,view_wview[view_current],view_hview[view_current],false); }
     switch state_var
     {
         case 0: // Story
         {
-            draw_background_stretched(path_bg_var,0,path_y_var,1280,720);
-            draw_background_stretched(path_cloud_bg_var,path_cloud_x_var,path_cloud_y_var,720,720);
-            draw_background_stretched(path_cloud_bg_var,path_cloud_x_var+720,path_cloud_y_var,720,720);
-            draw_background_stretched(path_cloud_bg_var,path_cloud_x_var-720,path_cloud_y_var,720,720);
+            draw_background_stretched(path_bg_var,0,local.ytmp+view_hview[view_current],local.width,view_hview[view_current]);
+            // Path Clouds
+            local.cloudwidth = background_get_width(path_cloud_bg_var);
+            local.cloudheight = background_get_height(path_cloud_bg_var);
+            local.scale = scale_var*(720/background_get_height(path_cloud_bg_var))
+            local.firstwidth = path_cloud_prog_var*local.cloudwidth;
+            local.lastwidth = (view_wview[view_current]/local.scale) mod local.cloudwidth;
+            local.num = ceil((view_wview[view_current]/local.scale)/local.cloudwidth)-1;
+            local.cloudx = 0;
+            local.cloudy = lerp_scr(view_hview[view_current],0,story_prog_var);
+            for (local.i=0; local.i<=local.num; local.i+=1;)
+            {
+                switch local.i
+                {
+                    case 0:
+                    {
+                        // First Cloud
+                        draw_background_part_ext
+                        (
+                            path_cloud_bg_var,
+                            local.cloudwidth-local.firstwidth,0,local.firstwidth,local.cloudheight,
+                            local.cloudx,local.cloudy,local.scale,local.scale,c_white,1
+                        );
+                        local.cloudx += local.firstwidth*local.scale;
+                        break;
+                    }
+                    case local.num:
+                    {
+                        // Last Cloud
+                        draw_background_part_ext
+                        (
+                            path_cloud_bg_var,
+                            0,0,local.lastwidth,local.cloudheight,
+                            local.cloudx,local.cloudy,
+                            local.scale,local.scale,c_white,1
+                        );
+                        break;
+                    }
+                    default:
+                    {
+                        // Between
+                        draw_background_ext
+                        (
+                            path_cloud_bg_var,local.cloudx,local.cloudy,
+                            local.scale,local.scale,0,c_white,1
+                        );
+                        local.cloudx += local.cloudwidth*local.scale;
+                        break;
+                    }
+                }
+            }
             // Text
-            draw_text_transformed(64,64,skip_str_var,0.3,0.3,0);
+            draw_text_transformed(64*scale_var,64*scale_var,skip_str_var,scale_skip_var,scale_skip_var,0);
             draw_set_halign(fa_center); draw_set_color(c_red);
-            draw_text_ext_transformed(640,story_y_var,story_str_var,215,2150,0.4,0.4,0); // 860, 86
+            local.height = view_hview[view_current]*25/24;
+            local.ytmp = lerp_scr(-local.height,local.height,story_prog_var)
+            draw_text_ext_transformed(center_var,local.ytmp,story_str_var,86/scale_story_var,860/scale_story_var,scale_story_var,scale_story_var,0); // 860, 86
             draw_set_halign(fa_left); draw_set_color(c_white);
             break;
         }
@@ -1525,7 +1672,8 @@ object_event_add
         }
         case 2: // Main
         {
-            draw_sprite(name_spr_var,0,393,name_y_var);
+            local.scale = 172800/(sprite_get_height(title_spr_var)*view_hview[view_current])
+            draw_sprite_ext(title_spr_var,0,393,name_y_var,local.scale,local.scale,0,c_white,1);
             for (local.i=0; local.i<4; local.i+=1)
             {
                 if local.i != button_state_var

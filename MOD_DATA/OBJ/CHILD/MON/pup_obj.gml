@@ -75,13 +75,14 @@ object_event_add
     tp_dist_max_var = 512;
     // Knock Em Down!
     do_hurt_var = 1;
-    hurt_dur_var = 0;
+    hurt_dur_base_var = 0;
     hurt_snd_var = 1;
     violence_var = 3;
     hurt_tp_var = true;
     hurt_tp_num_var = 1;
     hurt_tp_den_var = 4;
     hurt_multi_var = false;
+    hurt_dur_multi_var = false;
     // Down
     hurt_w_var = 20;
     hurt_h_var = 10;
@@ -167,6 +168,7 @@ object_event_add
         {
             hd_var = true;
             hd_snd_var = true;
+            terrible_var = true;
             delay_var = 0;
             do_anim_var = -1;
             do_move_var = -1;
@@ -185,7 +187,7 @@ object_event_add
             if !local.set
             {
                 do_hurt_var = 2;
-                hurt_dur_var = 1;
+                hurt_dur_base_var = 1;
             }
             break;
         }
@@ -232,6 +234,7 @@ object_event_add
     tex_var = sprite_get_texture(spr_var,spr_id_var);
     down_var = false;
     visible_var = (do_ascend_var && !temp_hd_var);
+    hurt_dur_var = hurt_dur_base_var;
 ');
 // Destroy Event
 object_event_add
@@ -343,6 +346,16 @@ object_event_add
                     case 2: // Descending
                     {
                         z_off_var = lerp_scr(0,ascend_z_var,alarm_arr[9,0]/alarm_arr[9,1]);
+                        // Oh GOD
+                        if is_seen_var == 0 && terrible_var
+                        {
+                            local.xvel = -lengthdir_x(1,target_var.yaw_var);
+                            local.yvel = -lengthdir_y(1,target_var.yaw_var);
+                            local.dist = median(check_ray_scr(target_x_var,target_y_var,target_z_var+(target_var.coll_var[1]/2),local.xvel,local.yvel,0)-(coll_var[2]/2),tp_dist_min_var,tp_dist_max_var);
+                            x = target_x_var+(local.xvel*local.dist);
+                            y = target_y_var+(local.yvel*local.dist);
+                            z = target_z_var;
+                        }
                         break;
                     }
                     case 3: // Waiting
@@ -525,6 +538,7 @@ object_event_add
     tex_var = sprite_get_texture(spr_var,spr_id_var);
     down_var = false;
     hurt_var = false;
+    hurt_dur_var = hurt_dur_base_var;
     if hd_var
     {
         state_var = 1;
@@ -548,8 +562,8 @@ object_event_add
     sub_var[1] = laugh_snd_var[2];
     if hd_var
     {
-        local.xvel = -lengthdir_x(1,target_var.eye_yaw_var);
-        local.yvel = -lengthdir_y(1,target_var.eye_yaw_var);
+        local.xvel = -lengthdir_x(1,target_var.yaw_var);
+        local.yvel = -lengthdir_y(1,target_var.yaw_var);
         local.dist = median(check_ray_scr(target_x_var,target_y_var,target_z_var+(target_var.coll_var[1]/2),local.xvel,local.yvel,0)-(coll_var[2]/2),tp_dist_min_var,tp_dist_max_var);
         x = target_x_var+(local.xvel*local.dist);
         y = target_y_var+(local.yvel*local.dist);
@@ -609,6 +623,7 @@ object_event_add
             hurt_var = true;
             set_alarm_scr(3,-1);
         }
+        if !hurt_dur_multi_var { hurt_dur_var = 0; }
         // Sound
         if hd_snd_var
         {
