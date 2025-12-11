@@ -9,6 +9,7 @@ ds_list_add(global.mod_list,working_directory+"\MODS\PLUS");
 ds_list_add(global.mod_list,working_directory+"\MODS\LEAN");
 ds_list_add(global.mod_list,working_directory+"\MODS\SMALL_BAB");
 ds_list_add(global.mod_list,working_directory+"\MODS\SCM");
+ds_list_add(global.mod_list,working_directory+"\MODS\DD");
 //ds_list_add(global.mod_list,working_directory+"\MODS\EXAMPLE_MOD");
 // Mod load list
 globalvar mod_load_list;

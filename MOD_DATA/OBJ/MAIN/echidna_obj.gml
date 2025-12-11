@@ -212,7 +212,7 @@ object_event_add
         sub_var[0] = wake_snd_var[2];
         sub_var[1] = wake_snd_var[3];
     }
-    else if do_snd_var && !loop_snd_var[0]
+    else if do_snd_var && !loop_snd_var[0] && snd_len_var > 0
     {
         local.snd = irandom(snd_len_var-1);
         snd_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0]);
@@ -273,7 +273,7 @@ object_event_add
     // Set target
     event_user(6);
     // Sound
-    if do_snd_var && loop_snd_var[0]
+    if do_snd_var && loop_snd_var[0] == 1
     { fmod_inst_stop_scr(loop_inst_var); }
     // Delay
     if delay_min_var > 0
@@ -338,8 +338,8 @@ object_event_add
     on_var = true;
     if do_snd_var
     {
-        if loop_snd_var[0] { loop_inst_var = fmod_snd_3d_loop_scr(loop_snd_var[1]); }
-        set_alarm_scr(6,irandom_range(snd_delay_min_var,snd_delay_max_var));
+        if loop_snd_var[0] == 1 { loop_inst_var = fmod_snd_3d_loop_scr(loop_snd_var[1]); }
+        if snd_len_var > 0 { set_alarm_scr(6,irandom_range(snd_delay_min_var,snd_delay_max_var)); }
     }
     if do_door_var
     {
@@ -405,7 +405,7 @@ object_event_add
 // Sound alarm
 object_event_add
 (argument0,ev_alarm,6,'
-    if do_snd_var && frac_chance_scr(snd_num_var,snd_den_var)
+    if do_snd_var && snd_len_var > 0 && frac_chance_scr(snd_num_var,snd_den_var)
     {
         if fmod_inst_is_play_scr(snd_var) && fmod_inst_is_3d_scr(snd_var)
         { fmod_inst_stop_scr(snd_var); }
@@ -778,7 +778,8 @@ object_event_add
                 else { snd_var = fmod_snd_play_scr(hurt_snd_var[1]); }
                 sub_var[0] = hurt_snd_var[2];
                 sub_var[1] = hurt_snd_var[3];
-                if do_snd_var { set_alarm_scr(6,irandom_range(snd_delay_min_var,snd_delay_max_var)); }
+                if do_snd_var && snd_len_var > 0
+                { set_alarm_scr(6,irandom_range(snd_delay_min_var,snd_delay_max_var)); }
                 break;
             }
         }
@@ -1010,7 +1011,8 @@ object_event_add
                     else { snd_var = fmod_snd_play_scr(atk_start_snd_var[1]); }
                     sub_var[0] = atk_start_snd_var[2];
                     sub_var[1] = atk_start_snd_var[3];
-                    if do_snd_var { set_alarm_scr(6,irandom_range(snd_delay_min_var,snd_delay_max_var)); }
+                    if do_snd_var && snd_len_var > 0
+                    { set_alarm_scr(6,irandom_range(snd_delay_min_var,snd_delay_max_var)); }
                     break;
                 }
             }

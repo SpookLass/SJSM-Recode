@@ -15,7 +15,6 @@ global.sfx_vol_var = ini_read_real("MAIN","sfx_vol",sfx_vol_const);
 global.voice_vol_var = ini_read_real("MAIN","voice_vol",voice_vol_const);
 global.reduce_flash_var = ini_read_real("MAIN","reduce_flash",reduce_flash_const);
 global.max_part_var = ini_read_real("MAIN","max_part",max_part_const);
-global.crouch_toggle_var = ini_read_real("MAIN","crouch_toggle",crouch_toggle_const);
 global.sub_var = ini_read_real("MAIN","sub",sub_const);
 global.anti_alias_var = ini_read_real("MAIN","anti_alias",anti_alias_const);
 global.vsync_var = ini_read_real("MAIN","vsync",vsync_const);
@@ -60,6 +59,8 @@ for (local.i=0; local.i<8; local.i+=1;)
     global.player_spr_var[local.i] = ini_read_real("MULTIPLAYER","spr_"+string(local.i),0);
     global.player_spr_id_var[local.i] = ini_read_real("MULTIPLAYER","spr_id_"+string(local.i),irandom(2));
     // Controls
+    global.crouch_toggle_var[local.i] = ini_read_real("MAIN","crouch_toggle_"+string(local.i),crouch_toggle_const);
+    global.joy_id_var[local.i] = ini_read_real("CONTROL","joy_id_"+string(local.i),joy_gmid_scr(local.i));
     global.sens_var[local.i] = ini_read_real("CONTROL","sens_"+string(local.i),sens_const);
     global.joy_sens_var[local.i] = ini_read_real("CONTROL","joy_sens_"+string(local.i),joy_sens_const);
     global.invert_yaw_var[local.i] = ini_read_real("CONTROL","invert_yaw_"+string(local.i),invert_yaw_const);

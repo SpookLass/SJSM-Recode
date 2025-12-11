@@ -60,6 +60,7 @@ object_event_add
     light_02_bg_var = background_add(vanilla_directory_const+"\TEX\menu\menu3_tex.png",false,false);
     path_bg_var = background_add(vanilla_directory_const+"\TEX\menu\path_tex.png",false,false);
     path_cloud_bg_var = background_add(vanilla_directory_const+"\TEX\menu\menu_clouds_tex.png",false,false);
+    multi_bg_var = background_add(main_directory_const+"\BG\UI\multi_bg.png",false,false);
     light_bg_var = light_01_bg_var;
 	
 	local.array_index = 0;
@@ -208,6 +209,19 @@ object_event_add
     button_str_arr[3,6] = back_str_var;
     	//Load Saves
 	button_str_arr[6,0] = back_str_var;
+        // Multiplayer
+    button_str_arr[9,0] = ini_read_string("MENU","player_len","MENU_player_len");
+    button_str_arr[9,1] = ini_read_string("MENU","player_id","MENU_player_id");
+    button_str_arr[9,2] = ini_read_string("MENU","name","MENU_name");
+    button_str_arr[9,3] = ini_read_string("MENU","spr","MENU_spr");
+    button_str_arr[9,4] = ini_read_string("MENU","spr_id","MENU_spr_id");
+    button_str_arr[9,5] = ini_read_string("MENU","red","MENU_red");
+    button_str_arr[9,6] = ini_read_string("MENU","green","MENU_green");
+    button_str_arr[9,7] = ini_read_string("MENU","blue","MENU_blue");
+    button_str_arr[9,8] = ini_read_string("MENU","hue","MENU_hue");
+    button_str_arr[9,9] = ini_read_string("MENU","sat","MENU_sat");
+    button_str_arr[9,10] = ini_read_string("MENU","val","MENU_val");
+    button_str_arr[9,11] = back_str_var;
     // Custom
         // Ditto (Customize)
     custom_button_len_var = 0;
@@ -859,6 +873,7 @@ object_event_add
     background_delete(light_02_bg_var);
     background_delete(path_bg_var);
     background_delete(path_cloud_bg_var);
+    background_delete(multi_bg_var);
     sprite_delete(set_spr_var);
     sprite_delete(title_spr_var);
 	fmod_snd_free_scr(menu_mus_snd_var);
@@ -1011,7 +1026,14 @@ object_event_add
                         event_user(0);
                         break;
                     }
-                    case 5: { state_var = 9; event_user(0); break; }
+                    case 5:
+                    {
+                        state_var = 9;
+                        event_user(0);
+
+                        sub_bg_var = irandom_range(0,sub_bg_len_var-1);
+                        break;
+                    }
                 }
             }
             break;
@@ -1359,6 +1381,179 @@ object_event_add
 			}
 			break;
 		}
+        case 9: // Multiplayer
+        {
+            // Effects! (I dont know how this works, but I trust Birds judgement)
+            subbgscroll_var += (1*global.true_delta_time_var);
+			
+			if subbgalpha_var < 1
+			subbgalpha_var += (0.04*global.true_delta_time_var);
+            // Text Stretch
+            time_var = (time_var+global.true_delta_time_var) mod 80;
+            str_scale_var = 0.8+(cos(2*time_var*pi/80)*0.2);
+            // Scroll
+            if global.input_press_arr[up_input_const,0] { button_state_var -= 1; }
+            if global.input_press_arr[down_input_const,0] { button_state_var += 1; }
+            button_state_var = mod_scr(button_state_var,12);
+            // Lerp
+            if do_scroll_focal_var
+            {
+                scroll_focal_var = median(button_state_var-2,button_state_var+2,scroll_focal_var);
+                local.state = scroll_focal_var
+            }
+            else { local.state = button_state_var; }
+            local.target_scroll = -96*median(0,7,local.state-2);
+            local.scroll_diff = abs(local.target_scroll-scroll_var);
+            local.scroll_rate = max(scroll_min_var,local.scroll_diff*scroll_rate_var)*global.true_delta_time_var;
+            scroll_var += min(local.scroll_diff,local.scroll_rate)*sign(local.target_scroll-scroll_var);
+            // Confirm
+            if global.input_press_arr[confirm_input_const,0]
+            {
+                fmod_update_take_over_when_lock_scr();
+                switch button_state_var
+                {
+                    case 2:
+                    {
+                        global.player_name_var[player_id_var] = get_string("Player Name",global.player_name_var[player_id_var]);
+                        break;
+                    }
+                    case 5:
+                    {
+                        local.red = median(get_integer("Player Red",color_get_red(global.player_color_var[player_id_var])),0,255);
+                        local.green = color_get_green(global.player_color_var[player_id_var]);
+                        local.blue = color_get_blue(global.player_color_var[player_id_var]);
+                        global.player_color_var[player_id_var] = make_color_rgb(local.red,local.green,local.blue);
+                        break;
+                    }
+                    case 6:
+                    {
+                        local.red = color_get_red(global.player_color_var[player_id_var]);
+                        local.green = median(get_integer("Player Green",color_get_green(global.player_color_var[player_id_var])),0,255);
+                        local.blue = color_get_blue(global.player_color_var[player_id_var]);
+                        global.player_color_var[player_id_var] = make_color_rgb(local.red,local.green,local.blue);
+                        break;
+                    }
+                    case 7:
+                    {
+                        local.red = color_get_red(global.player_color_var[player_id_var]);
+                        local.green = color_get_green(global.player_color_var[player_id_var]);
+                        local.blue = median(get_integer("Player Blue",color_get_blue(global.player_color_var[player_id_var])),0,255);
+                        global.player_color_var[player_id_var] = make_color_rgb(local.red,local.green,local.blue);
+                        break;
+                    }
+                    case 8:
+                    {
+                        local.hue = median(get_integer("Player Hue",color_get_hue(global.player_color_var[player_id_var])),0,255);
+                        local.saturation = color_get_saturation(global.player_color_var[player_id_var]);
+                        local.value = color_get_value(global.player_color_var[player_id_var]);
+                        global.player_color_var[player_id_var] = make_color_hsv(local.hue,local.saturation,local.value);
+                        break;
+                    }
+                    case 9:
+                    {
+                        local.hue = color_get_hue(global.player_color_var[player_id_var]);
+                        local.saturation = median(get_integer("Player Saturation",color_get_saturation(global.player_color_var[player_id_var])),0,255);
+                        local.value = color_get_value(global.player_color_var[player_id_var]);
+                        global.player_color_var[player_id_var] = make_color_hsv(local.hue,local.saturation,local.value);
+                        break;
+                    }
+                    case 10:
+                    {
+                        local.hue = color_get_hue(global.player_color_var[player_id_var]);
+                        local.saturation = color_get_saturation(global.player_color_var[player_id_var]);
+                        local.value = median(get_integer("Player Value",color_get_value(global.player_color_var[player_id_var])),0,255);
+                        global.player_color_var[player_id_var] = make_color_hsv(local.hue,local.saturation,local.value);
+                        break;
+                    }
+                    case 11:
+                    {
+                        state_var = 2;
+						event_user(0);
+						subbgalpha_var = 0;
+                        break;
+                    }
+                }
+                global.input_arr[confirm_input_const,0] = 0;
+                global.last_time_var = current_time;
+                fmod_update_take_over_done_scr();
+            }
+            if global.input_press_arr[left_input_const,0] || global.input_press_arr[right_input_const,0]
+            {
+                local.add = (global.input_press_arr[right_input_const,0] > 0)-(global.input_press_arr[left_input_const,0] > 0);
+                switch button_state_var
+                {
+                    case 0:
+                    {
+                        global.player_len_var = mod_scr(global.player_len_var+local.add-1,8)+1;
+                        break;
+                    }
+                    case 1:
+                    {
+                        player_id_var = mod_scr(player_id_var+local.add,global.player_len_var);
+                        break;
+                    }
+                    case 3:
+                    {
+                        global.player_spr_var[player_id_var] = mod_scr(global.player_spr_var[player_id_var]+local.add,2);
+                        break;
+                    }
+                    case 4:
+                    {
+                        global.player_spr_id_var[player_id_var] = mod_scr(global.player_spr_id_var[player_id_var]+local.add,3);
+                        break;
+                    }
+                    case 5:
+                    {
+                        local.red = median(color_get_red(global.player_color_var[player_id_var])+(local.add*8),0,255);
+                        local.green = color_get_green(global.player_color_var[player_id_var]);
+                        local.blue = color_get_blue(global.player_color_var[player_id_var]);
+                        global.player_color_var[player_id_var] = make_color_rgb(local.red,local.green,local.blue);
+                        break;
+                    }
+                    case 6:
+                    {
+                        local.red = color_get_red(global.player_color_var[player_id_var]);
+                        local.green = median(color_get_green(global.player_color_var[player_id_var])+(local.add*8),0,255);
+                        local.blue = color_get_blue(global.player_color_var[player_id_var]);
+                        global.player_color_var[player_id_var] = make_color_rgb(local.red,local.green,local.blue);
+                        break;
+                    }
+                    case 7:
+                    {
+                        local.red = color_get_red(global.player_color_var[player_id_var]);
+                        local.green = color_get_green(global.player_color_var[player_id_var]);
+                        local.blue = median(color_get_blue(global.player_color_var[player_id_var])+(local.add*8),0,255);
+                        global.player_color_var[player_id_var] = make_color_rgb(local.red,local.green,local.blue);
+                        break;
+                    }
+                    case 8:
+                    {
+                        local.hue = median(color_get_hue(global.player_color_var[player_id_var])+(local.add*8),0,255);
+                        local.saturation = color_get_saturation(global.player_color_var[player_id_var]);
+                        local.value = color_get_value(global.player_color_var[player_id_var]);
+                        global.player_color_var[player_id_var] = make_color_hsv(local.hue,local.saturation,local.value);
+                        break;
+                    }
+                    case 9:
+                    {
+                        local.hue = color_get_hue(global.player_color_var[player_id_var]);
+                        local.saturation = median(color_get_saturation(global.player_color_var[player_id_var])+(local.add*8),0,255);
+                        local.value = color_get_value(global.player_color_var[player_id_var]);
+                        global.player_color_var[player_id_var] = make_color_hsv(local.hue,local.saturation,local.value);
+                        break;
+                    }
+                    case 10:
+                    {
+                        local.hue = color_get_hue(global.player_color_var[player_id_var]);
+                        local.saturation = color_get_saturation(global.player_color_var[player_id_var]);
+                        local.value = median(color_get_value(global.player_color_var[player_id_var])+(local.add*8),0,255);
+                        global.player_color_var[player_id_var] = make_color_hsv(local.hue,local.saturation,local.value);
+                        break;
+                    }
+                }
+            }
+            break;
+        }
 		case 12: //Name Entry
         {
 			subbgscroll_var += (1*global.true_delta_time_var);
@@ -1445,7 +1640,6 @@ object_event_add
                 }
 				
                 // Boot it up!
-                global.player_len_var = 1;
                 for (local.i=0; local.i<global.player_len_var; local.i+=1;)
                 {
                     local.player = instance_create(0,0,player_obj);
@@ -1466,6 +1660,7 @@ object_event_add
                         }
                     }
                 }
+                event_user(1);
 				instance_create(0,0,mus_control_obj);
                 global.count_var = get_count_scr();
                 if save_name_var == "1987" { instance_create(0,0,otter8_js_obj); }
@@ -1573,6 +1768,20 @@ object_event_add
     time_var = 0;
     button_state_var = 0;
     scroll_var = 0;
+    scroll_focal_var = button_state_var;
+');
+// Save Multiplayer
+object_event_add
+(argument0,ev_other,ev_user1,'
+    for (local.i=0; local.i<global.player_len_var; local.i+=1;)
+    {
+        ini_open("settings.ini");
+        ini_write_string("MULTIPLAYER","name_"+string(local.i),global.player_name_var[local.i]);
+        ini_write_real("MULTIPLAYER","spr_"+string(local.i),global.player_spr_var[local.i]);
+        ini_write_real("MULTIPLAYER","spr_id_"+string(local.i),global.player_spr_id_var[local.i]);
+        ini_write_real("MULTIPLAYER","color_"+string(local.i),global.player_color_var[local.i]);
+        ini_close();
+    }
 ');
 // Draw
 object_event_add
@@ -1596,7 +1805,7 @@ object_event_add
             draw_str_scr(skip_str_var,64,64,0.3,0.3,0.125,fa_left,fa_top,0);
             draw_set_color(c_red);
             local.ytmp = lerp_scr(-750,750,story_prog_var);
-            draw_str_ext_scr(story_str_var,0,local.ytmp,0.4,0.4,0.125,fa_center,fa_top,86,860,0);
+            draw_str_ext_scr(story_str_var,0,local.ytmp,0.4,0.4,0.125,fa_center,fa_top,86,420,0);
             draw_set_color(c_white);
             break;
         }
@@ -2108,6 +2317,135 @@ object_event_add
 			
 			break;
 		}
+        case 9:
+        {
+            draw_bg_tiled_stretch_ext_scr(multi_bg_var,subbgscroll_var,subbgscroll_var*-1,512,0,2,0,global.player_color_var[player_id_var],subbgalpha_var);
+			
+            // Draw Preview
+            draw_set_color(c_black);
+            local.margin = 64*(min(view_wview[view_current]/1280,view_hview[view_current]/720));
+            draw_rectangle(local.margin+(view_wview[view_current]/2),local.margin,view_wview[view_current]-local.margin,view_hview[view_current]-local.margin,false);
+            draw_set_color(c_white);
+            switch global.player_spr_var[player_id_var]
+            {
+                case 0:
+                {
+                    d3d_set_fog(true,global.player_color_var[player_id_var],0,0);
+                    draw_spr_stretch_scr(ghost_spr,global.player_spr_id_var[player_id_var],-320,0,512,1,fa_right,fa_middle);
+                    d3d_set_fog(false,c_black,0,0);
+                    break;
+                }
+                case 1:
+                {
+                    switch global.player_spr_id_var[player_id_var]
+                    {
+                        case 0: { local.spr = player_01_spr; break; }
+                        case 1: { local.spr = player_02_spr; break; }
+                        case 2: { local.spr = player_03_spr; break; }
+                    }
+                    draw_spr_stretch_ext_scr(local.spr,0,-320,0,512,1,fa_right,fa_center,0,global.player_color_var[player_id_var],1);
+                    break;
+                }
+            }
+			
+            draw_str_shadow_scr
+            (
+                "MULTIPLAYER",
+                -20,20,0.95,0.95,0.125,fa_right,fa_top,
+                -4,4,str_bg_color_var,c_yellow,2,0
+            );
+
+            for (local.i=0; local.i<12; local.i+=1)
+            {
+                if local.i != button_state_var
+                {
+                    draw_str_shadow_scr
+                    (
+                        button_str_arr[state_var,local.i],
+                        96,144+(96*local.i)+scroll_var,0.75,0.75,0.125,fa_left,fa_top,
+                        -4,4,str_bg_color_var,c_yellow,2,0
+                    );
+
+                    local.str = 0;
+                    switch local.i
+					{
+						case 0: { local.str = string(global.player_len_var); break; }
+						case 1: { local.str = string(player_id_var+1); break; }
+                        case 2: { local.str = global.player_name_var[player_id_var]; break; }
+                        case 3:
+                        {
+                            switch global.player_spr_var[player_id_var]
+                            {
+                                case 0: { local.str = "SHADOW"; break; }
+                                case 1: { local.str = "SPOOKY BOI"; break; }
+                            }
+                            break;
+                        }
+                        case 4: { local.str = string(global.player_spr_id_var[player_id_var]+1) break; }
+                        case 5: { local.str = string(color_get_red(global.player_color_var[player_id_var])); break; }
+                        case 6: { local.str = string(color_get_green(global.player_color_var[player_id_var])); break; }
+                        case 7: { local.str = string(color_get_blue(global.player_color_var[player_id_var])); break; }
+                        case 8: { local.str = string(color_get_hue(global.player_color_var[player_id_var])); break; }
+                        case 9: { local.str = string(color_get_saturation(global.player_color_var[player_id_var])); break; }
+                        case 10: { local.str = string(color_get_value(global.player_color_var[player_id_var])); break; }
+					}
+					
+					if is_string(local.str)
+					{
+                        draw_str_shadow_scr
+                        (
+                            local.str,
+                            500,144+(96*local.i)+scroll_var,0.75,0.75,0.125,fa_left,fa_top,
+                            -4,4,str_bg_color_var,c_yellow,2,0
+                        );
+					}
+                }
+            }
+
+            local.ytmp = 144+(96*button_state_var)+scroll_var;
+            draw_spr_stretch_scr(select_spr,0,96,local.ytmp,132,0,fa_left,fa_top);
+            draw_str_select_scr
+            (
+                button_str_arr[state_var,button_state_var],
+                96,local.ytmp,str_scale_var,0.75,0.125,fa_left,fa_top,
+                -4,4,str_bg_select_color_var,c_white,2,0,0.75
+            );
+
+            local.str = 0;
+            switch button_state_var
+            {
+                case 0: { local.str = string(global.player_len_var); break; }
+                case 1: { local.str = string(player_id_var+1); break; }
+                case 2: { local.str = global.player_name_var[player_id_var]; break; }
+                case 3:
+                {
+                    switch global.player_spr_var[player_id_var]
+                    {
+                        case 0: { local.str = "SHADOW"; break; }
+                        case 1: { local.str = "SPOOKY BOI"; break; }
+                    }
+                    break;
+                }
+                case 4: { local.str = string(global.player_spr_id_var[player_id_var]+1) break; }
+                case 5: { local.str = string(color_get_red(global.player_color_var[player_id_var])); break; }
+                case 6: { local.str = string(color_get_green(global.player_color_var[player_id_var])); break; }
+                case 7: { local.str = string(color_get_blue(global.player_color_var[player_id_var])); break; }
+                case 8: { local.str = string(color_get_hue(global.player_color_var[player_id_var])); break; }
+                case 9: { local.str = string(color_get_saturation(global.player_color_var[player_id_var])); break; }
+                case 10: { local.str = string(color_get_value(global.player_color_var[player_id_var])); break; }
+            }
+            
+            if is_string(local.str)
+            {
+                draw_str_shadow_scr
+                (
+                    local.str,
+                    500,144+(96*button_state_var)+scroll_var,0.75,0.75,0.125,fa_left,fa_top,
+                    -4,4,str_bg_select_color_var,c_white,2,0
+                );
+            }
+			break;
+        }
 		case 12: // Name Entry
         {
 			draw_bg_tiled_stretch_ext_scr(sub_bg_arr[sub_bg_var],0,subbgscroll_var*-1,512,0,2,0,make_color_rgb(70,0,90),subbgalpha_var);

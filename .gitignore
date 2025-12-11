@@ -10,5 +10,10 @@ screenshot*.png
 *.log
 *.gb1
 *.zip
-# Except this one
+# Except these
 !en_us.ini
+!control_preset_pc.ini
+!control_preset_xbox.ini
+!control_preset_ps.ini
+!control_preset_switch.ini
+!control_preset_snes.ini

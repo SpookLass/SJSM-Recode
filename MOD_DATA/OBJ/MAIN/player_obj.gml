@@ -318,7 +318,6 @@ object_event_add
     if on_var && !possess_var
     {
         event_inherited();
-        local.tempid = max(player_id_var,1);
         // Camera
         if global.input_press_arr[turnaround_input_const,player_id_var]
         {

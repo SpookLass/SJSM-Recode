@@ -4,7 +4,6 @@ Returns the amount to move the yaw
 Run this one first, does not reset the mouse
 */
 // Camera
-local.tempid = max(argument0,1);
 switch global.input_cam_var[argument0]
 {
     case cam_mouse_const: // Mouse
@@ -16,29 +15,29 @@ switch global.input_cam_var[argument0]
     }
     case cam_joy_r_const: // Joystick Right (Xbox)
     {
-        if abs(joystick_upos(local.tempid)) > global.joy_sens_var[argument0]
-        { local.yaw = -joystick_upos(local.tempid)*global.delta_time_var*global.sens_var[argument0]/40; }
+        if abs(joy_u_scr(global.joy_id_var[argument0])) > global.joy_sens_var[argument0]/100
+        { local.yaw = -joy_u_scr(global.joy_id_var[argument0])*global.delta_time_var*global.sens_var[argument0]/40; }
         else { return 0; }
         break;
     }
     case cam_joy_rs_const: // Joystick Right (Switch)
     {
-        if abs(joystick_zpos(local.tempid)) > global.joy_sens_var[argument0]
-        { local.yaw = -joystick_zpos(local.tempid)*global.delta_time_var*global.sens_var[argument0]/40; }
+        if abs(joy_z_scr(global.joy_id_var[argument0])) > global.joy_sens_var[argument0]/100
+        { local.yaw = -joy_z_scr(global.joy_id_var[argument0])*global.delta_time_var*global.sens_var[argument0]/40; }
         else { return 0; }
         break;
     }
     case cam_joy_l_const: // Joystick Left (should be universal)
     {
-        if abs(joystick_xpos(local.tempid)) > global.joy_sens_var[argument0]
-        { local.yaw = -joystick_xpos(local.tempid)*global.delta_time_var*global.sens_var[argument0]/40; }
+        if abs(joy_x_scr(global.joy_id_var[argument0])) > global.joy_sens_var[argument0]/100
+        { local.yaw = -joy_x_scr(global.joy_id_var[argument0])*global.delta_time_var*global.sens_var[argument0]/40; }
         else { return 0; }
         break;
     }
     case cam_dpad_const: // D-Pad
     {
-        if joystick_has_pov(local.tempid)
-        { local.yaw = -lengthdir_y(1,joystick_pov(local.tempid))*global.delta_time_var*global.sens_var[argument0]/40; }
+        if joy_hats_scr(global.joy_id_var[argument0]) > 0
+        { local.yaw = -lengthdir_y(1,joy_hat_scr(global.joy_id_var[argument0]))*global.delta_time_var*global.sens_var[argument0]/40; }
         else { return 0; }
         break;
     }

@@ -22,6 +22,7 @@ draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"L
 screen_refresh();
 // Player
 file_to_spr_scr(vanilla_directory_const+"\TEX\sprites\EX_03_spr.png","ghost_spr",3,false,false,0,0,argument0);
+sprite_set_offset(ghost_spr,sprite_get_width(ghost_spr)/2,sprite_get_height(ghost_spr)/2);
 // Spooky
 file_to_spr_scr(vanilla_directory_const+"\TEX\sprites\spooky_spr.png","spooky_spr",9,false,false,0,0,argument0);
 file_to_spr_scr(vanilla_directory_const+"\TEX\sprites\spooky2_spr.png","spooky_sad_spr",9,false,false,0,0,argument0);
