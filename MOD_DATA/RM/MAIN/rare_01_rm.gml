@@ -4,8 +4,10 @@ Argument 0: Room Variable (same for all rooms)
 // Spawn spots// Name
 room_set_code
 (
-    argument0,"
-    global.rm_name_var = 'Ballroom'
+    argument0,'
+    ini_open(global.lang_var);
+    global.rm_name_var = ini_read_string("ROOM","ball","ROOM_ball");
+    ini_close();
     // Spawn
     global.spawn_len_var = 3;
     global.spawn_arr[0,0] = 192;
@@ -26,17 +28,8 @@ room_set_code
     d3d_start();
     global.draw_3d_var = true;
     // Doors
-    local.entrance = instance_create(global.spawn_arr[0,0]-lengthdir_x(16,global.spawn_arr[0,3]),global.spawn_arr[0,1]-lengthdir_y(16,global.spawn_arr[0,3]),door_entrance_obj);
-    local.entrance.z = global.spawn_arr[0,2];
-    local.entrance.direction = global.spawn_arr[0,3]+180;
-    for (local.i=1; local.i<global.spawn_len_var; local.i+=1;)
-    {
-        local.exitdoor = instance_create(global.spawn_arr[local.i,0]-lengthdir_x(16,global.spawn_arr[local.i,3]),global.spawn_arr[local.i,1]-lengthdir_y(16,global.spawn_arr[local.i,3]),door_obj);
-        local.exitdoor.direction = global.spawn_arr[local.i,3]+180; local.exitdoor.z = global.spawn_arr[local.i,2];
-        local.exittrig = instance_create(global.spawn_arr[local.i,0]-lengthdir_x(8,global.spawn_arr[local.i,3]),global.spawn_arr[local.i,1]-lengthdir_y(8,global.spawn_arr[local.i,3]),door_trig_obj);
-        local.exittrig.z = global.spawn_arr[local.i,2];
-    }
-");
+    spawn_create_scr(true,false);
+');
 // Room settings
 room_set_width(argument0,1280);
 room_set_height(argument0,720);
@@ -86,7 +79,6 @@ room_instance_add(argument0,384,368,floor_manor_obj);
 room_instance_add(argument0,256,304,floor_manor_obj);
 room_instance_add(argument0,256,272,floor_manor_obj);
 room_instance_add(argument0,256,336,floor_manor_obj);
-room_instance_add(argument0,240,160,floor_manor_obj);
 //Ceilings
 room_instance_add(argument0,192,336,ceil_manor_obj);
 room_instance_add(argument0,224,336,ceil_manor_obj);
@@ -123,7 +115,6 @@ room_instance_add(argument0,384,368,ceil_manor_obj);
 room_instance_add(argument0,256,304,ceil_manor_obj);
 room_instance_add(argument0,256,272,ceil_manor_obj);
 room_instance_add(argument0,256,336,ceil_manor_obj);
-room_instance_add(argument0,240,160,ceil_manor_obj);
 // Walls (Horizontal)
 room_instance_add(argument0,192,224,wall_2high_hor_obj);
 room_instance_add(argument0,224,224,wall_2high_hor_obj);
@@ -159,4 +150,5 @@ room_instance_add(argument0,288,384,torch_south_obj);
 room_instance_add(argument0,352,384,torch_south_obj);
 // Props
 room_instance_add(argument0,320,304,chand_obj);
-room_instance_add(argument0,192,368,table_obj);
+room_instance_add(argument0,192,240,table_obj);
+room_instance_add(argument0,192,368,table_note_obj);

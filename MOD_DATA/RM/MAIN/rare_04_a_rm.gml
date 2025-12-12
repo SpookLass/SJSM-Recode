@@ -4,8 +4,10 @@ Argument 0: Room Variable (same for all rooms)
 // Spawn spots// Name
 room_set_code
 (
-    argument0,"
-    global.rm_name_var = 'Rare Room'
+    argument0,'
+    ini_open(global.lang_var);
+    global.rm_name_var = ini_read_string("ROOM","rare","ROOM_rare");
+    ini_close();
     // Spawn
     global.spawn_len_var = 2;
     global.spawn_arr[0,0] = 160;
@@ -23,7 +25,7 @@ room_set_code
     global.draw_3d_var = true;
     // Doors
     spawn_create_scr(true,false);
-");
+');
 // Room settings
 room_set_width(argument0,1280);
 room_set_height(argument0,720);

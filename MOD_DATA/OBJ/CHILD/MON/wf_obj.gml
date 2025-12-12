@@ -156,6 +156,7 @@ object_event_add
     exit_spawn_var = true;
     color_prio_var = 1;
     fog_prio_var = 1;
+    reflect_var= -1;
     // Behavior
     if global.wf_type_var == -1 { local.type = irandom(8); }
     else { local.type = global.wf_type_var; }
@@ -473,8 +474,6 @@ object_event_add
     }
     if do_fog_var
     {
-        with fog_par_obj { instance_destroy(); }
-        with color_par_obj { instance_destroy(); }
         with torch_obj
         {
             if !gold_var

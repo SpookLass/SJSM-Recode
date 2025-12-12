@@ -57,6 +57,7 @@ object_event_add
     shake_type_var = 1;
     shake_var = 1;
     anim_spd_var = 1;
+    reflect_var = -1;
     // Teleport
     tp_type_var = 1;
     tp_off_var = 300;

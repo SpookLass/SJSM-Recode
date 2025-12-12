@@ -149,6 +149,7 @@ object_event_add
     fov_var = 40;
     eff_old_var = true;
     eff_var = true;
+    reflect_var= -1;
     // Spawn
     spawn_dist_var = 200;
     // Funny

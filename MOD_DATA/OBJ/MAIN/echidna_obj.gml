@@ -411,7 +411,7 @@ object_event_add
         { fmod_inst_stop_scr(snd_var); }
         local.snd = irandom(snd_len_var-1);
         snd_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0]);
-        fmod_inst_set_pitch_scr(snd_var,random_range(0.9,1.1));
+        fmod_inst_set_pitch_scr(snd_var,random_range(0.95,1.05));
         sub_var[0] = snd_arr[local.snd,1];
         sub_var[1] = snd_arr[local.snd,2];
     }
