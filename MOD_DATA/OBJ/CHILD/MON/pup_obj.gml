@@ -155,6 +155,7 @@ object_event_add
             tp_dist_max_var = 16;
             ascend_alarm_var = 60;
             descend_alarm_var = 30;
+            descend_start_alarm_var = 30;
             break;
         }
         case 5: // HD Hellgate

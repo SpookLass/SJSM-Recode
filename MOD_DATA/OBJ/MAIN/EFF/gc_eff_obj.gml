@@ -46,6 +46,7 @@ object_event_add
 (argument0,ev_draw,0,'
     if global.cam_type_var[view_current] == cam_alive_const
     {
+        d3d_set_fog(false,c_black,0,0);
         d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
         d3d_set_hidden(false);
         if old_var

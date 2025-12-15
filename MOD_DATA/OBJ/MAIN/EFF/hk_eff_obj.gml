@@ -42,6 +42,7 @@ object_event_add
             if view_wview[view_current] >= view_hview[view_current]
             { local.scale = view_hview[view_current]/720; }
             else { local.scale = view_wview[view_current]/1280; }
+            d3d_set_fog(false,c_black,0,0);
             d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
             d3d_set_hidden(false);
             if old_var { draw_set_color(c_red); draw_rectangle(0,0,view_wview[view_current],view_hview[view_current],false); draw_set_color(c_white); }

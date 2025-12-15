@@ -27,6 +27,7 @@ object_event_add
     else { local.scale = view_wview[view_current]/1280; }
     local.xscale = local.scale*image_xscale;
     local.yscale = local.scale*image_yscale;
+    d3d_set_fog(false,c_black,0,0);
     d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
     d3d_set_hidden(false);
     local.ytmp = y+(global.cam_pitch_var[view_current]*4);

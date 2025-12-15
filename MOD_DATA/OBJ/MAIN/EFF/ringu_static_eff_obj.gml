@@ -60,6 +60,7 @@ object_event_add
         if view_wview[view_current] >= view_hview[view_current]
         { local.scale = view_hview[view_current]/720; }
         else { local.scale = view_wview[view_current]/1280; }
+        d3d_set_fog(false,c_black,0,0);
         d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
         d3d_set_hidden(false);
         draw_set_color(color_02_var); draw_set_alpha(image_alpha);
@@ -67,7 +68,7 @@ object_event_add
         draw_set_alpha(random(alpha_03_var));
         draw_rectangle(0,0,view_wview[view_current],view_hview[view_current],false);
         draw_set_color(c_white); draw_set_alpha(1);
-        draw_sprite_tiled_ext(spr_var,spr_id_var,0,y,local.scale,local.scale,image_blend,image_alpha);
+        draw_sprite_tiled_ext(spr_var,spr_id_var,0,y,local.scale,local.scale,image_blend,alpha_02_var);
         d3d_set_hidden(true);
     }
 ');

@@ -50,12 +50,13 @@ object_event_add
 ");
 // Draw Event
 object_event_add
-(argument0,ev_draw,0,"
+(argument0,ev_draw,0,'
     if view_current == cam_id_var || cam_id_var == -1
     {
+        d3d_set_fog(false,c_black,0,0);
         d3d_set_projection_ortho(0,0,1,1,0);
         d3d_set_hidden(false); draw_set_color(image_blend); draw_set_alpha(image_alpha);
         draw_rectangle(0,0,1,1,false);
         draw_set_color(c_white); draw_set_alpha(1); d3d_set_hidden(true);
     }
-");
+');

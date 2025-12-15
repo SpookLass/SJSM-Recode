@@ -25,9 +25,6 @@ object_event_add
     // fmod_inst_set_mute_scr(mus_snd_var,true);
     alarm_len_var = 1;
     set_alarm_scr(0,60);
-    // Scale
-    cam_id_var = 0;
-    event_user(1);
     // Menu
     image_blend = make_color_rgb(59,59,119)
     button_len_var = 4;
@@ -144,6 +141,7 @@ object_event_add
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,'
+    d3d_set_fog(false,c_black,0,0);
     d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
     d3d_set_hidden(false);
     // Color
@@ -151,37 +149,40 @@ object_event_add
     draw_set_color(c_white-image_blend);
     draw_rectangle(0,0,view_wview[view_current],view_hview[view_current],false);
     draw_set_blend_mode(bm_normal);
+    // Text
     if view_current == cam_id_var
     {
+        // Title
+        draw_str_shadow_scr
+        (
+            str_var,
+            0,0,1,1,0.125,fa_center,fa_top,
+            -4,4,str_bg_select_color_var,c_white,2,0
+        );
         // Buttons
-        draw_set_valign(fa_bottom);
         for (local.i=0; local.i<button_len_var; local.i+=1)
         {
             if local.i != button_state_var
             {
-                local.ytmp = bottom_var+(96*(local.i+1-button_len_var)*scale_var)
-                draw_set_color(str_bg_color_var);
-                draw_text_transformed(left_var-shadow_off_02_var,local.ytmp+shadow_off_02_var,button_arr[local.i],str_scale_var,str_scale_var,0);
-                draw_text_transformed(left_var-shadow_off_01_var,local.ytmp+shadow_off_01_var,button_arr[local.i],str_scale_var,str_scale_var,0);
-                draw_set_color(c_yellow);
-                draw_text_transformed(left_var,local.ytmp,button_arr[local.i],str_scale_var,str_scale_var,0);
+                local.ytmp = -96+(96*(local.i+1-button_len_var))
+                draw_str_shadow_scr
+                (
+                    button_arr[state_var,local.i],
+                    96,336+(96*local.i),0.75,0.75,0.125,fa_left,fa_bottom,
+                    -4,4,local.ytmp,c_yellow,2,0
+                );
             }
         }
         // Selected Button
         local.xtmp = left_var+(string_width(button_arr[button_state_var])*0.375*scale_var);
-        local.ytmp = bottom_var+(96*(button_state_var+1-button_len_var)*scale_var);
-        draw_set_halign(fa_center); draw_set_color(str_bg_select_color_var);
-        draw_text_transformed(local.xtmp-shadow_off_02_var,local.ytmp+shadow_off_02_var,button_arr[button_state_var],str_stretch_scale_var,str_scale_var,0);
-        draw_text_transformed(local.xtmp-shadow_off_01_var,local.ytmp+shadow_off_01_var,button_arr[button_state_var],str_stretch_scale_var,str_scale_var,0);
-        draw_set_color(c_white);
-        draw_text_transformed(local.xtmp,local.ytmp,button_arr[button_state_var],str_stretch_scale_var,str_scale_var,0);
-        // Title
-        draw_set_valign(fa_top); draw_set_color(str_bg_select_color_var);
-        draw_text_transformed(center_var-shadow_off_02_var,top_var+shadow_off_02_var,str_var,scale_var,scale_var,0);
-        draw_text_transformed(center_var-shadow_off_01_var,top_var+shadow_off_01_var,str_var,scale_var,scale_var,0);
-        draw_set_color(c_white);
-        draw_text_transformed(center_var,top_var,str_var,scale_var,scale_var,0);
-        draw_set_halign(fa_left);
+        local.ytmp = -96+(96*(button_state_var+1-button_len_var)*scale_var);
+        draw_spr_stretch_scr(select_spr,0,96,local.ytmp,132,0,fa_left,fa_top);
+        draw_str_select_scr
+        (
+            button_arr[state_var,button_state_var],
+            96,local.ytmp,str_scale_var,0.75,0.125,fa_left,fa_bottom,
+            -4,4,str_bg_select_color_var,c_white,2,0,0.75
+        );
         // Hidden
         d3d_set_hidden(true);
     }

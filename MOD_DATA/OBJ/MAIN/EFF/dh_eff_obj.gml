@@ -49,6 +49,7 @@ object_event_add
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,'
+    d3d_set_fog(false,c_black,0,0);
     d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
     d3d_set_hidden(false);
     part_system_drawit(film_part_sys);

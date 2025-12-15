@@ -154,6 +154,7 @@ object_event_add
         if lock_var { local.txt = txt_lock_var; }
         else {local.txt = txt_var; }
 
+        d3d_set_fog(false,c_black,0,0);
         d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
         d3d_set_hidden(false);
 

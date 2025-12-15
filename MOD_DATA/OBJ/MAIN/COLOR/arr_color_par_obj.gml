@@ -58,6 +58,7 @@ object_event_add
 (argument0,ev_draw,0,'
     if global.color_var == 2 // HD style
     {
+        d3d_set_fog(false,c_black,0,0);
         d3d_set_projection_ortho(0,0,1,1,0);
         d3d_set_hidden(false);
         // draw_set_blend_mode_ext(bm_dest_color,bm_src_color);

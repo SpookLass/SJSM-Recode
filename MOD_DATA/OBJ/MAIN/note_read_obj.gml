@@ -17,6 +17,7 @@ object_event_add
 (argument0,ev_draw,0,'
     if view_current == cam_id_var
     {
+        d3d_set_fog(false,c_black,0,0);
         d3d_set_projection_ortho(0,0,view_wview[par_var.cam_id_var],view_hview[par_var.cam_id_var],0);
         d3d_set_hidden(false);
         local.scale = view_hview[par_var.cam_id_var]/720;
