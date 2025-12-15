@@ -1,5 +1,5 @@
 // Builtin Variables
-object_set_depth(argument0,99);
+object_set_depth(argument0,-102);
 object_set_mask(argument0,noone);
 object_set_parent(argument0,par_obj);
 object_set_persistent(argument0,false);
@@ -955,6 +955,7 @@ object_event_add
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,'
+    event_inherited();
     // Control Listen
     if control_listen_var
     {
@@ -995,8 +996,8 @@ object_event_add
         time_var = (time_var+global.true_delta_time_var) mod 80;
         str_scale_var = 0.8+(cos(2*time_var*pi/80)*0.2);
         // Scroll
-        if global.input_press_arr[up_input_const,0] { button_state_var -= 1; }
-        if global.input_press_arr[down_input_const,0] { button_state_var += 1; }
+        if global.input_press_arr[up_input_const,0] { button_state_var -= 1; fmod_snd_play_scr(select_snd); }
+        if global.input_press_arr[down_input_const,0] { button_state_var += 1; fmod_snd_play_scr(select_snd); }
         button_state_var = mod_scr(button_state_var-state_start_var[state_var],state_len_var[state_var])+state_start_var[state_var];
         // Lerp
         if do_scroll_focal_var
@@ -1015,6 +1016,7 @@ object_event_add
             // Confirm
             if global.input_press_arr[confirm_input_const,0]
             {
+                local.snd = true;
                 switch button_arr[button_state_var,3]
                 {
                     case -4: // Change State
@@ -1054,6 +1056,14 @@ object_event_add
                                     {
                                         state_var = 2;
                                         event_user(0); 
+                                    }
+                                }
+                                if instance_exists(pause_menu_obj)
+                                {
+                                    with pause_menu_obj
+                                    {
+                                        state_var = 0;
+                                        delay_var = true;
                                     }
                                 }
                                 instance_destroy();
@@ -1161,11 +1171,14 @@ object_event_add
                         global.input_arr[confirm_input_const,0] = 0;
                         break;
                     }
+                    default: { local.snd = false; break; }
                 }
+                if local.snd { fmod_snd_play_scr(confirm_snd); }
             }
             // Left or Right
             if global.input_press_arr[left_input_const,0] || global.input_press_arr[right_input_const,0]
             {
+                local.snd = true;
                 local.add = (global.input_press_arr[right_input_const,0] > 0)-(global.input_press_arr[left_input_const,0] > 0);
                 switch button_arr[button_state_var,3]
                 {
@@ -1208,7 +1221,9 @@ object_event_add
                         set_var = true;
                         break;
                     }
+                    default: { local.snd = false; }
                 }
+                if local.snd { fmod_snd_play_scr(select_snd); }
             }
         }
         else // Control State
@@ -1229,6 +1244,7 @@ object_event_add
             // Confirm
             if global.input_press_arr[confirm_input_const,0]
             {
+                local.snd = true;
                 switch control_button_arr[button_state_var,10]
                 {
                     case -6: // Preset
@@ -1362,11 +1378,14 @@ object_event_add
                         control_listen_var = true;
                         break;
                     }
+                    default: { local.snd = false; }
                 }
+                if local.snd { fmod_snd_play_scr(confirm_snd); }
             }
             // Left or Right
             if global.input_press_arr[left_input_const,0] || global.input_press_arr[right_input_const,0]
             {
+                local.snd = true;
                 local.add = (global.input_press_arr[right_input_const,0] > 0)-(global.input_press_arr[left_input_const,0] > 0);
                 switch control_button_arr[button_state_var,10]
                 {
@@ -1419,7 +1438,9 @@ object_event_add
                         set_var = true;
                         break;
                     }
+                    default: { local.snd = false; }
                 }
+                if local.snd { fmod_snd_play_scr(select_snd); }
             }
         }
     }
@@ -1536,6 +1557,10 @@ object_event_add
 // Draw
 object_event_add
 (argument0,ev_draw,0,'
+    d3d_set_fog(false,c_black,0,0);
+    d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
+    d3d_set_hidden(false);
+
     draw_bg_tiled_stretch_scr(settings_bg,bg_scroll_var,0,512,0,2);
     
     draw_str_shadow_scr

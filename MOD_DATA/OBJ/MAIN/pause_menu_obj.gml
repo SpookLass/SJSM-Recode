@@ -38,14 +38,32 @@ object_event_add
     button_arr[2] = "EXIT TO MENU"
     button_arr[3] = "QUIT"
 ');
-// Step Event
+// Step Begin
+object_event_add
+(argument0,ev_step,ev_step_begin,'
+    update_alarm_scr(global.true_delta_time_var);
+');
+// Step Normal
+object_event_add
+(argument0,ev_step,ev_step_normal,'
+    event_inherited();
+    if alarm_arr[0,0] > 0
+    {
+        fmod_inst_set_vol_scr(mus_snd_var,1-(alarm_arr[0,0]/alarm_arr[0,1]));
+    }
+    time_var = (time_var+global.true_delta_time_var) mod 80;
+    str_scale_var = 0.8+(cos(2*time_var*pi/80)*0.2);
+');
+// Step End
 object_event_add
 (argument0,ev_step,ev_step_end,'
+    event_inherited();
     if delay_var { delay_var = false; }
-    else
+    else if !state_var
     {
-        if global.input_press_arr[up_input_const,player_id_var] { button_state_var -= 1; }
-        if global.input_press_arr[down_input_const,player_id_var] { button_state_var += 1; }
+        if global.input_press_arr[up_input_const,player_id_var] { button_state_var -= 1; fmod_snd_play_scr(select_snd); }
+        if global.input_press_arr[down_input_const,player_id_var] { button_state_var += 1; fmod_snd_play_scr(select_snd); }
+        button_state_var = mod_scr(button_state_var,button_len_var);
         if global.input_press_arr[back_input_const,player_id_var]
         {
             instance_destroy();
@@ -63,7 +81,10 @@ object_event_add
                 }
                 case 1: // Settings
                 {
-
+                    instance_create(0,0,set_menu_obj);
+                    fmod_snd_play_scr(confirm_snd);
+                    state_var = 1;
+                    break;
                 }
                 case 2: // Exit to Menu
                 {
@@ -84,14 +105,6 @@ object_event_add
             }
         }
     }
-    if alarm_arr[0,0] > 0
-    {
-        fmod_inst_set_vol_scr(mus_snd_var,1-(alarm_arr[0,0]/alarm_arr[0,1]));
-    }
-    time_var = (time_var+global.true_delta_time_var) mod 80;
-    str_stretch_scale_var = str_base_scale_var+(cos(2*time_var*pi/80)*0.2*scale_var);
-    button_state_var = mod_scr(button_state_var,button_len_var);
-    update_alarm_scr(global.true_delta_time_var);
 ');
 // Room End Event
 object_event_add
@@ -116,23 +129,6 @@ object_event_add
     fmod_inst_set_pause_scr(mus_control_obj.snd_var,false);
     global.pause_var = false;
 ');
-// Scale Event
-object_event_add
-(argument0,ev_other,ev_user1,'
-    scale_min_var = 0.125;
-    if view_wview[cam_id_var] >= view_hview[cam_id_var]
-    { scale_var = view_hview[cam_id_var]/720; }
-    else { scale_var = view_wview[cam_id_var]/1280; }
-    scale_var = max(scale_var,scale_min_var);
-    str_scale_var = max(scale_min_var,scale_var*0.75);
-    str_base_scale_var = max(scale_min_var,scale_var*0.8);
-    left_var = 96*scale_var;
-    bottom_var = view_hview[cam_id_var]-(96*scale_var);
-    top_var = 120*scale_var;
-    center_var = view_wview[cam_id_var]/2;
-    shadow_off_01_var = 2*scale_var;
-    shadow_off_02_var = 4*scale_var;
-');
 // Alarm 0 Event
 object_event_add
 (argument0,ev_alarm,0,'
@@ -156,7 +152,7 @@ object_event_add
         draw_str_shadow_scr
         (
             str_var,
-            0,0,1,1,0.125,fa_center,fa_top,
+            0,120,1,1,0.125,fa_center,fa_top,
             -4,4,str_bg_select_color_var,c_white,2,0
         );
         // Buttons
@@ -167,19 +163,19 @@ object_event_add
                 local.ytmp = -96+(96*(local.i+1-button_len_var))
                 draw_str_shadow_scr
                 (
-                    button_arr[state_var,local.i],
-                    96,336+(96*local.i),0.75,0.75,0.125,fa_left,fa_bottom,
-                    -4,4,local.ytmp,c_yellow,2,0
+                    button_arr[local.i],
+                    96,local.ytmp,0.75,0.75,0.125,fa_left,fa_bottom,
+                    -4,4,str_bg_color_var,c_yellow,2,0
                 );
             }
         }
         // Selected Button
-        local.xtmp = left_var+(string_width(button_arr[button_state_var])*0.375*scale_var);
-        local.ytmp = -96+(96*(button_state_var+1-button_len_var)*scale_var);
-        draw_spr_stretch_scr(select_spr,0,96,local.ytmp,132,0,fa_left,fa_top);
+        local.ytmp = -96+(96*(button_state_var+1-button_len_var));
+        local.ytmp2 = local.ytmp-(string_height(button_arr[button_state_var])*0.75);
+        draw_spr_stretch_scr(select_spr,0,96,local.ytmp2,132,0,fa_left,fa_bottom);
         draw_str_select_scr
         (
-            button_arr[state_var,button_state_var],
+            button_arr[button_state_var],
             96,local.ytmp,str_scale_var,0.75,0.125,fa_left,fa_bottom,
             -4,4,str_bg_select_color_var,c_white,2,0,0.75
         );

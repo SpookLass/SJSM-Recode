@@ -33,37 +33,38 @@ execute_file(main_directory_const+"\SCR\LOAD\js_load_scr.gml");
 // Temporary Specimen Spawn List
 global.mon_list = ds_list_create();
 ds_list_clear(global.mon_list);
-ds_list_add(global.mon_list,bab_obj);
-ds_list_add(global.mon_list,bekka_obj);
+ds_list_add(global.mon_list,gel_obj); // Story
 ds_list_add(global.mon_list,bug_obj);
-// ds_list_add(global.mon_list,brain_chase_obj);
-ds_list_add(global.mon_list,dl_obj);
-ds_list_add(global.mon_list,fd_obj);
+ds_list_add(global.mon_list,ringu_obj);
+ds_list_add(global.mon_list,bab_obj);
+ds_list_add(global.mon_list,pup_obj);
 ds_list_add(global.mon_list,flesh_obj);
+ds_list_add(global.mon_list,dl_obj);
 ds_list_add(global.mon_list,eel_obj);
-ds_list_add(global.mon_list,gc_obj);
-ds_list_add(global.mon_list,gel_obj);
-ds_list_add(global.mon_list,hk_obj);
+ds_list_add(global.mon_list,para_obj);
+ds_list_add(global.mon_list,fd_obj);
 ds_list_add(global.mon_list,killer_obj);
+ds_list_add(global.mon_list,stem_obj); // Karamari (OG Endless)
+ds_list_add(global.mon_list,patient_obj);
+ds_list_add(global.mon_list,gc_obj);
+ds_list_add(global.mon_list,bekka_obj);
+ds_list_add(global.mon_list,real_ringu_obj); // Endless
+ds_list_add(global.mon_list,tiri_obj);
 ds_list_add(global.mon_list,lisa_obj);
 ds_list_add(global.mon_list,otto_obj);
-ds_list_add(global.mon_list,para_obj);
-ds_list_add(global.mon_list,patient_obj);
-ds_list_add(global.mon_list,pup_obj);
-ds_list_add(global.mon_list,real_ringu_obj);
-ds_list_add(global.mon_list,ringu_obj);
 ds_list_add(global.mon_list,spooper_obj);
-ds_list_add(global.mon_list,stem_obj);
-ds_list_add(global.mon_list,tiri_obj);
 ds_list_add(global.mon_list,wf_obj);
-if file_exists(working_directory+"\Karamari_Hospital\KH.exe")
+// ds_list_add(global.mon_list,brain_chase_obj);
+if file_exists(working_directory+"\Karamari_Hospital\KH.exe") // Karamari
 {
+    ds_list_add(global.mon_list,sg_obj);
     ds_list_add(global.mon_list,bodybag_obj);
 }
-if file_exists(working_directory+"\The_Doll_House\SDH.exe")
+if file_exists(working_directory+"\The_Doll_House\SDH.exe") // Dollhouse
 {
-    ds_list_add(global.mon_list,clown_obj);
     ds_list_add(global.mon_list,wc_obj);
+    ds_list_add(global.mon_list,clown_obj);
+    ds_list_add(global.mon_list,hk_obj);
 }
 global.mon_spawn_list = ds_list_create();
 ds_list_clear(global.mon_spawn_list);

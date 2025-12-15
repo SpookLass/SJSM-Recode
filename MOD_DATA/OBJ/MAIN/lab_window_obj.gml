@@ -8,15 +8,15 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create event
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
     event_inherited();
     h_var = 64;
     store_tex_02_var = lab_window_bg_tex;
     tex_02_var = store_tex_02_var;
-");
+');
 // Draw Event
 object_event_add
-(argument0,ev_draw,0,"
+(argument0,ev_draw,0,'
     if tex_var == -1 { local.tex = wall_bg_tex; } 
     else { local.tex = tex_var; }
     local.tex_w = tex_w_var*w_var/32;
@@ -35,4 +35,4 @@ object_event_add
     }
     d3d_transform_set_identity();
     draw_set_color(c_white); draw_set_alpha(1);
-");
+');
