@@ -111,6 +111,20 @@ object_event_add
                             }
                         }
                     }
+                    with interact_trig_obj
+                    {
+                        if weapon_var && on_var
+                        {
+                            if p3dc_check_rot_scr(coll_var[0],x,y,z,other.coll_var[0],local.xtmp+local.xvel,local.ytmp+local.yvel,local.ztmp+local.zvel,0,0,0,0,local.ydir,local.zdir)
+                            {
+                                hurt_weapon_var = other.id;
+                                hurt_target_var = local.player;
+                                hurt_power_var = other.power_var;
+                                hurt_type_var = other.type_var;
+                                event_user(4);
+                            }
+                        }
+                    }
                 }
                 break;
             }

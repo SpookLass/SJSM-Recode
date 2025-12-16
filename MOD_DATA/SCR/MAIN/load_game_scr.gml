@@ -41,6 +41,12 @@ global.dupe_var = ini_read_real("SETTING","dupe",dupe_canon_const);
 global.mon_chance_var = ini_read_real("SETTING","mon_chance",mon_chance_const);
 global.mon_chance_mult_var = ini_read_real("SETTING","mon_chance_mult",mon_chance_mult_const);
 global.js_chance_var = ini_read_real("SETTING","js_chance",js_chance_const);
+global.ele_type_var = ini_read_real("SETTING","ele_type",ele_type_const);
+global.ele_end_01_var = ini_read_real("SETTING","ele_end_01",ele_end_01_const);
+global.ele_end_02_var = ini_read_real("SETTING","ele_end_02",ele_end_02_const);
+global.ele_rate_01_var = ini_read_real("SETTING","ele_rate_01",ele_rate_01_const);
+global.ele_rate_02_var = ini_read_real("SETTING","ele_rate_02",ele_rate_02_const);
+global.ele_rate_03_var = ini_read_real("SETTING","ele_rate_03",ele_rate_03_const);
 // Behavior stuff
 global.default_type_var = ini_read_real("BEHAVIOR","type",0);
 global.player_type_var = ini_read_real("BEHAVIOR","player_type",global.default_type_var);
@@ -92,4 +98,4 @@ for (local.i=0; local.i<ds_list_size(global.mon_curr_list); local.i+=1;)
 tex_scr(global.tex_var);
 if argument0 == "1987" { instance_create(0,0,otter8_js_obj); }
 
-room_goto_scr(local.rm);
+rm_goto_scr(local.rm);

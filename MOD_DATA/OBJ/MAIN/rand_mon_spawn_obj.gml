@@ -40,6 +40,7 @@ object_event_add // ev_create,0
                 while local.size > 0 && local.mons < get_mult_scr()
                 {
                     local.mon = instance_create(0,0,ds_list_find_value(global.mon_spawn_list,irandom(local.size-1)));
+                    ds_list_add(global.mon_curr_list,local.mon);
                     if global.dupe_var == dupe_never_const || local.mon.dupe_var == dupe_never_const
                     || (global.dupe_var == dupe_canon_const && local.mon.dupe_var != dupe_canon_const)
                     {
@@ -89,7 +90,7 @@ object_event_add // ev_create,0
 ');
 // Try summon
 object_event_add
-(argument0,ev_other,ev_user0,"
+(argument0,ev_other,ev_user0,'
     ds_list_clear(global.mon_spawn_list);
     ds_list_copy(global.mon_spawn_list,global.mon_list);
     for (local.i=0; local.i<ds_list_size(global.mon_curr_list); local.i+=1;)
@@ -110,4 +111,4 @@ object_event_add
         global.count_var = get_count_scr();
         global.mon_fail_var = 0;
     }
-");
+');

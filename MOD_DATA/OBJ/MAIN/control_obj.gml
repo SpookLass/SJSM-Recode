@@ -124,13 +124,13 @@ object_event_add
             case 2:
             {
                 if room_exists(room+1)
-                { room_goto_scr(room+1); }
+                { rm_goto_scr(room+1); }
                 break;
             }
             case 3:
             {
                 if room != 1 && room_exists(room-1)
-                { room_goto_scr(room-1); }
+                { rm_goto_scr(room-1); }
                 break;
             }
             case 4:
@@ -141,7 +141,7 @@ object_event_add
                     execute_string
                     ("
                         if room_exists("+local.rm+") && "+local.rm+" != 0
-                        { room_goto_scr("+local.rm+"); }
+                        { rm_goto_scr("+local.rm+"); }
                     ");
                 }
                 break;

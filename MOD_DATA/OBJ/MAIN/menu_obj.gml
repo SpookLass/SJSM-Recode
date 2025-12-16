@@ -114,7 +114,7 @@ object_event_add
             }
             case 1:
             {
-                title_spr_var = execute_file(main_directory_const+"\SPR\UI\menu_title_old_01_spr.gml",main_directory_const+"\SPR\UI\menu_title_old_spr.png");
+                title_spr_var = execute_file(main_directory_const+"\SPR\UI\menu_title_old_01_spr.gml",main_directory_const+"\SPR\UI\menu_title_old_01_spr.png");
                 title_old_var = true;
                 break;
             }
@@ -507,7 +507,7 @@ object_event_add
     custom_button_arr[custom_button_len_var,7] = true; // Behavior / Difficulty
     custom_button_arr[custom_button_len_var,9] = "mon_chance_mult_const"; // Default
     custom_button_len_var += 1;
-        // Chance Mult
+        // Jumpscare Chance
     custom_button_arr[custom_button_len_var,1] = ini_read_string("MENU","js_chance","MENU_js_chance");
     custom_button_arr[custom_button_len_var,2] = "Temp"; // Description
     custom_button_arr[custom_button_len_var,3] = 1; // Type (Number)
@@ -515,6 +515,72 @@ object_event_add
     custom_button_arr[custom_button_len_var,6] = "js_chance"; // Global variable to modify
     custom_button_arr[custom_button_len_var,7] = false; // Behavior / Difficulty
     custom_button_arr[custom_button_len_var,9] = "js_chance_const"; // Default
+    custom_button_len_var += 1;
+        // Elevator Type
+    custom_button_arr[custom_button_len_var,1] = ini_read_string("MENU","ele_type","MENU_ele_type");
+    custom_button_arr[custom_button_len_var,2] = "Temp"; // Description
+    custom_button_arr[custom_button_len_var,3] = 0; // Type (Enum / Boolean)
+    custom_button_arr[custom_button_len_var,4] = true; // Wrap Value
+    custom_button_arr[custom_button_len_var,5] = 2; // Max Value (min is always -1)
+    custom_button_arr[custom_button_len_var,6] = "ele_type"; // Global variable to modify
+    custom_button_arr[custom_button_len_var,7] = 2; // Behavior / Difficulty / Mode
+    custom_button_arr[custom_button_len_var,8] = "1"
+    custom_button_arr[custom_button_len_var,9] = "2"
+    custom_button_arr[custom_button_len_var,10] = "3"
+    custom_button_arr[custom_button_len_var,11] = "ele_type_const"; // Default
+    custom_button_arr[custom_button_len_var,12] = "1"; // Recode Story
+    custom_button_arr[custom_button_len_var,13] = "2"; // OG Story
+    custom_button_arr[custom_button_len_var,14] = "2"; // HD Story
+    custom_button_arr[custom_button_len_var,15] = "1"; // Recode Endless
+    custom_button_arr[custom_button_len_var,16] = "2"; // OG Endless
+    custom_button_arr[custom_button_len_var,17] = "0"; // HD Endless
+    custom_button_arr[custom_button_len_var,18] = "1"; // Sandbox
+    custom_button_len_var += 1;
+        // Elevator End 1
+    custom_button_arr[custom_button_len_var,1] = ini_read_string("MENU","ele_end","MENU_ele_end")+" 2";
+    custom_button_arr[custom_button_len_var,2] = "Temp"; // Description
+    custom_button_arr[custom_button_len_var,3] = 1; // Type (Number)
+    custom_button_arr[custom_button_len_var,4] = false; // Wrap Value
+    custom_button_arr[custom_button_len_var,6] = "ele_end_01"; // Global variable to modify
+    custom_button_arr[custom_button_len_var,7] = 2; // Behavior / Difficulty / Mode
+    custom_button_arr[custom_button_len_var,9] = "ele_end_01_const"; // Default
+    custom_button_len_var += 1;
+        // Elevator End 2
+    custom_button_arr[custom_button_len_var,1] = ini_read_string("MENU","ele_end","MENU_ele_end")+" 2";
+    custom_button_arr[custom_button_len_var,2] = "Temp"; // Description
+    custom_button_arr[custom_button_len_var,3] = 1; // Type (Number)
+    custom_button_arr[custom_button_len_var,4] = false; // Wrap Value
+    custom_button_arr[custom_button_len_var,6] = "ele_end_02"; // Global variable to modify
+    custom_button_arr[custom_button_len_var,7] = 2; // Behavior / Difficulty / Mode
+    custom_button_arr[custom_button_len_var,9] = "ele_end_02_const"; // Default
+    custom_button_len_var += 1;
+        // Elevator Rate 1
+    custom_button_arr[custom_button_len_var,1] = ini_read_string("MENU","ele_rate","MENU_ele_rate")+" 1";
+    custom_button_arr[custom_button_len_var,2] = "Temp"; // Description
+    custom_button_arr[custom_button_len_var,3] = 1; // Type (Number)
+    custom_button_arr[custom_button_len_var,4] = false; // Wrap Value
+    custom_button_arr[custom_button_len_var,6] = "ele_rate_01"; // Global variable to modify
+    custom_button_arr[custom_button_len_var,7] = 2; // Behavior / Difficulty / Mode
+    custom_button_arr[custom_button_len_var,9] = "ele_rate_01_const"; // Default
+    custom_button_arr[custom_button_len_var,15] = "100"; // HD Endless
+    custom_button_len_var += 1;
+        // Elevator Rate 2
+    custom_button_arr[custom_button_len_var,1] = ini_read_string("MENU","ele_rate","MENU_ele_rate")+" 2";
+    custom_button_arr[custom_button_len_var,2] = "Temp"; // Description
+    custom_button_arr[custom_button_len_var,3] = 1; // Type (Number)
+    custom_button_arr[custom_button_len_var,4] = false; // Wrap Value
+    custom_button_arr[custom_button_len_var,6] = "ele_rate_02"; // Global variable to modify
+    custom_button_arr[custom_button_len_var,7] = 2; // Behavior / Difficulty / Mode
+    custom_button_arr[custom_button_len_var,9] = "ele_rate_02_const"; // Default
+    custom_button_len_var += 1;
+        // Elevator Rate 3
+    custom_button_arr[custom_button_len_var,1] = ini_read_string("MENU","ele_rate","MENU_ele_rate")+" 3";
+    custom_button_arr[custom_button_len_var,2] = "Temp"; // Description
+    custom_button_arr[custom_button_len_var,3] = 1; // Type (Number)
+    custom_button_arr[custom_button_len_var,4] = false; // Wrap Value
+    custom_button_arr[custom_button_len_var,6] = "ele_rate_03"; // Global variable to modify
+    custom_button_arr[custom_button_len_var,7] = 2; // Behavior / Difficulty / Mode
+    custom_button_arr[custom_button_len_var,9] = "ele_rate_03_const"; // Default
     custom_button_len_var += 1;
         // Behavior
     custom_button_arr[custom_button_len_var,1] = ini_read_string("MENU","type","MENU_type");
@@ -1635,18 +1701,30 @@ object_event_add
                         // Default
                         if custom_button_arr[local.i,0] == -1 || !global.custom_var
                         {
-                            // Starts at 9 plus the max value to avoid array conflicts
-                            if custom_button_arr[local.i,7] // Difficulty based
+                            switch custom_button_arr[local.i,7]
                             {
-
-                                // Starts at 12 because -3 is default, -2 is OG, and -1 is HD
-                                local.index = 12+global.diff_var+custom_button_arr[local.i,5];
-                                if !is_string(custom_button_arr[local.i,local.index]) { local.index = 9+custom_button_arr[local.i,5]; }
-                            }
-                            else // Type based
-                            {
-                                local.index = 9+global.main_type_var+custom_button_arr[local.i,5];
-                                if !is_string(custom_button_arr[local.i,local.index]) { local.index = 9+custom_button_arr[local.i,5]; }
+                                case 0: // Type based
+                                {
+                                    // Starts at 9 plus the max value to avoid array conflicts
+                                    local.index = 9+global.main_type_var+custom_button_arr[local.i,5];
+                                    if !is_string(custom_button_arr[local.i,local.index]) { local.index = 9+custom_button_arr[local.i,5]; }
+                                    break;
+                                }
+                                case 1: // Difficulty based
+                                {
+                                    // Starts at 12 because -3 is default, -2 is OG, and -1 is HD
+                                    local.index = 12+global.diff_var+custom_button_arr[local.i,5];
+                                    if !is_string(custom_button_arr[local.i,local.index]) { local.index = 9+custom_button_arr[local.i,5]; }
+                                    break;
+                                }
+                                case 2:
+                                {
+                                    if global.mode_var < 2
+                                    { local.index = 10+global.main_type_var+(global.mode_var*3)+custom_button_arr[local.i,5]; }
+                                    else { local.index = 14+global.mode_var+custom_button_arr[local.i,5]; }
+                                    if !is_string(custom_button_arr[local.i,local.index]) { local.index = 9+custom_button_arr[local.i,5]; }
+                                    break;
+                                }
                             }
                             local.value = custom_button_arr[local.i,local.index]
                             execute_string("global."+custom_button_arr[local.i,6]+"_var = "+local.value);

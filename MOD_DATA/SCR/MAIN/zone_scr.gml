@@ -29,4 +29,4 @@ else { local.zone = argument0; }
 zone_from_num_scr(local.zone);
 local.rm = ds_list_find_value(global.rm_list_var,0);
 ds_list_delete(global.rm_list_var,0);
-room_goto_scr(local.rm);
+rm_goto_scr(local.rm);

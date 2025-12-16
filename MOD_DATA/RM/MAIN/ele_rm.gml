@@ -37,6 +37,7 @@ room_set_view(argument0,0,true,0,0,1280,720,0,0,1280,720,32,32,-1,-1,noone);
 room_instance_add(argument0,0,0,fog_01_obj);
 room_instance_add(argument0,0,0,amb_control_obj);
 room_instance_add(argument0,0,0,ele_rock_obj);
+room_instance_add(argument0,0,0,destroy_mon_obj);
 // Walls (Horizontal)
 room_instance_add(argument0,80,32,ele_wall_hor_obj);
 room_instance_add(argument0,80,128,ele_wall_hor_obj);
@@ -78,3 +79,4 @@ room_instance_add(argument0,32,80,ele_frame_02_vert_obj);
 room_instance_add(argument0,128,80,ele_frame_02_vert_obj);
 room_instance_add(argument0,130,80,ele_frame_01_vert_obj);
 room_instance_add(argument0,132,80,ele_door_obj);
+room_instance_add(argument0,128,102,ele_button_obj);

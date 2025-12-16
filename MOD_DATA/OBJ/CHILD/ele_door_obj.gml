@@ -15,3 +15,11 @@ object_event_add
     event_inherited();
     direction = 180;
 ');
+// Alarm 0 Event
+object_event_add
+(argument0,ev_alarm,0,'
+    event_inherited();
+    local.xtmp = x+lengthdir_x(global.trig_coll[2]/2,direction);
+    local.ytmp = y+lengthdir_y(global.trig_coll[2]/2,direction);
+    trig_var = instance_create(local.xtmp,local.ytmp,ele_door_trig_obj);
+');

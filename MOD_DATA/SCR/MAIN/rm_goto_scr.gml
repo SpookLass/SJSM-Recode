@@ -96,10 +96,8 @@ if room_exists(argument0) && argument0 != 0
             break;
         }
     }
-    if room_
-    room_set_width(argument0,local.res_w);
-    room_set_height(argument0,local.res_h);
-    room_goto(argument0)
+    room_goto(argument0);
+    return true;
 }
 else
 {

@@ -17,5 +17,5 @@ object_event_add
 // Despite the depth being super low, it still doesnt run last, weird
 object_event_add
 (argument0,ev_other,ev_room_start,'
-    if frac_chance_scr(4,9) { with torch_obj { on_var = false; } }
+    if frac_chance_scr(4,9) { with torch_obj { if !gold_var { on_var = false; }} }
 ');

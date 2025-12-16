@@ -33,8 +33,33 @@ object_event_add
     zone_var = -1;
     if rm_var == 0
     {
-        zone_var = global.zone_var;
-        event_user(0);
+        // Elevator (temporary)
+        switch global.ele_type_var
+        {
+            case 2:
+            {
+                if mod_scr(global.rm_count_var+1,global.ele_rate_03_var) == 0
+                { rm_var = ele_rm; }
+                if global.rm_count_var >= global.ele_end_02_var { break; }
+            }
+            case 1:
+            {
+                if mod_scr(global.rm_count_var+1,global.ele_rate_02_var) == 0
+                { rm_var = ele_rm; }
+                if global.rm_count_var >= global.ele_end_01_var { break; }
+            }
+            case 0:
+            {
+                if mod_scr(global.rm_count_var+1,global.ele_rate_01_var) == 0
+                { rm_var = ele_rm; }
+                break;
+            }
+        }
+        if rm_var == 0
+        {
+            zone_var = global.zone_var;
+            event_user(0);
+        }
     }
     // Alarm
     alarm_len_var = 1;
@@ -42,8 +67,8 @@ object_event_add
 // Alarm 0 Event
 object_event_add
 (argument0,ev_alarm,0,'
-    if room_exists(rm_var) && rm_var != 0 { room_goto_scr(rm_var); }
-    else { show_error("Room "+string(rm_var)+" does not exist!",false); room_goto_scr(hall_01_rm); }
+    if room_exists(rm_var) && rm_var != 0 { rm_goto_scr(rm_var); }
+    else { show_error("Room "+string(rm_var)+" does not exist!",false); rm_goto_scr(hall_01_rm); }
     global.rm_count_var += rm_count_var;
 ')
 // Step Event

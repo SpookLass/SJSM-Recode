@@ -55,6 +55,18 @@ object_event_add
         }
     }
 ');
+// Axe Trigger Event
+object_event_add
+(argument0,ev_other,ev_user4,'
+    with par_var
+    {
+        hurt_weapon_var = other.hurt_weapon_var;
+        hurt_target_var = other.hurt_target_var;
+        hurt_power_var = other.hurt_power_var;
+        hurt_type_var = other.hurt_type_var;
+        event_user(4);
+    }
+');
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,'

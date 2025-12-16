@@ -21,7 +21,7 @@ object_event_add
 object_event_add
 (argument0,ev_step,ev_step_normal,'
     if alarm_arr[0,0] > 0
-    { z = lerp_scr(z_end_var,z_start_var,alarm_arr[0,0]/alarm_arr[1,0]); }
+    { z = lerp_scr(z_end_var,z_start_var,alarm_arr[0,0]/alarm_arr[0,1]); }
 ');
 // Alarm 0 Event
 object_event_add

@@ -46,7 +46,7 @@ object_event_add
     if state_var != 1
     {
         if global.input_press_arr[confirm_input_const,0] { event_user(0); }
-        if global.input_press_arr[back_input_const,0] { room_goto_scr(menu_rm); }
+        if global.input_press_arr[back_input_const,0] { rm_goto_menu_scr(menu_rm); }
     }
     switch state_var
     {
@@ -110,7 +110,7 @@ object_event_add
         }
         case 5: // Leave
         {
-            room_goto_scr(menu_rm);
+            rm_goto_menu_scr(menu_rm);
             break;
         }
     }

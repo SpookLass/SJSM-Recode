@@ -687,8 +687,8 @@ object_event_add
         if false//local.dead
         {
             global.dead_mon_var = object_index;
-            instance_destroy();
-            room_goto_scr(dead_rm_var);
+            global.dead_player_var = attack_target_var.player_id_var;
+            rm_goto_menu_scr(dead_rm_var,true);
         }
         else { event_perform(ev_other,ev_user3); }
     }

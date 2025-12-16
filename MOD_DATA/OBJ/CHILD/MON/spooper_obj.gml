@@ -411,7 +411,7 @@ object_event_add
                         do_coll_var = false;
                         grav_var = false;
                         if local.kill == 0
-                        { local.kill = true; }
+                        { local.kill = true; local.player = id; }
                     }
                 }
                 if !dead_var { local.kill = -1; }
@@ -419,8 +419,8 @@ object_event_add
             if local.kill && local.dokill
             {
                 global.dead_mon_var = object_index;
-                instance_destroy();
-                room_goto_scr(dead_rm_var);
+                global.dead_player_var = local.player.player_id_var;
+                rm_goto_menu_scr(dead_rm_var,true);
             }
         }
     }

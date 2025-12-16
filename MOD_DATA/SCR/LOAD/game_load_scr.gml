@@ -109,4 +109,4 @@ draw_set_halign(fa_left); draw_set_valign(fa_top);
 // Load
 global.player_len_var = 1;
 instance_create(0,0,global.control_obj);
-room_goto_scr(splash_rm);
+rm_goto_menu_scr(splash_rm);
