@@ -151,6 +151,48 @@ switch argument0
         );
         break;
     }
+    case 12:
+    {
+        local.width = argument2/2;
+        local.length = argument3/2;
+        p3dc_add_wall_scr
+        (
+            -local.width,
+            -local.length,
+            argument4,
+            local.width,
+            -local.length,
+            0
+        );
+        p3dc_add_wall_scr
+        (
+            -local.width,
+            local.length,
+            argument4,
+            local.width,
+            local.length,
+            0
+        );
+        p3dc_add_floor_scr
+        (
+            -local.width,
+            -local.length,
+            0,
+            local.width,
+            local.length,
+            0
+        );
+        p3dc_add_floor_scr
+        (
+            -local.width,
+            -local.length,
+            argument4,
+            local.width,
+            local.length,
+            argument4
+        );
+        break;
+    }
 }
 p3dc_end_mdl_scr();
 return local.collmod;

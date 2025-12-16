@@ -7,13 +7,12 @@ object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Prop collisions
-execute_string
-("
-    global.brain_tank_coll[1] = 24;
-    global.brain_tank_coll[2] = 24;
-    global.brain_tank_coll[3] = 24;
-    global.brain_tank_coll[0] = prop_to_coll_scr(3,'',global.brain_tank_coll[2],global.brain_tank_coll[3],global.brain_tank_coll[1],true,8);
-");
+p3dc_set_trimask_scr(mask_metal_const);
+global.brain_tank_coll[1] = 24;
+global.brain_tank_coll[2] = 24;
+global.brain_tank_coll[3] = 24;
+global.brain_tank_coll[0] = prop_to_coll_scr(3,'',global.brain_tank_coll[2],global.brain_tank_coll[3],global.brain_tank_coll[1],true,8);
+p3dc_set_trimask_scr(mask_basic_const);
 // Create event
 object_event_add
 (argument0,ev_create,0,"

@@ -7,6 +7,8 @@ p3dc_split_mdl_scr(global.room_coll,1280,736,40,23,6);
 global.room_player_coll = -1;
 global.room_mon_coll = -1;
 global.room_float_coll = -1;
+// No Mask
+p3dc_set_trimask_scr(mask_none_const);
 // Player
 global.player_coll[1] = 18;
 global.player_coll[2] = 8;
@@ -88,6 +90,8 @@ global.rm_size_var = 1280;
 global.grid_snap_var = 4;
 global.phys_grid = mp_grid_create(0,0,global.rm_size_var/global.grid_snap_var,global.rm_size_var/global.grid_snap_var,global.grid_snap_var,global.grid_snap_var);
 global.float_grid = mp_grid_create(0,0,global.rm_size_var/global.grid_snap_var,global.rm_size_var/global.grid_snap_var,global.grid_snap_var,global.grid_snap_var);
+// Reset
+p3dc_set_trimask_scr(mask_basic_const);
 // Draw
 draw_clear_alpha(c_black,0);
 draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loaded collisions!",1,1,0);

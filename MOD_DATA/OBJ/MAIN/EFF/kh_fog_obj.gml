@@ -1,7 +1,7 @@
 // Builtin Variables
-object_set_depth(argument0,-4);
+object_set_depth(argument0,-5);
 object_set_mask(argument0,noone);
-object_set_parent(argument0,fog_par_obj);
+object_set_parent(argument0,par_obj);
 object_set_persistent(argument0,false);
 object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
@@ -9,11 +9,13 @@ object_set_visible(argument0,true);
 // Create event
 object_event_add
 (argument0,ev_create,0,'
+    /* Just use fog par
     fog_var = true;
     fog_color_var = c_dkgray; // c_black for flashlight
     fog_start_var = 0;
     fog_end_var = 360; // 96 for flashlight, 128 for flashlight 2
     fog_dark_var = true;
+    */
     event_inherited();
     wall_num_var = 6;
     wall_start_var = 24;

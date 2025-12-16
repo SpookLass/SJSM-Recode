@@ -20,6 +20,7 @@ type_var
     9: Jumpscare. Duplicate of Offset Plane with front and back sprites. Uses dist_var
     10: Single Plane. Uses w_var, h_var, dist_var, tex_w_var, and tex_h_var. Like double plane, but only one.
     11: Cross. Uses w_var, h_var, tex_w_var, and tex_h_var. Useful if you want Minecraft grass I guess.
+    12: Doorway. Uses w_var, l_var, h_var, tex_w_var, tex_l_var, and tex_h_var.
 snap_var
     0: No snap
     1: Snap to floor
@@ -134,6 +135,17 @@ object_event_add
         {
             d3d_draw_wall(0,-w_var/2,h_var,0,w_var/2,0,local.tex,tex_w_var,tex_h_var*sign(h_var));
             d3d_draw_wall(-w_var/2,0,h_var,w_var/2,0,0,local.tex,tex_w_var,tex_h_var*sign(h_var));
+            break;
+        }
+        case 12:
+        {
+            local.width = w_var/2;
+            local.length = l_var/2;
+            local.tex_height = tex_h_var*sign(h_var);
+            d3d_draw_wall(-local.width,-local.length,h_var,local.width,-local.length,0,local.tex,tex_w_var,local.tex_height);
+            d3d_draw_wall(-local.width,local.length,h_var,local.width,local.length,0,local.tex,tex_w_var,local.tex_height);
+            d3d_draw_floor(-local.width,-local.length,0,local.width,local.length,0,local.tex,tex_w_var,tex_l_var);
+            d3d_draw_floor(-local.width,-local.length,h_var,local.width,local.length,h_var,local.tex,tex_w_var,tex_l_var);
             break;
         }
     }

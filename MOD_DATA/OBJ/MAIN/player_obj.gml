@@ -589,7 +589,11 @@ object_event_add
                 if local.bobprev > bob_time_var
                 {
                     // Play footsteps
-                    fmod_snd_play_scr(choose(ft_01_snd,ft_02_snd,ft_03_snd,ft_04_snd,ft_05_snd,ft_06_snd))
+                    switch floor_mask_var
+                    {
+                        case mask_basic_const: { fmod_snd_play_scr(choose(ft_01_snd,ft_02_snd,ft_03_snd,ft_04_snd,ft_05_snd,ft_06_snd)); break; }
+                        case mask_metal_const: { fmod_snd_play_scr(choose(ft_m_01_snd,ft_m_02_snd,ft_m_03_snd,ft_m_04_snd)); break; }
+                    }
                 }
             }
         }

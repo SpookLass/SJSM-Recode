@@ -61,6 +61,7 @@ object_event_add
     wander_attempt_var = 30;
     sight_dist_var = 128/3;
     sight_yaw_var = 60;
+    alarm_len_var = 9;
     // Assets
         // Search for existing assets to save memory
     with object_index
@@ -72,6 +73,7 @@ object_event_add
             other.atk_spr_var = atk_spr_var;
             other.atk_end_spr_var = atk_end_spr_var;
             other.dead_spr_var = dead_spr_var;
+            other.static_bg_var = static_bg_var;
             other.atk_start_snd_var[1] = atk_start_snd_var[1];
             other.hurt_snd_var[1] = hurt_snd_var[1];
             other.dead_snd_var[0] = dead_snd_var[0];
@@ -90,6 +92,7 @@ object_event_add
         atk_spr_var = sprite_add(dh_directory_const+"\TEX\sprites\WD_SPR3.png",10,false,false,0,0);
         atk_end_spr_var = sprite_add(dh_directory_const+"\TEX\sprites\WD_SPR4.png",9,false,false,0,0);
         dead_spr_var = sprite_add(dh_directory_const+"\TEX\sprites\WD_SPR5.png",2,false,false,0,0);
+        static_bg_var = background_add(main_directory_const+"\BG\DH\tile_static_bg.png",false,false);
         snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\wc_01_snd.wav",true);
         snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\wc_02_snd.wav",true);
         snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\wc_03_snd.wav",true);
@@ -162,12 +165,14 @@ object_event_add
         sprite_delete(rise_spr_var);
         sprite_delete(atk_spr_var);
         sprite_delete(atk_end_spr_var);
+        background_delete(static_bg_var);
         for (local.i=0; local.i<snd_len_var; local.i+=1;)
         { fmod_snd_free_scr(snd_arr[local.i,0]); }
         fmod_snd_free_scr(atk_start_snd_var[1]);
         fmod_snd_free_scr(hurt_snd_var[1]);
         fmod_snd_free_scr(dead_snd_var[0]);
     }
+    with wc_eff_obj { if par_var == other.id { instance_destroy(); }}
 ');
 // Room Start Event
 object_event_add
@@ -179,34 +184,39 @@ object_event_add
     rise_var = false;
     if do_wander_var { wander_var = true; }
     event_inherited();
-    if do_rise_var
+    local.rise = do_rise_var && global.mark_len_var > 0;
+    if local.rise
     {
-        if global.mark_len_var > 0
+        local.mark = irandom(global.mark_len_var-1);
+        x = global.mark_arr[local.mark,0];
+        y = global.mark_arr[local.mark,1];
+        z = global.mark_arr[local.mark,2];
+        spr_var = rise_spr_var;
+        tex_var = sprite_get_texture(spr_var,spr_id_var);
+        on_var = true;
+        enter_var = false;
+        do_coll_var = true;
+        move_var = false;
+        set_alarm_scr(0,-1);
+        if do_rise_var == 2
         {
-            local.mark = irandom(global.mark_len_var-1);
-            x = global.mark_arr[local.mark,0];
-            y = global.mark_arr[local.mark,1];
-            z = global.mark_arr[local.mark,2];
-            spr_var = rise_spr_var;
-            tex_var = sprite_get_texture(spr_var,spr_id_var);
-            on_var = true;
-            enter_var = false;
-            do_coll_var = true;
-            move_var = false;
-            set_alarm_scr(0,-1);
-            if do_rise_var == 2
-            {
-                anim_type_var = 1;
-                set_alarm_scr(1,rise_alarm_var);
-                set_alarm_scr(5,rise_alarm_var);
-                set_alarm_scr(6,rise_alarm_var+irandom_range(snd_alarm_min_var,snd_alarm_max_var));
-            }
-            else
-            {
-                anim_var = false;
-                rise_var = true;
-            }
+            anim_type_var = 1;
+            set_alarm_scr(1,rise_alarm_var);
+            set_alarm_scr(5,rise_alarm_var);
+            set_alarm_scr(6,rise_alarm_var+irandom_range(snd_alarm_min_var,snd_alarm_max_var));
+            if !wander_var { set_alarm_scr(8,rise_alarm_var); }
         }
+        else
+        {
+            anim_var = false;
+            rise_var = true;
+        }
+    }
+    with instance_create(0,0,wc_eff_obj)
+    {
+        par_var = other.id;
+        bg_var = other.static_bg_var;
+        visible = !local.rise;
     }
 ');
 // Room End Event
@@ -234,6 +244,7 @@ object_event_add
                 set_alarm_scr(1,rise_alarm_var);
                 set_alarm_scr(5,rise_alarm_var);
                 set_alarm_scr(6,rise_alarm_var+irandom_range(snd_alarm_min_var,snd_alarm_max_var));
+                if !wander_var { set_alarm_scr(8,rise_alarm_var); }
             }
         }
         else if wander_var
@@ -254,6 +265,7 @@ object_event_add
                     { other.wander_var = false; break; }
                 }
             }
+            if !wander_var { with wc_eff_obj { visible = true; }}
         }
     }
     event_inherited();
@@ -294,6 +306,11 @@ object_event_add
 (argument0,ev_alarm,3,'
     event_inherited();
     tone_var = c_white;
+');
+// Rise alarm
+object_event_add
+(argument0,ev_alarm,8,'
+    with wc_eff_obj { visible = true; }
 ');
 // Hurt Event
 object_event_add

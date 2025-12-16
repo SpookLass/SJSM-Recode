@@ -25,6 +25,7 @@ file_to_spr_scr(vanilla_directory_const+"\TEX\sprites\EX_03_spr.png","ghost_spr"
 sprite_set_offset(ghost_spr,sprite_get_width(ghost_spr)/2,sprite_get_height(ghost_spr)/2);
 // Spooky
 file_to_spr_scr(vanilla_directory_const+"\TEX\sprites\spooky_spr.png","spooky_spr",9,false,false,0,0,argument0);
+sprite_set_offset(spooky_spr,sprite_get_width(spooky_spr)/2,108);
 file_to_spr_scr(vanilla_directory_const+"\TEX\sprites\spooky2_spr.png","spooky_sad_spr",9,false,false,0,0,argument0);
 file_to_spr_scr(vanilla_directory_const+"\TEX\sprites\spooky3_spr.png","spooky_halloween_spr",9,false,false,0,0,argument0);
 // Replaceable

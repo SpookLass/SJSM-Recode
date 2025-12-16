@@ -1824,6 +1824,7 @@ object_event_add
     draw_bg_fit_ext_scr(light_01_bg_var,0,local.ytmp,0,c_white,light_alpha_01_var);
     draw_bg_fit_ext_scr(light_02_bg_var,0,local.ytmp,0,c_white,light_alpha_02_var);
     draw_bg_tiled_stretch_scr(cloud_bg_var,cloud_prog_var*1243,18+local.ytmp,1243,0,0); // Stretch X, Tile X
+    draw_spr_stretch_ext_scr(spooky_spr,0,0,0,1520,0,fa_center,fa_middle,0,c_white,spook_alpha_var);
     if flash_var { draw_rectangle(0,0,view_wview[view_current],view_hview[view_current],false); }
     switch state_var
     {

@@ -7,13 +7,15 @@ object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Collisions
+p3dc_set_trimask_scr(mask_metal_const);
 global.pc_big_coll[1] = 24;
 global.pc_big_coll[2] = 24;
 global.pc_big_coll[3] = 24;
 global.pc_big_coll[0] = prop_to_coll_scr(7,'',global.pc_big_coll[2],global.pc_big_coll[3],global.pc_big_coll[1]);
+p3dc_set_trimask_scr(mask_basic_const);
 // Create event
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
     snap_var = 1;
     store_tex_var = pc_big_bg_tex;
     event_inherited();
@@ -29,10 +31,10 @@ object_event_add
     coll_var[1] = global.pc_big_coll[1];
     coll_var[2] = global.pc_big_coll[2];
     coll_var[3] = global.pc_big_coll[3];
-");
+');
 // Draw Event
 object_event_add
-(argument0,ev_draw,0,"
+(argument0,ev_draw,0,'
     d3d_transform_set_identity();
     if type_var == 5 { d3d_transform_add_rotation_z(point_direction(x,y,global.cam_x_var[view_current],global.cam_y_var[view_current])); }
     else { d3d_transform_add_rotation_z(direction); }
@@ -68,4 +70,4 @@ object_event_add
     }
     d3d_transform_set_identity();
     draw_set_color(c_white); draw_set_alpha(1);
-");
+');

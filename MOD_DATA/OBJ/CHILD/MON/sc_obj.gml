@@ -201,13 +201,25 @@ object_event_add
     with fog_par_obj { if prio_var < other.fog_prio_var { instance_destroy(); }}
 	if !instance_exists(fog_par_obj)
 	{
+        with instance_create(0,0,fog_par_obj)
+		{
+			prio_var = other.fog_prio_var;
+			par_var = other.id;
+			fog_var = true;
+			fog_color_var = c_black;//other.fog_color_var;
+			fog_start_var = 0;
+			fog_end_var = lerp_scr(other.fog_dist_max_var,other.fog_dist_min_var,local.per);
+			fog_dark_var = true;
+			event_user(0);
+		}
+    }
+    if !instance_exists(kh_fog_obj)
+	{
         with instance_create(0,0,kh_fog_obj)
         {
             prio_var = other.fog_prio_var;
             par_var = other.id;
             fog_type_var = other.fog_type_var;
-            fog_color_var = c_black;//other.fog_color_var;
-            fog_end_var = lerp_scr(other.fog_dist_max_var,other.fog_dist_min_var,local.per);
             image_blend = other.fog_color_var;
             image_alpha = other.wall_alpha_var*local.per;
             event_user(0);

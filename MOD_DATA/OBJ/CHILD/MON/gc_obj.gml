@@ -361,6 +361,20 @@ object_event_add
         with fog_par_obj { if prio_var < other.fog_prio_var { instance_destroy(); }}
         if !instance_exists(fog_par_obj)
         {
+            with instance_create(0,0,fog_par_obj)
+            {
+                par_var = other.id;
+                prio_var = other.fog_prio_var;
+                fog_var = true;
+                fog_color_var = c_black;
+                fog_start_var = 80; // Estimated
+                fog_end_var = 128;
+                fog_dark_var = true;
+                event_user(0);
+            }
+        }
+        if !instance_exists(gc_fog_obj)
+        {
             with instance_create(0,0,gc_fog_obj)
             {
                 par_var = other.id;

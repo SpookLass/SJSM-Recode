@@ -38,6 +38,7 @@ if do_coll_var && grav_var > 0
     local.zdist = 10000000;
     local.zdist_max = 0;
     local.radius = coll_var[2]/2;
+    floor_mask_var = mask_none_const;
     for (local.c=0; local.c<local.coll_arr_len; local.c+=1;)
     {
         for (local.i=0; local.i<5; local.i+=1;)
@@ -83,6 +84,7 @@ if do_coll_var && grav_var > 0
                     0,0,-1
                 );
             }
+            if local.zdist_new < local.zdist { floor_mask_var = p3dc_get_lastmask_scr(); }
             local.zdist = min(local.zdist,local.zdist_new);
             local.zdist_max = max(local.zdist_max,local.zdist_new)
         }

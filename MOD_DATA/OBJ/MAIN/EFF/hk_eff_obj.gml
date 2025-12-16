@@ -47,7 +47,7 @@ object_event_add
             d3d_set_hidden(false);
             if old_var { draw_set_color(c_red); draw_rectangle(0,0,view_wview[view_current],view_hview[view_current],false); draw_set_color(c_white); }
             draw_background_tiled_ext(bg_var,x*local.scale*image_xscale,y*local.scale*image_yscale,local.scale*image_xscale,local.scale*image_yscale,image_blend,local.alpha);
-            draw_set_blend_mode(bm_normal); d3d_set_hidden(true);
+            d3d_set_hidden(true);
         }
     }
 ');

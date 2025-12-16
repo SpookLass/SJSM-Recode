@@ -169,6 +169,7 @@ object_event_add
         {
             hd_var = true;
             hd_snd_var = true;
+            hurt_eff_var = true;
             terrible_var = true;
             delay_var = 0;
             do_anim_var = -1;
@@ -634,6 +635,16 @@ object_event_add
             snd_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0]);
             sub_var[0] = snd_arr[local.snd,1];
             sub_var[1] = snd_arr[local.snd,2];
+        }
+        // Effect
+        if hurt_eff_var
+        {
+            with instance_create(0,0,flash_eff_obj)
+            {
+                image_blend = c_red;
+                cam_id_var = hurt_target_var.cam_id_var;
+                set_alarm_scr(0,18);
+            }
         }
     }
 ');

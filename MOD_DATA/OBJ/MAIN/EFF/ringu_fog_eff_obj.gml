@@ -81,7 +81,7 @@ object_event_add
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,'
-    if global.cam_type_var[view_current] == cam_alive_const
+    if global.cam_type_var[view_current] == cam_alive_const && global.fog_var
     {
         d3d_set_fog(false,c_black,0,0);
         d3d_transform_set_identity();

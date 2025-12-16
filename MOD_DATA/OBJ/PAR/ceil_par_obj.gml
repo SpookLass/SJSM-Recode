@@ -18,6 +18,7 @@ object_event_add
     tex_h_var = 1;
     if store_tex_var == 0
     { store_tex_var = -1; }
+    mask_var = -1;
     tex_var = store_tex_var;
     solid_var = true;
     color_var = true;
