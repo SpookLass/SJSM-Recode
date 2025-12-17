@@ -2,7 +2,6 @@
 Argument 0: Room
 Argument 1: Reset All
 */
-
 if room_exists(argument0) && argument0 != 0
 {
     if argument1
@@ -10,7 +9,7 @@ if room_exists(argument0) && argument0 != 0
         // Remove persistent objects
         with all
         {
-            if persistent && object_index != other.object_index && object_index != control_obj
+            if persistent && object_index != pause_menu_obj && object_index != control_obj
             { instance_destroy(); }
         }
         // Stop sounds

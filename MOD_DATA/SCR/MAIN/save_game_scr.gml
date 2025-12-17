@@ -49,6 +49,7 @@ ini_write_real("SETTING","ele_end_02",global.ele_end_02_var);
 ini_write_real("SETTING","ele_rate_01",global.ele_rate_01_var);
 ini_write_real("SETTING","ele_rate_02",global.ele_rate_02_var);
 ini_write_real("SETTING","ele_rate_03",global.ele_rate_03_var);
+ini_write_real("SETTING","rare_chance",global.rare_chance_var);
 // Behavior stuff
 ini_write_real("BEHAVIOR","type",global.default_type_var);
 ini_write_real("BEHAVIOR","player_type",global.player_type_var);

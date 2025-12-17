@@ -299,7 +299,11 @@ Taker
 Zone
     Zone: "+cond_scr(global.zone_num_var < global.zone_len_var,"Endless "+string(global.zone_num_var),"Story "+string(global.zone_num_var-global.zone_len_var))+"
     Tex: "+cond_scr(global.tex_var < global.tex_story_len_var,"Story "+string(global.tex_var),"Endless "+string(global.tex_var-global.tex_story_len_var))+"
-    Rooms Left: "+string(ds_list_size(global.rm_list_var));
+    Rooms Left: "+string(ds_list_size(global.rm_list_var))+"
+Spawning
+    Count: "+string(global.count_var)+"
+    Fail: "+string(global.mon_fail_var)+"
+    Chance: 1/"+string(global.mon_chance_var+(global.mon_chance_mult_var*instance_number(mon_par_obj)-global.mon_fail_var))
                 draw_text_transformed(0,128*scale_var,local.str,scale_small_var,scale_small_var,0);
             }
         }

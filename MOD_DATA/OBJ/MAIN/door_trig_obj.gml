@@ -31,9 +31,17 @@ object_event_add
     rm_count_var = 1;
     delay_var = 20;
     zone_var = -1;
+    // Alarm
+    alarm_len_var = 1;
+');
+// Room Start Event
+// Moved here to prevent monster conflicts
+object_event_add
+(argument0,ev_other,ev_room_start,'
+    event_inherited(); 
     if rm_var == 0
     {
-        // Elevator (temporary)
+        // Elevator
         switch global.ele_type_var
         {
             case 2:
@@ -57,12 +65,16 @@ object_event_add
         }
         if rm_var == 0
         {
-            zone_var = global.zone_var;
-            event_user(0);
+            // Rare Rooms
+            if !instance_exists(mon_par_obj) && global.rare_chance_var > 0 && frac_chance_scr(1,global.rare_chance_var)
+            { rm_var = ds_list_find_value(global.rare_zone_var,irandom(ds_list_size(global.rare_zone_var)-1)); }
+            else
+            {
+                zone_var = global.zone_var;
+                event_user(0);
+            }
         }
     }
-    // Alarm
-    alarm_len_var = 1;
 ');
 // Alarm 0 Event
 object_event_add

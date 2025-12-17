@@ -53,15 +53,6 @@ Menu and button States
 // Create Event
 object_event_add
 (argument0,ev_create,0,'
-    // Backgrounds
-    bg_var = background_add(vanilla_directory_const+"\TEX\menu\menu_tex.png",false,false);
-    cloud_bg_var = background_add(vanilla_directory_const+"\TEX\menu\menu_clouds2_tex.png",false,false);
-    light_01_bg_var = background_add(vanilla_directory_const+"\TEX\menu\menu2_tex.png",false,false);
-    light_02_bg_var = background_add(vanilla_directory_const+"\TEX\menu\menu3_tex.png",false,false);
-    path_bg_var = background_add(vanilla_directory_const+"\TEX\menu\path_tex.png",false,false);
-    path_cloud_bg_var = background_add(vanilla_directory_const+"\TEX\menu\menu_clouds_tex.png",false,false);
-    multi_bg_var = background_add(main_directory_const+"\BG\UI\multi_bg.png",false,false);
-    light_bg_var = light_01_bg_var;
 	
 	local.array_index = 0;
 	local.wall_index = 1;
@@ -103,19 +94,29 @@ object_event_add
     // Sprites
     set_spr_var = sprite_add(main_directory_const+"\SPR\UI\settings_spr.png",2,false,false,0,0);
     sprite_set_offset(set_spr_var,sprite_get_width(set_spr_var)/2,sprite_get_height(set_spr_var)/2);
-    if !irandom(7)
+    if !irandom(1)
     {
-        switch (irandom(6))
+        switch irandom(5)
         {
             case 0:
             {
                 title_spr_var = execute_file(main_directory_const+"\SPR\UI\menu_title_hd_spr.gml",main_directory_const+"\SPR\UI\menu_title_hd_spr.png");
+                bg_var = background_add(main_directory_const+"\BG\UI\menu_hd_bg.png",false,false);
+                light_01_bg_var = background_add(vanilla_directory_const+"\MAT\blank.png",false,false);
+                light_02_bg_var = background_add(vanilla_directory_const+"\MAT\blank.png",false,false);
+                menu_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\menu_mus_snd.mp3");
                 break;
             }
             case 1:
             {
                 title_spr_var = execute_file(main_directory_const+"\SPR\UI\menu_title_old_01_spr.gml",main_directory_const+"\SPR\UI\menu_title_old_01_spr.png");
-                title_old_var = true;
+                title_02_spr_var = execute_file(main_directory_const+"\SPR\UI\menu_title_old_02_spr.gml",main_directory_const+"\SPR\UI\menu_title_old_02_spr.png");
+                old_var = true;
+                bg_var = background_add(main_directory_const+"\BG\UI\menu_old_bg.png",false,false);
+                light_01_bg_var = background_add(main_directory_const+"\BG\UI\menu_light_01_old_bg.png",false,false);
+                light_02_bg_var = background_add(main_directory_const+"\BG\UI\menu_light_02_old_bg.png",false,false);
+                menu_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\menu_mus_old_snd.mp3");
+                fmod_snd_set_max_vol_scr(menu_mus_snd_var,0.75);
                 break;
             }
             default:
@@ -123,16 +124,30 @@ object_event_add
                 local.path = vanilla_directory_const+"\TEX\menu\"+choose("name_uhh_spr","name_uhh_spr2","name_uhh_spr3","name_uhh_spr4")+".png";
                 title_spr_var = sprite_add(local.path,1,false,false,0,0);
                 sprite_set_offset(title_spr_var,sprite_get_width(title_spr_var)/2,sprite_get_height(title_spr_var)/2);
+                bg_var = background_add(vanilla_directory_const+"\TEX\menu\menu_tex.png",false,false);
+                light_01_bg_var = background_add(vanilla_directory_const+"\TEX\menu\menu2_tex.png",false,false);
+                light_02_bg_var = background_add(vanilla_directory_const+"\TEX\menu\menu3_tex.png",false,false);
+                menu_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\menu_mus_snd.mp3");
                 break;
             }
         }
-        
     }
     else
     {
         title_spr_var = execute_file(main_directory_const+"\SPR\UI\menu_title_spr.gml",main_directory_const+"\SPR\UI\menu_title_spr.png");
+        bg_var = background_add(vanilla_directory_const+"\TEX\menu\menu_tex.png",false,false);
+        light_01_bg_var = background_add(vanilla_directory_const+"\TEX\menu\menu2_tex.png",false,false);
+        light_02_bg_var = background_add(vanilla_directory_const+"\TEX\menu\menu3_tex.png",false,false);
+        menu_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\menu_mus_snd.mp3");
     }
-    name_y_var = 170;
+    title_y_var = 141; // 170
+    title_02_y_var = 270;
+    // Backgrounds
+    cloud_bg_var = background_add(vanilla_directory_const+"\TEX\menu\menu_clouds2_tex.png",false,false);
+    path_bg_var = background_add(vanilla_directory_const+"\TEX\menu\path_tex.png",false,false);
+    path_cloud_bg_var = background_add(vanilla_directory_const+"\TEX\menu\menu_clouds_tex.png",false,false);
+    multi_bg_var = background_add(main_directory_const+"\BG\UI\multi_bg.png",false,false);
+    light_bg_var = light_01_bg_var;
     // Sounds
     select_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\menu_select_snd.wav");
     confirm_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\menu_confirm_snd.wav");
@@ -141,7 +156,6 @@ object_event_add
     fmod_snd_set_group_scr(start_snd_var,snd_group_mus_const);
     story_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\story_mus_snd.mp3");
     fmod_snd_set_group_scr(story_mus_snd_var,snd_group_mus_const);
-    menu_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\menu_mus_snd.mp3");
     fmod_snd_set_group_scr(menu_mus_snd_var,snd_group_mus_const);
     fmod_snd_set_loop_point_scr(menu_mus_snd,6/71,70/71);
     // Text
@@ -582,6 +596,22 @@ object_event_add
     custom_button_arr[custom_button_len_var,7] = 2; // Behavior / Difficulty / Mode
     custom_button_arr[custom_button_len_var,9] = "ele_rate_03_const"; // Default
     custom_button_len_var += 1;
+        // Rare Chance
+    custom_button_arr[custom_button_len_var,1] = ini_read_string("MENU","rare_chance","MENU_rare_chance");
+    custom_button_arr[custom_button_len_var,2] = "Temp"; // Description
+    custom_button_arr[custom_button_len_var,3] = 1; // Type (Number)
+    custom_button_arr[custom_button_len_var,4] = false; // Wrap Value
+    custom_button_arr[custom_button_len_var,6] = "rare_chance"; // Global variable to modify
+    custom_button_arr[custom_button_len_var,7] = 2; // Behavior / Difficulty / Mode
+    custom_button_arr[custom_button_len_var,9] = "rare_chance_const"; // Default
+    custom_button_arr[custom_button_len_var,10] = "8"; // Recode Story
+    custom_button_arr[custom_button_len_var,11] = "8"; // OG Story
+    custom_button_arr[custom_button_len_var,12] = "8"; // HD Story
+    custom_button_arr[custom_button_len_var,13] = "16"; // Recode Endless
+    custom_button_arr[custom_button_len_var,14] = "0"; // OG Endless
+    custom_button_arr[custom_button_len_var,15] = "8"; // HD Endless
+    custom_button_arr[custom_button_len_var,16] = "16"; // Sandbox
+    custom_button_len_var += 1;
         // Behavior
     custom_button_arr[custom_button_len_var,1] = ini_read_string("MENU","type","MENU_type");
     custom_button_arr[custom_button_len_var,3] = -1; // Type (Behavior)
@@ -887,6 +917,11 @@ object_event_add
     spook_alpha_max_var = 0.2;
     spook_alarm_var = 25;
     flash_alarm_var = 3;
+    // Old
+    title_alarm_min_var = 60;
+    title_alarm_max_var = 240;
+    title_01_anim_var = 14;
+    title_02_anim_var = 48; // log base 1.05 (10)
     // Button Scroll
     do_scroll_focal_var = true;
     scroll_var = 0;
@@ -925,7 +960,7 @@ object_event_add
     scale_story_var = max(0.4*scale_var,scale_min_var);
     scale_skip_var = max(0.3*scale_var,scale_min_var);
     // Alarms
-    alarm_len_var = 11;
+    alarm_len_var = 14;
     set_alarm_scr(0,3000);
     set_alarm_scr(9,cloud_alarm_var);
     set_alarm_scr(10,path_cloud_alarm_var);
@@ -942,6 +977,7 @@ object_event_add
     background_delete(multi_bg_var);
     sprite_delete(set_spr_var);
     sprite_delete(title_spr_var);
+    if old_var { sprite_delete(title_02_spr_var); }
 	fmod_snd_free_scr(menu_mus_snd_var);
 	fmod_snd_free_scr(story_mus_snd_var);
 	fmod_snd_free_scr(popup_snd_var);
@@ -1021,7 +1057,15 @@ object_event_add
             }
             time_var = (time_var+global.true_delta_time_var) mod 160;
             str_scale_var = 0.8+(cos(2*time_var*pi/80)*0.2);
-            name_y_var = 170+(sin(2*time_var*pi/160)*10)
+            title_y_var = 141+(sin(2*time_var*pi/160)*10);
+            if old_var
+            {
+                title_02_y_var = 270+(sin(2*(time_var+15)*pi/160)*10);
+                if alarm_arr[13,0] > 0
+                { title_02_scale_var = 78*sqr(1-(alarm_arr[13,0]/alarm_arr[13,1])); }
+                if alarm_arr[12,0] > 0
+                { title_spr_id_var = floor(sprite_get_number(title_spr_var)*(1-(alarm_arr[12,0]/alarm_arr[12,1]))); }
+            }
             if global.input_press_arr[confirm_input_const,0]
             {
                 local.snd = true;
@@ -1064,10 +1108,10 @@ object_event_add
 							
 							repeat(ds_list_size(global.save_list))
 							{
-							local.name = string(ds_list_find_value(global.save_list,local.save_index));
-							button_str_arr[6,local.save_index+1] = local.name;
-							
-							local.save_index += 1;
+                                local.name = string(ds_list_find_value(global.save_list,local.save_index));
+                                button_str_arr[6,local.save_index+1] = local.name;
+                                
+                                local.save_index += 1;
 							}
 							
 							state_var = 6;
@@ -1798,6 +1842,11 @@ object_event_add
     event_perform(ev_alarm,3);
     set_alarm_scr(5,irandom_range(light_delay_min_var,light_delay_max_var));
     set_alarm_scr(2,light_alarm_max_var);
+    if old_var
+    {
+        set_alarm_scr(12,title_01_anim_var);
+        set_alarm_scr(13,title_02_anim_var);
+    }
 ');
 // Lightning Alarm
 object_event_add
@@ -1862,13 +1911,30 @@ object_event_add
 object_event_add
 (argument0,ev_alarm,9,'
     cloud_prog_var = 0;
-    set_alarm_scr(9,cloud_alarm_var)
+    set_alarm_scr(9,cloud_alarm_var);
 ');
 // Path Cloud Alarm
 object_event_add
 (argument0,ev_alarm,10,'
     path_cloud_prog_var = 0;
-    set_alarm_scr(10,path_cloud_alarm_var)
+    set_alarm_scr(10,path_cloud_alarm_var);
+');
+// Title Alarm
+object_event_add
+(argument0,ev_alarm,11,'
+    if !irandom(2) { title_spr_id_var = 0; set_alarm_scr(12,title_01_anim_var); }
+    else { set_alarm_scr(11,irandom_range(title_alarm_min_var,title_alarm_max_var)); }
+');
+// Title Animation Alarm
+object_event_add
+(argument0,ev_alarm,12,'
+    title_spr_id_var = 0;
+    set_alarm_scr(11,irandom_range(title_alarm_min_var,title_alarm_max_var));
+');
+// Title 2 Animation Alarm
+object_event_add
+(argument0,ev_alarm,13,'
+    title_02_scale_var = 78;
 ');
 // Reset state
 object_event_add
@@ -1927,7 +1993,8 @@ object_event_add
         }
         case 2: // Main
         {
-            draw_spr_stretch_scr(title_spr_var,0,393,name_y_var,666,0,fa_left,fa_top);
+            draw_spr_stretch_scr(title_spr_var,title_spr_id_var,393,title_y_var,666,0,fa_left,fa_top);
+            if old_var { draw_spr_scale_scr(title_02_spr_var,0,394.5,title_02_y_var,339,title_02_scale_var,fa_left,fa_top); }
             for (local.i=0; local.i<4; local.i+=1)
             {
                 if local.i != button_state_var

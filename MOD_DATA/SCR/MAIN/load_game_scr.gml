@@ -47,6 +47,7 @@ global.ele_end_02_var = ini_read_real("SETTING","ele_end_02",ele_end_02_const);
 global.ele_rate_01_var = ini_read_real("SETTING","ele_rate_01",ele_rate_01_const);
 global.ele_rate_02_var = ini_read_real("SETTING","ele_rate_02",ele_rate_02_const);
 global.ele_rate_03_var = ini_read_real("SETTING","ele_rate_03",ele_rate_03_const);
+global.rare_chance_var = ini_read_real("SETTING","rare_chance",rare_chance_const);
 // Behavior stuff
 global.default_type_var = ini_read_real("BEHAVIOR","type",0);
 global.player_type_var = ini_read_real("BEHAVIOR","player_type",global.default_type_var);

@@ -16,7 +16,7 @@ object_event_add
     dist_max_var = 320/3; // 106.r6
     num_var = 1;
     den_var = 3;
-    snd_len_var = 32;
+    snd_len_var = 33;
     snd_arr[0] = amb_01_snd;
     snd_arr[1] = amb_02_snd;
     snd_arr[2] = amb_03_snd;
@@ -49,6 +49,7 @@ object_event_add
     snd_arr[29] = amb_30_snd;
     snd_arr[30] = amb_31_snd;
     snd_arr[31] = amb_32_snd;
+    snd_arr[32] = amb_07_old_snd;
     alarm_len_var = 1;
     set_alarm_scr(0,random_range(alarm_min_var,alarm_max_var));
 ');

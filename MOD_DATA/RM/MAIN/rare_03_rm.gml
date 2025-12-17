@@ -9,7 +9,7 @@ room_set_code
     global.rm_name_var = ini_read_string("ROOM","lp","ROOM_lp");
     ini_close();
     // Spawn
-    global.spawn_len_var = 3;
+    global.spawn_len_var = 2;
     global.spawn_arr[0,0] = 208;
     global.spawn_arr[0,1] = 240;
     global.spawn_arr[0,2] = 0;
@@ -144,9 +144,10 @@ room_instance_add(argument0,385,192,bush_obj);
 room_instance_add(argument0,440,167,bush_obj);
 room_instance_add(argument0,373,121,bush_obj);
 room_instance_add(argument0,229,139,bush_obj);
-room_instance_add(argument0,384,288,lp_pic1_obj);
-room_instance_add(argument0,408,288,lp_pic2_obj);
-room_instance_add(argument0,432,288,lp_pic3_obj);
-room_instance_add(argument0,456,288,lp_pic4_obj);
 room_instance_add(argument0,224,336,table_obj);
 room_instance_add(argument0,272,344,seat_obj);
+room_instance_add(argument0,384,288,lp_pic_fs_obj);
+room_instance_add(argument0,408,288,lp_pic_jel_obj);
+room_instance_add(argument0,432,288,lp_pic_bb_obj);
+room_instance_add(argument0,456,288,lp_pic_spn_obj);
+room_instance_add(argument0,480,288,lp_pic_j985_obj);
