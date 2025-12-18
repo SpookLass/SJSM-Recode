@@ -94,7 +94,7 @@ object_event_add
     // Sprites
     set_spr_var = sprite_add(main_directory_const+"\SPR\UI\settings_spr.png",2,false,false,0,0);
     sprite_set_offset(set_spr_var,sprite_get_width(set_spr_var)/2,sprite_get_height(set_spr_var)/2);
-    if !irandom(1)
+    if !irandom(7)
     {
         switch irandom(5)
         {
@@ -104,7 +104,9 @@ object_event_add
                 bg_var = background_add(main_directory_const+"\BG\UI\menu_hd_bg.png",false,false);
                 light_01_bg_var = background_add(vanilla_directory_const+"\MAT\blank.png",false,false);
                 light_02_bg_var = background_add(vanilla_directory_const+"\MAT\blank.png",false,false);
+                path_bg_var = background_add(vanilla_directory_const+"\TEX\menu\path_tex.png",false,false);
                 menu_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\menu_mus_snd.mp3");
+                rain_var = true;
                 break;
             }
             case 1:
@@ -115,8 +117,10 @@ object_event_add
                 bg_var = background_add(main_directory_const+"\BG\UI\menu_old_bg.png",false,false);
                 light_01_bg_var = background_add(main_directory_const+"\BG\UI\menu_light_01_old_bg.png",false,false);
                 light_02_bg_var = background_add(main_directory_const+"\BG\UI\menu_light_02_old_bg.png",false,false);
+                path_bg_var = background_add(vanilla_directory_const+"\TEX\menu\path_tex.png",false,false);
                 menu_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\menu_mus_old_snd.mp3");
                 fmod_snd_set_max_vol_scr(menu_mus_snd_var,0.75);
+                rain_var = true;
                 break;
             }
             default:
@@ -127,7 +131,9 @@ object_event_add
                 bg_var = background_add(vanilla_directory_const+"\TEX\menu\menu_tex.png",false,false);
                 light_01_bg_var = background_add(vanilla_directory_const+"\TEX\menu\menu2_tex.png",false,false);
                 light_02_bg_var = background_add(vanilla_directory_const+"\TEX\menu\menu3_tex.png",false,false);
+                path_bg_var = background_add(vanilla_directory_const+"\TEX\menu\path_tex.png",false,false);
                 menu_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\menu_mus_snd.mp3");
+                rain_var = true;
                 break;
             }
         }
@@ -135,16 +141,28 @@ object_event_add
     else
     {
         title_spr_var = execute_file(main_directory_const+"\SPR\UI\menu_title_spr.gml",main_directory_const+"\SPR\UI\menu_title_spr.png");
-        bg_var = background_add(vanilla_directory_const+"\TEX\menu\menu_tex.png",false,false);
-        light_01_bg_var = background_add(vanilla_directory_const+"\TEX\menu\menu2_tex.png",false,false);
-        light_02_bg_var = background_add(vanilla_directory_const+"\TEX\menu\menu3_tex.png",false,false);
+        rain_var = (current_hour <= 6 || current_hour >= 18);
+        if rain_var // Night
+        {
+            bg_var = background_add(vanilla_directory_const+"\TEX\menu\menu_tex.png",false,false);
+            light_01_bg_var = background_add(vanilla_directory_const+"\TEX\menu\menu2_tex.png",false,false);
+            light_02_bg_var = background_add(vanilla_directory_const+"\TEX\menu\menu3_tex.png",false,false);
+            path_bg_var = background_add(vanilla_directory_const+"\TEX\menu\path_tex.png",false,false);
+            
+        }
+        else // Day
+        {
+            bg_var = background_add(main_directory_const+"\BG\UI\menu_bg.png",false,false);
+            path_bg_var = background_add(main_directory_const+"\BG\UI\menu_path_bg.png",false,false);
+            menu_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\menu_mus_snd.mp3");
+            background_color = make_color_rgb(31,37,89);
+        }
         menu_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\menu_mus_snd.mp3");
     }
     title_y_var = 141; // 170
     title_02_y_var = 270;
     // Backgrounds
     cloud_bg_var = background_add(vanilla_directory_const+"\TEX\menu\menu_clouds2_tex.png",false,false);
-    path_bg_var = background_add(vanilla_directory_const+"\TEX\menu\path_tex.png",false,false);
     path_cloud_bg_var = background_add(vanilla_directory_const+"\TEX\menu\menu_clouds_tex.png",false,false);
     multi_bg_var = background_add(main_directory_const+"\BG\UI\multi_bg.png",false,false);
     light_bg_var = light_01_bg_var;
@@ -917,6 +935,12 @@ object_event_add
     spook_alpha_max_var = 0.2;
     spook_alarm_var = 25;
     flash_alarm_var = 3;
+    // Rain
+    if rain_var
+    {
+        part_emitter_stream(rain_part_sys,rain_part_emit,rain_part_type[0],1);
+        rain_inst_var = fmod_snd_loop_scr(rain_snd);
+    }
     // Old
     title_alarm_min_var = 60;
     title_alarm_max_var = 240;
@@ -970,8 +994,11 @@ object_event_add
 (argument0,ev_other,ev_room_end,'
     background_delete(bg_var);
     background_delete(cloud_bg_var);
-    background_delete(light_01_bg_var);
-    background_delete(light_02_bg_var);
+    if rain_var
+    {
+        background_delete(light_01_bg_var);
+        background_delete(light_02_bg_var);
+    }
     background_delete(path_bg_var);
     background_delete(path_cloud_bg_var);
     background_delete(multi_bg_var);
@@ -984,6 +1011,7 @@ object_event_add
 	fmod_snd_free_scr(confirm_snd_var);
     fmod_snd_free_scr(select_snd_var);
 	fmod_snd_free_scr(start_snd_var);
+    fmod_inst_stop_scr(rain_inst_var);
     for (local.i=0; local.i<sub_bg_len_var; local.i+=1;)
     { background_delete(sub_bg_arr[local.i]); }
 ');
@@ -997,6 +1025,7 @@ object_event_add
     if alarm_arr[6,0] > 0 { light_alpha_02_var = alarm_arr[6,0]/alarm_arr[6,1]; }
     if alarm_arr[7,0] > 0 { spook_alpha_var = spook_alpha_max_var*alarm_arr[7,0]/alarm_arr[7,1]; }
     if alarm_arr[9,0] > 0 { cloud_prog_var = alarm_arr[9,0]/alarm_arr[9,1]; }
+    if rain_var { part_system_update(rain_part_sys); }
     switch state_var
     {
         case 0: // Story
@@ -1841,7 +1870,7 @@ object_event_add
     event_user(0);
     event_perform(ev_alarm,3);
     set_alarm_scr(5,irandom_range(light_delay_min_var,light_delay_max_var));
-    set_alarm_scr(2,light_alarm_max_var);
+    if rain_var { set_alarm_scr(2,light_alarm_max_var); }
     if old_var
     {
         set_alarm_scr(12,title_01_anim_var);
@@ -1960,16 +1989,33 @@ object_event_add
 // Draw
 object_event_add
 (argument0,ev_draw,0,'
+    d3d_set_fog(false,c_black,0,0);
+    d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
+    d3d_set_hidden(false);
+
     if story_prog_var > 0
     { local.ytmp = -story_prog_var*1440; }
     else { local.ytmp = 0; }
     local.width = view_hview[view_current]*16/9;
     draw_bg_fit_scr(bg_var,0,local.ytmp);
-    draw_bg_fit_ext_scr(light_01_bg_var,0,local.ytmp,0,c_white,light_alpha_01_var);
-    draw_bg_fit_ext_scr(light_02_bg_var,0,local.ytmp,0,c_white,light_alpha_02_var);
-    draw_bg_tiled_stretch_scr(cloud_bg_var,cloud_prog_var*1243,18+local.ytmp,1243,0,0); // Stretch X, Tile X
+
+    if rain_var
+    {
+        // Lightning
+        draw_bg_fit_ext_scr(light_01_bg_var,0,local.ytmp,0,c_white,light_alpha_01_var);
+        draw_bg_fit_ext_scr(light_02_bg_var,0,local.ytmp,0,c_white,light_alpha_02_var);
+        draw_bg_tiled_stretch_scr(cloud_bg_var,cloud_prog_var*1243,18+local.ytmp,1243,0,0); // Stretch X, Tile X
+
+        // Rain Particles
+        d3d_set_projection_ortho(0,0,1280,720,0);
+        part_system_drawit(rain_part_sys);
+        d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
+    }
+
+    // Effects
     draw_spr_stretch_ext_scr(spooky_spr,0,0,0,1520,0,fa_center,fa_middle,0,c_white,spook_alpha_var);
     if flash_var { draw_rectangle(0,0,view_wview[view_current],view_hview[view_current],false); }
+
     switch state_var
     {
         case 0: // Story

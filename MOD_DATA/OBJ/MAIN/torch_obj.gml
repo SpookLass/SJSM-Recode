@@ -15,11 +15,11 @@ object_event_add
     mdl_path_var = torch_mdl_path;
     on_var = true;
     // Light stuff
-    local.light = instance_create(x+lengthdir_x(-1.5,direction+90),y+lengthdir_y(-1.5,direction+90),light_torch_obj);
-    local.light.z += z;
-    local.light.gold_var = gold_var;
-    local.light.color_var = !gold_var;
-    local.light.par_var = id;
+    light_var = instance_create(x+lengthdir_x(-1.5,direction+90),y+lengthdir_y(-1.5,direction+90),light_torch_obj);
+    light_var.z += z;
+    light_var.gold_var = gold_var;
+    light_var.color_var = !gold_var;
+    light_var.par_var = id;
     if auto_var { event_perform(ev_other,ev_user0); }
     // Gold
     door_var = noone;

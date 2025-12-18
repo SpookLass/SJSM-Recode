@@ -455,7 +455,7 @@ object_event_add
         active_var = abs(local.input_dir_x) || abs(local.input_dir_y) || abs(local.input_dir_z)
         || global.input_arr[sprint_input_const,player_id_var] || global.input_arr[jump_input_const,player_id_var]
         || global.input_arr[crouch_input_const,player_id_var] || global.input_arr[attack_input_const,player_id_var];
-        if active_var && !dead_var && !taker_spawn_var
+        if active_var && !global.in_door_var && !dead_var && !taker_spawn_var
         { set_alarm_scr(3,taker_alarm_var); }
         // Sprint
         sprint_var = do_sprint_var && global.input_arr[sprint_input_const,player_id_var] && (stam_var > 0 || !do_stam_var);

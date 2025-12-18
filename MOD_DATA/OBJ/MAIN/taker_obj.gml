@@ -8,7 +8,7 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create Event
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
     // Render
     spr_var = taker_spr;
     spr_id_var = 0;
@@ -62,15 +62,29 @@ object_event_add
     x = global.spawn_arr[0,0]-lengthdir_x(32,yaw_var);
     y = global.spawn_arr[0,1]-lengthdir_y(32,yaw_var);
     z = global.spawn_arr[0,2];
-");
+    // Music
+    with instance_create(0,0,mus_par_obj)
+    {
+        par_var = other.id;
+        prio_var = mb_mus_prio_const;
+        snd_var = taker_mus_snd;
+    }
+    with mus_control_obj { event_user(0); }
+');
+// Destroy Event
+object_event_add
+(argument0,ev_destroy,0,'
+    with mus_par_obj { if par_var == other.id { instance_destroy(); }}
+    with mus_control_obj { event_user(0); }
+');
 // Delay Alarm
 object_event_add
-(argument0,ev_alarm,0,"
+(argument0,ev_alarm,0,'
     on_var = true;
-");
+');
 // Step Event
 object_event_add
-(argument0,ev_step,ev_step_normal,"
+(argument0,ev_step,ev_step_normal,'
     if instance_exists(target_var) && !target_var.dead_var && target_var.on_var
     {
         if on_var
@@ -128,10 +142,10 @@ object_event_add
         }
     }
     else { instance_destroy(); }
-");
+');
 // Draw Event
 object_event_add
-(argument0,ev_draw,0,"
+(argument0,ev_draw,0,'
     if (on_var || visible_var) && (cam_id_var == view_current || cam_id_var < 0)
     {
         draw_set_color(image_blend); draw_set_alpha(image_alpha);
@@ -142,4 +156,4 @@ object_event_add
         d3d_transform_set_identity();
         draw_set_color(c_white); draw_set_alpha(1);
     }
-");
+');

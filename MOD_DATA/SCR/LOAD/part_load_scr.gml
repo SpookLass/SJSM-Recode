@@ -2,6 +2,30 @@
 draw_clear_alpha(c_black,0);
 draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading particles...",1,1,0);
 screen_refresh();
+// Rain
+globalvar rain_part_sys;
+globalvar rain_part_type;
+globalvar rain_part_emit;
+rain_part_sys = part_system_create();
+
+rain_part_type[0] = part_type_create();
+part_type_shape(rain_part_type[0],pt_shape_line);
+part_type_size(rain_part_type[0],0.10,0.20,0,0);
+part_type_scale(rain_part_type[0],2,1);
+part_type_color1(rain_part_type[0],12632256);
+part_type_alpha2(rain_part_type[0],0.50,0.10);
+part_type_speed(rain_part_type[0],10,20,0,0);
+part_type_direction(rain_part_type[0],270,270,0,0);
+part_type_gravity(rain_part_type[0],0,270);
+part_type_orientation(rain_part_type[0],90,90,0,0,0);
+part_type_blend(rain_part_type[0],0);
+part_type_life(rain_part_type[0],10,50);
+
+rain_part_emit = part_emitter_create(rain_part_sys);
+part_emitter_region(rain_part_sys,rain_part_emit,0,1280,-64,0,ps_shape_rectangle,0);
+
+part_system_automatic_draw(rain_part_sys,false);
+part_system_automatic_update(rain_part_sys,false);
 // Dollhouse
 globalvar film_part_sys;
 globalvar film_part_type;
@@ -41,8 +65,7 @@ part_type_alpha1(film_part_type[2],0.20);
 film_part_emit = part_emitter_create(film_part_sys);
 part_emitter_region(film_part_sys,film_part_emit,0,1280,0,720,ps_shape_rectangle,0);
 
-part_system_automatic_draw(film_part_sys,false);
-part_system_automatic_update(film_part_sys,false);
+
 // Draw
 draw_clear_alpha(c_black,0);
 draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loaded particles!",1,1,0);
