@@ -30,7 +30,7 @@ object_event_add
     if gold_var
     {
         if instance_exists(door_var) 
-        { on_var = !door_var.lock_var; }
+        { on_var = (door_var.lock_var != 1); }
     }
 ');
 // Draw

@@ -21,8 +21,7 @@ object_set_visible(argument0,true);
         3: Min clamped number
         4: Max clamped number
         5: String
-        6: Control
-        
+        6: Control 
 */
 // Create Event
 object_event_add
@@ -1258,8 +1257,7 @@ object_event_add
                                 case 2: { preset_var = "ps"; break; }
                                 case 3: { preset_var = "switch"; break; }
                                 case 4: { preset_var = "snes"; break; }
-                                case 5: { preset_var = "snes"; break; }
-                                case 6:
+                                case 5:
                                 {
                                     preset_var = get_string("Custom preset","");
                                     break;

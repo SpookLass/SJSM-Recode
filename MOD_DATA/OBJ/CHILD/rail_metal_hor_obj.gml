@@ -12,4 +12,5 @@ object_event_add
     direction = 90;
     store_tex_var = rail_metal_bg_tex;
     event_inherited();
+    coll_var[0] = global.rail_metal_coll[0];
 ");

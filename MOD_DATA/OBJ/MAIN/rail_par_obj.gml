@@ -7,10 +7,11 @@ object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Collisions
-p3dc_set_trimask_scr(mask_metal_const);
 global.rail_coll[1] = 14;
 global.rail_coll[2] = 32;
 global.rail_coll[0] = prop_to_coll_scr(1,'',global.rail_coll[2],0,global.rail_coll[1],false,0,3);
+p3dc_set_trimask_scr(mask_metal_const);
+global.rail_metal_coll[0] = prop_to_coll_scr(1,'',global.rail_coll[2],0,global.rail_coll[1],false,0,3);
 p3dc_set_trimask_scr(mask_basic_const);
 // Create event
 object_event_add

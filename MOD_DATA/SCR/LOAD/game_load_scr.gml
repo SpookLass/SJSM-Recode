@@ -31,6 +31,8 @@ execute_file(main_directory_const+"\SCR\LOAD\zone_load_scr.gml");
 execute_file(main_directory_const+"\SCR\LOAD\tex_load_scr.gml");
 execute_file(main_directory_const+"\SCR\LOAD\js_load_scr.gml");
 // Temporary Specimen Spawn List
+
+
 global.mon_list = ds_list_create();
 ds_list_clear(global.mon_list);
 ds_list_add(global.mon_list,gel_obj); // Story
@@ -65,6 +67,7 @@ if file_exists(working_directory+"\The_Doll_House\SDH.exe") // Dollhouse
     ds_list_add(global.mon_list,wc_obj);
     ds_list_add(global.mon_list,clown_obj);
     ds_list_add(global.mon_list,hk_obj);
+    ds_list_add(global.mon_list,frenzy_obj);
 }
 global.mon_spawn_list = ds_list_create();
 ds_list_clear(global.mon_spawn_list);

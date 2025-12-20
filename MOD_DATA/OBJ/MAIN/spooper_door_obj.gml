@@ -65,7 +65,7 @@ object_event_add
         if hp_var <= 0
         { event_user(15); }
     }
-    with door_trig_obj { if spooper_var { lock_var = false; }}
+    with door_trig_obj { if lock_var == 2 { lock_var = false; }}
     with object_index { instance_destroy(); }
     
 ');
@@ -81,7 +81,7 @@ object_event_add
         local.bestspawn = -1;
         for (local.i=1; local.i<local.spawns; local.i+=1;)
         {
-            if global.spawn_arr[local.i,4].spooper_var == true
+            if global.spawn_arr[local.i,4].lock_var == 2
             {
                 with player_obj
                 {

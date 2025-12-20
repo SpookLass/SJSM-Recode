@@ -60,6 +60,7 @@ object_event_add
             other.bg_overlay_var = bg_overlay_var;
             other.wake_snd_var[1] = wake_snd_var[1];
             other.mus_snd_var = mus_snd_var;
+            other.scare_snd_var = scare_snd_var;
             local.loaded = true;
             break;
         }
@@ -70,6 +71,7 @@ object_event_add
         spr_var = sprite_add(main_directory_const+"\SPR\MON\patient_spr.png",3,false,false,0,0); // vanilla_directory_const+"\3D\npc_6_tex.png"
         wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\patient_wake_snd.wav",global.wake_3d_var);
         mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\patient_mus_snd.mp3");
+        scare_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\KH\scare_01_snd.wav");
         fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
         mdl_01_var = d3d_model_create();
         mdl_02_var = d3d_model_create();
@@ -101,6 +103,17 @@ object_event_add
     overlay_var = true;
     overlay_color_var = c_white;
     overlay_alpha_var = 0.1;
+    // Die
+    hp_var = 8;
+    do_hurt_var = 3;
+    hurt_hp_var = 1;
+    hurt_die_var = 2;
+    hurt_snd_var = 1;
+    die_color_var = c_black;
+    die_alarm_01_var = 60;
+    die_alarm_02_var = 66;
+    die_alarm_03_var = 300;
+    die_alarm_03_var = 300;
     // Behavior
     if global.patient_type_var == -1 { local.type = irandom(2); }
     else { local.type = global.patient_type_var; }
@@ -129,7 +142,11 @@ object_event_add
             sil_dist_var = 0.1;
             break;
         }
-        case 2:
+        case 3: // HD Karamari
+        {
+            local.set = true;
+        }
+        case 2: // HD
         {
             dur_var = irandom_range(10,15);
             hang_var = false;
@@ -150,14 +167,24 @@ object_event_add
             inv_limit_var = 30;
             back_tp_alarm_var = 60;
             // Hurt
-            hurt_snd_var = 3;
-            do_hurt_var = 2;
-            hurt_dur_var = 1;
-            hurt_die_var = 1;
-            stun_var = true;
+            if !local.set
+            {
+                do_hurt_var = 2;
+                hurt_die_var = 1;
+                hurt_dur_var = 1;
+                hurt_snd_var = 3;
+                hurt_hp_var = 0;
+            }
+            // You must DIE
+            die_color_var = c_blue;
+            die_alarm_01_var = 60;
+            die_alarm_02_var = 60;
+            die_alarm_03_var = 36;
+            die_alarm_04_var = 120;
+            stun_var = 2;
             break;
         }
-        case 3: // Old Recode / Plus
+        case 4: // Old Recode / Plus
         {
             seen_pitch_01_var = 3.434;
             seen_pitch_02_var = 30;
@@ -183,7 +210,7 @@ object_event_add
         do_anim_var = -1;
     }
     // Alarms
-    alarm_len_var = 13;
+    alarm_len_var = 15;
     // Bools
     do_mdl_var = true;
     do_snd_var = -1;
@@ -201,6 +228,7 @@ object_event_add
         d3d_model_destroy(mdl_02_var);
         fmod_snd_free_scr(mus_snd_var);
         fmod_snd_free_scr(wake_snd_var[1]);
+        fmod_snd_free_scr(scare_snd_var);
     }
     with fog_overlay_obj
     { if par_var == other.id { instance_destroy(); }}
@@ -350,50 +378,100 @@ object_event_add
         rage_var = true;
     }
 ');
+// Die Alarm
+object_event_add
+(argument0,ev_alarm,13,'
+    image_alpha = 0;
+    with fade_eff_obj
+    {
+        if par_var == other.id
+        { instance_destroy(); }
+    }
+    with instance_create(0,0,fade_eff_obj)
+    {
+        par_var = other.id;
+        stay_var = false;
+        invert_var = false;
+        image_blend = other.die_color_var;
+        set_alarm_scr(0,other.die_alarm_03_var);
+    }
+    set_alarm_scr(14,die_alarm_04_var);
+');
+// Die Alarm 2
+object_event_add
+(argument0,ev_alarm,14,'
+    instance_destroy();
+');
+// Die event
+object_event_add
+(argument0,ev_other,ev_user11,'
+    move_var = false;
+    anim_var = false;
+    atk_var = false;
+    dead_var = true;
+    hurt_var = true;
+    dur_var = 1;
+    reset_alarm_scr();
+    with fade_eff_obj
+    {
+        par_var = other.id;
+        stay_var = true;
+        invert_var = true;
+        image_blend = other.die_color_var;
+        set_alarm_scr(0,other.die_alarm_01_var);
+    }
+    set_alarm_scr(13,die_alarm_02_var);
+    fmod_snd_play_scr(scare_snd_var);
+');
 // Step event
 object_event_add
 (argument0,ev_step,ev_step_normal,'
-    if hang_var
+    if on_var
     {
-        if is_seen_var == 1 && target_dist_var <= 200 // Look target is so weird
+        if hang_var
         {
-            hang_var = false;
-            visible = true;
-            seen_yaw_var = seen_yaw_02_var;
-            seen_pitch_var = seen_pitch_02_var;
-            if fmod_snd_is_3d_scr(wake_snd_var[1]) { snd_var = fmod_snd_3d_play_scr(wake_snd_var[1]); }
-            else { snd_var = fmod_snd_play_scr(wake_snd_var[1]); }
-            sub_var[0] = wake_snd_var[2];
-            sub_var[1] = wake_snd_var[3];
-            do_anim_var = false;
-            anim_var = false;
-            set_alarm_scr(11,fmod_inst_get_len_scr(snd_var)*milli_frame_rate_const/global.game_spd_var);
-            event_perform(ev_other,ev_room_start);
-        }
-    }
-    else
-    {
-        if is_seen_var == 1
-        {
-            spd_mult_var *= seen_spd_mult_var;
-            if tp_alarm_var > 0 && alarm_arr[9,0] <= 0 { set_alarm_scr(9,tp_alarm_var); }
-            if seen_rage_var && !rage_var && alarm_arr[12,0] <= 0 { set_alarm_scr(12,rage_alarm_var); }
-            if image_alpha == 0 && inv_limit_var > 0 { inv_time_var += global.delta_time_var; }
-        }
-        else
-        {
-            if alarm_arr[9,0] > 0 { set_alarm_scr(9,-1); }
-            if alarm_arr[12,0] > 0 { set_alarm_scr(12,-1); }
-            if seen_rage_var == 2 { rage_var = false; }
-        }
-        if back_tp_alarm_var > 0
-        {
-            if is_seen_var == 0
+            if is_seen_var == 1 && target_dist_var <= 200 // Look target is so weird
             {
-                if alarm_arr[10,0] <= 0 { set_alarm_scr(10,back_tp_alarm_var); }
+                hang_var = false;
+                visible = true;
+                seen_yaw_var = seen_yaw_02_var;
+                seen_pitch_var = seen_pitch_02_var;
+                if fmod_snd_is_3d_scr(wake_snd_var[1]) { snd_var = fmod_snd_3d_play_scr(wake_snd_var[1]); }
+                else { snd_var = fmod_snd_play_scr(wake_snd_var[1]); }
+                sub_var[0] = wake_snd_var[2];
+                sub_var[1] = wake_snd_var[3];
+                do_anim_var = false;
+                anim_var = false;
+                set_alarm_scr(11,fmod_inst_get_len_scr(snd_var)*milli_frame_rate_const/global.game_spd_var);
+                event_perform(ev_other,ev_room_start);
             }
-            else if alarm_arr[10,0] > 0 { set_alarm_scr(10,-1); }
         }
+        else if !dead_var
+        {
+            if is_seen_var == 1
+            {
+                spd_mult_var *= seen_spd_mult_var;
+                if tp_alarm_var > 0 && alarm_arr[9,0] <= 0 { set_alarm_scr(9,tp_alarm_var); }
+                if seen_rage_var && !rage_var && alarm_arr[12,0] <= 0 { set_alarm_scr(12,rage_alarm_var); }
+                if image_alpha == 0 && inv_limit_var > 0 { inv_time_var += global.delta_time_var; }
+            }
+            else
+            {
+                if alarm_arr[9,0] > 0 { set_alarm_scr(9,-1); }
+                if alarm_arr[12,0] > 0 { set_alarm_scr(12,-1); }
+                if seen_rage_var == 2 { rage_var = false; }
+            }
+            if back_tp_alarm_var > 0
+            {
+                if is_seen_var == 0
+                {
+                    if alarm_arr[10,0] <= 0 { set_alarm_scr(10,back_tp_alarm_var); }
+                }
+                else if alarm_arr[10,0] > 0 { set_alarm_scr(10,-1); }
+            }
+        }
+        else if alarm_arr[12,0] > 0
+        { image_alpha = alarm_arr[12,0]/alarm_arr[12,1]; }
     }
     if !draw_pos_var
     {
@@ -420,9 +498,10 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user4,'
     event_inherited();
-    if stun_var
+    if stun_var == 2
     {
         on_var = false;
+        set_motion_3d_scr(0,true);
         with instance_create(0,0,flash_eff_obj)
         {
             image_blend = c_red;

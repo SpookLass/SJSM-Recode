@@ -81,6 +81,7 @@ object_event_add
             { other.glitch_snd_arr[local.i] = glitch_snd_arr[local.i]; }
             for (local.i=0; local.i<dmg_snd_len_var; local.i+=1;)
             { other.dmg_snd_arr[local.i,0] = dmg_snd_arr[local.i,0]; }
+            other.scare_snd_var = scare_snd_var;
             other.mus_snd_var = mus_snd_var;
             local.loaded = true;
             break;
@@ -106,6 +107,7 @@ object_event_add
         glitch_snd_arr[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_02_snd.wav");
         glitch_snd_arr[2] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_03_snd.wav");
         glitch_snd_arr[3] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_04_snd.wav");
+        scare_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\KH\scare_01_snd.wav");
         for (local.i=0; local.i<glitch_snd_len_var; local.i+=1;)
         { fmod_snd_set_group_scr(glitch_snd_arr[local.i],snd_group_mon_const); }
         dmg_snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\cow_01_snd.wav");
@@ -154,6 +156,17 @@ object_event_add
     spawn_dist_var = 200;
     // Funny
     upside_var = false;
+    // Die
+    hp_var = 8;
+    do_hurt_var = 3;
+    hurt_hp_var = 1;
+    hurt_die_var = 2;
+    hurt_snd_var = 1;
+    die_color_var = c_black;
+    die_alarm_01_var = 60;
+    die_alarm_02_var = 66;
+    die_alarm_03_var = 300;
+    die_alarm_03_var = 300;
     // Behavior
     if global.gc_type_var == -1 { local.type = irandom(6); }
     else { local.type = global.gc_type_var; }
@@ -254,7 +267,15 @@ object_event_add
                 hurt_die_var = 1;
                 hurt_dur_var = 1;
                 hurt_snd_var = 3;
+                hurt_hp_var = 0;
             }
+            // You must DIE
+            die_color_var = c_blue;
+            die_alarm_01_var = 60;
+            die_alarm_02_var = 60;
+            die_alarm_03_var = 36;
+            die_alarm_04_var = 120;
+            stun_var = 2;
             // Autobrake (close enough)
             autobrake_var = true;
             autobrake_spd_var = 0;
@@ -273,7 +294,7 @@ object_event_add
         }
     }
     // Alarms
-    alarm_len_var = 12;
+    alarm_len_var = 14;
     event_inherited();
     if upside_var { z_off_var = 24.5; } // 21.3
     do_snd_var = false;
@@ -294,6 +315,7 @@ object_event_add
         { fmod_snd_free_scr(glitch_snd_arr[local.i]); }
         for (local.i=0; local.i<dmg_snd_len_var; local.i+=1;)
         { fmod_snd_free_scr(dmg_snd_arr[local.i,0]); }
+        fmod_snd_free_scr(scare_snd_var);
         background_delete(bg_var);
         background_delete(wall_bg_var);
         background_delete(floor_bg_var);
@@ -392,6 +414,13 @@ object_event_add
     { set_alarm_scr(8,irandom_range(rand_alarm_min_var,rand_alarm_max_var)); }
     if move_type_var == 3
     { set_alarm_scr(11,move_alarm_var); }
+');
+// Step Event
+object_event_add
+(argument0,ev_step,ev_step_normal,'
+    if on_var && dead_var && alarm_arr[12,0] > 0
+    { image_alpha = alarm_arr[12,0]/alarm_arr[12,1]; }
+    event_inherited();
 ');
 // Movement
 object_event_add
@@ -531,6 +560,30 @@ object_event_add
     }
     set_alarm_scr(11,move_alarm_var);
 ');
+// Die Alarm
+object_event_add
+(argument0,ev_alarm,12,'
+    image_alpha = 0;
+    with fade_eff_obj
+    {
+        if par_var == other.id
+        { instance_destroy(); }
+    }
+    with instance_create(0,0,fade_eff_obj)
+    {
+        par_var = other.id;
+        stay_var = false;
+        invert_var = false;
+        image_blend = other.die_color_var;
+        set_alarm_scr(0,other.die_alarm_03_var);
+    }
+    set_alarm_scr(13,die_alarm_04_var);
+');
+// Die Alarm 2
+object_event_add
+(argument0,ev_alarm,13,'
+    instance_destroy();
+');
 // Animation
 object_event_add
 (argument0,ev_other,ev_user1,'
@@ -612,22 +665,46 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user4,'
     event_inherited();
-    x = global.spawn_arr[0,0];
-    y = global.spawn_arr[0,1];
-    z = global.spawn_arr[0,2];
-    set_motion_scr(0,true);
-    with instance_create(0,0,flash_eff_obj)
+    if stun_var == 2
     {
-        image_blend = c_red;
-        cam_id_var = hurt_target_var.cam_id_var;
-        set_alarm_scr(0,18);
+        x = global.spawn_arr[0,0];
+        y = global.spawn_arr[0,1];
+        z = global.spawn_arr[0,2];
+        set_motion_scr(0,true);
+        with instance_create(0,0,flash_eff_obj)
+        {
+            image_blend = c_red;
+            cam_id_var = hurt_target_var.cam_id_var;
+            set_alarm_scr(0,18);
+        }
+        with instance_create(0,0,fade_eff_obj)
+        {
+            image_blend = other.die_color_var;
+            cam_id_var = hurt_target_var.cam_id_var;
+            set_alarm_scr(0,18);
+        }
     }
-    with instance_create(0,0,fade_eff_obj)
+');
+// Die event
+object_event_add
+(argument0,ev_other,ev_user11,'
+    move_var = false;
+    anim_var = false;
+    atk_var = false;
+    dead_var = true;
+    hurt_var = true;
+    dur_var = 1;
+    reset_alarm_scr();
+    with fade_eff_obj
     {
-        image_blend = c_blue;
-        cam_id_var = hurt_target_var.cam_id_var;
-        set_alarm_scr(0,18);
+        par_var = other.id;
+        stay_var = true;
+        invert_var = true;
+        image_blend = other.die_color_var;
+        set_alarm_scr(0,other.die_alarm_01_var);
     }
+    set_alarm_scr(12,die_alarm_02_var);
+    fmod_snd_play_scr(scare_snd_var);
 ');
 // Draw Event
 object_event_add

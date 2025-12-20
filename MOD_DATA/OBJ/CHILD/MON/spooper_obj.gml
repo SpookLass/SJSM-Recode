@@ -244,8 +244,7 @@ object_event_add
                 {
                     with global.spawn_arr[local.i,4]
                     {
-                        lock_var = true;
-                        spooper_var = true;
+                        lock_var = 2;
                         txt_lock_var = other.txt_lock_var;
                     }
                     if !local.spawn || door_type_var != 2

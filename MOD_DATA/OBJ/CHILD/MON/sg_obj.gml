@@ -138,7 +138,7 @@ object_event_add
     {
         case 0:
         {
-            charge_alarm_01_var = 15;
+            // charge_alarm_01_var = 15;
             spawn_dist_var = 96;
             dmg_var = 30;
             atk_range_var = coll_var[2];
@@ -282,7 +282,7 @@ object_event_add
         anim_var = false;
         charge_yaw_var = point_direction(x,y,target_x_var,target_y_var);
         set_alarm_scr(8,charge_alarm_01_var);
-        set_motion_3d_scr(0,true);
+        set_motion_3d_scr(0,true,charge_yaw_var,true);
     }
 ');
 // Start Charging

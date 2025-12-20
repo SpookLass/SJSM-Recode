@@ -506,7 +506,10 @@ object_event_add
                     set_alarm_scr(0,fall_dmg_alarm_var);
                 }
                 hurt_target_var = id;
-                event_perform(ev_other,ev_user0);
+                fmod_snd_play_scr(claw_snd);
+                with instance_create(0,0,blood_eff_obj)
+                { cam_id_var = other.cam_id_var; }
+                event_user(0);
             }
             else
             {

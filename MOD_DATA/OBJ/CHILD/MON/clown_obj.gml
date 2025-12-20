@@ -116,7 +116,7 @@ object_event_add
 ');
 // Destroy Event
 object_event_add
-(argument0,ev_destroy,0,"
+(argument0,ev_destroy,0,'
     event_inherited();
     with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
     if !local.bool
@@ -127,24 +127,52 @@ object_event_add
         for (local.i=0; local.i<snd_len_var; local.i+=1;)
         { fmod_snd_free_scr(snd_arr[local.i,0]); }
     }
-");
+');
 // Room Start Event
 object_event_add
 (argument0,ev_other,ev_room_start,'
     if dur_var == 1
     {
+        // Damn Doors
+        local.mon = id;
         with door_trig_obj
         {
-            par_var = other.id;
-            instance_change(clown_door_trig_obj,true);
-            instance_destroy();
+            if object_index != clown_door_trig_obj
+            {
+                local.door = id;
+                with instance_create(x,y,clown_door_trig_obj)
+                {
+                    par_var = local.mon;
+                    // Collision
+                    coll_var[0] = local.door.coll_var[0];
+                    coll_var[1] = local.door.coll_var[1];
+                    coll_var[2] = local.door.coll_var[2];
+                    // Text
+                    do_txt_var = local.door.do_txt_var;
+                    txt_var = local.door.txt_var;
+                    txt_lock_var = local.door.txt_lock_var;
+                    shadow_off_var = local.door.shadow_off_var;
+                    // Sound
+                    snd_len_var = local.door.snd_len_var;
+                    for (local.i=0; local.i<snd_len_var; local.i+=1)
+                    { snd_arr[local.i] = local.door.snd_arr[local.i]; }
+                    // Function
+                    rm_count_var = local.door.rm_count_var;
+                    delay_var = local.door.delay_var;
+                    zone_var = local.door.zone_var;
+                    rm_var = local.door.rm_var;
+                    // HELP
+                    event_perform(ev_other,ev_room_start);
+                }
+                instance_destroy();
+            }
         }
     }
     event_inherited();
 ');
 // Step event
 object_event_add
-(argument0,ev_step,ev_step_normal,"
+(argument0,ev_step,ev_step_normal,'
     event_inherited();
     // Seem stuff
     if is_seen_var == 1
@@ -169,7 +197,7 @@ object_event_add
         }
         if alarm_arr[6,0] <= 0 { set_alarm_scr(6,irandom_range(snd_alarm_min_var,snd_alarm_max_var)); }
     }
-");
+');
 // Leave
 object_event_add
 (argument0,ev_other,ev_user15,'

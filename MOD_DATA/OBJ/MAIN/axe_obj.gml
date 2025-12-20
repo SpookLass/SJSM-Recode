@@ -14,6 +14,8 @@ object_event_add
     type_var = 0;
     stam_start_var = 10;
     stam_end_var = 10;
+    check_stam_var = false;
+    good_var = true;
     spr_spd_var = 0;
     spr_spd_raise_var = 0.5;
     spr_spd_swing_var = 0.25;
@@ -25,6 +27,22 @@ object_event_add
     coll_var[1] = global.axe_coll[1];
     coll_var[2] = global.axe_coll[2];
     coll_var[3] = global.axe_coll[3];
+    switch global.axe_type_var
+    {
+        case 1:
+        {
+            stam_start_var = 0;
+            stam_end_var = 20;
+            break;
+        }
+        case 2:
+        {
+            check_stam_var = true;
+            good_var = false;
+            spr_spd_raise_var = 30/69; // 13.8 frames
+            spr_spd_swing_var = 1; // 6 frames
+        }
+    }
 ');
 // Step Event
 object_event_add
@@ -36,7 +54,8 @@ object_event_add
         {
             case 0:
             {
-                if global.input_press_arr[attack_input_const,par_var.player_id_var] && (par_var.stam_var > stam_start_var || stam_start_var <= 0 || !par_var.do_stam_var)
+                if global.input_press_arr[attack_input_const,par_var.player_id_var]
+                && (par_var.stam_var > stam_start_var || stam_start_var <= 0 || !par_var.do_stam_var || !check_stam_var)
                 {
                     visible = true;
                     state_var = 1;
@@ -50,7 +69,7 @@ object_event_add
             }
             case 1:
             {
-                if spr_id_var >= sprite_get_number(spr_var) || !global.input_arr[attack_input_const,par_var.player_id_var]
+                if spr_id_var >= sprite_get_number(spr_var) || (!global.input_arr[attack_input_const,par_var.player_id_var] && good_var)
                 {
                     spr_id_var = sprite_get_number(spr_var) - 1;
                     spr_spd_var = 0;

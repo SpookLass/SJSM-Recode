@@ -134,7 +134,7 @@ object_event_add
     spr_var = spr_base_var;
     tex_var = sprite_get_texture(spr_var,irandom(sprite_get_number(spr_var)));
     // Behavior
-    if global.pup_type_var == -1 { local.type = irandom(6); }
+    if global.pup_type_var == -1 { local.type = irandom(5); }
     else { local.type = global.pup_type_var; }
     switch local.type
     {
