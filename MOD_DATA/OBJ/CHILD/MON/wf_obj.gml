@@ -212,6 +212,7 @@ object_event_add
             spr_spd_var = 1/6; // 0.1r6 I think
             move_type_var = 2;
             do_fog_var = false;
+            web_start_var = 0;
             // Teleport
             tp_dist_min_var = 320/3; // 106.r6
             tp_dist_max_var = 2560/3; // 853.r3

@@ -18,7 +18,8 @@ object_event_add
     // Text
     do_str_var = true;
     ini_open(global.lang_var)
-    str_var = ini_read_string("UI","interact","UI_interact");
+    str_var = ini_read_string("UI","look","UI_look");
+    ini_close();
     shadow_off_var = 2;
 ');
 // Step Event

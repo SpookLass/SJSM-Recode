@@ -46,7 +46,7 @@ if local.coll_prec
 }
 if p3dc_check_split_scr(local.coll,local.xtmp,local.ytmp,local.ztmp+0.01) || local.ray_coll { return true; }
 // Check float if it exists
-if !float_var && !float_temp_var && on_floor_var && global.room_float_coll != -1
+if !fall_spr && !fall_temp_var && on_floor_var && global.room_float_coll != -1
 {
     if local.coll_prec
     {

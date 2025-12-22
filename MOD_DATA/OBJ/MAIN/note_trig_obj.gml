@@ -10,7 +10,9 @@ object_set_visible(argument0,false);
 object_event_add
 (argument0,ev_create,0,'
     event_inherited();
+    ini_open(global.lang_var);
     str_var = ini_read_string("UI","read","UI_read");
+    ini_close();
 ');
 // Step Event
 object_event_add

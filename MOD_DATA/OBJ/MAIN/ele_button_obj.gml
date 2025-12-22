@@ -38,11 +38,15 @@ object_event_add
     coll_var[1] = global.ele_button_coll[1];
     coll_var[2] = global.ele_button_coll[2];
     // Trigger
+    ini_open(global.lang_var);
+    str_var = ini_read_string("UI","button_look","UI_button_look");
+    ini_close();
     local.xtmp = x+lengthdir_x(global.trig_coll[2]/2,direction);
     local.ytmp = y+lengthdir_y(global.trig_coll[2]/2,direction);
     trig_var = instance_create(local.xtmp,local.ytmp,interact_trig_obj);
     trig_var.weapon_var = true;
     trig_var.par_var = id;
+    trig_var.str_var = str_var;
 ');
 // Trigger Event
 object_event_add

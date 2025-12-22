@@ -171,7 +171,7 @@ object_event_add
 			spd_min_var = 16/45;
 			spd_max_var = 56/45; // 8/9?
 			// Teleport
-			tp_type_var = 2;
+			tp_type_var = 1;
 			tp_alarm_min_var = 600;
 			tp_alarm_max_var = 1200;
 			tp_dist_min_var = 128/3;
@@ -437,7 +437,7 @@ object_event_add
 					x = local.xtmp;
 					y = local.ytmp;
 					z = local.ztmp;
-					break;
+					exit;
 				}
 			}
             break;
@@ -463,11 +463,10 @@ object_event_add
 						x = local.xtmp;
 						y = local.ytmp;
 						z = local.ztmp;
-						break;
+						exit;
 					}
 				}
 			}
-            break;
         }
 		case 2:
         {

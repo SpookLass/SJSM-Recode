@@ -337,6 +337,11 @@ object_event_add
         // Get inputs
         local.input_dir_x = input_x_scr(player_id_var);
         local.input_dir_y = input_y_scr(player_id_var);
+        if invert_var // Sorry I need this for Plus
+        {
+            local.input_dir_x *= -1;
+            local.input_dir_y *= -1;
+        }
         local.input_dir = radtodeg(arctan2(-local.input_dir_y,local.input_dir_x));
         // Extra movement handling
         if do_coll_var && grav_var > 0
@@ -489,7 +494,7 @@ object_event_add
             if back_var { local.spd *= lerp_scr(1,back_spd_mult_var,abs(local.input_dir)/180); }
             acc_3d_scr(global.delta_time_var,local.acc,local.frick,local.input_dir+eye_yaw_var,local.input_dir_pitch+(eye_pitch_var*lengthdir_x(1,local.input_dir)),local.spd);
         }
-        else if z <= -320 // Maybe add deathplane later?
+        else if z <= -128 // Maybe add deathplane later?
         {
             x = floor_x_var;
             y = floor_y_var;

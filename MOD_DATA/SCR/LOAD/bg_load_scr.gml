@@ -48,9 +48,9 @@ file_to_bg_scr(vanilla_directory_const+"\MAT\METAL_02.png","pole_metal_bg",false
 file_to_bg_scr(vanilla_directory_const+"\MAT\RUG.png","rug_bg",false,false,argument0);
 file_to_bg_scr(vanilla_directory_const+"\MAT\SAVE_01.png","save_ped_01_bg",false,false,argument0);
 file_to_bg_scr(vanilla_directory_const+"\MAT\SAVE_02.png","save_ped_02_bg",false,false,argument0);
-file_to_bg_scr(vanilla_directory_const+"\MAT\SAVE_03.png","save_cross_01_bg",false,false,argument0);
-file_to_bg_scr(vanilla_directory_const+"\MAT\SAVE_04.png","save_cross_02_bg",false,false,argument0);
-file_to_bg_scr(vanilla_directory_const+"\MAT\SAVE_05.png","save_cross_03_bg",false,false,argument0);
+file_to_bg_scr(vanilla_directory_const+"\MAT\SAVE_03.png","save_cross_02_bg",false,false,argument0);
+file_to_bg_scr(vanilla_directory_const+"\MAT\SAVE_04.png","save_cross_03_bg",false,false,argument0);
+file_to_bg_scr(vanilla_directory_const+"\MAT\SAVE_05.png","save_cross_01_bg",false,false,argument0);
 file_to_bg_scr(vanilla_directory_const+"\MAT\TORCH.png","torch_bg",false,false,argument0);
 file_to_bg_scr(vanilla_directory_const+"\MAT\WOOD_01.png","wood_01_bg",false,false,argument0);
 file_to_bg_scr(vanilla_directory_const+"\MAT\WOOD_02.png","wood_02_bg",false,false,argument0);

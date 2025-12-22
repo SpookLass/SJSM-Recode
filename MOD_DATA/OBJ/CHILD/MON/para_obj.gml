@@ -139,7 +139,7 @@ object_event_add
     state_dist_var[0] = 128;
     state_chance_var[0] = 6;
     state_alarm_var[0] = 12;
-    state_acc_var[2] = false;
+    state_acc_var[0] = false;
     // Open
     state_spd_var[1] = 1/3;
     state_spr_spd_var[1] = 1/12;
@@ -150,7 +150,7 @@ object_event_add
     state_dist_var[1] = 56;
     state_chance_var[1] = 6;
     state_alarm_var[1] = 12;
-    state_acc_var[2] = false;
+    state_acc_var[1] = false;
     // Leech
     state_spd_var[2] = 7/3;
     state_spr_spd_var[2] = 1/3;
@@ -207,6 +207,7 @@ object_event_add
         }
         case 2: // HD
         {
+            do_hurt_var = false;
             dur_var = irandom_range(10,15);
             do_warn_var = true;
             delay_calc_var = false;

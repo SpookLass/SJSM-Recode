@@ -115,9 +115,7 @@ object_event_add
             break;
         }
         case 4: // Old HD
-        {
-            type_var = 2;
-        }
+        { type_var = 2; }
         case 2: // HD
         {
             inf_stam_var = false;
