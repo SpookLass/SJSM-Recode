@@ -25,6 +25,7 @@ object_event_add
     dmg_var = 20;
     dmg_alarm_var = 10;
     z_off_var = -1.5;
+	blood_spr_var = blood_kh_spr;
     // Assets
         // Search for existing assets to save memory
     with object_index

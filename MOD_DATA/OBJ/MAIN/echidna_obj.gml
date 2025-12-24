@@ -160,6 +160,8 @@ object_event_add
     // Attack variables
     if atk_range_var == 0
     { atk_range_var = coll_var[2]; }
+    if blood_spr_var == 0
+    { blood_spr_var = blood_spr; }
     // Pathfinding
     if type_var > 0
     {
@@ -744,6 +746,8 @@ object_event_add
     }
     with instance_create(0,0,blood_eff_obj)
     {
+        spr_var = other.blood_spr_var;
+        spr_id_var = irandom(sprite_get_number(spr_var)-1);
         // Set camera to player
         cam_id_var = other.attack_target_var.cam_id_var;
     }

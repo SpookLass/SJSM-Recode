@@ -37,6 +37,7 @@ object_event_add
     w_var = 12.5;
     h_var = 30.3;
     z_off_var = -0.3;
+    blood_spr_var = blood_kh_spr;
     // Attack
     atk_type_var = 3; // Stop moving while delay
     atk_anim_var = 2;

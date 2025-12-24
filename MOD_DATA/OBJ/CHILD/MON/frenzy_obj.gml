@@ -24,6 +24,7 @@ object_event_add
     w_var = 16.8;
     h_var = 25.2;
     atk_range_var = 12;
+    blood_spr_var = blood_kh_spr;
     // Sounds
     snd_dist_max_var = -1;
     hurt_snd_var = 4;

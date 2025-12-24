@@ -180,6 +180,7 @@ object_event_add
             eff_old_var = false;
             cam_end_var = -1;
             fog_var = true;
+            blood_spr_var = blood_kh_spr;
             break;
         }
         case 6: // KH Recode
@@ -191,6 +192,7 @@ object_event_add
             do_acc_var = true;
             acc_var = 0.1;
             frick_var = acc_var;
+            blood_spr_var = blood_kh_spr;
             // Other
             dmg_var = 20;
             dmg_alarm_var = 120;
@@ -222,6 +224,7 @@ object_event_add
             dmg_alarm_var = 120;
             move_type_var = 3;
             rand_alarm_max_var = 6;
+            blood_spr_var = blood_kh_spr;
             // Yes fun
             eff_var = false;
             seen_flash_var = false;

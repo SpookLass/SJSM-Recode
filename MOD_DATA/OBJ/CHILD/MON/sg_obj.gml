@@ -52,6 +52,7 @@ object_event_add
     dmg_alarm_var = 120;
     atk_range_var = 48;
     alarm_len_var = 10;
+    blood_spr_var = blood_kh_spr;
     // No official value
     dur_var = irandom_range(10,20); 
     delay_var = 120;

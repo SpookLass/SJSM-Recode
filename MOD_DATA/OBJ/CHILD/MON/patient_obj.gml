@@ -134,6 +134,7 @@ object_event_add
             inv_limit_var = 30;
             weird_var = true;
             weird_chance_var = 16;
+            blood_spr_var = blood_kh_spr;
             // Silhouette (Lazy)
             sil_var = true;
             sil_type_var = 1; // Pure color

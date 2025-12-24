@@ -148,6 +148,7 @@ object_event_add
             tp_dist_min_var = 64;
             move_type_var = 0;
             hurt_snd_var = 1;
+            blood_spr_var = blood_kh_spr;
             break;
         }
         case 4: // Karamari HD
@@ -198,6 +199,7 @@ object_event_add
             spd_base_var = 0.2;
             snd_alarm_min_var = 300;
             snd_alarm_max_var = 600;
+            blood_spr_var = blood_kh_spr;
             break;
         }
     }

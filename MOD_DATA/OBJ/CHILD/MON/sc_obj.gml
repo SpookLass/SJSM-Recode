@@ -48,6 +48,7 @@ object_event_add
     h_var = 17;
     z_off_var = 5;
     do_anim_var = -1;
+    blood_spr_var = blood_kh_spr;
     // Sounds
     loop_snd_var[0] = true;
     loop_snd_dist_max_var = 600;

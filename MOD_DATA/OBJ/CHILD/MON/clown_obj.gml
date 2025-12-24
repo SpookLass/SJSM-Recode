@@ -34,6 +34,7 @@ object_event_add
     w_var = 24.7;
     h_var = 25.3;
     z_off_var = -0.3;
+    blood_spr_var = blood_kh_spr;
     // Special
     do_atk_var = -1;
     do_seen_var = true;

@@ -133,6 +133,7 @@ object_event_add
             dark_color_var = make_color_rgb(97,97,106);
             bright_var = true;
             derand_var = true;
+            blood_spr_var = blood_kh_spr;
             break;
         }
         case 2: // HD

@@ -46,6 +46,7 @@ object_event_add
     w_var = 10;
     h_var = 20;
     dupe_var = dupe_canon_const;
+    blood_spr_var = blood_kh_spr;
     // Sound
     wake_snd_var[0] = true;
     mus_prio_var = theme_mus_prio_const;
