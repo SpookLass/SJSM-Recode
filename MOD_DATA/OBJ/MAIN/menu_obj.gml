@@ -866,6 +866,9 @@ object_event_add
     type_button_arr[9,6] = yoshi_str_var;
     type_button_arr[11,2] = 4; // Eel
     type_button_arr[11,4] = yoshi_str_var;
+    type_button_arr[13,2] = 5; // Food Demon
+    type_button_arr[13,4] = dh_str_var;
+    type_button_arr[13,5] = dh_str_var+" "+hd_str_var;
     type_button_arr[14,2] = 8; // Killer
     type_button_arr[14,4] = old_str_var;
     type_button_arr[14,5] = yoshi_str_var;
@@ -2266,8 +2269,8 @@ object_event_add
                         case 1:
                         {
                             if custom_button_arr[local.i,0] == -1 { local.str = def_str_var; }
-                            else if is_string(custom_button_arr[local.i,custom_button_arr[local.i,0]+8])
-                            { local.str = custom_button_arr[local.i,custom_button_arr[local.i,0]+8]; }
+                            /*else if is_string(custom_button_arr[local.i,custom_button_arr[local.i,0]+8])
+                            { local.str = custom_button_arr[local.i,custom_button_arr[local.i,0]+8]; }*/
                             else { local.str = string(custom_button_arr[local.i,0]); }
                             break;
                         }
@@ -2305,8 +2308,8 @@ object_event_add
                 case 1:
                 {
                     if custom_button_arr[button_state_var,0] == -1 { local.str = def_str_var; }
-                    else if is_string(custom_button_arr[button_state_var,custom_button_arr[button_state_var,0]+8])
-                    { local.str = custom_button_arr[button_state_var,custom_button_arr[button_state_var,0]+8]; }
+                    /*else if is_string(custom_button_arr[button_state_var,custom_button_arr[button_state_var,0]+8])
+                    { local.str = custom_button_arr[button_state_var,custom_button_arr[button_state_var,0]+8]; }*/
                     else { local.str = string(custom_button_arr[button_state_var,0]); }
                     break;
                 }

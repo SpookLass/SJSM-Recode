@@ -9,6 +9,17 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,1,'
+    // Sounds
+    snd_main_len_var = 3;
+    snd_amb_len_var = 4;
+    snd_len_var = 4;
+    snd_num_var = 1;
+    snd_den_var = 2;
+    snd_alarm_min_var = 80;
+    snd_alarm_max_var = 240;
+    snd_dist_max_var = 800;
+    amb_snd_dist_max_var = 800;
+    // Translations
     ini_open(global.lang_var);
     switch global.name_var
     {
@@ -28,14 +39,12 @@ object_event_add
     }
     sub_main_var = string_replace(ini_read_string("SUB","bab","SUB_bab"),"@n",name_var);
     sub_amb_var = ini_read_string("SUB","bab_amb","SUB_bab_amb");
-    snd_main_arr[0,1] = sub_main_var;
-    snd_main_arr[1,1] = sub_main_var;
-    snd_main_arr[2,1] = sub_main_var;
-    snd_amb_arr[0,1] = sub_amb_var;
-    snd_amb_arr[1,1] = sub_amb_var;
-    snd_amb_arr[2,1] = sub_amb_var;
-    snd_amb_arr[3,1] = sub_amb_var;
+    for (local.i=0; local.i<snd_main_len_var; local.i+=1;)
+    { snd_main_arr[local.i,1] = sub_main_var; }
+    for (local.i=0; local.i<snd_amb_len_var; local.i+=1;)
+    { snd_amb_arr[local.i,1] = sub_amb_var; }
     ini_close();
+    // Variables
     type_var = 1;
     if global.mode_var == 0
     {
@@ -57,16 +66,6 @@ object_event_add
     w_02_var = 3.5;
     h_var = 20;
     atk_range_var = 48;
-    // Sounds
-    snd_main_len_var = 3;
-    snd_amb_len_var = 4;
-    snd_len_var = 4;
-    snd_num_var = 1;
-    snd_den_var = 2;
-    snd_alarm_min_var = 80;
-    snd_alarm_max_var = 240;
-    snd_dist_max_var = 800;
-    amb_snd_dist_max_var = 800;
     // Special
     eff_var = true;
     eff_alpha_min_var = 0.2;
@@ -100,8 +99,10 @@ object_event_add
             other.overlay_spr_var = overlay_spr_var;
             other.flesh_spr_var = flesh_spr_var;
             other.eff_spr_var = eff_spr_var;
-            for (local.i=0; local.i<snd_len_var; local.i+=1;)
-            { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
+            for (local.i=0; local.i<snd_main_len_var; local.i+=1;)
+            { other.snd_main_arr[local.i,0] = snd_main_arr[local.i,0]; }
+            for (local.i=0; local.i<snd_amb_len_var; local.i+=1;)
+            { other.snd_amb_arr[local.i,0] = snd_amb_arr[local.i,0]; }
             other.mus_snd_var = mus_snd_var;
             local.loaded = true;
             break;

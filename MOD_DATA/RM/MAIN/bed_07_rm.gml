@@ -112,7 +112,7 @@ room_instance_add(argument0,176,240,wall_2high_vert_obj);
 room_instance_add(argument0,336,240,wall_2high_vert_obj);
 // Props
 room_instance_add(argument0,192,256,bed_rand_obj);
-room_instance_add(argument0,288,232,drawer_rand_obj);
+room_instance_add(argument0,288,232,drawer_rand_south_obj);
 room_instance_add(argument0,320,232,table_rand_obj);
 room_instance_add(argument0,256,304,rug_rand_rot_obj);
 room_instance_add(argument0,224,352,window_01_high_hor_obj);

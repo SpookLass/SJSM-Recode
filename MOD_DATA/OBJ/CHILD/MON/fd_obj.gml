@@ -51,39 +51,6 @@ object_event_add
     hurt_snd_var = 4;
     // Theme
     mus_prio_var = theme_mus_prio_const;
-    // Assets
-        // Search for existing assets to save memory
-    with object_index
-    {
-        if id != other.id && object_index == other.object_index
-        {
-            other.spr_var = spr_var;
-            other.eff_spr_01_var = eff_spr_01_var;
-            other.eff_spr_02_var = eff_spr_02_var;
-            for (local.i=0; local.i<snd_len_var; local.i+=1;)
-            { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
-            other.wake_snd_var[1] = wake_snd_var[1];
-            other.hurt_snd_var[1] = hurt_snd_var[1];
-            other.mus_snd_var = mus_snd_var;
-            local.loaded = true;
-            break;
-        }
-    }
-        // If no existing assets were found, load them
-    if !local.loaded
-    {
-        spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS9_01_spr.png",12,false,false,0,0);
-        eff_spr_01_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS9_02_spr.png",3,0,0,0,0);
-        eff_spr_02_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS9_03_spr.png",19,0,0,0,0);
-        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\fd_01_snd.wav",true);
-        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\fd_02_snd.wav",true);
-        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\fd_03_snd.wav",true);
-        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\fd_04_snd.wav",true);
-        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\fd_wake_snd.wav",global.wake_3d_var);
-        hurt_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\fd_hurt_snd.wav",true);
-        mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\fd_mus_snd.mp3");
-        fmod_snd_set_loop_point_scr(mus_snd_var,0,0.972669769662);
-    }
     // Axe
     do_hurt_var = true;
     hurt_alarm_var = 60;
@@ -134,8 +101,48 @@ object_event_add
     flame_tex_var = sprite_get_texture(flame_spr_var,0);
     flame_alpha_var = 1;
     flame_color_var = c_white;
+    // MEAT
+    meat_var = false;
+    meat_num_var = 1;
+    meat_den_var = 3;
+    // Assets
+        // Search for existing assets to save memory
+    with object_index
+    {
+        if id != other.id && object_index == other.object_index
+        {
+            other.spr_var = spr_var;
+            other.meat_bg_var = meat_bg_var;
+            other.eff_spr_01_var = eff_spr_01_var;
+            other.eff_spr_02_var = eff_spr_02_var;
+            for (local.i=0; local.i<snd_len_var; local.i+=1;)
+            { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
+            other.wake_snd_var[1] = wake_snd_var[1];
+            other.hurt_snd_var[1] = hurt_snd_var[1];
+            other.mus_snd_var = mus_snd_var;
+            local.loaded = true;
+            break;
+        }
+    }
+        // If no existing assets were found, load them
+    if !local.loaded
+    {
+        spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS9_01_spr.png",12,false,false,0,0);
+        meat_bg_var = background_add(vanilla_directory_const+"\TEX\mobile\MB8_26_tex.png",false,false);
+        eff_spr_01_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS9_02_spr.png",3,0,0,0,0);
+        eff_spr_02_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS9_03_spr.png",19,0,0,0,0);
+        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\fd_01_snd.wav",true);
+        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\fd_02_snd.wav",true);
+        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\fd_03_snd.wav",true);
+        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\fd_04_snd.wav",true);
+        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\fd_wake_snd.wav",global.wake_3d_var);
+        hurt_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\fd_hurt_snd.wav",true);
+        mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\fd_mus_snd.mp3");
+        fmod_snd_set_loop_point_scr(mus_snd_var,0,0.972669769662);
+    }
+    meat_tex_var = background_get_texture(meat_bg_var);
     // Behavior
-    if global.fd_type_var == -1 { local.type = irandom(3); }
+    if global.fd_type_var == -1 { local.type = irandom(4); }
     else { local.type = global.fd_type_var; }
     switch local.type
     {
@@ -158,6 +165,8 @@ object_event_add
             sil_dist_var = 0.1;
             break;
         }
+        case 4: // HD Hellgate
+        { meat_var = true; }
         case 2: // HD
         {
             hide_reset_var = true; // Not certain on this
@@ -184,6 +193,8 @@ object_event_add
             snd_dist_max_var = 500;
             break;
         }
+        case 3: // Hellgate
+        { meat_var = true; break; }
     }
 ');
 // Destroy Event
@@ -195,6 +206,7 @@ object_event_add
     {
         fmod_snd_free_scr(mus_snd_var);
         sprite_delete(spr_var);
+        background_delete(meat_bg_var);
         sprite_delete(eff_spr_01_var);
         sprite_delete(eff_spr_02_var);
         for (local.i=0; local.i<snd_len_var; local.i+=1;)
@@ -204,6 +216,7 @@ object_event_add
     }
     with spr_flash_eff_obj
     { if par_var == other.id { instance_destroy(); }}
+    with food_meat_obj { if par_var == other.id { instance_destroy(); }}
 ');
 // Room Start Event
 object_event_add
@@ -231,6 +244,21 @@ object_event_add
         }
     }
     else { door_hide_var = false; }
+    if meat_var
+    {
+        for (local.i=0; local.i<global.mark_len_var; local.i+=1;)
+        {
+            if !global.mark_arr[local.i,3] && frac_chance_scr(meat_num_var,meat_den_var)
+            {
+                with instance_create(global.mark_arr[local.i,0],global.mark_arr[local.i,1],food_meat_obj)
+                {
+                    par_var = other.id;
+                    tex_var = other.meat_tex_var;
+                }
+                global.mark_arr[local.i,3] = true;
+            }
+        }
+    }
 ');
 // Delay
 object_event_add
@@ -241,27 +269,30 @@ object_event_add
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,'
-    if hurt_var
+    if on_var
     {
-        if hurt_spd_var != 1 && move_var { spd_mult_var *= hurt_spd_var; }
-        if alarm_arr[3,0] > 0 && hurt_tp_var == 2
+        if hurt_var
         {
-            local.per = alarm_arr[3,0]/alarm_arr[3,1]
-            w_var = lerp_scr(0,w_base_var,local.per);
-            h_var = lerp_scr(h_base_var*20,h_base_var,local.per);
-            z_off_var = lerp_scr(z_off_base_var-(h_base_var*9.5),z_off_base_var,local.per)
-            flame_z_off_var = lerp_scr(flame_z_off_base_var*20,flame_z_off_base_var,local.per)
+            if hurt_spd_var != 1 && move_var { spd_mult_var *= hurt_spd_var; }
+            if alarm_arr[3,0] > 0 && hurt_tp_var == 2
+            {
+                local.per = alarm_arr[3,0]/alarm_arr[3,1]
+                w_var = lerp_scr(0,w_base_var,local.per);
+                h_var = lerp_scr(h_base_var*20,h_base_var,local.per);
+                z_off_var = lerp_scr(z_off_base_var-(h_base_var*9.5),z_off_base_var,local.per)
+                flame_z_off_var = lerp_scr(flame_z_off_base_var*20,flame_z_off_base_var,local.per)
+            }
         }
-    }
-    if seen_var && is_seen_var == 1
-    {
-        spr_spd_var = spr_spd_seen_var;
-        anim_type_var = 3;
-    }
-    else if anim_type_var == 3
-    {
-        spr_spd_var = spr_spd_base_var;
-        anim_type_var = 0;
+        if seen_var && is_seen_var == 1
+        {
+            spr_spd_var = spr_spd_seen_var;
+            anim_type_var = 3;
+        }
+        else if anim_type_var == 3
+        {
+            spr_spd_var = spr_spd_base_var;
+            anim_type_var = 0;
+        }
     }
     event_inherited();
     spd_mult_var = 1;

@@ -143,6 +143,8 @@ object_event_add
                 with instance_create(x,y,clown_door_trig_obj)
                 {
                     par_var = local.mon;
+                    z = local.door.z;
+                    lock_var = local.door.lock_var;
                     // Collision
                     coll_var[0] = local.door.coll_var[0];
                     coll_var[1] = local.door.coll_var[1];
