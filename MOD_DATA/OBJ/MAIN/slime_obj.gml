@@ -21,6 +21,7 @@ object_event_add
     w_var = 28;
     spd_mult_var = 0.6;
     tp_var = true;
+    touch_var = false;
     if instance_exists(color_par_obj) && global.color_var == 0
     { image_blend = color_par_obj.image_blend; }
 ');
@@ -32,7 +33,10 @@ object_event_add
         if on_floor_var && !dead_var && !hurt_var && !in_door_var && !invuln_var && on_var
         {
             if cyl_coll_scr(x,y,z,coll_var[2],coll_var[1],other.x,other.y,other.z,other.coll_var[2],other.coll_var[1])
-            { spd_mult_var *= other.spd_mult_var; }
+            {
+                spd_mult_var *= other.spd_mult_var;
+                other.touch_var = true;
+            }
         }
     }
 ');

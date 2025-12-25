@@ -140,6 +140,31 @@ object_event_add
             }
             draw_set_halign(fa_left); draw_set_valign(fa_top); draw_set_alpha(1);
         }
+        // Taker!
+        if par_var.alarm_arr[3,0] < par_var.alarm_arr[3,1]/2 && par_var.on_var && (!par_var.active_var || par_var.taker_spawn_var)
+        {
+            if par_var.alarm_arr[3,0] <= 0 { local.per = 1; }
+            else { local.per = median(0,1,1-(2*par_var.alarm_arr[3,0]/par_var.alarm_arr[3,1])); }
+            // Take your text!
+            draw_set_color(taker_color_var); draw_set_alpha(local.per);
+            draw_set_font(taker_font);
+            for (local.i=0; local.i<round(view_hview[view_current]/taker_h_var)+(taker_off_len_var*2); local.i+=1;)
+            {
+                if taker_cool_var && (local.i mod taker_off_len_var) mod 2 { local.xtmp = ((-taker_x_var+taker_off_arr[local.i mod taker_off_len_var]) mod taker_w_var)-taker_w_var; }
+                else { local.xtmp = ((taker_x_var+taker_off_arr[local.i mod taker_off_len_var]) mod taker_w_var)-taker_w_var; }
+                local.ytmp = (taker_y_var mod (taker_h_var*taker_off_len_var))+(taker_h_var*(local.i-taker_off_len_var));
+                for (local.w=0; local.w<round(view_wview[view_current]/taker_w_var)+2; local.w+=1;)
+                { draw_text_transformed(local.xtmp+(local.w*taker_w_var),local.ytmp,taker_str_var,taker_xscale_var,taker_yscale_var,0); }
+            }
+            draw_set_font(main_font); draw_set_alpha(1);
+            // Turn it red
+            local.value = lerp_scr(0,255,local.per);
+            draw_set_blend_mode(bm_subtract);
+            draw_set_color(make_color_rgb(0,local.value,local.value));
+            draw_rectangle(0,0,view_wview[view_current],view_hview[view_current],false);
+            draw_set_color(c_white);
+            draw_set_blend_mode(bm_normal);
+        }
         // Main
         if !par_var.dead_var
         {
@@ -148,31 +173,6 @@ object_event_add
             {
                 draw_set_blend_mode(bm_add);
                 draw_background_stretched_ext(lens_01_bg,0,0,view_wview[view_current],view_hview[view_current],c_white,par_var.flare_var);
-                draw_set_blend_mode(bm_normal);
-            }
-            // Taker!
-            if par_var.alarm_arr[3,0] < par_var.alarm_arr[3,1]/2
-            {
-                if par_var.alarm_arr[3,0] <= 0 { local.per = 1; }
-                else { local.per = median(0,1,1-(2*par_var.alarm_arr[3,0]/par_var.alarm_arr[3,1])); }
-                // Take your text!
-                draw_set_color(taker_color_var); draw_set_alpha(local.per);
-                draw_set_font(taker_font);
-                for (local.i=0; local.i<round(view_hview[view_current]/taker_h_var)+(taker_off_len_var*2); local.i+=1;)
-                {
-                    if taker_cool_var && (local.i mod taker_off_len_var) mod 2 { local.xtmp = ((-taker_x_var+taker_off_arr[local.i mod taker_off_len_var]) mod taker_w_var)-taker_w_var; }
-                    else { local.xtmp = ((taker_x_var+taker_off_arr[local.i mod taker_off_len_var]) mod taker_w_var)-taker_w_var; }
-                    local.ytmp = (taker_y_var mod (taker_h_var*taker_off_len_var))+(taker_h_var*(local.i-taker_off_len_var));
-                    for (local.w=0; local.w<round(view_wview[view_current]/taker_w_var)+2; local.w+=1;)
-                    { draw_text_transformed(local.xtmp+(local.w*taker_w_var),local.ytmp,taker_str_var,taker_xscale_var,taker_yscale_var,0); }
-                }
-                draw_set_font(main_font); draw_set_alpha(1);
-                // Turn it red
-                local.value = lerp_scr(0,255,local.per);
-                draw_set_blend_mode(bm_subtract);
-                draw_set_color(make_color_rgb(0,local.value,local.value));
-                draw_rectangle(0,0,view_wview[view_current],view_hview[view_current],false);
-                draw_set_color(c_white);
                 draw_set_blend_mode(bm_normal);
             }
             // Health and Stamina bars

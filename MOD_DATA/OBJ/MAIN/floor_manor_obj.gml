@@ -8,8 +8,8 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create event
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
     store_tex_var = tile_floor_bg_tex;
-    image_alpha = 0.4;
+    image_alpha = 0.6; // Originally 0.4
     event_inherited();
-");
+');

@@ -394,7 +394,7 @@ object_event_add
             }
             else
             {
-                local.min = dmg_var;
+                local.min = dmg_var*global.delta_time_var;
                 local.dokill = true;
             }
             with player_obj

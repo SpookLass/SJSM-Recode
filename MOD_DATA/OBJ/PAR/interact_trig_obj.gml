@@ -35,7 +35,7 @@ object_event_add
                 // p3dc_check_scr(coll_var[0],x,y,z,other.coll_var[0],other.x,other.y,other.z)
                 if box_coll_scr(x,y,z,coll_var[2],coll_var[2],coll_var[1],other.x,other.y,other.z,other.coll_var[2],other.coll_var[2],other.coll_var[1])
                 {
-                    other.visible = other.do_str_var;
+                    other.visible = other.do_str_var && !instance_exists(txt_obj);
                     other.cam_id_var = cam_id_var
                     if global.input_press_arr[interact_input_const,player_id_var] == 1
                     {

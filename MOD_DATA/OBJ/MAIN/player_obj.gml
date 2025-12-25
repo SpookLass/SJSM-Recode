@@ -149,6 +149,7 @@ object_event_add
     }
     // Taker Behavior
     taker_alarm_var = 7200;
+    taker_mon_alarm_var = 720;
     switch global.taker_type_var
     {
         // Gotta take the wikis word, cant find it
@@ -182,13 +183,30 @@ object_event_add
 // Taker Alarm
 object_event_add
 (argument0,ev_alarm,3,'
-    if on_var && !dead_var && !active_var && !taker_spawn_var
+    if !active_var && !taker_spawn_var
     {
-        taker_spawn_var = true;
-        with instance_create(0,0,taker_obj)
+        if possess_var
         {
-            target_var = other.id;
-            cam_id_var = other.cam_id_var;
+            if mon_var.on_var && !mon_var.enter_var
+            {
+                taker_spawn_var = true;
+                with instance_create(0,0,taker_obj)
+                {
+                    target_var = other.mon_var;
+                    cam_id_var = other.cam_id_var;
+                    possess_var = other.possess_var;
+                }
+            }
+        }
+        else if on_var && !dead_var
+        {
+            taker_spawn_var = true;
+            with instance_create(0,0,taker_obj)
+            {
+                target_var = other.id;
+                cam_id_var = other.cam_id_var;
+                possess_var = other.possess_var;
+            }
         }
     }
 ');
@@ -315,252 +333,268 @@ object_event_add
 // Step
 object_event_add
 (argument0,ev_step,ev_step_normal,'
-    if on_var && !possess_var
+    if on_var
     {
-        event_inherited();
-        // Camera
-        if global.input_press_arr[turnaround_input_const,player_id_var]
+        if !possess_var
         {
-            turn_var = true;
-            turn_yaw_var = eye_yaw_var;
-            turn_pitch_var = eye_pitch_var;
-            set_alarm_scr(4,turn_alarm_var);
-            eye_yaw_var += 180;
-        }
-        if !turn_var
-        {
-            eye_yaw_var += input_yaw_scr(player_id_var);
-            eye_pitch_var += input_pitch_scr(player_id_var);
-        }
-        eye_yaw_var = mod_scr(eye_yaw_var,360);
-        eye_pitch_var = median(-89.9,89.9,eye_pitch_var);
-        // Get inputs
-        local.input_dir_x = input_x_scr(player_id_var);
-        local.input_dir_y = input_y_scr(player_id_var);
-        if invert_var // Sorry I need this for Plus
-        {
-            local.input_dir_x *= -1;
-            local.input_dir_y *= -1;
-        }
-        local.input_dir = radtodeg(arctan2(-local.input_dir_y,local.input_dir_x));
-        // Extra movement handling
-        if do_coll_var && grav_var > 0
-        {
-            // Jump!
-            if can_jump_var && global.input_press_arr[jump_input_const,player_id_var] && on_floor_var && (stam_var > jump_stam_var || !do_stam_var)
+            event_inherited();
+            // Camera
+            if global.input_press_arr[turnaround_input_const,player_id_var]
             {
-                if do_stam_var
-                { stam_var -= jump_stam_var; }
-                z_spd_var = jump_z_spd_var;
-                jump_var = true;
-                jump_hold_var = true;
-                on_floor_var = false;
-                fall_temp_var = true; // For big rooms
-                z += grav_var;
+                turn_var = true;
+                turn_yaw_var = eye_yaw_var;
+                turn_pitch_var = eye_pitch_var;
+                set_alarm_scr(4,turn_alarm_var);
+                eye_yaw_var += 180;
             }
-            if jump_var
+            if !turn_var
             {
-                if on_floor_var
-                {
-                    jump_var = false;
-                    jump_hold_var = false;
-                    grav_var = grav_base_var;
-                }
-                else
-                {
-                    if jump_hold_var
-                    {
-                        if global.input_press_arr[jump_input_const,player_id_var] == -1 || z_spd_var <= 0
-                        { jump_hold_var = false; }
-                        else if do_stam_var { stam_var -= jump_stam_rate_var*global.delta_time_var; }
-                    }
-                    if jump_hold_var || z_spd_var <= 0
-                    { grav_var = grav_base_var; }
-                    else { grav_var = grav_base_var*jump_grav_var; }
-                }
+                eye_yaw_var += input_yaw_scr(player_id_var);
+                eye_pitch_var += input_pitch_scr(player_id_var);
             }
-            // Crouch!
-            if can_crouch_var
+            eye_yaw_var = mod_scr(eye_yaw_var,360);
+            eye_pitch_var = median(-89.9,89.9,eye_pitch_var);
+            // Get inputs
+            local.input_dir_x = input_x_scr(player_id_var);
+            local.input_dir_y = input_y_scr(player_id_var);
+            if invert_var // Sorry I need this for Plus
             {
-                if (global.input_press_arr[crouch_input_const,player_id_var] && crouch_toggle_var) 
-                || (global.input_arr[crouch_input_const,player_id_var] != crouch_var && !crouch_toggle_var)
+                local.input_dir_x *= -1;
+                local.input_dir_y *= -1;
+            }
+            local.input_dir = radtodeg(arctan2(-local.input_dir_y,local.input_dir_x));
+            // Extra movement handling
+            if do_coll_var && grav_var > 0
+            {
+                // Jump!
+                if can_jump_var && global.input_press_arr[jump_input_const,player_id_var] && on_floor_var && (stam_var > jump_stam_var || !do_stam_var)
                 {
-                    local.znext = z;
-                    if !on_floor_var
+                    if do_stam_var
+                    { stam_var -= jump_stam_var; }
+                    z_spd_var = jump_z_spd_var;
+                    jump_var = true;
+                    jump_hold_var = true;
+                    on_floor_var = false;
+                    fall_temp_var = true; // For big rooms
+                    z += grav_var;
+                }
+                if jump_var
+                {
+                    if on_floor_var
                     {
-                        local.coll_diff = global.player_coll[1]-global.player_crouch_coll[1];
-                        if !crouch_var { local.znext += local.coll_diff; }
-                        else { local.znext -= local.coll_diff; }
+                        jump_var = false;
+                        jump_hold_var = false;
+                        grav_var = grav_base_var;
                     }
-                    if !crouch_var
+                    else
                     {
-                        crouch_var = true;
-                        coll_var[0] = global.player_crouch_coll[0];
-                        coll_var[1] = global.player_crouch_coll[1];
-                        coll_var[2] = global.player_crouch_coll[2];
-                        z = local.znext;
-                        target_eye_h_var = crouch_eye_h_var;
-                    }
-                    else if !check_coll_scr(-1,global.player_coll[0],global.player_coll[1],global.player_coll[2],x,y,local.znext+0.01)
-                    {
-                        crouch_var = false;
-                        coll_var[0] = global.player_coll[0];
-                        coll_var[1] = global.player_coll[1];
-                        coll_var[2] = global.player_coll[2];
-                        z = local.znext;
-                        target_eye_h_var = base_eye_h_var;
-                    }
-                    else if !on_floor_var
-                    {
-                        local.zdist = 10000000;
-                        local.radius = coll_var[2]/2;
-                        for (local.i=0; local.i<5; local.i+=1;)
+                        if jump_hold_var
                         {
-                            local.xtmp = x;
-                            local.ytmp = y;
-                            if local.i != 0
-                            {
-                                local.xtmp += lengthdir_x(local.radius,local.i*90);
-                                local.ytmp += lengthdir_y(local.radius,local.i*90);
-                            }
-                            local.zdist = min
-                            (
-                                local.zdist,
-                                check_ray_scr
-                                (
-                                    local.xtmp,local.ytmp,z+coll_var[1],
-                                    0,0,-1
-                                )
-                            );
+                            if global.input_press_arr[jump_input_const,player_id_var] == -1 || z_spd_var <= 0
+                            { jump_hold_var = false; }
+                            else if do_stam_var { stam_var -= jump_stam_rate_var*global.delta_time_var; }
                         }
-                        local.zdist -= coll_var[1];
-                        local.znext = z-local.zdist;
-                        if !check_coll_scr(-1,global.player_coll[0],global.player_coll[1],global.player_coll[2],x,y,local.znext+0.01)
+                        if jump_hold_var || z_spd_var <= 0
+                        { grav_var = grav_base_var; }
+                        else { grav_var = grav_base_var*jump_grav_var; }
+                    }
+                }
+                // Crouch!
+                if can_crouch_var
+                {
+                    if (global.input_press_arr[crouch_input_const,player_id_var] && crouch_toggle_var) 
+                    || (global.input_arr[crouch_input_const,player_id_var] != crouch_var && !crouch_toggle_var)
+                    {
+                        local.znext = z;
+                        if !on_floor_var
+                        {
+                            local.coll_diff = global.player_coll[1]-global.player_crouch_coll[1];
+                            if !crouch_var { local.znext += local.coll_diff; }
+                            else { local.znext -= local.coll_diff; }
+                        }
+                        if !crouch_var
+                        {
+                            crouch_var = true;
+                            coll_var[0] = global.player_crouch_coll[0];
+                            coll_var[1] = global.player_crouch_coll[1];
+                            coll_var[2] = global.player_crouch_coll[2];
+                            z = local.znext;
+                            target_eye_h_var = crouch_eye_h_var;
+                        }
+                        else if !check_coll_scr(-1,global.player_coll[0],global.player_coll[1],global.player_coll[2],x,y,local.znext+0.01)
                         {
                             crouch_var = false;
                             coll_var[0] = global.player_coll[0];
                             coll_var[1] = global.player_coll[1];
                             coll_var[2] = global.player_coll[2];
                             z = local.znext;
-                            z_spd_var = 0;
-                            on_floor_var = true;
                             target_eye_h_var = base_eye_h_var;
                         }
+                        else if !on_floor_var
+                        {
+                            local.zdist = 10000000;
+                            local.radius = coll_var[2]/2;
+                            for (local.i=0; local.i<5; local.i+=1;)
+                            {
+                                local.xtmp = x;
+                                local.ytmp = y;
+                                if local.i != 0
+                                {
+                                    local.xtmp += lengthdir_x(local.radius,local.i*90);
+                                    local.ytmp += lengthdir_y(local.radius,local.i*90);
+                                }
+                                local.zdist = min
+                                (
+                                    local.zdist,
+                                    check_ray_scr
+                                    (
+                                        local.xtmp,local.ytmp,z+coll_var[1],
+                                        0,0,-1
+                                    )
+                                );
+                            }
+                            local.zdist -= coll_var[1];
+                            local.znext = z-local.zdist;
+                            if !check_coll_scr(-1,global.player_coll[0],global.player_coll[1],global.player_coll[2],x,y,local.znext+0.01)
+                            {
+                                crouch_var = false;
+                                coll_var[0] = global.player_coll[0];
+                                coll_var[1] = global.player_coll[1];
+                                coll_var[2] = global.player_coll[2];
+                                z = local.znext;
+                                z_spd_var = 0;
+                                on_floor_var = true;
+                                target_eye_h_var = base_eye_h_var;
+                            }
+                        }
+                        if !on_floor_var { eye_h_var = target_eye_h_var }
                     }
-                    if !on_floor_var { eye_h_var = target_eye_h_var }
                 }
-            }
-        }
-        else
-        {
-            local.input_dir_z = input_z_scr(player_id_var);
-            local.input_dir_pitch = radtodeg(arctan2(local.input_dir_z,sqrt(sqr(local.input_dir_x)+sqr(local.input_dir_y))));
-        }
-        // Is the player active?
-        active_var = abs(local.input_dir_x) || abs(local.input_dir_y) || abs(local.input_dir_z)
-        || global.input_arr[sprint_input_const,player_id_var] || global.input_arr[jump_input_const,player_id_var]
-        || global.input_arr[crouch_input_const,player_id_var] || global.input_arr[attack_input_const,player_id_var];
-        if active_var && !global.in_door_var && !dead_var && !taker_spawn_var
-        { set_alarm_scr(3,taker_alarm_var); }
-        // Sprint
-        sprint_var = do_sprint_var && global.input_arr[sprint_input_const,player_id_var] && (stam_var > 0 || !do_stam_var);
-        // Calculate speed
-        local.spd = 0;
-        if local.input_dir_x != 0 || local.input_dir_y != 0 || local.input_dir_z != 0
-        {
-            local.spd = spd_base_var;
-            if sprint_var { local.spd *= sprint_spd_mult_var; }
-            if crouch_var { local.spd *= crouch_spd_mult_var; }
-            if jump_var { local.spd *= jump_spd_mult_var; }
-            local.spd *= spd_mult_var;
-        }
-        spd_mult_var = 1;
-        // Calculate friction and acceleration
-        local.acc = acc_var;
-        local.frick = frick_var;
-        if !on_floor_var
-        {
-            local.acc *= air_frick_mult_var;
-            local.frick *= air_frick_mult_var;
-        }
-        local.acc *= frick_mult_var;
-        local.frick *= frick_mult_var;
-        frick_mult_var = 1;
-        // Accelerate and move
-        if !do_coll_var || grav_var <= 0
-        {
-            on_floor_var = true;
-            if global.input_move_var[player_id_var] != move_button_const { local.spd *= median(0,1,sqrt(sqr(local.input_dir_x)+sqr(local.input_dir_y)+sqr(local.input_dir_z))); }
-            if back_var { local.spd *= lerp_scr(1,back_spd_mult_var,abs(local.input_dir)/180); }
-            acc_3d_scr(global.delta_time_var,local.acc,local.frick,local.input_dir+eye_yaw_var,local.input_dir_pitch+(eye_pitch_var*lengthdir_x(1,local.input_dir)),local.spd);
-        }
-        else if z <= -128 // Maybe add deathplane later?
-        {
-            x = floor_x_var;
-            y = floor_y_var;
-            z = floor_z_var;
-            fall_temp_var = false;
-            set_motion_scr(0,false,eye_yaw_var,true);
-            event_perform(ev_other,ev_user0);
-            if hp_var > fall_dmg_var
-            {
-                hp_var -= fall_dmg_var;
-                if fall_dmg_alarm_var
-                {
-                    hurt_var = true;
-                    set_alarm_scr(0,fall_dmg_alarm_var);
-                }
-                hurt_target_var = id;
-                fmod_snd_play_scr(claw_snd);
-                with instance_create(0,0,blood_eff_obj)
-                { cam_id_var = other.cam_id_var; }
-                event_user(0);
             }
             else
             {
-                hp_var = 0;
-                dead_var = true;
-                do_coll_var = false;
-                grav_var = false;
+                local.input_dir_z = input_z_scr(player_id_var);
+                local.input_dir_pitch = radtodeg(arctan2(local.input_dir_z,sqrt(sqr(local.input_dir_x)+sqr(local.input_dir_y))));
             }
-        }
-        else if normal_var
-        {
-            if global.input_move_var[player_id_var] != move_button_const { local.spd *= median(0,1,sqrt(sqr(local.input_dir_x)+sqr(local.input_dir_y))); }
-            if back_var { local.spd *= lerp_scr(1,back_spd_mult_var,abs(local.input_dir)/180); }
-            acc_scr(global.delta_time_var,local.acc,local.frick,local.input_dir+eye_yaw_var,local.spd);
+            // Is the player active?
+            active_var = abs(local.input_dir_x) || abs(local.input_dir_y) || abs(local.input_dir_z)
+            || global.input_arr[sprint_input_const,player_id_var] || global.input_arr[jump_input_const,player_id_var]
+            || global.input_arr[crouch_input_const,player_id_var] || global.input_arr[attack_input_const,player_id_var]
+            || dead_var;
+            if active_var && !taker_spawn_var
+            { set_alarm_scr(3,taker_alarm_var); }
+            // Sprint
+            sprint_var = do_sprint_var && global.input_arr[sprint_input_const,player_id_var] && (stam_var > 0 || !do_stam_var);
+            // Calculate speed
+            local.spd = 0;
+            if local.input_dir_x != 0 || local.input_dir_y != 0 || local.input_dir_z != 0
+            {
+                local.spd = spd_base_var;
+                if sprint_var { local.spd *= sprint_spd_mult_var; }
+                if crouch_var { local.spd *= crouch_spd_mult_var; }
+                if jump_var { local.spd *= jump_spd_mult_var; }
+                local.spd *= spd_mult_var;
+            }
+            spd_mult_var = 1;
+            // Calculate friction and acceleration
+            local.acc = acc_var;
+            local.frick = frick_var;
+            if !on_floor_var
+            {
+                local.acc *= air_frick_mult_var;
+                local.frick *= air_frick_mult_var;
+            }
+            local.acc *= frick_mult_var;
+            local.frick *= frick_mult_var;
+            frick_mult_var = 1;
+            // Accelerate and move
+            if !do_coll_var || grav_var <= 0
+            {
+                on_floor_var = true;
+                if global.input_move_var[player_id_var] != move_button_const { local.spd *= median(0,1,sqrt(sqr(local.input_dir_x)+sqr(local.input_dir_y)+sqr(local.input_dir_z))); }
+                if back_var { local.spd *= lerp_scr(1,back_spd_mult_var,abs(local.input_dir)/180); }
+                acc_3d_scr(global.delta_time_var,local.acc,local.frick,local.input_dir+eye_yaw_var,local.input_dir_pitch+(eye_pitch_var*lengthdir_x(1,local.input_dir)),local.spd);
+            }
+            else if z <= -128 // Maybe add deathplane later?
+            {
+                x = floor_x_var;
+                y = floor_y_var;
+                z = floor_z_var;
+                fall_temp_var = false;
+                set_motion_scr(0,false,eye_yaw_var,true);
+                event_perform(ev_other,ev_user0);
+                if hp_var > fall_dmg_var
+                {
+                    hp_var -= fall_dmg_var;
+                    if fall_dmg_alarm_var
+                    {
+                        hurt_var = true;
+                        set_alarm_scr(0,fall_dmg_alarm_var);
+                    }
+                    hurt_target_var = id;
+                    fmod_snd_play_scr(claw_snd);
+                    with instance_create(0,0,blood_eff_obj)
+                    { cam_id_var = other.cam_id_var; }
+                    event_user(0);
+                }
+                else
+                {
+                    hp_var = 0;
+                    dead_var = true;
+                    do_coll_var = false;
+                    grav_var = false;
+                }
+            }
+            else if normal_var
+            {
+                if global.input_move_var[player_id_var] != move_button_const { local.spd *= median(0,1,sqrt(sqr(local.input_dir_x)+sqr(local.input_dir_y))); }
+                if back_var { local.spd *= lerp_scr(1,back_spd_mult_var,abs(local.input_dir)/180); }
+                acc_scr(global.delta_time_var,local.acc,local.frick,local.input_dir+eye_yaw_var,local.spd);
+            }
+            else
+            {
+                local.forspd = local.spd;
+                local.sidespd = local.spd;
+                if back_var
+                {
+                    if local.input_dir_x < 0 { local.forspd *= back_spd_mult_var;}
+                    local.sidespd *= (back_spd_mult_var+1)/2;
+                }
+                acc_odd_scr(global.delta_time_var,local.acc,local.frick,local.input_dir_x,local.input_dir_y,local.forspd,local.sidespd,eye_yaw_var);
+            }
+            // Possession
+            if dead_var && !possess_var
+            {
+                if global.input_press_arr[interact_input_const,player_id_var]
+                {
+                    with mon_par_obj
+                    {
+                        if on_var && !possess_var
+                        {
+                            if cyl_coll_scr(x,y,z,coll_var[2],coll_var[1],other.x,other.y,other.z,other.coll_var[2],other.coll_var[1])
+                            {
+                                possess_var = true;
+                                other.possess_var = true;
+                                other.mon_var = id;
+                                player_id_var = other.player_id_var;
+                                cam_id_var = other.cam_id_var;
+                            }
+                        }
+                    }
+                    if possess_var { set_motion_3d_scr(0,true); }
+                }
+            }
         }
         else
         {
-            local.forspd = local.spd;
-            local.sidespd = local.spd;
-            if back_var
-            {
-                if local.input_dir_x < 0 { local.forspd *= back_spd_mult_var;}
-                local.sidespd *= (back_spd_mult_var+1)/2;
-            }
-            acc_odd_scr(global.delta_time_var,local.acc,local.frick,local.input_dir_x,local.input_dir_y,local.forspd,local.sidespd,eye_yaw_var);
-        }
-        // Possession
-        if dead_var && !possess_var
-        {
-            if global.input_press_arr[interact_input_const,player_id_var]
-            {
-                with mon_par_obj
-                {
-                    if on_var && !possess_var
-                    {
-                        if cyl_coll_scr(x,y,z,coll_var[2],coll_var[1],other.x,other.y,other.z,other.coll_var[2],other.coll_var[1])
-                        {
-                            possess_var = true;
-                            other.possess_var = true;
-                            other.mon_var = id;
-                            player_id_var = other.player_id_var;
-                            cam_id_var = other.cam_id_var;
-                        }
-                    }
-                }
-            }
+            x = mon_var.x;
+            y = mon_var.y;
+            z = mon_var.z;
+            eye_yaw_var = mon_var.eye_yaw_var;
+            eye_pitch_var = mon_var.eye_pitch_var;
+            active_var = mon_var.active_var || mon_var.enter_var || !mon_var.on_var;
+            if !active_var && !taker_spawn_var
+            { set_alarm_scr(3,taker_mon_alarm_var); }
         }
     }
 ');

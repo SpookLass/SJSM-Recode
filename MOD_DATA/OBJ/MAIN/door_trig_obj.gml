@@ -100,7 +100,7 @@ object_event_add
             // p3dc_check_scr(coll_var[0],x,y,z,other.coll_var[0],other.x,other.y,other.z)
             if box_coll_scr(x,y,z,coll_var[2],coll_var[2],coll_var[1],other.x,other.y,other.z,other.coll_var[2],other.coll_var[2],other.coll_var[1])
             {
-                other.visible = other.do_txt_var;
+                other.visible = other.do_txt_var && !instance_exists(txt_obj);
                 other.cam_id_var = cam_id_var
                 if global.input_press_arr[interact_input_const,player_id_var] == 1
                 {
@@ -125,7 +125,7 @@ object_event_add
                     else if !instance_exists(txt_obj)
                     {
                         local.txt = instance_create(0,0,txt_obj);
-                        local.txt.txt_var = other.txt_lock_var;
+                        local.txt.str_var = local.door.txt_lock_var;
                         fmod_snd_play_scr(deny_snd);
                     }
                 }

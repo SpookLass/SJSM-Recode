@@ -11,7 +11,7 @@ object_event_add
 (argument0,ev_create,1,'
     ini_open(global.lang_var);
     name_var = ini_read_string("NAME","frenzy","NAME_frenzy");
-    atk_snd_var[1] = ini_read_string("SUB","frenzy","SUB_frenzy");
+    charge_snd_var[1] = ini_read_string("SUB","frenzy","SUB_frenzy");
     hurt_snd_var[2] = string_replace(ini_read_string("SUB","frenzy_hurt","SUB_frenzy_hurt"),"@n",name_var);
     ini_close();
     type_var = 2;
@@ -49,7 +49,7 @@ object_event_add
         {
             other.spr_var = spr_var;
             other.bg_var = bg_var;
-            other.atk_snd_var[0] = atk_snd_var[0];
+            other.charge_snd_var[0] = charge_snd_var[0];
             other.mus_snd_var = mus_snd_var;
             other.hurt_snd_var[1] = hurt_snd_var[1];
             other.scare_snd_var = scare_snd_var;
@@ -62,11 +62,11 @@ object_event_add
     {
         spr_var = sprite_add(dh_directory_const+"\TEX\sprites\frenzy2_spr.png",8,false,false,0,0);
         bg_var = background_add(dh_directory_const+"\TEX\sprites\frenzy_spr.png",false,false);
-        atk_snd_var[0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\frenzy_atk_short_snd.wav",true);
+        charge_snd_var[0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\frenzy_atk_short_snd.wav",true);
         mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\frenzy_mus_snd.mp3");
         hurt_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\DH\frenzy_hurt_snd.wav",true);
         scare_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\scare_short_snd.wav");
-        fmod_snd_set_group_scr(atk_snd_var[0],snd_group_mon_const);
+        fmod_snd_set_group_scr(charge_snd_var[0],snd_group_mon_const);
         fmod_snd_set_group_scr(hurt_snd_var[1],snd_group_mon_const);
     }
     // Behavior
@@ -140,9 +140,9 @@ object_event_add
         woke_var = true;
         image_alpha = 1;
         move_var = true;
-        snd_var = fmod_snd_3d_play_scr(atk_snd_var[0]);
-        sub_var[0] = atk_snd_var[1];
-        sub_var[1] = atk_snd_var[2];
+        snd_var = fmod_snd_3d_play_scr(charge_snd_var[0]);
+        sub_var[0] = charge_snd_var[1];
+        sub_var[1] = charge_snd_var[2];
     }
 ');
 // Animation
@@ -246,7 +246,7 @@ object_event_add
         sprite_delete(spr_var);
         background_delete(bg_var);
         fmod_snd_free_scr(mus_snd_var);
-        fmod_snd_free_scr(atk_snd_var[0]);
+        fmod_snd_free_scr(charge_snd_var[0]);
         fmod_snd_free_scr(hurt_snd_var[1]);
         fmod_snd_free_scr(scare_snd_var);
     }

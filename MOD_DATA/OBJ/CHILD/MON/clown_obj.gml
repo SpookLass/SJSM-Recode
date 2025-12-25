@@ -140,34 +140,8 @@ object_event_add
         {
             if object_index != clown_door_trig_obj
             {
-                local.door = id;
-                with instance_create(x,y,clown_door_trig_obj)
-                {
-                    par_var = local.mon;
-                    z = local.door.z;
-                    lock_var = local.door.lock_var;
-                    // Collision
-                    coll_var[0] = local.door.coll_var[0];
-                    coll_var[1] = local.door.coll_var[1];
-                    coll_var[2] = local.door.coll_var[2];
-                    // Text
-                    do_txt_var = local.door.do_txt_var;
-                    txt_var = local.door.txt_var;
-                    txt_lock_var = local.door.txt_lock_var;
-                    shadow_off_var = local.door.shadow_off_var;
-                    // Sound
-                    snd_len_var = local.door.snd_len_var;
-                    for (local.i=0; local.i<snd_len_var; local.i+=1)
-                    { snd_arr[local.i] = local.door.snd_arr[local.i]; }
-                    // Function
-                    rm_count_var = local.door.rm_count_var;
-                    delay_var = local.door.delay_var;
-                    zone_var = local.door.zone_var;
-                    rm_var = local.door.rm_var;
-                    // HELP
-                    event_perform(ev_other,ev_room_start);
-                }
-                instance_destroy();
+                event_perform(ev_other,ev_room_start);
+                instance_change(clown_door_trig_obj,true);
             }
         }
     }

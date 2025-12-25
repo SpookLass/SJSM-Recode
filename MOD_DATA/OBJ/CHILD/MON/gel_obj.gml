@@ -301,7 +301,7 @@ object_event_add
             if par_var == other.id && tp_var
             {
                 local.dist = point_distance_3d_scr(x,y,z,other.target_x_var,other.target_y_var,other.target_z_var);
-                if local.dist < local.bestdist
+                if local.dist < local.bestdist && (touch_var || other.do_slime_spawn_var != 1)
                 {
                     local.slime = id;
                     local.bestdist = local.dist

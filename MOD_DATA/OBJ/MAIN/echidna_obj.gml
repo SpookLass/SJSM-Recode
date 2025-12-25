@@ -350,13 +350,15 @@ object_event_add
     }
     if do_door_var
     {
-        with global.spawn_arr[0,5] // Entrance door
+        if global.spawn_arr[0,5] != 0
         {
-            if !open_var
+            with global.spawn_arr[0,5] // Entrance door
             {
-                event_user(0);
+                if !open_var
+                { event_user(0); }
             }
         }
+        
     }
     if possess_var && !do_enter_var
     {
@@ -520,6 +522,7 @@ object_event_add
                 if local.input_dir_x == 0 && local.input_dir_y == 0
                 { local.spd = 0; }
                 local.yaw = radtodeg(arctan2(-local.input_dir_y,local.input_dir_x))+eye_yaw_var;
+                active_var = abs(local.input_dir_x) || abs(local.input_dir_y);
             }
             else if !enter_var && !target_visible_var
             {
@@ -580,6 +583,7 @@ object_event_add
                 local.input_dir = radtodeg(arctan2(-local.input_dir_y,local.input_dir_x));
                 local.yaw = local.input_dir+eye_yaw_var;
                 local.pitch = radtodeg(arctan2(local.input_dir_z,sqrt(sqr(local.input_dir_x)+sqr(local.input_dir_y))))+(eye_pitch_var*lengthdir_x(1,local.input_dir));
+                active_var = abs(local.input_dir_x) || abs(local.input_dir_y) || abs(local.input_dir_z);
             }
             else
             {

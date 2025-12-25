@@ -85,7 +85,9 @@ object_event_add
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,'
-    if instance_exists(target_var) && !target_var.dead_var && target_var.on_var
+    if possess_var { local.target = instance_exists(target_var) && !target_var.enter_var && target_var.on_var; }
+    else { local.target = instance_exists(target_var) && !target_var.dead_var && target_var.on_var; }
+    if local.target
     {
         if on_var
         {
@@ -98,45 +100,70 @@ object_event_add
             tex_var = sprite_get_texture(spr_var,floor(spr_id_var));
             // Attack
             local.dead = true;
-            with player_obj
+            with target_var
             {
-                if id == other.target_var && !dead_var && !hurt_var && !in_door_var && !invuln_var && on_var
+                if other.possess_var
                 {
-                    // p3dc_check_scr(coll_var[0],x,y,z,other.coll_var[0],other.x,other.y,other.z)
-                    if cyl_coll_scr(x,y,z,coll_var[2],coll_var[1],other.x,other.y,other.z,other.coll_var[2],other.coll_var[1])
+                    if on_var && !enter_var
                     {
-                        if hp_var > other.dmg_var
+                        if cyl_coll_scr(x,y,z,coll_var[2],coll_var[1],other.x,other.y,other.z,other.coll_var[2],other.coll_var[1])
                         {
-                            hp_var -= other.dmg_var;
-                            if other.dmg_alarm_var
+                            with global.player_arr[player_id_var] // Add possession ban
                             {
-                                hurt_var = true;
-                                set_alarm_scr(0,other.dmg_alarm_var);
+                                possess_var = false;
+                                x = other.x;
+                                y = other.y;
+                                z = other.z;
+                                eye_yaw_var = other.eye_yaw_var;
+                                eye_pitch_var = other.eye_pitch_var;
                             }
-                            hurt_target_var = other.id;
-                            event_perform(ev_other,ev_user0);
                         }
-                        else
+                    }
+                    
+                }
+                else
+                {
+                    if !dead_var && !hurt_var && !in_door_var && !invuln_var && on_var
+                    {
+                        if cyl_coll_scr(x,y,z,coll_var[2],coll_var[1],other.x,other.y,other.z,other.coll_var[2],other.coll_var[1])
                         {
-                            hp_var = 0;
-                            dead_var = true;
-                            do_coll_var = false;
-                            grav_var = false;
+                            if hp_var > other.dmg_var
+                            {
+                                hp_var -= other.dmg_var;
+                                if other.dmg_alarm_var
+                                {
+                                    hurt_var = true;
+                                    set_alarm_scr(0,other.dmg_alarm_var);
+                                }
+                                hurt_target_var = other.id;
+                                event_perform(ev_other,ev_user0);
+                            }
+                            else
+                            {
+                                hp_var = 0;
+                                dead_var = true;
+                                do_coll_var = false;
+                                grav_var = false;
+                            }
+                            local.success = true;
                         }
-                        local.success = true;
                     }
                 }
-                if !dead_var { local.dead = false; }
             }
-            if local.success
+            if !possess_var
             {
-                if false//local.dead
+                local.dead = true;
+                with player_var { if !dead_var { local.dead = false; break; } }
+                if local.success
                 {
-                    global.dead_mon_var = object_index;
-                    global.dead_player_var = attack_target_var.player_id_var;
-                    rm_goto_menu_scr(dead_rm_var,true);
+                    if false//local.dead
+                    {
+                        global.dead_mon_var = object_index;
+                        global.dead_player_var = attack_target_var.player_id_var;
+                        rm_goto_menu_scr(dead_rm_var,true);
+                    }
+                    else { event_perform(ev_other,ev_user3); }
                 }
-                else { event_perform(ev_other,ev_user3); }
             }
             event_inherited();
         }

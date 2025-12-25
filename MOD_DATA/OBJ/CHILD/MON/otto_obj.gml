@@ -65,9 +65,11 @@ object_event_add
         if id != other.id && object_index == other.object_index
         {
             other.spr_var = spr_var;
+            other.eye_spr_var = eye_spr_var;
             local.loaded = true;
             for (local.i=0; local.i<snd_len_var; local.i+=1;)
             { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
+            other.mus_snd_var = mus_snd_var;
             break;
         }
     }
@@ -75,6 +77,9 @@ object_event_add
     if !local.loaded
     {
         spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS26_01_spr.png",3,false,false,0,0);
+        eye_spr_var = execute_file(main_directory_const+"\SPR\MON\otto_eye_spr.gml",main_directory_const+"\SPR\MON\otto_eye_spr.png");
+        mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\otto_mus_test_snd.wav");
+        fmod_snd_set_loop_point_scr(mus_snd_var,0.0234541577825,0.977967306326);
         snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\otto_01_snd.wav",true);
         snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\otto_02_snd.wav",true);
         snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\otto_03_snd.wav",true);
@@ -88,6 +93,8 @@ object_event_add
         case 0:
         {
             griddy_var = frac_chance_scr(1,1987);
+            mus_prio_var = mon_mus_prio_const;
+            eye_var = true;
             break;
         }
         case 3: // Old HD
@@ -107,6 +114,7 @@ object_event_add
                 delay_min_var = 120;
                 delay_max_var = 240;
             }
+            eye_var = true;
             spr_spd_var = 1/15;
             spd_base_var = 28/45; // 0.6r2
             do_acc_var = true;
@@ -118,21 +126,31 @@ object_event_add
         }
     }
 ');
+// Room Start Event
+object_event_add
+(argument0,ev_other,ev_room_start,'
+    event_inherited();
+    if global.color_var < 2 && instance_exists(color_par_obj)
+    { eye_color_var = color_par_obj.light_color_var; }
+    else { eye_color_var = c_white; }
+');
 // Destroy Event
 object_event_add
-(argument0,ev_destroy,0,"
+(argument0,ev_destroy,0,'
     event_inherited();
     with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
     if !local.bool
     {
         sprite_delete(spr_var);
+        sprite_delete(eye_spr_var);
+        fmod_snd_free_scr(mus_snd_var);
         for (local.i=0; local.i<snd_len_var; local.i+=1;)
         { fmod_snd_free_scr(snd_arr[local.i,0]); }
     }
-");
+');
 // Animation
 object_event_add
-(argument0,ev_other,ev_user1,"
+(argument0,ev_other,ev_user1,'
     if anim_type_var == 4
     {
         spr_prog_var = (spr_prog_var+(spr_spd_var*global.delta_time_var)) mod spr_num_var;
@@ -144,10 +162,11 @@ object_event_add
         }
     }
     event_inherited();
-");
+    eye_tex_var = sprite_get_texture(eye_spr_var,floor(spr_id_var));
+');
 // Attack Success
 object_event_add
-(argument0,ev_other,ev_user3,"
+(argument0,ev_other,ev_user3,'
     event_inherited();
     if atk_stun_var > 0
     {
@@ -159,4 +178,39 @@ object_event_add
         set_alarm_scr(2,atk_stun_var);
         set_alarm_scr(4,atk_stun_var);
     }
-");
+');
+// Draw Event
+object_event_add
+(argument0,ev_draw,0,'
+    event_inherited();
+    if eye_var && (on_var || visible_var) && (!possess_var || cam_id_var != view_current || global.reflect_var)
+    {
+        // Set variables
+        draw_set_color(eye_color_var); draw_set_alpha(image_alpha);
+        d3d_transform_set_identity();
+        // Get position
+        local.xtmp = x+x_off_var;
+        local.ytmp = y+y_off_var;
+        local.ztmp = z+z_off_var;
+        // Reflection handling (more complex for billboarded sprites)
+        if global.reflect_var
+        {
+            switch (global.reflect_axis_var)
+            {
+                case 0: { local.xtmp = global.reflect_pos_var-local.xtmp; d3d_transform_add_scaling(-1,1,1); break; }
+                case 1: { local.ytmp = global.reflect_pos_var-local.ytmp; d3d_transform_add_scaling(1,-1,1); break; }
+                case 2: { local.ztmp = global.reflect_pos_var-local.ztmp; d3d_transform_add_scaling(1,1,-1); break; }
+            }
+        }
+        d3d_transform_add_rotation_z(point_direction(local.xtmp,local.ytmp,global.cam_x_var[view_current],global.cam_y_var[view_current]));
+        d3d_transform_add_translation(local.xtmp,local.ytmp,local.ztmp);
+        // Eyes
+        if global.fog_dark_var { d3d_set_fog(false,c_black,0,0); }
+        d3d_draw_wall(sil_dist_var,w_var/2,h_var,sil_dist_var,-w_var/2,0,eye_tex_var,1,1);
+        if global.fog_dark_var
+        { d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var); }
+        // Reset
+        d3d_transform_set_identity();
+        draw_set_color(c_white); draw_set_alpha(1);
+    }
+');

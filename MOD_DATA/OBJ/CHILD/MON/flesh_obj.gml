@@ -385,6 +385,7 @@ object_event_add
         set_motion_3d_scr(spd_base_var,true);
         // Damage
         local.kill = 0;
+        local.dmg = dmg_var*global.delta_time_var;
         with player_obj
         {
             if !dead_var && !hurt_var && !in_door_var && !invuln_var && on_var
@@ -392,8 +393,8 @@ object_event_add
                 // p3dc_check_scr(coll_var[0],x,y,z,other.coll_var[0],other.x,other.y,other.z)
                 if abs(deg_diff_scr(other.yaw_var,point_direction(other.x,other.y,x,y))) > 90
                 {
-                    if hp_var > other.dmg_var
-                    { hp_var -= other.dmg_var; }
+                    if hp_var > local.dmg
+                    { hp_var -= local.dmg; }
                     else
                     {
                         hp_var = 0;
