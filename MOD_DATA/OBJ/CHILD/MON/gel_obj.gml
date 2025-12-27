@@ -180,6 +180,24 @@ object_event_add
     }
     alarm_len_var = 9;
 ');
+// Destroy Event
+object_event_add
+(argument0,ev_destroy,0,'
+    event_inherited();
+    with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
+    if !local.bool
+    {
+        sprite_delete(spr_var);
+        background_delete(slime_bg_var);
+        background_delete(overlay_bg_var);
+        for (local.i=0; local.i<snd_len_var; local.i+=1;)
+        { fmod_snd_free_scr(snd_arr[local.i,0]); }
+        fmod_snd_free_scr(wake_snd_var[1]);
+        fmod_snd_free_scr(slime_snd_var[1]);
+        fmod_snd_free_scr(mus_snd_var);
+    }
+    with slime_obj { if par_var == other.id { instance_destroy(); }}
+');
 // Room Start Event
 object_event_add
 (argument0,ev_other,ev_room_start,'
@@ -213,24 +231,6 @@ object_event_add
             }
         }
     }
-');
-// Destroy Event
-object_event_add
-(argument0,ev_destroy,0,'
-    event_inherited();
-    with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
-    if !local.bool
-    {
-        sprite_delete(spr_var);
-        background_delete(slime_bg_var);
-        background_delete(overlay_bg_var);
-        for (local.i=0; local.i<snd_len_var; local.i+=1;)
-        { fmod_snd_free_scr(snd_arr[local.i,0]); }
-        fmod_snd_free_scr(wake_snd_var[1]);
-        fmod_snd_free_scr(slime_snd_var[1]);
-        fmod_snd_free_scr(mus_snd_var);
-    }
-    with slime_obj { if par_var = other.id { instance_destroy(); }}
 ');
 // Slime alarm
 object_event_add

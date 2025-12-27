@@ -63,6 +63,9 @@ object_event_add
     sight_dist_var = 128/3;
     sight_yaw_var = 60;
     alarm_len_var = 9;
+    // Shadow
+    shadow_z_var = 0.3;
+    shadow_w_var = 10;
     // Assets
         // Search for existing assets to save memory
     with object_index
@@ -74,6 +77,8 @@ object_event_add
             other.atk_spr_var = atk_spr_var;
             other.atk_end_spr_var = atk_end_spr_var;
             other.dead_spr_var = dead_spr_var;
+            other.doll_blood_bg_var = doll_blood_bg_var;
+            other.shadow_bg_var = shadow_bg_var;
             other.static_bg_var = static_bg_var;
             other.atk_start_snd_var[1] = atk_start_snd_var[1];
             other.hurt_snd_var[1] = hurt_snd_var[1];
@@ -94,6 +99,8 @@ object_event_add
         atk_end_spr_var = sprite_add(dh_directory_const+"\TEX\sprites\WD_SPR4.png",9,false,false,0,0);
         dead_spr_var = sprite_add(dh_directory_const+"\TEX\sprites\WD_SPR5.png",2,false,false,0,0);
         static_bg_var = background_add(main_directory_const+"\BG\DH\tile_static_bg.png",false,false);
+        doll_blood_bg_var = background_add(main_directory_const+"\BG\DH\doll_blood_bg.png",false,false);
+        shadow_bg_var = background_add(main_directory_const+"\BG\DH\shadow_bg.png",false,false);
         snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\wc_01_snd.wav",true);
         snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\wc_02_snd.wav",true);
         snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\wc_03_snd.wav",true);
@@ -107,6 +114,7 @@ object_event_add
         dead_snd_var[0]  = fmod_snd_add_scr(main_directory_const+"\SND\MON\wc_dead_snd.wav",true);
         mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\wc_mus_snd.mp3");
     }
+    shadow_tex_var = background_get_texture(shadow_bg_var);
     spr_var = main_spr_var;
     mus_prio_var = theme_mus_prio_const;
     // Behavior
@@ -167,6 +175,8 @@ object_event_add
         sprite_delete(atk_spr_var);
         sprite_delete(atk_end_spr_var);
         background_delete(static_bg_var);
+        background_delete(shadow_bg_var);
+        background_delete(doll_blood_bg_var);
         for (local.i=0; local.i<snd_len_var; local.i+=1;)
         { fmod_snd_free_scr(snd_arr[local.i,0]); }
         fmod_snd_free_scr(atk_start_snd_var[1]);
@@ -174,6 +184,7 @@ object_event_add
         fmod_snd_free_scr(dead_snd_var[0]);
     }
     with wc_eff_obj { if par_var == other.id { instance_destroy(); }}
+    with doll_blood_obj { if par_var == other.id { instance_destroy(); }}
 ');
 // Room Start Event
 object_event_add
@@ -322,6 +333,16 @@ object_event_add
         set_alarm_scr(5,dead_alarm_var);
         anim_type_var = 1; // End on last
         spr_id_var = 0;
+        if dead_var == 2
+        {
+            with instance_create(x,y,doll_blood_obj)
+            {
+                par_var = other.id;
+                store_tex_var = background_get_texture(other.doll_blood_bg_var);
+                tex_var = store_tex_var;
+            }
+        }
+        else { dead_var += 1; }
     }
     else { tone_var = c_red; }
 ');
@@ -354,4 +375,25 @@ object_event_add
     set_alarm_scr(5,dead_alarm_var);
     z_off_var = -0.6;
     h_var = 15.3;
+    // Turn off static
+    local.dead = true;
+    with wc_obj { if !dead_var { local.dead = false; }}
+    if local.dead { with wc_eff_obj { visible = false; }}
+');
+// Draw Event
+object_event_add
+(argument0,ev_draw,0,'
+    if (on_var || visible_var) && (!possess_var || cam_id_var != view_current || global.reflect_var)
+    {
+        draw_set_alpha(image_alpha);
+        // Transform
+        d3d_transform_set_identity();
+        d3d_transform_add_translation(x+x_off_var,y+y_off_var,z+shadow_z_var);
+        // Draw
+        d3d_draw_floor(-shadow_w_var/2,-shadow_w_var/2,0,shadow_w_var/2,shadow_w_var/2,0,shadow_tex_var,1,1);
+        // Reset
+        d3d_transform_set_identity();
+        draw_set_color(c_white); draw_set_alpha(1);
+    }
+    event_inherited();
 ');

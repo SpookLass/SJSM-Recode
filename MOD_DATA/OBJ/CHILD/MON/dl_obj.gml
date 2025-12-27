@@ -119,6 +119,12 @@ object_event_add
             // Effect
             eff_min_var = 15;
             eff_max_var = 30;
+            // Axe
+            do_hurt_var = 1;
+            hurt_snd_var = 1;
+            hurt_alarm_var = 30;
+            stun_var = 1;
+            violence_var = 3;
             break;
         }
         case 3: // Old HD
@@ -360,6 +366,28 @@ object_event_add
     x = warp_x_var;
     y = warp_y_var;
     z = warp_z_var;
+');
+// Hurt Event
+object_event_add
+(argument0,ev_other,ev_user4,'
+    event_inherited();
+    if stun_var
+    {
+        if warp_var { alarm_arr[8,0] += hurt_alarm_var; }
+        else if stun_var == 2
+        {
+            set_motion_3d_scr(0,true);
+            move_var = false;
+            anim_var = false;
+            atk_var = false;
+            if hurt_alarm_var
+            {
+                set_alarm_scr(1,hurt_alarm_var);
+                set_alarm_scr(2,hurt_alarm_var);
+                set_alarm_scr(4,hurt_alarm_var);
+            }
+        }
+    }
 ');
 // Attack Success
 object_event_add
