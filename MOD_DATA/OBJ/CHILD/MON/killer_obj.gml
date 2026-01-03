@@ -375,7 +375,9 @@ object_event_add
             do_sprint_var = true;
             do_stam_var = true;
             dmg_var = 30;
+            dmg_alarm_var = 60;
             atk_range_var = coll_var[2];
+            breath_snd_num_var = 0;
             // Parry
             do_hurt_var = true;
             hurt_snd_var = 3;
@@ -638,7 +640,7 @@ object_event_add
 object_event_add
 (argument0,ev_alarm,0,'
     event_inherited();
-    if do_snd_var
+    if do_snd_var && drag_snd_len_var > 0
     { set_alarm_scr(8,drag_snd_alarm_var); }
     if scary_var
     {
@@ -653,7 +655,7 @@ object_event_add
     {
         if fmod_inst_is_play_scr(snd_var) && fmod_inst_is_3d_scr(snd_var)
         { fmod_inst_stop_scr(snd_var); }
-        if frac_chance_scr(breath_snd_num_var,breath_snd_den_var) || sprint_var
+        if breath_snd_len_var > 0 && (frac_chance_scr(breath_snd_num_var,breath_snd_den_var) || sprint_var)
         {
             local.index = irandom(breath_snd_len_var-1);
             local.snd = breath_snd_arr[local.index,0];
@@ -674,7 +676,7 @@ object_event_add
 // Drag Sound Alarm
 object_event_add
 (argument0,ev_alarm,8,'
-    if do_snd_var && frac_chance_scr(drag_snd_num_var,drag_snd_den_var)
+    if do_snd_var && drag_snd_len_var > 0 && frac_chance_scr(drag_snd_num_var,drag_snd_den_var)
     {
         local.snd = irandom(drag_snd_len_var-1);
         drag_snd_var = fmod_snd_3d_play_scr(drag_snd_arr[local.snd,0]);

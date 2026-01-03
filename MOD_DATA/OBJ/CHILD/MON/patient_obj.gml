@@ -160,7 +160,7 @@ object_event_add
             rand_alarm_max_var = 6;
             tp_alarm_var = 480;
             overlay_var = false;
-            atk_snd_var = 1;
+            atk_snd_var = 2;
             // HD Only
             seen_spd_mult_var = 1;
             seen_rage_var = true;

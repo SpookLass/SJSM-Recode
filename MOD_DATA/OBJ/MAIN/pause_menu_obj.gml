@@ -1,5 +1,5 @@
 // Builtin Variables
-object_set_depth(argument0,-101);
+object_set_depth(argument0,-102);
 object_set_mask(argument0,noone);
 object_set_parent(argument0,par_obj);
 object_set_persistent(argument0,false);
@@ -36,7 +36,7 @@ object_event_add
     spook_x_var = random(1280)-640;
     spook_y_var = random(1280)-640;
     // Music
-    mus_snd_var = fmod_snd_loop_scr(pause_mus_snd);//fmod_snd_loop_scr(pause_drum_mus_snd);
+    mus_snd_var = fmod_snd_loop_scr(pause_drum_mus_snd);
     fmod_inst_set_vol_scr(mus_snd_var,0);
     // fmod_inst_set_mute_scr(mus_snd_var,true);
     alarm_len_var = 6;

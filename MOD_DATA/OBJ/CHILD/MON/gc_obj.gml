@@ -262,7 +262,7 @@ object_event_add
             dmg_alarm_var = 120;
             eff_old_var = false;
             fog_var = true;
-            atk_snd_var = 1;
+            atk_snd_var = 2;
             if !local.set
             {
                 spd_base_var = 44/45; // 0.9r7

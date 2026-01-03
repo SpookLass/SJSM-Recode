@@ -1,0 +1,108 @@
+/*
+Argument 0: Room Variable (same for all rooms)
+*/
+room_set_code
+(
+    argument0,
+    '
+    // Name
+    ini_open(global.lang_var);
+    global.rm_name_var = ini_read_string("ROOM","hall","ROOM_hall")+" 1 "+ini_read_string("MENU","hd","MENU_hd");
+    ini_close();
+    // Spawns
+    global.spawn_len_var = 2;
+    // Spawn 0 (entrance)
+    global.spawn_arr[0,0] = 336;    // X
+    global.spawn_arr[0,1] = 240;    // Y
+    global.spawn_arr[0,2] = 0;      // Z
+    global.spawn_arr[0,3] = 90;     // Angle (0 is right, 90 is up, etc)
+    // Spawn 1 (exit)
+    global.spawn_arr[1,0] = 176;
+    global.spawn_arr[1,1] = 144;
+    global.spawn_arr[1,2] = 0;
+    global.spawn_arr[1,3] = 0;
+    // Marks (Slime spawners)
+    global.mark_len_var = 3;
+    // Mark 0
+    global.mark_arr[0,0] = 240;     // X
+    global.mark_arr[0,1] = 144;     // Y
+    global.mark_arr[0,2] = 0;       // Z
+    // Mark 1
+    global.mark_arr[1,0] = 336;
+    global.mark_arr[1,1] = 144;
+    global.mark_arr[1,2] = 0;
+    // Mark 2
+    global.mark_arr[2,0] = 336;
+    global.mark_arr[2,1] = 176;
+    global.mark_arr[2,2] = 0;
+    // 3D Draw
+    d3d_start();
+    global.draw_3d_var = true;
+    // Doors
+    spawn_create_scr(true,false);
+');
+// Room settings
+room_set_width(argument0,1280);
+room_set_height(argument0,720);
+room_set_background_color(argument0,c_black,true);
+room_set_view_enabled(argument0,true);
+for (local.i=0; local.i<8; local.i+=1;)
+{ room_set_view(argument0,local.i,false,0,0,1280,720,0,0,1280,720,32,32,-1,-1,noone); }
+room_set_view(argument0,0,true,0,0,1280,720,0,0,1280,720,32,32,-1,-1,noone);
+// Effects
+room_instance_add(argument0,0,0,fog_01_obj);
+room_instance_add(argument0,0,0,color_control_02_obj);
+room_instance_add(argument0,0,0,rand_mon_spawn_obj);
+room_instance_add(argument0,0,0,amb_control_obj);
+// Walls (Horizontal)
+room_instance_add(argument0,336,128,wall_hor_obj);
+room_instance_add(argument0,304,128,wall_hor_obj);
+room_instance_add(argument0,176,128,wall_hor_obj);
+room_instance_add(argument0,208,128,wall_hor_obj);
+room_instance_add(argument0,240,128,wall_hor_obj);
+room_instance_add(argument0,272,128,wall_hor_obj);
+room_instance_add(argument0,304,160,wall_hor_obj);
+room_instance_add(argument0,176,160,wall_hor_obj);
+room_instance_add(argument0,208,160,wall_hor_obj);
+room_instance_add(argument0,272,160,wall_hor_obj);
+room_instance_add(argument0,240,160,wall_hor_obj);
+room_instance_add(argument0,144,160,wall_hor_obj);
+room_instance_add(argument0,336,256,wall_hor_obj);
+// Walls (Vertical)
+room_instance_add(argument0,160,144,wall_vert_obj);
+room_instance_add(argument0,320,240,wall_vert_obj);
+room_instance_add(argument0,320,176,wall_vert_obj);
+room_instance_add(argument0,320,208,wall_vert_obj);
+room_instance_add(argument0,352,240,wall_vert_obj);
+room_instance_add(argument0,352,144,wall_vert_obj);
+room_instance_add(argument0,352,176,wall_vert_obj);
+room_instance_add(argument0,352,208,wall_vert_obj);
+// Floors
+room_instance_add(argument0,176,144,floor_obj);
+room_instance_add(argument0,208,144,floor_obj);
+room_instance_add(argument0,240,144,floor_obj);
+room_instance_add(argument0,272,144,floor_obj);
+room_instance_add(argument0,304,144,floor_obj);
+room_instance_add(argument0,336,144,floor_obj);
+room_instance_add(argument0,336,176,floor_obj);
+room_instance_add(argument0,336,208,floor_obj);
+room_instance_add(argument0,336,240,floor_obj);
+// Ceilings
+room_instance_add(argument0,176,144,ceil_obj);
+room_instance_add(argument0,208,144,ceil_obj);
+room_instance_add(argument0,240,144,ceil_obj);
+room_instance_add(argument0,272,144,ceil_obj);
+room_instance_add(argument0,304,144,ceil_obj);
+room_instance_add(argument0,336,144,ceil_obj);
+room_instance_add(argument0,336,176,ceil_obj);
+room_instance_add(argument0,336,208,ceil_obj);
+room_instance_add(argument0,336,240,ceil_obj);
+// Torches
+room_instance_add(argument0,208,128,torch_north_obj);
+room_instance_add(argument0,272,128,torch_north_obj);
+room_instance_add(argument0,208,160,torch_south_obj);
+room_instance_add(argument0,272,160,torch_south_obj);
+room_instance_add(argument0,324,208,torch_west_obj);
+room_instance_add(argument0,348,208,torch_east_obj);
+// Jumpscare
+room_instance_add(argument0,324,160,js_obj);

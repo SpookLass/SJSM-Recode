@@ -12,7 +12,7 @@ room_set_code
 	ini_close();
     // Spawns
     global.spawn_len_var = 2;
-    global.spawn_arr[0,0] = 48;
+    global.spawn_arr[0,0] = 16;
     global.spawn_arr[0,1] = 48;
     global.spawn_arr[0,2] = 0;
     global.spawn_arr[0,3] = 0;
@@ -42,6 +42,7 @@ room_instance_add(argument0,0,0,color_control_02_obj);
 room_instance_add(argument0,0,0,rand_mon_spawn_obj);
 room_instance_add(argument0,0,0,amb_control_obj);
 // Floors
+room_instance_add(argument0,16,48,floor_obj);
 room_instance_add(argument0,48,48,floor_obj);
 room_instance_add(argument0,80,48,floor_obj);
 room_instance_add(argument0,80,80,floor_obj);
@@ -78,6 +79,10 @@ room_instance_add(argument0,272,112,ceil_low_obj);
 room_instance_add(argument0,304,112,ceil_low_obj);
 room_instance_add(argument0,208,80,ceil_low_obj);
 // Walls (Horizontal)
+room_instance_add(argument0,16,36,wall_hor_obj);
+room_instance_add(argument0,16,60,wall_hor_obj);
+room_instance_add(argument0,48,36,wall_hor_obj);
+room_instance_add(argument0,48,60,wall_hor_obj);
 room_instance_add(argument0,200,72,wall_hor_obj);
 room_instance_add(argument0,168,72,wall_hor_obj);
 room_instance_add(argument0,232,100,wall_hor_obj);
@@ -91,13 +96,12 @@ room_instance_add(argument0,176,152,wall_hor_obj);
 room_instance_add(argument0,144,152,wall_hor_obj);
 room_instance_add(argument0,112,124,wall_hor_obj);
 room_instance_add(argument0,80,124,wall_hor_obj);
-room_instance_add(argument0,48,60,wall_hor_obj);
-room_instance_add(argument0,48,36,wall_hor_obj);
+
 room_instance_add(argument0,80,36,wall_hor_obj);
 room_instance_add(argument0,104,100,wall_hor_obj);
 room_instance_add(argument0,136,100,wall_hor_obj);
 // Walls (Vertical)
-room_instance_add(argument0,32,48,wall_vert_obj);
+room_instance_add(argument0,0,48,wall_vert_obj);
 room_instance_add(argument0,216,84,wall_vert_obj);
 room_instance_add(argument0,312,112,wall_vert_obj);
 room_instance_add(argument0,224,140,wall_vert_obj);

@@ -734,15 +734,15 @@ object_event_add
         case 2: { fmod_snd_play_scr(choose(axe_01_snd,axe_02_snd,axe_03_snd)); break; } // Ding!
         case 3:
         {
-            if fmod_snd_is_3d_scr(hurt_snd_var[1])
+            if fmod_snd_is_3d_scr(atk_snd_var[1])
             {
                 if fmod_inst_is_play_scr(snd_var) && fmod_inst_is_3d_scr(snd_var)
                 { fmod_inst_stop_scr(snd_var); }
-                snd_var = fmod_snd_3d_play_scr(hurt_snd_var[1]);
+                snd_var = fmod_snd_3d_play_scr(atk_snd_var[1]);
             }
-            else { snd_var = fmod_snd_play_scr(hurt_snd_var[1]); }
-            sub_var[0] = hurt_snd_var[2];
-            sub_var[1] = hurt_snd_var[3];
+            else { snd_var = fmod_snd_play_scr(atk_snd_var[1]); }
+            sub_var[0] = atk_snd_var[2];
+            sub_var[1] = atk_snd_var[3];
             if do_snd_var && snd_len_var > 0
             { set_alarm_scr(6,irandom_range(snd_delay_min_var,snd_delay_max_var)); }
             break;
@@ -793,7 +793,7 @@ object_event_add
         }
     }
     // Hurt sound
-    if hurt_snd_var
+    if hurt_snd_var && (do_hurt_var != 3 || hurt_type_var == 1)
     {
         switch hurt_snd_var
         {

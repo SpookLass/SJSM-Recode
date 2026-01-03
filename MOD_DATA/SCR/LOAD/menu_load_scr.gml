@@ -1,4 +1,43 @@
 /*
+Customize menu stuff
+Type
+    0 - Enum
+    1 - Number
+    2 - Clamped Number
+    3 - Max Clamped Number
+    4 - Min Clamped Number
+    5 - String
+Default
+    custom_default_arr[0,0] - Setting index & Difficulty + 1
+    ds_grid_add(custom_default_arr[0,0],0,0,true) - Mode + 1 & Behavior + 1
+    0 is always default. If there is no value it will go to Behavior first, then Mode, then difficulty last
+*/
+globalvar custom_name_arr;
+globalvar custom_label_arr;
+globalvar custom_desc_arr;
+globalvar custom_type_arr;
+globalvar custom_default_arr;
+globalvar custom_clamp_arr;
+// Name
+custom_name_arr[0,0] = "example"
+custom_name_arr[0,1] = true; // Translate?
+// Description
+custom_desc_arr[0,0] = "example"
+custom_desc_arr[0,1] = true; // Translate?
+// Type
+custom_type_arr[0] = 0;
+// Label
+custom_label_arr[0,0] = "example"; // Value 1
+custom_label_arr[0,1] = true; // Translate
+custom_label_arr[0,2] = "example"; // Value 2
+custom_label_arr[0,3] = true; // Translate
+// Clamp
+custom_clamp_arr[0,0] = 0;
+custom_clamp_arr[0,1] = 1;
+// Default
+custom_default_arr[0,0] = ds_grid_create(); ds_grid_clear(custom_default_arr[0,0]);
+ds_grid_add(custom_default_arr[0,0],0,0,true);
+/*
 Monster lists
 0 - Story
     0 - None

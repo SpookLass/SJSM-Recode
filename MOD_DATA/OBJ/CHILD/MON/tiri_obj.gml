@@ -123,8 +123,8 @@ object_event_add
             }
             // Silhouette
             sil_var = true;
-            sil_type_var = 0; // None
-            sil_color_var = -1;
+            sil_type_var = 2; // Color
+            sil_color_var = c_black;
             sil_alpha_var = 0.2;
             break;
         }
@@ -163,7 +163,7 @@ object_event_add
 ');
 // Destroy Event
 object_event_add
-(argument0,ev_destroy,0,"
+(argument0,ev_destroy,0,'
     event_inherited();
     with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
     if !local.bool
@@ -179,7 +179,7 @@ object_event_add
     { if par_var == other.id { instance_destroy(); }}
     with tiri_shadow_obj
     { if par_var == other.id { instance_destroy(); }}
-");
+');
 // Room Start Event
 object_event_add
 (argument0,ev_other,ev_room_start,'
@@ -255,6 +255,9 @@ object_event_add
             }
         }
     }
+    // Silhouette Color
+    if global.fog_dark_var { sil_color_var = eff_color_var; }
+    else { sil_color_var = c_black; }
 ');
 // Movement
 object_event_add

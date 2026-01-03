@@ -163,7 +163,7 @@ object_event_add
             snd_alarm_max_var = 600;
             inv_chance_var = 5;
             tp_dist_max_var = 640/3; // 213.r3
-            atk_snd_var = 1;
+            atk_snd_var = 2;
             break;
         }
         case 5: // Old HD
