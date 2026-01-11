@@ -51,7 +51,7 @@ object_event_add
 ");
 // Step
 object_event_add
-(argument0,ev_step,ev_step_normal,"
+(argument0,ev_step,ev_step_normal,'
     z_time_var = (z_time_var+global.delta_time_var) mod z_rate_var;
     z = z_base_var+(sin(2*z_time_var*pi/z_rate_var)*z_mult_var/2);
     if state_var <= 0 && instance_number(mon_par_obj) < 2
@@ -62,20 +62,20 @@ object_event_add
             { spd_mult_var = other.target_spd_mult_var; }
         }
     }
-");
+');
 // Weapon
 object_event_add
-(argument0,ev_other,ev_user4,"
+(argument0,ev_other,ev_user4,'
     if state_var > 0
     {
         state_var -= 1;
         if state_var <= 0
         { set_alarm_scr(0,delay_var); }
     }
-");
+');
 // Alarm
 object_event_add
-(argument0,ev_alarm,0,"
+(argument0,ev_alarm,0,'
     with instance_create(x,y,brain_chase_obj)
     {
         set_alarm_scr(0,-1);
@@ -91,6 +91,7 @@ object_event_add
         tex_var = other.store_tex_var;
         w_var = other.w_var;
         h_var = other.h_var;
+        if loop_snd_var[0] == 1 { loop_inst_var = fmod_snd_3d_loop_scr(loop_snd_var[1]); }
     }
     instance_destroy();
-")
+')

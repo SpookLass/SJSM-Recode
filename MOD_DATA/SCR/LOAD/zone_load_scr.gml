@@ -869,6 +869,7 @@ ds_list_add(global.zone_arr[9],hotel_01_rm);
 ds_list_add(global.zone_arr[9],hotel_02_rm);
 ds_list_add(global.zone_arr[9],hotel_03_rm);
 ds_list_add(global.zone_arr[9],hotel_04_rm);
+ds_list_add(global.zone_arr[9],hotel_04_lass_rm);
 ds_list_add(global.zone_arr[9],hotel_05_rm);
 ds_list_add(global.zone_arr[9],hotel_06_rm);
 ds_list_add(global.zone_arr[9],hotel_07_rm);

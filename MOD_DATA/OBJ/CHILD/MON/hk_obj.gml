@@ -143,6 +143,7 @@ object_event_add
 			fog_type_var = 1;
 			fog_end_var = 72;
 			door_var = true;
+			dur_var = irandom_range(10,20);
 			// Seen
 			seen_pitch_var = 40.5;
 			seen_dist_var = 128;

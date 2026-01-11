@@ -508,11 +508,8 @@ object_event_add
             set_motion_3d_scr(0,true);
             if wander_var { event_user(13); }
         }
-        else if type_var > 0 // Physical
+        else
         {
-            // V3
-            sight_type_var = 2;
-            event_user(8); // Check Sight
             // V4
             if possess_var
             {
@@ -523,90 +520,58 @@ object_event_add
                 { local.spd = 0; }
                 local.yaw = radtodeg(arctan2(-local.input_dir_y,local.input_dir_x))+eye_yaw_var;
                 active_var = abs(local.input_dir_x) || abs(local.input_dir_y);
-            }
-            else if !enter_var && !target_visible_var
-            {
-                if mp_grid_path(grid_var,path_var,x,y,target_x_var,target_y_var,true)
+                if !do_coll_var || grav_var <= 0
                 {
-                    path_x_var = x;
-                    path_y_var = y;
+                    local.input_dir_z = input_z_scr(player_id_var);
+                    local.pitch = radtodeg(arctan2(local.input_dir_z,sqrt(sqr(local.input_dir_x)+sqr(local.input_dir_y))))+(eye_pitch_var*lengthdir_x(1,local.input_dir));
                 }
-                else { mp_grid_path(grid_var,path_var,path_x_var,path_y_var,target_x_var,target_y_var,true); }
-                local.yaw = point_direction
-                (
-                    path_get_point_x(path_var,0),
-                    path_get_point_y(path_var,0),
-                    path_get_point_x(path_var,1),
-                    path_get_point_y(path_var,1)
-                );
-            }
-            else { local.yaw = point_direction(x,y,target_x_var,target_y_var); }
-            switch do_acc_var
-            {
-                case 1: // Modern
-                {
-                    // Tried to add autobrake support, but it"s difficult without Unity source code
-                    if local.spd > 0 && autobrake_var && target_visible_var && spd_var > autobrake_spd_var && !possess_var
-                    && (target_dist_var <= autobrake_dist_var || autobrake_dist_var <= 0) 
-                    {
-                        if autobrake_dir_var > 0
-                        {
-                            if abs(deg_diff_scr(local.yaw,yaw_var)) > autobrake_dir_var
-                            { local.spd = autobrake_spd_var; }
-                        }
-                        else { local.spd = autobrake_spd_var; }
-                    }
-                    acc_scr(global.delta_time_var,acc_var,frick_var,local.yaw,local.spd);
-                    break;
-                }
-                case 2: // Classic
-                {
-                    if abs(spd_var) < abs(local.spd) { local.spd = sign(local.spd)*min(abs(local.spd),abs(spd_var)+(acc_var*global.delta_time_var)); }
-                }
-                case 3: // Friction only
-                {
-                    if abs(spd_var) > abs(local.spd) { local.spd = sign(local.spd)*max(abs(local.spd),abs(spd_var)-(frick_var*global.delta_time_var)); }
-                }
-                default: { set_motion_scr(local.spd,true,local.yaw,true); break; }
-            }
-        }
-        else // Incorporeal
-        {
-            if possess_var
-            {
-                // Get inputs
-                local.input_dir_x = input_x_scr(player_id_var);
-                local.input_dir_y = input_y_scr(player_id_var);
-                local.input_dir_z = input_z_scr(player_id_var);
-                if local.input_dir_x == 0 && local.input_dir_y == 0 && local.input_dir_z == 0
-                { local.spd = 0; }
-                local.input_dir = radtodeg(arctan2(-local.input_dir_y,local.input_dir_x));
-                local.yaw = local.input_dir+eye_yaw_var;
-                local.pitch = radtodeg(arctan2(local.input_dir_z,sqrt(sqr(local.input_dir_x)+sqr(local.input_dir_y))))+(eye_pitch_var*lengthdir_x(1,local.input_dir));
-                active_var = abs(local.input_dir_x) || abs(local.input_dir_y) || abs(local.input_dir_z);
             }
             else
             {
                 local.yaw = point_direction(x,y,target_x_var,target_y_var);
-                local.pitch = point_direction_3d_scr(x,y,z,target_x_var,target_y_var,target_z_var);
+                if do_coll_var
+                {
+                    // V3
+                    sight_type_var = 2;
+                    event_user(8); // Check Sight
+                    // Path
+                    if !enter_var && !target_visible_var
+                    {
+                        if mp_grid_path(grid_var,path_var,x,y,target_x_var,target_y_var,true)
+                        {
+                            path_x_var = x;
+                            path_y_var = y;
+                        }
+                        else { mp_grid_path(grid_var,path_var,path_x_var,path_y_var,target_x_var,target_y_var,true); }
+                        local.yaw = point_direction
+                        (
+                            path_get_point_x(path_var,0),
+                            path_get_point_y(path_var,0),
+                            path_get_point_x(path_var,1),
+                            path_get_point_y(path_var,1)
+                        );
+                    }
+                }
+                if !do_coll_var || grav_var <= 0 { local.pitch = point_direction_3d_scr(x,y,z,target_x_var,target_y_var,target_z_var); }
             }
             switch do_acc_var
             {
-                case 1:
+                case 1: // Modern
                 {
-                    // Tried to add autobrake support, but it"s difficult without Unity source code
-                    if autobrake_var && target_visible_var && spd_var > autobrake_spd_var
+                    // Tried to add autobrake support, but its difficult without Unity source code
+                    if local.spd > 0 && autobrake_var && spd_var > autobrake_spd_var && !possess_var //&& target_visible_var
                     && (target_dist_var <= autobrake_dist_var || autobrake_dist_var <= 0) 
                     {
                         if autobrake_dir_var > 0
                         {
                             if abs(deg_diff_scr(local.yaw,yaw_var)) > autobrake_dir_var
-                            || abs(deg_diff_scr(local.pitch,pitch_var)) > autobrake_dir_var
+                            || (type_var != 1 && abs(deg_diff_scr(local.pitch,pitch_var)) > autobrake_dir_var)
                             { local.spd = autobrake_spd_var; }
                         }
                         else { local.spd = autobrake_spd_var; }
                     }
-                    acc_3d_scr(global.delta_time_var,acc_var,frick_var,local.yaw,local.pitch,local.spd);
+                    if do_coll_var && grav_var > 0 { acc_scr(global.delta_time_var,acc_var,frick_var,local.yaw,local.spd); }
+                    else { acc_3d_scr(global.delta_time_var,acc_var,frick_var,local.yaw,local.pitch,local.spd); }
                     break;
                 }
                 case 2: // Classic
@@ -617,7 +582,12 @@ object_event_add
                 {
                     if abs(spd_var) > abs(local.spd) { local.spd = sign(local.spd)*max(abs(local.spd),abs(spd_var)-(frick_var*global.delta_time_var)); }
                 }
-                default: { set_motion_3d_scr(local.spd,true,local.yaw,true,local.pitch,true); break; }
+                default:
+                {
+                    if do_coll_var && grav_var > 0 { set_motion_scr(local.spd,true,local.yaw,true); }
+                    else { set_motion_3d_scr(local.spd,true,local.yaw,true,local.pitch,true); }
+                    break;
+                }
             }
         }
     }
@@ -695,7 +665,7 @@ object_event_add
     }
     if local.success
     {
-        if false//local.dead
+        if local.dead && !global.debug_var
         {
             global.dead_mon_var = object_index;
             global.dead_player_var = attack_target_var.player_id_var;

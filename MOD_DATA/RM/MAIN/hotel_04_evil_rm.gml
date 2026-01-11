@@ -10,10 +10,10 @@ room_set_code
 	ini_close();
     // Spawn
     global.spawn_len_var = 2;
-    global.spawn_arr[0,0] = 160;
-    global.spawn_arr[0,1] = 272;
+    global.spawn_arr[0,0] = 320;
+    global.spawn_arr[0,1] = 256;
     global.spawn_arr[0,2] = 0;
-    global.spawn_arr[0,3] = 0;
+    global.spawn_arr[0,3] = 180;
     global.spawn_arr[1,0] = 352;
     global.spawn_arr[1,1] = 320;
     global.spawn_arr[1,2] = 0;
@@ -71,12 +71,6 @@ room_instance_add(argument0,352,352,floor_obj);
 room_instance_add(argument0,352,384,floor_obj);
 room_instance_add(argument0,352,416,floor_obj);
 room_instance_add(argument0,320,416,floor_obj);
-room_instance_add(argument0,160,256,floor_obj); // New
-room_instance_add(argument0,192,256,floor_obj);
-room_instance_add(argument0,224,256,floor_obj);
-room_instance_add(argument0,160,288,floor_obj);
-room_instance_add(argument0,192,288,floor_obj);
-room_instance_add(argument0,224,288,floor_obj);
 // Ceilings
 room_instance_add(argument0,256,256,ceil_obj);
 room_instance_add(argument0,288,256,ceil_obj);
@@ -100,12 +94,6 @@ room_instance_add(argument0,352,352,ceil_obj);
 room_instance_add(argument0,352,384,ceil_obj);
 room_instance_add(argument0,352,416,ceil_obj);
 room_instance_add(argument0,320,416,ceil_obj);
-room_instance_add(argument0,160,256,ceil_obj); // New
-room_instance_add(argument0,192,256,ceil_obj);
-room_instance_add(argument0,224,256,ceil_obj);
-room_instance_add(argument0,160,288,ceil_obj);
-room_instance_add(argument0,192,288,ceil_obj);
-room_instance_add(argument0,224,288,ceil_obj);
 // Walls (Horizontal)
 room_instance_add(argument0,256,240,wall_hor_obj);
 room_instance_add(argument0,288,240,wall_hor_obj);
@@ -116,13 +104,8 @@ room_instance_add(argument0,352,432,wall_hor_obj);
 room_instance_add(argument0,352,304,wall_hor_obj);
 room_instance_add(argument0,256,432,wall_hor_obj);
 room_instance_add(argument0,288,432,wall_hor_obj);
-room_instance_add(argument0,160,240,wall_hor_obj); // New
-room_instance_add(argument0,192,240,wall_hor_obj);
-room_instance_add(argument0,224,240,wall_hor_obj);
-room_instance_add(argument0,160,304,wall_hor_obj);
-room_instance_add(argument0,192,304,wall_hor_obj);
-room_instance_add(argument0,224,304,wall_hor_obj);
 // Walls (Vertical)
+room_instance_add(argument0,240,256,wall_vert_obj);
 room_instance_add(argument0,336,256,wall_vert_obj);
 room_instance_add(argument0,336,288,wall_vert_obj);
 room_instance_add(argument0,368,320,wall_vert_obj);
@@ -132,12 +115,12 @@ room_instance_add(argument0,368,416,wall_vert_obj);
 room_instance_add(argument0,304,416,wall_vert_obj);
 room_instance_add(argument0,304,352,wall_vert_obj);
 room_instance_add(argument0,304,320,wall_vert_obj);
+room_instance_add(argument0,240,288,wall_vert_obj);
 room_instance_add(argument0,240,320,wall_vert_obj);
 room_instance_add(argument0,240,352,wall_vert_obj);
 room_instance_add(argument0,240,384,wall_vert_obj);
 room_instance_add(argument0,240,416,wall_vert_obj);
-room_instance_add(argument0,144,256,wall_vert_obj); // New
-room_instance_add(argument0,144,288,wall_vert_obj);
+// Torches
 // Props
 room_instance_add(argument0,304,384,doorframe_01_vert_obj);
 room_instance_add(argument0,304,384,doorframe_02_vert_obj);

@@ -190,6 +190,7 @@ object_event_add
             inv_chance_var = 5;
             tp_dist_max_var = 640/3; // 213.r3
             hurt_snd_var = 3;
+            dupe_var = 0;
             break;
         }
         case 3: // Karamari

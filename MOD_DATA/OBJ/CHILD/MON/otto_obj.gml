@@ -16,6 +16,7 @@ object_event_add
     snd_alarm_min_var = 300;
     snd_alarm_max_var = 480;
     snd_dist_max_var = 600;
+    wake_snd_var[0] = true;
     // Translations
     ini_open(global.lang_var);
     switch global.name_var
@@ -45,6 +46,7 @@ object_event_add
     local.sub = string_replace(ini_read_string("SUB","otto","SUB_otto"),"@n",name_var);
     for (local.i=0; local.i<snd_len_var; local.i+=1)
     { snd_arr[local.i,1] = local.sub; }
+    wake_snd_var[1] = local.sub;
     ini_close();
     type_var = 1;
     spd_base_var = 1/6; // 0.1r6
@@ -66,10 +68,11 @@ object_event_add
         {
             other.spr_var = spr_var;
             other.eye_spr_var = eye_spr_var;
-            local.loaded = true;
+            other.wake_snd_var[1] = wake_snd_var[1];
             for (local.i=0; local.i<snd_len_var; local.i+=1;)
             { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
             other.mus_snd_var = mus_snd_var;
+            local.loaded = true;
             break;
         }
     }
@@ -80,6 +83,7 @@ object_event_add
         eye_spr_var = execute_file(main_directory_const+"\SPR\MON\otto_eye_spr.gml",main_directory_const+"\SPR\MON\otto_eye_spr.png");
         mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\otto_mus_test_snd.wav");
         fmod_snd_set_loop_point_scr(mus_snd_var,0.0234541577825,0.977967306326);
+        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\otto_01_snd.wav",global.wake_3d_var);
         snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\otto_01_snd.wav",true);
         snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\otto_02_snd.wav",true);
         snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\otto_03_snd.wav",true);
@@ -146,6 +150,7 @@ object_event_add
         fmod_snd_free_scr(mus_snd_var);
         for (local.i=0; local.i<snd_len_var; local.i+=1;)
         { fmod_snd_free_scr(snd_arr[local.i,0]); }
+        fmod_snd_free_scr(wake_snd_var[1]);
     }
 ');
 // Animation

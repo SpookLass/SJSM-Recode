@@ -62,6 +62,7 @@ object_event_add
     w_var = 16;
     h_var = 13;
     atk_range_var = 33.6;
+    dupe_var = dupe_canon_const;
     // Hurt
     do_hurt_var = 2; // Damage
     hurt_alarm_var = 60;

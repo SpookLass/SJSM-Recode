@@ -26,6 +26,7 @@ object_event_add
     heal_delay_var = 0;
     heal_safe_var = 10;
     heal_mult_var = 1;
+    alarm_arr[1,2] = true; // Persists between rooms
     // Speed
     spd_base_var = 1;
     spd_mult_var = 1;
@@ -55,8 +56,8 @@ object_event_add
     crouch_toggle_var = global.crouch_toggle_var;
     crouch_spd_mult_var = 0.6;
     // Camera
-    base_eye_h_var = 16.29; // 16 + 2/7
-    crouch_eye_h_var = 10.29; // 16 - 6 + 2/7
+    base_eye_h_var = 114/7; // 16 + 2/7
+    crouch_eye_h_var = 72/7; // 16 - 6 + 2/7
     target_eye_h_var = base_eye_h_var;
     eye_h_var = base_eye_h_var;
     eye_rate_var = 0.4;
@@ -218,13 +219,6 @@ object_event_add
     cam_pitch_var = eye_pitch_var;
     display_mouse_set(display_get_width()/2,display_get_height()/2);
 ');
-// Room End Event
-object_event_add
-(argument0,ev_other,ev_room_end,'
-    event_inherited();
-    hurt_var = false;
-    heal_var = true;
-');
 // Room Start Event
 object_event_add
 (argument0,ev_other,ev_room_start,'
@@ -273,11 +267,14 @@ object_event_add
     grav_var = grav_base_var;
     fall_temp_var = false;
     in_door_var = false;
-    heal_var = true;
+    hurt_var = false;
     turn_var = false;
     // Maybe reset?
     do_sprint_var = true;
     do_stam_var = true;
+    // Healing
+    if heal_delay_var <= 0 || alarm_arr[0,1] <= 0
+    { heal_var = true; }
     // Bob
     bob_time_var = 45;
     breath_time_var = 0;

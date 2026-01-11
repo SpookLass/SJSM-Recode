@@ -11,7 +11,7 @@ object_event_add
 (argument0,ev_create,1,'
     ini_open(global.lang_var);
     name_var = ini_read_string("NAME","frenzy","NAME_frenzy");
-    charge_snd_var[1] = ini_read_string("SUB","frenzy","SUB_frenzy");
+    charge_snd_var[1] = string_replace(ini_read_string("SUB","frenzy","SUB_frenzy"),"@n",name_var);
     hurt_snd_var[2] = string_replace(ini_read_string("SUB","frenzy_hurt","SUB_frenzy_hurt"),"@n",name_var);
     ini_close();
     type_var = 2;
@@ -25,7 +25,9 @@ object_event_add
     h_var = 25.2;
     atk_range_var = 12;
     blood_spr_var = blood_kh_spr;
+    dupe_var = dupe_canon_const;
     // Sounds
+    do_snd_var = true;
     snd_dist_max_var = -1;
     hurt_snd_var = 4;
     // Theme
@@ -41,6 +43,12 @@ object_event_add
     spawn_attempt_var = 30;
     spawn_dist_var = 64;
     alarm_len_var = 9;
+    // Fog
+    do_eff_var = false;
+    fog_color_var = c_dkgray;
+    fog_prio_var = 3;
+    fog_start_var = 32;
+    fog_end_var = 200;
     // Assets
         // Search for existing assets to save memory
     with object_index
@@ -60,7 +68,7 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
-        spr_var = sprite_add(dh_directory_const+"\TEX\sprites\frenzy2_spr.png",8,false,false,0,0);
+        spr_var = sprite_add(dh_directory_const+"\TEX\sprites\frenzy2_spr.png",8,false,false,0,0); // working_directory+"\MODS\PLUS\SPR\MON\gangnam_frenzy_spr.gif"
         bg_var = background_add(dh_directory_const+"\TEX\sprites\frenzy_spr.png",false,false);
         charge_snd_var[0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\frenzy_atk_short_snd.wav",true);
         mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\frenzy_mus_snd.mp3");
@@ -70,12 +78,13 @@ object_event_add
         fmod_snd_set_group_scr(hurt_snd_var[1],snd_group_mon_const);
     }
     // Behavior
-    if global.frenzy_type_var == -1 { local.type = irandom(3); }
+    if global.frenzy_type_var == -1 { local.type = irandom(2); }
     else { local.type = global.frenzy_type_var; }
     switch local.type
     {
         case 0: // Recode
         {
+            do_eff_var = true;
             sight_dist_var = 128;
             spawn_dist_var = 160;
             respawn_alarm_var = 90;
@@ -105,6 +114,23 @@ object_event_add
         }
     }
 ');
+// Destroy Event
+object_event_add
+(argument0,ev_destroy,0,'
+    event_inherited();
+    with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
+    if !local.bool
+    {
+        sprite_delete(spr_var);
+        background_delete(bg_var);
+        fmod_snd_free_scr(mus_snd_var);
+        fmod_snd_free_scr(charge_snd_var[0]);
+        fmod_snd_free_scr(hurt_snd_var[1]);
+        fmod_snd_free_scr(scare_snd_var);
+    }
+    if do_eff_var
+    { shader_set_ps_scr(-1); }
+');
 // Room Start
 object_event_add
 (argument0,ev_other,ev_room_start,'
@@ -112,9 +138,26 @@ object_event_add
     tex_var = background_get_texture(bg_var);
     enter_var = false;
     do_coll_var = true;
-    if !instance_exists(dh_eff_obj)
-    { instance_create(0,0,dh_eff_obj); }
-    shader_set_ps_scr(orthographic_ps);
+    if do_eff_var
+    {
+        if !instance_exists(dh_eff_obj)
+        { instance_create(0,0,dh_eff_obj); }
+        shader_set_ps_scr(orthographic_ps);
+        with fog_par_obj { if prio_var < other.fog_prio_var { instance_destroy(); }}
+        if !instance_exists(fog_par_obj)
+        {
+            with instance_create(0,0,fog_par_obj)
+            {
+                prio_var = other.fog_prio_var;
+                fog_var = true;
+                fog_color_var = other.fog_color_var;
+                fog_start_var = other.fog_start_var;
+                fog_end_var = other.fog_end_var;
+                fog_dark_var = false;
+                event_user(0);
+            }
+        }
+    }
 ');
 // Delay Alarm
 object_event_add
@@ -236,19 +279,14 @@ object_event_add
         set_alarm_scr(0,other.fade_alarm_var);
     }
 ');
-// Destroy Event
+// Draw Event
 object_event_add
-(argument0,ev_destroy,0,'
-    event_inherited();
-    with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
-    if !local.bool
+(argument0,ev_draw,0,'
+    if !woke_var && do_eff_var && global.fog_dark_var
     {
-        sprite_delete(spr_var);
-        background_delete(bg_var);
-        fmod_snd_free_scr(mus_snd_var);
-        fmod_snd_free_scr(charge_snd_var[0]);
-        fmod_snd_free_scr(hurt_snd_var[1]);
-        fmod_snd_free_scr(scare_snd_var);
+        d3d_set_fog(global.fog_dark_var,fog_color_var,0,0);
+        event_inherited();
+        d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var);
     }
-    shader_set_ps_scr(-1);
+    else { event_inherited(); }
 ');

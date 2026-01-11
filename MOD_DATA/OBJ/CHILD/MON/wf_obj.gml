@@ -38,6 +38,7 @@ object_event_add
     h_var = 4.1;
     z_off_base_var = 14;
     z_off_var = 14;
+    dupe_var = dupe_canon_const;
     // Sounds
     do_snd_var = 1; // At least for now
     loop_snd_var[0] = true;

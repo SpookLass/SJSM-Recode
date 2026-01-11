@@ -6,12 +6,12 @@ room_set_code
 (
     argument0,'
     ini_open(global.lang_var);
-	global.rm_name_var = ini_read_string("ROOM","sc","ROOM_sc")+" 3";
+	global.rm_name_var = ini_read_string("ROOM","sc","ROOM_sc")+" 3 "+ini_read_string("ROOM","old","ROOM_old");
 	ini_close();
     // Spawn
     global.spawn_len_var = 2;
     global.spawn_arr[0,0] = 112;
-    global.spawn_arr[0,1] = 292;
+    global.spawn_arr[0,1] = 288;
     global.spawn_arr[0,2] = 0;
     global.spawn_arr[0,3] = 0;
     global.spawn_arr[1,0] = 688;
@@ -89,8 +89,8 @@ room_instance_add(argument0,624,312,ceil_2high_obj);
 room_instance_add(argument0,656,304,ceil_2high_obj);
 room_instance_add(argument0,688,296,ceil_2high_obj);
 // Walls (Horizontal)
-room_instance_add(argument0,112,304,wall_2high_hor_obj); // Lower
 room_instance_add(argument0,112,280,wall_2high_hor_obj);
+room_instance_add(argument0,112,296,wall_2high_hor_obj);
 room_instance_add(argument0,144,280,wall_2high_hor_obj);
 room_instance_add(argument0,144,304,wall_2high_hor_obj);
 room_instance_add(argument0,176,312,wall_2high_hor_obj);
@@ -129,6 +129,7 @@ room_instance_add(argument0,688,280,wall_2high_hor_obj);
 room_instance_add(argument0,688,304,wall_2high_hor_obj);
 // Walls (Vertical)
 room_instance_add(argument0,96,288,wall_2high_vert_obj);
+room_instance_add(argument0,128,312,wall_2high_vert_obj);
 room_instance_add(argument0,160,320,wall_2high_vert_obj);
 room_instance_add(argument0,192,320,wall_2high_vert_obj);
 room_instance_add(argument0,224,320,wall_2high_vert_obj);

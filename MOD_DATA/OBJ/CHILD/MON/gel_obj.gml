@@ -41,6 +41,7 @@ object_event_add
     wake_snd_var[2] = local.sub;
     slime_snd_var[2] = local.sub;
     ini_close();
+    // Variables
     type_var = 0;
     spd_base_var = 0.6;
     spr_spd_var = 1/6;
@@ -53,6 +54,7 @@ object_event_add
     z_off_var = 2;
     dupe_var = dupe_canon_const;
     atk_range_var = 48;
+    dead_rm_var = gel_dead_rm;
     // Coward
     do_hurt_var = 2; // Reduces duration
     hurt_die_var = 0;

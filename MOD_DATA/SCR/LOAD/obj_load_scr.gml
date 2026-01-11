@@ -74,6 +74,18 @@ while (local.file != "")
     screen_refresh();
 }
 file_find_close();
+local.file = file_find_first(main_directory_const+"\OBJ\MAIN\DEAD\*.gml",-1);
+while (local.file != "")
+{
+    file_to_obj_scr(main_directory_const+"\OBJ\MAIN\DEAD\"+local.file,filename_change_ext(local.file,""),argument0);
+    local.file = file_find_next();
+    local.i += 1;
+    // Draw
+    draw_clear_alpha(c_black,0);
+    draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading objects ("+string(local.i)+")...",1,1,0);
+    screen_refresh();
+}
+file_find_close();
 // Get the first file in the child directory
 local.file = file_find_first(main_directory_const+"\OBJ\CHILD\*.gml",-1);
 while (local.file != "")

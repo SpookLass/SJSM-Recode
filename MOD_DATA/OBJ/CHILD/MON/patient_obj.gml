@@ -135,12 +135,14 @@ object_event_add
             weird_var = true;
             weird_chance_var = 16;
             blood_spr_var = blood_kh_spr;
+            // Corporeal?
+            type_var = 2;
             // Silhouette (Lazy)
-            sil_var = true;
+            /*sil_var = true;
             sil_type_var = 1; // Pure color
             sil_color_var = c_black;
             sil_alpha_var = 0.2;
-            sil_dist_var = 0.1;
+            sil_dist_var = 0.1;*/
             break;
         }
         case 3: // HD Karamari
