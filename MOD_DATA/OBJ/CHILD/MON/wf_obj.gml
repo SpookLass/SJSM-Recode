@@ -53,7 +53,6 @@ object_event_add
     seen_delay_max_var = 15;
     seen_yaw_var = 30;
     seen_flash_var = true;
-    seen_dist_var = -1;
     // Teleport
     tp_spawn_var = 2;
     tp_spawn_chance_var = 3;
@@ -157,23 +156,20 @@ object_event_add
         for (local.i=0; local.i<glitch_snd_len_var; local.i+=1;)
         { fmod_snd_set_group_scr(glitch_snd_arr[local.i,0],snd_group_mon_const); }
         mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\wf_mus_test_snd.wav");
+        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
     }
     tex_02_var = background_get_texture(bg_var);
     web_tex_var = background_get_texture(web_bg_var);
     // Behavior
-    if global.wf_type_var == -1 { local.type = irandom(8); }
+    if global.wf_type_var == -1 { local.type = irandom(7); }
     else { local.type = global.wf_type_var; }
     switch local.type
     {
         
-        case 7: // Mayas Idea
+        case 6: // Mayas Idea
         {
             move_type_var = 1;
             local.maya = true;
-        }
-        case 6: // Lass Idea
-        {
-            if !local.maya { seen_dist_var = 160; }
         }
         case 0: // Recode
         {
@@ -297,7 +293,7 @@ object_event_add
             tex_var = sprite_get_texture(spr_var,0);
             break;
         }
-        case 8: // Imscared Recode
+        case 7: // Imscared Recode
         {
             // Recode
             dur_var = 30;

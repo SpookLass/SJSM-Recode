@@ -115,6 +115,7 @@ object_event_add
         for (local.i=0; local.i<dmg_snd_len_var; local.i+=1;)
         { fmod_snd_set_group_scr(dmg_snd_arr[local.i,0],snd_group_mon_const); }
         mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\M7_AMB.mp3");
+        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
     }
     tex_var = background_get_texture(bg_var);
     // Movement

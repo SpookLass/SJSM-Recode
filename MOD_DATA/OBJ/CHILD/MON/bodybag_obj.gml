@@ -79,6 +79,7 @@ object_event_add
         fmod_snd_set_group_scr(eff_snd_var,snd_group_mon_const);
         mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\bodybag_mus_snd.mp3");
         wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\bodybag_wake_snd.wav");
+        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
     }
     tex_var = background_get_texture(bg_var);
     // Sounds

@@ -60,6 +60,7 @@ object_event_add
 		loop_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\hk_loop_02_snd.wav",true);
 		look_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\hk_loop_01_snd.wav",true);
 		mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\hk_mus_snd.mp3");
+		fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
 		hurt_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\doll_hurt_snd.wav",true);
 		
 		lamp_mdl_var = d3d_model_create();

@@ -10,6 +10,7 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,0,'
     event_inherited();
+    alpha_base_var = 1;
     alarm_len_var = 1;
     alarm_arr[0,2] = true;
 ');
@@ -17,7 +18,7 @@ object_event_add
 object_event_add
 (argument0,ev_step,ev_step_normal,'
     event_inherited();
-    if alarm_arr[0,0] > 0 { image_alpha = alarm_arr[0,0]/alarm_arr[0,1]; }
+    if alarm_arr[0,0] > 0 { image_alpha = alpha_base_var*alarm_arr[0,0]/alarm_arr[0,1]; }
 ');
 // Alarm
 object_event_add

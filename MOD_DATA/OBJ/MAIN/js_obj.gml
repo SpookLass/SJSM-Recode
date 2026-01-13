@@ -31,7 +31,7 @@ object_event_add
         rotate_var = false;
         look_var = false;
         // Behavior
-        if global.js_type_var == -1 { local.type = irandom(2); }
+        if global.js_type_var == -1 { local.type = irandom(3); }
         else { local.type = global.js_type_var; }
         switch local.type
         {

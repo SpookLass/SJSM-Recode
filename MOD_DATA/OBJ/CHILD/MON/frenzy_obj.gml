@@ -76,6 +76,7 @@ object_event_add
         scare_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\scare_short_snd.wav");
         fmod_snd_set_group_scr(charge_snd_var[0],snd_group_mon_const);
         fmod_snd_set_group_scr(hurt_snd_var[1],snd_group_mon_const);
+        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
     }
     // Behavior
     if global.frenzy_type_var == -1 { local.type = irandom(2); }

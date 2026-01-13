@@ -71,6 +71,7 @@ object_event_add
         spr_var = sprite_add(main_directory_const+"\SPR\MON\patient_spr.png",3,false,false,0,0); // vanilla_directory_const+"\3D\npc_6_tex.png"
         wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\patient_wake_snd.wav",global.wake_3d_var);
         mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\patient_mus_snd.mp3");
+        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
         scare_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\KH\scare_01_snd.wav");
         fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
         mdl_01_var = d3d_model_create();

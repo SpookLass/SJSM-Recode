@@ -180,7 +180,7 @@ object_event_add
     button_len_var += 1;
 
     button_arr[button_len_var,0] = global.shake_type_var;
-    button_arr[button_len_var,1] = ini_read_string("SETTINGS","idle_bob","SETTINGS_idle_bob"); // Label
+    button_arr[button_len_var,1] = ini_read_string("SETTINGS","shake_type","SETTINGS_shake_type"); // Label
     button_arr[button_len_var,2] = "How to shake the screen." // Description
     button_arr[button_len_var,3] = 0; // Type: Enum
     button_arr[button_len_var,4] = true; // Wrap value

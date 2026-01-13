@@ -86,6 +86,7 @@ object_event_add
         cam_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_cam_snd.wav");
         fmod_snd_set_group_scr(cam_snd_var,snd_group_mon_const);
         mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_real_mus_snd.mp3");
+        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
         fmod_snd_set_loop_point_scr(mus_snd_var,0.5,1);
     }
     // Laugh

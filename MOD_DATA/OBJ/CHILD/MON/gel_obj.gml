@@ -113,6 +113,7 @@ object_event_add
         wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_wake_snd.wav",global.wake_3d_var);
         slime_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_wake_snd.wav",true);
         mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_mus_snd.mp3");
+        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
     }
     slime_tex_var = background_get_texture(slime_bg_var);
     // Behavior

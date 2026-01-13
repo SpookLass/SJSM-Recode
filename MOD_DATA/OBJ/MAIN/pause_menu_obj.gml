@@ -38,6 +38,7 @@ object_event_add
     // Music
     mus_snd_var = fmod_snd_loop_scr(pause_drum_mus_snd);
     fmod_inst_set_vol_scr(mus_snd_var,0);
+    //fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
     // fmod_inst_set_mute_scr(mus_snd_var,true);
     alarm_len_var = 6;
     set_alarm_scr(0,60);

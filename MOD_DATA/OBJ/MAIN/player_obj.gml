@@ -690,9 +690,9 @@ object_event_add
             {
                 case shake_classic_const:
                 {
-                    x += random_range(-shake_var,shake_var);
-                    y += random_range(-shake_var,shake_var);
-                    z += random_range(-shake_var,shake_var);
+                    cam_x_var += random_range(-shake_var,shake_var);
+                    cam_y_var += random_range(-shake_var,shake_var);
+                    cam_z_var += random_range(-shake_var,shake_var);
                     break;
                 }
                 case shake_modern_const:
@@ -764,13 +764,7 @@ object_event_add
         heal_var = false;
         set_alarm_scr(1,heal_delay_var);
     }
-    // Play hurt noise, flash red, shake screen, etc
-    with instance_create(0,0,flash_eff_obj)
-    {
-        image_blend = c_red; 
-        set_alarm_scr(0,6);
-        cam_id_var = other.cam_id_var;
-    }
+    // Shake screen
     switch (global.shake_type_var)
     {
         case shake_classic_const:

@@ -91,6 +91,7 @@ object_event_add
         fmod_snd_set_minmax_dist_scr(hurt_snd_var[1],0,snd_dist_max_var);
         fmod_snd_set_group_scr(hurt_snd_var[1],snd_group_mon_const);
         mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\eel_mus_snd.mp3");
+        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
     }
     // Body
     bod_len_var = 6;

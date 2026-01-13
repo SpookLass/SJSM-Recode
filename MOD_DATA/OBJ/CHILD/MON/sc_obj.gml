@@ -113,6 +113,7 @@ object_event_add
         loop_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\sc_snd.wav",true);
         fmod_snd_set_max_vol_scr(loop_snd_var[1],0.5);
         mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\sc_mus_snd.mp3");
+        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
         fmod_snd_set_minmax_dist_scr(hurt_snd_var[1],0,snd_dist_max_var);
         fmod_snd_set_group_scr(hurt_snd_var[1],snd_group_mon_const);
     }

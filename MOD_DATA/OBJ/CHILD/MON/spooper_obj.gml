@@ -133,6 +133,7 @@ object_event_add
         choke_01_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\spooper_choke_01_snd.wav");
         choke_02_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\spooper_choke_02_snd.wav");
         mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\SPOOPER_AMB.mp3");
+        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
         loop_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\spooper_loop_snd.wav",true);
         dur_var = irandom_range(24,31);
     }

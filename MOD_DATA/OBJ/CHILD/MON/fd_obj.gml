@@ -139,6 +139,7 @@ object_event_add
         hurt_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\fd_hurt_snd.wav",true);
         mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\fd_mus_snd.mp3");
         fmod_snd_set_loop_point_scr(mus_snd_var,0,0.972669769662);
+        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
     }
     meat_tex_var = background_get_texture(meat_bg_var);
     // Behavior

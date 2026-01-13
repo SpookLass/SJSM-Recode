@@ -60,6 +60,7 @@ object_event_add
     {
         loop_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\brain_loop_snd.wav",true);
         mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\brain_mus_snd.mp3");
+        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
     }
     if global.main_type_var != 2 && global.mode_var != 0
     {

@@ -124,6 +124,7 @@ object_event_add
         snd_main_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\bab_02_snd.wav",true);
         snd_main_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\bab_03_snd.wav",true);
         mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\bab_mus_snd.mp3");
+        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
     }
     for (local.i=0; local.i<3; local.i+=1;)
     {
@@ -360,8 +361,8 @@ object_event_add
         // Add random
         local.yaw = random(360); local.pitch = random_range(-90,90); local.dist = random_range(amb_dist_min_var,amb_dist_max_var);
         local.xtmp += lengthdir_x(lengthdir_x(local.dist,local.yaw),local.pitch);
-        local.ytmp += target_y_var+lengthdir_x(lengthdir_y(local.dist,local.yaw),local.pitch);
-        local.ztmp -= target_z_var-lengthdir_y(local.dist,local.pitch);
+        local.ytmp += lengthdir_x(lengthdir_y(local.dist,local.yaw),local.pitch);
+        local.ztmp -= lengthdir_y(local.dist,local.pitch);
         // Play Sound
         fmod_snd_3d_play_scr(snd_amb_arr[irandom(snd_amb_len_var-1),0],local.xtmp,local.ytmp,local.ztmp);
     }

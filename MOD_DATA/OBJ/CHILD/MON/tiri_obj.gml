@@ -78,6 +78,7 @@ object_event_add
         snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\tiri_03_snd.wav",true);
         snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\tiri_04_snd.wav",true);
         mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\TIRSIAK_AMB.mp3");
+        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
     }
     // Coward
     do_coward_var = true;

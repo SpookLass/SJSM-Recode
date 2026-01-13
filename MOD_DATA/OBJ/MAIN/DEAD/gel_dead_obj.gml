@@ -91,7 +91,7 @@ object_event_add
 // Alarm 3 Event
 object_event_add
 (argument0,ev_alarm,3,'
-    rm_goto_menu_scr(menu_rm,true);
+    rm_goto_menu_scr(dead_rm,true);
 ');
 // Alarm 4 Event
 object_event_add

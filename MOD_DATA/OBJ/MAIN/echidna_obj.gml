@@ -52,6 +52,7 @@ Attack
         1: Axe
         2: Axe Hit
         3: Custom
+    atk_flash_var: Whether to show flash
     do_atk_var: Whether the specimen should attack
     atk_var: Whether the specimen can currently attack
     dmg_var: How much damage a monster deals per hit
@@ -140,6 +141,7 @@ object_event_add
     if do_door_var == 0 { do_door_var = (type_var == 1 && do_enter_var); }
     if color_var == 0 { color_var = true; }
     if reflect_var == 0 { reflect_var = true; }
+    if dead_rm_var == 0 { dead_rm_var = dead_rm; }
     // Speed
     spd_mult_var = 1;
     spd_mult_per_var = 1;
@@ -162,6 +164,8 @@ object_event_add
     { atk_range_var = coll_var[2]; }
     if blood_spr_var == 0
     { blood_spr_var = blood_spr; }
+    if atk_flash_var == 0
+    { atk_flash_var = true; }
     // Pathfinding
     if type_var > 0
     {
@@ -648,7 +652,7 @@ object_event_add
                         set_alarm_scr(0,other.dmg_alarm_var);
                     }
                     hurt_target_var = other.id;
-                    event_perform(ev_other,ev_user0);
+                    event_user(0);
                 }
                 else
                 {
@@ -718,13 +722,26 @@ object_event_add
             break;
         }
     }
-    with instance_create(0,0,blood_eff_obj)
+    if blood_spr_var > 0
     {
-        spr_var = other.blood_spr_var;
-        spr_id_var = irandom(sprite_get_number(spr_var)-1);
-        // Set camera to player
-        cam_id_var = other.attack_target_var.cam_id_var;
+        with instance_create(0,0,blood_eff_obj)
+        {
+            spr_var = other.blood_spr_var;
+            spr_id_var = irandom(sprite_get_number(spr_var)-1);
+            // Set camera to player
+            cam_id_var = other.attack_target_var.cam_id_var;
+        }
     }
+    if atk_flash_var && !global.reduce_flash_var
+    {
+        with instance_create(0,0,flash_eff_obj)
+        {
+            image_blend = c_red; 
+            set_alarm_scr(0,6);
+            cam_id_var = other.attack_target_var.cam_id_var;
+        }
+    }
+    
 ');
 // Hurt Event
 /*Weapons call this function when attacking

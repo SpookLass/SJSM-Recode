@@ -130,6 +130,7 @@ object_event_add
         wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\pup_wake_snd.wav",global.wake_3d_var);
         laugh_snd_var[0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\pup_wake_snd.wav",true);
         mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\pup_mus_snd.mp3");
+        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
     }
     spr_var = spr_base_var;
     tex_var = sprite_get_texture(spr_var,irandom(sprite_get_number(spr_var)));

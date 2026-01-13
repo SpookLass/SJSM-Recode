@@ -905,12 +905,11 @@ object_event_add
     type_button_arr[28,4] = old_str_var;
     type_button_arr[30,2] = 4; // Otto
     type_button_arr[30,4] = old_str_var;
-    type_button_arr[32,2] = 8; // White Face
+    type_button_arr[32,2] = 7; // White Face
     type_button_arr[32,4] = old_str_var;
     type_button_arr[32,5] = imscared_str_var;
-    type_button_arr[32,6] = alt_str_var+" 1";
-    type_button_arr[32,7] = alt_str_var+" 2";
-    type_button_arr[32,8] = imscared_str_var+" "+mod_str_var;
+    type_button_arr[32,6] = alt_str_var;
+    type_button_arr[32,7] = imscared_str_var+" "+mod_str_var;
     ini_close();
     for (local.i=0; local.i<type_button_len_var-1; local.i+=1;)
     { type_button_arr[local.i,0] = -1; }

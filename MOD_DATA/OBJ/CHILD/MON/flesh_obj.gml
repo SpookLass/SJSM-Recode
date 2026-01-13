@@ -86,6 +86,7 @@ object_event_add
         // Music
         mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\flesh_mus_snd.mp3");
         fmod_snd_set_loop_point_scr(mus_snd_var,5/22,9/11); // Ohhh 9/11
+        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
         // Zone
         zone_list_var = ds_list_create();
         ds_list_clear(zone_list_var);
