@@ -44,6 +44,7 @@ object_event_add
     h_var = 20;
     z_off_var = 2;
     atk_range_var = 48;
+    dead_rm_var = ringu_dead_rm;
     // Sounds
     snd_len_var = 4;
     wake_snd_var[0] = true;

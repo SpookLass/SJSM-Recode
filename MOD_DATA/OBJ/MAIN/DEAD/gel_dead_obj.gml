@@ -121,6 +121,7 @@ object_event_add
         fmod_snd_free_scr(snd_01_var);
         fmod_snd_free_scr(snd_02_var);
         sprite_delete(spr_var);
+        load_var = false;
     }
 ');
 // Draw Event

@@ -45,6 +45,7 @@ object_event_add
     dmg_alarm_var = 120;
     h_var = 20;
     z_off_var = 2;
+    dead_rm_var = real_ringu_dead_rm;
     // Sounds
     snd_len_var = 5;
     wake_snd_var[0] = true;

@@ -12,6 +12,7 @@ object_event_add
     event_inherited();
     spr_var = static_01_spr;
     spr_spd_var = 0.25;
+    image_alpha = 0.4;
     stretch_type_var = 0;
     image_xscale = 128;
     // Alarm
