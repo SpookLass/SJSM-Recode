@@ -122,6 +122,11 @@ object_event_add
     grid_var = global.phys_grid;
     // Alarms
     alarm_len_var = 5;
+    revive_alarm_var = 300;
+    // Possess
+    possess_var = false;
+    possess_delay_var = 0;
+    possess_delay_max_var = 10;
     // Behavior
     switch global.player_type_var
     {
@@ -149,10 +154,11 @@ object_event_add
         }
     }
     // Taker Behavior
-    taker_alarm_var = 7200;
-    taker_mon_alarm_var = 720;
+    taker_alarm_var = 7200; // 5940
+    taker_mon_alarm_var = 731; // 540
     switch global.taker_type_var
     {
+        case 0: { taker_alarm_var = 7310; break; } // Recode
         // Gotta take the wikis word, cant find it
         case 2: { taker_alarm_var = 4200; break; } // HD
         case 3: { taker_alarm_var = 2760; break; } // DH
@@ -308,6 +314,7 @@ object_event_add
         } 
     }
     // Start room
+    possess_delay_var = max(possess_delay_var-1,0);
     taker_spawn_var = false;
     if !global.stam_per_var
     {
@@ -478,8 +485,9 @@ object_event_add
             || global.input_arr[sprint_input_const,player_id_var] || global.input_arr[jump_input_const,player_id_var]
             || global.input_arr[crouch_input_const,player_id_var] || global.input_arr[attack_input_const,player_id_var]
             || dead_var;
-            if active_var && !taker_spawn_var
-            { set_alarm_scr(3,taker_alarm_var); }
+            taker_var = !active_var || taker_spawn_var;
+            with player_obj { if id != other.id && in_door_var { other.taker_var = true; break; }}
+            if !taker_var { set_alarm_scr(3,taker_alarm_var); }
             // Sprint
             sprint_var = do_sprint_var && global.input_arr[sprint_input_const,player_id_var] && (stam_var > 0 || !do_stam_var);
             // Calculate speed
@@ -560,7 +568,7 @@ object_event_add
                 acc_odd_scr(global.delta_time_var,local.acc,local.frick,local.input_dir_x,local.input_dir_y,local.forspd,local.sidespd,eye_yaw_var);
             }
             // Possession
-            if dead_var && !possess_var
+            if dead_var && !possess_var && possess_delay_var <= 0
             {
                 if global.input_press_arr[interact_input_const,player_id_var]
                 {
@@ -590,8 +598,8 @@ object_event_add
             eye_yaw_var = mon_var.eye_yaw_var;
             eye_pitch_var = mon_var.eye_pitch_var;
             active_var = mon_var.active_var || mon_var.enter_var || !mon_var.on_var;
-            if !active_var && !taker_spawn_var
-            { set_alarm_scr(3,taker_mon_alarm_var); }
+            taker_var = !active_var || taker_spawn_var;
+            if !taker_var { set_alarm_scr(3,taker_mon_alarm_var); }
         }
     }
 ');

@@ -693,7 +693,7 @@ ds_list_add(global.zone_arr[8],sc_hall_12_rm);
 // Zone 9: Every
 global.zone_arr[9] = ds_list_create();
 ds_list_clear(global.zone_arr[9]);
-ds_list_add(global.zone_arr[9],amn_hall_01_rm);
+/*ds_list_add(global.zone_arr[9],amn_hall_01_rm);
 ds_list_add(global.zone_arr[9],amn_hall_02_rm);
 ds_list_add(global.zone_arr[9],amn_hall_03_rm);
 ds_list_add(global.zone_arr[9],amn_hall_04_rm);
@@ -708,7 +708,7 @@ ds_list_add(global.zone_arr[9],amn_hall_12_rm);
 ds_list_add(global.zone_arr[9],amn_hall_13_rm);
 ds_list_add(global.zone_arr[9],amn_hall_14_rm);
 ds_list_add(global.zone_arr[9],amn_hall_15_rm);
-ds_list_add(global.zone_arr[9],amn_hall_16_rm);
+ds_list_add(global.zone_arr[9],amn_hall_16_rm);*/
 ds_list_add(global.zone_arr[9],bed_01_rm);
 ds_list_add(global.zone_arr[9],bed_02_rm);
 ds_list_add(global.zone_arr[9],bed_03_rm);
@@ -807,7 +807,7 @@ ds_list_add(global.zone_arr[9],fish_13_rm);
 ds_list_add(global.zone_arr[9],fish_14_rm);
 ds_list_add(global.zone_arr[9],fish_15_rm);
 ds_list_add(global.zone_arr[9],fish_16_rm);
-ds_list_add(global.zone_arr[9],flesh_01_rm);
+/*ds_list_add(global.zone_arr[9],flesh_01_rm);
 ds_list_add(global.zone_arr[9],flesh_02_rm);
 ds_list_add(global.zone_arr[9],flesh_03_rm);
 ds_list_add(global.zone_arr[9],flesh_04_rm);
@@ -816,7 +816,7 @@ ds_list_add(global.zone_arr[9],flesh_06_rm);
 ds_list_add(global.zone_arr[9],flesh_07_rm);
 ds_list_add(global.zone_arr[9],flesh_08_rm);
 ds_list_add(global.zone_arr[9],flesh_09_rm);
-ds_list_add(global.zone_arr[9],flesh_10_rm);
+ds_list_add(global.zone_arr[9],flesh_10_rm);*/
 ds_list_add(global.zone_arr[9],hall_01_rm);
 ds_list_add(global.zone_arr[9],hall_02_a_rm);
 ds_list_add(global.zone_arr[9],hall_02_a_gold_rm);

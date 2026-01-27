@@ -978,7 +978,7 @@ object_event_add
                 {
                     if joy_pressed_scr(global.joy_id_var[player_id_var],local.i)
                     {
-                        control_button_arr[button_state_var,player_id_var] = local.i-6;
+                        control_button_arr[button_state_var,player_id_var] = -local.i-6;
                         control_listen_var = false;
                         set_var = true;
                         break;

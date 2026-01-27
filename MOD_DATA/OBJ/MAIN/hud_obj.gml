@@ -141,7 +141,7 @@ object_event_add
             draw_set_halign(fa_left); draw_set_valign(fa_top); draw_set_alpha(1);
         }
         // Taker!
-        if par_var.alarm_arr[3,0] < par_var.alarm_arr[3,1]/2 && par_var.on_var && (!par_var.active_var || par_var.taker_spawn_var)
+        if par_var.alarm_arr[3,0] < par_var.alarm_arr[3,1]/2 && par_var.on_var && par_var.taker_var
         {
             if par_var.alarm_arr[3,0] <= 0 { local.per = 1; }
             else { local.per = median(0,1,1-(2*par_var.alarm_arr[3,0]/par_var.alarm_arr[3,1])); }

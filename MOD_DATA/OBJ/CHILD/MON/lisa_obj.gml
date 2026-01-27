@@ -168,7 +168,8 @@ object_event_add
             type_var = 2;
             vis_spd_var = 1;
             seen_mult_var = 1;
-            seen_pitch_var = 30;
+            seen_yaw_var = 60;
+            seen_pitch_var = 60;
             player_spawn_var = true;
             attack_tp_var = 2;
             attack_alpha_var = true;
@@ -221,6 +222,7 @@ object_event_add
             vis_phase_end_var = -1;
             mus_prio_var = -1;
             js_chance_var = 3;
+            note_rand_var = true;
             break;
         }
     }
@@ -364,7 +366,8 @@ object_event_add
         global.note_override_var = true;
         global.note_override_num_var = 1;
         global.note_override_den_var = 1;
-        global.note_override_str_var = note_str_arr[mod_scr(note_var,note_str_len_var)];
+        if note_rand_var { global.note_override_str_var = note_str_arr[irandom(note_str_len_var-1)]; }
+        else { global.note_override_str_var = note_str_arr[mod_scr(note_var,note_str_len_var)]; }
         global.js_override_num_var = 1;
         global.js_override_den_var = js_chance_var;
     }

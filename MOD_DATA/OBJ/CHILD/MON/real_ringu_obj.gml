@@ -110,7 +110,7 @@ object_event_add
     state_spr_spd_var[1] = 1/3;
     state_w_var[1] = 13.6;
     // Effect
-    fog_prio_var = 3;
+    fog_prio_var = 4;
     eff_fog_var = false;
     eff_fog_start_var = 560/3; // 186.r6
     eff_fog_end_var = 1120/3; // 373.r3

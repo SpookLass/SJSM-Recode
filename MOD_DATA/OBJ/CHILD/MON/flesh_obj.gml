@@ -37,7 +37,7 @@ object_event_add
     alarm_len_var = 1;
     color_var = true;
     // Zone
-    zone_var = true;
+    zone_var = false;
     zone_start_var = 0;
     // Fog
     fog_color_var = make_color_rgb(135,10,24);
@@ -104,7 +104,7 @@ object_event_add
     arrow_base_tex_var = background_get_texture(arrow_base_bg_var);
     door_tex_var = background_get_texture(door_bg_var);
     // Behavior
-    if global.flesh_type_var == -1 { local.type = irandom(2); }
+    if global.flesh_type_var == -1 { local.type = irandom(3); }
     else { local.type = global.flesh_type_var; }
     switch local.type
     {
@@ -120,6 +120,11 @@ object_event_add
         {
             delay_var = 0;
             spd_base_var = 44/225; // 0.19r5
+            break;
+        }
+        case 3:
+        {
+            zone_var = false;
             break;
         }
     }
@@ -217,9 +222,17 @@ object_event_add
     if !color_var || !instance_exists(color_par_obj) || global.color_var == 1
     { image_blend = c_white; }
     // Reset Position
+    local.minx = -1; local.miny = -1; local.maxx = -1; local.maxy = -1;
+    with floor_par_obj
+    {
+        if x-(w_var/2) < local.minx || local.minx == -1 { local.minx = x-(w_var/2); }
+        if y-(h_var/2) < local.miny || local.miny == -1 { local.miny = y-(h_var/2); }
+        if x+(w_var/2) > local.maxx || local.maxx == -1 { local.maxx = x+(w_var/2); }
+        if y+(h_var/2) > local.maxy || local.maxy == -1 { local.maxy = y+(h_var/2); }
+    }
     yaw_var = global.spawn_arr[0,3];
-    x = global.spawn_arr[0,0]-lengthdir_x(32,yaw_var);
-    y = global.spawn_arr[0,1]-lengthdir_y(32,yaw_var);
+    x = ((local.maxx+local.minx)/2)-(sign(cos(yaw_var*pi/180))*(32+local.maxx-local.minx)/2);
+    y = ((local.maxy+local.miny)/2)+(sign(sin(yaw_var*pi/180))*(32+local.maxy-local.miny)/2);
     z = global.spawn_arr[0,2];
     set_motion_3d_scr(0,true,yaw_var,true,0,true);
     // Reset Variables

@@ -139,50 +139,46 @@ object_event_add
     // Theme
     mus_prio_var = mon_mus_prio_const;
     // Sprite stuff
-    do_turn_var = !global.mem_save_var;
     spr_arr_var[0,1] = 7.5;
     spr_arr_var[0,2] = 6.3;
     spr_arr_var[8,1] = 11;
     spr_arr_var[8,2] = 11;
-    if do_turn_var
-    {
-        spr_arr_var[1,1] = 9;
-        spr_arr_var[1,2] = 7.2;
-        spr_arr_var[2,1] = 10.7;
-        spr_arr_var[2,2] = 7.8;
-        spr_arr_var[3,1] = 9;
-        spr_arr_var[3,2] = 6;
-        spr_arr_var[4,1] = 6.3;
-        spr_arr_var[4,2] = 9;
-        spr_arr_var[5,1] = 6.6;
-        spr_arr_var[5,2] = 9.6;
-        spr_arr_var[6,1] = 7.5;
-        spr_arr_var[6,2] = 10.4;
-        spr_arr_var[7,1] = 7.2;
-        spr_arr_var[7,2] = 7.2;
-        spr_arr_var[9,1] = 11;
-        spr_arr_var[9,2] = 11;
-        spr_arr_var[10,1] = 11;
-        spr_arr_var[10,2] = 11;
-        spr_arr_var[11,1] = 11;
-        spr_arr_var[11,2] = 11;
-        spr_arr_var[12,1] = 11;
-        spr_arr_var[12,2] = 11;
-        spr_arr_var[13,1] = 11;
-        spr_arr_var[13,2] = 11;
-        spr_arr_var[14,1] = 11;
-        spr_arr_var[14,2] = 11;
-        spr_arr_var[15,1] = 11;
-        spr_arr_var[15,2] = 11;
-    }
+    spr_arr_var[1,1] = 9;
+    spr_arr_var[1,2] = 7.2;
+    spr_arr_var[2,1] = 10.7;
+    spr_arr_var[2,2] = 7.8;
+    spr_arr_var[3,1] = 9;
+    spr_arr_var[3,2] = 6;
+    spr_arr_var[4,1] = 6.3;
+    spr_arr_var[4,2] = 9;
+    spr_arr_var[5,1] = 6.6;
+    spr_arr_var[5,2] = 9.6;
+    spr_arr_var[6,1] = 7.5;
+    spr_arr_var[6,2] = 10.4;
+    spr_arr_var[7,1] = 7.2;
+    spr_arr_var[7,2] = 7.2;
+    spr_arr_var[9,1] = 11;
+    spr_arr_var[9,2] = 11;
+    spr_arr_var[10,1] = 11;
+    spr_arr_var[10,2] = 11;
+    spr_arr_var[11,1] = 11;
+    spr_arr_var[11,2] = 11;
+    spr_arr_var[12,1] = 11;
+    spr_arr_var[12,2] = 11;
+    spr_arr_var[13,1] = 11;
+    spr_arr_var[13,2] = 11;
+    spr_arr_var[14,1] = 11;
+    spr_arr_var[14,2] = 11;
+    spr_arr_var[15,1] = 11;
+    spr_arr_var[15,2] = 11;
     // Search for existing assets to save memory
     with object_index
     {
         if id != other.id && object_index == other.object_index
         {
-            
             other.spr_arr_var[0,0] = spr_arr_var[0,0];
             other.spr_arr_var[8,0] = spr_arr_var[8,0];
+            other.do_turn_var = do_turn_var;
             if other.do_turn_var
             {
                 other.spr_arr_var[1,0] = spr_arr_var[1,0];
@@ -221,6 +217,7 @@ object_event_add
     {
         spr_arr_var[0,0] = sprite_add(vanilla_directory_const+"\TEX\sprites\MS10_05_spr.png",15,false,false,0,0);
         spr_arr_var[8,0] = sprite_add(main_directory_const+"\SPR\MON\killer_sprint_01_spr.png",15,false,false,0,0);
+        do_turn_var = !global.mem_save_var;
         if do_turn_var
         {
             spr_arr_var[1,0] = sprite_add(vanilla_directory_const+"\TEX\sprites\MS10_06_spr.png",15,false,false,0,0);

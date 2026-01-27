@@ -254,7 +254,11 @@ object_event_add
                 with instance_create(global.mark_arr[local.i,0],global.mark_arr[local.i,1],food_meat_obj)
                 {
                     par_var = other.id;
-                    tex_var = other.meat_tex_var;
+                    store_tex_var = other.meat_tex_var;
+                    tex_var = store_tex_var;
+                    coll_var[0] = food_meat_chase_coll[0];
+                    coll_var[1] = food_meat_chase_coll[1];
+                    coll_var[2] = food_meat_chase_coll[2];
                 }
                 global.mark_arr[local.i,3] = true;
             }

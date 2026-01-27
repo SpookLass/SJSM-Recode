@@ -148,7 +148,8 @@ object_event_add
             type_var = 2;
             delay_var = 60;
             dmg_var = 30;
-            seen_pitch_var = 30;
+            seen_yaw_var = 60;
+            seen_pitch_var = 60;
             visible_var = true;
             hurt_tp_var = false;
             hurt_multi_var = true;

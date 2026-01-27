@@ -90,7 +90,27 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user0,'
     trig_var.on_var = false;
-    with player_obj { hp_var = hp_max_var; }
+    with player_obj
+    {
+        hp_var = hp_max_var;
+        if dead_var
+        {
+            // Revive
+            dead_var = false;
+            do_coll_var = true;
+            grav_var = grav_const;
+            hp_var = hp_max_var;
+            possess_var = false;
+            // Respawn
+            x = global.spawn_arr[0,0];
+            y = global.spawn_arr[0,1];
+            z = global.spawn_arr[0,2];
+            eye_yaw_var = global.spawn_arr[0,3];
+            eye_pitch_var = 0;
+            // Motion
+            set_motion_3d_scr(0,true);
+        }
+    }
     save_game_scr();
     with instance_create(0,0,fade_eff_obj)
     {
@@ -106,4 +126,6 @@ object_event_add
         str_var = other.str_var;
     }
     fmod_snd_play_scr(deny_snd);
+    store_tex_02_var = save_cross_03_bg_tex;
+    tex_02_var = store_tex_02_var;
 ');

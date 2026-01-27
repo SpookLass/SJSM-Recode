@@ -85,7 +85,7 @@ object_event_add
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,'
-    if possess_var { local.target = instance_exists(target_var) && !target_var.enter_var && target_var.on_var; }
+    if possess_var { local.target = instance_exists(target_var) && target_var.possess_var && !target_var.enter_var && target_var.on_var; }
     else { local.target = instance_exists(target_var) && !target_var.dead_var && target_var.on_var; }
     if local.target
     {
@@ -99,24 +99,26 @@ object_event_add
             spr_id_var = (spr_id_var+(spr_spd_var*global.delta_time_var)) mod sprite_get_number(spr_var);
             tex_var = sprite_get_texture(spr_var,floor(spr_id_var));
             // Attack
-            local.dead = true;
             with target_var
             {
                 if other.possess_var
                 {
-                    if on_var && !enter_var
+                    if on_var && !enter_var && possess_var
                     {
                         if cyl_coll_scr(x,y,z,coll_var[2],coll_var[1],other.x,other.y,other.z,other.coll_var[2],other.coll_var[1])
                         {
+                            local.mon = id;
                             with global.player_arr[player_id_var] // Add possession ban
                             {
                                 possess_var = false;
-                                x = other.x;
-                                y = other.y;
-                                z = other.z;
-                                eye_yaw_var = other.eye_yaw_var;
-                                eye_pitch_var = other.eye_pitch_var;
+                                x = local.mon.x;
+                                y = local.mon.y;
+                                z = local.mon.z;
+                                eye_yaw_var = local.mon.eye_yaw_var;
+                                eye_pitch_var = local.mon.eye_pitch_var;
+                                possess_delay_var = possess_delay_max_var;
                             }
+                            possess_var = false;
                         }
                     }
                     
@@ -150,13 +152,13 @@ object_event_add
                     }
                 }
             }
-            if !possess_var
+            if local.success
             {
-                local.dead = true;
-                with player_var { if !dead_var { local.dead = false; break; } }
-                if local.success
+                if !possess_var
                 {
-                    if false//local.dead
+                    local.dead = true;
+                    with player_var { if !dead_var { local.dead = false; break; } }
+                    if local.dead
                     {
                         global.dead_mon_var = object_index;
                         global.dead_player_var = attack_target_var.player_id_var;
@@ -164,6 +166,7 @@ object_event_add
                     }
                     else { event_perform(ev_other,ev_user3); }
                 }
+                instance_destroy();
             }
             event_inherited();
         }

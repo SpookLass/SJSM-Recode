@@ -46,7 +46,7 @@ object_event_add(argument0,ev_step,ev_step_begin,'
                 else
                 {
                     local.button = abs(global.input_key_arr[local.i,local.j])-6;
-                    global.input_arr[local.i,local.j] = joy_button_scr(global.joy_id_var[local.i],local.button);
+                    global.input_arr[local.i,local.j] = joy_button_scr(global.joy_id_var[local.j],local.button);
                 }
                 // Press
                 global.input_press_arr[local.i,local.j] = global.input_arr[local.i,local.j]-global.input_prev_arr[local.i,local.j];

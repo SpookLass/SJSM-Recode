@@ -50,6 +50,7 @@ object_event_add
     snd_alarm_max_var = 360;
     snd_dist_max_var = 768; // Kinda, maybe 512
     leave_snd_len_var = 2;
+    mus_prio_var = theme_mus_prio_const;
     // Assets
         // Search for existing assets to save memory
     with object_index
@@ -61,6 +62,7 @@ object_event_add
             { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
             for (local.i=0; local.i<leave_snd_len_var; local.i+=1;)
             { other.leave_snd_arr[local.i,0] = leave_snd_arr[local.i,0]; }
+            other.mus_snd_var = mus_snd_var;
             local.loaded = true;
             break;
         }
@@ -81,6 +83,7 @@ object_event_add
         snd_arr[9,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\clown_10_snd.wav",true);
         leave_snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\clown_leave_01_snd.wav");
         leave_snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\clown_leave_02_snd.wav");
+        mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\clown_mus_snd.ogg");
         for (local.i=0; local.i<leave_snd_len_var; local.i+=1;)
         {
             fmod_snd_set_minmax_dist_scr(leave_snd_arr[local.i,0],0,leave_snd_dist_var);
@@ -101,7 +104,8 @@ object_event_add
         }
         case 0:
         {
-            seen_pitch_var = 30;
+            seen_yaw_var = 60;
+            seen_pitch_var = 60;
             break;
         }
         case 2: // HD
@@ -127,6 +131,7 @@ object_event_add
         { fmod_snd_free_scr(leave_snd_arr[local.i,0]); }
         for (local.i=0; local.i<snd_len_var; local.i+=1;)
         { fmod_snd_free_scr(snd_arr[local.i,0]); }
+        fmod_snd_free_scr(mus_snd_var);
     }
 ');
 // Room Start Event

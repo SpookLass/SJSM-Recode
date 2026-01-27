@@ -42,7 +42,6 @@ object_event_add
     dupe_var = dupe_never_const;
     // Sounds
     do_snd_var = false;
-    loop_snd_var[0] = true;
     loop_snd_dist_max_var = 600;
     // Special
     do_seen_var = true;
@@ -163,6 +162,7 @@ object_event_add
             puke_alarm_03_var = 72;
             door_chance_var = 3;
             do_snd_var = true;
+            loop_snd_var[0] = true;
             // Silhouette
             sil_var = true;
             sil_type_var = 1; // Pure color
