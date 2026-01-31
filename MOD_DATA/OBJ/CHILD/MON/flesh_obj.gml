@@ -37,7 +37,7 @@ object_event_add
     alarm_len_var = 1;
     color_var = true;
     // Zone
-    zone_var = false;
+    zone_var = true;
     zone_start_var = 0;
     // Fog
     fog_color_var = make_color_rgb(135,10,24);
@@ -108,7 +108,8 @@ object_event_add
     else { local.type = global.flesh_type_var; }
     switch local.type
     {
-        case 0:
+        case 0: { zone_var = false; }
+        case 3:
         {
             angle_var = 5;
             smart_var = true;
@@ -120,11 +121,6 @@ object_event_add
         {
             delay_var = 0;
             spd_base_var = 44/225; // 0.19r5
-            break;
-        }
-        case 3:
-        {
-            zone_var = false;
             break;
         }
     }

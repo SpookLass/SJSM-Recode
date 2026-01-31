@@ -128,6 +128,7 @@ object_event_add
     drag_snd_arr[1,1] = drag_snd_arr[0,1];
     drag_snd_arr[2,1] = drag_snd_arr[0,1];
     ini_close();
+    // Variables
     type_var = 1;
     spd_base_var = 1/3; // 0.r3
     dur_var = irandom_range(15,30);
@@ -136,6 +137,7 @@ object_event_add
     dmg_alarm_var = 30;
     h_var = 22;
     atk_range_var = 48;
+    dead_rm_var = killer_dead_rm;
     // Theme
     mus_prio_var = mon_mus_prio_const;
     // Sprite stuff

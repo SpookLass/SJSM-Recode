@@ -61,6 +61,7 @@ room_instance_add(argument0,272,112,floor_obj);
 room_instance_add(argument0,304,112,floor_obj);
 room_instance_add(argument0,208,80,floor_obj);
 // Ceilings
+room_instance_add(argument0,16,48,ceil_low_obj);
 room_instance_add(argument0,48,48,ceil_low_obj);
 room_instance_add(argument0,80,48,ceil_low_obj);
 room_instance_add(argument0,80,80,ceil_low_obj);

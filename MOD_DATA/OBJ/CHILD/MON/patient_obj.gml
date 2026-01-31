@@ -40,12 +40,14 @@ object_event_add
     }
     wake_snd_var[2] = string_replace(ini_read_string("SUB","patient","SUB_patient"),"@n",name_var);
     ini_close();
+    // Patient
     type_var = 0;
     spd_base_var = 2;
     dur_var = irandom_range(20,33);
     delay_var = 60;
     dmg_var = 10;
     dmg_alarm_var = 30;
+    dead_rm_var = patient_dead_rm;
     // Theme
     mus_delay_var = 144
     // Assets

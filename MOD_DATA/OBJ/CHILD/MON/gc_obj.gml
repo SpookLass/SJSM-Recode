@@ -45,6 +45,7 @@ object_event_add
     for (local.i=0; local.i<snd_len_var; local.i+=1)
     { snd_arr[local.i,1] = local.sub_02; }
     ini_close();
+    // Variables
     type_var = 0;
     spd_base_var = 0.7;
     dur_var = irandom_range(15,30);
@@ -55,6 +56,7 @@ object_event_add
     h_var = 20;
     spr_spd_var = 1;
     fog_prio_var = 2;
+    dead_rm_var = gc_dead_rm;
     // Collision
     coll_var[0] = global.mon_wide_coll[0];
     coll_var[1] = global.mon_wide_coll[1];

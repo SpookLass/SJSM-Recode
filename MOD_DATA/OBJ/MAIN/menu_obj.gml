@@ -326,7 +326,7 @@ object_event_add
     custom_button_arr[custom_button_len_var,14] = "false"; // Easy
     custom_button_arr[custom_button_len_var,15] = "false"; // Normal
     custom_button_arr[custom_button_len_var,16] = "false"; // Hard
-    custom_button_arr[custom_button_len_var,17] = "true"; // Hardest
+    custom_button_arr[custom_button_len_var,17] = "false"; // Hardest
     custom_button_arr[custom_button_len_var,18] = "true"; // :)
     custom_button_len_var += 1;
         // Lock
