@@ -151,7 +151,7 @@ object_event_add
             seen_yaw_var = 60;
             seen_pitch_var = 60;
             visible_var = true;
-            hurt_tp_var = false;
+            // hurt_tp_var = false;
             hurt_multi_var = true;
             tp_dist_min_var = 0;
             tp_dist_max_var = 16;

@@ -29,6 +29,7 @@ object_event_add
     txt_lock_var = ini_read_string("UI","spooper","UI_spooper");
     loop_snd_var[2] = string_replace(ini_read_string("SUB","spooper","SUB_spooper"),"@n",name_var);
     ini_close();
+    // Variables
     type_var = 0;
     spd_base_var = 3;
     spr_spd_var = 1/3;
@@ -40,6 +41,7 @@ object_event_add
     h_var = 20;
     z_off_var = 3;
     dupe_var = dupe_never_const;
+    dead_rm_var = spooper_dead_rm;
     // Sounds
     do_snd_var = false;
     loop_snd_dist_max_var = 600;

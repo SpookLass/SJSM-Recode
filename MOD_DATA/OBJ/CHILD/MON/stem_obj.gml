@@ -214,7 +214,7 @@ object_event_add
 ');
 // Destroy Event
 object_event_add
-(argument0,ev_destroy,0,"
+(argument0,ev_destroy,0,'
     event_inherited();
     with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
     if !local.bool
@@ -226,17 +226,17 @@ object_event_add
         for (local.i=0; local.i<snd_len_var; local.i+=1;)
         { fmod_snd_free_scr(snd_arr[local.i,0]); }
     }
-");
+');
 // Room Start Event
 object_event_add
-(argument0,ev_other,ev_room_start,"
+(argument0,ev_other,ev_room_start,'
     event_inherited();
     // Position
     event_user(15);
     // Reset Variables
     mdl_yaw_var = yaw_var;
     mdl_pitch_var = pitch_var;
-");
+');
 // Delay
 object_event_add
 (argument0,ev_alarm,0,"
@@ -254,7 +254,7 @@ object_event_add
 ");
 // Movement
 object_event_add
-(argument0,ev_other,ev_user0,"
+(argument0,ev_other,ev_user0,'
     // If second face, move faster
     if boost_var && mdl_var == mdl_02_var
     {
@@ -273,7 +273,7 @@ object_event_add
         {
             if do_acc_var
             {
-                // Tried to add autobrake support, but it's difficult without Unity source code
+                // Tried to add autobrake support, but its difficult without Unity source code
                 if autobrake_var && target_visible_var && spd_var > autobrake_spd_var
                 && (target_dist_var <= autobrake_dist_var || autobrake_dist_var <= 0) 
                 {
@@ -334,7 +334,7 @@ object_event_add
     spd_mult_var = 1;
     turn_mult_var = 1;
     acc_mult_var = 1;
-");
+');
 // Animation
 object_event_add
 (argument0,ev_other,ev_user1,"

@@ -44,6 +44,7 @@ object_event_add
     delay_var = 56; // Assuming unseen speed
     dmg_var = 30;
     dmg_alarm_var = 60;
+    dead_rm_var = lisa_dead_rm;
     // Sounds
     wake_snd_var[0] = 2;
     snd_dist_max_var = 600;

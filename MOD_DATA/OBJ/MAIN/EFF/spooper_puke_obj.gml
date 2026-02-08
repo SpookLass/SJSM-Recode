@@ -52,14 +52,14 @@ object_event_add
             }
             if !dead_var { local.dead = false; }
         }
-        fmod_snd_play_scr(snd_var);
-        if false//local.dead
+        if local.dead
         {
             global.dead_mon_var = par_var.object_index;
             global.dead_player_var = local.player.player_id_var;
-            rm_goto_menu_scr(dead_rm_var,true);
+            rm_goto_menu_scr(par_var.dead_rm_var,true);
             exit;
         }
+        fmod_snd_play_scr(snd_var);
         instance_create(player_var.x,player_var.y,blood_sm_obj);
         if !irandom(1)
         {

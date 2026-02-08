@@ -42,6 +42,7 @@ object_event_add
     wake_snd_var[2] = local.sub;
     hurt_snd_var[2] = local.sub;
     ini_close();
+    // Variables
     type_var = 1;
     spd_base_var = 17/30; // 0.5r6
     spr_var = sprite_add(main_directory_const+"\SPR\MON\eel_spr.png",9,false,false,0,0);
@@ -55,6 +56,7 @@ object_event_add
     z_off_var = 4;
     dupe_var = dupe_canon_const;
     atk_range_var = 48;
+    dead_rm_var = eel_dead_rm;
     // Scream
     do_hurt_var = true;
     violence_var = 3;

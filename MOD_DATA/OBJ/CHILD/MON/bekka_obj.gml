@@ -33,7 +33,7 @@ object_event_add
         }
     }
     ini_close();
-    name_var = "Bekka";
+    // Variables
     type_var = 0;
     spd_base_var = 0.75;
     spr_spd_var = 1;
@@ -43,6 +43,7 @@ object_event_add
     dmg_alarm_var = 30;
     w_var = 14;
     h_var = 21;
+    dead_rm_var = bekka_dead_rm;
     // mus
     mus_prio_var = theme_mus_prio_const;
     // Assets

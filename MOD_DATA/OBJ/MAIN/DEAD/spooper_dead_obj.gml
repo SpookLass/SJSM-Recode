@@ -11,32 +11,37 @@ object_event_add
 (argument0,ev_create,0,'
     // Translation
     ini_open(global.lang_var);
-    str_var = string_replace_all(ini_read_string("DEAD","gc","DEAD_gc"),"@l","
+    str_var = string_replace_all(ini_read_string("DEAD","spooper","DEAD_spooper"),"@l","
 ");
     ini_close();
     // Load assets
-    bg_var = background_add(vanilla_directory_const+"\TEX\sprites\MS22_01_spr.png",false,false);
-    snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\M6_AMB2.mp3");
+    spr_var = execute_file(main_directory_const+"\SPR\DEAD\lisa_dead_spr.gml",main_directory_const+"\SPR\DEAD\lisa_dead_spr.png");
+    snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DEAD\spooper_dead_snd.wav");
     load_var = true;
+    // Sprite
+    spr_id_var = irandom(sprite_get_number(spr_var)-1);
+    // Static
+    static_spr_var = static_01_spr;
+    image_xscale = 256;
+    image_yscale = 128;
+    y_spd_var = -5;
+    static_spr_spd_var = 0.5;
     // Sound
     fmod_snd_play_scr(snd_var);
-    // Background
-    bg_x_var = random_range(-2,2);
-    bg_y_var = random_range(-2,2);
     // String
-    x = 200;
-    y = 200+random_range(-2,2);
-    image_xscale = 0.5;
-    image_yscale = 0.5;
-    // Static
-    spr_var = static_01_spr;
-    spr_id_var = irandom(sprite_get_number(spr_var)-1)
-    spr_spd_var = 1;
+    image_alpha = random_range(0.7,1);
     // Alarm
-    fade_alarm_var = 60;
+    fade_alarm_var = 30;
     alarm_len_var = 3;
-    set_alarm_scr(0,300);
+    set_alarm_scr(0,270);
     set_alarm_scr(2,1);
+    // FLASH!!!
+    with instance_create(0,0,flash_eff_obj)
+    {
+        image_blend = c_red; 
+        set_alarm_scr(0,6);
+        cam_id_var = other.attack_target_var.cam_id_var;
+    }
 ');
 // Destroy
 object_event_add
@@ -53,7 +58,7 @@ object_event_add
 (argument0,ev_other,ev_user0,'
     if load_var
     {
-        background_delete(bg_var);
+        sprite_delete(spr_var);
         fmod_snd_free_scr(snd_var);
         load_var = false;
     }
@@ -64,7 +69,8 @@ object_event_add
     if global.input_press_arr[confirm_input_const,global.dead_player_var] == 1
     || global.input_press_arr[back_input_const,global.dead_player_var] == 1
     { event_perform(ev_alarm,1); }
-    spr_id_var = mod_scr(spr_id_var+(spr_spd_var*global.delta_time_var),sprite_get_number(spr_var));
+    y = mod_scr(y+(y_spd_var*global.delta_time_var),image_yscale);
+    static_spr_id_var = mod_scr(static_spr_id_var+(static_spr_spd_var*global.delta_time_var),sprite_get_number(static_spr_var));
 ');
 // Alarm 0
 object_event_add
@@ -86,15 +92,18 @@ object_event_add
 // Effect Alarm
 object_event_add
 (argument0,ev_alarm,2,'
-    y = 200+random_range(-2,2);
-    bg_x_var = random_range(-2,2);
-    bg_y_var = random_range(-2,2);
+    spr_id_var = irandom(sprite_get_number(spr_var)-1);
+    image_alpha = random_range(0.7,1);
     set_alarm_scr(2,1);
 ');
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,'
-    draw_bg_fit_scr(bg_var,bg_x_var,bg_y_var);
-    draw_str_scr(str_var,x,y,image_xscale,image_yscale,0.125,fa_left,fa_top,0);
-    draw_spr_tiled_scale_ext_scr(spr_var,floor(spr_id_var),0,0,1024,128,2,0,c_white,0.5);
+    draw_set_alpha(image_alpha);
+    draw_str_scr(str_var,0,0,0.6,0.6,0.125,fa_center,fa_middle,0);
+    draw_set_alpha(1);
+    draw_set_blend_mode_ext(bm_dest_color,bm_src_color);
+    draw_spr_fit_scr(spr_var,spr_id_var,0,0);
+    draw_set_blend_mode(bm_normal);
+    draw_spr_tiled_scale_ext_scr(static_spr_var,floor(static_spr_id_var),x,y,image_xscale,image_yscale,2,0,c_white,0.5);
 ');
