@@ -129,8 +129,9 @@ object_event_add
         case 0: // Recode
         {
             exit_alarm_min_var = 30;
+            trig_dist_var = 48;
             exit_alarm_max_var = exit_alarm_min_var;
-            trig_type_var = 1;
+            trig_type_var = 2;
             exit_spawn_var = true;
             dark_color_var = make_color_rgb(97,97,106);
             bright_var = true;
@@ -252,12 +253,12 @@ object_event_add
             set_alarm_scr(0,-1);
             move_var = false;
             // Reset Position
-            if global.unlock_var > 0 { local.spawn = global.unlock_var; }
-            else { local.spawn = irandom_range(1,global.spawn_len_var-1); }
-            yaw_var = global.spawn_arr[local.spawn,3];
-            x = global.spawn_arr[local.spawn,0]-lengthdir_x(exit_dist_var,yaw_var);
-            y = global.spawn_arr[local.spawn,1]-lengthdir_y(exit_dist_var,yaw_var);
-            z = global.spawn_arr[local.spawn,2];
+            if global.unlock_var > 0 { spawn_var = global.unlock_var; }
+            else { spawn_var = irandom_range(1,global.spawn_len_var-1); }
+            yaw_var = global.spawn_arr[spawn_var,3];
+            x = global.spawn_arr[spawn_var,0]-lengthdir_x(exit_dist_var,yaw_var);
+            y = global.spawn_arr[spawn_var,1]-lengthdir_y(exit_dist_var,yaw_var);
+            z = global.spawn_arr[spawn_var,2];
             set_motion_3d_scr(0,true,yaw_var,true,0,true);
             // Set target
             event_user(6);
@@ -304,21 +305,43 @@ object_event_add
             case 1:
             {
                 local.active = false;
-                if trig_type_var
+                switch trig_type_var
                 {
-                    event_user(6);
-                    if instance_exists(target_var)
-                    && target_dist_var < trig_dist_var
-                    { local.active = true; }
-                }
-                else
-                {
-                    with player_obj
+                    case 0: // Box
                     {
-                        if box_coll_scr(x,y,z,coll_var[2],coll_var[2],coll_var[1],other.x,other.y,other.z,other.trig_w_var,other.trig_w_var,other.trig_h_var)
+                        with player_obj
                         {
-                            local.active = true;
-                            break;
+                            if box_coll_scr(x,y,z,coll_var[2],coll_var[2],coll_var[1],other.x,other.y,other.z,other.trig_w_var,other.trig_w_var,other.trig_h_var)
+                            { local.active = true; break; }
+                        }
+                        break;
+                    }
+                    case 1: // Circle
+                    {
+                        with player_obj
+                        {
+                            if point_distance_3d_scr(x,y,z,other.x,other.y,other.z) < other.trig_dist_var
+                            { local.active = true; break; }
+                        }
+                    }
+                    case 2: // Smart Circle
+                    {
+                        with player_obj
+                        {
+                            local.dist = point_distance_3d_scr(x,y,z,global.spawn_arr[other.spawn_var,0],global.spawn_arr[other.spawn_var,1],global.spawn_arr[other.spawn_var,2]);
+                            if local.dist < other.trig_dist_var
+                            {
+                                local.xvec = (x-global.spawn_arr[other.spawn_var,0])/local.dist;
+                                local.yvec = (y-global.spawn_arr[other.spawn_var,1])/local.dist;
+                                local.zvec = (z-global.spawn_arr[other.spawn_var,2])/local.dist;
+                                local.newdist = check_ray_scr
+                                (
+                                    global.spawn_arr[other.spawn_var,0],global.spawn_arr[other.spawn_var,1],global.spawn_arr[other.spawn_var,2],
+                                    local.xvec,local.yvec,local.zvec
+                                );
+                                if local.dist <= local.newdist+1 { local.active = true; break; }
+                            }
+                            
                         }
                     }
                 }

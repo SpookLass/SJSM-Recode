@@ -47,7 +47,7 @@ object_event_add
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,'
-    if par_var.on_var && !par_var.dead_var
+    if par_var.on_var && !par_var.dead_var && !global.pause_var
     {
         spr_id_var += spr_spd_var*global.delta_time_var;
         switch state_var
@@ -177,7 +177,7 @@ object_event_add
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,'
-    if view_current == par_var.cam_id_var && par_var.on_var && !par_var.dead_var
+    if view_current == par_var.cam_id_var && !par_var.dead_var
     {
         d3d_set_fog(false,c_black,0,0);
         d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);

@@ -258,39 +258,22 @@ object_event_add
     // If second face, move faster
     if boost_var && mdl_var == mdl_02_var
     {
-        spd_mult_var = random_range(spd_mult_min_var,spd_mult_max_var);
-        turn_mult_var = random_range(turn_mult_min_var,turn_mult_max_var);
-        acc_mult_var = random_range(acc_mult_min_var,acc_mult_max_var);
+        spd_mult_var *= random_range(spd_mult_min_var,spd_mult_max_var);
+        turn_mult_var *= random_range(turn_mult_min_var,turn_mult_max_var);
+        acc_mult_var *= random_range(acc_mult_min_var,acc_mult_max_var);
     }
     local.yaw = point_direction(x,y,target_x_var,target_y_var);
     local.pitch = point_direction_3d_scr(x,y,z,target_x_var,target_y_var,target_z_var);
     local.spd = spd_base_var*spd_mult_var;
     local.turn = turn_rate_var*turn_mult_var;
+    if do_acc_var
+    {
+        local.acc = acc_var*acc_mult_var*acc_mult_per_var;
+        local.frick = frick_var*acc_mult_var*acc_mult_per_var;
+    }
     // Type
     switch move_type_var
     {
-        case 0: // Mod
-        {
-            if do_acc_var
-            {
-                // Tried to add autobrake support, but its difficult without Unity source code
-                if autobrake_var && target_visible_var && spd_var > autobrake_spd_var
-                && (target_dist_var <= autobrake_dist_var || autobrake_dist_var <= 0) 
-                {
-                    if autobrake_dir_var > 0
-                    {
-                        if abs(deg_diff_scr(local.yaw,yaw_var)) > autobrake_dir_var
-                        { local.spd = autobrake_spd_var; }
-                    }
-                    else { local.spd = autobrake_spd_var; }
-                }
-                acc_3d_scr(global.delta_time_var,acc_var*acc_mult_var,frick_var*acc_mult_var,local.yaw,local.pitch,local.spd);
-            }
-            else { set_motion_3d_scr(local.spd,true,local.yaw,true,local.pitch,true); }
-            mdl_yaw_var = yaw_var;
-            mdl_pitch_var = pitch_var;
-            break;
-        }
         case 1: // OG
         {
             // Turning
@@ -323,7 +306,7 @@ object_event_add
             mdl_pitch_var = pitch_var;
             break;
         }
-        default:
+        default: // Mod
         {
             event_inherited();
             mdl_yaw_var = yaw_var;

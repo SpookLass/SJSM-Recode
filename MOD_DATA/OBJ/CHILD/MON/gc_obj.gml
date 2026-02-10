@@ -141,7 +141,6 @@ object_event_add
     spd_per_min_var = 1;
     spd_per_max_var = 12/7; // 1.r714285x
     spd_per_pain_var = 100/7; // 14.r285714x
-    spd_per_var = 1;
     spd_delay_min_var = 1;
     spd_delay_max_var = 3;
     seen_delay_min_var = 3;
@@ -358,7 +357,7 @@ object_event_add
     }
     mdl_yaw_var = yaw_var;
     mdl_pitch_var = pitch_var;
-    spd_per_var = 1;
+    spd_mult_per_var = 1;
     visible = true;
     // Effects
     global.wall_bg_tex = background_get_texture(wall_bg_var);
@@ -432,25 +431,27 @@ object_event_add
 // Movement
 object_event_add
 (argument0,ev_other,ev_user0,'
-    if spd_per_var != 1 { spd_mult_var *= spd_per_var; }
     local.yaw = point_direction(x,y,target_x_var,target_y_var);
     local.pitch = point_direction_3d_scr(x,y,z,target_x_var,target_y_var,target_z_var);
-    local.spd = spd_base_var*spd_mult_var;
+    local.spd = spd_base_var*spd_mult_var*spd_mult_per_var;
     switch move_type_var
     {
         case 0: // Recode
         {
             event_inherited();
-            local.yawdiff = deg_diff_scr(local.yaw,yaw_var);
-            local.pitchdiff = deg_diff_scr(local.pitch,pitch_var);
-            set_motion_3d_scr
-            (
-                0,false,
-                local.yaw-(sign(local.yawdiff)*turn_max_var),
-                abs(local.yawdiff)>turn_max_var, // Change yaw if difference is over max
-                local.pitch-(sign(local.pitchdiff)*turn_max_var),
-                abs(local.pitchdiff)>turn_max_var // Change pitch if difference is over max
-            );
+            if !possess_var
+            {
+                local.yawdiff = deg_diff_scr(local.yaw,yaw_var);
+                local.pitchdiff = deg_diff_scr(local.pitch,pitch_var);
+                set_motion_3d_scr
+                (
+                    0,false,
+                    local.yaw-(sign(local.yawdiff)*turn_max_var),
+                    abs(local.yawdiff)>turn_max_var, // Change yaw if difference is over max
+                    local.pitch-(sign(local.pitchdiff)*turn_max_var),
+                    abs(local.pitchdiff)>turn_max_var // Change pitch if difference is over max
+                );
+            }
             mdl_yaw_var = yaw_var;
             mdl_pitch_var = pitch_var;
             break;
@@ -501,7 +502,7 @@ object_event_add
 // Speed Reset
 object_event_add
 (argument0,ev_alarm,10,'
-    spd_per_var = 1;
+    spd_mult_per_var = 1;
     if spd_var > spd_base_var
     { set_motion_3d_scr(spd_base_var,true); }
 ');
@@ -616,15 +617,15 @@ object_event_add
         {
             if !irandom(3)
             {
-                spd_per_var = spd_per_pain_var;
+                spd_mult_per_var = spd_per_pain_var;
                 local.yaw = point_direction(x,y,target_x_var,target_y_var);
                 local.pitch = point_direction_3d_scr(x,y,z,target_x_var,target_y_var,target_z_var);
-                set_motion_3d_scr(spd_base_var*spd_per_var,true,local.yaw,true,local.pitch,true);
+                set_motion_3d_scr(spd_base_var*spd_mult_var*spd_mult_per_var,true,local.yaw,true,local.pitch,true);
             }
             else
             {
-                if !irandom(2) { spd_per_var = random_range(spd_per_min_var,spd_per_max_var); }
-                set_motion_3d_scr(spd_base_var*spd_per_var,true);
+                if !irandom(2) { spd_mult_per_var = random_range(spd_per_min_var,spd_per_max_var); }
+                set_motion_3d_scr(spd_base_var*spd_mult_var*spd_mult_per_var,true);
             }
             set_alarm_scr(9,irandom_range(seen_delay_min_var,seen_delay_max_var));
         }

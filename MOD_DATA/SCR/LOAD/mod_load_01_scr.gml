@@ -5,12 +5,12 @@ global.mod_list = ds_list_create();
 ds_list_clear(global.mod_list);
 ds_list_read(global.mod_list,ini_read_string("MODS","mods",ds_list_write(global.mod_list)));
 ini_close();
-ds_list_add(global.mod_list,working_directory+"\MODS\PLUS");
+/*ds_list_add(global.mod_list,working_directory+"\MODS\PLUS");
 ds_list_add(global.mod_list,working_directory+"\MODS\LEAN");
 ds_list_add(global.mod_list,working_directory+"\MODS\SMALL_BAB");
 ds_list_add(global.mod_list,working_directory+"\MODS\SCM");
 ds_list_add(global.mod_list,working_directory+"\MODS\DD");
-// ds_list_add(global.mod_list,working_directory+"\MODS\EXAMPLE_MOD");
+ds_list_add(global.mod_list,working_directory+"\MODS\EXAMPLE_MOD");*/
 // Mod load list
 globalvar mod_load_list;
 global.mod_load_list = ds_list_create();

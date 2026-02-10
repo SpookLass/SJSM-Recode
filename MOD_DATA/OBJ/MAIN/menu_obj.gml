@@ -860,6 +860,8 @@ object_event_add
     type_button_arr[7,4] = old_str_var;
     type_button_arr[7,5] = dh_str_var;
     type_button_arr[7,6] = dh_str_var+" "+hd_str_var;
+    type_button_arr[8,2] = 4; // Flesh
+    type_button_arr[8,6] = alt_str_var;
     type_button_arr[9,2] = 6; // Deer Lord
     type_button_arr[9,4] = old_str_var;
     type_button_arr[9,5] = rouge_str_var;

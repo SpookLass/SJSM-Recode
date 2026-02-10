@@ -145,6 +145,8 @@ object_event_add
     // Speed
     spd_mult_var = 1;
     spd_mult_per_var = 1;
+    acc_mult_var = 1;
+    acc_mult_per_var = 1;
     // Delay
     if delay_var != 0 && delay_min_var == 0
     {
@@ -466,6 +468,11 @@ object_event_add
         else if is_seen_var == 0 && unseen_mult_var != 1 { spd_mult_var *= unseen_mult_var; }
     }
     local.spd = spd_base_var*spd_mult_var*spd_mult_per_var;
+    if do_acc_var
+    {
+        local.acc = acc_var*acc_mult_var*acc_mult_per_var;
+        local.frick = frick_var*acc_mult_var*acc_mult_per_var;
+    }
     if enter_var
     {
         if target_dist_var <= local.spd
@@ -574,17 +581,17 @@ object_event_add
                         }
                         else { local.spd = autobrake_spd_var; }
                     }
-                    if do_coll_var && grav_var > 0 { acc_scr(global.delta_time_var,acc_var,frick_var,local.yaw,local.spd); }
-                    else { acc_3d_scr(global.delta_time_var,acc_var,frick_var,local.yaw,local.pitch,local.spd); }
+                    if do_coll_var && grav_var > 0 { acc_scr(global.delta_time_var,local.acc,local.frick,local.yaw,local.spd); }
+                    else { acc_3d_scr(global.delta_time_var,local.acc,local.frick,local.yaw,local.pitch,local.spd); }
                     break;
                 }
                 case 2: // Classic
                 {
-                    if abs(spd_var) < abs(local.spd) { local.spd = sign(local.spd)*min(abs(local.spd),abs(spd_var)+(acc_var*global.delta_time_var)); }
+                    if abs(spd_var) < abs(local.spd) { local.spd = sign(local.spd)*min(abs(local.spd),abs(spd_var)+(local.acc*global.delta_time_var)); }
                 }
                 case 3: // Friction only
                 {
-                    if abs(spd_var) > abs(local.spd) { local.spd = sign(local.spd)*max(abs(local.spd),abs(spd_var)-(frick_var*global.delta_time_var)); }
+                    if abs(spd_var) > abs(local.spd) { local.spd = sign(local.spd)*max(abs(local.spd),abs(spd_var)-(local.frick*global.delta_time_var)); }
                 }
                 default:
                 {
@@ -596,6 +603,7 @@ object_event_add
         }
     }
     spd_mult_var = 1;
+    acc_mult_var = 1;
 ');
 // Animation Event
 object_event_add

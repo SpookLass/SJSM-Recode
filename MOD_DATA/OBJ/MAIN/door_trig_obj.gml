@@ -86,71 +86,74 @@ object_event_add
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,'
-    visible = false;
-    local.door = id;
-    local.active = false;
-    local.remaining = 0;
-    // Check remaining players
-    with player_obj { if !in_door_var && !dead_var { local.remaining += 1; }}
-    // Check for eligable players
-    with player_obj
+    if !global.pause_var
     {
-        if !in_door_var && !dead_var
+        visible = false;
+        local.door = id;
+        local.active = false;
+        local.remaining = 0;
+        // Check remaining players
+        with player_obj { if !in_door_var && !dead_var { local.remaining += 1; }}
+        // Check for eligable players
+        with player_obj
         {
-            // p3dc_check_scr(coll_var[0],x,y,z,other.coll_var[0],other.x,other.y,other.z)
-            if box_coll_scr(x,y,z,coll_var[2],coll_var[2],coll_var[1],other.x,other.y,other.z,other.coll_var[2],other.coll_var[2],other.coll_var[1])
+            if !in_door_var && !dead_var
             {
-                other.visible = other.do_txt_var && !instance_exists(txt_obj);
-                other.cam_id_var = cam_id_var
-                if global.input_press_arr[interact_input_const,player_id_var] == 1
+                // p3dc_check_scr(coll_var[0],x,y,z,other.coll_var[0],other.x,other.y,other.z)
+                if box_coll_scr(x,y,z,coll_var[2],coll_var[2],coll_var[1],other.x,other.y,other.z,other.coll_var[2],other.coll_var[2],other.coll_var[1])
                 {
-                    if !other.lock_var
+                    other.visible = other.do_txt_var && !instance_exists(txt_obj);
+                    other.cam_id_var = cam_id_var
+                    if global.input_press_arr[interact_input_const,player_id_var] == 1
                     {
-                        on_var = false;
-                        in_door_var = true;
-                        local.active = true;
-                        local.player = id;
-                        local.remaining -= 1;
-                        with instance_create(0,0,fade_eff_obj)
+                        if !other.lock_var
                         {
-                            image_blend = c_black;
-                            image_alpha = 0;
-                            set_alarm_scr(0,local.door.delay_var); 
-                            invert_var = true;
-                            stay_var = true;
-                            cam_id_var = local.player.cam_id_var;
+                            on_var = false;
+                            in_door_var = true;
+                            local.active = true;
+                            local.player = id;
+                            local.remaining -= 1;
+                            with instance_create(0,0,fade_eff_obj)
+                            {
+                                image_blend = c_black;
+                                image_alpha = 0;
+                                set_alarm_scr(0,local.door.delay_var); 
+                                invert_var = true;
+                                stay_var = true;
+                                cam_id_var = local.player.cam_id_var;
+                            }
+                            other.player_var += 1;
                         }
-                        other.player_var += 1;
-                    }
-                    else if !instance_exists(txt_obj)
-                    {
-                        local.txt = instance_create(0,0,txt_obj);
-                        local.txt.str_var = local.door.txt_lock_var;
-                        fmod_snd_play_scr(deny_snd);
+                        else if !instance_exists(txt_obj)
+                        {
+                            local.txt = instance_create(0,0,txt_obj);
+                            local.txt.str_var = local.door.txt_lock_var;
+                            fmod_snd_play_scr(deny_snd);
+                        }
                     }
                 }
             }
         }
-    }
-    // If no remaining players, check most voted door
-    if !global.in_door_var && local.remaining == 0
-    && (local.active || global.player_len_var > 1 || !global.debug_var) // Dont go in single player if not opened (testing)
-    {
-        local.bestdoor = id;
-        local.bestnum = player_var;
-        with door_trig_obj
+        // If no remaining players, check most voted door
+        if !global.in_door_var && local.remaining == 0
+        && (local.active || global.player_len_var > 1 || !global.debug_var) // Dont go in single player if not opened (testing)
         {
-            if player_var > local.bestnum
+            local.bestdoor = id;
+            local.bestnum = player_var;
+            with door_trig_obj
             {
-                local.bestdoor = id;
-                local.bestnum = player_var;
+                if player_var > local.bestnum
+                {
+                    local.bestdoor = id;
+                    local.bestnum = player_var;
+                }
             }
+            with local.bestdoor
+            { set_alarm_scr(0,delay_var); }
+            global.in_door_var = true;
+            // Play sound
+            fmod_snd_play_scr(snd_arr[irandom(snd_len_var-1)]);
         }
-        with local.bestdoor
-        { set_alarm_scr(0,delay_var); }
-        global.in_door_var = true;
-        // Play sound
-        fmod_snd_play_scr(snd_arr[irandom(snd_len_var-1)]);
     }
 ');
 // Recalculate Door

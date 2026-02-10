@@ -1051,7 +1051,7 @@ draw_clear_alpha(c_black,0);
 draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading story zones...",1,1,0);
 screen_refresh();
 // Story Zones
-global.story_zone_len_var = 11; // Will be 12
+global.story_zone_len_var = 12; // Will be 12
 // Story Zone 0: 0-50
 global.story_zone_arr[0] = ds_list_create();
 ds_list_clear(global.story_zone_arr[0]);
@@ -1775,12 +1775,12 @@ ds_list_add(global.story_zone_arr[11],sm_05_rm); ds_list_add(global.story_zone_a
 ds_list_add(global.story_zone_arr[11],sm_06_rm); ds_list_add(global.story_zone_arr[11],sm_06_rm);
 ds_list_add(global.story_zone_arr[11],sm_07_rm); ds_list_add(global.story_zone_arr[11],sm_07_rm);
 ds_list_add(global.story_zone_arr[11],sm_08_rm); ds_list_add(global.story_zone_arr[11],sm_08_rm);
-ds_list_add(global.story_zone_arr[11],sm_09_rm); ds_list_add(global.story_zone_arr[11],sm_09_rm);
-ds_list_add(global.story_zone_arr[11],sm_10_rm); ds_list_add(global.story_zone_arr[11],sm_10_rm);
-ds_list_add(global.story_zone_arr[11],sm_11_rm); ds_list_add(global.story_zone_arr[11],sm_11_rm);
-ds_list_add(global.story_zone_arr[11],sm_12_rm); ds_list_add(global.story_zone_arr[11],sm_12_rm);
-ds_list_add(global.story_zone_arr[11],sm_13_rm); ds_list_add(global.story_zone_arr[11],sm_13_rm);
-ds_list_add(global.story_zone_arr[11],sm_14_rm); ds_list_add(global.story_zone_arr[11],sm_14_rm);
+ds_list_add(global.story_zone_arr[11],purp_01_rm); ds_list_add(global.story_zone_arr[11],purp_01_rm);
+ds_list_add(global.story_zone_arr[11],purp_02_rm); ds_list_add(global.story_zone_arr[11],purp_02_rm);
+ds_list_add(global.story_zone_arr[11],purp_03_rm); ds_list_add(global.story_zone_arr[11],purp_03_rm);
+ds_list_add(global.story_zone_arr[11],purp_04_rm); ds_list_add(global.story_zone_arr[11],purp_04_rm);
+ds_list_add(global.story_zone_arr[11],purp_05_rm); ds_list_add(global.story_zone_arr[11],purp_05_rm);
+ds_list_add(global.story_zone_arr[11],purp_06_rm); ds_list_add(global.story_zone_arr[11],purp_06_rm);
 ds_list_add(global.story_zone_arr[11],sm_15_rm); ds_list_add(global.story_zone_arr[11],sm_15_rm);
 ds_list_add(global.story_zone_arr[11],sm_16_rm); ds_list_add(global.story_zone_arr[11],sm_16_rm);
 ds_list_add(global.story_zone_arr[11],sm_17_rm); ds_list_add(global.story_zone_arr[11],sm_17_rm);
@@ -1876,7 +1876,7 @@ if argument0
     {
         for (local.j=0; local.j<ds_list_size(global.zone_arr[local.i]); local.j+=1;)
         {
-            local.rm = ds_list_find_value(global.zone_arr[local.i],local.j)
+            local.rm = ds_list_find_value(global.zone_arr[local.i],local.j);
             if local.rm == 0 || !room_exists(local.rm)
             { show_error("Zone "+string(local.i)+" Index "+string(local.j+1)+" does not exist!",false); }
         }
@@ -1885,7 +1885,7 @@ if argument0
     {
         for (local.j=0; local.j<ds_list_size(global.story_zone_arr[local.i]); local.j+=1;)
         {
-            local.rm = ds_list_find_value(global.story_zone_arr[local.i],local.j) == 0
+            local.rm = ds_list_find_value(global.story_zone_arr[local.i],local.j);
             if local.rm == 0 || !room_exists(local.rm)
             { show_error("Story Zone "+string(local.i)+" Index "+string(local.j+1)+" does not exist!",false); }
         }

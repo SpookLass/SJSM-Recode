@@ -27,12 +27,10 @@ execute_file(main_directory_const+"\SCR\LOAD\part_load_scr.gml");
 shader_load_scr();
 execute_file(main_directory_const+"\SCR\LOAD\obj_load_scr.gml");
 execute_file(main_directory_const+"\SCR\LOAD\rm_load_scr.gml");
-execute_file(main_directory_const+"\SCR\LOAD\zone_load_scr.gml");
+execute_file(main_directory_const+"\SCR\LOAD\zone_load_scr.gml",true);
 execute_file(main_directory_const+"\SCR\LOAD\tex_load_scr.gml");
 execute_file(main_directory_const+"\SCR\LOAD\js_load_scr.gml");
 // Temporary Specimen Spawn List
-
-
 global.mon_list = ds_list_create();
 ds_list_clear(global.mon_list);
 ds_list_add(global.mon_list,gel_obj); // Story

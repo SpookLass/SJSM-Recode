@@ -153,6 +153,7 @@ object_event_add
         }
     }
     // Taker Behavior
+    do_taker_var = true;
     taker_alarm_var = 7200; // 5940
     taker_mon_alarm_var = 731; // 540
     switch global.taker_type_var
@@ -484,12 +485,15 @@ object_event_add
             || global.input_arr[sprint_input_const,player_id_var] || global.input_arr[jump_input_const,player_id_var]
             || global.input_arr[crouch_input_const,player_id_var] || global.input_arr[attack_input_const,player_id_var];
             // Show taker hud
-            if dead_var { taker_var = possess_delay_var > 0 }
-            else
+            if do_taker_var
             {
-                taker_var = !active_var || taker_spawn_var;
-                with player_obj { if id != other.id && in_door_var { other.taker_var = true; break; }}
-                if !taker_var { set_alarm_scr(3,taker_alarm_var); }
+                if dead_var { taker_var = possess_delay_var > 0 }
+                else
+                {
+                    taker_var = !active_var || taker_spawn_var;
+                    with player_obj { if id != other.id && in_door_var { other.taker_var = true; break; }}
+                    if !taker_var { set_alarm_scr(3,taker_alarm_var); }
+                }
             }
             // Sprint
             sprint_var = do_sprint_var && global.input_arr[sprint_input_const,player_id_var] && (stam_var > 0 || !do_stam_var);
@@ -601,8 +605,11 @@ object_event_add
             eye_yaw_var = mon_var.eye_yaw_var;
             eye_pitch_var = mon_var.eye_pitch_var;
             active_var = mon_var.active_var || mon_var.enter_var || !mon_var.on_var;
-            taker_var = !active_var || taker_spawn_var;
-            if !taker_var { set_alarm_scr(3,taker_mon_alarm_var); }
+            if do_taker_var
+            {
+                taker_var = !active_var || taker_spawn_var;
+                if !taker_var { set_alarm_scr(3,taker_mon_alarm_var); }
+            }
         }
     }
 ');
