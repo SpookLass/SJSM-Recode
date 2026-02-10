@@ -19,7 +19,7 @@ object_event_add
     spd_str_var = ini_read_string("UI","spd","UI_spd");
     health_str_var = ini_read_string("UI","health","UI_health");
     stamina_str_var = ini_read_string("UI","stamina","UI_stamina");
-    taker_str_var = ini_read_string("UI","taker","UI_taker");
+    taker_str_var = ini_read_string("UI","taker","UI_taker")+" ";
     tps_str_var = ini_read_string("UI","tps","UI_tps");
     fps_str_var = ini_read_string("UI","fps","UI_fps");
 	ini_close();

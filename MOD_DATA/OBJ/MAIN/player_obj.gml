@@ -16,7 +16,6 @@ object_event_add
     coll_var[0] = global.player_coll[0];
     coll_var[1] = global.player_coll[1];
     coll_var[2] = global.player_coll[2];
-    coll_h_var = 18;
     // HP
     if global.one_hit { hp_max_var = 1; }
     else { hp_max_var = 100; }
@@ -483,11 +482,15 @@ object_event_add
             // Is the player active?
             active_var = abs(local.input_dir_x) || abs(local.input_dir_y) || abs(local.input_dir_z)
             || global.input_arr[sprint_input_const,player_id_var] || global.input_arr[jump_input_const,player_id_var]
-            || global.input_arr[crouch_input_const,player_id_var] || global.input_arr[attack_input_const,player_id_var]
-            || dead_var;
-            taker_var = !active_var || taker_spawn_var;
-            with player_obj { if id != other.id && in_door_var { other.taker_var = true; break; }}
-            if !taker_var { set_alarm_scr(3,taker_alarm_var); }
+            || global.input_arr[crouch_input_const,player_id_var] || global.input_arr[attack_input_const,player_id_var];
+            // Show taker hud
+            if dead_var { taker_var = possess_delay_var > 0 }
+            else
+            {
+                taker_var = !active_var || taker_spawn_var;
+                with player_obj { if id != other.id && in_door_var { other.taker_var = true; break; }}
+                if !taker_var { set_alarm_scr(3,taker_alarm_var); }
+            }
             // Sprint
             sprint_var = do_sprint_var && global.input_arr[sprint_input_const,player_id_var] && (stam_var > 0 || !do_stam_var);
             // Calculate speed
@@ -755,7 +758,7 @@ object_event_add
             global.cam_x_var[cam_id_var],global.cam_y_var[cam_id_var],global.cam_z_var[cam_id_var],
             global.cam_fx_var[cam_id_var],global.cam_fy_var[cam_id_var],global.cam_fz_var[cam_id_var],
             global.cam_ux_var[cam_id_var],global.cam_uy_var[cam_id_var],global.cam_uz_var[cam_id_var],
-        )
+        );
     }
 ');
 // Draw Event

@@ -11,6 +11,7 @@ object_event_add
 (argument0,ev_create,0,'
     event_inherited();
     depth_base_var = depth;
+    zstart = z;
 ');
 // End Step
 object_event_add

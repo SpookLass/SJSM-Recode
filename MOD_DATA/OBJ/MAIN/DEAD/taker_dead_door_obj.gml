@@ -5,14 +5,15 @@ object_set_parent(argument0,prop_par_obj);
 object_set_persistent(argument0,false);
 object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
-object_set_visible(argument0,true);
+object_set_visible(argument0,false);
 // Create event
 object_event_add
 (argument0,ev_create,0,'
-    store_tex_var = door_entrance_bg_tex;
+    store_tex_var = door_bg_tex;
     event_inherited();
     mdl_var = door_mdl;
     mdl_path_var = door_mdl_path;
+    direction = 180;
 ');
 // Break
 object_event_add
@@ -25,7 +26,7 @@ object_event_add
         fmod_snd_3d_play_scr(break_snd,x,y,z);
         open_var = true;
         local.door = id;
-        with player_obj
+        with cam_dead_obj
         {
             local.player = id;
             switch (global.shake_type_var)

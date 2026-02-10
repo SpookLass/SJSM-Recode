@@ -20,6 +20,7 @@ object_event_add
     // Damage
     dmg_var = 60;
     dmg_alarm_var = 120;
+    dead_rm_var = taker_dead_3d_rm;
     // Movement
     spd_var = 0.8;
     delay_var = 600;
@@ -157,16 +158,34 @@ object_event_add
                 if !possess_var
                 {
                     local.dead = true;
-                    with player_var { if !dead_var { local.dead = false; break; } }
-                    if local.dead
+                    with player_obj { if !dead_var { local.dead = false; break; } }
+                    if local.dead && !global.debug_var
                     {
                         global.dead_mon_var = object_index;
-                        global.dead_player_var = attack_target_var.player_id_var;
+                        global.dead_player_var = target_var.player_id_var;
                         rm_goto_menu_scr(dead_rm_var,true);
                     }
-                    else { event_perform(ev_other,ev_user3); }
+                    else
+                    {
+                        fmod_snd_play_scr(claw_snd);
+                        with instance_create(0,0,blood_eff_obj)
+                        {
+                            spr_var = blood_spr;
+                            spr_id_var = irandom(sprite_get_number(spr_var)-1);
+                            // Set camera to player
+                            cam_id_var = other.target_var.cam_id_var;
+                        }
+                        if !global.reduce_flash_var
+                        {
+                            with instance_create(0,0,flash_eff_obj)
+                            {
+                                image_blend = c_red; 
+                                set_alarm_scr(0,6);
+                                cam_id_var = other.attack_target_var.cam_id_var;
+                            }
+                        }
+                    }
                 }
-                instance_destroy();
             }
             event_inherited();
         }
