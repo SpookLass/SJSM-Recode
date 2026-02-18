@@ -17,7 +17,7 @@ object_event_add
     coll_var[1] = global.player_coll[1];
     coll_var[2] = global.player_coll[2];
     // HP
-    if global.one_hit { hp_max_var = 1; }
+    if false /*global.one_hit_var*/ { hp_max_var = 1; }
     else { hp_max_var = 100; }
     hp_var = hp_max_var;
     heal_rate_var = 1/60;
@@ -25,13 +25,17 @@ object_event_add
     heal_delay_var = 0;
     heal_safe_var = 10;
     heal_mult_var = 1;
+    dead_var = false;
     alarm_arr[1,2] = true; // Persists between rooms
+    hp_infect_var = 0;
+    invuln_var = false;
     // Speed
     spd_base_var = 1;
     spd_mult_var = 1;
     back_spd_mult_var = 0.6; // Normally 0.5, but I use 0.6 so the run speed is accurate
     back_var = false; // Whether to reduce speed when walking backwards
     normal_var = true;
+    invert_var = false;
     // Stamina
     do_stam_var = true;
     do_sprint_var = true; // Uhh yeah I sure it does
@@ -104,6 +108,7 @@ object_event_add
     fov_rate_var = 0.2;
     fov_rate_min_var = 0.5;
     // Flare
+    flare_var = 0;
     flare_yaw_var = 5.856;
     flare_pitch_var = 5.856;
     flare_rate_01_var = 0.01;
@@ -121,6 +126,7 @@ object_event_add
     grid_var = global.phys_grid;
     // Alarms
     alarm_len_var = 5;
+    alarm_ini_scr();
     revive_alarm_var = 300;
     // Possess
     possess_var = false;
@@ -154,6 +160,7 @@ object_event_add
     }
     // Taker Behavior
     do_taker_var = true;
+    taker_var = false;
     taker_alarm_var = 7200; // 5940
     taker_mon_alarm_var = 731; // 540
     switch global.taker_type_var
@@ -229,9 +236,13 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_room_start,'
     // Position
-    x = global.spawn_arr[0,0];
-    y = global.spawn_arr[0,1];
-    z = global.spawn_arr[0,2];
+    if global.spawn_len_var
+    {
+        x = global.spawn_arr[0,0];
+        y = global.spawn_arr[0,1];
+        z = global.spawn_arr[0,2];
+        eye_yaw_var = global.spawn_arr[0,3];
+    }
     if global.player_len_var > 1
     {
         switch global.player_len_var
@@ -261,7 +272,6 @@ object_event_add
         }
         
     }
-    eye_yaw_var = global.spawn_arr[0,3];
     eye_pitch_var = 0;
     set_motion_3d_scr(0,false,eye_yaw_var,true,eye_pitch_var,true);
     display_mouse_set(display_get_width()/2,display_get_height()/2);
@@ -291,6 +301,7 @@ object_event_add
     cam_yaw_var = eye_yaw_var;
     cam_pitch_var = eye_pitch_var;
     cam_roll_var = 0;
+    cam_set_scr(cam_id_var,cam_x_var,cam_y_var,cam_z_var,cam_yaw_var,cam_pitch_var,current_fov_var,cam_roll_var,dead_var);
     // View
     view_visible[cam_id_var] = true;
     view_enabled = true;
@@ -370,6 +381,7 @@ object_event_add
             // Extra movement handling
             if do_coll_var && grav_var > 0
             {
+                local.input_dir_z = 0;
                 // Jump!
                 if can_jump_var && global.input_press_arr[jump_input_const,player_id_var] && on_floor_var && (stam_var > jump_stam_var || !do_stam_var)
                 {
@@ -621,6 +633,7 @@ object_event_add
         event_inherited();
         // Get real speed for bobbing and stamina (already delta-timed)
         local.real_spd = point_distance(xprevious,yprevious,x,y);
+        local.stam_rate = 0;
         if on_floor_var
         {
             // Calculate stamina

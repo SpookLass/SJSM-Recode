@@ -35,6 +35,7 @@ object_event_add
     image_yscale = 192;
     // Alarm
     alarm_len_var = 5;
+    alarm_ini_scr();
     fade_alarm_var = 60;
     set_alarm_scr(0,240);
     set_alarm_scr(2,irandom_range(eff_alarm_min_var,eff_alarm_max_var));

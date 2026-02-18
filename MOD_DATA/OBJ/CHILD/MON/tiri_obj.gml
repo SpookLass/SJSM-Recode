@@ -48,11 +48,13 @@ object_event_add
     snd_den_var = 3;
     snd_alarm_min_var = 200;
     snd_alarm_max_var = 480;
+    snd_dist_min_var = 0;
     snd_dist_max_var = 700;
     // Theme
     mus_prio_var = theme_mus_prio_const;
     // Assets
         // Search for existing assets to save memory
+    local.loaded = false;
     with object_index
     {
         if id != other.id && object_index == other.object_index
@@ -85,6 +87,7 @@ object_event_add
     coward_var = false;
     coward_alarm_var = 90;
     alarm_len_var = 9;
+    alarm_ini_scr();
     // Effects
     eff_color_var = make_color_rgb(51,255,255);
     overlay_color_var = eff_color_var;

@@ -18,6 +18,7 @@ object_event_add
     snd_alarm_max_var = 30;
     snd_delay_min_var = -1;
     snd_delay_max_var = -1;
+    snd_dist_min_var = 0;
     snd_dist_max_var = 600;
     // Translations
     ini_open(global.lang_var);
@@ -47,9 +48,9 @@ object_event_add
     }
     local.sub = string_replace(ini_read_string("SUB","pup","SUB_pup"),"@n",name_var);
     for (local.i=0; local.i<snd_len_var; local.i+=1)
-    { snd_arr[local.i,1] = local.sub; }
-    wake_snd_var[2] = string_replace(ini_read_string("SUB","pup_laugh","SUB_pup_laugh"),"@n",name_var);
-    laugh_snd_var[1] = wake_snd_var[2];
+    { snd_arr[local.i,1] = local.sub; snd_arr[local.i,2] = false; }
+    wake_snd_var[2] = string_replace(ini_read_string("SUB","pup_laugh","SUB_pup_laugh"),"@n",name_var); wake_snd_var[3] = false;
+    laugh_snd_var[1] = wake_snd_var[2]; laugh_snd_var[2] = false;
     ini_close();
     type_var = 0;
     spd_base_var = 5;
@@ -103,6 +104,7 @@ object_event_add
     mus_prio_var = theme_mus_prio_const;
     // Assets
         // Search for existing assets to save memory
+    local.loaded = false;
     with object_index
     {
         if id != other.id && object_index == other.object_index
@@ -218,6 +220,7 @@ object_event_add
     h_var = h_base_var;
     // Alarms
     alarm_len_var = 11;
+    alarm_ini_scr();
 ');
 // Room start
 object_event_add

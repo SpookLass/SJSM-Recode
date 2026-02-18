@@ -16,6 +16,7 @@ object_event_add
     h_var = 128;
     // Particles
     part_len_var = 100;
+    part_ini_scr();
     part_spawn_var = 4;
     do_coll_var = true;
     // Ring

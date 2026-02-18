@@ -12,6 +12,7 @@ object_event_add
     event_inherited();
     // Alarms
     alarm_len_var = 2;
+    alarm_ini_scr();
     alarm_min_var = 160;
     alarm_max_var = 420;
     rand_alarm_min_var = 30;

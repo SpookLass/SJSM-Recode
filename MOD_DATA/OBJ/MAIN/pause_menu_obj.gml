@@ -19,8 +19,11 @@ object_event_add
     fmod_inst_set_pause_scr(mus_control_obj.snd_var,true);
     global.pause_var = true;
     fmod_snd_play_scr(deny_snd);
+    time_var = 0;
+    state_var = 0;
     // Static
     spr_var = static_01_spr;
+    spr_id_var = 0;
     spr_spd_var = 0.25;
     image_alpha = 0.2;
     scale_min_var = 128;
@@ -28,6 +31,7 @@ object_event_add
     scale_alarm_var = 30;
     scale_var = random_range(scale_min_var,scale_max_var);
     // Spooky
+    spook_alpha_var = 0;
     spook_scale_min_var = 1140;
     spook_scale_max_var = 1900;
     spook_scale_base_var = random_range(spook_scale_min_var,spook_scale_max_var);
@@ -41,6 +45,7 @@ object_event_add
     //fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
     // fmod_inst_set_mute_scr(mus_snd_var,true);
     alarm_len_var = 6;
+    alarm_ini_scr();
     set_alarm_scr(0,60);
     set_alarm_scr(1,scale_alarm_var);
     set_alarm_scr(2,2400);

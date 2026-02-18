@@ -2,6 +2,8 @@
 Argument 0: Delta Time
 Set delta time to 1 if you aren't using it.
 */
+did_coll_var = false;
+local.stop = false;
 // Movement add
 local.xspd = x_spd_var*argument0;
 local.yspd = y_spd_var*argument0;
@@ -10,18 +12,26 @@ if local.xspd != 0 || local.yspd != 0 || (grav_var > 0 && do_coll_var)
 {
     // Always check split
     local.coll_arr[0,0] = -1;
+    local.coll_arr[0,1] = 0;
+    local.coll_arr[0,2] = 0;
+    local.coll_arr[0,3] = 0;
+    local.coll_arr[0,4] = 0;
     local.coll_arr_len = 1;
     // Check float if it exists
     if !fall_var && on_floor_var && global.room_float_coll != -1
     {
         local.coll_arr[local.coll_arr_len,0] = -2;
+        local.coll_arr[local.coll_arr_len,1] = 0;
+        local.coll_arr[local.coll_arr_len,2] = 0;
+        local.coll_arr[local.coll_arr_len,3] = 0;
+        local.coll_arr[local.coll_arr_len,4] = 0;
         local.coll_arr_len += 1;
     }
     // Props, needed here since rotation lol
     with prop_par_obj
     {
         // Equivalent to split size
-        if solid_var && point_distance_3d_scr(other.x,other.y,other.z,x,y,z) < 36+other.spd_var && coll_var[0] > 0
+        if solid_var && point_distance_3d_scr(other.x,other.y,other.z,x,y,z) < 36+other.spd_var
         {
             local.coll_arr[local.coll_arr_len,0] = coll_var[0];
             local.coll_arr[local.coll_arr_len,1] = x;
@@ -52,37 +62,40 @@ if do_coll_var && grav_var > 0
             }
             if local.coll_arr[local.c,0] == -1
             { local.zdist_new = p3dc_ray_still_scr(global.room_coll,local.xtmp,local.ytmp,z+coll_var[1],0,0,-1); } // p3dc_ray_split_scr
-            else if local.coll_arr[local.c,4] != 0
-            {
-                // Seems to set variables for use in next function? So weird.
-                p3dc_set_modrot_scr(0,0,local.coll_arr[local.c,4]);
-                // I kid you not, THE EXAMPLE CODE IS OUTDATED
-                local.zdist_new = 
-                p3dc_ray_rot_scr
-                (
-                    local.coll_arr[local.c,0],
-                    local.coll_arr[local.c,1],
-                    local.coll_arr[local.c,2],
-                    local.coll_arr[local.c,3],
-                    local.xtmp,local.ytmp,
-                    z+coll_var[1],
-                    0,0,-1,0,0,local.coll_arr[local.c,4]
-                );
-            }
             // Don't check float walls
             else if local.coll_arr[local.c,0] != -2
             {
-                local.zdist_new = 
-                p3dc_ray_scr
-                (
-                    local.coll_arr[local.c,0],
-                    local.coll_arr[local.c,1],
-                    local.coll_arr[local.c,2],
-                    local.coll_arr[local.c,3],
-                    local.xtmp,local.ytmp,
-                    z+coll_var[1],
-                    0,0,-1
-                );
+                if local.coll_arr[local.c,4] != 0
+                {
+                    // Seems to set variables for use in next function? So weird.
+                    p3dc_set_modrot_scr(0,0,local.coll_arr[local.c,4]);
+                    // I kid you not, THE EXAMPLE CODE IS OUTDATED
+                    local.zdist_new = 
+                    p3dc_ray_rot_scr
+                    (
+                        local.coll_arr[local.c,0],
+                        local.coll_arr[local.c,1],
+                        local.coll_arr[local.c,2],
+                        local.coll_arr[local.c,3],
+                        local.xtmp,local.ytmp,
+                        z+coll_var[1],
+                        0,0,-1,0,0,local.coll_arr[local.c,4]
+                    );
+                }
+                else
+                {
+                    local.zdist_new = 
+                    p3dc_ray_scr
+                    (
+                        local.coll_arr[local.c,0],
+                        local.coll_arr[local.c,1],
+                        local.coll_arr[local.c,2],
+                        local.coll_arr[local.c,3],
+                        local.xtmp,local.ytmp,
+                        z+coll_var[1],
+                        0,0,-1
+                    );
+                }
             }
             if local.zdist_new < local.zdist { floor_mask_var = p3dc_get_lastmask_scr(); }
             local.zdist = min(local.zdist,local.zdist_new);
@@ -141,6 +154,7 @@ if local.xspd != 0 || local.yspd != 0 || local.zspd != 0
                 // If collided, slide
                 if p3dc_check_split_scr(coll_var[0],x+local.xspd,y+local.yspd,z+local.zspd+0.01) || local.ray_coll
                 {
+                    did_coll_var = true;
                     // X Speed
                     if local.xspd != 0
                     {
@@ -199,6 +213,7 @@ if local.xspd != 0 || local.yspd != 0 || local.zspd != 0
                 // If collided and not inside, slide
                 else if !fall_temp_var
                 {
+                    did_coll_var = true;
                     // X Speed
                     if local.xspd != 0
                     {
@@ -272,6 +287,7 @@ if local.xspd != 0 || local.yspd != 0 || local.zspd != 0
                     0,0,0,0,0,local.coll_arr[local.c,4]
                 )
                 {
+                    did_coll_var = true;
                     // X Speed
                     if local.xspd != 0
                     {
@@ -382,6 +398,7 @@ if local.xspd != 0 || local.yspd != 0 || local.zspd != 0
                     local.coll_arr[local.c,0],local.coll_arr[local.c,1],local.coll_arr[local.c,2],local.coll_arr[local.c,3]
                 )
                 {
+                    did_coll_var = true;
                     // X Speed
                     if local.xspd != 0
                     {
@@ -463,14 +480,16 @@ if local.xspd != 0 || local.yspd != 0 || local.zspd != 0
                 }
             }
             // If the object is still moving, continue to check.
-            if local.xspd != 0 || local.yspd != 0 || local.zspd != 0
-            { continue; }
-            // Otherwise, GET OUT
-            break;
+            if local.xspd == 0 && local.yspd == 0 && local.zspd == 0
+            { local.stop = true; break; }
         }
     }
+    did_slide_var = global.coll_prec_var && did_coll_var && !local.stop
     // Add motion
-    x += local.xspd;
-    y += local.yspd;
-    z += local.zspd;
+    if !local.stop
+    {
+        x += local.xspd;
+        y += local.yspd;
+        z += local.zspd;
+    }
 }

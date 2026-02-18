@@ -9,6 +9,7 @@ object_set_visible(argument0,true);
 // Create
 object_event_add
 (argument0,ev_create,0,'
+    event_inherited();
     kira_spr_var = execute_file(main_directory_const+"\SPR\UI\kira_spr.gml",main_directory_const+"\SPR\UI\kira_spr.png");
     kira_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\kira_snd.wav");
     amg_vid_var = main_directory_const+"\VID\UI\amg_silent_vid.wmv";
@@ -25,9 +26,15 @@ object_event_add
     image_yscale = 0.01;
     image_alpha = 0;
     shadow_off_var = 4;
-    alarm_len_var = 6;
-    set_alarm_scr(3,240);
+    
+    state_var = 0;
+    
     inst_var = fmod_snd_play_scr(kira_snd_var);
+    fade_alpha_var = 0;
+    // Alarms
+    alarm_len_var = 6;
+    alarm_ini_scr();
+    set_alarm_scr(3,240);
 ');
 // Room End
 object_event_add

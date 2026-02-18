@@ -12,6 +12,7 @@ object_event_add
     event_inherited();
     alpha_base_var = 1;
     alarm_len_var = 1;
+    alarm_ini_scr();
     alarm_arr[0,2] = true;
 ');
 // Step Event
@@ -32,7 +33,9 @@ object_event_add
     // Reflection handling (more complex for billboarded sprites)
     local.xtmp = x;
     local.ytmp = y;
-    local.ztmp = z;
+    
+    
+    
     if global.reflect_var
     {
         switch (global.reflect_axis_var)

@@ -5,7 +5,7 @@ mp_grid_clear_rectangle(global.float_grid,0,0,global.rm_size_var,global.rm_size_
 local.radius = (global.mon_coll[2]/2)-1;
 with (floor_par_obj)
 {
-    if (solid_var == 1 || solid_var == mon_solid_const || solid_var == float_solid_const)  && !no_grid_var
+    if (solid_var == 1 || solid_var == mon_solid_const || solid_var == float_solid_const)  && grid_var
     {
         mp_grid_clear_rectangle
         (
@@ -30,7 +30,7 @@ with (floor_par_obj)
 }
 with (wall_par_obj)
 {
-    if (solid_var == 1 || solid_var == mon_solid_const || solid_var == float_solid_const)  && !no_grid_var
+    if (solid_var == 1 || solid_var == mon_solid_const || solid_var == float_solid_const)  && grid_var
     {
         local.width = w_var/2;
         local.xtmp = local.radius+abs(lengthdir_y(local.width,direction));
@@ -58,7 +58,7 @@ with (wall_par_obj)
 }
 with (prop_par_obj)
 {
-    if (solid_var == 1 || solid_var == mon_solid_const || solid_var == float_solid_const)  && !no_grid_var
+    if (solid_var == 1 || solid_var == mon_solid_const || solid_var == float_solid_const)  && grid_var
     {
         switch type_var
         {
@@ -176,51 +176,79 @@ with (prop_par_obj)
 }
 // Main
 local.addextra = false;
-execute_string
-('
-    if global.'+local.rm_name+'_coll == 0
+if !variable_global_exists(local.rm_name+"_coll")
+{
+    execute_string("
+        globalvar "+local.rm_name+"_coll
+        globalvar "+local.rm_name+"_player_coll
+        globalvar "+local.rm_name+"_mon_coll
+        globalvar "+local.rm_name+"_coll
+    ")
+    variable_global_set("global."+local.rm_name+"_coll",p3dc_begin_mdl_scr());
+    // Add floors
+    with (floor_par_obj)
     {
-        global.'+local.rm_name+'_coll = p3dc_begin_mdl_scr();
-        // Add floors
-        with (floor_par_obj)
+        if solid_var
         {
-            if solid_var
-            {
-                p3dc_set_trimask_scr(mask_var);
-                p3dc_add_floor_scr
-                (
-                    x-(w_var/2),
-                    y-(h_var/2),
-                    z,
-                    x+(w_var/2),
-                    y+(h_var/2),
-                    z
-                );
-                p3dc_set_trimask_scr(mask_basic_const);
-            }
+            p3dc_set_trimask_scr(mask_var);
+            p3dc_add_floor_scr
+            (
+                x-(w_var/2),
+                y-(h_var/2),
+                z,
+                x+(w_var/2),
+                y+(h_var/2),
+                z
+            );
+            p3dc_set_trimask_scr(mask_basic_const);
         }
-        // Add ceilings
-        with (ceil_par_obj)
+    }
+    // Add ceilings
+    with (ceil_par_obj)
+    {
+        if solid_var
         {
-            if solid_var
-            {
-                p3dc_set_trimask_scr(mask_var);
-                p3dc_add_floor_scr
-                (
-                    x-(w_var/2),
-                    y-(h_var/2),
-                    z,
-                    x+(w_var/2),
-                    y+(h_var/2),
-                    z
-                );
-                p3dc_set_trimask_scr(mask_basic_const);
-            }
+            p3dc_set_trimask_scr(mask_var);
+            p3dc_add_floor_scr
+            (
+                x-(w_var/2),
+                y-(h_var/2),
+                z,
+                x+(w_var/2),
+                y+(h_var/2),
+                z
+            );
+            p3dc_set_trimask_scr(mask_basic_const);
         }
-        // Add walls
+    }
+    // Add walls
+    with (wall_par_obj)
+    {
+        if solid_var == 1
+        {
+            p3dc_set_trimask_scr(mask_var);
+            p3dc_add_wall_scr
+            (
+                x-lengthdir_y(w_var/2,direction),
+                y-lengthdir_x(w_var/2,direction),
+                z+h_var,
+                x+lengthdir_y(w_var/2,direction),
+                y+lengthdir_x(w_var/2,direction),
+                z
+            );
+            p3dc_set_trimask_scr(mask_basic_const);
+        }
+        else if solid_var == float_solid_const { local.addextra = true; }
+    }
+    // End
+    p3dc_end_mdl_scr();
+    // Add extra
+    if local.addextra
+    {
+        variable_global_set("global."+local.rm_name+"_player_coll",p3dc_begin_mdl_scr());
         with (wall_par_obj)
         {
-            if solid_var == 1
+            if solid_var == player_solid_const
             {
                 p3dc_set_trimask_scr(mask_var);
                 p3dc_add_wall_scr
@@ -234,83 +262,59 @@ execute_string
                 );
                 p3dc_set_trimask_scr(mask_basic_const);
             }
-            else if solid_var == float_solid_const { local.addextra = true; }
         }
-        // End
         p3dc_end_mdl_scr();
-        // Add extra
-        if local.addextra
+        variable_global_set("global."+local.rm_name+"_mon_coll",p3dc_begin_mdl_scr());
+        with (wall_par_obj)
         {
-            global.'+local.rm_name+'_player_coll = p3dc_begin_mdl_scr();
-            with (wall_par_obj)
+            if solid_var == mon_solid_const
             {
-                if solid_var == player_solid_const
-                {
-                    p3dc_set_trimask_scr(mask_var);
-                    p3dc_add_wall_scr
-                    (
-                        x-lengthdir_y(w_var/2,direction),
-                        y-lengthdir_x(w_var/2,direction),
-                        z+h_var,
-                        x+lengthdir_y(w_var/2,direction),
-                        y+lengthdir_x(w_var/2,direction),
-                        z
-                    );
-                    p3dc_set_trimask_scr(mask_basic_const);
-                }
+                p3dc_set_trimask_scr(mask_var);
+                p3dc_add_wall_scr
+                (
+                    x-lengthdir_y(w_var/2,direction),
+                    y-lengthdir_x(w_var/2,direction),
+                    z+h_var,
+                    x+lengthdir_y(w_var/2,direction),
+                    y+lengthdir_x(w_var/2,direction),
+                    z
+                );
+                p3dc_set_trimask_scr(mask_basic_const);
             }
-            p3dc_end_mdl_scr();
-            global.'+local.rm_name+'_mon_coll = p3dc_begin_mdl_scr();
-            with (wall_par_obj)
-            {
-                if solid_var == mon_solid_const
-                {
-                    p3dc_set_trimask_scr(mask_var);
-                    p3dc_add_wall_scr
-                    (
-                        x-lengthdir_y(w_var/2,direction),
-                        y-lengthdir_x(w_var/2,direction),
-                        z+h_var,
-                        x+lengthdir_y(w_var/2,direction),
-                        y+lengthdir_x(w_var/2,direction),
-                        z
-                    );
-                    p3dc_set_trimask_scr(mask_basic_const);
-                }
-            }
-            p3dc_end_mdl_scr();
-            global.'+local.rm_name+'_float_coll = p3dc_begin_mdl_scr();
-            with (wall_par_obj)
-            {
-                if solid_var == float_solid_const
-                {
-                    p3dc_set_trimask_scr(mask_var);
-                    p3dc_add_wall_scr
-                    (
-                        x-lengthdir_y(w_var/2,direction),
-                        y-lengthdir_x(w_var/2,direction),
-                        z+h_var,
-                        x+lengthdir_y(w_var/2,direction),
-                        y+lengthdir_x(w_var/2,direction),
-                        z
-                    );
-                    p3dc_set_trimask_scr(mask_basic_const);
-                }
-            }
-            p3dc_end_mdl_scr();
         }
-        else
+        p3dc_end_mdl_scr();
+        variable_global_set("global."+local.rm_name+"_float_coll",p3dc_begin_mdl_scr());
+        with (wall_par_obj)
         {
-            global.'+local.rm_name+'_player_coll = -1;
-            global.'+local.rm_name+'_mon_coll = -1;
-            global.'+local.rm_name+'_float_coll = -1;
+            if solid_var == float_solid_const
+            {
+                p3dc_set_trimask_scr(mask_var);
+                p3dc_add_wall_scr
+                (
+                    x-lengthdir_y(w_var/2,direction),
+                    y-lengthdir_x(w_var/2,direction),
+                    z+h_var,
+                    x+lengthdir_y(w_var/2,direction),
+                    y+lengthdir_x(w_var/2,direction),
+                    z
+                );
+                p3dc_set_trimask_scr(mask_basic_const);
+            }
         }
+        p3dc_end_mdl_scr();
     }
-    global.room_coll = global.'+local.rm_name+'_coll;
-    global.room_player_coll = global.'+local.rm_name+'_player_coll;
-    global.room_mon_coll = global.'+local.rm_name+'_mon_coll;
-    global.room_float_coll = global.'+local.rm_name+'_float_coll;
-');
+    else
+    {
+        variable_global_set("global."+local.rm_name+"_player_coll",-1);
+        variable_global_set("global."+local.rm_name+"_mon_coll",-1);
+        variable_global_set("global."+local.rm_name+"_float_coll",-1);
+    }
+}
+global.room_coll = variable_global_get("global."+local.rm_name+"_coll");
+global.room_player_coll = variable_global_get("global."+local.rm_name+"_player_coll");
+global.room_mon_coll = variable_global_get("global."+local.rm_name+"_mon_coll");
+global.room_float_coll = variable_global_get("global."+local.rm_name+"_float_coll");
+// Split
 local.cell = ceil(global.rm_size_var/32);
 local.size = local.cell*32;
 p3dc_split_mdl_scr(global.room_coll,local.size,local.size,local.cell,local.cell,6);

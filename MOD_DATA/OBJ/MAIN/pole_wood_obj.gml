@@ -13,7 +13,7 @@ global.pole_wood_coll[3] = 2;
 global.pole_wood_coll[0] = prop_to_coll_scr(2,'',global.pole_wood_coll[2],global.pole_wood_coll[3],global.pole_wood_coll[1]);
 // Create event
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
     store_tex_var = wood_01_bg_tex;
     event_inherited();
     solid_var = true;
@@ -26,4 +26,4 @@ object_event_add
     coll_var[1] = global.pole_wood_coll[1];
     coll_var[2] = global.pole_wood_coll[2];
     coll_var[3] = global.pole_wood_coll[3];
-");
+');

@@ -13,6 +13,7 @@ object_event_add
     image_alpha = 0;
     // Alarm
     alarm_len_var = 2;
+    alarm_ini_scr();
 ');
 // Step Event
 object_event_add

@@ -17,8 +17,6 @@ room_set_code
     global.spawn_arr[0,1] = 208;    // Y
     global.spawn_arr[0,2] = 0;      // Z
     global.spawn_arr[0,3] = 0;      // Angle (0 is right, 90 is up, etc)
-    // Marks (Slime spawners)
-    global.mark_len_var = 0;
     // 3D Draw
     d3d_start();
     global.draw_3d_var = true;

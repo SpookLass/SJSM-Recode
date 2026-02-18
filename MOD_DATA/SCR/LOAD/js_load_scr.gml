@@ -13,9 +13,7 @@ while file_exists(vanilla_directory_const+"\TEX\SCARE_"+local.index_str+'.png')
     if argument0 { show_message("Added jumpscare "+local.index_str+" at index "+string(global.js_len_var)); }
     global.js_len_var += 1;
     // Draw
-    draw_clear_alpha(c_black,0);
-    draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading jumpscares ("+string(local.index)+")...",1,1,0);
-    screen_refresh();
+    draw_load_scr("Loading jumpscares ("+string(local.index)+")...");
     // Index
     local.index += 1;
     if local.index < 10 { local.index_str = '0'+string(local.index); }
@@ -39,9 +37,7 @@ while file_exists(vanilla_directory_const+"\EM\TEX\JS_"+local.index_str+'.png')
     if argument0 { show_message("Added EM jumpscare "+local.index_str+" at index "+string(global.js_len_var)); }
     global.js_len_var += 1;
     // Draw
-    draw_clear_alpha(c_black,0);
-    draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading endless jumpscares ("+string(local.index)+")...",1,1,0);
-    screen_refresh();
+    draw_load_scr("Loading endless jumpscares ("+string(local.index)+")...");
     // Index
     local.index += 1;
     if local.index < 10 { local.index_str = '0'+string(local.index); }
@@ -72,6 +68,4 @@ global.js_snd_arr[17] = main_directory_const+'\SND\MON\stab_em_06_snd.wav';
 global.js_snd_arr[18] = main_directory_const+'\SND\MON\stab_em_07_snd.wav';
 global.js_snd_arr[19] = main_directory_const+'\SND\MON\stab_em_08_snd.wav';
 // Draw
-draw_clear_alpha(c_black,0);
-draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loaded jumpscares!",1,1,0);
-screen_refresh();
+draw_load_scr("Loaded jumpscares!");

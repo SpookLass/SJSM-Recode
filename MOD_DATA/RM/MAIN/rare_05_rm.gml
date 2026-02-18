@@ -22,8 +22,6 @@ room_set_code
     global.spawn_arr[2,1] = 496;
     global.spawn_arr[2,2] = 0;
     global.spawn_arr[2,3] = 180;
-    // Mark
-    global.mark_len_var = 0;
     // 3D Draw
     d3d_start();
     global.draw_3d_var = true;
@@ -100,24 +98,14 @@ room_instance_add(argument0,608,480,wall_2high_vert_obj);
 room_instance_add(argument0,608,448,wall_2high_vert_obj);
 room_instance_add(argument0,608,416,wall_2high_vert_obj);
 room_instance_add(argument0,608,384,wall_2high_vert_obj);
-// Props
-room_instance_add(argument0,292,520,table_obj);
-room_instance_add(argument0,240,512,chair_east_obj);
-room_instance_add(argument0,292,508,fan_obj);
-room_instance_add(argument0,292,508,table_obj);
-// Phone
-room_instance_add(argument0,272,512,phone_trig_obj);
-room_instance_add(argument0,292,517,phone_obj);
 // Map
-room_instance_add(argument0,608,448,map_obj);
-
-
+//room_instance_add(argument0,608,448,map_obj);
 // Unused
-room_instance_add(argument0,0,0,map_control);
+/*room_instance_add(argument0,0,0,map_control);
 room_instance_add(argument0,0,-16,map_mini_01);
 room_instance_add(argument0,160,80,map_mini_02);
 room_instance_add(argument0,32,48,map_mini_03);
 room_instance_add(argument0,64,144,map_mini_04);
 room_instance_add(argument0,96,48,map_mini_05);
 room_instance_add(argument0,176,176,map_mini_06);
-room_instance_add(argument0,224,16,map_mini_07);
+room_instance_add(argument0,224,16,map_mini_07);*/

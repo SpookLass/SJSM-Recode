@@ -16,7 +16,7 @@ object_event_add
     h_var = 32;
     tex_w_var = 1;
     tex_h_var = 1;
-    if store_tex_var == 0
+    if !variable_local_exists("store_tex_var")
     { store_tex_var = -1; }
     mask_var = -1;
     tex_var = store_tex_var;

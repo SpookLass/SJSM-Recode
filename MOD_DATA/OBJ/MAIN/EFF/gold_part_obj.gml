@@ -15,11 +15,13 @@ object_event_add
     l_var = 3;
     h_var = 3;
     part_len_var = 8;
+    part_ini_scr();
     part_delay_var = 15;
     part_time_var = 90;
     part_frick_var = 0.002;
     part_turn_var = 2;
     alarm_len_var = 1;
+    alarm_ini_scr();
     set_alarm_scr(0,part_delay_var);
     image_blend = make_color_rgb(224,208,142);
 ');
@@ -40,7 +42,7 @@ object_event_add
             0,0,
             part_time_var
         );
-        if local.part > 0
+        if local.part >= 0
         {
             // Yaw add direction
             part_arr[local.part,18] = random_range(-part_turn_var,part_turn_var);

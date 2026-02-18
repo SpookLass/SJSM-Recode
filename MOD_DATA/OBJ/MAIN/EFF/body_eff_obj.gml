@@ -28,6 +28,7 @@ object_event_add
     strobe_chance_var = 3;
     // Alarm
     alarm_len_var = 2;
+    alarm_ini_scr();
     // Start
     event_perform(ev_alarm,0);
     if strobe_var { set_alarm_scr(1,strobe_rate_var); }

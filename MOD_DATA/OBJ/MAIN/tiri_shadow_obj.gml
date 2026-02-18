@@ -30,6 +30,7 @@ object_event_add
     weapon_var = true;
     weapon_alarm_var = 6;
     alarm_len_var = 1;
+    alarm_ini_scr();
 ');
 // Weapon
 object_event_add

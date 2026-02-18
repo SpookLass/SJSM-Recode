@@ -35,6 +35,7 @@ object_event_add
     snd_den_var = 2;
     snd_alarm_min_var = 80;
     snd_alarm_max_var = 240;
+    snd_dist_min_var = 0;
     snd_dist_max_var = 600;
     eff_snd_len_var = 4;
     // Translations
@@ -57,7 +58,7 @@ object_event_add
     }
     local.sub = string_replace(ini_read_string("SUB","para","SUB_para"),"@n",name_var);
     for (local.i=0; local.i<snd_len_var; local.i+=1)
-    { snd_arr[local.i,1] = local.sub; }
+    { snd_arr[local.i,1] = local.sub; snd_arr[local.i,2] = false; }
     wake_snd_var[2] = local.sub;
     ini_close();
     type_var = 1;
@@ -125,6 +126,7 @@ object_event_add
     state_eff_max_var = 60;
     // Assets
         // Search for existing assets to save memory
+    local.loaded = false;
     with object_index
     {
         if id != other.id && object_index == other.object_index
@@ -162,7 +164,7 @@ object_event_add
         eff_snd_arr[2] = fmod_snd_add_scr(main_directory_const+"\SND\MON\para_eff_03_snd.wav");
         eff_snd_arr[3] = fmod_snd_add_scr(main_directory_const+"\SND\MON\dl_eff_03_snd.wav");
         for (local.i=0; local.i<eff_snd_len_var; local.i+=1;)
-        { fmod_snd_set_group_scr(eff_snd_arr[local.i,0],snd_group_mon_const); }
+        { fmod_snd_set_group_scr(eff_snd_arr[local.i],snd_group_mon_const); }
         wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\para_wake_snd.wav",global.wake_3d_var);
         main_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\para_mus_snd.mp3");
         fmod_snd_set_group_scr(main_mus_snd_var,snd_group_mus_const);
@@ -201,7 +203,7 @@ object_event_add
             do_hurt_var = 1;
             check_all_var = true;
             check_path_var = true;
-            atk_range_var = coll_var[2];
+            atk_range_var = global.mon_coll[2];
             // Autobrake
             autobrake_var = true;
             autobrake_spd_var = 1;
@@ -263,6 +265,7 @@ object_event_add
     { delay_var = max(0,(delay_dist_var/delay_spd_var)-(32/state_spd_var[0])); }
     // Alarms
     alarm_len_var = 10;
+    alarm_ini_scr();
     // Defaults
     spd_base_var = state_spd_var[0];
     spr_var = state_spr_var[0]

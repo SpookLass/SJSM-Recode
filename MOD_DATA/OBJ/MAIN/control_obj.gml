@@ -9,7 +9,9 @@ object_set_visible(argument0,true);
 // Create
 object_event_add
 (argument0,ev_create,0,'
+    event_inherited();
     alarm_len_var = 1;
+    alarm_ini_scr();
     window_x_var = window_get_x();
     window_y_var = window_get_y();
     window_w_var = window_get_width();
@@ -96,7 +98,7 @@ object_event_add
     {
         if !global.debug_unlock_var
         {
-            local.pass = "spooklass"; //string_lower(string_letters(get_string("Password Please","")));
+            local.pass = string_lower(string_letters(get_string("Password Please","")));
             if local.pass == "birdbonanza" || local.pass == "yoshicraft" || local.pass == "spooklass" || local.pass == "everlastingmaya"
             || local.pass == "bird" || local.pass == "yoshi" || local.pass == "lass" || local.pass == "maya"
             || local.pass == "kira" || local.pass == "lag" || local.pass == "poi" || local.pass == "open"

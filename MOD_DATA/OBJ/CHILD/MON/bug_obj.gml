@@ -17,6 +17,7 @@ object_event_add
     snd_alarm_max_var = 240;
     snd_dist_max_var = 800;
     loop_snd_var[0] = true;
+    loop_snd_dist_min_var = 600;
     loop_snd_dist_max_var = 600;
     // Translations
     ini_open(global.lang_var);
@@ -47,7 +48,7 @@ object_event_add
     loop_snd_var[2] = string_replace(ini_read_string("SUB","bug_loop","SUB_bug_loop"),"@n",name_var);
     local.sub = string_replace(ini_read_string("SUB","bug","SUB_bug"),"@n",name_var);
     for (local.i=0; local.i<snd_len_var; local.i+=1)
-    { snd_arr[local.i,1] = local.sub; }
+    { snd_arr[local.i,1] = local.sub; snd_arr[local.i,2] = false; }
     ini_close();
     // Main
     type_var = 1;
@@ -106,6 +107,7 @@ object_event_add
     mus_prio_var = theme_mus_prio_const;
     // Assets
         // Search for existing assets to save memory
+    local.loaded = false;
     with object_index
     {
         if id != other.id && object_index == other.object_index
@@ -165,7 +167,7 @@ object_event_add
             bod_len_var = 10;
             do_wiggle_var = true;
             spd_anim_var = true;
-            atk_range_var = coll_var[2];
+            atk_range_var = global.mon_coll[2];
             // Autobrake
             autobrake_var = true;
             autobrake_spd_var = 0.5;
@@ -230,6 +232,7 @@ object_event_add
         }
     }
     alarm_len_var = 10;
+    alarm_ini_scr();
     local.follow = id;
     for (local.i=0; local.i<bod_len_var; local.i+=1;)
     {

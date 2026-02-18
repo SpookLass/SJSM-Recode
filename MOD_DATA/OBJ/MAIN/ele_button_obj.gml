@@ -25,6 +25,7 @@ object_event_add
     direction = 180;
     // Alarms
     alarm_len_var = 3;
+    alarm_ini_scr();
     delay_var = 120;
     delay_fast_var = 30
     snd_alarm_var = 1800/11;

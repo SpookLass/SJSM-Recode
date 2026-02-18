@@ -1,3 +1,4 @@
+draw_load_scr("Loading collisions...");
 // Initialize 3D functions
 p3dc_ini_scr();
 // Room (load bearing???)
@@ -112,6 +113,4 @@ global.float_grid = mp_grid_create(0,0,global.rm_size_var/global.grid_snap_var,g
 // Reset
 p3dc_set_trimask_scr(mask_basic_const);
 // Draw
-draw_clear_alpha(c_black,0);
-draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loaded collisions!",1,1,0);
-screen_refresh();
+draw_load_scr("Loaded collisions!");

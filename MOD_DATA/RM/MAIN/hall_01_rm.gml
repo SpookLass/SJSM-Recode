@@ -23,6 +23,7 @@ room_set_code
     global.spawn_arr[1,3] = 90;
     // Marks (Slime spawners)
     global.mark_len_var = 3;
+    mark_create_scr();
     // Mark 0
     global.mark_arr[0,0] = 240;     // X
     global.mark_arr[0,1] = 144;     // Y

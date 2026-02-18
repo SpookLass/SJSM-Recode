@@ -20,20 +20,6 @@ room_set_code
     global.spawn_arr[1,1] = 112;
     global.spawn_arr[1,2] = 0;
     global.spawn_arr[1,3] = 180;
-    // Marks (Slime spawners)
-    global.mark_len_var = 4;
-    global.mark_arr[0,0] = 152;
-    global.mark_arr[0,1] = 80;
-    global.mark_arr[0,2] = 0;
-    global.mark_arr[1,0] = 208;
-    global.mark_arr[1,1] = 48;
-    global.mark_arr[1,2] = 0;
-    global.mark_arr[2,0] = 256;
-    global.mark_arr[2,1] = 136;
-    global.mark_arr[2,2] = 0;
-    global.mark_arr[3,0] = 344;
-    global.mark_arr[3,1] = 112;
-    global.mark_arr[3,2] = 0;
     // 3D Draw
     d3d_start();
     global.draw_3d_var = true;

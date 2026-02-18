@@ -10,12 +10,55 @@ d3d_set_hidden(false);
 draw_set_font(main_font);
 splash_set_close_button(false);
 global.game_spd_var = 1;
+global.draw_3d_var = false;
+global.res_override_var = false;
+global.js_override_var = false;
+global.note_override_var = false;
+globalvar float_grid;
+globalvar phys_grid;
+globalvar input_arr;
+globalvar input_prev_arr;
+globalvar input_key_arr;
+globalvar input_menu_hold_arr;
+globalvar spawn_arr;
+global.spawn_len_var = -1;
+global.spawn_len_extra_var = -1;
+global.mark_len_var = -1;
+global.js_mark_len_var = -1;
+global.rm_count_var = 0;
+global.input_len_var = 24;
+global.debug_var = false;
+global.last_time_var = current_time;
+global.reflect_var = false;
+global.reflect_pos_var = 0;
+global.reflect_axis_var = 0;
+global.no_mon_var = false;
+global.mon_fail_var = 0;
+global.hide_hud_var = false;
+global.hide_debug_var = false;
+global.pause_var = false;
+global.mouse_free_var = false;
+global.debug_unlock_var = true;
+for (local.i=0; local.i<8; local.i+=1;)
+{
+    input_menu_hold_arr[0,local.i] = 0;
+    input_menu_hold_arr[1,local.i] = 0;
+    input_menu_hold_arr[2,local.i] = 0;
+    input_menu_hold_arr[3,local.i] = 0;
+}
+// Lists
+global.mon_list = ds_list_create();
+ds_list_clear(global.mon_list);
+global.mon_spawn_list = ds_list_create();
+ds_list_clear(global.mon_spawn_list);
+global.mon_curr_list = ds_list_create();
+ds_list_clear(global.mon_curr_list);
 // Draw Text
 draw_set_halign(fa_center); draw_set_valign(fa_bottom);
 set_automatic_draw(false);
 // execute_file(main_directory_const+"\SCR\LOAD\scr_load_scr.gml");
 joy_ini_scr();
-sf_ini_scr();
+if gamemaker_version == 800 { sf_ini_scr(); }
 execute_file(main_directory_const+"\SCR\LOAD\set_load_scr.gml");
 execute_file(main_directory_const+"\SCR\LOAD\mod_load_01_scr.gml");
 execute_file(main_directory_const+"\SCR\LOAD\spr_load_scr.gml");
@@ -24,55 +67,24 @@ execute_file(main_directory_const+"\SCR\LOAD\snd_load_scr.gml");
 execute_file(main_directory_const+"\SCR\LOAD\mdl_load_scr.gml");
 execute_file(main_directory_const+"\SCR\LOAD\coll_load_scr.gml");
 execute_file(main_directory_const+"\SCR\LOAD\part_load_scr.gml");
-shader_load_scr();
+if gamemaker_version == 800 { shader_load_scr(); }
 execute_file(main_directory_const+"\SCR\LOAD\obj_load_scr.gml");
 execute_file(main_directory_const+"\SCR\LOAD\rm_load_scr.gml");
 execute_file(main_directory_const+"\SCR\LOAD\zone_load_scr.gml",true);
 execute_file(main_directory_const+"\SCR\LOAD\tex_load_scr.gml");
 execute_file(main_directory_const+"\SCR\LOAD\js_load_scr.gml");
-// Temporary Specimen Spawn List
-global.mon_list = ds_list_create();
-ds_list_clear(global.mon_list);
-ds_list_add(global.mon_list,gel_obj); // Story
-ds_list_add(global.mon_list,bug_obj);
-ds_list_add(global.mon_list,ringu_obj);
-ds_list_add(global.mon_list,bab_obj);
-ds_list_add(global.mon_list,pup_obj);
-ds_list_add(global.mon_list,flesh_obj);
-ds_list_add(global.mon_list,dl_obj);
-ds_list_add(global.mon_list,eel_obj);
-ds_list_add(global.mon_list,para_obj);
-ds_list_add(global.mon_list,fd_obj);
-ds_list_add(global.mon_list,killer_obj);
-ds_list_add(global.mon_list,stem_obj); // Karamari (OG Endless)
-ds_list_add(global.mon_list,patient_obj);
-ds_list_add(global.mon_list,gc_obj);
-ds_list_add(global.mon_list,bekka_obj);
-ds_list_add(global.mon_list,real_ringu_obj); // Endless
-ds_list_add(global.mon_list,tiri_obj);
-ds_list_add(global.mon_list,lisa_obj);
-ds_list_add(global.mon_list,otto_obj);
-ds_list_add(global.mon_list,spooper_obj);
-ds_list_add(global.mon_list,wf_obj);
-// ds_list_add(global.mon_list,brain_chase_obj);
-if file_exists(working_directory+"\Karamari_Hospital\KH.exe") // Karamari
-{
-    ds_list_add(global.mon_list,sg_obj);
-    ds_list_add(global.mon_list,bodybag_obj);
-}
-if file_exists(working_directory+"\The_Doll_House\SDH.exe") // Dollhouse
-{
-    ds_list_add(global.mon_list,wc_obj);
-    ds_list_add(global.mon_list,clown_obj);
-    ds_list_add(global.mon_list,hk_obj);
-    ds_list_add(global.mon_list,frenzy_obj);
-}
-global.mon_spawn_list = ds_list_create();
-ds_list_clear(global.mon_spawn_list);
-global.mon_curr_list = ds_list_create();
-ds_list_clear(global.mon_curr_list);
+execute_file(main_directory_const+"\SCR\LOAD\menu_load_scr.gml");
 // Load Mods
 execute_file(main_directory_const+"\SCR\LOAD\mod_load_02_scr.gml");
+// In case mods load more controls
+for (local.i=0; local.i<global.input_len_var; local.i+=1)
+{
+    for (local.j=0; local.j<8; local.j+=1;)
+    {
+        global.input_arr[local.i,local.j] = false;
+        global.input_prev_arr[local.i,local.j] = 0;
+    }
+}
 // Gay
 global.pride_len_var = 30;
 global.pride_arr[0] = pride_color_obj;

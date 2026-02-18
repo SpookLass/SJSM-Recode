@@ -1,7 +1,7 @@
 // Builtin Variables
 object_set_depth(argument0,1);
 object_set_mask(argument0,noone);
-object_set_parent(argument0,par_obj);
+object_set_parent(argument0,par_3d_obj);
 object_set_persistent(argument0,false);
 object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
@@ -17,6 +17,7 @@ object_event_add
     mult_var = 12;
     store_tex_var = water_bg_tex;
     tex_var = store_tex_var;
+    time_var = 0;
 ');
 // Step Event
 object_event_add

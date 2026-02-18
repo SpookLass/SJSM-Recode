@@ -11,6 +11,7 @@ object_event_add
 (argument0,ev_create,1,'
     // Sound
     snd_len_var = 4;
+    snd_dist_min_var = 0;
     snd_dist_max_var = 500;
     snd_alarm_min = 90;
     snd_alarm_max = 240;
@@ -41,9 +42,9 @@ object_event_add
     local.sub_01 = string_replace(ini_read_string("SUB","gc","SUB_gc"),"@n",name_var);
     local.sub_02 = string_replace(ini_read_string("SUB","gc_glitch","SUB_gc_glitch"),"@n",name_var);
     for (local.i=0; local.i<dmg_snd_len_var; local.i+=1)
-    { dmg_snd_arr[local.i,1] = local.sub_01; }
+    { dmg_snd_arr[local.i,1] = local.sub_01; dmg_snd_arr[local.i,2] = false; }
     for (local.i=0; local.i<snd_len_var; local.i+=1)
-    { snd_arr[local.i,1] = local.sub_02; }
+    { snd_arr[local.i,1] = local.sub_02; snd_arr[local.i,2] = false; }
     ini_close();
     // Variables
     type_var = 0;
@@ -65,6 +66,7 @@ object_event_add
     mus_prio_var = theme_mus_prio_const;
     // Assets
         // Search for existing assets to save memory
+    local.loaded = false;
     with object_index
     {
         if id != other.id && object_index == other.object_index
@@ -301,6 +303,7 @@ object_event_add
     }
     // Alarms
     alarm_len_var = 14;
+    alarm_ini_scr();
     event_inherited();
     if upside_var { z_off_var = 24.5; } // 21.3
     do_snd_var = false;

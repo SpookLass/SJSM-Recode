@@ -15,7 +15,7 @@ if !fall_var && !fall_temp_var && on_floor_var && global.room_float_coll != -1
 // Check props
 with prop_par_obj
 {
-    if solid_var && coll_var[0] > 0
+    if solid_var
     {
         if direction != 0
         {

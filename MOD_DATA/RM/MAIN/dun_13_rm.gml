@@ -4,9 +4,9 @@ Argument 0: Room Variable (same for all rooms)
 // Spawn spots// Name
 room_set_code
 (
-    argument0,"
+    argument0,'
     ini_open(global.lang_var);
-    global.rm_name_var = ini_read_string('ROOM','dun','ROOM_dun')+' 13';
+    global.rm_name_var = ini_read_string("ROOM","dun","ROOM_dun")+" 13";
     ini_close();
     // Spawn
     global.spawn_len_var = 5;
@@ -30,15 +30,13 @@ room_set_code
     global.spawn_arr[4,1] = 416;
     global.spawn_arr[4,2] = 0;
     global.spawn_arr[4,3] = 90;
-    // Mark
-    global.mark_len_var = 0;
     // 3D Draw
     d3d_start();
     global.draw_3d_var = true;
     // Doors
     local.lock = lock_scr();
     local.gold = gold_scr(local.lock);
-    global.unlock_var = spawn_create_scr(true,local.lock);
+    spawn_create_scr(true,local.lock);
     // Bars
     if local.lock
     {
@@ -103,7 +101,7 @@ room_set_code
         instance_create(448,208,torch_north_obj);
         instance_create(448,304,torch_south_obj);
     }
-");
+');
 // Room settings
 room_set_width(argument0,1280);
 room_set_height(argument0,720);

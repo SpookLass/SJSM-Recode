@@ -30,8 +30,8 @@ object_event_add
     snd_arr[1,1] = ini_read_string("SUB","fd_02","SUB_fd_02"); snd_arr[1,2] = true;
     snd_arr[2,1] = ini_read_string("SUB","fd_03","SUB_fd_03"); snd_arr[2,2] = true;
     snd_arr[3,1] = ini_read_string("SUB","fd_04","SUB_fd_04"); snd_arr[3,2] = true;
-    wake_snd_var[2] = string_replace(ini_read_string("SUB","fd_wake","SUB_fd_wake"),"@n",name_var);
-    hurt_snd_var[2] = string_replace(ini_read_string("SUB","fd_hurt","SUB_fd_hurt"),"@n",name_var);
+    wake_snd_var[2] = string_replace(ini_read_string("SUB","fd_wake","SUB_fd_wake"),"@n",name_var); wake_snd_var[3] = false;
+    hurt_snd_var[2] = string_replace(ini_read_string("SUB","fd_hurt","SUB_fd_hurt"),"@n",name_var); hurt_snd_var[3] = false;
     ini_close();
     type_var = 0;
     spd_base_var = 0.8;
@@ -46,6 +46,7 @@ object_event_add
     snd_den_var = 2;
     snd_alarm_min_var = 240;
     snd_alarm_max_var = 420;
+    snd_dist_min_var = 0;
     snd_dist_max_var = 600;
     wake_snd_var[0] = true;
     hurt_snd_var = 4;
@@ -87,6 +88,7 @@ object_event_add
     hide_trig_var = true;
     hide_per_var = true;
     alarm_len_var = 9;
+    alarm_ini_scr();
     // Effect
     eff_dist_var = 32;
     eff_chance_var = 5;
@@ -107,6 +109,7 @@ object_event_add
     meat_den_var = 3;
     // Assets
         // Search for existing assets to save memory
+    local.loaded = false;
     with object_index
     {
         if id != other.id && object_index == other.object_index
@@ -157,7 +160,7 @@ object_event_add
             hurt_alarm_var = 18;
             hurt_tp_var = 2;
             stun_var = true;
-            atk_range_var = coll_var[2];
+            atk_range_var = global.mon_coll[2];
             // Silhouette
             sil_var = true;
             sil_type_var = 1; // Pure color

@@ -17,6 +17,7 @@ object_event_add
     z_end_var = -160;
     alarm_var = 587;
     alarm_len_var = 1;
+    alarm_ini_scr();
     z = z_start_var;
 ');
 // Room Start Event

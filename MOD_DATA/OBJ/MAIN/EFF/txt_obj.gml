@@ -28,6 +28,7 @@ object_event_add
     shadow_color_var = make_color_rgb(30,0,50);
     // Alarm
     alarm_len_var = 1;
+    alarm_ini_scr();
     set_alarm_scr(0,120);
 ');
 // Alarm 0 Event

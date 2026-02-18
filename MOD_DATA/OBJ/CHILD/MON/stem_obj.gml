@@ -21,6 +21,7 @@ object_event_add
     snd_den_var = 1;
     snd_alarm_min_var = 200;
     snd_alarm_max_var = 400;
+    snd_dist_min_var = 0;
     snd_dist_max_var = 600;
     // Translations
     ini_open(global.lang_var);
@@ -54,7 +55,7 @@ object_event_add
     }
     local.sub = string_replace(ini_read_string("SUB","stem","SUB_stem"),"@n",name_var);
     for (local.i=0; local.i<snd_len_var; local.i+=1)
-    { snd_arr[local.i,1] = local.sub; }
+    { snd_arr[local.i,1] = local.sub; snd_arr[local.i,2] = false; }
     ini_close();
     type_var = 0;
     spd_base_var = 0.4;
@@ -73,6 +74,7 @@ object_event_add
     mus_prio_var = mon_mus_prio_const;
     // Assets
         // Search for existing assets to save memory
+    local.loaded = false;
     with object_index
     {
         if id != other.id && object_index == other.object_index
@@ -207,6 +209,7 @@ object_event_add
     }
     // Alarms
     alarm_len_var = 9;
+    alarm_ini_scr();
     // sine
     z_off_time_var=0;
     z_off_mult_var=6;

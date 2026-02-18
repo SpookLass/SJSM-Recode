@@ -1,7 +1,5 @@
 // Draw
-draw_clear_alpha(c_black,0);
-draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading shaders...",1,1,0);
-screen_refresh();
+draw_load_scr("Loading shaders...");
 // Initialize
 shader_ini_scr();
 // Grayscale
@@ -53,6 +51,4 @@ tint_ps = shader_ps_create_scr
       mul     r0,     r0,v0
 ');
 // Draw
-draw_clear_alpha(c_black,0);
-draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loaded shaders!",1,1,0);
-screen_refresh();
+draw_load_scr("Loaded shaders!");

@@ -17,6 +17,7 @@ object_event_add
     h_var = 128;
     // Particles
     part_len_var = 100;
+    part_ini_scr();
     part_spawn_var = 4;
     part_spd_min_var = 3.5;
     part_spd_max_var = 5.5;

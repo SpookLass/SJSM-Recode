@@ -1,6 +1,7 @@
 if global.spawn_len_extra_var > global.spawn_len_var
 { local.len = global.spawn_len_extra_var; }
 else { local.len = global.spawn_len_var; }
+global.unlock_var = -1;
 global.spawn_len_var = -1;
 global.spawn_len_extra_var = -1;
 for (local.i=0; local.i<local.len; local.i+=1;)

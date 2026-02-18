@@ -32,6 +32,7 @@ room_set_code
     global.mark_arr[3,0] = 245;
     global.mark_arr[3,1] = 465;
     global.mark_arr[3,2] = 0;
+    mark_create_scr();
     // 3D Draw
     d3d_start();
     global.draw_3d_var = true;

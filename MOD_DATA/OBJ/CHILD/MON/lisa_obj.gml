@@ -27,7 +27,7 @@ object_event_add
             break;
         }
     }
-    wake_snd_var[2] = string_replace(ini_read_string("SUB","lisa","SUB_lisa"),"@n",name_var);
+    wake_snd_var[2] = string_replace(ini_read_string("SUB","lisa","SUB_lisa"),"@n",name_var); wake_snd_var[3] = false;
     note_str_len_var = 6;
     note_str_arr[0] = ini_read_string("NOTE","lisa_01","NOTE_lisa_01");
     note_str_arr[1] = ini_read_string("NOTE","lisa_02","NOTE_lisa_02");
@@ -47,6 +47,7 @@ object_event_add
     dead_rm_var = lisa_dead_rm;
     // Sounds
     wake_snd_var[0] = 2;
+    snd_dist_min_var = 0;
     snd_dist_max_var = 600;
     // Theme
     mus_prio_var = mon_mus_prio_const;
@@ -54,6 +55,7 @@ object_event_add
     do_mdl_var = true;
     head_len_var = 4;
     alarm_len_var = 9;
+    alarm_ini_scr();
     head_alarm_min_var = 1;
     head_alarm_max_var = 3;
     seen_alpha_rate_var = 0.02;
@@ -93,6 +95,7 @@ object_event_add
     color_prio_var = 3;
     // Assets
         // Search for existing assets to save memory
+    local.loaded = false;
     with object_index
     {
         if id != other.id && object_index == other.object_index

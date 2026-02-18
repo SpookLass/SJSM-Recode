@@ -20,6 +20,7 @@ object_event_add
     // Alarm
     alarm_var = 250; // 420 for HD
     alarm_len_var = 1;
+    alarm_ini_scr();
     alarm_arr[0,2] = false;
     set_alarm_scr(0,alarm_var);
     event_inherited();

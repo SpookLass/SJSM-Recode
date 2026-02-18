@@ -16,6 +16,7 @@ object_event_add
     snd_den_var = 2;
     snd_alarm_min_var = 80;
     snd_alarm_max_var = 240;
+    snd_dist_min_var = 0;
     snd_dist_max_var = 600;
     hurt_snd_var = 4;
     // Translations
@@ -38,9 +39,9 @@ object_event_add
     }
     local.sub = string_replace(ini_read_string("SUB","eel","SUB_eel"),"@n",name_var);
     for (local.i=0; local.i<snd_len_var; local.i+=1)
-    { snd_arr[local.i,1] = local.sub; }
-    wake_snd_var[2] = local.sub;
-    hurt_snd_var[2] = local.sub;
+    { snd_arr[local.i,1] = local.sub; snd_arr[local.i,2] = false; }
+    wake_snd_var[2] = local.sub; wake_snd_var[3] = false;
+    hurt_snd_var[2] = local.sub; hurt_snd_var[3] = false;
     ini_close();
     // Variables
     type_var = 1;
@@ -64,6 +65,7 @@ object_event_add
     mus_prio_var = mon_mus_prio_const;
     // Assets
         // Search for existing assets to save memory
+    local.loaded = false;
     with object_index
     {
         if id != other.id && object_index == other.object_index
@@ -128,7 +130,7 @@ object_event_add
         case 0: // Recode
         {
             bod_form_var = true;
-            atk_range_var = coll_var[2];
+            atk_range_var = global.mon_coll[2];
             break;
         }
         case 3: // Remodeled

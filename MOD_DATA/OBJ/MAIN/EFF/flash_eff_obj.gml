@@ -8,20 +8,21 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create Event
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
     event_inherited();
     //Defaults
     image_blend = c_red;
     cam_id_var = 0;
     // Alarm
     alarm_len_var = 1;
+    alarm_ini_scr();
     set_alarm_scr(0,3);
-");
+');
 // Alarm 0 Event
 object_event_add
-(argument0,ev_alarm,0,"
+(argument0,ev_alarm,0,'
     instance_destroy();
-");
+');
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,'

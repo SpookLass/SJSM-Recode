@@ -26,7 +26,7 @@ object_event_add
             break;
         }
     }
-    loop_snd_var[2] = string_replace(ini_read_string("SUB","wf","SUB_wf"),"@n",name_var);
+    loop_snd_var[2] = string_replace(ini_read_string("SUB","wf","SUB_wf"),"@n",name_var); loop_snd_var[3] = false;
     ini_close();
     type_var = 0;
     spr_spd_var = 1;
@@ -42,6 +42,7 @@ object_event_add
     // Sounds
     do_snd_var = 1; // At least for now
     loop_snd_var[0] = true;
+    loop_snd_dist_min_var = 0;
     loop_snd_dist_max_var = 600;
     glitch_snd_len_var = 4;
     // White Face Specific
@@ -100,6 +101,7 @@ object_event_add
     reflect_var= -1;
     // Assets
         // Search for existing assets to save memory
+    local.loaded = false;
     with object_index
     {
         if id != other.id && object_index == other.object_index
@@ -154,7 +156,7 @@ object_event_add
         glitch_snd_arr[2] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_03_snd.wav");
         glitch_snd_arr[3] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_04_snd.wav");
         for (local.i=0; local.i<glitch_snd_len_var; local.i+=1;)
-        { fmod_snd_set_group_scr(glitch_snd_arr[local.i,0],snd_group_mon_const); }
+        { fmod_snd_set_group_scr(glitch_snd_arr[local.i],snd_group_mon_const); }
         mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\wf_mus_test_snd.wav");
         fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
     }
@@ -322,6 +324,7 @@ object_event_add
     }
     spd_base_var = spd_base_real_var;
     alarm_len_var = 11;
+    alarm_ini_scr();
 ');
 // Destroy Event
 object_event_add

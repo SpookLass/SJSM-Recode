@@ -14,4 +14,5 @@ object_event_add
     player_id_var = global.dead_player_var;
     do_stam_var = false;
     do_taker_var = false;
+    invuln_var = true;
 ');

@@ -20,6 +20,7 @@ object_event_add
     image_angle = random_range(45,-45);
     // Alarm
     alarm_len_var = 2;
+    alarm_ini_scr();
     set_alarm_scr(0,20);
 ');
 // Alarm 0 Event

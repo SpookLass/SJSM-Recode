@@ -17,6 +17,7 @@ object_event_add
     stay_var = false;
     // Alarm
     alarm_len_var = 1;
+    alarm_ini_scr();
     set_alarm_scr(0,20);
 ');
 // Alarm 0 Event

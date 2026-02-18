@@ -21,7 +21,7 @@ room_set_code
     global.spawn_arr[1,2] = 0;
     global.spawn_arr[1,3] = 180;
     // Marks (Slime spawners)
-    global.mark_len_var = 0;
+    global.mark_len_var = 3;
     global.mark_arr[0,0] = 248;
     global.mark_arr[0,1] = 226;
     global.mark_arr[0,2] = 0;

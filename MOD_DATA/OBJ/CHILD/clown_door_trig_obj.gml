@@ -14,6 +14,7 @@ object_event_add
     event_inherited();
     // Alarm
     alarm_len_var = 2;
+    alarm_ini_scr();
 ');
 // Alarm 1 Event
 object_event_add

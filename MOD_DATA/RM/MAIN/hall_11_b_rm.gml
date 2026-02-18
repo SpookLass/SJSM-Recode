@@ -27,8 +27,7 @@ room_set_code
     global.mark_arr[1,0] = 112;
     global.mark_arr[1,1] = 432;
     global.mark_arr[1,2] = 0;
-room_instance_add(argument0,240,432,slime_obj);
-room_instance_add(argument0,112,432,slime_obj);
+    mark_create_scr();
     // 3D Draw
     d3d_start();
     global.draw_3d_var = true;

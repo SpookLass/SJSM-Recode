@@ -28,7 +28,7 @@ object_event_add
     // Sound
     inst_var = fmod_snd_loop_scr(snd_var);
     // Effects
-    invert_var = irandom(3);
+    invert_var = !irandom(3);
     // Chomp!
     prechomp_dist_var = 280;
     prechomp_alarm_var = 540;
@@ -38,6 +38,7 @@ object_event_add
     chomp_y_var = 360;
     // Alarm
     alarm_len_var = 5;
+    alarm_ini_scr();
     set_alarm_scr(0,prechomp_alarm_var);
     set_alarm_scr(3,15);
     set_alarm_scr(4,irandom_range(3,6));

@@ -4,9 +4,9 @@ Argument 0: Room Variable (same for all rooms)
 // Spawn spots// Name
 room_set_code
 (
-    argument0,"
+    argument0,'
     ini_open(global.lang_var);
-    global.rm_name_var = ini_read_string('ROOM','dun','ROOM_dun')+' 13 +ini_read_string('ROOM','old','ROOM_old')
+    global.rm_name_var = ini_read_string("ROOM","dun","ROOM_dun")+" 13 "+ini_read_string("ROOM","old","ROOM_old")
     ini_close();
     // Spawn
     global.spawn_len_var = 5;
@@ -30,26 +30,16 @@ room_set_code
     global.spawn_arr[4,1] = 416;
     global.spawn_arr[4,2] = 0;
     global.spawn_arr[4,3] = 90;
-    // Mark
-    global.mark_len_var = 0;
     // 3D Draw
     d3d_start();
     global.draw_3d_var = true;
     // Doors
-    local.entrance = instance_create(global.spawn_arr[0,0]-lengthdir_x(16,global.spawn_arr[0,3]),global.spawn_arr[0,1]-lengthdir_y(16,global.spawn_arr[0,3]),door_entrance_obj);
-    local.entrance.z = global.spawn_arr[0,2];
-    local.entrance.direction = global.spawn_arr[0,3]+180;
-    // Exit
-    global.unlock_var = irandom_range(1,global.spawn_len_var-1);
+    spawn_create_scr(true,true);
+    // Bars
     for (local.i=1; local.i<global.spawn_len_var; local.i+=1;)
     {
-        local.exitdoor = instance_create(global.spawn_arr[local.i,0]-lengthdir_x(16,global.spawn_arr[local.i,3]),global.spawn_arr[local.i,1]-lengthdir_y(16,global.spawn_arr[local.i,3]),door_obj);
-        local.exitdoor.direction = global.spawn_arr[local.i,3]+180;
-        local.exittrig = instance_create(global.spawn_arr[local.i,0]-lengthdir_x(8,global.spawn_arr[local.i,3]),global.spawn_arr[local.i,1]-lengthdir_y(8,global.spawn_arr[local.i,3]),door_trig_obj);
-        local.exittrig.z = global.spawn_arr[local.i,2];
         if local.i != global.unlock_var
         {
-            local.exittrig.lock_var = true;
             // Bars
             switch local.i
             {
@@ -60,9 +50,8 @@ room_set_code
             }
             instance_create(local.xtmp,local.ytmp,bar_vert_obj);
         }
-        global.spawn_arr[local.i,4] = local.exittrig;
     }
-");
+');
 // Room settings
 room_set_width(argument0,1280);
 room_set_height(argument0,720);

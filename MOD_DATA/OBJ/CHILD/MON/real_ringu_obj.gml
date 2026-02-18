@@ -33,9 +33,9 @@ object_event_add
     snd_arr[0,1] = ini_read_string("SUB","ringu_01","SUB_ringu_01"); snd_arr[0,2] = true;
     snd_arr[1,1] = ini_read_string("SUB","ringu_02","SUB_ringu_02"); snd_arr[1,2] = true;
     snd_arr[2,1] = ini_read_string("SUB","ringu_03","SUB_ringu_03"); snd_arr[2,2] = true;
-    snd_arr[3,1] = string_replace(ini_read_string("SUB","ringu_04","SUB_ringu_04"),"@n",name_var);
-    snd_arr[4,1] = string_replace(ini_read_string("SUB","ringu_hurt","SUB_ringu_hurt"),"@n",name_var);
-    wake_snd_var[2] = string_replace(ini_read_string("SUB","ringu_wake","SUB_ringu_wake"),"@n",name_var);
+    snd_arr[3,1] = string_replace(ini_read_string("SUB","ringu_04","SUB_ringu_04"),"@n",name_var); snd_arr[3,2] = false;
+    snd_arr[4,1] = string_replace(ini_read_string("SUB","ringu_hurt","SUB_ringu_hurt"),"@n",name_var); snd_arr[4,2] = false;
+    wake_snd_var[2] = string_replace(ini_read_string("SUB","ringu_wake","SUB_ringu_wake"),"@n",name_var); wake_snd_var[3] = false;
     hurt_snd_var[2] = snd_arr[4,1];
     ini_close();
     type_var = 0;
@@ -53,11 +53,13 @@ object_event_add
     snd_den_var = 2;
     snd_alarm_min_var = 80;
     snd_alarm_max_var = 240;
+    snd_dist_min_var = 0;
     snd_dist_max_var = 600;
     // Theme
     mus_prio_var = theme_mus_prio_const;
     // Assets
         // Search for existing assets to save memory
+    local.loaded = false;
     with object_index
     {
         if id != other.id && object_index == other.object_index
@@ -183,6 +185,7 @@ object_event_add
     }
     // Alarms
     alarm_len_var = 9;
+    alarm_ini_scr();
     // Stuff
     event_perform(ev_other,ev_user14);
 ');

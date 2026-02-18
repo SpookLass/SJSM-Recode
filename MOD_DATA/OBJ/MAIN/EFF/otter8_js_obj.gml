@@ -10,6 +10,7 @@ object_set_visible(argument0,false);
 object_event_add
 (argument0,ev_create,0,'
     event_inherited();
+    local.loaded = false;
     with object_index
     {
         if id != other.id
@@ -26,6 +27,7 @@ object_event_add
     }
     snd_var = 0;
     alarm_len_var = 2;
+    alarm_ini_scr();
     chance_alarm_var = 60;
     chance_num_var = 1;
     chance_den_var = 1987;

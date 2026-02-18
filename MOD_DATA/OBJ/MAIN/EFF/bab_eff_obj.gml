@@ -21,6 +21,7 @@ object_event_add
     image_alpha = random_range(alpha_min_var,alpha_max_var);
     // Alarm
     alarm_len_var = 2;
+    alarm_ini_scr();
     set_alarm_scr(0,irandom_range(anim_alarm_min_var,anim_alarm_max_var));
     set_alarm_scr(1,irandom_range(alpha_alarm_min_var,alpha_alarm_max_var));
 ');

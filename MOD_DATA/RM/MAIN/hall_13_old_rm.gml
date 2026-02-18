@@ -34,8 +34,9 @@ room_set_code
     global.mark_arr[2,0] = 336;
     global.mark_arr[2,1] = 176;
     global.mark_arr[2,2] = 0;
+    mark_create_scr();
     // Doors
-    global.unlock_var = spawn_create_scr(true,true);
+    spawn_create_scr(true,true);
     if global.unlock_var == 1 { global.mark_arr[0,1] = 176; }
     else { global.mark_arr[0,1] = 112; }
     // 3D Draw

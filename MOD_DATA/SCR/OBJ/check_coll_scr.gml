@@ -38,6 +38,7 @@ else
     local.ytmp = y;
     local.ztmp = z;
 }
+local.ray_coll = false;
 // Always check split
 if local.coll_prec
 {
@@ -46,7 +47,7 @@ if local.coll_prec
 }
 if p3dc_check_split_scr(local.coll,local.xtmp,local.ytmp,local.ztmp+0.01) || local.ray_coll { return true; }
 // Check float if it exists
-if !fall_spr && !fall_temp_var && on_floor_var && global.room_float_coll != -1
+if !fall_var && !fall_temp_var && on_floor_var && global.room_float_coll != -1
 {
     if local.coll_prec
     {
@@ -56,10 +57,11 @@ if !fall_spr && !fall_temp_var && on_floor_var && global.room_float_coll != -1
     if p3dc_check_still_scr(local.coll,local.xtmp,local.ytmp,local.ztmp+0.01,global.room_float_coll) || local.ray_coll { return true; }
 }
 // Check props
+local.coll_arr_len = 0;
 with prop_par_obj
 {
     // Equivalent to split size
-    if solid_var && point_distance_3d_scr(local.xtmp,local.ytmp,local.ztmp,x,y,z) < 36+other.spd_var && coll_var[0] > 0
+    if solid_var && point_distance_3d_scr(local.xtmp,local.ytmp,local.ztmp,x,y,z) < 36+other.spd_var
     {
         local.coll_arr[local.coll_arr_len,0] = coll_var[0];
         local.coll_arr[local.coll_arr_len,1] = x;

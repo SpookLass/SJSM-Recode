@@ -35,6 +35,7 @@ object_event_add
     path_prec_var = 32;
     dupe_var = dupe_never_const;
     alarm_len_var = 1;
+    alarm_ini_scr();
     color_var = true;
     // Zone
     zone_var = true;
@@ -48,6 +49,7 @@ object_event_add
     mus_prio_var = theme_mus_prio_const;
     // Assets
         // Search for existing assets to save memory
+    local.loaded = false;
     with object_index
     {
         if id != other.id && object_index == other.object_index

@@ -11,6 +11,7 @@ object_event_add
 (argument0,ev_create,0,'
     event_inherited();
     alarm_len_var = 3;
+    alarm_ini_scr();
     set_alarm_scr(0,1);
     set_alarm_scr(1,irandom_range(16,30));
     set_alarm_scr(2,irandom_range(6,12));

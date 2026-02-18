@@ -24,6 +24,7 @@ object_event_add
     spr_var = static_01_spr;
     spr_spd_var = 0.25;
     alarm_len_var = 1;
+    alarm_ini_scr();
     set_alarm_scr(0,alarm_var);
     alarm_arr[0,2] = false; // Persistent
 ');

@@ -8,7 +8,7 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create event
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
     store_tex_var = frame_bg_tex
     event_inherited();
     solid_var = false;
@@ -17,4 +17,4 @@ object_event_add
     h_var = 12;
     z = 14;
     dist_var = 0.2;
-");
+');

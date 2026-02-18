@@ -34,6 +34,7 @@ room_set_code
     global.mark_arr[2,0] = 336;
     global.mark_arr[2,1] = 176;
     global.mark_arr[2,2] = 0;
+    mark_create_scr();
     // Doors
     local.entrance = instance_create(global.spawn_arr[0,0]-lengthdir_x(16,global.spawn_arr[0,3]),global.spawn_arr[0,1]-lengthdir_y(16,global.spawn_arr[0,3]),door_entrance_obj);
     local.entrance.z = global.spawn_arr[0,2];
@@ -41,7 +42,7 @@ room_set_code
     // Exit
     local.lock = lock_scr();
     local.gold = gold_scr(local.lock);
-    global.unlock_var = spawn_create_scr(true,local.lock);
+    spawn_create_scr(true,local.lock);
     if global.unlock_var == 1 { global.mark_arr[0,1] = 176; }
     else { global.mark_arr[0,1] = 112; }
     if local.gold

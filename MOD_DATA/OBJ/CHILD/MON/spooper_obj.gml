@@ -27,7 +27,7 @@ object_event_add
         }
     }
     txt_lock_var = ini_read_string("UI","spooper","UI_spooper");
-    loop_snd_var[2] = string_replace(ini_read_string("SUB","spooper","SUB_spooper"),"@n",name_var);
+    loop_snd_var[2] = string_replace(ini_read_string("SUB","spooper","SUB_spooper"),"@n",name_var); loop_snd_var[3] = false;
     ini_close();
     // Variables
     type_var = 0;
@@ -44,6 +44,7 @@ object_event_add
     dead_rm_var = spooper_dead_rm;
     // Sounds
     do_snd_var = false;
+    loop_snd_dist_min_var = 0;
     loop_snd_dist_max_var = 600;
     // Special
     do_seen_var = true;
@@ -67,6 +68,7 @@ object_event_add
     tp_seen_var = false;
     // Puke
     alarm_len_var = 9;
+    alarm_ini_scr();
     puke_delay_min_var = 60;
     puke_delay_max_var = 240;
     puke_alarm_01_var = 40;
@@ -96,6 +98,7 @@ object_event_add
     puke_chance_var = 5;
     // Assets
         // Search for existing assets to save memory
+    local.loaded = false;
     with object_index
     {
         if id != other.id && object_index == other.object_index

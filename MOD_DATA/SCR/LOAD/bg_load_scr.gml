@@ -11,15 +11,11 @@ while (local.file != "")
     local.file = file_find_next();
     local.i += 1;
     // Draw
-    draw_clear_alpha(c_black,0);
-    draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading textures ("+string(local.i)+")...",1,1,0);
-    screen_refresh();
+    draw_load_scr("Loading textures ("+string(local.i)+")...");
 }
 file_find_close();
 // Time for the manual stuff
-draw_clear_alpha(c_black,0);
-draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading vanilla textures...",1,1,0);
-screen_refresh();
+draw_load_scr("Loading vanilla textures...");
 // Replaceable
 file_to_bg_scr(vanilla_directory_const+"\TEX\WALL_01.png","wall_bg",false,false,argument0);
 file_to_bg_scr(vanilla_directory_const+"\TEX\FLOOR_01.png","floor_bg",false,false,argument0);
@@ -106,13 +102,9 @@ for (local.j=0; local.j<ds_list_size(global.mod_list); local.j+=1;)
         local.file = file_find_next();
         local.i += 1;
         // Draw
-        draw_clear_alpha(c_black,0);
-        draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading mod textures ("+string(local.i)+")...",1,1,0);
-        screen_refresh();
+        draw_load_scr("Loading mod textures ("+string(local.i)+")...");
     }
     file_find_close();
 }
 // Draw
-draw_clear_alpha(c_black,0);
-draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loaded textures!",1,1,0);
-screen_refresh();
+draw_load_scr("Loaded textures!");

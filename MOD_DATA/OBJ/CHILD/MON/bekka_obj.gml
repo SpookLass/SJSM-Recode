@@ -48,6 +48,7 @@ object_event_add
     mus_prio_var = theme_mus_prio_const;
     // Assets
     // Search for existing assets to save memory
+    local.loaded = false;
     with object_index
     {
         if id != other.id && object_index == other.object_index
@@ -175,6 +176,7 @@ object_event_add
     }
     // Alarms
     alarm_len_var = 11;
+    alarm_ini_scr();
     // Bools
     do_snd_var = -1;
     if bright_var { color_var = -1; }

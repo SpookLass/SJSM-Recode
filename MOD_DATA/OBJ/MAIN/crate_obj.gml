@@ -13,7 +13,7 @@ global.crate_coll[3] = 16;
 global.crate_coll[0] = prop_to_coll_scr(2,'',global.crate_coll[2],global.crate_coll[3],global.crate_coll[1]);
 // Create event
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
     snap_var = 1;
     store_tex_var = crate_bg_tex;
     event_inherited();
@@ -27,4 +27,4 @@ object_event_add
     coll_var[1] = global.crate_coll[1];
     coll_var[2] = global.crate_coll[2];
     coll_var[3] = global.crate_coll[3];
-");
+');

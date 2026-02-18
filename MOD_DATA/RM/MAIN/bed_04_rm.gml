@@ -4,8 +4,10 @@ Argument 0: Room Variable (same for all rooms)
 // Spawn spots// Name
 room_set_code
 (
-    argument0,"
-    global.rm_name_var = 'Bedroom 4'
+    argument0,'
+    ini_open(global.lang_var);
+    global.rm_name_var = ini_read_string("ROOM","bed","ROOM_bed")+" 4";
+    ini_close();
     // Spawn
     global.spawn_len_var = 2;
     global.spawn_arr[0,0] = 192;
@@ -16,23 +18,12 @@ room_set_code
     global.spawn_arr[1,1] = 208;
     global.spawn_arr[1,2] = 0;
     global.spawn_arr[1,3] = 180;
-    // Mark
-    global.mark_len_var = 0;
-    /*global.mark_arr[0,0] = 211;
-    global.mark_arr[0,1] = 290;
-    global.mark_arr[0,2] = 0;
-    global.mark_arr[1,0] = 242;
-    global.mark_arr[1,1] = 327;
-    global.mark_arr[1,2] = 0;
-    global.mark_arr[2,0] = 279;
-    global.mark_arr[2,1] = 290;
-    global.mark_arr[2,2] = 0;*/
     // 3D Draw
     d3d_start();
     global.draw_3d_var = true;
     // Doors
     spawn_create_scr(true,false);
-");
+');
 // Room settings
 room_set_width(argument0,1280);
 room_set_height(argument0,720);
@@ -139,6 +130,6 @@ room_instance_add(argument0,336,240,wall_2high_vert_obj);
 room_instance_add(argument0,192,208,bed_rand_obj);
 room_instance_add(argument0,256,168,drawer_rand_south_obj);
 room_instance_add(argument0,320,336,table_rand_obj);
-room_instance_add(argument0,336,272,painting_vert_obj);
+room_instance_add(argument0,336,272,frame_vert_rand_obj);
 room_instance_add(argument0,256,352,window_01_high_hor_obj);
 room_instance_add(argument0,256,352,window_02_high_hor_obj);

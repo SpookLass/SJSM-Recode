@@ -17,6 +17,7 @@ object_event_add
     load_var = true;
     // Alarm
     alarm_len_var = 2;
+    alarm_ini_scr();
     set_alarm_scr(0,spot_alarm_var);
 ');
 // Room start event

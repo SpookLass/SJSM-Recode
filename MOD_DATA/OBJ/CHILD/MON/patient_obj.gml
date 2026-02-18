@@ -38,7 +38,7 @@ object_event_add
             break;
         }
     }
-    wake_snd_var[2] = string_replace(ini_read_string("SUB","patient","SUB_patient"),"@n",name_var);
+    wake_snd_var[2] = string_replace(ini_read_string("SUB","patient","SUB_patient"),"@n",name_var); wake_snd_var[3] = false;
     ini_close();
     // Patient
     type_var = 0;
@@ -52,6 +52,7 @@ object_event_add
     mus_delay_var = 144
     // Assets
         // Search for existing assets to save memory
+    local.loaded = false;
     with object_index
     {
         if id != other.id && object_index == other.object_index
@@ -218,6 +219,7 @@ object_event_add
     }
     // Alarms
     alarm_len_var = 15;
+    alarm_ini_scr();
     // Bools
     do_mdl_var = true;
     do_snd_var = -1;

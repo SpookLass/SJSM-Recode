@@ -23,8 +23,6 @@ room_set_code
     global.spawn_arr[2,2] = 0;
     global.spawn_arr[2,3] = 90;
     shuffle_spawn_scr(false);
-    // Mark
-    global.mark_len_var = -1;
     // 3D Draw
     d3d_start();
     global.draw_3d_var = true;

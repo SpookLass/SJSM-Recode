@@ -12,7 +12,7 @@ global.brain_coll[2] = 10;
 global.brain_coll[0] = prop_to_coll_scr(5,'',global.brain_coll[2],0,global.brain_coll[1],true,8);
 // Create event
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
     store_tex_var = brain_bg_tex;
     event_inherited();
     solid_var = false;
@@ -36,19 +36,20 @@ object_event_add
     weapon_var = true;
     state_var = 2;
     alarm_len_var = 1;
+    alarm_ini_scr();
     // Slow
     target_spd_mult_var = 0.6;
     if global.mode_var == 0 || global.main_type_var == 2
     { target_spd_mult_var = 0.3; }
-");
+');
 // Draw
 object_event_add
-(argument0,ev_draw,0,"
+(argument0,ev_draw,0,'
     if global.fog_dark_var { d3d_set_fog(false,c_black,0,0); }
     event_inherited();
     if global.fog_dark_var 
     { d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var); }
-");
+');
 // Step
 object_event_add
 (argument0,ev_step,ev_step_normal,'

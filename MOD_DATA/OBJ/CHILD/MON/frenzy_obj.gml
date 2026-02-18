@@ -28,6 +28,7 @@ object_event_add
     dupe_var = dupe_canon_const;
     // Sounds
     do_snd_var = true;
+    snd_dist_min_var = -1;
     snd_dist_max_var = -1;
     hurt_snd_var = 4;
     // Theme
@@ -43,6 +44,7 @@ object_event_add
     spawn_attempt_var = 30;
     spawn_dist_var = 64;
     alarm_len_var = 9;
+    alarm_ini_scr();
     // Fog
     do_eff_var = false;
     fog_color_var = c_dkgray;
@@ -51,6 +53,7 @@ object_event_add
     fog_end_var = 200;
     // Assets
         // Search for existing assets to save memory
+    local.loaded = false;
     with object_index
     {
         if id != other.id && object_index == other.object_index
@@ -91,7 +94,7 @@ object_event_add
             respawn_alarm_var = 90;
             respawn_alone_var = true;
             dmg_var = 20;
-            atk_range_var = coll_var[2];
+            atk_range_var = global.mon_coll[2];
             fade_alarm_var = 60;
             alpha_min_var = 0.2;
             alpha_max_var = 0.4;
@@ -129,7 +132,7 @@ object_event_add
         fmod_snd_free_scr(hurt_snd_var[1]);
         fmod_snd_free_scr(scare_snd_var);
     }
-    if do_eff_var
+    if do_eff_var && gamemaker_version == 800
     { shader_set_ps_scr(-1); }
 ');
 // Room Start
@@ -143,7 +146,8 @@ object_event_add
     {
         if !instance_exists(dh_eff_obj)
         { instance_create(0,0,dh_eff_obj); }
-        shader_set_ps_scr(orthographic_ps);
+        if gamemaker_version == 800
+        { shader_set_ps_scr(orthographic_ps); }
         with fog_par_obj { if prio_var < other.fog_prio_var { instance_destroy(); }}
         if !instance_exists(fog_par_obj)
         {

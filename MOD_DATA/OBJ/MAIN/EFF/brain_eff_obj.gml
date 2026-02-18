@@ -95,6 +95,7 @@ object_event_add
     ini_close();
     str_var = str_wake_var;
     alarm_len_var = 2;
+    alarm_ini_scr();
     set_alarm_scr(0,anim_alarm_var);
     set_alarm_scr(1,char_alarm_var);
     char_var = 1;

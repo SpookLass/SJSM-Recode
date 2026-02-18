@@ -19,7 +19,7 @@ object_event_add
     store_tex_var = metal_01_bg_tex;
     event_inherited();
     solid_var = true;
-    no_grid_var = true;
+    grid_var = false;
     w_var = 4;
     h_var = 24;
     l_var = 16;

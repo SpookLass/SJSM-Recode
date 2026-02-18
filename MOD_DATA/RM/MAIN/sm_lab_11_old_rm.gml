@@ -18,10 +18,6 @@ room_set_code
     global.spawn_arr[1,1] = 560;
     global.spawn_arr[1,2] = 0;
     global.spawn_arr[1,3] = 180;
-room_instance_add(argument0,112,272,door1_fake_west);
-room_instance_add(argument0,176,560,door1_vert);
-    // Mark
-    global.mark_len_var = 0;
     // 3D Draw
     d3d_start();
     global.draw_3d_var = true;

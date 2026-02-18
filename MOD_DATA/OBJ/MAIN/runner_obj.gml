@@ -20,7 +20,7 @@ object_event_add
     snap_var = 2;
     event_inherited();
     solid_var = true;
-    no_grid_var = true; // Dont stop pathfinding
+    grid_var = false; // Dont stop pathfinding
     type_var = 7; // Better Block
     w_var = 4;
     l_var = 32;

@@ -18,8 +18,6 @@ room_set_code
     global.spawn_arr[1,1] = 320;
     global.spawn_arr[1,2] = 0;
     global.spawn_arr[1,3] = 180;
-    // Mark
-    global.mark_len_var = 0;
     // 3D Draw
     d3d_start();
     global.draw_3d_var = true;
@@ -145,7 +143,7 @@ room_instance_add(argument0,440,167,bush_obj);
 room_instance_add(argument0,373,121,bush_obj);
 room_instance_add(argument0,229,139,bush_obj);
 room_instance_add(argument0,224,336,table_obj);
-room_instance_add(argument0,272,344,seat_obj);
+// room_instance_add(argument0,272,344,seat_obj);
 room_instance_add(argument0,384,288,lp_pic_fs_obj);
 room_instance_add(argument0,408,288,lp_pic_jel_obj);
 room_instance_add(argument0,432,288,lp_pic_bb_obj);

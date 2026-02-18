@@ -50,6 +50,7 @@ object_event_add
     snd_alarm_max_var = 460;
     snd_delay_min_var = 80;
     snd_delay_max_var = 240;
+    snd_dist_min_var = 0;
     snd_dist_max_var = 600;
     eff_snd_len_var = 4;
     // Theme
@@ -64,8 +65,10 @@ object_event_add
     warp_alarm_var = 60;
     warp_dist_var = 128;
     alarm_len_var = 9;
+    alarm_ini_scr();
     // Assets
         // Search for existing assets to save memory
+    local.loaded = false;
     with object_index
     {
         if id != other.id && object_index == other.object_index
@@ -103,7 +106,7 @@ object_event_add
         eff_snd_arr[2] = fmod_snd_add_scr(main_directory_const+"\SND\MON\dl_eff_03_snd.wav");
         eff_snd_arr[3] = fmod_snd_add_scr(main_directory_const+"\SND\MON\dl_eff_04_snd.wav");
         for (local.i=0; local.i<eff_snd_len_var; local.i+=1;)
-        { fmod_snd_set_group_scr(eff_snd_arr[local.i,0],snd_group_mon_const); }
+        { fmod_snd_set_group_scr(eff_snd_arr[local.i],snd_group_mon_const); }
     }
     // Behavior
     if global.dl_type_var == -1 { local.type = irandom(5); }
@@ -116,7 +119,7 @@ object_event_add
             dmg_alarm_var = 120;
             do_warp_var = true;
             delay_var = 60;
-            atk_range_var = coll_var[2];
+            atk_range_var = global.mon_coll[2];
             // Effect
             eff_min_var = 15;
             eff_max_var = 30;

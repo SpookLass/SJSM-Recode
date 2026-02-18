@@ -8,6 +8,7 @@ object_set_visible(argument0,true);
 // Create event
 object_event_add
 (argument0,ev_create,0,'
+    load_var = false;
     if global.mode_var == 0 { local.path = vanilla_directory_const+"\TEX\sprites\POS_"+choose("07","08","09","10")+"_spr.png"; }
     else
     {
@@ -60,6 +61,9 @@ object_event_add
 // Delete Event
 object_event_add
 (argument0,ev_other,ev_user0,'
-    if bg_load_var
-    { background_delete(bg_var); }
+    if load_var
+    {
+        background_delete(bg_var);
+        load_var = false;
+    }
 ');

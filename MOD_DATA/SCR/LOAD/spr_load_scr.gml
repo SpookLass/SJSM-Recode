@@ -11,15 +11,11 @@ while (local.file != "")
     local.file = file_find_next();
     local.i += 1;
     // Draw
-    draw_clear_alpha(c_black,0);
-    draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading sprites ("+string(local.i)+")...",1,1,0);
-    screen_refresh();
+    draw_load_scr("Loading sprites ("+string(local.i)+")...");
 }
 file_find_close();
 // Draw
-draw_clear_alpha(c_black,0);
-draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading vanilla sprites...",1,1,0);
-screen_refresh();
+draw_load_scr("Loading vanilla sprites ("+string(local.i)+")...");
 // Player
 file_to_spr_scr(vanilla_directory_const+"\TEX\sprites\EX_03_spr.png","ghost_spr",3,false,false,0,0,argument0);
 sprite_set_offset(ghost_spr,sprite_get_width(ghost_spr)/2,sprite_get_height(ghost_spr)/2);
@@ -48,13 +44,9 @@ for (local.j=0; local.j<ds_list_size(global.mod_list); local.j+=1;)
         local.file = file_find_next();
         local.i += 1;
         // Draw
-        draw_clear_alpha(c_black,0);
-        draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading mod sprites ("+string(local.i)+")...",1,1,0);
-        screen_refresh();
+        draw_load_scr("Loading mod sprites ("+string(local.i)+")...");
     }
     file_find_close();
 }
 // Draw
-draw_clear_alpha(c_black,0);
-draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loaded sprites!",1,1,0);
-screen_refresh();
+draw_load_scr("Loaded sprites!");

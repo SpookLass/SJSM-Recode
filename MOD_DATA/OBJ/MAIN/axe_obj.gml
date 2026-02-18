@@ -16,12 +16,14 @@ object_event_add
     stam_end_var = 10;
     check_stam_var = false;
     good_var = true;
+    state_var = false;
     spr_spd_var = 0;
     spr_spd_raise_var = 0.5;
     spr_spd_swing_var = 0.25;
     spr_raise_var = axe_raise_spr;
     spr_swing_var = axe_swing_spr;
     spr_var = spr_raise_var;
+    spr_id_var = 0;
     color_var = true;
     coll_var[0] = global.axe_coll[0];
     coll_var[1] = global.axe_coll[1];

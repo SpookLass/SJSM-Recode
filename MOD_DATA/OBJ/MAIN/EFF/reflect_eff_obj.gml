@@ -9,8 +9,9 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,0,'
-    reflect_axis_var = 2;
     event_inherited();
+    if !variable_local_exists("reflect_axis_var") { reflect_axis_var = 2; }
+    if !variable_local_exists("reflect_pos_var") { reflect_pos_var = 0; }
 ');
 // Draw Event
 object_event_add
@@ -18,6 +19,13 @@ object_event_add
     global.reflect_var = true;
     global.reflect_pos_var = reflect_pos_var;
     global.reflect_axis_var = reflect_axis_var;
-    with par_var { if reflect_var && object_index != other.object_index && visible { event_perform(ev_draw,0); }}
+    with par_3d_obj
+    {
+        if variable_local_exists("reflect_var")
+        {
+            if reflect_var && object_index != other.object_index && visible
+            { event_perform(ev_draw,0); }
+        }
+    }
     global.reflect_var = false;
 ');

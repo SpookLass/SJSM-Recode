@@ -11,6 +11,7 @@ object_event_add // ev_create,0
 (argument0,ev_other,ev_room_start,'
     ds_list_clear(global.mon_curr_list);
     local.mons = 0;
+    local.nospawn = false;
     with mon_par_obj
     {
         ds_list_add(global.mon_curr_list,id);

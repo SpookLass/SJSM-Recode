@@ -17,6 +17,8 @@ object_event_add
     tex_h_var = 1;
     store_spr_var = -1;
     spr_var = store_spr_var;
+    spr_id_var = 0;
+    par_var = noone;
     color_var = true;
 ');
 // Step event

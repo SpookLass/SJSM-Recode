@@ -33,6 +33,7 @@ object_event_add
     inst_var = fmod_snd_play_scr(snd_01_var);
     // Alarms
     alarm_len_var = 5;
+    alarm_ini_scr();
     fade_alarm_var = 20;
     set_alarm_scr(0,30);
     set_alarm_scr(4,1);

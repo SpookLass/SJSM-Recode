@@ -51,6 +51,7 @@ object_event_add
     snd_arr[31] = amb_32_snd;
     snd_arr[32] = amb_07_old_snd;
     alarm_len_var = 1;
+    alarm_ini_scr();
     set_alarm_scr(0,random_range(alarm_min_var,alarm_max_var));
 ');
 //Alarm
@@ -72,8 +73,8 @@ object_event_add
         // Add random
         local.yaw = random(360); local.pitch = random_range(-90,90); local.dist = random_range(dist_min_var,dist_max_var);
         local.xtmp += lengthdir_x(lengthdir_x(local.dist,local.yaw),local.pitch);
-        local.ytmp += target_y_var+lengthdir_x(lengthdir_y(local.dist,local.yaw),local.pitch);
-        local.ztmp -= target_z_var-lengthdir_y(local.dist,local.pitch);
+        local.ytmp += lengthdir_x(lengthdir_y(local.dist,local.yaw),local.pitch);
+        local.ztmp -= lengthdir_y(local.dist,local.pitch);
         // Play Sound
         fmod_snd_3d_play_scr(snd_arr[irandom(snd_len_var-1)],local.xtmp,local.ytmp,local.ztmp);
     }

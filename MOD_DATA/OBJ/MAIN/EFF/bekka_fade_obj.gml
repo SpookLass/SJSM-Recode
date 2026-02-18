@@ -19,6 +19,7 @@ object_event_add
     dead_rm_var = gameover_rm;
     // Alarm
     alarm_len_var = 1;
+    alarm_ini_scr();
     set_alarm_scr(0,300);
 ');
 // Alarm 0 Event

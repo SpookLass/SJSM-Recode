@@ -11,6 +11,7 @@ object_event_add
 (argument0,ev_create,0,'
     bg_var = note_bg;
     cam_id_var = -1;
+    player_id_var = 0;
     // String
     str_var = note_scr();
     str_margin_x_var = 30;
@@ -18,6 +19,7 @@ object_event_add
     str_scale_var = 0.4;
     str_color_var = c_black;
     story_var = !global.note_override_var;
+    read_var = false;
     // Sound
     snd_len_var = 4;
     snd_arr[0] = paper_01_snd;
@@ -30,6 +32,13 @@ object_event_add
     surf_var = surface_create(surf_w_var,surf_h_var);
     event_user(1);
     store_tex_var = surface_get_texture(surf_var);
+    // Prop
+    event_inherited();
+    solid_var = false;
+    type_var = 4; // Floor
+    w_var = 3;
+    l_var = 4;
+    z += 0.1;
     // Trigger
     with instance_create(x,y,note_trig_obj)
     {
@@ -38,13 +47,6 @@ object_event_add
         str_var = "Read";
         other.trig_var = id;
     }
-    // Prop
-    event_inherited();
-    solid_var = false;
-    type_var = 4; // Floor
-    w_var = 3;
-    l_var = 4;
-    z += 0.1;
 ');
 // Destroy Event
 object_event_add
@@ -61,7 +63,7 @@ object_event_add
 (argument0,ev_other,ev_user2,'
     if read_var && story_var { global.note_var += 1; }
     with note_read_obj { if par_var == other.id { instance_destroy(); }}
-    with trig_obj { if par_var == other.id { instance_destroy(); }}
+    with note_trig_obj { if par_var == other.id { instance_destroy(); }}
     surface_free(surf_var);
 ');
 // Redraw Surface
@@ -83,10 +85,10 @@ object_event_add
 // Pick up note
 object_event_add
 (argument0,ev_other,ev_user0,'
+    player_id_var = interact_target_var.player_id_var;
     global.input_press_arr[interact_input_const,player_id_var] = 0;
     trig_var.on_var = false;
     read_var = true;
-    player_id_var = interact_target_var.player_id_var;
     cam_id_var = interact_target_var.cam_id_var;
     with instance_create(0,0,note_read_obj)
     {

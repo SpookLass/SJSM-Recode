@@ -4,11 +4,10 @@ Argument 0: Room Variable (same for all rooms)
 // Spawn spots
 room_set_code
 (
-    argument0,
-    "
+    argument0,'
     // Name
     ini_open(global.lang_var);
-    global.rm_name_var = ini_read_string('ROOM','hall','ROOM_hall')+' 2 '+ini_read_string('ROOM','gold','ROOM_gold');
+    global.rm_name_var = ini_read_string("ROOM","hall","ROOM_hall")+" 2 "+ini_read_string("ROOM","gold","ROOM_gold");
     ini_close();
     // Spawn
     global.spawn_len_var = 5;
@@ -38,7 +37,7 @@ room_set_code
     // Doors
     local.lock = lock_scr();
     local.gold = gold_scr(local.lock);
-    global.unlock_var = spawn_create_scr(true,local.lock);
+    spawn_create_scr(true,local.lock);
     // Gold Effects
     if local.gold
     {
@@ -61,7 +60,7 @@ room_set_code
         instance_create(272,480,torch_south_obj);
         instance_create(368,480,torch_south_obj);
     }
-");
+');
 // Room settings
 room_set_width(argument0,1280);
 room_set_height(argument0,720);

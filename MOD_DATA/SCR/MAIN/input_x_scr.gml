@@ -4,7 +4,7 @@ Argument 0: Player ID
 switch global.input_move_var[argument0]
 {
     // Keyboard
-    case move_button_const: { return global.input_arr[forward_input_const,player_id_var]-global.input_arr[backward_input_const,argument0]; }
+    case move_button_const: { return global.input_arr[forward_input_const,argument0]-global.input_arr[backward_input_const,argument0]; }
     // Left Joystick
     case move_joy_l_const:  { if abs(joy_y_scr(global.joy_id_var[argument0])) > global.joy_sens_var[argument0]/100 { return -joy_y_scr(global.joy_id_var[argument0]); } return 0; }
     // Right Joystick

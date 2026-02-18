@@ -13,16 +13,16 @@ object_event_add
     name_var = ini_read_string("NAME","clown","NAME_clown");
     local.sub_01 = string_replace(ini_read_string("SUB","clown","SUB_clown"),"@n",name_var);
     local.sub_02 = string_replace(ini_read_string("SUB","clown_laugh","SUB_clown_laugh"),"@n",name_var);
-    snd_arr[0,1] = local.sub_01;
-    snd_arr[1,1] = local.sub_01;
-    snd_arr[2,1] = local.sub_01;
-    snd_arr[3,1] = local.sub_01;
-    snd_arr[4,1] = local.sub_02;
-    snd_arr[5,1] = local.sub_02;
-    snd_arr[6,1] = local.sub_02;
-    snd_arr[7,1] = local.sub_02;
-    snd_arr[8,1] = local.sub_02;
-    snd_arr[9,1] = local.sub_02;
+    snd_arr[0,1] = local.sub_01; snd_arr[0,2] = false;
+    snd_arr[1,1] = local.sub_01; snd_arr[1,2] = false;
+    snd_arr[2,1] = local.sub_01; snd_arr[2,2] = false;
+    snd_arr[3,1] = local.sub_01; snd_arr[3,2] = false;
+    snd_arr[4,1] = local.sub_02; snd_arr[4,2] = false;
+    snd_arr[5,1] = local.sub_02; snd_arr[5,2] = false;
+    snd_arr[6,1] = local.sub_02; snd_arr[6,2] = false;
+    snd_arr[7,1] = local.sub_02; snd_arr[7,2] = false;
+    snd_arr[8,1] = local.sub_02; snd_arr[8,2] = false;
+    snd_arr[9,1] = local.sub_02; snd_arr[9,2] = false;
     leave_snd_arr[0,1] = ini_read_string("SUB","clown_leave","SUB_clown_leave"); leave_snd_arr[0,2] = true;
     leave_snd_arr[1,1] = ini_read_string("SUB","clown_bye","SUB_clown_bye"); leave_snd_arr[1,2] = true;
     ini_close();
@@ -48,11 +48,13 @@ object_event_add
     snd_den_var = 1;
     snd_alarm_min_var = 300;
     snd_alarm_max_var = 360;
+    snd_dist_min_var = 0;
     snd_dist_max_var = 768; // Kinda, maybe 512
     leave_snd_len_var = 2;
     mus_prio_var = theme_mus_prio_const;
     // Assets
         // Search for existing assets to save memory
+    local.loaded = false;
     with object_index
     {
         if id != other.id && object_index == other.object_index

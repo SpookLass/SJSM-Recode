@@ -8,15 +8,15 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
     direction = 90;
     gold_var = true;
     auto_var = true;
     color_var = false;
+    event_inherited();
     local.light = instance_create(x+lengthdir_x(-1.5,direction+90),y+lengthdir_y(-1.5,direction+90),gold_part_obj);
     local.light.z += z;
     local.light.par_var = id;
-    event_inherited();
     store_tex_var = background_get_texture(torch_gold_bg);
     tex_var = store_tex_var;
-");
+');

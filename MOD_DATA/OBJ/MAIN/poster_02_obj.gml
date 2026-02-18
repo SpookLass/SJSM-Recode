@@ -8,6 +8,7 @@ object_set_visible(argument0,true);
 // Create event
 object_event_add
 (argument0,ev_create,0,'
+    load_var = false;
     if ((global.mode_var == 0 && global.rm_count_var > 100) 
     || (global.mode_var != 0 && file_exists(working_directory+"\Karamari_Hospital\KH.exe")))
     && frac_chance_scr(2,3)
@@ -61,6 +62,9 @@ object_event_add
 // Delete Event
 object_event_add
 (argument0,ev_other,ev_user0,'
-    if bg_load_var
-    { background_delete(bg_var); }
+    if load_var
+    {
+        background_delete(bg_var);
+        load_var = false;
+    }
 ');

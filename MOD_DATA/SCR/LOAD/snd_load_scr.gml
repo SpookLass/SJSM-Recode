@@ -18,9 +18,7 @@ while (local.file != "")
     local.file = file_find_next();
     local.i += 1;
     // Draw
-    draw_clear_alpha(c_black,0);
-    draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading sounds ("+string(local.i)+")...",1,1,0);
-    screen_refresh();
+    draw_load_scr("Loading sounds ("+string(local.i)+")...");
 }
 file_find_close();
 // MP3
@@ -31,9 +29,7 @@ while (local.file != "")
     local.file = file_find_next();
     local.i += 1;
     // Draw
-    draw_clear_alpha(c_black,0);
-    draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading sounds ("+string(local.i)+")...",1,1,0);
-    screen_refresh();
+    draw_load_scr("Loading sounds ("+string(local.i)+")...");
 }
 file_find_close();
 // OGG
@@ -44,15 +40,11 @@ while (local.file != "")
     local.file = file_find_next();
     local.i += 1;
     // Draw
-    draw_clear_alpha(c_black,0);
-    draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading sounds ("+string(local.i)+")...",1,1,0);
-    screen_refresh();
+    draw_load_scr("Loading sounds ("+string(local.i)+")...");
 }
 file_find_close();
 // Draw
-draw_clear_alpha(c_black,0);
-draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading ambience...",1,1,0);
-screen_refresh();
+draw_load_scr("Loading ambience...");
 // Manual
 file_to_snd_scr(vanilla_directory_const+"\SND\AMB\AMB_01.mp3","amb_mus_01_snd",false,snd_group_mus_const,argument0);
 file_to_snd_scr(vanilla_directory_const+"\SND\AMB\AMB_02.mp3","amb_mus_02_snd",false,snd_group_mus_const,argument0);
@@ -78,9 +70,7 @@ for (local.j=0; local.j<ds_list_size(global.mod_list); local.j+=1;)
         local.file = file_find_next();
         local.i += 1;
         // Draw
-        draw_clear_alpha(c_black,0);
-        draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading mod sounds ("+string(local.i)+")...",1,1,0);
-        screen_refresh();
+        draw_load_scr("Loading mod sounds ("+string(local.i)+")...");
     }
     file_find_close();
     // MP3
@@ -91,9 +81,7 @@ for (local.j=0; local.j<ds_list_size(global.mod_list); local.j+=1;)
         local.file = file_find_next();
         local.i += 1;
         // Draw
-        draw_clear_alpha(c_black,0);
-        draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading mod sounds ("+string(local.i)+")...",1,1,0);
-        screen_refresh();
+        draw_load_scr("Loading mod sounds ("+string(local.i)+")...");
     }
     file_find_close();
     // OGG
@@ -104,13 +92,9 @@ for (local.j=0; local.j<ds_list_size(global.mod_list); local.j+=1;)
         local.file = file_find_next();
         local.i += 1;
         // Draw
-        draw_clear_alpha(c_black,0);
-        draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading mod sounds ("+string(local.i)+")...",1,1,0);
-        screen_refresh();
+        draw_load_scr("Loading mod sounds ("+string(local.i)+")...");
     }
     file_find_close();
 }
 // Draw
-draw_clear_alpha(c_black,0);
-draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loaded sounds!",1,1,0);
-screen_refresh();
+draw_load_scr("Loaded sounds!");

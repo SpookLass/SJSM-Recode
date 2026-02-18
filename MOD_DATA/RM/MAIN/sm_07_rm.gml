@@ -18,8 +18,6 @@ room_set_code
     global.spawn_arr[1,1] = 336;
     global.spawn_arr[1,2] = 0;
     global.spawn_arr[1,3] = 180;
-room_instance_add(argument0,240,208,door1_fake_west);
-room_instance_add(argument0,528,336,door1_vert);
     // Mark
     global.mark_len_var = 3;
     global.mark_arr[0,0] = 289;
@@ -31,6 +29,7 @@ room_instance_add(argument0,528,336,door1_vert);
     global.mark_arr[2,0] = 447;
     global.mark_arr[2,1] = 301;
     global.mark_arr[2,2] = 0;
+    mark_create_scr();
     // 3D Draw
     d3d_start();
     global.draw_3d_var = true;

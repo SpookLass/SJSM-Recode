@@ -11,6 +11,7 @@ object_event_add
 (argument0,ev_create,0,'
     event_inherited();
     alarm_len_var = 1;
+    alarm_ini_scr();
     alarm_min_var = 60;
     alarm_max_var = 120;
     event_perform(ev_alarm,0);

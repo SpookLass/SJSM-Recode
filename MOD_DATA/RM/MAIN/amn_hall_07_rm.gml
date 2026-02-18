@@ -32,6 +32,7 @@ room_set_code
     global.mark_arr[3,0] = 286;
     global.mark_arr[3,1] = 387;
     global.mark_arr[3,2] = 0;
+    mark_create_scr();
     // 3D Draw
     d3d_start();
     global.draw_3d_var = true;
@@ -122,6 +123,6 @@ room_instance_add(argument0,432,384,wall_vert_obj);
 room_instance_add(argument0,496,352,wall_vert_obj);
 room_instance_add(argument0,432,320,wall_vert_obj);
 // Siren
-room_instance_add(argument0,320,288,siren_spawn_obj);
+//room_instance_add(argument0,320,288,siren_spawn_obj);
 // Grates
 room_instance_add(argument0,320,304,wall_grate_hor_obj);

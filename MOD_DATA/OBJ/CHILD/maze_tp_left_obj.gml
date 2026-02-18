@@ -8,6 +8,7 @@ object_set_visible(argument0,false);
 // Create
 object_event_add
 (argument0,ev_create,0,'
+    event_inherited();
     direction = 90;
     id_var = 0;
 ');

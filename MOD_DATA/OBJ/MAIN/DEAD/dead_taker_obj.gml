@@ -19,6 +19,7 @@ object_event_add
     z_off_var = 10;
     // Alarms
     alarm_len_var = 3;
+    alarm_ini_scr();
     set_alarm_scr(0,221.4); // 90
     set_alarm_scr(1,191.4); // 60
     fade_alarm_var = 20; // 18

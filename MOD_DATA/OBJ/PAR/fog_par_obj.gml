@@ -11,6 +11,11 @@ object_event_add
 (argument0,ev_create,0,'
     prio_var = 0;
     event_inherited();
+    if !variable_local_exists("fog_var") { fog_var = false; }
+    if !variable_local_exists("fog_color_var") { fog_color_var = c_black; }
+    if !variable_local_exists("fog_start_var") { fog_start_var = 0; }
+    if !variable_local_exists("fog_end_var") { fog_end_var = 0; }
+    if !variable_local_exists("fog_dark_var") { fog_dark_var = false; }
     event_user(0);
 ');
 // Room start

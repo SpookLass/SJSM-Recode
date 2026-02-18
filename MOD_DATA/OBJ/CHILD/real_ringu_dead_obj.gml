@@ -9,6 +9,7 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,0,'
+    load_var = false;
     if !file_exists(working_directory+"\The_Doll_House\SDH.exe") { event_inherited(); }
     else
     {
@@ -34,6 +35,7 @@ object_event_add
         inst_var = fmod_snd_play_scr(snd_01_var);
         // Alarms
         alarm_len_var = 4;
+        alarm_ini_scr();
         fade_alarm_var = 20;
         set_alarm_scr(0,48);
         set_alarm_scr(3,48);

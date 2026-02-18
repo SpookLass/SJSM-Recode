@@ -10,13 +10,13 @@ object_set_visible(argument0,true);
 global.doorframe_01_coll[0] = prop_to_coll_scr(0,doorframe_01_mdl_path);
 // Create event
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
     store_tex_var = door_bg_tex;
     event_inherited();
     solid_var = false;
     mdl_var = doorframe_01_mdl;
     mdl_path_var = doorframe_01_mdl_path;
-    no_grid_var = true;
+    grid_var = false;
     // Collisions
     coll_var[0] = global.doorframe_01_coll[0];
-");
+');

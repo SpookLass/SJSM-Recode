@@ -27,6 +27,7 @@ room_set_code
     global.mark_arr[2,0] = 560;
     global.mark_arr[2,1] = 465;
     global.mark_arr[2,2] = 0;
+    mark_create_scr();
     // 3D Draw
     d3d_start();
     global.draw_3d_var = true;
@@ -156,4 +157,4 @@ room_instance_add(argument0,912,480,wall_hor_obj);
 room_instance_add(argument0,96,464,wall_vert_obj);
 room_instance_add(argument0,928,464,wall_vert_obj);
 // White Face
-room_instance_add(argument0,880,464,WF_02_obj);
+// room_instance_add(argument0,880,464,wf_02_obj);

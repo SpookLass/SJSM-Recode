@@ -32,6 +32,7 @@ object_event_add
     // Alarm
     fade_alarm_var = 30;
     alarm_len_var = 4;
+    alarm_ini_scr();
     set_alarm_scr(0,270);
     set_alarm_scr(2,1);
     set_alarm_scr(3,irandom_range(3,6));

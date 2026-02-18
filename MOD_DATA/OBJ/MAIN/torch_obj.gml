@@ -14,13 +14,15 @@ object_event_add
     mdl_var = torch_mdl;
     mdl_path_var = torch_mdl_path;
     on_var = true;
+    if !variable_local_exists("gold_var") { gold_var = false; }
+    if !variable_local_exists("auto_var") { auto_var = false; }
     // Light stuff
     light_var = instance_create(x+lengthdir_x(-1.5,direction+90),y+lengthdir_y(-1.5,direction+90),light_torch_obj);
     light_var.z += z;
     light_var.gold_var = gold_var;
     light_var.color_var = !gold_var;
     light_var.par_var = id;
-    if auto_var { event_perform(ev_other,ev_user0); }
+    if auto_var { event_user(0); }
     // Gold
     door_var = noone;
 ');
@@ -52,36 +54,43 @@ object_event_add
     local.ztmp = z+16;
     with wall_par_obj
     {
-        if visible && tex_var == -1
-        && abs(x-local.xtmp) <= 16
-        && abs(y-local.ytmp) <= 16
-        && local.ztmp > z && local.ztmp < z+h_var
-        && !instance_position(x,y,light_wall_vert_obj)
+        // Gotta check because of walls with lower depth
+        if depth > other.depth
         {
-            local.light = instance_create(x,y,light_wall_vert_obj);
-            local.light.direction = direction;
-            local.light.z = other.z;
-            local.light.gold_var = other.gold_var;
-            local.light.color_var = !gold_var;
-            local.light.par_var = other.id;
+            if visible && tex_var == -1
+            && abs(x-local.xtmp) <= 16
+            && abs(y-local.ytmp) <= 16
+            && local.ztmp > z && local.ztmp < z+h_var
+            && !instance_position(x,y,light_wall_vert_obj)
+            {
+                local.light = instance_create(x,y,light_wall_vert_obj);
+                local.light.direction = direction;
+                local.light.z = other.z;
+                local.light.gold_var = other.gold_var;
+                local.light.color_var = !other.gold_var;
+                local.light.par_var = other.id;
+            }
         }
     }
     with floor_par_obj
     {
-        local.wtmp = w_var/2;
-        local.htmp = h_var/2;
-        if visible && tex_var == -1
-        && local.xtmp > x-16 && local.xtmp < x+16
-        && local.ytmp > y-16 && local.ytmp < y+16
-        && abs(z-local.ztmp) <= 16
-        && !instance_position(x,y,light_floor_obj)
+        if depth > other.depth
         {
-            local.light = instance_create(x,y,light_floor_obj);
-            local.light.direction = direction;
-            local.light.z = z;
-            local.light.gold_var = other.gold_var;
-            local.light.color_var = !gold_var;
-            local.light.par_var = other.id;
+            local.wtmp = w_var/2;
+            local.htmp = h_var/2;
+            if visible && tex_var == -1
+            && local.xtmp > x-16 && local.xtmp < x+16
+            && local.ytmp > y-16 && local.ytmp < y+16
+            && abs(z-local.ztmp) <= 16
+            && !instance_position(x,y,light_floor_obj)
+            {
+                local.light = instance_create(x,y,light_floor_obj);
+                local.light.direction = direction;
+                local.light.z = z;
+                local.light.gold_var = other.gold_var;
+                local.light.color_var = !other.gold_var;
+                local.light.par_var = other.id;
+            }
         }
     }
 ');

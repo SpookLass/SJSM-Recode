@@ -17,7 +17,9 @@ object_event_add
     snd_den_var = 2;
     snd_alarm_min_var = 80;
     snd_alarm_max_var = 240;
+    snd_dist_min_var = 0;
     snd_dist_max_var = 800;
+    amb_snd_dist_min_var = 0;
     amb_snd_dist_max_var = 800;
     // Translations
     ini_open(global.lang_var);
@@ -40,9 +42,9 @@ object_event_add
     sub_main_var = string_replace(ini_read_string("SUB","bab","SUB_bab"),"@n",name_var);
     sub_amb_var = ini_read_string("SUB","bab_amb","SUB_bab_amb");
     for (local.i=0; local.i<snd_main_len_var; local.i+=1;)
-    { snd_main_arr[local.i,1] = sub_main_var; }
+    { snd_main_arr[local.i,1] = sub_main_var; snd_main_arr[local.i,2] = false; }
     for (local.i=0; local.i<snd_amb_len_var; local.i+=1;)
-    { snd_amb_arr[local.i,1] = sub_amb_var; }
+    { snd_amb_arr[local.i,1] = sub_amb_var; snd_amb_arr[local.i,2] = false; }
     ini_close();
     // Variables
     type_var = 1;
@@ -69,7 +71,7 @@ object_event_add
     // Special
     eff_var = true;
     eff_alpha_min_var = 0.2;
-    eff_alpha_min_var = 0.6;
+    eff_alpha_max_var = 0.6;
     flesh_var = true;
     flesh_alarm_min_var = 160;
     flesh_alarm_max_var = 420;
@@ -90,6 +92,7 @@ object_event_add
     mus_prio_var = theme_mus_prio_const;
     // Assets
         // Search for existing assets to save memory
+    local.loaded = false;
     with object_index
     {
         if id != other.id && object_index == other.object_index
@@ -147,7 +150,7 @@ object_event_add
             flesh_door_var = false;
             w_01_var = 7.7; // 7
             w_02_var = 2.8; // 3.5
-            atk_range_var = coll_var[2];
+            atk_range_var = global.mon_coll[2];
             snd_len_var = 3;
             snd_dist_max_var = 600;
             for (local.i=0; local.i<3; local.i+=1;)
@@ -247,6 +250,7 @@ object_event_add
     }
     // Alarms
     alarm_len_var = 12;
+    alarm_ini_scr();
 ');
 // Destroy Event
 object_event_add

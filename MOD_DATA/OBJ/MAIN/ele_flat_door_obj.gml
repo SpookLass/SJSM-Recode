@@ -16,6 +16,7 @@ object_event_add
     dist_var = 0.1;
     z = z_start_var;
     alarm_len_var = 1;
+    alarm_ini_scr();
 ');
 // Step Event
 object_event_add

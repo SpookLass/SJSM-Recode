@@ -11,9 +11,9 @@ object_event_add
 (argument0,ev_create,1,'
     ini_open(global.lang_var);
     name_var = ini_read_string("NAME","hk","NAME_hk");
-	loop_snd_var[2] = string_replace(ini_read_string("SUB","hk","SUB_hk"),"@n",name_var);
-	hurt_snd_var[2] = string_replace(ini_read_string("SUB","hk_hurt","SUB_hk_hurt"),"@n",name_var);
-	snd_arr[local.i,1] = string_replace(ini_read_string("SUB","hk_breath","SUB_hk_breath"),"@n",name_var);
+	loop_snd_var[2] = string_replace(ini_read_string("SUB","hk","SUB_hk"),"@n",name_var); loop_snd_var[3] = false;
+	hurt_snd_var[2] = string_replace(ini_read_string("SUB","hk_hurt","SUB_hk_hurt"),"@n",name_var); hurt_snd_var[3] = false;
+	snd_arr[0,1] = string_replace(ini_read_string("SUB","hk_breath","SUB_hk_breath"),"@n",name_var); snd_arr[0,2] = false;
     ini_close();
     type_var = 0;
     spd_base_var = 1;
@@ -28,6 +28,7 @@ object_event_add
 	blood_spr_var = blood_kh_spr;
     // Assets
         // Search for existing assets to save memory
+	local.loaded = false;
     with object_index
     {
         if id != other.id && object_index == other.object_index
@@ -230,6 +231,7 @@ object_event_add
 	w_var = base_w_var;
 	h_var = base_h_var;
 	alarm_len_var = 9;
+	alarm_ini_scr();
 ');
 // Step Event
 object_event_add

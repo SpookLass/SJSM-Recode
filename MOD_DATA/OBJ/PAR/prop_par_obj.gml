@@ -30,12 +30,24 @@ snap_var
 object_event_add
 (argument0,ev_create,0,'
     event_inherited();
-    reflect_var = true;
+    if !variable_local_exists("reflect_var") { reflect_var = true; }
+    if !variable_local_exists("type_var") { type_var = 0; }
+    if !variable_local_exists("store_tex_var") { store_tex_var = -1; }
+    if !variable_local_exists("tex_w_var") { tex_w_var = 1; }
+    if !variable_local_exists("tex_l_var") { tex_l_var = 1; }
+    if !variable_local_exists("tex_h_var") { tex_h_var = 1; }
+    if !variable_local_exists("w_var") { w_var = 1; }
+    if !variable_local_exists("l_var") { l_var = 1; }
+    if !variable_local_exists("h_var") { h_var = 1; }
+    if !variable_local_exists("dist_var") { dist_var = 0; }
+    if !variable_local_exists("color_var") { color_var = true; }
+    if !variable_local_exists("close_var") { close_var = true; }
+    if !variable_local_exists("step_var") { step_var = 8; }
+    if !variable_local_exists("snap_var") { snap_var = false; }
+    if !variable_local_exists("solid_var") { solid_var = 0; }
+    if !variable_local_exists("grid_var") { grid_var = true; }
+    if !variable_local_exists("weapon_var") { weapon_var = false; }
     tex_var = store_tex_var;
-    tex_w_var = 1;
-    tex_l_var = 1;
-    tex_h_var = 1;
-    color_var = true;
     if snap_var > 0
     {
         switch snap_var

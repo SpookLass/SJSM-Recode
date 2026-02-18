@@ -17,6 +17,7 @@ object_event_add
     snd_den_var = 2;
     snd_alarm_min_var = 240;
     snd_alarm_max_var = 240;
+    snd_dist_min_var = 0;
     snd_dist_max_var = 600;
     // Charge sounds
     charge_snd_len_var = 1;
@@ -56,20 +57,20 @@ object_event_add
     {
         case 0: // Vernon Shaw
         {
-            wake_snd_var[2] = string_replace(ini_read_string("SUB","killer_wake","SUB_killer_wake"),"@n",name_var);
+            wake_snd_var[2] = string_replace(ini_read_string("SUB","killer_wake","SUB_killer_wake"),"@n",name_var); wake_snd_var[3] = false;
             charge_snd_arr[0,1] = wake_snd_var[2];
             snd_arr[0,1] = ini_read_string("SUB","killer_01","SUB_killer_01"); snd_arr[0,2] = true;
             snd_arr[1,1] = ini_read_string("SUB","killer_02","SUB_killer_02"); snd_arr[1,2] = true;
             snd_arr[2,1] = ini_read_string("SUB","killer_03","SUB_killer_03"); snd_arr[2,2] = true;
             local.sub = string_replace(ini_read_string("SUB","killer_breath","SUB_killer_breath"),"@n",name_var);
             for (local.i=0; local.i<breath_snd_len_var; local.i+=1;)
-            { breath_snd_arr[local.i,1] = local.sub; }
+            { breath_snd_arr[local.i,1] = local.sub; breath_snd_arr[local.i,2] = false; }
             break;
         }
         case 1: // DirectorFlik
         {
             snd_len_var = 9;
-            wake_snd_var[2] = string_replace(ini_read_string("SUB","killer_wake","SUB_killer_wake"),"@n",name_var);
+            wake_snd_var[2] = string_replace(ini_read_string("SUB","killer_wake","SUB_killer_wake"),"@n",name_var); wake_snd_var[3] = false;
             charge_snd_arr[0,1] = wake_snd_var[2];
             snd_arr[0,1] = ini_read_string("SUB","killer_hd_01","SUB_killer_hd_01"); snd_arr[0,2] = true;
             snd_arr[1,1] = ini_read_string("SUB","killer_hd_02","SUB_killer_hd_02"); snd_arr[1,2] = true;
@@ -82,14 +83,14 @@ object_event_add
             snd_arr[8,1] = ini_read_string("SUB","killer_hd_09","SUB_killer_hd_09"); snd_arr[8,2] = true;
             local.sub = string_replace(ini_read_string("SUB","killer_breath","SUB_killer_breath"),"@n",name_var);
             for (local.i=0; local.i<breath_snd_len_var; local.i+=1;)
-            { breath_snd_arr[local.i,1] = local.sub; }
+            { breath_snd_arr[local.i,1] = local.sub; breath_snd_arr[local.i,2] = false; }
             break;
         }
         case 2: // Spook Lass
         {
             snd_len_var = 4;
             breath_snd_len_var = 3;
-            wake_snd_var[2] = string_replace(ini_read_string("SUB","killer_wake","SUB_killer_wake"),"@n",name_var);
+            wake_snd_var[2] = string_replace(ini_read_string("SUB","killer_wake","SUB_killer_wake"),"@n",name_var); wake_snd_var[3] = false;
             charge_snd_arr[0,1] = wake_snd_var[2];
             snd_arr[0,1] = ini_read_string("SUB","killer_hd_01","SUB_killer_hd_01"); snd_arr[0,2] = true;
             snd_arr[1,1] = ini_read_string("SUB","killer_hd_02","SUB_killer_hd_02"); snd_arr[1,2] = true;
@@ -97,7 +98,7 @@ object_event_add
             snd_arr[3,1] = ini_read_string("SUB","killer_hd_09","SUB_killer_hd_09"); snd_arr[3,2] = true;
             local.sub = string_replace(ini_read_string("SUB","killer_breath","SUB_killer_breath"),"@n",name_var);
             for (local.i=0; local.i<breath_snd_len_var; local.i+=1;)
-            { breath_snd_arr[local.i,1] = local.sub; }
+            { breath_snd_arr[local.i,1] = local.sub; breath_snd_arr[local.i,2] = false; }
             break;
         }
         case 3: // Ryan J
@@ -119,14 +120,14 @@ object_event_add
             charge_snd_arr[2,1] = string_replace(ini_read_string("SUB","killer_charge_ryan_03","SUB_killer_charge_ryan_03"),"@n",name_var);
             local.sub = string_replace(ini_read_string("SUB","killer_mumble_ryan","SUB_killer_mumble_ryan"),"@n",name_var);
             for (local.i=0; local.i<breath_snd_len_var; local.i+=1;)
-            { breath_snd_arr[local.i,1] = local.sub; }
+            { breath_snd_arr[local.i,1] = local.sub; breath_snd_arr[local.i,2] = false; }
             break;
         }
     }
-    loop_snd_var[2] = string_replace(ini_read_string("SUB","killer_creep","SUB_killer_creep"),"@n",name_var);
-    drag_snd_arr[0,1] = ini_read_string("SUB","killer_drag","SUB_killer_drag");
-    drag_snd_arr[1,1] = drag_snd_arr[0,1];
-    drag_snd_arr[2,1] = drag_snd_arr[0,1];
+    loop_snd_var[2] = string_replace(ini_read_string("SUB","killer_creep","SUB_killer_creep"),"@n",name_var); loop_snd_var[3] = false;
+    drag_snd_arr[0,1] = ini_read_string("SUB","killer_drag","SUB_killer_drag"); drag_snd_arr[0,2] = false;
+    drag_snd_arr[1,1] = drag_snd_arr[0,1]; drag_snd_arr[1,2] = false;
+    drag_snd_arr[2,1] = drag_snd_arr[0,1]; drag_snd_arr[2,2] = false;
     ini_close();
     // Variables
     type_var = 1;
@@ -138,6 +139,7 @@ object_event_add
     h_var = 22;
     atk_range_var = 48;
     dead_rm_var = killer_dead_rm;
+    scary_var = false;
     // Theme
     mus_prio_var = mon_mus_prio_const;
     // Sprite stuff
@@ -174,6 +176,7 @@ object_event_add
     spr_arr_var[15,1] = 11;
     spr_arr_var[15,2] = 11;
     // Search for existing assets to save memory
+    local.loaded = false;
     with object_index
     {
         if id != other.id && object_index == other.object_index
@@ -367,7 +370,7 @@ object_event_add
             stam_spawn_min_var = 100;
             stam_spawn_max_var = 100;
             do_acc_var = true;
-            atk_range_var = coll_var[2];
+            atk_range_var = global.mon_coll[2];
         }
         case 0: // Recode
         {
@@ -375,7 +378,7 @@ object_event_add
             do_stam_var = true;
             dmg_var = 30;
             dmg_alarm_var = 60;
-            atk_range_var = coll_var[2];
+            atk_range_var = global.mon_coll[2];
             breath_snd_num_var = 0;
             // Parry
             do_hurt_var = true;
@@ -463,7 +466,7 @@ object_event_add
             scary_var = true;
             sprint_mult_var = 24; // WOW!
             dmg_var = 30;
-            atk_range_var = coll_var[2];
+            atk_range_var = global.mon_coll[2];
             break;
         }
     }
@@ -479,6 +482,7 @@ object_event_add
     else { mus_snd_var = main_mus_snd_var; }
     // Alarms
     alarm_len_var = 9;
+    alarm_ini_scr();
 ');
 // Destroy Event
 object_event_add

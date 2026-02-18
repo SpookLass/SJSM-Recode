@@ -1,6 +1,7 @@
 /*
 Argument 0: Print
 */
+local.i = 0;
 // Get the first file in the main directory
 local.file = file_find_first(main_directory_const+"\RM\MAIN\*.gml",-1);
 while (local.file != "")

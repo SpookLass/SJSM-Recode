@@ -1,7 +1,5 @@
 // Draw
-draw_clear_alpha(c_black,0);
-draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading settings...",1,1,0);
-screen_refresh();
+draw_load_scr("Loading settings...");
 // Load
 ini_open("settings.ini");
 global.fov_var = ini_read_real("MAIN","fov",fov_const);
@@ -39,7 +37,6 @@ global.rm_hud_var = ini_read_real("MAIN","rm_hud",rm_hud_const);
 global.bar_hud_var = ini_read_real("MAIN","bar_hud",bar_hud_const);
 global.tps_hud_var = ini_read_real("MAIN","tps_hud",tps_hud_const);
 // Controls & Multiplayer
-global.input_len_var = 24;
 for (local.i=0; local.i<8; local.i+=1;)
 {
     // Multiplayer
@@ -101,6 +98,4 @@ texture_set_interpolation(global.anti_alias_var);
 global.save_list = ds_list_create();
 ds_list_clear(global.save_list);
 // Draw (hope this works)
-draw_clear_alpha(c_black,0);
-draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loaded settings!",1,1,0);
-screen_refresh();
+draw_load_scr("Loaded settings!");

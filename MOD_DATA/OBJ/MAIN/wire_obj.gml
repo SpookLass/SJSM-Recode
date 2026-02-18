@@ -8,7 +8,7 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create event
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
     store_tex_var = choose(wire_01_bg_tex,wire_02_bg_tex,wire_03_bg_tex);
     event_inherited();
     solid_var = false;
@@ -16,4 +16,4 @@ object_event_add
     w_var = 32;
     h_var = 32;
     dist_var = 0.1;
-");
+');

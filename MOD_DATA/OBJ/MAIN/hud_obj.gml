@@ -10,7 +10,7 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,0,'
     event_inherited();
-    event_perform(ev_other,ev_room_start);
+    //event_perform(ev_other,ev_room_start);
     
     ini_open(global.lang_var);
 	rm_str_var = ini_read_string("UI","rm","UI_rm");
@@ -26,6 +26,9 @@ object_event_add
     // Taker
     taker_color_var = make_color_rgb(159,0,0);
     taker_cool_var = true;
+    taker_classic_var = false;
+    taker_x_var = 0;
+    taker_y_var = 0;
 ');
 // Room Start
 object_event_add
@@ -108,12 +111,12 @@ object_event_add
             if par_var.possess_var { local.index = par_var.mon_var; }
             with echidna_obj
             {
-                if id != local.index
+                if id != local.index && do_snd_var
                 {
                     local.dist = point_distance_3d_scr(x,y,z,global.cam_x_var[view_current],global.cam_y_var[view_current],global.cam_z_var[view_current]);
                     local.bool = false;
                     if local.dist < snd_dist_max_var && fmod_inst_is_play_scr(snd_var)
-                    && string(sub_var[0]) != "0" && (sub_var[1] || global.sub_var > 1) 
+                    && (sub_var[1] || global.sub_var > 1) 
                     {
                         local.bool = true;
                         local.str = sub_var[0];
@@ -238,7 +241,7 @@ object_event_add
                 {
                     with ds_list_find_value(global.mon_curr_list,local.i)
                     {
-                        if !hide_var && string(name_var) != "0"
+                        if !hide_var
                         {
                             local.str = string(name_var);
                             if global.mon_hud_var == 2 { local.str += ": "+string(dur_var); }
@@ -288,6 +291,8 @@ Movement
     Yaw: "+string(par_var.yaw_var)+"
     Pitch: "+string(par_var.pitch_var)+"
     On Floor: "+string(par_var.on_floor_var)+"
+    Collided: "+string(par_var.did_coll_var)+"
+    Slide: "+string(par_var.did_slide_var)+"
 Looking
     Eye Yaw: "+string(par_var.eye_yaw_var)+"
     Eye Pitch: "+string(par_var.eye_pitch_var)+"

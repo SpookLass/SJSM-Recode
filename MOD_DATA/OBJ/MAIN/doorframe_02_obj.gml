@@ -16,7 +16,7 @@ object_event_add
     solid_var = true;
     mdl_var = doorframe_02_mdl;
     mdl_path_var = doorframe_02_mdl_path;
-    no_grid_var = true;
+    grid_var = false;
     // Collisions
     coll_var[0] = global.doorframe_02_coll[0];
 ');

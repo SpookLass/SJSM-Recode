@@ -33,6 +33,7 @@ object_event_add
     image_yscale = random_range(scale_min_var,scale_max_var);
     // Alarm
     alarm_len_var = 1;
+    alarm_ini_scr();
     set_alarm_scr(0,rand_rate_var);
 ');
 // Step Event

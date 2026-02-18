@@ -15,6 +15,7 @@ object_event_add
     // Dollhouse
     rand_rate_var = 1;
     alarm_len_var = 1;
+    alarm_ini_scr();
     set_alarm_scr(0,rand_rate_var);
 ');
 // Step Event

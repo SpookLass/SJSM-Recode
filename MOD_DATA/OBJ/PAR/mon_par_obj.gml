@@ -31,10 +31,10 @@ object_event_add
 // Create Event
 object_event_add
 (argument0,ev_create,0,'
+    event_inherited();
     event_perform(ev_create,1);
     event_perform(ev_create,2);
     event_perform(ev_create,3);
-    event_inherited();
 ')
 // Room End Event
 object_event_add
@@ -55,4 +55,9 @@ object_event_add
 (argument0,ev_destroy,0,'
     event_inherited();
     global.mon_fail_var = 0;
+    if mus_prio_var > amb_mus_prio_const
+    {
+        mus_prio_var = -1;
+        with mus_control_obj { event_user(0); }
+    }
 ');

@@ -15,16 +15,17 @@ object_event_add
     snd_den_var = 9;
     snd_alarm_min_var = 60;
     snd_alarm_max_var = 130;
+    snd_dist_min_var = 0;
     snd_dist_max_var = 512;
     // Translations
     ini_open(global.lang_var);
     name_var = ini_read_string("NAME","wc","NAME_wc");
     local.sub = string_replace(ini_read_string("SUB","wc","SUB_wc"),"@n",name_var);
     for (local.i=0; local.i<snd_len_var; local.i+=1)
-    { snd_arr[local.i,1] = local.sub; }
-    atk_start_snd_var[2] = local.sub;
-    hurt_snd_var[2] = local.sub;
-    dead_snd_var[1] = local.sub;
+    { snd_arr[local.i,1] = local.sub; snd_arr[local.i,2] = false }
+    atk_start_snd_var[2] = local.sub; atk_start_snd_var[3] = false;
+    hurt_snd_var[2] = local.sub; hurt_snd_var[3] = false;
+    dead_snd_var[1] = local.sub; dead_snd_var[2] = false;
     ini_close();
     // Main
     type_var = 1;
@@ -63,11 +64,13 @@ object_event_add
     sight_dist_var = 128/3;
     sight_yaw_var = 60;
     alarm_len_var = 9;
+    alarm_ini_scr();
     // Shadow
     shadow_z_var = 0.3;
     shadow_w_var = 10;
     // Assets
         // Search for existing assets to save memory
+    local.loaded = false;
     with object_index
     {
         if id != other.id && object_index == other.object_index

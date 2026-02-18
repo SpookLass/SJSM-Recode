@@ -18,6 +18,7 @@ object_event_add
     l_var = 0;
     direction = random(360);
     alarm_len_var = 1;
+    alarm_ini_scr();
     set_alarm_scr(0,117);
 ');
 // Alarm 0

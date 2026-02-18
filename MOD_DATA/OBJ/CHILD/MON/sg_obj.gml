@@ -15,6 +15,7 @@ object_event_add
     snd_den_var = 2;
     snd_alarm_min_var = 180;
     snd_alarm_max_var = 300;
+    snd_dist_min_var = 0;
     snd_dist_max_var = 600;
     hurt_snd_var = 4;
     // Translation
@@ -41,7 +42,7 @@ object_event_add
     }
     local.sub = string_replace(ini_read_string("SUB","sg","SUB_sg"),"@n",name_var);
     for (local.i=0; local.i<snd_len_var; local.i+=1)
-    { snd_arr[local.i,1] = local.sub; }
+    { snd_arr[local.i,1] = local.sub; snd_arr[local.i,2] = false; }
     hurt_snd_var[2] = local.sub;
     ini_close();
     // Variables
@@ -52,6 +53,7 @@ object_event_add
     dmg_alarm_var = 120;
     atk_range_var = 48;
     alarm_len_var = 10;
+    alarm_ini_scr();
     blood_spr_var = blood_kh_spr;
     // No official value
     dur_var = irandom_range(10,20); 
@@ -85,6 +87,7 @@ object_event_add
     mus_prio_var = mon_mus_prio_const;
     // Assets
         // Search for existing assets to save memory
+    local.loaded = false;
     with object_index
     {
         if id != other.id && object_index == other.object_index
@@ -143,7 +146,7 @@ object_event_add
             // charge_alarm_01_var = 15;
             spawn_dist_var = 96;
             dmg_var = 30;
-            atk_range_var = coll_var[2];
+            atk_range_var = global.mon_coll[2];
             break;
         }
         case 2: // HD

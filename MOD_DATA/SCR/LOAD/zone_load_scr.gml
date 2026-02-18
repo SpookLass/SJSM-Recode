@@ -2,9 +2,7 @@
 Argument 0: Print
 */
 // Draw
-draw_clear_alpha(c_black,0);
-draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading endless zones...",1,1,0);
-screen_refresh();
+draw_load_scr("Loading endless zones...");
 global.zone_len_var = 10;
 // Zone 0: Basic
 global.zone_arr[0] = ds_list_create();
@@ -1047,9 +1045,7 @@ ds_list_add(global.zone_arr[9],w_hall_13_rm);
 ds_list_add(global.zone_arr[9],w_hall_14_rm);
 ds_list_add(global.zone_arr[9],w_hall_15_rm);
 // Draw
-draw_clear_alpha(c_black,0);
-draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading story zones...",1,1,0);
-screen_refresh();
+draw_load_scr("Loading story zones...");
 // Story Zones
 global.story_zone_len_var = 12; // Will be 12
 // Story Zone 0: 0-50
@@ -1815,6 +1811,8 @@ ds_list_add(global.story_zone_arr[11],stor_06_rm); ds_list_add(global.story_zone
 ds_list_add(global.story_zone_arr[11],stor_07_rm); ds_list_add(global.story_zone_arr[11],stor_07_rm);
 ds_list_add(global.story_zone_arr[11],stor_08_rm); ds_list_add(global.story_zone_arr[11],stor_08_rm);
 // Rare Zones
+// Draw
+draw_load_scr("Loading rare zones...");
 // Rare Zone 0-3, 5, 8, S0-7, and S9-10: Basic
 global.rare_zone_arr[0] = ds_list_create();
 ds_list_clear(global.rare_zone_arr[0]);
@@ -1898,6 +1896,4 @@ global.rare_zone_var = global.rare_zone_arr[global.zone_num_var];
 global.rm_list_var = ds_list_create();
 zone_reset_scr();
 // Draw
-draw_clear_alpha(c_black,0);
-draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loaded zones!",1,1,0);
-screen_refresh();
+draw_load_scr("Loaded zones!");

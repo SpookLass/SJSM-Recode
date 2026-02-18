@@ -32,6 +32,7 @@ object_event_add
     // Axe
     weapon_var = true;
     alarm_len_var = 1;
+    alarm_ini_scr();
     alarm_var = 60;
     angle_max_var = -10;
 ');

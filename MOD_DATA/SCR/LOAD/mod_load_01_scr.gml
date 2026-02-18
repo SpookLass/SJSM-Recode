@@ -25,12 +25,8 @@ while (local.file != "")
     file_find_next();
     local.i += 1;
     // Draw
-    draw_clear_alpha(c_black,0);
-    draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading mods ("+string(local.i)+")...",1,1,0);
-    screen_refresh();
+    draw_load_scr("Loading mods ("+string(local.i)+")...");
 }
 file_find_close();
 // Draw (hope this works)
-draw_clear_alpha(c_black,0);
-draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loaded mods!",1,1,0);
-screen_refresh();
+draw_load_scr("Loaded mods!");

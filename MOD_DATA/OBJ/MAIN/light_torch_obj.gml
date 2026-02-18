@@ -15,9 +15,9 @@ object_event_add
     h_var = 4.8;
     w_var = 3;
     spr_var = torch_spr;
+    spr_id_var = 0;
     par_var = noone;
     color_var = true;
-    event_inherited();
 ');
 // Step event
 object_event_add

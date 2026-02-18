@@ -6,7 +6,12 @@ object_set_persistent(argument0,false);
 object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
-
+// Create
+object_event_add
+(argument0,ev_create,0,'
+    var alarm_arr;
+    alarm_len_var = 0;
+');
 // Begin Step
 object_event_add
 (argument0,ev_step,ev_step_begin,'

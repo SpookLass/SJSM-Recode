@@ -1,6 +1,6 @@
 object_set_depth(argument0,-1);
 object_set_mask(argument0,noone);
-object_set_parent(argument0,par_var);
+object_set_parent(argument0,par_obj);
 object_set_persistent(argument0,false);
 object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
@@ -18,6 +18,7 @@ object_event_add
 object_event_add
 (argument0,ev_step,ev_step_normal,'
     // Praying this works
+    local.dothing = false;
     with player_obj
     {
         local.dir = deg_diff_scr(other.direction,point_direction(other.x,other.y,x,y));

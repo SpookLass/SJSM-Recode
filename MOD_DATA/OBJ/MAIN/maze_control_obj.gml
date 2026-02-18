@@ -1,6 +1,6 @@
 object_set_depth(argument0,-1);
 object_set_mask(argument0,noone);
-object_set_parent(argument0,par_var);
+object_set_parent(argument0,par_obj);
 object_set_persistent(argument0,false);
 object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
@@ -8,6 +8,8 @@ object_set_visible(argument0,false);
 // Create
 object_event_add
 (argument0,ev_create,0,'
+    event_inherited();
+    prog_var = 0;
     ini_open(global.lang_var);
     str_01_var = ini_read_string("UI","harp_01","UI_harp_01");
     str_02_var = ini_read_string("UI","harp_02","UI_harp_02");

@@ -13,19 +13,24 @@ global.jsl_coll[0] = prop_to_coll_scr(9,'',-global.js_coll[2],0,global.js_coll[1
 // Create event
 object_event_add
 (argument0,ev_create,0,'
+    note_var = noone;
+    load_var = false;
+    inst_var = noone;
+    silent_var = false;
     if global.js_override_var
     {
         chance_num_var = global.js_override_num_var;
         chance_den_var = global.js_override_den_var;
     }
-    else if chance_num_var == 0
+    else if !variable_local_exists("chance_num_var")
     {
         chance_num_var = 1;
         chance_den_var = global.js_chance_var;
     }
     if frac_chance_scr(chance_num_var,chance_den_var)
     {
-        snd_dist_max_var = -1;
+        snd_dist_min_var = 0;
+        snd_dist_max_var = 0;
         snd_3d_var = false;
         freeze_var = true;
         rotate_var = false;
@@ -56,7 +61,7 @@ object_event_add
             }
         }
         // Texture
-        bg_load_var = true;
+        load_var = true;
         if global.mode_var == 0
         {
             if global.rm_count_var < 600 { local.tex = irandom(6); local.snd = global.js_snd_arr[irandom(7)]; }
@@ -79,7 +84,8 @@ object_event_add
         w_var = 14;
         h_var = 14;
         radius_var = 1;
-        base_dir_var += 180;
+        if variable_local_exists("base_dir_var") { base_dir_var += 180; }
+        else { base_dir_var = 180; }
         jump_dir_var = -90;
         direction = base_dir_var;
         dist_var = 0.1;
@@ -87,13 +93,14 @@ object_event_add
         // Special
         delay_var = 10;
         alarm_len_var = 1;
+        alarm_ini_scr();
         weapon_var = true;
         // Collisions
         coll_var[0] = global.jsr_coll[0];
         coll_var[1] = global.js_coll[1];
         coll_var[2] = global.js_coll[2];
         // Trigger
-        if trig_var == 0
+        if !variable_local_exists("trig_var")
         {
             with instance_create(x+lengthdir_x(16,base_dir_var-90),y+lengthdir_y(16,base_dir_var-90),js_trig_obj)
             {
@@ -142,14 +149,13 @@ object_event_add
                 visible = false;
             }
         }
-        else { note_var = noone; }
     }
     else { instance_destroy(); }
 ');
 // Destroy
 object_event_add
 (argument0,ev_destroy,0,'
-    if note_var != 0 && instance_exists(note_var)
+    if instance_exists(note_var)
     { with note_var { instance_destroy(); }}
     event_user(0);
 ');
@@ -161,12 +167,12 @@ object_event_add
 // Delete background
 object_event_add
 (argument0,ev_other,ev_user0,'
-    if bg_load_var
+    if load_var
     {
         background_delete(bg_01_var);
         background_delete(bg_02_var);
         fmod_snd_free_scr(snd_var);
-        bg_load_var = false;
+        load_var = false;
     }
 ');
 // Jumpscare!
@@ -204,7 +210,7 @@ object_event_add
         direction = base_dir_var+jump_dir_var;
         set_alarm_scr(0,delay_var);
     }
-    if note_var != 0 && instance_exists(note_var)
+    if instance_exists(note_var)
     {
         with note_var
         {
@@ -225,7 +231,7 @@ object_event_add
     if alarm_arr[0,0] > 0
     {
         direction = lerp_scr(base_dir_var,base_dir_var+jump_dir_var,alarm_arr[0,0]/alarm_arr[0,1]);
-        if note_var != 0 && instance_exists(note_var)
+        if instance_exists(note_var)
         {
             with note_var
             {
@@ -242,7 +248,7 @@ object_event_add
 object_event_add
 (argument0,ev_alarm,0,'
     direction = base_dir_var;
-    if note_var != 0 && instance_exists(note_var)
+    if instance_exists(note_var)
     {
         with note_var
         {
@@ -264,7 +270,7 @@ object_event_add
         fmod_inst_stop_scr(inst_var);
         fmod_snd_play_scr(choose(card_01_snd,card_02_snd,card_03_snd,card_04_snd));
         hurt_target_var.violence_var += 1;
-        if note_var != 0 && instance_exists(note_var)
+        if instance_exists(note_var)
         {
             with note_var
             { instance_destroy(); }

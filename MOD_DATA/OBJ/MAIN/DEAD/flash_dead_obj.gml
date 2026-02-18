@@ -14,6 +14,7 @@ object_event_add
     alarm_var = 3;
     flash_alarm_var = 1;
     alarm_len_var = 1;
+    alarm_ini_scr();
     set_alarm_scr(0,alarm_var);
 ');
 // Draw Event

@@ -1,7 +1,5 @@
 // Draw
-draw_clear_alpha(c_black,0);
-draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading particles...",1,1,0);
-screen_refresh();
+draw_load_scr("Loading particles...");
 // Rain
 globalvar rain_part_sys;
 globalvar rain_part_type;
@@ -68,6 +66,4 @@ part_emitter_region(film_part_sys,film_part_emit,0,1280,0,720,ps_shape_rectangle
 part_system_automatic_draw(film_part_sys,false);
 part_system_automatic_update(film_part_sys,false);
 // Draw
-draw_clear_alpha(c_black,0);
-draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loaded particles!",1,1,0);
-screen_refresh();
+draw_load_scr("Loaded particles!");

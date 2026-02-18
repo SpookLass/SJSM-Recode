@@ -1,7 +1,7 @@
 // Builtin Variables
 object_set_depth(argument0,-100);
 object_set_mask(argument0,noone);
-object_set_parent(argument0,par_obj);
+object_set_parent(argument0,par_3d_obj);
 object_set_persistent(argument0,false);
 object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
@@ -31,15 +31,18 @@ object_event_add
     rm_count_var = 1;
     delay_var = 20;
     zone_var = -1;
+    if !variable_local_exists("lock_var") { lock_var = false; }
+    player_var = 0;
     // Alarm
     alarm_len_var = 1;
+    alarm_ini_scr();
 ');
 // Room Start Event
 // Moved here to prevent monster conflicts
 object_event_add
 (argument0,ev_other,ev_room_start,'
     event_inherited(); 
-    if rm_var == 0
+    if !variable_local_exists("rm_var")
     {
         // Elevator
         switch global.ele_type_var
@@ -63,7 +66,7 @@ object_event_add
                 break;
             }
         }
-        if rm_var == 0
+        if !variable_local_exists("rm_var")
         {
             // Rare Rooms
             if !instance_exists(mon_par_obj) && global.rare_chance_var > 0 && frac_chance_scr(1,global.rare_chance_var)
@@ -164,7 +167,7 @@ object_event_add
         local.set = false;
         with door_trig_obj
         {
-            if zone_var == other.zone_var && rm_var != 0 && id != other.id
+            if zone_var == other.zone_var && variable_local_exists("rm_var") && id != other.id
             {
                 other.rm_var = rm_var;
                 local.set = true;

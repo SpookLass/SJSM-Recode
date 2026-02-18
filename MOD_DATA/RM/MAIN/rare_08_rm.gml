@@ -45,7 +45,7 @@ for (local.i=0; local.i<8; local.i+=1;)
 room_set_view(argument0,0,true,0,0,1280,720,0,0,1280,720,32,32,-1,-1,noone);
 // Effects
 room_instance_add(argument0,0,0,fog_01_obj);
-room_instance_add(argument0,0,0,color_dark_obj);
+room_instance_add(argument0,0,0,dark_color_obj);
 // Floors
 room_instance_add(argument0,352,608,floor_obj);
 room_instance_add(argument0,352,640,floor_obj);
@@ -183,12 +183,6 @@ room_instance_add(argument0,192,352,wall_vert_obj);
 room_instance_add(argument0,64,288,wall_vert_obj);
 room_instance_add(argument0,64,320,wall_vert_obj);
 room_instance_add(argument0,64,352,wall_vert_obj);
-// Props
-room_instance_add(argument0,80,368,torch_south_obj);
-room_instance_add(argument0,176,368,torch_south_obj);
-room_instance_add(argument0,128,320,rug_rand_rot_obj);
-room_instance_add(argument0,176,288,chair_rand_obj);
-room_instance_add(argument0,128,352,table_obj);
 // Endless Room Control
 room_instance_add(argument0,1152,224,wall_inv_vert_obj);
 room_instance_add(argument0,752,224,endless_ctrl_obj);
@@ -261,3 +255,9 @@ room_instance_add(argument0,160,192,endless_wall_vert_south_obj);
 room_instance_add(argument0,160,256,endless_wall_vert_north_obj);
 // Torch
 room_instance_add(argument0,1184,224,endless_torch_obj);
+// Props
+room_instance_add(argument0,80,368,torch_south_obj);
+room_instance_add(argument0,176,368,torch_south_obj);
+room_instance_add(argument0,128,320,rug_rand_rot_obj);
+room_instance_add(argument0,176,288,chair_rand_obj);
+room_instance_add(argument0,128,352,table_obj);

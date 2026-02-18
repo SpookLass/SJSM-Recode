@@ -3,10 +3,10 @@ Argument 0: Room Variable (same for all rooms)
 */
 room_set_code
 (
-    argument0,"
+    argument0,'
     // Name
     ini_open(global.lang_var);
-    global.rm_name_var = ini_read_string('ROOM','flesh','ROOM_flesh')+' 7';
+    global.rm_name_var = ini_read_string("ROOM","flesh","ROOM_flesh")+" 7";
     ini_close();
     // Spawn
     global.spawn_len_var = 2;
@@ -18,14 +18,12 @@ room_set_code
     global.spawn_arr[1,1] = 352;
     global.spawn_arr[1,2] = 0;
     global.spawn_arr[1,3] = 180;
-    // Mark
-    global.mark_len_var = -1;
     // 3D Draw
     d3d_start();
     global.draw_3d_var = true;
     // Doors
     spawn_create_scr(true,false);
-");
+');
 // Room settings
 room_set_width(argument0,1280);
 room_set_height(argument0,720);

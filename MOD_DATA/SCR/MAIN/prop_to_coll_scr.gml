@@ -18,7 +18,7 @@ switch argument0
     case 0:
     {
         if file_exists(string(argument1))
-        { p3dc_add_mdl_scr(argument1,x,y,z); }
+        { p3dc_add_mdl_scr(argument1,0,0,0); }
         break;
     }
     case 1:

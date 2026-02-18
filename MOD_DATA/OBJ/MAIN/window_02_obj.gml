@@ -10,13 +10,13 @@ object_set_visible(argument0,true);
 global.window_02_coll[0] = prop_to_coll_scr(0,window_02_mdl_path);
 // Create event
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
     store_tex_var = -1;
     event_inherited();
     solid_var = true;
     mdl_var = window_02_mdl;
     mdl_path_var = window_02_mdl_path;
-    no_grid_var = true;
+    grid_var = false;
     // Collisions
     coll_var[0] = global.window_02_coll[0];
-");
+');

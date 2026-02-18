@@ -21,6 +21,7 @@ object_event_add
     scale_max_var = 768;
     image_yscale = random_range(scale_min_var,scale_max_var);
     alarm_len_var = 1;
+    alarm_ini_scr();
     alarm_var = 30;
     set_alarm_scr(0,alarm_var);
 ');

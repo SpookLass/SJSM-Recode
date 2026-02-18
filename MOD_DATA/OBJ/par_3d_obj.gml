@@ -10,8 +10,22 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,0,'
     event_inherited();
-    depth_base_var = depth;
+    spd_var = 0;
+    x_spd_var = 0;
+    y_spd_var = 0;
+    z_spd_var = 0;
+    yaw_var = 0;
+    pitch_var = 0;
+    z = 0;
     zstart = z;
+    do_coll_var = false;
+    grav_var = 0;
+    depth_base_var = depth;
+    did_coll_var = false;
+    did_slide_var = false;
+    fall_var = true;
+    fall_temp_var = false;
+    on_floor_var = false;
 ');
 // End Step
 object_event_add

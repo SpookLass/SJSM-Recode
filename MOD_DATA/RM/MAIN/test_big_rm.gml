@@ -20,8 +20,6 @@ room_set_code
     global.spawn_arr[1,1] = "+string(16+(round(local.height/2)*32))+";
     global.spawn_arr[1,2] = 0;
     global.spawn_arr[1,3] = 180;
-    // Mark
-    global.mark_len_var = -1;
     // 3D Draw
     d3d_start();
     global.draw_3d_var = true;
@@ -37,8 +35,8 @@ for (local.i=0; local.i<8; local.i+=1;)
 { room_set_view(argument0,local.i,false,0,0,1280,720,0,0,1280,720,32,32,-1,-1,noone); }
 room_set_view(argument0,0,true,0,0,1280,720,0,0,1280,720,32,32,-1,-1,noone);
 // Effects
-room_instance_add(argument0,0,0,fog_obj);
-room_instance_add(argument0,0,0,color_control_02_obj);
+room_instance_add(argument0,0,0,fog_big_obj);
+room_instance_add(argument0,0,0,color_control_dark_obj);
 room_instance_add(argument0,0,0,rand_mon_spawn_obj);
 room_instance_add(argument0,0,0,amb_control_obj);
 // Floors

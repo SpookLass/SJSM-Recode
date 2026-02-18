@@ -11,9 +11,7 @@ while (local.file != "")
     local.file = file_find_next();
     local.i += 1;
     // Draw
-    draw_clear_alpha(c_black,0);
-    draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading models ("+string(local.i)+")...",1,1,0);
-    screen_refresh();
+    draw_load_scr("Loading models ("+string(local.i)+")...");
 }
 file_find_close();
 // Mod stuff
@@ -28,13 +26,9 @@ for (local.j=0; local.j<ds_list_size(global.mod_list); local.j+=1;)
         local.file = file_find_next();
         local.i += 1;
         // Draw
-        draw_clear_alpha(c_black,0);
-        draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading mod models ("+string(local.i)+")...",1,1,0);
-        screen_refresh();
+        draw_load_scr("Loading mod models ("+string(local.i)+")...");
     }
     file_find_close();
 }
 // Draw
-draw_clear_alpha(c_black,0);
-draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loaded models!",1,1,0);
-screen_refresh();
+draw_load_scr("Loaded models!");

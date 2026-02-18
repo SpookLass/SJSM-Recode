@@ -26,7 +26,7 @@ object_event_add
             break;
         }
     }
-    loop_snd_var[2] = string_replace(ini_read_string("SUB","brain","SUB_brain"),"@n",name_var);
+    loop_snd_var[2] = string_replace(ini_read_string("SUB","brain","SUB_brain"),"@n",name_var); loop_snd_var[3] = false;
     ini_close();
     type_var = 0;
     spd_base_var = 0.8;
@@ -42,9 +42,11 @@ object_event_add
     // Sounds
     do_snd_var = true;
     loop_snd_var[0] = true;
+    loop_snd_dist_min_var = 0;
     loop_snd_dist_max_var = 600;
     // Assets
         // Search for existing assets to save memory
+    local.loaded = false;
     with object_index
     {
         if id != other.id && object_index == other.object_index

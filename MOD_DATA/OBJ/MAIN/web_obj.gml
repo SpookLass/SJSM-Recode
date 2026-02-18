@@ -8,7 +8,7 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create event
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
     snap_var = 2; // Snap to ceiling
     store_tex_var = sprite_get_texture(web_spr,irandom(sprite_get_number(web_spr)-1));
     event_inherited();
@@ -16,4 +16,4 @@ object_event_add
     w_var = 12;
     h_var = -16; // Hang down
     solid_var = false;
-");
+');

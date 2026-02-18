@@ -45,6 +45,7 @@ object_event_add
     margin_var = 64;
     // Alarms
     alarm_len_var = 2;
+    alarm_ini_scr();
     set_alarm_scr(0,180);
     // Main
     x_spd_var = 80;

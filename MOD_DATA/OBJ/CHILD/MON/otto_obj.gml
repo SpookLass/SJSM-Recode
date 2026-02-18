@@ -15,6 +15,7 @@ object_event_add
     snd_den_var = 2;
     snd_alarm_min_var = 300;
     snd_alarm_max_var = 480;
+    snd_dist_min_var = 0;
     snd_dist_max_var = 600;
     wake_snd_var[0] = true;
     // Translations
@@ -45,8 +46,8 @@ object_event_add
     }
     local.sub = string_replace(ini_read_string("SUB","otto","SUB_otto"),"@n",name_var);
     for (local.i=0; local.i<snd_len_var; local.i+=1)
-    { snd_arr[local.i,1] = local.sub; }
-    wake_snd_var[1] = local.sub;
+    { snd_arr[local.i,1] = local.sub; snd_arr[local.i,2] = false; }
+    wake_snd_var[2] = local.sub; wake_snd_var[3] = false;
     ini_close();
     type_var = 1;
     spd_base_var = 1/6; // 0.1r6
@@ -62,6 +63,7 @@ object_event_add
     anim_type_var = 4;
     // Assets
         // Search for existing assets to save memory
+    local.loaded = false;
     with object_index
     {
         if id != other.id && object_index == other.object_index

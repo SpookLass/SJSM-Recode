@@ -22,8 +22,6 @@ room_set_code
     global.spawn_arr[2,1] = 608;
     global.spawn_arr[2,2] = 0;
     global.spawn_arr[2,3] = 180;
-    // Mark
-    global.mark_len_var = 0;
     // 3D Draw
     d3d_start();
     global.draw_3d_var = true;
@@ -123,8 +121,8 @@ room_instance_add(argument0,304,512,wall_vert_obj);
 // Props
 room_instance_add(argument0,292,520,table_obj);
 room_instance_add(argument0,240,512,chair_east_obj);
-room_instance_add(argument0,292,508,fan_obj);
 room_instance_add(argument0,292,508,table_obj);
 // Phone
+/*room_instance_add(argument0,292,508,fan_obj);
 room_instance_add(argument0,272,512,phone_trig_obj);
-room_instance_add(argument0,292,517,phone_obj);
+room_instance_add(argument0,292,517,phone_obj);*/
