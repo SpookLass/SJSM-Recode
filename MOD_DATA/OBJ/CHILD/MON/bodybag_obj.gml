@@ -10,36 +10,13 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,1,'
     ini_open(global.lang_var);
-    switch global.name_var
-    {
-        case name_og_const:
-        case name_hd_const:
-        {
-            name_var = ini_read_string("NAME","bodybag","NAME_bodybag");
-            break;
-        }
-        case name_fanon_const:
-        {
-            name_var = ini_read_string("NAME","bodybag_fanon","NAME_bodybag_fanon");
-            break;
-        }
-        case name_num_og_const:
-        {
-            name_var = ini_read_string("NAME","bodybag_num_og","NAME_bodybag_num_og");
-            break;
-        }
-        case name_num_hd_const:
-        {
-            name_var = ini_read_string("NAME","bodybag_num_hd","NAME_bodybag_num_hd");
-            break;
-        }
-    }
+    name_var = translate_mon_str_scr("body",global.name_var);
     wake_snd_var[2] = string_replace(ini_read_string("SUB","body","SUB_body"),"@n",name_var); wake_snd_var[3] = false;
     ini_close();
+    // Variables
     type_var = 1;
     spd_base_var = 0.8;
     spr_spd_var = 1;
-    tex_var = background_get_texture(bg_var);
     dur_var = irandom_range(10,15);
     delay_var = 180;
     dmg_var = 20;
@@ -90,6 +67,7 @@ object_event_add
     mdl_pitch_var = 90;
     shake_var = 0.1;
     inf_stam_var = true;
+    spin_var = false;
     spin_rate_var = 5;
     // Effects
     eff_fade_var = false;
@@ -149,7 +127,7 @@ object_event_add
     alarm_ini_scr();
     // Bools
     do_mdl_var = true;
-    do_snd_var = -1;
+    do_snd_var = false;
 ');
 // Create End Event
 object_event_add
@@ -161,6 +139,7 @@ object_event_add
 object_event_add
 (argument0,ev_destroy,0,'
     event_inherited();
+    local.bool = false;
     with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
     if !local.bool
     {
@@ -197,7 +176,7 @@ object_event_add
         fade_var = other.eff_fade_var;
         set_alarm_scr(0,60);
         // Set camera to player
-        cam_id_var = other.attack_target_var.cam_id_var;
+        cam_id_var = -1;
     }
 ');
 // Room Start Event
@@ -260,7 +239,7 @@ object_event_add
             fade_var = other.eff_fade_var;
             set_alarm_scr(0,60);
             // Set camera to player
-            cam_id_var = other.attack_target_var.cam_id_var;
+            cam_id_var = other.atk_target_var.cam_id_var;
         }
     }
 ');

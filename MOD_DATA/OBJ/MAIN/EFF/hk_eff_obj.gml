@@ -12,6 +12,7 @@ object_event_add
     event_inherited();
     image_xscale = 2;
     image_yscale = 2;
+    old_var = false;
     // Dollhouse
     rand_rate_var = 1;
     alarm_len_var = 1;
@@ -37,7 +38,14 @@ object_event_add
     if global.cam_type_var[view_current] == cam_alive_const
     {
         local.alpha = 0;
-        with hk_obj { if is_seen_var && view_current == target_var.cam_id_var { local.alpha = max(local.alpha,static_alpha_var); }}
+        with hk_obj
+        {
+            if is_seen_var && instance_exists(target_var)
+            {
+                if view_current == target_var.cam_id_var 
+                { local.alpha = max(local.alpha,static_alpha_var); }
+            }
+        }
         if local.alpha > 0
         {
             if view_wview[view_current] >= view_hview[view_current]

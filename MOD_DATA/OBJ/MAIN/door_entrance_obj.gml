@@ -13,6 +13,7 @@ object_event_add
     event_inherited();
     mdl_var = door_mdl;
     mdl_path_var = door_mdl_path;
+    open_var = false;
 ');
 // Break
 object_event_add

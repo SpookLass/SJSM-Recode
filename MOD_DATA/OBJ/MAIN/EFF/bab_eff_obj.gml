@@ -11,6 +11,7 @@ object_event_add
 (argument0,ev_create,0,'
     event_inherited();
     // Animate
+    spr_id_var = 0;
     anim_alarm_min_var = 6;
     anim_alarm_max_var = 15;
     // Alpha

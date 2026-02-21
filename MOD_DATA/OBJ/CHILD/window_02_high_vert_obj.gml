@@ -8,7 +8,7 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create event
 object_event_add
-(argument0,ev_create,0,"
-    z = 32;
+(argument0,ev_create,0,'
     event_inherited();
-");
+    z = 32;
+');

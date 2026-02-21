@@ -14,8 +14,17 @@ object_event_add
     // Default settings
 object_event_add
 (argument0,ev_create,2,'
+    // Variables
+    if !variable_local_exists("dur_var") { dur_var = -1; }
+    if !variable_local_exists("boss_var") { boss_var = false; }
+    if !variable_local_exists("intro_var") { intro_var = false; }
+    if !variable_local_exists("dupe_var") { dupe_var = 0; }
+    if !variable_local_exists("name_var") { name_var = "Unknown"; }
+    if !variable_local_exists("hide_var") { hide_var = false; }
+    if !variable_local_exists("dead_rm_var") { dead_rm_var = dead_rm; }
     dur_start_var = dur_var;
     // Theme
+    if !variable_local_exists("mus_prio_var") { mus_prio_var = -1; }
     if mus_prio_var > amb_mus_prio_const
     {
         fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
@@ -48,6 +57,7 @@ object_event_add
             exit;
         }
     }
+    hurt_var = false;
     event_inherited();
 ');
 // Destroy

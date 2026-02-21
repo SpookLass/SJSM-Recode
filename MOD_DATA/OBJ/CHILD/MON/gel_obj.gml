@@ -20,22 +20,7 @@ object_event_add
     snd_dist_max_var = 600;
     // Translations
     ini_open(global.lang_var);
-    switch global.name_var
-    {
-        case name_og_const:
-        case name_hd_const:
-        case name_fanon_const:
-        {
-            name_var = ini_read_string("NAME","gel","NAME_gel");
-            break;
-        }
-        case name_num_og_const:
-        case name_num_hd_const:
-        {
-            name_var = ini_read_string("NAME","gel_num","NAME_gel_num");
-            break;
-        }
-    }
+    name_var = translate_mon_str_scr("gel",global.name_var);
     local.sub = string_replace(ini_read_string("SUB","gel","SUB_gel"),"@n",name_var);
     for (local.i=0; local.i<snd_len_var; local.i+=1)
     { snd_arr[local.i,1] = local.sub; snd_arr[local.i,2] = false; }
@@ -190,6 +175,7 @@ object_event_add
 object_event_add
 (argument0,ev_destroy,0,'
     event_inherited();
+    local.bool = false;
     with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
     if !local.bool
     {

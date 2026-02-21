@@ -10,22 +10,7 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,1,'
     ini_open(global.lang_var);
-    switch global.name_var
-    {
-        case name_og_const:
-        case name_hd_const:
-        case name_fanon_const:
-        case name_num_og_const:
-        {
-            name_var = ini_read_string("NAME","spooper","NAME_spooper");
-            break;
-        }
-        case name_num_hd_const:
-        {
-            name_var = ini_read_string("NAME","spooper_num","NAME_spooper_num");
-            break;
-        }
-    }
+    name_var = translate_mon_str_scr("spooper",global.name_var);
     txt_lock_var = ini_read_string("UI","spooper","UI_spooper");
     loop_snd_var[2] = string_replace(ini_read_string("SUB","spooper","SUB_spooper"),"@n",name_var); loop_snd_var[3] = false;
     ini_close();
@@ -35,7 +20,7 @@ object_event_add
     spr_spd_var = 1/3;
     anim_type_var = 3;
     delay_var = 0;
-    do_atk_var = -1;
+    do_atk_var = false;
     dmg_var = 0.01;
     w_var = 20;
     h_var = 20;
@@ -58,12 +43,13 @@ object_event_add
     hp_dur_var = true;
     shake_type_var = 1;
     shake_var = 1;
+    anim_prog_var = 0;
     anim_spd_var = 1;
     reflect_var = -1;
     // Teleport
     tp_type_var = 1;
     tp_off_var = 300;
-    tp_dist_min_var = 200;
+    tp_dist_min_var = 0;
     tp_dist_max_var = tp_dist_min_var;
     tp_seen_var = false;
     // Puke
@@ -145,6 +131,7 @@ object_event_add
     // Behavior
     if global.spooper_type_var == -1 { local.type = irandom(2); }
     else { local.type = global.spooper_type_var; }
+    local.set = false;
     switch local.type
     {
         case 0: // Recode
@@ -189,8 +176,8 @@ object_event_add
             spd_base_var = 16/45;
             door_type_var = 2;
             tp_off_var = 320;
-            tp_dist_min_var = 640/3;
-            tp_dist_max_var = tp_dist_min_var;
+            tp_dist_min_var = 0;
+            tp_dist_max_var = 640/3;
             shake_var = 32/15;
             shake_type_var = 0;
             puke_slow_var = 0.3;
@@ -210,6 +197,7 @@ object_event_add
     global.ceil_bg_tex = background_get_texture(global.ceil_bg);
     global.light_wall_obj_spr = global.light_wall_spr;
     global.light_floor_obj_spr = global.light_floor_spr;
+    local.bool = false;
     with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
     if !local.bool
     {
@@ -243,6 +231,7 @@ object_event_add
         {
             local.tex = sprite_get_texture(door_spr_var,hp_max_var-hp_var);
             local.spawns = max(global.spawn_len_var,global.spawn_len_extra_var);
+            local.spawn = false;
             for (local.i=1; local.i<local.spawns; local.i+=1;)
             {
                 if door_type_var == 1 { local.i = irandom_range(1,local.spawns-1); }
@@ -266,7 +255,7 @@ object_event_add
                             tp_var = (other.door_type_var == 2);
                             spawn_var = local.i;
                         }
-                        local.spawn = 2;
+                        local.spawn = true;
                     }
                 }
                 if door_type_var == 1 { break; }
@@ -287,10 +276,10 @@ object_event_add
             if local.door
             {
                 local.spawn = irandom_range(1,global.spawn_len_var-1);
-                with instance_create(global.spawn_arr[local.i,0]-lengthdir_x(8,global.spawn_arr[local.i,3]),global.spawn_arr[local.i,1]-lengthdir_y(8,global.spawn_arr[local.i,3]),spooper_mark_obj)
+                with instance_create(global.spawn_arr[local.spawn,0]-lengthdir_x(8,global.spawn_arr[local.spawn,3]),global.spawn_arr[local.spawn,1]-lengthdir_y(8,global.spawn_arr[local.spawn,3]),spooper_mark_obj)
                 {
-                    z = global.spawn_arr[local.i,2];
-                    direction = global.spawn_arr[local.i,3]+180;
+                    z = global.spawn_arr[local.spawn,2];
+                    direction = global.spawn_arr[local.spawn,3]+180;
                     par_var = other.id;
                     mdl_var = other.mdl_var;
                     store_tex_var = local.tex;
@@ -499,6 +488,7 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user2,'
     local.spooper = id;
+    local.success = false;
     with player_obj
     {
         if !dead_var && !hurt_var && !in_door_var && !invuln_var && on_var
@@ -562,7 +552,7 @@ object_event_add
     y = target_y_var+lengthdir_y(local.dist,local.dir);
     if tp_type_var == 1
     {
-        local.dir = target_var.yaw_var;
+        if instance_exists(target_var) { local.dir = target_var.yaw_var; } else { local.dir = 0; }
         x += lengthdir_x(tp_off_var,local.dir);
         y += lengthdir_y(tp_off_var,local.dir);
     }

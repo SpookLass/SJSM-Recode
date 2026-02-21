@@ -10,26 +10,7 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,1,'
     ini_open(global.lang_var);
-    switch global.name_var
-    {
-        case name_og_const:
-        case name_num_og_const:
-        {
-            name_var = ini_read_string("NAME","real_ringu_og","NAME_real_ringu_og");
-            break;
-        }
-        case name_hd_const:
-        case name_fanon_const:
-        {
-            name_var = ini_read_string("NAME","real_ringu_hd","NAME_real_ringu_hd");
-            break;
-        }
-        case name_num_hd_const:
-        {
-            name_var = ini_read_string("NAME","real_ringu_num","NAME_real_ringu_num");
-            break;
-        }
-    }
+    name_var = translate_mon_str_scr("real_ringu",global.name_var);
     snd_arr[0,1] = ini_read_string("SUB","ringu_01","SUB_ringu_01"); snd_arr[0,2] = true;
     snd_arr[1,1] = ini_read_string("SUB","ringu_02","SUB_ringu_02"); snd_arr[1,2] = true;
     snd_arr[2,1] = ini_read_string("SUB","ringu_03","SUB_ringu_03"); snd_arr[2,2] = true;
@@ -125,6 +106,7 @@ object_event_add
     // Behavior
     if global.real_ringu_type_var == -1 { local.type = irandom(3); }
     else { local.type = global.real_ringu_type_var; }
+    local.set = false;
     switch local.type
     {
         case 0: // Mod
@@ -187,7 +169,8 @@ object_event_add
     alarm_len_var = 9;
     alarm_ini_scr();
     // Stuff
-    event_perform(ev_other,ev_user14);
+    is_seen_var = -1;
+    event_user(14);
 ');
 // Room Start Event
 object_event_add
@@ -229,12 +212,13 @@ object_event_add
         } 
     }
     state_var = 0;
-    event_perform(ev_other,ev_user14);
+    event_user(14);
 ');
 // Destroy Event
 object_event_add
 (argument0,ev_destroy,0,'
     event_inherited();
+    local.bool = false;
     with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
     if !local.bool
     {
@@ -303,20 +287,20 @@ object_event_add
 ");
 // Change form event
 object_event_add
-(argument0,ev_other,ev_user14,"
+(argument0,ev_other,ev_user14,'
     if is_seen_var { spd_base_var = state_seen_spd_var[state_var]; }
     else { spd_base_var = state_spd_var[state_var]; }
     spr_var = state_spr_var[state_var];
     spr_spd_var = state_spr_spd_var[state_var];
     w_var = state_w_var[state_var];
     image_alpha = 1;
-");
+');
 // Check form event
 object_event_add
-(argument0,ev_other,ev_user15,"
+(argument0,ev_other,ev_user15,'
     if state_var { state_var = 0; }
     else if is_seen_var 
     && frac_chance_scr(state_chance_num_var,state_chance_den_var)
     { state_var = 1; }
-    event_perform(ev_other,ev_user14);
-");
+    event_user(14);
+');

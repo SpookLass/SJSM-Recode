@@ -129,31 +129,16 @@ Seen
     // Default settings
 object_event_add
 (argument0,ev_create,2,'
+    // Inherit
+    event_inherited();
     // Main
-    if !variable_local_exists("dur_var") { dur_var = -1; }
     if !variable_local_exists("type_var") { type_var = 0; }
-    if !variable_local_exists("color_var") { color_var = true; }
-    if !variable_local_exists("reflect_var") { reflect_var = true; }
-    if !variable_local_exists("dead_rm_var") { dead_rm_var = dead_rm; }
-    if !variable_local_exists("wander_var") { wander_var = false; }
     if !variable_local_exists("visible_var") { visible_var = false; }
-    if !variable_local_exists("boss_var") { boss_var = false; }
-    if !variable_local_exists("intro_var") { intro_var = false; }
-    if !variable_local_exists("anim_type_var") { anim_type_var = 0; }
-    // Monster List
-    if !variable_local_exists("name_var") { name_var = "Unknown"; }
-    if !variable_local_exists("hide_var") { hide_var = false; }
+    if !variable_local_exists("hp_var") { hp_var = -1; }
     // Behavior
-    if !variable_local_exists("do_move_var") { do_move_var = true; }
-    if !variable_local_exists("do_atk_var") { do_atk_var = true; }
-    if !variable_local_exists("do_anim_var") { do_anim_var = true; }
     if !variable_local_exists("do_enter_var") { do_enter_var = (type_var > 0); }
     if !variable_local_exists("do_door_var") { do_door_var = (type_var == 1 && do_enter_var); }
-    if !variable_local_exists("do_seen_var") { do_seen_var = false; }
-    if !variable_local_exists("do_acc_var") { do_acc_var = false; }
-    if !variable_local_exists("do_seen_mult_var") { do_seen_mult_var = false; }
     // Sound Stuff
-    if !variable_local_exists("mus_prio_var") { mus_prio_var = -1; }
     if !variable_local_exists("do_snd_var") { do_snd_var = true; }
     if do_snd_var
     {
@@ -164,7 +149,14 @@ object_event_add
         if !variable_local_exists("loop_snd_dist_max_var") { loop_snd_dist_max_var = 600; }
         if !variable_local_exists("wake_snd_var") { wake_snd_var[0] = false; }
         if !variable_local_exists("loop_snd_var") { loop_snd_var[0] = false; }
-        if !variable_local_exists("snd_delay_min_var") && variable_local_exists("snd_alarm_min_var")
+        if !variable_local_exists("snd_alarm_min_var")
+        {
+            if variable_local_exists("snd_alarm_max_var")
+            { snd_alarm_min_var = snd_alarm_max_var; }
+            else { snd_alarm_min_var = 0; }
+        }
+        if !variable_local_exists("snd_alarm_max_var") { snd_alarm_max_var = snd_alarm_min_var; }
+        if !variable_local_exists("snd_delay_min_var")
         {
             snd_delay_min_var = snd_alarm_min_var;
             snd_delay_max_var = snd_alarm_max_var;
@@ -197,26 +189,100 @@ object_event_add
     }
     if !variable_local_exists("mon_coll_var") { mon_coll_var = true; }
     // Attack variables
-    if !variable_local_exists("atk_type_var") { atk_type_var = 0; }
-    if !variable_local_exists("atk_range_var") { atk_range_var = coll_var[2]; }
-    if !variable_local_exists("blood_spr_var") { blood_spr_var = blood_spr; }
-    if !variable_local_exists("atk_flash_var") { atk_flash_var = true; }
-    // Misc Stuff
-    tone_var = c_white;
-    on_var = false;
-    possess_var = false;
-    snd_var = noone;
-    loop_inst_var = noone;
-    target_spawn_var = 0;
-    cam_id_var = -1;
-    sub_var[0] = "";
-    sub_var[1] = false;
-    spr_id_var = 0;
-    // Speed
-    spd_mult_var = 1;
-    spd_mult_per_var = 1;
-    acc_mult_var = 1;
-    acc_mult_per_var = 1;
+    if !variable_local_exists("do_atk_var") { do_atk_var = true; }
+    if do_atk_var
+    {
+        if !variable_local_exists("atk_type_var") { atk_type_var = 0; }
+        if !variable_local_exists("atk_range_var") { atk_range_var = coll_var[2]; }
+        if !variable_local_exists("blood_spr_var") { blood_spr_var = blood_spr; }
+        if !variable_local_exists("atk_flash_var") { atk_flash_var = true; }
+        if !variable_local_exists("atk_snd_var") { atk_snd_var = 0; }
+    }
+    // Hurt
+    if do_hurt_var
+    {
+        if !variable_local_exists("violence_var") { violence_var = 0; }
+        if !variable_local_exists("hurt_alarm_var") { hurt_alarm_var = 0; }
+        if !variable_local_exists("hurt_dur_var") { hurt_dur_var = 0; }
+        if !variable_local_exists("hurt_dist_var") { hurt_dist_var = 0; }
+        if !variable_local_exists("hurt_snd_var") { hurt_snd_var = 0; }
+        if !variable_local_exists("hurt_hp_var") { hurt_hp_var = 0; }
+        if !variable_local_exists("stun_var") { stun_var = false; }
+    }
+    // Seen
+    if !variable_local_exists("do_seen_var") { do_seen_var = false; }
+    if do_seen_var
+    {
+        if !variable_local_exists("seen_type_var") { seen_type_var = 0; }
+        if !variable_local_exists("seen_yaw_var") { seen_yaw_var = 0; }
+        if !variable_local_exists("seen_pitch_var") { seen_pitch_var = 0; }
+        if !variable_local_exists("seen_dist_var") { seen_dist_var = 0; }
+    }
+    // Movement
+    if !variable_local_exists("do_move_var") { do_move_var = true; }
+    if do_move_var
+    {
+        if !variable_local_exists("wander_var") { wander_var = false; }
+        if !variable_local_exists("do_acc_var") { do_acc_var = false; }
+        if do_acc_var
+        {
+            if !variable_local_exists("autobrake_var") { autobrake_var = false; }
+            if autobrake_var
+            {
+                if !variable_local_exists("autobrake_spd_var") { autobrake_spd_var = 0; }
+                if !variable_local_exists("autobrake_dist_var") { autobrake_dist_var = -1; }
+                if !variable_local_exists("autobrake_dir_var") { autobrake_dir_var = -1; }
+            }
+            if !variable_local_exists("acc_var")
+            {
+                if variable_local_exists("frick_var") { acc_var = frick_var; }
+                else { acc_var = 1; }
+            }
+            if !variable_local_exists("frick_var")
+            {
+                if variable_local_exists("acc") { frick_var = acc_var; }
+                else { frick_var = 1; }
+            }
+        }
+        if do_seen_var
+        {
+            if !variable_local_exists("do_seen_mult_var") { do_seen_mult_var = false; }
+            if do_seen_mult_var
+            {
+                if !variable_local_exists("seen_mult_var") { seen_mult_var = 1; }
+                if !variable_local_exists("unseen_mult_var") { unseen_mult_var = 1; }
+            }
+        }
+    }
+    // Drawing
+    if !variable_local_exists("w_var") { w_var = 1; }
+    if !variable_local_exists("h_var") { h_var = 1; }
+    if !variable_local_exists("x_off_var") { x_off_var = 0; }
+    if !variable_local_exists("y_off_var") { y_off_var = 0; }
+    if !variable_local_exists("z_off_var") { z_off_var = 0; }
+    if !variable_local_exists("color_var") { color_var = true; }
+    if !variable_local_exists("reflect_var") { reflect_var = true; }
+    if !variable_local_exists("do_anim_var") { do_anim_var = true; }
+    if !variable_local_exists("do_mdl_var") { do_mdl_var = false; }
+    if do_anim_var
+    {
+        if !variable_local_exists("spr_spd_var") { spr_spd_var = 0; }
+        if !variable_local_exists("anim_type_var") { anim_type_var = 0; }
+    }
+    // Silhouette
+    if !variable_local_exists("sil_var") { sil_var = false; }
+    if sil_var
+    {
+        if !variable_local_exists("sil_dist_var") { sil_dist_var = 0.1; }
+        if !variable_local_exists("sil_alpha_var") { sil_alpha_var = 1; }
+        if !variable_local_exists("sil_color_var") { sil_color_var = c_black; }
+        if !variable_local_exists("sil_type_var") { sil_type_var = 0; }
+    }
+    if !variable_local_exists("tex_var")
+    {
+        if variable_local_exists("spr_var") { tex_var = sprite_get_texture(spr_var,0); }
+        else if variable_local_exists("bg_var") { tex_var = background_get_texture(bg_var); }
+    }
     // Delay
     if !variable_local_exists("delay_min_var")
     {
@@ -231,9 +297,34 @@ object_event_add
             delay_max_var = 0;
         }
     }
+    // Misc Stuff
+    tone_var = c_white;
+    target_spawn_var = 0;
+    is_seen_var = -1;
+    spr_id_var = 0;
+    spr_prog_var = 1;
+    // Sound
+    sub_var[0] = "";
+    sub_var[1] = false;
+    snd_var = noone;
+    loop_inst_var = noone;
+    // Speed
+    spd_mult_var = 1;
+    spd_mult_per_var = 1;
+    acc_mult_var = 1;
+    acc_mult_per_var = 1;
+    // Target (just in case)
+    target_var = noone;
+    target_x_var = 0;
+    target_y_var = 0;
+    target_z_var = 0;
+    target_dist_var = 0;
+    path_x_var = 0;
+    path_y_var = 0;
     // Pathfinding
     if type_var > 0
     {
+        fall_var = false;
         path_var = path_add();
         switch type_var
         {
@@ -252,24 +343,22 @@ object_event_add
         alarm_len_var = 8;
         alarm_ini_scr();
     }
-    // Inherit
-    event_inherited();
 ');
 // Create End Event
     // Startup
 object_event_add
 (argument0,ev_create,3,'
     // Play wake (or random sound if it doesnt exist)
-    if wake_snd_var[0] == 1
+    if do_snd_var
     {
-        if fmod_snd_is_3d_scr(wake_snd_var[1]) { snd_var = fmod_snd_3d_play_scr(wake_snd_var[1]); }
-        else { snd_var = fmod_snd_play_scr(wake_snd_var[1]); }
-        sub_var[0] = wake_snd_var[2];
-        sub_var[1] = wake_snd_var[3];
-    }
-    else if do_snd_var
-    {
-        if !loop_snd_var[0] && snd_len_var > 0
+        if wake_snd_var[0] == 1
+        {
+            if fmod_snd_is_3d_scr(wake_snd_var[1]) { snd_var = fmod_snd_3d_play_scr(wake_snd_var[1]); }
+            else { snd_var = fmod_snd_play_scr(wake_snd_var[1]); }
+            sub_var[0] = wake_snd_var[2];
+            sub_var[1] = wake_snd_var[3];
+        }
+        else if !loop_snd_var[0] && snd_len_var > 0
         {
             local.snd = irandom(snd_len_var-1);
             snd_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0]);
@@ -284,8 +373,11 @@ object_event_add
 object_event_add
 (argument0,ev_destroy,0,'
     event_inherited();
-    if type_var > 0 && path_exists(path_var)
-    { path_delete(path_var); }
+    if type_var > 0
+    {
+        if path_exists(path_var)
+        { path_delete(path_var); }
+    }
     fmod_inst_stop_scr(snd_var);
     if possess_var
     {
@@ -508,10 +600,13 @@ object_event_add
 // Movement Event
 object_event_add
 (argument0,ev_other,ev_user0,'
-    if seen_var && do_seen_mult_var
+    if do_seen_var
     {
-        if is_seen_var == 1 && seen_mult_var != 1 { spd_mult_var *= seen_mult_var; }
-        else if is_seen_var == 0 && unseen_mult_var != 1 { spd_mult_var *= unseen_mult_var; }
+        if seen_var && do_seen_mult_var
+        {
+            if is_seen_var == 1 && seen_mult_var != 1 { spd_mult_var *= seen_mult_var; }
+            else if is_seen_var == 0 && unseen_mult_var != 1 { spd_mult_var *= unseen_mult_var; }
+        }
     }
     local.spd = spd_base_var*spd_mult_var*spd_mult_per_var;
     if do_acc_var
@@ -567,6 +662,8 @@ object_event_add
         }
         else
         {
+            local.yaw = 0;
+            local.pitch = 0;
             // V4
             if possess_var
             {
@@ -580,7 +677,7 @@ object_event_add
                 if !do_coll_var || grav_var <= 0
                 {
                     local.input_dir_z = input_z_scr(player_id_var);
-                    local.pitch = radtodeg(arctan2(local.input_dir_z,sqrt(sqr(local.input_dir_x)+sqr(local.input_dir_y))))+(eye_pitch_var*lengthdir_x(1,local.input_dir));
+                    local.pitch = radtodeg(arctan2(local.input_dir_z,sqrt(sqr(local.input_dir_x)+sqr(local.input_dir_y))))+(eye_pitch_var*lengthdir_x(1,local.input_dir_z));
                 }
             }
             else
@@ -616,16 +713,19 @@ object_event_add
                 case 1: // Modern
                 {
                     // Tried to add autobrake support, but its difficult without Unity source code
-                    if local.spd > 0 && autobrake_var && spd_var > autobrake_spd_var && !possess_var //&& target_visible_var
-                    && (target_dist_var <= autobrake_dist_var || autobrake_dist_var <= 0) 
+                    if autobrake_var
                     {
-                        if autobrake_dir_var > 0
+                        if local.spd > 0 && spd_var > autobrake_spd_var && !possess_var //&& target_visible_var
+                        && (target_dist_var <= autobrake_dist_var || autobrake_dist_var < 0) 
                         {
-                            if abs(deg_diff_scr(local.yaw,yaw_var)) > autobrake_dir_var
-                            || (type_var != 1 && abs(deg_diff_scr(local.pitch,pitch_var)) > autobrake_dir_var)
-                            { local.spd = autobrake_spd_var; }
+                            if autobrake_dir_var >= 0
+                            {
+                                if abs(deg_diff_scr(local.yaw,yaw_var)) > autobrake_dir_var
+                                || (type_var != 1 && abs(deg_diff_scr(local.pitch,pitch_var)) > autobrake_dir_var)
+                                { local.spd = autobrake_spd_var; }
+                            }
+                            else { local.spd = autobrake_spd_var; }
                         }
-                        else { local.spd = autobrake_spd_var; }
                     }
                     if do_coll_var && grav_var > 0 { acc_scr(global.delta_time_var,local.acc,local.frick,local.yaw,local.spd); }
                     else { acc_3d_scr(global.delta_time_var,local.acc,local.frick,local.yaw,local.pitch,local.spd); }
@@ -741,7 +841,7 @@ object_event_add
                         }
                     }
                 }
-                other.attack_target_var = id;
+                other.atk_target_var = id;
                 local.success = true;
             }
         }
@@ -752,14 +852,14 @@ object_event_add
         if local.dead && !global.debug_var && !possess_var
         {
             global.dead_mon_var = object_index;
-            global.dead_player_var = attack_target_var.player_id_var;
+            global.dead_player_var = atk_target_var.player_id_var;
             rm_goto_menu_scr(dead_rm_var,true);
         }
-        else { event_perform(ev_other,ev_user3); }
+        else { event_user(3); }
     }
 ');
 // Attack Success
-// Uses attack_target_var as an argument, usually the player.
+// Uses atk_target_var as an argument, usually the player.
 object_event_add
 (argument0,ev_other,ev_user3,'
     if atk_type_var == 1
@@ -812,7 +912,7 @@ object_event_add
             spr_var = other.blood_spr_var;
             spr_id_var = irandom(sprite_get_number(spr_var)-1);
             // Set camera to player
-            cam_id_var = other.attack_target_var.cam_id_var;
+            cam_id_var = other.atk_target_var.cam_id_var;
         }
     }
     if atk_flash_var && !global.reduce_flash_var
@@ -821,7 +921,7 @@ object_event_add
         {
             image_blend = c_red; 
             set_alarm_scr(0,6);
-            cam_id_var = other.attack_target_var.cam_id_var;
+            cam_id_var = other.atk_target_var.cam_id_var;
         }
     }
     
@@ -840,82 +940,85 @@ hurt_type_var
 */
 object_event_add
 (argument0,ev_other,ev_user4,'
-    if hurt_alarm_var
+    if !enter_var
     {
-        hurt_var = true;
-        set_alarm_scr(3,hurt_alarm_var);
-    }
-    if violence_var > 0 { hurt_target_var.violence_var += violence_var; }
-    // Reduce duration if very vulnerable
-    if do_hurt_var == 2 || (do_hurt_var == 3 && hurt_type_var == 1)
-    {
-        if dur_var > 0 && hurt_dur_var > 0
-        {
-            dur_var -= hurt_dur_var;
-            if hurt_die_var == 1 && dur_var <= 0 { event_user(11); exit; }
-            else { dur_var = max(1,dur_var); }
-        }
-        if hp_var > 0 && hurt_hp_var > 0
-        {
-            hp_var -= hurt_hp_var;
-            if hurt_die_var == 2 && hp_var <= 0 { event_user(11); exit; }
-            else { hp_var = max(1,hp_var); }
-        }
-    }
-    // Hurt sound
-    if hurt_snd_var && (do_hurt_var != 3 || hurt_type_var == 1)
-    {
-        switch hurt_snd_var
-        {
-            case 1: { fmod_snd_play_scr(choose(axe_hit_01_snd,axe_hit_02_snd)); break; } // Clank!
-            case 2: { fmod_snd_play_scr(claw_snd); break; } // Scratch!
-            case 3: { fmod_snd_play_scr(choose(axe_01_snd,axe_02_snd,axe_03_snd)); break; } // Ding!
-            case 4:
-            {
-                if fmod_snd_is_3d_scr(hurt_snd_var[1])
-                {
-                    if fmod_inst_is_play_scr(snd_var) && fmod_inst_is_3d_scr(snd_var)
-                    { fmod_inst_stop_scr(snd_var); }
-                    snd_var = fmod_snd_3d_play_scr(hurt_snd_var[1]);
-                }
-                else { snd_var = fmod_snd_play_scr(hurt_snd_var[1]); }
-                sub_var[0] = hurt_snd_var[2];
-                sub_var[1] = hurt_snd_var[3];
-                if do_snd_var
-                {
-                    if snd_len_var > 0
-                    { set_alarm_scr(6,irandom_range(snd_delay_min_var,snd_delay_max_var)); }
-                }
-                break;
-            }
-        }
-    }
-    // Push back
-    if hurt_dist_var > 0
-    {
-        local.dir = point_direction(hurt_target_var.x,hurt_target_var.y,x,y);
-        local.xtmp = x+lengthdir_x(hurt_dist_var,local.dir);
-        local.ytmp = y+lengthdir_y(hurt_dist_var,local.dir);
-        if do_coll_var { local.bool = !check_coll_scr(0,0,0,0,local.xtmp,local.ytmp,z); }
-        else { local.bool = true; }
-        if local.bool
-        {
-            x = local.xtmp;
-            y = local.ytmp;
-        }
-    }
-    // You can set this to higher values to have custom stun behavior
-    if stun_var == 1 
-    {
-        set_motion_3d_scr(0,true);
-        move_var = false;
-        anim_var = false;
-        atk_var = false;
         if hurt_alarm_var
         {
-            set_alarm_scr(1,hurt_alarm_var);
-            set_alarm_scr(2,hurt_alarm_var);
-            set_alarm_scr(4,hurt_alarm_var);
+            hurt_var = true;
+            set_alarm_scr(3,hurt_alarm_var);
+        }
+        if violence_var > 0 { hurt_target_var.violence_var += violence_var; }
+        // Reduce duration if very vulnerable
+        if do_hurt_var == 2 || (do_hurt_var == 3 && hurt_type_var == 1)
+        {
+            if dur_var > 0 && hurt_dur_var > 0
+            {
+                dur_var -= hurt_dur_var;
+                if hurt_die_var == 1 && dur_var <= 0 { event_user(11); exit; }
+                else { dur_var = max(1,dur_var); }
+            }
+            if hp_var > 0 && hurt_hp_var > 0
+            {
+                hp_var -= hurt_hp_var;
+                if hurt_die_var == 2 && hp_var <= 0 { event_user(11); exit; }
+                else { hp_var = max(1,hp_var); }
+            }
+        }
+        // Hurt sound
+        if hurt_snd_var && (do_hurt_var != 3 || hurt_type_var == 1)
+        {
+            switch hurt_snd_var
+            {
+                case 1: { fmod_snd_play_scr(choose(axe_hit_01_snd,axe_hit_02_snd)); break; } // Clank!
+                case 2: { fmod_snd_play_scr(claw_snd); break; } // Scratch!
+                case 3: { fmod_snd_play_scr(choose(axe_01_snd,axe_02_snd,axe_03_snd)); break; } // Ding!
+                case 4:
+                {
+                    if fmod_snd_is_3d_scr(hurt_snd_var[1])
+                    {
+                        if fmod_inst_is_play_scr(snd_var) && fmod_inst_is_3d_scr(snd_var)
+                        { fmod_inst_stop_scr(snd_var); }
+                        snd_var = fmod_snd_3d_play_scr(hurt_snd_var[1]);
+                    }
+                    else { snd_var = fmod_snd_play_scr(hurt_snd_var[1]); }
+                    sub_var[0] = hurt_snd_var[2];
+                    sub_var[1] = hurt_snd_var[3];
+                    if do_snd_var
+                    {
+                        if snd_len_var > 0
+                        { set_alarm_scr(6,irandom_range(snd_delay_min_var,snd_delay_max_var)); }
+                    }
+                    break;
+                }
+            }
+        }
+        // Push back
+        if hurt_dist_var > 0
+        {
+            local.dir = point_direction(hurt_target_var.x,hurt_target_var.y,x,y);
+            local.xtmp = x+lengthdir_x(hurt_dist_var,local.dir);
+            local.ytmp = y+lengthdir_y(hurt_dist_var,local.dir);
+            if do_coll_var { local.bool = !check_coll_scr(0,0,0,0,local.xtmp,local.ytmp,z); }
+            else { local.bool = true; }
+            if local.bool
+            {
+                x = local.xtmp;
+                y = local.ytmp;
+            }
+        }
+        // You can set this to higher values to have custom stun behavior
+        if stun_var == 1 
+        {
+            set_motion_3d_scr(0,true);
+            move_var = false;
+            anim_var = false;
+            atk_var = false;
+            if hurt_alarm_var
+            {
+                set_alarm_scr(1,hurt_alarm_var);
+                set_alarm_scr(2,hurt_alarm_var);
+                set_alarm_scr(4,hurt_alarm_var);
+            }
         }
     }
 ');
@@ -1065,6 +1168,7 @@ object_event_add
 (argument0,ev_other,ev_user10,'
     local.xtmp = x;
     local.ytmp = y;
+    local.collided = false;
     with echidna_obj
     {
         if id != other.id && (type_var > 0) == (other.type_var > 0) && (do_coll_var || type_var <= 0) && mon_coll_var

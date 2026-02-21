@@ -12,7 +12,7 @@ object_event_add
     event_inherited();
     image_alpha = 0;
     // Alarm
-    alarm_len_var = 2;
+    alarm_len_var = 3;
     alarm_ini_scr();
 ');
 // Step Event
@@ -40,7 +40,7 @@ object_event_add
                     hurt_var = true;
                     set_alarm_scr(0,other.alarm_02_var);
                     hurt_target_var = other.id;
-                    event_perform(ev_other,ev_user0);
+                    event_user(0);
                     local.player = id;
                 }
                 else
@@ -79,6 +79,7 @@ object_event_add
         }
         player_var.eye_h_var -= 45/7;
         set_alarm_scr(1,alarm_02_var);
+        set_alarm_scr(2,alarm_03_var);
     }
 ');
 // Alarm 1 Event

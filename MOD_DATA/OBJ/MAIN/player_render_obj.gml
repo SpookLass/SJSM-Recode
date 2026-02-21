@@ -13,6 +13,7 @@ object_event_add
     image_alpha = 0.5;
     str_color_var = c_dkgray;
     reflect_var = true;
+    spr_id_var = 0;
 ');
 // Destroy Event
 object_event_add

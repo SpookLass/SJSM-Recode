@@ -23,22 +23,7 @@ object_event_add
     amb_snd_dist_max_var = 800;
     // Translations
     ini_open(global.lang_var);
-    switch global.name_var
-    {
-        case name_og_const:
-        case name_hd_const:
-        case name_fanon_const:
-        {
-            name_var = ini_read_string("NAME","bab","NAME_bab");
-            break;
-        }
-        case name_num_og_const:
-        case name_num_hd_const:
-        {
-            name_var = ini_read_string("NAME","bab_num","NAME_bab_num");
-            break;
-        }
-    }
+    name_var = translate_mon_str_scr("bab",global.name_var);
     sub_main_var = string_replace(ini_read_string("SUB","bab","SUB_bab"),"@n",name_var);
     sub_amb_var = ini_read_string("SUB","bab_amb","SUB_bab_amb");
     for (local.i=0; local.i<snd_main_len_var; local.i+=1;)
@@ -69,6 +54,8 @@ object_event_add
     h_var = 20;
     atk_range_var = 48;
     // Special
+    stop_var = false;
+    drain_var = false;
     eff_var = true;
     eff_alpha_min_var = 0.2;
     eff_alpha_max_var = 0.6;
@@ -78,6 +65,7 @@ object_event_add
     flesh_per_var = false;
     flesh_door_var = true;
     // Trail
+    trail_var = false;
     trail_per_var = true;
     trail_alarm_var = 12;
     trail_fade_var = 60;
@@ -256,6 +244,7 @@ object_event_add
 object_event_add
 (argument0,ev_destroy,0,'
     event_inherited();
+    local.bool = false;
     with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
     if !local.bool
     {

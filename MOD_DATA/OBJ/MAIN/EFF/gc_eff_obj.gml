@@ -11,6 +11,7 @@ object_event_add
 (argument0,ev_create,0,'
     event_inherited();
     image_alpha = 0.5;
+    scale_var = 1
     // Alarm
     alarm_len_var = 1;
     alarm_ini_scr();
@@ -20,6 +21,7 @@ object_event_add
     top_off_var = random(20);
     bottom_off_var = random(20);
     // New
+    sine_time_var = 0;
     sine_rate_var = 120;
     sine_base_var = 1;
     sine_mult_var = 1;

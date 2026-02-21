@@ -10,27 +10,13 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,1,'
     ini_open(global.lang_var);
-    switch global.name_var
-    {
-        case name_og_const:
-        case name_hd_const:
-        case name_fanon_const:
-        {
-            name_var = ini_read_string("NAME","dl","NAME_dl");
-            break;
-        }
-        case name_num_og_const:
-        case name_num_hd_const:
-        {
-            name_var = ini_read_string("NAME","dl_num","NAME_dl_num");
-            break;
-        }
-    }
+    name_var = translate_mon_str_scr("dl",global.name_var);
     snd_arr[0,1] = ini_read_string("SUB","dl_01","SUB_dl_01"); snd_arr[0,2] = true;
     snd_arr[1,1] = ini_read_string("SUB","dl_02","SUB_dl_02"); snd_arr[1,2] = true;
     snd_arr[2,1] = ini_read_string("SUB","dl_03","SUB_dl_03"); snd_arr[2,2] = true;
     snd_arr[3,1] = ini_read_string("SUB","dl_04","SUB_dl_04"); snd_arr[3,2] = true;
     ini_close();
+    // Variables
     type_var = 0;
     spd_base_var = 0.7;
     spr_spd_var = 1/6;
@@ -61,11 +47,23 @@ object_event_add
     // Special
     open_dist_var = 48;
     close_dist_var = 48;
+    do_warp_var = false;
     warp_update_var = true;
     warp_alarm_var = 60;
     warp_dist_var = 128;
     alarm_len_var = 9;
     alarm_ini_scr();
+    // Remodeled
+    slender_var = false;
+    slender_rate_var = 0.02;
+    slender_alpha_var = 0;
+    slender_spd_var = 6;
+    // Rouge
+    rb_var = false;
+    rb_dist_var = 48;
+    xray_var = false;
+    xray_rate_var = 0.05;
+    acc_var = 0.02;
     // Assets
         // Search for existing assets to save memory
     local.loaded = false;
@@ -108,9 +106,11 @@ object_event_add
         for (local.i=0; local.i<eff_snd_len_var; local.i+=1;)
         { fmod_snd_set_group_scr(eff_snd_arr[local.i],snd_group_mon_const); }
     }
+    spr_var = close_spr_var;
     // Behavior
     if global.dl_type_var == -1 { local.type = irandom(5); }
     else { local.type = global.dl_type_var; }
+    local.set = false;
     switch local.type
     {
         case 0: // Recode
@@ -167,11 +167,8 @@ object_event_add
             // Rubberband
             spd_min_var = 0.1;
             rb_var = true;
-            rb_dist_var = 48;
-            acc_var = 0.02;
             // Silhouette
             xray_var = true;
-            xray_rate_var = 0.05;
             sil_var = true;
             sil_type_var = 2; // Color
             sil_color_var = c_red;
@@ -184,11 +181,11 @@ object_event_add
             spd_min_var = 0.1;
             acc_var = 1/60; // 0.01r6
             slender_var = true;
-            slender_rate_var = 0.02;
-            slender_alpha_var = 0;
-            slender_spd_var = 6;
             do_seen_var = true;
             seen_yaw_var = 30;
+            seen_pitch_var = 0;
+            seen_dist_var = 0;
+            seen_type_var = 0;
             break;
         }
     }
@@ -197,6 +194,7 @@ object_event_add
 object_event_add
 (argument0,ev_destroy,0,'
     event_inherited();
+    local.bool = false;
     with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
     if !local.bool
     {
@@ -338,7 +336,7 @@ object_event_add
     local.zvec = (z-target_z_var)/target_dist_var;*/
     temp_var = -1;
     local.dist_2d = point_distance(start_x_var,start_y_var,target_x_var,target_y_var);
-    if local.dist_2d > 0 // Still not sure whats causing this
+    if local.dist_2d > 0 && instance_exists(target_var) // Still not sure whats causing this
     {
         local.xvec = (start_x_var-target_x_var)/local.dist_2d;
         local.yvec = (start_y_var-target_y_var)/local.dist_2d;
@@ -409,7 +407,7 @@ object_event_add
         rand_rate_var = 15;
         set_alarm_scr(0,min(other.dmg_alarm_var/2,irandom_range(other.eff_min_var,other.eff_max_var)));
         // Set camera to player
-        cam_id_var = other.attack_target_var.cam_id_var;
+        cam_id_var = other.atk_target_var.cam_id_var;
     }
 ');
 // Draw Event

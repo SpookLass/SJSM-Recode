@@ -10,23 +10,7 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,1,'
     ini_open(global.lang_var);
-    switch global.name_var
-    {
-        case name_og_const:
-        case name_hd_const:
-        case name_fanon_const:
-        case name_num_og_const:
-        {
-            name_var = ini_read_string("NAME","tiri","NAME_tiri");
-            break;
-        }
-        
-        case name_num_hd_const:
-        {
-            name_var = ini_read_string("NAME","tiri_num","NAME_tiri_num");
-            break;
-        }
-    }
+    name_var = translate_mon_str_scr("tiri",global.name_var);
     snd_arr[0,1] = ini_read_string("SUB","tiri_01","SUB_tiri_01"); snd_arr[0,2] = true;
     snd_arr[1,1] = ini_read_string("SUB","tiri_02","SUB_tiri_02"); snd_arr[1,2] = true;
     snd_arr[2,1] = ini_read_string("SUB","tiri_03","SUB_tiri_03"); snd_arr[2,2] = true;
@@ -97,6 +81,7 @@ object_event_add
     fog_color_02_var = c_teal;
     color_prio_var = 2;
     fog_prio_var = 3;
+    gay_var = false;
     // Shadows
     shadow_hp_var = 3;
     shadow_scale_var = 16;
@@ -105,6 +90,7 @@ object_event_add
     // Behavior
     if global.tiri_type_var == -1 { local.type = irandom(3); }
     else { local.type = global.tiri_type_var; }
+    local.set = false;
     switch local.type
     {
         case 0: // Recode
@@ -169,6 +155,7 @@ object_event_add
 object_event_add
 (argument0,ev_destroy,0,'
     event_inherited();
+    local.bool = false;
     with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
     if !local.bool
     {

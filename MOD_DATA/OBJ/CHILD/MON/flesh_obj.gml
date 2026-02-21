@@ -10,22 +10,7 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,1,'
     ini_open(global.lang_var);
-    switch global.name_var
-    {
-        case name_og_const:
-        case name_hd_const:
-        case name_fanon_const:
-        {
-            name_var = ini_read_string("NAME","flesh","NAME_flesh");
-            break;
-        }
-        case name_num_og_const:
-        case name_num_hd_const:
-        {
-            name_var = ini_read_string("NAME","flesh_num","NAME_flesh_num");
-            break;
-        }
-    }
+    name_var = translate_mon_str_scr("flesh",global.name_var);
     ini_close();
     // Variables
     spd_base_var = 0.5;
@@ -37,6 +22,7 @@ object_event_add
     alarm_len_var = 1;
     alarm_ini_scr();
     color_var = true;
+    do_possess_var = false;
     // Zone
     zone_var = true;
     zone_start_var = 0;
@@ -149,6 +135,7 @@ object_event_add
     global.ceil_bg_tex = background_get_texture(global.ceil_bg);
     global.light_wall_obj_spr = global.light_wall_spr;
     global.light_floor_obj_spr = global.light_floor_spr;
+    local.bool = false;
     with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
     if !local.bool
     {
@@ -416,16 +403,16 @@ object_event_add
                         if local.kill == 0
                         { local.kill = 1; }
                     }
-                    other.attack_target_var = id;
+                    other.atk_target_var = id;
                     local.success = true;
                 }
             }
             if !dead_var { local.kill = -1; }
         }
-        if false//local.kill
+        if local.kill
         {
             global.dead_mon_var = object_index;
-            global.dead_player_var = attack_target_var.player_id_var;
+            global.dead_player_var = atk_target_var.player_id_var;
             rm_goto_menu_scr(dead_rm_var,true);
         }
     }

@@ -119,7 +119,7 @@ object_event_add
             local.question = mod_scr(keyboard_lastkey-49,10)+1;
             if keyboard_check(vk_lshift) { local.question += 10; }
         }
-        else {local.question = show_menu("Back|Restart Room|Next Room|Previous Room|Go To Room|Create Instance|Destroy Instance|Set Tex Set|Set Zone|Set Count|Set LV|Set Room|Toggle Invincibility|Toggle Noclip|Toggle Flight|Toggle Monster Spawn|Revive|Hide Debug|Hide Hud|Toggle X-ray|Save|Execute Code",0);}
+        else {local.question = show_menu("Back|Restart Room|Next Room|Previous Room|Go To Room|Go To Menu Room|Create Instance|Destroy Instance|Set Tex Set|Set Zone|Set Count|Set LV|Set Room|Toggle Invincibility|Toggle Noclip|Toggle Flight|Toggle Monster Spawn|Revive|Hide Debug|Hide Hud|Toggle X-ray|Save|Execute Code",0);}
         switch(local.question)
         {
             case 1: { room_restart(); break; }
@@ -150,6 +150,20 @@ object_event_add
             }
             case 5:
             {
+                local.rm = get_string("Go To Menu Room","");
+                if local.rm != ""
+                {
+                    global.dead_player_var = 0;
+                    execute_string
+                    ("
+                        if room_exists("+local.rm+") && "+local.rm+" != 0
+                        { rm_goto_menu_scr("+local.rm+",true); }
+                    ");
+                }
+                break;
+            }
+            case 6:
+            {
                 local.instance = get_string("Create Instance","");
                 if local.instance != ""
                 {
@@ -161,7 +175,7 @@ object_event_add
                 }
                 break;
             }
-            case 6:
+            case 7:
             {
                 local.instance = get_string("Destroy Instance","");
                 if local.instance != ""
@@ -177,24 +191,24 @@ object_event_add
                 }
                 break;
             }
-            case 7:
+            case 8:
             {
                 local.tex = get_integer("Tex set",global.tex_var);
                 tex_scr(local.tex);
                 break;
             }
-            case 8:
+            case 9:
             {
                 local.zone = get_integer("Zone",global.zone_num_var);
                 zone_scr(local.zone);
                 break;
             }
-            case 9: { global.count_var = get_integer("Set Count", global.count_var); break; }
-            case 10: { global.violence_var = get_integer("Set LOVE", global.violence_var); break; }
-            case 11: { global.rm_count_var = get_integer("Set Room Count", global.rm_count_var); break; }
-            case 12: { with player_obj { invuln_var = !invuln_var; } break; }
-            case 13: { with player_obj { do_coll_var = !do_coll_var; } break; }
-            case 14:
+            case 10: { global.count_var = get_integer("Set Count", global.count_var); break; }
+            case 11: { global.violence_var = get_integer("Set LOVE", global.violence_var); break; }
+            case 12: { global.rm_count_var = get_integer("Set Room Count", global.rm_count_var); break; }
+            case 13: { with player_obj { invuln_var = !invuln_var; } break; }
+            case 14: { with player_obj { do_coll_var = !do_coll_var; } break; }
+            case 15:
             {
                 with player_obj
                 {
@@ -203,8 +217,8 @@ object_event_add
                 } 
                 break; 
             }
-            case 15: { global.no_mon_var = !global.no_mon_var; break; }
-            case 16:
+            case 16: { global.no_mon_var = !global.no_mon_var; break; }
+            case 17:
             {
                 with (player_obj)
                 {
@@ -220,15 +234,15 @@ object_event_add
                 with mon_par_obj { possess_var = false; }
                 break;
             }
-            case 17: { global.hide_debug_var = !global.hide_debug_var; break; }
-            case 18: { global.hide_hud_var = !global.hide_hud_var; break; }
-            case 19: { global.xray_var = !global.xray_var; break; }
-            case 20:
+            case 18: { global.hide_debug_var = !global.hide_debug_var; break; }
+            case 19: { global.hide_hud_var = !global.hide_hud_var; break; }
+            case 20: { global.xray_var = !global.xray_var; break; }
+            case 21:
 			{
 				save_game_scr();
 				break;
 			}
-            case 21:
+            case 22:
             {
                 local.code = get_string("Execute Code","");
                 if local.code != ""
@@ -283,6 +297,7 @@ object_event_add
     window_y_var = window_get_y();
     window_w_var = window_get_width();
     window_h_var = window_get_height();
+    io_handle();
 ');
 // Room Start
 object_event_add

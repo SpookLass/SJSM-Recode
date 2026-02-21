@@ -39,6 +39,8 @@ object_event_add
     h_var = 30.3;
     z_off_var = -0.3;
     blood_spr_var = blood_kh_spr;
+    dead_var = false;
+    temp_var = false;
     // Attack
     atk_type_var = 3; // Stop moving while delay
     atk_anim_var = 2;
@@ -56,6 +58,10 @@ object_event_add
     hurt_alarm_var = 3;
     hurt_dist_var = 5;
     hurt_snd_var = 4;
+        // Gotta set these manually since do_hurt_var is false
+    violence_var = 0;
+    hurt_dur_var = 0;
+    stun_var = false;
     // Special
     do_wander_var = false;
     do_rise_var = true;
@@ -138,7 +144,7 @@ object_event_add
         case 2: // HD
         {
             do_wander_var = true;
-            dmg_var = 15;
+            dmg_var = 25;
             hp_var = 10;
             hurt_dist_var = 19.2;
             wander_mult_var = 0.125;
@@ -171,6 +177,7 @@ object_event_add
 object_event_add
 (argument0,ev_destroy,0,'
     event_inherited();
+    local.bool = false;
     with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
     if !local.bool
     {

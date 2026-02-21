@@ -37,6 +37,7 @@ object_event_add
 // Destroy Event
 object_event_add
 (argument0,ev_destroy,0,'
+    local.bool = false;
     with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
     if !local.bool
     {

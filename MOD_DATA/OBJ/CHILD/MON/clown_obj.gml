@@ -10,7 +10,7 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,1,'
     ini_open(global.lang_var);
-    name_var = ini_read_string("NAME","clown","NAME_clown");
+    name_var = translate_mon_str_scr("clown",global.name_var);
     local.sub_01 = string_replace(ini_read_string("SUB","clown","SUB_clown"),"@n",name_var);
     local.sub_02 = string_replace(ini_read_string("SUB","clown_laugh","SUB_clown_laugh"),"@n",name_var);
     snd_arr[0,1] = local.sub_01; snd_arr[0,2] = false;
@@ -36,7 +36,7 @@ object_event_add
     z_off_var = -0.3;
     blood_spr_var = blood_kh_spr;
     // Special
-    do_atk_var = -1;
+    do_atk_var = false;
     do_seen_var = true;
     seen_type_var = 1;
     seen_yaw_var = 30;
@@ -87,10 +87,7 @@ object_event_add
         leave_snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\clown_leave_02_snd.wav");
         mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\clown_mus_snd.ogg");
         for (local.i=0; local.i<leave_snd_len_var; local.i+=1;)
-        {
-            fmod_snd_set_minmax_dist_scr(leave_snd_arr[local.i,0],0,leave_snd_dist_var);
-            fmod_snd_set_group_scr(leave_snd_arr[local.i,0],snd_group_mon_const);
-        }
+        { fmod_snd_set_group_scr(leave_snd_arr[local.i,0],snd_group_mon_const); }
     }
     // Behavior
     if global.clown_type_var == -1 { local.type = irandom(3); }
@@ -125,6 +122,7 @@ object_event_add
 object_event_add
 (argument0,ev_destroy,0,'
     event_inherited();
+    local.bool = false;
     with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
     if !local.bool
     {

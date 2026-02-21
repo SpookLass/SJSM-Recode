@@ -40,22 +40,7 @@ object_event_add
     eff_snd_len_var = 4;
     // Translations
     ini_open(global.lang_var);
-    switch global.name_var
-    {
-        case name_og_const:
-        case name_hd_const:
-        case name_fanon_const:
-        {
-            name_var = ini_read_string("NAME","para","NAME_para");
-            break;
-        }
-        case name_num_og_const:
-        case name_num_hd_const:
-        {
-            name_var = ini_read_string("NAME","para_num","NAME_para_num");
-            break;
-        }
-    }
+    name_var = translate_mon_str_scr("para",global.name_var);
     local.sub = string_replace(ini_read_string("SUB","para","SUB_para"),"@n",name_var);
     for (local.i=0; local.i<snd_len_var; local.i+=1)
     { snd_arr[local.i,1] = local.sub; snd_arr[local.i,2] = false; }
@@ -280,6 +265,7 @@ object_event_add
 object_event_add
 (argument0,ev_destroy,0,'
     event_inherited();
+    local.bool = false;
     with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
     if !local.bool
     {
@@ -308,7 +294,7 @@ object_event_add
     if state_var < 2 || !state_rm_var
     {
         state_var = 0;
-        event_perform(ev_other,ev_user15); 
+        event_user(15);
     }
     // Recalculate delay
     else if delay_calc_var // Delay calculation
@@ -385,9 +371,9 @@ object_event_add
     else { local.maxstate = 1; }
     if state_var < local.maxstate
     {
+        local.check = !state_var;
         if !enter_var
         {
-            local.check = !state_var;
             if local.check { local.bool = (target_dist_var <= state_dist_var[local.check]); }
             else { local.bool = (target_dist_var >= state_dist_var[local.check]); }
             if local.bool && frac_chance_scr(1,state_chance_var[local.check])
@@ -406,7 +392,7 @@ object_event_add
                     // Set camera to everyone
                     cam_id_var = -1;
                 }
-                event_perform(ev_other,ev_user15);
+                event_user(15);
             }
         }
         if !state_check_var
@@ -453,7 +439,7 @@ object_event_add
                     // Set camera to everyone
                     cam_id_var = -1;
                 }
-                event_perform(ev_other,ev_user15);
+                event_user(15);
                 if state_dur_var > 0 && dur_var > state_dur_var
                 {
                     dur_var = state_dur_var;
@@ -476,7 +462,7 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user3,'
     event_inherited();
-    with attack_target_var
+    with atk_target_var
     {
         hp_infect_var = median(0,hp_max_var-hp_var,hp_infect_var+other.dmg_var);
     }
@@ -491,12 +477,12 @@ object_event_add
         rand_rate_var = 15;
         set_alarm_scr(0,min(other.dmg_alarm_var/2,irandom_range(other.eff_min_var,other.eff_max_var)));
         // Set camera to player
-        cam_id_var = other.attack_target_var.cam_id_var;
+        cam_id_var = other.atk_target_var.cam_id_var;
     }
     if state_var >= 2 && !state_atk_var
     {
         state_var = 0;
-        event_perform(ev_other,ev_user15);
+        event_user(15);
         if state_delay_var > 0
         {
             set_motion_scr(0,true,yaw_var,false);
@@ -529,7 +515,7 @@ object_event_add
             // Set camera to player
             cam_id_var = other.hurt_target_var.cam_id_var;
         }
-        event_perform(ev_other,ev_user15);
+        event_user(15);
         if state_dur_var > 0 && dur_var > state_dur_var
         {
             dur_var = state_dur_var;
@@ -554,7 +540,6 @@ object_event_add
     w_var = state_w_var[state_var];
     h_var = state_h_var[state_var];
     do_acc_var = state_acc_var[state_var];
-    set_alarm_scr(3,state_delay_var[state_var]);
     spr_id_var = 0;
     tex_var = sprite_get_texture(spr_var,0);
 ');

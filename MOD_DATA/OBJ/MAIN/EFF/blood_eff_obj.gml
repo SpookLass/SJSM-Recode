@@ -18,6 +18,7 @@ object_event_add
     x = random_range(30,1250);
     y = random_range(50,500);
     image_angle = random_range(45,-45);
+    state_var = 0;
     // Alarm
     alarm_len_var = 2;
     alarm_ini_scr();

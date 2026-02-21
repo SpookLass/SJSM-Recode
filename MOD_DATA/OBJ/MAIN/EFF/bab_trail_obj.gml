@@ -33,9 +33,7 @@ object_event_add
     // Reflection handling (more complex for billboarded sprites)
     local.xtmp = x;
     local.ytmp = y;
-    
-    
-    
+    local.ztmp = z;
     if global.reflect_var
     {
         switch (global.reflect_axis_var)

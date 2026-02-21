@@ -33,7 +33,7 @@ object_event_add
     {
         image_blend = c_red; 
         set_alarm_scr(0,6);
-        cam_id_var = other.attack_target_var.cam_id_var;
+        cam_id_var = other.atk_target_var.cam_id_var;
     }
 ');
 // Destroy

@@ -36,8 +36,8 @@ object_event_add
         action_splash_web(link_var,true);
         with instance_create(0,0,pause_menu_obj)
         {
-            cam_id_var = interact_target_var.cam_id_var;
-            player_id_var = interact_target_var.player_id_var;
+            cam_id_var = other.interact_target_var.cam_id_var;
+            player_id_var = other.interact_target_var.player_id_var;
             event_user(1);
         }
     }

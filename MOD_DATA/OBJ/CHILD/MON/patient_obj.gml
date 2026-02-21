@@ -10,34 +10,7 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,1,'
     ini_open(global.lang_var);
-    switch global.name_var
-    {
-        case name_og_const:
-        {
-            name_var = ini_read_string("NAME","patient_og","NAME_patient_og");
-            break;
-        }
-        case name_hd_const:
-        {
-            name_var = ini_read_string("NAME","patient_hd","NAME_patient_hd");
-            break;
-        }
-        case name_fanon_const:
-        {
-            name_var = ini_read_string("NAME","patient_fanon","NAME_patient_fanon");
-            break;
-        }
-        case name_num_og_const:
-        {
-            name_var = ini_read_string("NAME","patient_num_og","NAME_patient_num_og");
-            break;
-        }
-        case name_num_hd_const:
-        {
-            name_var = ini_read_string("NAME","patient_num_hd","NAME_patient_num_hd");
-            break;
-        }
-    }
+    name_var = translate_mon_str_scr("patient",global.name_var);
     wake_snd_var[2] = string_replace(ini_read_string("SUB","patient","SUB_patient"),"@n",name_var); wake_snd_var[3] = false;
     ini_close();
     // Patient
@@ -48,6 +21,7 @@ object_event_add
     dmg_var = 10;
     dmg_alarm_var = 30;
     dead_rm_var = patient_dead_rm;
+    inv_time_var = 0;
     // Theme
     mus_delay_var = 144
     // Assets
@@ -91,9 +65,11 @@ object_event_add
     tp_sight_var = false;
     tp_dist_min_var = 128;
     tp_dist_max_var = 512;
+    back_tp_alarm_var = -1;
     // Render
     tex_var = sprite_get_texture(spr_var,0);
     mdl_var = mdl_01_var;
+    draw_pos_var = false;
     // Rand
     rand_chance_var = 3;
     rand_alarm_min_var = 3;
@@ -108,6 +84,7 @@ object_event_add
     overlay_color_var = c_white;
     overlay_alpha_var = 0.1;
     // Die
+    dead_var = false;
     hp_var = 8;
     do_hurt_var = 3;
     hurt_hp_var = 1;
@@ -121,6 +98,7 @@ object_event_add
     // Behavior
     if global.patient_type_var == -1 { local.type = irandom(2); }
     else { local.type = global.patient_type_var; }
+    local.set = false;
     switch local.type
     {
         case 0: // Recode
@@ -215,19 +193,20 @@ object_event_add
         wake_snd_var[0] = 1;
         seen_yaw_var = seen_yaw_02_var;
         seen_pitch_var = seen_pitch_02_var;
-        do_anim_var = -1;
+        do_anim_var = false;
     }
     // Alarms
     alarm_len_var = 15;
     alarm_ini_scr();
     // Bools
     do_mdl_var = true;
-    do_snd_var = -1;
+    do_snd_var = false;
 ');
 // Destroy Event
 object_event_add
 (argument0,ev_destroy,0,'
     event_inherited();
+    local.bool = false;
     with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
     if !local.bool
     {
@@ -358,15 +337,18 @@ object_event_add
 // Teleport Behind Alarm
 object_event_add
 (argument0,ev_alarm,10,'
-    local.xvel = -lengthdir_x(1,target_var.eye_yaw_var);
-    local.yvel = -lengthdir_y(1,target_var.eye_yaw_var);
-    if check_ray_scr(target_x_var,target_y_var,target_z_var+(target_var.coll_var[1]/2),local.xvel,local.yvel,0) > 32+(coll_var[2]/2)
+    if instance_exists(target_var)
     {
-        x = target_x_var+(local.xvel*32);
-        y = target_y_var+(local.yvel*32);
-        z = target_z_var;
-        // Become visible
-        event_user(14);
+        local.xvel = -lengthdir_x(1,target_var.eye_yaw_var);
+        local.yvel = -lengthdir_y(1,target_var.eye_yaw_var);
+        if check_ray_scr(target_x_var,target_y_var,target_z_var+(target_var.coll_var[1]/2),local.xvel,local.yvel,0) > 32+(coll_var[2]/2)
+        {
+            x = target_x_var+(local.xvel*32);
+            y = target_y_var+(local.yvel*32);
+            z = target_z_var;
+            // Become visible
+            event_user(14);
+        }
     }
 ');
 // Play Theme
@@ -493,7 +475,7 @@ object_event_add
     event_inherited();
 ');
 // Attack Success
-// Uses attack_target_var as an argument, usually the player.
+// Uses atk_target_var as an argument, usually the player.
 object_event_add
 (argument0,ev_other,ev_user3,'
     event_inherited();

@@ -26,6 +26,7 @@ object_event_add
     breath_snd_num_var = 2;
     breath_snd_den_var = 3;
     // Drag Sounds
+    drag_snd_var = noone;
     drag_snd_len_var = 3;
     drag_snd_num_var = 1;
     drag_snd_den_var = 2;
@@ -33,32 +34,13 @@ object_event_add
     drag_snd_dist_var = 700;
     // Translations
     ini_open(global.lang_var);
-    switch global.name_var
-    {
-        case name_og_const:
-        {
-            name_var = ini_read_string("NAME","killer_og","NAME_killer_og");
-            break;
-        }
-        case name_hd_const:
-        case name_fanon_const:
-        {
-            name_var = ini_read_string("NAME","killer_hd","NAME_killer_hd");
-            break;
-        }
-        case name_num_og_const:
-        case name_num_hd_const:
-        {
-            name_var = ini_read_string("NAME","killer_num","NAME_killer_num");
-            break;
-        }
-    }
+    name_var = translate_mon_str_scr("killer",global.name_var);
     switch global.killer_voice_var
     {
         case 0: // Vernon Shaw
         {
             wake_snd_var[2] = string_replace(ini_read_string("SUB","killer_wake","SUB_killer_wake"),"@n",name_var); wake_snd_var[3] = false;
-            charge_snd_arr[0,1] = wake_snd_var[2];
+            charge_snd_arr[0,1] = wake_snd_var[2]; charge_snd_arr[0,2] = wake_snd_var[3];
             snd_arr[0,1] = ini_read_string("SUB","killer_01","SUB_killer_01"); snd_arr[0,2] = true;
             snd_arr[1,1] = ini_read_string("SUB","killer_02","SUB_killer_02"); snd_arr[1,2] = true;
             snd_arr[2,1] = ini_read_string("SUB","killer_03","SUB_killer_03"); snd_arr[2,2] = true;
@@ -71,7 +53,7 @@ object_event_add
         {
             snd_len_var = 9;
             wake_snd_var[2] = string_replace(ini_read_string("SUB","killer_wake","SUB_killer_wake"),"@n",name_var); wake_snd_var[3] = false;
-            charge_snd_arr[0,1] = wake_snd_var[2];
+            charge_snd_arr[0,1] = wake_snd_var[2]; charge_snd_arr[0,2] = wake_snd_var[3];
             snd_arr[0,1] = ini_read_string("SUB","killer_hd_01","SUB_killer_hd_01"); snd_arr[0,2] = true;
             snd_arr[1,1] = ini_read_string("SUB","killer_hd_02","SUB_killer_hd_02"); snd_arr[1,2] = true;
             snd_arr[2,1] = ini_read_string("SUB","killer_hd_03","SUB_killer_hd_03"); snd_arr[2,2] = true;
@@ -91,7 +73,7 @@ object_event_add
             snd_len_var = 4;
             breath_snd_len_var = 3;
             wake_snd_var[2] = string_replace(ini_read_string("SUB","killer_wake","SUB_killer_wake"),"@n",name_var); wake_snd_var[3] = false;
-            charge_snd_arr[0,1] = wake_snd_var[2];
+            charge_snd_arr[0,1] = wake_snd_var[2]; charge_snd_arr[0,2] = wake_snd_var[3];
             snd_arr[0,1] = ini_read_string("SUB","killer_hd_01","SUB_killer_hd_01"); snd_arr[0,2] = true;
             snd_arr[1,1] = ini_read_string("SUB","killer_hd_02","SUB_killer_hd_02"); snd_arr[1,2] = true;
             snd_arr[2,1] = ini_read_string("SUB","killer_hd_08","SUB_killer_hd_08"); snd_arr[2,2] = true;
@@ -117,7 +99,7 @@ object_event_add
             snd_arr[7,1] = ini_read_string("SUB","killer_ryan_08","SUB_killer_ryan_08"); snd_arr[7,2] = true;
             charge_snd_arr[0,1] = ini_read_string("SUB","killer_charge_ryan_01","SUB_killer_charge_ryan_01"); charge_snd_arr[0,2] = true;
             charge_snd_arr[1,1] = ini_read_string("SUB","killer_charge_ryan_02","SUB_killer_charge_ryan_02"); charge_snd_arr[1,2] = true;
-            charge_snd_arr[2,1] = string_replace(ini_read_string("SUB","killer_charge_ryan_03","SUB_killer_charge_ryan_03"),"@n",name_var);
+            charge_snd_arr[2,1] = string_replace(ini_read_string("SUB","killer_charge_ryan_03","SUB_killer_charge_ryan_03"),"@n",name_var); charge_snd_arr[2,2] = false;
             local.sub = string_replace(ini_read_string("SUB","killer_mumble_ryan","SUB_killer_mumble_ryan"),"@n",name_var);
             for (local.i=0; local.i<breath_snd_len_var; local.i+=1;)
             { breath_snd_arr[local.i,1] = local.sub; breath_snd_arr[local.i,2] = false; }
@@ -140,6 +122,7 @@ object_event_add
     atk_range_var = 48;
     dead_rm_var = killer_dead_rm;
     scary_var = false;
+    dmg_stun_var = 0;
     // Theme
     mus_prio_var = mon_mus_prio_const;
     // Sprite stuff
@@ -354,6 +337,7 @@ object_event_add
     // Behavior
     if global.killer_type_var == -1 { local.type = irandom(7); }
     else { local.type = global.killer_type_var; }
+    local.set = false;
     switch local.type
     {
         case 7: // Player 9
@@ -488,6 +472,7 @@ object_event_add
 object_event_add
 (argument0,ev_destroy,0,'
     event_inherited();
+    local.bool = false;
     with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
     if !local.bool
     {

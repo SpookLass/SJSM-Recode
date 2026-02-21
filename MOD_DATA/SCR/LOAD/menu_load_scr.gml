@@ -203,7 +203,7 @@ custom_arr_add_len_scr(0,1);
 custom_arr_set_scr(false,global.custom_len_var,-1,-1,-1); // Default
 custom_arr_set_scr(true,global.custom_len_var,5,-1,-1); // :)
 custom_arr_set_scr(false,global.custom_len_var,-1,-1,1); // OG
-custom_arr_set_scr(false,global.custom_len_var,-1,-1,1); // HD
+custom_arr_set_scr(false,global.custom_len_var,-1,-1,2); // HD
 global.custom_len_var += 1;
     // Lock
 // Name

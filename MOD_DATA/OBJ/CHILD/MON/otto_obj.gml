@@ -20,38 +20,17 @@ object_event_add
     wake_snd_var[0] = true;
     // Translations
     ini_open(global.lang_var);
-    switch global.name_var
-    {
-        case name_og_const:
-        case name_num_og_const:
-        {
-            name_var = ini_read_string("NAME","otto_og","NAME_otto_og");
-            break;
-        }
-        case name_hd_const:
-        {
-            name_var = ini_read_string("NAME","otto_hd","NAME_otto_hd");
-            break;
-        }
-        case name_fanon_const:
-        {
-            name_var = ini_read_string("NAME","otto_fanon","NAME_otto_fanon");
-            break;
-        }
-        case name_num_hd_const:
-        {
-            name_var = ini_read_string("NAME","otto_num","NAME_otto_num");
-            break;
-        }
-    }
+    name_var = translate_mon_str_scr("otto",global.name_var);
     local.sub = string_replace(ini_read_string("SUB","otto","SUB_otto"),"@n",name_var);
     for (local.i=0; local.i<snd_len_var; local.i+=1)
     { snd_arr[local.i,1] = local.sub; snd_arr[local.i,2] = false; }
     wake_snd_var[2] = local.sub; wake_snd_var[3] = false;
     ini_close();
+    // Variables
     type_var = 1;
     spd_base_var = 1/6; // 0.1r6
     spr_spd_var = 1/6;
+    spr_prog_var = 1;
     dur_var = 20;
     delay_var = -64;
     dmg_var = 10;
@@ -61,6 +40,7 @@ object_event_add
     h_var = 24;
     spr_num_var = 4;
     anim_type_var = 4;
+    sil_dist_var = -0.1;
     // Assets
         // Search for existing assets to save memory
     local.loaded = false;
@@ -93,9 +73,11 @@ object_event_add
         snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\otto_04_snd.wav",true);
         fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
     }
+    eye_tex_var = sprite_get_texture(eye_spr_var,0);
     // Behavior
     if global.otto_type_var == -1 { local.type = irandom(3); }
     else { local.type = global.otto_type_var; }
+    local.set = false;
     switch local.type
     {
         case 0:
@@ -107,12 +89,10 @@ object_event_add
         }
         case 3: // Old HD
         {
-            if local.set
-            {
-                dmg_var = 60;
-                delay_min_var = 90;
-                delay_max_var = 180;
-            }
+            dmg_var = 60;
+            delay_min_var = 90;
+            delay_max_var = 180;
+            local.set = true;
         }
         case 2: // HD
         {
@@ -146,6 +126,7 @@ object_event_add
 object_event_add
 (argument0,ev_destroy,0,'
     event_inherited();
+    local.bool = false;
     with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
     if !local.bool
     {

@@ -9,6 +9,7 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,0,'
+    event_inherited();
     spot_alarm_var = 221.4; // 240
     inst_var = fmod_snd_loop_scr(taker_mus_snd);
     spot_bg_var = background_add(vanilla_directory_const+"\TEX\mobile\MB5_20_tex.png",false,false);

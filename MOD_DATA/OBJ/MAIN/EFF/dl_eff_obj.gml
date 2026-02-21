@@ -14,6 +14,7 @@ object_event_add
     spr_var = static_01_spr;
     anim_var = !global.reduce_flash_var;
     spr_spd_var = 0.25;
+    spr_id_var = 0;
     // Random
     alpha_min_var = 0.2;
     alpha_max_var = 0.6;

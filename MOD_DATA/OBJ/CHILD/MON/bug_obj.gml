@@ -17,35 +17,12 @@ object_event_add
     snd_alarm_max_var = 240;
     snd_dist_max_var = 800;
     loop_snd_var[0] = true;
-    loop_snd_dist_min_var = 600;
+    loop_snd_dist_min_var = 0;
     loop_snd_dist_max_var = 600;
     // Translations
     ini_open(global.lang_var);
-    switch global.name_var
-    {
-        case name_og_const:
-        {
-            name_var = ini_read_string("NAME","bug_og","NAME_bug_og");
-            break;
-        }
-        case name_hd_const:
-        {
-            name_var = ini_read_string("NAME","bug_hd","NAME_bug_hd");
-            break;
-        }
-        case name_fanon_const:
-        {
-            name_var = ini_read_string("NAME","bug_fanon","NAME_bug_fanon");
-            break;
-        }
-        case name_num_og_const:
-        case name_num_hd_const:
-        {
-            name_var = ini_read_string("NAME","bug_num","NAME_bug_num");
-            break;
-        }
-    }
-    loop_snd_var[2] = string_replace(ini_read_string("SUB","bug_loop","SUB_bug_loop"),"@n",name_var);
+    name_var = translate_mon_str_scr("bug",global.name_var);
+    loop_snd_var[2] = string_replace(ini_read_string("SUB","bug_loop","SUB_bug_loop"),"@n",name_var); loop_snd_var[3] = false;
     local.sub = string_replace(ini_read_string("SUB","bug","SUB_bug"),"@n",name_var);
     for (local.i=0; local.i<snd_len_var; local.i+=1)
     { snd_arr[local.i,1] = local.sub; snd_arr[local.i,2] = false; }
@@ -264,6 +241,7 @@ object_event_add
 object_event_add
 (argument0,ev_destroy,0,'
     event_inherited();
+    local.bool = false;
     with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
     if !local.bool
     {

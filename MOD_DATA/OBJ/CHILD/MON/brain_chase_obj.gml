@@ -10,22 +10,7 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,1,'
     ini_open(global.lang_var);
-    switch global.name_var
-    {
-        case name_og_const:
-        case name_hd_const:
-        case name_num_og_const:
-        case name_fanon_const:
-        {
-            name_var = ini_read_string("NAME","brain","NAME_brain");
-            break;
-        }
-        case name_num_hd_const:
-        {
-            name_var = ini_read_string("NAME","brain_num","NAME_brain_num");
-            break;
-        }
-    }
+    name_var = translate_mon_str_scr("brain",global.name_var);
     loop_snd_var[2] = string_replace(ini_read_string("SUB","brain","SUB_brain"),"@n",name_var); loop_snd_var[3] = false;
     ini_close();
     type_var = 0;
@@ -39,6 +24,8 @@ object_event_add
     h_var = 10;
     spd_var = 8/9;
     target_spd_mult_var = 0.3;
+    eff_var = false;
+    smart_var = false;
     // Sounds
     do_snd_var = true;
     loop_snd_var[0] = true;
@@ -64,21 +51,28 @@ object_event_add
         mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\brain_mus_snd.mp3");
         fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
     }
-    if global.main_type_var != 2 && global.mode_var != 0
+    switch global.brain_type_var
     {
-        mus_prio_var = theme_mus_prio_const;
-        dur_var = irandom_range(10,15);
-        spd_var = 8/15; // Old HD
-        target_spd_mult_var = 0.6;
-        smart_var = true;
-        eff_var = true;
-        dmg_var = 60;
-        // Silhouette
-        sil_var = true;
-        sil_type_var = 1; // Pure color
-        sil_color_var = make_color_rgb(159,196,156);
-        sil_alpha_var = 0.6;
-        sil_dist_var = 0.1;
+        case 0:
+        {
+            if global.mode_var != 0
+            {
+                mus_prio_var = theme_mus_prio_const;
+                dur_var = irandom_range(10,15);
+                spd_var = 8/15; // Old HD
+                target_spd_mult_var = 0.6;
+                smart_var = true;
+                eff_var = true;
+                dmg_var = 60;
+                // Silhouette
+                sil_var = true;
+                sil_type_var = 1; // Pure color
+                sil_color_var = make_color_rgb(159,196,156);
+                sil_alpha_var = 0.6;
+                sil_dist_var = 0.1;
+            }
+            break;
+        }
     }
     // sine
     z_off_time_var=0;
@@ -92,6 +86,7 @@ object_event_add
 (argument0,ev_destroy,0,'
     event_inherited();
     with brain_eff_obj { if par_var == other.id { instance_destroy(); }}
+    local.bool = false;
     with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
     if !local.bool
     {
@@ -134,13 +129,16 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user6,'
     event_inherited();
-    if smart_var && instance_exists(target_var) && spd_var > 0 && target_var.spd_var > 0
+    if smart_var && instance_exists(target_var) && spd_var > 0
     {
-        local.time = target_dist_var/spd_var;
-        local.raydist = check_ray_scr(target_x_var,target_y_var,target_z_var,target_var.x_spd_var,target_var.y_spd_var,target_var.z_spd_var)-(target_var.coll_var[1]/2);
-        local.dist = min(local.time*target_var.spd_var,local.raydist);
-        target_x_var += lengthdir_x(lengthdir_x(local.dist,target_var.yaw_var),target_var.pitch_var);
-        target_y_var += lengthdir_x(lengthdir_y(local.dist,target_var.yaw_var),target_var.pitch_var);
-        target_z_var -= lengthdir_y(local.dist,target_var.pitch_var);
+        if target_var.spd_var > 0
+        {
+            local.time = target_dist_var/spd_var;
+            local.raydist = check_ray_scr(target_x_var,target_y_var,target_z_var,target_var.x_spd_var,target_var.y_spd_var,target_var.z_spd_var)-(target_var.coll_var[1]/2);
+            local.dist = min(local.time*target_var.spd_var,local.raydist);
+            target_x_var += lengthdir_x(lengthdir_x(local.dist,target_var.yaw_var),target_var.pitch_var);
+            target_y_var += lengthdir_x(lengthdir_y(local.dist,target_var.yaw_var),target_var.pitch_var);
+            target_z_var -= lengthdir_y(local.dist,target_var.pitch_var);
+        }
     }
 ');

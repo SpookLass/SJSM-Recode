@@ -9,6 +9,8 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,0,'
+    on_var = false;
+    spr_id_var = 0;
     // Fog
     fog_color_var = c_dkgray;
     fog_var = true;

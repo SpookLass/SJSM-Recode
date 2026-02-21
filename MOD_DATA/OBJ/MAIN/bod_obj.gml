@@ -6,6 +6,21 @@ object_set_persistent(argument0,true);
 object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
+// Create
+object_event_add
+(argument0,ev_create,0,'
+    event_inherited();
+    on_var = false;
+    spr_id_var = 0;
+    x_off_var = 0;
+    y_off_var = 0;
+    z_off_var = 0;
+    w_var = 1;
+    h_var = 1;
+    pitch_var = 0;
+    yaw_var = 0;
+    rotate_var = false;
+');
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,'

@@ -147,7 +147,8 @@ object_event_add
     fmod_inst_stop_scr(mus_snd_var);
     fmod_group_set_pause_scr(snd_group_mon_const,false);
     fmod_group_set_pause_scr(snd_group_voice_const,false);
-    fmod_inst_set_pause_scr(mus_control_obj.snd_var,false);
+    if instance_exists(mus_control_obj)
+    { fmod_inst_set_pause_scr(mus_control_obj.snd_var,false); }
     global.pause_var = false;
 ');
 // Alarm 0 Event

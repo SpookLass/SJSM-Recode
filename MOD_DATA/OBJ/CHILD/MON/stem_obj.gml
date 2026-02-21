@@ -25,38 +25,12 @@ object_event_add
     snd_dist_max_var = 600;
     // Translations
     ini_open(global.lang_var);
-    switch global.name_var
-    {
-        case name_og_const:
-        {
-            name_var = ini_read_string("NAME","stem_og","NAME_stem_og");
-            break;
-        }
-        case name_hd_const:
-        {
-            name_var = ini_read_string("NAME","stem_hd","NAME_stem_hd");
-            break;
-        }
-        case name_fanon_const:
-        {
-            name_var = ini_read_string("NAME","stem_fanon","NAME_stem_fanon");
-            break;
-        }
-        case name_num_og_const:
-        {
-            name_var = ini_read_string("NAME","stem_num_og","NAME_stem_num_og");
-            break;
-        }
-        case name_num_hd_const:
-        {
-            name_var = ini_read_string("NAME","stem_num_hd","NAME_stem_num_hd");
-            break;
-        }
-    }
+    name_var = translate_mon_str_scr("stem",global.name_var);
     local.sub = string_replace(ini_read_string("SUB","stem","SUB_stem"),"@n",name_var);
     for (local.i=0; local.i<snd_len_var; local.i+=1)
     { snd_arr[local.i,1] = local.sub; snd_arr[local.i,2] = false; }
     ini_close();
+    // Variables
     type_var = 0;
     spd_base_var = 0.4;
     dur_var = irandom_range(15,30);
@@ -70,6 +44,18 @@ object_event_add
     h_var = 10;
     dupe_var = dupe_canon_const;
     spr_spd_var = 1;
+    if !irandom(3)
+    {
+        x_off_var = random_range(-3,3);
+        y_off_var = random_range(-3,3);
+        z_off_rand_var = random_range(-3,3);
+    }
+    else
+    {
+        x_off_var = 0;
+        y_off_var = 0;
+        z_off_rand_var = 0;
+    }
     // Theme
     mus_prio_var = mon_mus_prio_const;
     // Assets
@@ -136,6 +122,8 @@ object_event_add
     do_mdl_var = true;
     rand_alarm_var = 6;
     inv_chance_var = 3;
+    // Thing
+    hurt_efF_var = false;
     // Behavior
     if global.stem_type_var == -1 { local.type = irandom(3); }
     else { local.type = global.stem_type_var; }
@@ -219,6 +207,7 @@ object_event_add
 object_event_add
 (argument0,ev_destroy,0,'
     event_inherited();
+    local.bool = false;
     with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
     if !local.bool
     { 
@@ -242,19 +231,19 @@ object_event_add
 ');
 // Delay
 object_event_add
-(argument0,ev_alarm,0,"
+(argument0,ev_alarm,0,'
     event_inherited();
     set_alarm_scr(8,rand_alarm_var);
-");
+');
 // Random anim
 object_event_add
-(argument0,ev_alarm,8,"
+(argument0,ev_alarm,8,'
     if !irandom(inv_chance_var-1) && image_alpha != 0 { image_alpha = 0; }
     else { image_alpha = choose(1,random_range(0.5,1)); }
     if !irandom(3) { mdl_var = mdl_02_var; }
     else { mdl_var = mdl_01_var; }
     set_alarm_scr(8,rand_alarm_var);
-");
+');
 // Movement
 object_event_add
 (argument0,ev_other,ev_user0,'
@@ -323,7 +312,7 @@ object_event_add
 ');
 // Animation
 object_event_add
-(argument0,ev_other,ev_user1,"
+(argument0,ev_other,ev_user1,'
     z_off_time_var = (z_off_time_var+global.delta_time_var) mod z_off_rate_var;
     z_off_var = (sin(2*z_off_time_var*pi/z_off_rate_var)*z_off_mult_var/2)+z_off_rand_var;
     spr_prog_var -= spr_spd_var*global.delta_time_var;
@@ -343,10 +332,10 @@ object_event_add
             z_off_rand_var = 0;
         }
     }
-");
+');
 // Hurt Event
 object_event_add
-(argument0,ev_other,ev_user4,"
+(argument0,ev_other,ev_user4,'
     event_inherited();
     if hurt_tp_var { event_user(15); }
     if hurt_eff_var
@@ -358,7 +347,7 @@ object_event_add
             set_alarm_scr(0,18);
         }
     }
-");
+');
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,'

@@ -9,8 +9,10 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,0,'
+    event_inherited();
     fov_var = global.fov_var;
     h_var = 114/7; // 16 + 2/7
+    roll_var = 0;
     cam_id_var = 0;
     player_id_var = global.dead_player_var;
     // Idle Bob
@@ -47,6 +49,7 @@ object_event_add
     cam_z_var = z+h_var+breath_var;
     cam_yaw_var = yaw_var;
     cam_pitch_var = pitch_var;
+    cam_roll_var = roll_var;
     // Camera shake
     if shake_var > 0
     {
@@ -70,7 +73,6 @@ object_event_add
     }
     // Set camera and listener position
     cam_set_scr(cam_id_var,cam_x_var,cam_y_var,cam_z_var,cam_yaw_var,cam_pitch_var,fov_var,cam_roll_var,false);
-    cam_roll_var = 0;
     // Could put this in control, but needs extra camera boolean
     fmod_listen_pos_ex_scr
     (

@@ -11,30 +11,7 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,1,'
     ini_open(global.lang_var);
-    switch global.name_var
-    {
-        case name_og_const:
-        {
-            name_var = ini_read_string("NAME","sc_og","NAME_sc_og");
-            break;
-        }
-        case name_hd_const:
-        case name_fanon_const:
-        {
-            name_var = ini_read_string("NAME","sc_hd","NAME_sc_hd");
-            break;
-        }
-        case name_num_og_const:
-        {
-            name_var = ini_read_string("NAME","sc_num_og","NAME_sc_num_og");
-            break;
-        }
-        case name_num_hd_const:
-        {
-            name_var = ini_read_string("NAME","sc_num_hd","NAME_sc_num_hd");
-            break;
-        }
-    }
+    name_var = translate_mon_str_scr("sc",global.name_var);
     loop_snd_var[2] = string_replace(ini_read_string("SUB","sc","SUB_sc"),"@n",name_var); loop_snd_var[3] = false;
     ini_close();
     type_var = 0;
@@ -47,7 +24,7 @@ object_event_add
     w_var = 10;
     h_var = 17;
     z_off_var = 5;
-    do_anim_var = -1;
+    do_anim_var = false;
     blood_spr_var = blood_kh_spr;
     // Sounds
     loop_snd_var[0] = true;
@@ -147,6 +124,7 @@ object_event_add
 object_event_add
 (argument0,ev_destroy,0,'
     event_inherited();
+    local.bool = false;
     with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
     if !local.bool
     {
@@ -273,7 +251,7 @@ object_event_add
                 }
             }
         }
-        else if tp_var
+        else if tp_var && instance_exists(target_var)
         {
             event_user(6);
             x = target_x_var+lengthdir_x(lengthdir_x(tp_dist_var,target_var.yaw_var),target_var.pitch_var);
@@ -323,17 +301,20 @@ object_event_add
 // Teleport Delay
 object_event_add
 (argument0,ev_alarm,10,'
-    if tp_delay_var
+    if instance_exists(target_var)
     {
-        on_var = true;
-        fmod_inst_set_pause_scr(snd_var,false);
-        tp_var = false;
-        visible_var = false;
+        if tp_delay_var
+        {
+            on_var = true;
+            fmod_inst_set_pause_scr(snd_var,false);
+            tp_var = false;
+            visible_var = false;
+        }
+        event_user(6);
+        x = target_x_var+lengthdir_x(lengthdir_x(tp_dist_var,target_var.yaw_var),target_var.pitch_var);
+        y = target_y_var+lengthdir_x(lengthdir_y(tp_dist_var,target_var.yaw_var),target_var.pitch_var);
+        z = target_z_var-lengthdir_y(tp_dist_var,target_var.pitch_var);
+        image_alpha = 1;
+        set_alarm_scr(9,irandom_range(return_alarm_min_var,return_alarm_max_var));
     }
-    event_user(6);
-    x = target_x_var+lengthdir_x(lengthdir_x(tp_dist_var,target_var.yaw_var),target_var.pitch_var);
-    y = target_y_var+lengthdir_x(lengthdir_y(tp_dist_var,target_var.yaw_var),target_var.pitch_var);
-    z = target_z_var-lengthdir_y(tp_dist_var,target_var.pitch_var);
-    image_alpha = 1;
-    set_alarm_scr(9,irandom_range(return_alarm_min_var,return_alarm_max_var));
 ');

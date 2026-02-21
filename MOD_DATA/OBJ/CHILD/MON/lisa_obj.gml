@@ -10,23 +10,7 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,1,'
     ini_open(global.lang_var);
-    switch global.name_var
-    {
-        case name_og_const:
-        case name_num_og_const:
-        case name_hd_const:
-        case name_fanon_const:
-        {
-            name_var = ini_read_string("NAME","lisa","NAME_lisa");
-            break;
-        }
-        
-        case name_num_hd_const:
-        {
-            name_var = ini_read_string("NAME","lisa_num","NAME_lisa_num");
-            break;
-        }
-    }
+    name_var = translate_mon_str_scr("lisa",global.name_var);
     wake_snd_var[2] = string_replace(ini_read_string("SUB","lisa","SUB_lisa"),"@n",name_var); wake_snd_var[3] = false;
     note_str_len_var = 6;
     note_str_arr[0] = ini_read_string("NOTE","lisa_01","NOTE_lisa_01");
@@ -84,7 +68,10 @@ object_event_add
     red_end_var = 14;
     vis_phase_end_var = 21;
     amb_start_var = 8;
+    zone_end_var = 0;
     // Other
+    note_rand_var = false;
+    note_var = 0;
     hide_var = true;
     js_chance_var = 1;
     red_rand_var = false;
@@ -157,6 +144,7 @@ object_event_add
     // Behavior
     if global.lisa_type_var == -1 { local.type = irandom(3); }
     else { local.type = global.lisa_type_var; }
+    local.set = false;
     switch local.type
     {
         case 3: // Alternate (no loop)
@@ -243,6 +231,7 @@ object_event_add
 object_event_add
 (argument0,ev_destroy,0,'
     event_inherited();
+    local.bool = false;
     with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
     if !local.bool
     {
@@ -412,7 +401,7 @@ object_event_add
     }
 ');
 // Attack Success
-// Uses attack_target_var as an argument, usually the player.
+// Uses atk_target_var as an argument, usually the player.
 object_event_add
 (argument0,ev_other,ev_user3,'
     event_inherited();

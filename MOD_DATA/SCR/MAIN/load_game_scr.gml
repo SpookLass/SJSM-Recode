@@ -30,7 +30,7 @@ for (local.i=0; local.i<global.custom_len_var; local.i+=1)
 {
     if custom_arr[local.i,4] != 6 // Not Monster List
     {
-        if custom_add[local.i,4] == 5 // String
+        if custom_arr[local.i,4] == 5 // String
         { local.value = ini_read_string("SETTING",custom_arr[local.i,0],custom_arr_get_scr(local.i,global.diff_var,global.mode_var,global.main_type_var)); }
         // Number
         { local.value = ini_read_real("SETTING",custom_arr[local.i,0],custom_arr_get_scr(local.i,global.diff_var,global.mode_var,global.main_type_var)); }
@@ -40,28 +40,31 @@ for (local.i=0; local.i<global.custom_len_var; local.i+=1)
 // Behavior stuff
 for (local.i=0; local.i<global.mon_len_var; local.i+=1;)
 { execute_string("global."+mon_arr[local.i,0]+"_type_var = argument0",ini_read_real("BEHAVIOR",mon_arr[local.i,0]+"_type",global.main_type_var)); }
-ini_close();
-// Boot it up!
+// Players
 for (local.i=0; local.i<global.player_len_var; local.i+=1;)
 {
-    local.player = instance_create(0,0,player_obj);
-    global.player_arr[local.i] = local.player;
-    local.player.player_id_var = local.i;
-    local.player.cam_id_var = local.i;
-    local.hud = instance_create(0,0,hud_obj);
-    local.hud.par_var = local.player;
-    local.axe = instance_create(0,0,axe_obj);
-    local.axe.par_var = local.player;
-    if global.player_len_var > 1
+    with instance_create(0,0,player_obj)
     {
-        with instance_create(0,0,player_render_obj)
+        local.player = id;
+        global.player_arr[local.i] = id;
+        player_id_var = local.i;
+        cam_id_var = local.i;
+        hp_var = ini_read_real("PLAYER","hp_"+string(local.i),hp_var);
+        violence_var = ini_read_real("PLAYER","violence_"+string(local.i),violence_var);
+        with instance_create(0,0,hud_obj) { par_var = local.player; }
+        with instance_create(0,0,axe_obj) { par_var = local.player; }
+        if global.player_len_var > 1
         {
-            player_id_var = local.i;
-            par_var = local.player;
-            event_user(0);
+            with instance_create(0,0,player_render_obj)
+            {
+                player_id_var = local.i;
+                par_var = local.player;
+                event_user(0);
+            }
         }
     }
 }
+ini_close();
 instance_create(0,0,mus_control_obj);
 // Spawn present specimens
 for (local.i=0; local.i<ds_list_size(global.mon_curr_list); local.i+=1;)

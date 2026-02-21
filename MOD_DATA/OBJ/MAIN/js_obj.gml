@@ -17,6 +17,7 @@ object_event_add
     load_var = false;
     inst_var = noone;
     silent_var = false;
+    hit_var = false;
     if global.js_override_var
     {
         chance_num_var = global.js_override_num_var;

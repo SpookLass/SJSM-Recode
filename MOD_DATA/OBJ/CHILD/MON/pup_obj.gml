@@ -22,36 +22,14 @@ object_event_add
     snd_dist_max_var = 600;
     // Translations
     ini_open(global.lang_var);
-    switch global.name_var
-    {
-        case name_og_const:
-        {
-            name_var = ini_read_string("NAME","pup_og","NAME_pup_og");
-            break;
-        }
-        case name_hd_const:
-        {
-            name_var = ini_read_string("NAME","pup_hd","NAME_pup_hd");
-            break;
-        }
-        case name_fanon_const:
-        {
-            name_var = ini_read_string("NAME","pup_fanon","NAME_pup_fanon");
-            break;
-        }
-        case name_num_og_const:
-        case name_num_hd_const:
-        {
-            name_var = ini_read_string("NAME","pup_num","NAME_pup_num");
-            break;
-        }
-    }
+    name_var = translate_mon_str_scr("pup",global.name_var);
     local.sub = string_replace(ini_read_string("SUB","pup","SUB_pup"),"@n",name_var);
     for (local.i=0; local.i<snd_len_var; local.i+=1)
     { snd_arr[local.i,1] = local.sub; snd_arr[local.i,2] = false; }
     wake_snd_var[2] = string_replace(ini_read_string("SUB","pup_laugh","SUB_pup_laugh"),"@n",name_var); wake_snd_var[3] = false;
     laugh_snd_var[1] = wake_snd_var[2]; laugh_snd_var[2] = false;
     ini_close();
+    // Variables
     type_var = 0;
     spd_base_var = 5;
     spr_spd_var = 1/30;
@@ -61,6 +39,9 @@ object_event_add
     dmg_alarm_var = 120;
     w_base_var = 10;
     h_base_var = 20;
+    hd_var = false;
+    hd_snd_var = false;
+    terrible_var = false;
     // Anim
     anim_type_var = 3; // Random
     // Seen
@@ -84,6 +65,7 @@ object_event_add
     hurt_tp_den_var = 4;
     hurt_multi_var = false;
     hurt_dur_multi_var = false;
+    hurt_eff_var = false;
     // Down
     hurt_w_var = 20;
     hurt_h_var = 10;
@@ -139,6 +121,7 @@ object_event_add
     // Behavior
     if global.pup_type_var == -1 { local.type = irandom(5); }
     else { local.type = global.pup_type_var; }
+    local.set = false;
     switch local.type
     {
         case 0: // Mod
@@ -176,7 +159,7 @@ object_event_add
             hurt_eff_var = true;
             terrible_var = true;
             delay_var = 0;
-            do_anim_var = -1;
+            do_anim_var = false;
             do_move_var = -1;
             snd_alarm_min_var = -1;
             snd_alarm_max_var = -1;
@@ -247,6 +230,7 @@ object_event_add
 object_event_add
 (argument0,ev_destroy,0,'
     event_inherited();
+    local.bool = false;
     with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
     if !local.bool
     {
@@ -354,14 +338,14 @@ object_event_add
                     {
                         z_off_var = lerp_scr(0,ascend_z_var,alarm_arr[9,0]/alarm_arr[9,1]);
                         // Oh GOD
-                        if is_seen_var == 0 && terrible_var
+                        if is_seen_var == 0 && terrible_var && instance_exists(target_var)
                         {
                             local.xvel = -lengthdir_x(1,target_var.yaw_var);
                             local.yvel = -lengthdir_y(1,target_var.yaw_var);
                             local.dist = median(check_ray_scr(target_x_var,target_y_var,target_z_var+(target_var.coll_var[1]/2),local.xvel,local.yvel,0)-(coll_var[2]/2),tp_dist_min_var,tp_dist_max_var);
                             x = target_x_var+(local.xvel*local.dist);
                             y = target_y_var+(local.yvel*local.dist);
-                            z = target_z_var;
+                            z = target_z_var;                         
                         }
                         break;
                     }
@@ -567,32 +551,35 @@ object_event_add
     snd_var = fmod_snd_3d_play_scr(laugh_snd_var[0]);
     sub_var[0] = laugh_snd_var[1];
     sub_var[1] = laugh_snd_var[2];
-    if hd_var
+    if instance_exists(target_var)
     {
-        local.xvel = -lengthdir_x(1,target_var.yaw_var);
-        local.yvel = -lengthdir_y(1,target_var.yaw_var);
-        local.dist = median(check_ray_scr(target_x_var,target_y_var,target_z_var+(target_var.coll_var[1]/2),local.xvel,local.yvel,0)-(coll_var[2]/2),tp_dist_min_var,tp_dist_max_var);
-        x = target_x_var+(local.xvel*local.dist);
-        y = target_y_var+(local.yvel*local.dist);
-        z = target_z_var;
-        // Descend
-        tex_var = sprite_get_texture(spr_var,irandom(sprite_get_number(spr_var)));
-        atk_var = false;
-        set_alarm_scr(4,descend_alarm_var);
-        set_alarm_scr(9,descend_alarm_var);
-        z_off_var = ascend_z_var;
-        state_var = 2;
-    }
-    else
-    {
-        // Originally anywhere in the room (0-1280 x 0-720 y)
-        if tp_sight_var { local.dir = random_range(target_var.eye_yaw_var+seen_yaw_var,target_var.eye_yaw_var+360-seen_yaw_var); }
-        else { local.dir = random(360); }
-        local.dist = random_range(tp_dist_min_var,tp_dist_max_var);
-        x = target_x_var+lengthdir_x(local.dist,local.dir);
-        y = target_y_var+lengthdir_y(local.dist,local.dir);
-        // Set alarm again
-        set_alarm_scr(8,tp_alarm_var);
+        if hd_var
+        {
+            local.xvel = -lengthdir_x(1,target_var.yaw_var);
+            local.yvel = -lengthdir_y(1,target_var.yaw_var);
+            local.dist = median(check_ray_scr(target_x_var,target_y_var,target_z_var+(target_var.coll_var[1]/2),local.xvel,local.yvel,0)-(coll_var[2]/2),tp_dist_min_var,tp_dist_max_var);
+            x = target_x_var+(local.xvel*local.dist);
+            y = target_y_var+(local.yvel*local.dist);
+            z = target_z_var;
+            // Descend
+            tex_var = sprite_get_texture(spr_var,irandom(sprite_get_number(spr_var)));
+            atk_var = false;
+            set_alarm_scr(4,descend_alarm_var);
+            set_alarm_scr(9,descend_alarm_var);
+            z_off_var = ascend_z_var;
+            state_var = 2;
+        }
+        else
+        {
+            // Originally anywhere in the room (0-1280 x 0-720 y)
+            if tp_sight_var { local.dir = random_range(target_var.eye_yaw_var+seen_yaw_var,target_var.eye_yaw_var+360-seen_yaw_var); }
+            else { local.dir = random(360); }
+            local.dist = random_range(tp_dist_min_var,tp_dist_max_var);
+            x = target_x_var+lengthdir_x(local.dist,local.dir);
+            y = target_y_var+lengthdir_y(local.dist,local.dir);
+            // Set alarm again
+            set_alarm_scr(8,tp_alarm_var);
+        }
     }
 ');
 // Hurt Event

@@ -10,24 +10,11 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,1,'
     ini_open(global.lang_var);
-    switch global.name_var
-    {
-        case name_og_const:
-        case name_hd_const:
-        case name_fanon_const:
-        case name_num_og_const:
-        {
-            name_var = ini_read_string("NAME","wf","NAME_wf");
-            break;
-        }
-        case name_num_hd_const:
-        {
-            name_var = ini_read_string("NAME","wf_num","NAME_wf_num");
-            break;
-        }
-    }
+    name_var = translate_mon_str_scr("wf",global.name_var);
     loop_snd_var[2] = string_replace(ini_read_string("SUB","wf","SUB_wf"),"@n",name_var); loop_snd_var[3] = false;
+    wake_snd_var[2] = ""; wake_snd_var[3] = false;
     ini_close();
+    // Variables
     type_var = 0;
     spr_spd_var = 1;
     dur_var = 40;
@@ -39,6 +26,7 @@ object_event_add
     z_off_base_var = 14;
     z_off_var = 14;
     dupe_var = dupe_canon_const;
+    move_type_var = 0;
     // Sounds
     do_snd_var = 1; // At least for now
     loop_snd_var[0] = true;
@@ -50,10 +38,13 @@ object_event_add
     vis_den_var = 3;
     // Seen Stuff
     do_seen_var = true;
+    do_seen_agg_var = 0;
     seen_delay_min_var = 3;
     seen_delay_max_var = 15;
     seen_yaw_var = 30;
     seen_flash_var = true;
+    spd_agg_var = -1;
+    seen_agg_var = 0;
     // Teleport
     tp_spawn_var = 2;
     tp_spawn_chance_var = 3;
@@ -64,6 +55,7 @@ object_event_add
     tp_dist_max_var = 400;
     tp_dist_var = 400;
     tp_type_var = 0;
+    tp_alarm_var = -1;
     // Effect
     flash_chance_var = 4;
     eff_01_alarm_var = 6;
@@ -88,6 +80,7 @@ object_event_add
     anim_off_var = 0.1;
     anim_type_var = 4;
     face_dist_var = 48;
+    face_var = false;
     // other
     do_fog_var = true;
     start_var = 6;
@@ -165,6 +158,7 @@ object_event_add
     // Behavior
     if global.wf_type_var == -1 { local.type = irandom(7); }
     else { local.type = global.wf_type_var; }
+    local.set = false;
     switch local.type
     {
         
@@ -200,11 +194,11 @@ object_event_add
         {
             dmg_var = 60;
             dmg_alarm_var = 180;
-            local.setdmg = true;
+            local.set = true;
         }
         case 2: // HD
         {
-            if !local.setdmg
+            if !local.set
             {
                 dmg_var = 30;
                 dmg_alarm_var = 60;
@@ -272,7 +266,7 @@ object_event_add
             tp_dist_min_var = 500;
             tp_dist_max_var = 500;
             spd_base_real_var = 1.5;
-            do_anim_var = -1;
+            do_anim_var = false;
             face_dist_var = 0;
             attack_stun_var = false;
             zone_start_var = -1;
@@ -335,6 +329,7 @@ object_event_add
     global.ceil_bg_tex = background_get_texture(global.ceil_bg);
     global.light_wall_obj_spr = global.light_wall_spr;
     global.light_floor_obj_spr = global.light_floor_spr;
+    local.bool = false;
     with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
     if !local.bool
     {
@@ -641,13 +636,15 @@ object_event_add
             z_off_var = z_off_base_var+random_range(-anim_off_var,anim_off_var);
         }
         // Flashing effects
-        if frac_chance_scr(1,flash_chance_var) && seen_flash_var && (flash_agg_var <= 0 || seen_agg_var > flash_agg_var)
+        if frac_chance_scr(1,flash_chance_var) && seen_flash_var && (flash_agg_var <= 0 || seen_agg_var > flash_agg_var) && instance_exists(target_var)
         {
             // Make sure not to blind the player
-            if !instance_exists(color_par_obj)
-            || color_get_red(color_par_obj.image_blend) > 96
-            { local.rand = irandom(3); }
-            else { local.rand = irandom(2); }
+            local.rand = irandom(3);
+            if instance_exists(color_par_obj)
+            {
+                if color_get_red(color_par_obj.image_blend) < 96 
+                { local.rand = irandom(2); }
+            }
             switch local.rand
             {
                 case 0:
@@ -656,7 +653,7 @@ object_event_add
                     {
                         image_blend = c_red; 
                         set_alarm_scr(0,other.eff_01_alarm_var);
-                        cam_id_var = -1;
+                        cam_id_var = other.target_var.cam_id_var;
                     }
                     break;
                 }
@@ -682,7 +679,7 @@ object_event_add
                     {
                         image_blend = c_red; 
                         set_alarm_scr(0,irandom_range(other.eff_03_alarm_min_var,other.eff_03_alarm_max_var));
-                        cam_id_var = -1;
+                        cam_id_var = other.target_var.cam_id_var;
                     }
                     break;
                 }

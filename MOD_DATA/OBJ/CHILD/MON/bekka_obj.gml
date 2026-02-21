@@ -16,22 +16,7 @@ state_var
 object_event_add
 (argument0,ev_create,1,'
     ini_open(global.lang_var);
-    switch global.name_var
-    {
-        case name_og_const:
-        case name_hd_const:
-        case name_num_og_const:
-        case name_fanon_const:
-        {
-            name_var = ini_read_string("NAME","bekka","NAME_bekka");
-            break;
-        }
-        case name_num_hd_const:
-        {
-            name_var = ini_read_string("NAME","bekka_num","NAME_bekka_num");
-            break;
-        }
-    }
+    name_var = translate_mon_str_scr("bekka",global.name_var);
     ini_close();
     // Variables
     type_var = 0;
@@ -178,13 +163,14 @@ object_event_add
     alarm_len_var = 11;
     alarm_ini_scr();
     // Bools
-    do_snd_var = -1;
+    do_snd_var = false;
     if bright_var { color_var = -1; }
 ');
 // Destroy Event
 object_event_add
 (argument0,ev_destroy,0,'
     event_inherited();
+    local.bool = false;
     with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
     if !local.bool
     {

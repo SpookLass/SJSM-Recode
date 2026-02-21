@@ -14,6 +14,7 @@ object_event_add
     mdl_var = door_mdl;
     mdl_path_var = door_mdl_path;
     direction = 180;
+    open_var = false;
 ');
 // Break
 object_event_add

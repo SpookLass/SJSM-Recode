@@ -10,6 +10,7 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,0,'
     event_inherited();
+    on_var = false;
     // Alarms
     alarm_len_var = 2;
     alarm_ini_scr();
@@ -20,6 +21,7 @@ object_event_add
     set_alarm_scr(0,irandom_range(alarm_min_var,alarm_max_var));
     per_var = false;
     // Scale
+    scale_time_var = 0;
     scale_base_var = 0.875;
     scale_mult_var = 1.25;
     scale_rate_var = 50;

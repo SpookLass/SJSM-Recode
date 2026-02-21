@@ -104,7 +104,7 @@ object_event_add
                     p3dc_set_modrot_scr(0,local.ydir,local.zdir);
                     with enemy_par_obj
                     {
-                        if on_var && do_hurt_var && !hurt_var && !enter_var
+                        if on_var && do_hurt_var && !hurt_var// && !enter_var
                         {
                             // p3dc_ray_scr(coll_var[0],x,y,z,local.xtmp,local.ytmp,local.ztmp,local.xvel,local.yvel,local.zvel)
                             if p3dc_check_rot_scr(coll_var[0],x,y,z,other.coll_var[0],local.xtmp+local.xvel,local.ytmp+local.yvel,local.ztmp+local.zvel,0,0,0,0,local.ydir,local.zdir)

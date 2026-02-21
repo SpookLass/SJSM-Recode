@@ -37,7 +37,9 @@ object_event_add
     }
     // Fade in
     fade_spr_spd_var = 0.1;
+    fade_spr_id_var = 0;
     // String
+    do_str_var = false;
     str_scale_var = 1;
     str_stretch_scale_var = 3;
     str_stretch_var = 6;

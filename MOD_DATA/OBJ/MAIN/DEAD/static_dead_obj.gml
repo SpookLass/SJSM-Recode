@@ -11,6 +11,7 @@ object_event_add
 (argument0,ev_create,0,'
     event_inherited();
     spr_var = static_01_spr;
+    spr_id_var = 0;
     spr_spd_var = 0.25;
     image_alpha = 0.4;
     stretch_type_var = 0;

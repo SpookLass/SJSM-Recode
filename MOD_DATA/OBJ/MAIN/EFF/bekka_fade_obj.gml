@@ -35,6 +35,7 @@ object_event_add
     if atk_var
     {
         local.dead = true;
+        local.success = false;
         with player_obj
         {
             if !dead_var && !hurt_var && !in_door_var && !invuln_var && on_var
@@ -48,7 +49,7 @@ object_event_add
                         set_alarm_scr(0,other.dmg_alarm_var);
                     }
                     hurt_target_var = other.mon_var;
-                    event_perform(ev_other,ev_user0);
+                    event_user(0);
                     local.player = id;
                 }
                 else
@@ -64,7 +65,7 @@ object_event_add
         }
         if local.success
         {
-            if false//local.dead
+            if local.dead
             {
                 global.dead_mon_var = mon_var.object_index;
                 global.dead_player_var = local.player.player_id_var;

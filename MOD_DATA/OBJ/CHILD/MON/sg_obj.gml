@@ -20,26 +20,7 @@ object_event_add
     hurt_snd_var = 4;
     // Translation
     ini_open(global.lang_var);
-    switch global.name_var
-    {
-        case name_og_const:
-        case name_hd_const:
-        case name_fanon_const:
-        {
-            name_var = ini_read_string("NAME","sg","NAME_sg");
-            break;
-        }
-        case name_num_og_const:
-        {
-            name_var = ini_read_string("NAME","sg_num_og","NAME_sg_num_og");
-            break;
-        }
-        case name_num_hd_const:
-        {
-            name_var = ini_read_string("NAME","sg_num_hd","NAME_sg_num_hd");
-            break;
-        }
-    }
+    name_var = translate_mon_str_scr("sg",global.name_var);
     local.sub = string_replace(ini_read_string("SUB","sg","SUB_sg"),"@n",name_var);
     for (local.i=0; local.i<snd_len_var; local.i+=1)
     { snd_arr[local.i,1] = local.sub; snd_arr[local.i,2] = false; }
@@ -55,6 +36,10 @@ object_event_add
     alarm_len_var = 10;
     alarm_ini_scr();
     blood_spr_var = blood_kh_spr;
+    do_wander_var = false;
+    atk_type_var = 0;
+    atk_flash_var = true;
+    atk_snd_var = 0;
     // No official value
     dur_var = irandom_range(10,20); 
     delay_var = 120;
@@ -66,7 +51,7 @@ object_event_add
     spawn_attempt_var = 30; 
     spawn_dist_var = 24;
     // Charge
-    do_atk_var = -1;
+    do_atk_var = false;
     charge_var = true;
     charge_dist_var = 24;
     charge_spd_var = 3;
@@ -170,6 +155,7 @@ object_event_add
 object_event_add
 (argument0,ev_destroy,0,'
     event_inherited();
+    local.bool = false;
     with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
     if !local.bool
     {

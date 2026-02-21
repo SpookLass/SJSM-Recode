@@ -11,6 +11,7 @@ object_event_add
 (argument0,ev_create,0,'
     event_inherited();
     on_var = true;
+    weapon_var = false;
     // Collision
     coll_var[0] = global.trig_coll[0];
     coll_var[1] = global.trig_coll[1];

@@ -12,6 +12,7 @@ object_event_add
     event_inherited();
     //Defaults
     spr_var = static_01_spr;
+    spr_id_var = 0;
     spr_spd_var = 0.1;
     image_blend = c_white;
     image_alpha = 0.025;
@@ -23,6 +24,7 @@ object_event_add
     overlay_alpha_var = 0.5; // 0.25 for flashlight 2, 0.35 for Hooked Doll
     overlay_color_var = c_white;
     // Dollhouse
+    rand_var = false;
     rand_rate_var = 1;
     alarm_len_var = 1;
     alarm_ini_scr();

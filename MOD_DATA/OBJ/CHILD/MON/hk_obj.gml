@@ -10,7 +10,7 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,1,'
     ini_open(global.lang_var);
-    name_var = ini_read_string("NAME","hk","NAME_hk");
+    name_var = translate_mon_str_scr("hk",global.name_var);
 	loop_snd_var[2] = string_replace(ini_read_string("SUB","hk","SUB_hk"),"@n",name_var); loop_snd_var[3] = false;
 	hurt_snd_var[2] = string_replace(ini_read_string("SUB","hk_hurt","SUB_hk_hurt"),"@n",name_var); hurt_snd_var[3] = false;
 	snd_arr[0,1] = string_replace(ini_read_string("SUB","hk_breath","SUB_hk_breath"),"@n",name_var); snd_arr[0,2] = false;
@@ -68,7 +68,7 @@ object_event_add
         d3d_model_load(lamp_mdl_var,main_directory_const+"\MDL\MON\hk_lamp_mdl.gmmod");
         lamp_bg_var = background_add(dh_directory_const+"\TEX\DOLL\DOOR_02.png",false,false);
     }
-	tex_var = sprite_get_texture(spr_var,spr_id_var);
+	tex_var = sprite_get_texture(spr_var,0);
 	fmod_snd_set_minmax_dist_scr(look_snd_var,40,240);
     fmod_snd_set_group_scr(look_snd_var,snd_group_mon_const);
 	fmod_snd_set_max_vol_scr(mus_snd_var,1.8);
@@ -99,6 +99,7 @@ object_event_add
 	spd_min_var = 0.4;
 	spd_max_var = 1.075;
 	shake_var = 0.36;
+	do_seen_agg_var = false;
 	seen_agg_var = 0;
 	seen_rate_var = 0.02;
 	static_alpha_var = 0;
@@ -107,6 +108,7 @@ object_event_add
 	spd_anim_var = false;
 	spr_spd_min_var = spr_spd_var;
 	spr_spd_max_var = spr_spd_var;
+	do_look_snd_var = false;
 	// Effects
 	eff_color_var = make_color_rgb(97,97,106);
 	fog_end_var = 64;
@@ -296,7 +298,7 @@ object_event_add
 object_event_add
 (argument0,ev_destroy,0,'
     event_inherited();
-	
+	local.bool = false;
     with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
     if !local.bool
     {

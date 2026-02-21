@@ -11,6 +11,7 @@ object_event_add
 (argument0,ev_create,0,'
     // Static
     spr_var = static_01_spr;
+    spr_id_var = 0;
     spr_spd_var = 0.25;
     y_spd_var = 0.5;
     alpha_02_var = 0.4;

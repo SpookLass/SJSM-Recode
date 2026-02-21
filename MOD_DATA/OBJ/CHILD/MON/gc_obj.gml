@@ -19,26 +19,7 @@ object_event_add
     dmg_snd_len_var = 2;
     // Translations
     ini_open(global.lang_var);
-    switch global.name_var
-    {
-        case name_og_const:
-        case name_hd_const:
-        case name_fanon_const:
-        {
-            name_var = ini_read_string("NAME","gc","NAME_gc");
-            break;
-        }
-        case name_num_og_const:
-        {
-            name_var = ini_read_string("NAME","gc_num_og","NAME_gc_num_og");
-            break;
-        }
-        case name_num_hd_const:
-        {
-            name_var = ini_read_string("NAME","gc_num_hd","NAME_gc_num_hd");
-            break;
-        }
-    }
+    name_var = translate_mon_str_scr("gc",global.name_var);
     local.sub_01 = string_replace(ini_read_string("SUB","gc","SUB_gc"),"@n",name_var);
     local.sub_02 = string_replace(ini_read_string("SUB","gc_glitch","SUB_gc_glitch"),"@n",name_var);
     for (local.i=0; local.i<dmg_snd_len_var; local.i+=1)
@@ -145,6 +126,7 @@ object_event_add
     spd_per_pain_var = 100/7; // 14.r285714x
     spd_delay_min_var = 1;
     spd_delay_max_var = 3;
+    seen_type_var = 0; // Only target
     seen_delay_min_var = 3;
     seen_delay_max_var = 15;
     seen_yaw_var = 30;
@@ -171,9 +153,11 @@ object_event_add
     die_alarm_02_var = 66;
     die_alarm_03_var = 300;
     die_alarm_03_var = 300;
+    dead_var = false;
     // Behavior
     if global.gc_type_var == -1 { local.type = irandom(6); }
     else { local.type = global.gc_type_var; }
+    local.set = false;
     switch local.type
     {
         case 0: // Recode
@@ -210,7 +194,7 @@ object_event_add
             seen_flash_var = false;
             seen_spd_var = false;
             spawn_dist_var = 0;
-            do_anim_var = -1;
+            do_anim_var = false;
             dmg_stun_alarm_var = -1;
             do_seen_var = false;
             cam_end_var = -1;
@@ -234,7 +218,7 @@ object_event_add
             seen_flash_var = false;
             seen_spd_var = false;
             spawn_dist_var = 0;
-            do_anim_var = -1;
+            do_anim_var = false;
             dmg_stun_alarm_var = -1;
             do_seen_var = false;
             cam_end_var = -1;
@@ -291,7 +275,7 @@ object_event_add
             // No fun
             do_seen_var = false;
             spawn_dist_var = 0;
-            do_anim_var = -1;
+            do_anim_var = false;
             rand_alarm_min_var = -1;
             rand_alarm_max_var = -1;
             dur_var = irandom_range(10,15);
@@ -316,6 +300,7 @@ object_event_add
     global.floor_bg_tex = background_get_texture(global.floor_bg);
     global.light_wall_obj_spr = global.light_wall_spr;
     global.light_floor_obj_spr = global.light_floor_spr;
+    local.bool = false;
     with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
     if !local.bool
     {
@@ -536,7 +521,7 @@ object_event_add
         {
             local.can_path = mp_grid_path(grid_var,path_var,x,y,target_x_var,target_y_var,true);
             sight_type_var = 2;
-            event_perform(ev_other,ev_user8);
+            event_user(8);
             if enter_var || target_visible_var || !local.can_path
             {
                 yaw_var = point_direction(x,y,target_x_var,target_y_var);
@@ -685,13 +670,13 @@ object_event_add
         with instance_create(0,0,flash_eff_obj)
         {
             image_blend = c_red;
-            cam_id_var = hurt_target_var.cam_id_var;
+            cam_id_var = other.hurt_target_var.cam_id_var;
             set_alarm_scr(0,18);
         }
         with instance_create(0,0,fade_eff_obj)
         {
             image_blend = other.die_color_var;
-            cam_id_var = hurt_target_var.cam_id_var;
+            cam_id_var = other.hurt_target_var.cam_id_var;
             set_alarm_scr(0,18);
         }
     }

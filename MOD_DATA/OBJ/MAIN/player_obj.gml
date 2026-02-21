@@ -11,6 +11,7 @@ object_event_add
 (argument0,ev_create,0,'
     event_inherited();
     player_id_var = 0;
+    violence_var = 0;
     // Collision
     do_coll_var = true;
     coll_var[0] = global.player_coll[0];
@@ -49,6 +50,7 @@ object_event_add
     start_stam_base_var = 1;
     start_stam_rate_var = 1/19; // 19 frames
     // Acceleration
+    do_acc_var = true;
     frick_var = 0.5;
     acc_var = 0.8;
     frick_mult_var = 1;
@@ -147,6 +149,7 @@ object_event_add
         }
         case 2:
         {
+            do_acc_var = false;
             breath_do_var = false;
             spd_base_var = 5/pf_ms_rate_const;
             sprint_spd_mult_var = 1.8;
@@ -155,6 +158,7 @@ object_event_add
             heal_delay_var = 480; // 60?
             heal_rate_var = 1/6;
             heal_safe_var = 1;
+            stam_rate_var = 5/12;
             break;
         }
     }
@@ -199,27 +203,16 @@ object_event_add
 (argument0,ev_alarm,3,'
     if !active_var && !taker_spawn_var
     {
-        if possess_var
-        {
-            if mon_var.on_var && !mon_var.enter_var
-            {
-                taker_spawn_var = true;
-                with instance_create(0,0,taker_obj)
-                {
-                    target_var = other.mon_var;
-                    cam_id_var = other.cam_id_var;
-                    possess_var = other.possess_var;
-                }
-            }
-        }
-        else if on_var && !dead_var
+        if possess_var { local.bool = mon_var.on_var && !mon_var.enter_var; }
+        else { local.bool = on_var && !dead_var; }
+        if local.bool
         {
             taker_spawn_var = true;
             with instance_create(0,0,taker_obj)
             {
                 target_var = other.id;
                 cam_id_var = other.cam_id_var;
-                possess_var = other.possess_var;
+                target_possess_var = other.possess_var;
             }
         }
     }
@@ -236,6 +229,7 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_room_start,'
     // Position
+    eye_yaw_var = 0;
     if global.spawn_len_var
     {
         x = global.spawn_arr[0,0];
@@ -273,6 +267,7 @@ object_event_add
         
     }
     eye_pitch_var = 0;
+    eye_roll_var = 0;
     set_motion_3d_scr(0,false,eye_yaw_var,true,eye_pitch_var,true);
     display_mouse_set(display_get_width()/2,display_get_height()/2);
     // Reset variables
@@ -300,7 +295,7 @@ object_event_add
     cam_z_var = z+eye_h_var;
     cam_yaw_var = eye_yaw_var;
     cam_pitch_var = eye_pitch_var;
-    cam_roll_var = 0;
+    cam_roll_var = eye_roll_var;
     cam_set_scr(cam_id_var,cam_x_var,cam_y_var,cam_z_var,cam_yaw_var,cam_pitch_var,current_fov_var,cam_roll_var,dead_var);
     // View
     view_visible[cam_id_var] = true;
@@ -537,7 +532,8 @@ object_event_add
                 on_floor_var = true;
                 if global.input_move_var[player_id_var] != move_button_const { local.spd *= median(0,1,sqrt(sqr(local.input_dir_x)+sqr(local.input_dir_y)+sqr(local.input_dir_z))); }
                 if back_var { local.spd *= lerp_scr(1,back_spd_mult_var,abs(local.input_dir)/180); }
-                acc_3d_scr(global.delta_time_var,local.acc,local.frick,local.input_dir+eye_yaw_var,local.input_dir_pitch+(eye_pitch_var*lengthdir_x(1,local.input_dir)),local.spd);
+                if do_acc_var { acc_3d_scr(global.delta_time_var,local.acc,local.frick,local.input_dir+eye_yaw_var,local.input_dir_pitch+(eye_pitch_var*lengthdir_x(1,local.input_dir)),local.spd); }
+                else { set_motion_3d_scr(local.spd,true,local.input_dir+eye_yaw_var,true,local.input_dir_pitch+(eye_pitch_var*lengthdir_x(1,local.input_dir)),true)}
             }
             else if z <= -128 // Maybe add deathplane later?
             {
@@ -546,7 +542,7 @@ object_event_add
                 z = floor_z_var;
                 fall_temp_var = false;
                 set_motion_scr(0,false,eye_yaw_var,true);
-                event_perform(ev_other,ev_user0);
+                event_user(0);
                 if hp_var > fall_dmg_var
                 {
                     hp_var -= fall_dmg_var;
@@ -573,7 +569,8 @@ object_event_add
             {
                 if global.input_move_var[player_id_var] != move_button_const { local.spd *= median(0,1,sqrt(sqr(local.input_dir_x)+sqr(local.input_dir_y))); }
                 if back_var { local.spd *= lerp_scr(1,back_spd_mult_var,abs(local.input_dir)/180); }
-                acc_scr(global.delta_time_var,local.acc,local.frick,local.input_dir+eye_yaw_var,local.spd);
+                if do_acc_var { acc_scr(global.delta_time_var,local.acc,local.frick,local.input_dir+eye_yaw_var,local.spd); }
+                else { set_motion_scr(local.spd,true,local.input_dir+eye_yaw_var,true); }
             }
             else
             {
@@ -584,16 +581,17 @@ object_event_add
                     if local.input_dir_x < 0 { local.forspd *= back_spd_mult_var;}
                     local.sidespd *= (back_spd_mult_var+1)/2;
                 }
-                acc_odd_scr(global.delta_time_var,local.acc,local.frick,local.input_dir_x,local.input_dir_y,local.forspd,local.sidespd,eye_yaw_var);
+                if do_acc_var { acc_odd_scr(global.delta_time_var,local.acc,local.frick,local.input_dir_x,local.input_dir_y,local.forspd,local.sidespd,eye_yaw_var); }
+                else { set_motion_odd_scr(local.forspd*local.input_dir_x,true,local.sidespd*local.input_dir_y,true,eye_yaw_var,true); }
             }
             // Possession
             if dead_var && !possess_var && possess_delay_var <= 0
             {
                 if global.input_press_arr[interact_input_const,player_id_var]
                 {
-                    with mon_par_obj
+                    with enemy_par_obj
                     {
-                        if on_var && !possess_var
+                        if do_possess_var && on_var && !possess_var
                         {
                             if cyl_coll_scr(x,y,z,coll_var[2],coll_var[1],other.x,other.y,other.z,other.coll_var[2],other.coll_var[1])
                             {
@@ -602,6 +600,7 @@ object_event_add
                                 other.mon_var = id;
                                 player_id_var = other.player_id_var;
                                 cam_id_var = other.cam_id_var;
+                                break;
                             }
                         }
                     }
@@ -714,6 +713,7 @@ object_event_add
             cam_yaw_var = eye_yaw_var;
             cam_pitch_var = eye_pitch_var;
         }
+        cam_roll_var = eye_roll_var;
         // Camera shake
         if shake_var > 0
         {
@@ -770,7 +770,6 @@ object_event_add
         flare_var = median(0,1,flare_var);
         // Set camera and listener position
         cam_set_scr(cam_id_var,cam_x_var,cam_y_var,cam_z_var,cam_yaw_var,cam_pitch_var,current_fov_var,cam_roll_var,dead_var);
-        cam_roll_var = 0;
         // Could put this in control, but needs extra camera boolean
         fmod_listen_pos_ex_scr
         (

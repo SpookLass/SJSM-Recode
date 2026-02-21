@@ -17,4 +17,4 @@ if argument4 != 0 && argument6 > 0 && side_spd_var <= argument6
 { side_spd_var = median(-argument6,argument6,side_spd_var+(argument0*argument1*argument4)); }
 else { side_spd_var = max(0,side_spd_var-(argument0*argument2)); }
 // This sucks and I'm killing you
-execute_file(set_motion_odd_scr,for_spd_var,false,side_spd_var,false,argument7,true);
+set_motion_odd_scr(for_spd_var,false,side_spd_var,false,argument7,true);

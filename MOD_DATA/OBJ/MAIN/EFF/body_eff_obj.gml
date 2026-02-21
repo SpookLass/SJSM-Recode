@@ -12,6 +12,7 @@ object_event_add
     event_inherited();
     // Animate
     spr_spd_var = 0.01;
+    spr_id_var = 0;
     rand_rate_var = 30;
     state_var = !irandom(1);
     // Scale
@@ -30,7 +31,6 @@ object_event_add
     alarm_len_var = 2;
     alarm_ini_scr();
     // Start
-    event_perform(ev_alarm,0);
     if strobe_var { set_alarm_scr(1,strobe_rate_var); }
 ');
 // Step Event

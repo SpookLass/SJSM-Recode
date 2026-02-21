@@ -34,7 +34,7 @@ for (local.i=0; local.i<global.custom_len_var; local.i+=1)
 {
     if custom_arr[local.i,4] != 6 // Not Monster List
     {
-        if custom_add[local.i,4] == 5 // String
+        if custom_arr[local.i,4] == 5 // String
         { ini_write_string("SETTING",custom_arr[local.i,0],variable_global_get(custom_arr[local.i,0]+"_var")); }
         // Number
         else { ini_write_real("SETTING",custom_arr[local.i,0],variable_global_get(custom_arr[local.i,0]+"_var")); }
@@ -43,4 +43,10 @@ for (local.i=0; local.i<global.custom_len_var; local.i+=1)
 // Behavior stuff
 for (local.i=0; local.i<global.mon_len_var; local.i+=1;)
 { ini_write_real("BEHAVIOR",mon_arr[local.i,0]+"_type",variable_global_get(mon_arr[local.i,0]+"_type_var")); }
+// Players
+for (local.i=0; local.i<global.player_len_var; local.i+=1;)
+{
+    ini_write_real("PLAYER","violence_"+string(local.i),global.player_arr[local.i].violence_var);
+    ini_write_real("PLAYER","hp_"+string(local.i),global.player_arr[local.i].hp_var);
+}
 ini_close();

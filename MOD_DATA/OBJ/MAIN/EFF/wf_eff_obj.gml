@@ -12,6 +12,7 @@ object_event_add
     event_inherited();
     //Defaults
     spr_spd_var = 0.1;
+    spr_id_var = 0;
     image_alpha = 0.01;
     image_xscale = 4;
     image_yscale = 4;

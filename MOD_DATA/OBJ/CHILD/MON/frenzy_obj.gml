@@ -10,10 +10,11 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,1,'
     ini_open(global.lang_var);
-    name_var = ini_read_string("NAME","frenzy","NAME_frenzy");
-    charge_snd_var[1] = string_replace(ini_read_string("SUB","frenzy","SUB_frenzy"),"@n",name_var);
-    hurt_snd_var[2] = string_replace(ini_read_string("SUB","frenzy_hurt","SUB_frenzy_hurt"),"@n",name_var);
+    name_var = translate_mon_str_scr("frenzy",global.name_var);
+    charge_snd_var[1] = string_replace(ini_read_string("SUB","frenzy","SUB_frenzy"),"@n",name_var); charge_snd_var[2] = false;
+    hurt_snd_var[2] = string_replace(ini_read_string("SUB","frenzy_hurt","SUB_frenzy_hurt"),"@n",name_var); hurt_snd_var[3] = false;
     ini_close();
+    // Variables
     type_var = 2;
     spd_base_var = 1.3;
     spr_spd_var = 0.65;
@@ -122,6 +123,7 @@ object_event_add
 object_event_add
 (argument0,ev_destroy,0,'
     event_inherited();
+    local.bool = false;
     with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
     if !local.bool
     {
@@ -267,7 +269,7 @@ object_event_add
     fmod_snd_play_scr(scare_snd_var);
     with instance_create(0,0,fade_eff_obj)
     {
-        cam_id_var = other.attack_target_var.cam_id_var;
+        cam_id_var = other.atk_target_var.cam_id_var;
         set_alarm_scr(0,other.fade_alarm_var);
     }
 ');

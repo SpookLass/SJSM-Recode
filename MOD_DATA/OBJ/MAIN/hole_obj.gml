@@ -9,6 +9,7 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,0,'
+    event_inherited();
     z = instance_nearest(x,y,floor_par_obj).z;
     if instance_exists(ceil_par_obj)
     { h_var = instance_nearest(x,y,ceil_par_obj).z-z; }
@@ -37,14 +38,18 @@ object_event_add
             on_var = false;
             with echidna_obj
             {
-                if do_hole_var && !hole_var && !on_var && frac_chance_scr(hole_spawn_num_var,hole_spawn_den_var)
+                if variable_local_exists("do_hole_var")
                 {
-                    hole_x_var = other.x;
-                    hole_y_var = other.y;
-                    hole_z_var = other.z+other.h_var-16;
-                    event_user(15);
-                    break;
+                    if do_hole_var && !hole_var && !on_var && frac_chance_scr(hole_spawn_num_var,hole_spawn_den_var)
+                    {
+                        hole_x_var = other.x;
+                        hole_y_var = other.y;
+                        hole_z_var = other.z+other.h_var-16;
+                        event_user(15);
+                        break;
+                    }
                 }
+                
             }
             local.last = true;
             with hole_obj { if on_var { local.last = false; }}
@@ -52,10 +57,13 @@ object_event_add
             {
                 with echidna_obj
                 {
-                    if do_hole_var && !hole_var && !on_var && door_var
+                    if variable_local_exists("do_hole_var")
                     {
-                        hole_var = true;
-                        set_alarm_scr(0,irandom_range(delay_min_var,delay_max_var));
+                        if do_hole_var && !hole_var && !on_var && door_var
+                        {
+                            hole_var = true;
+                            set_alarm_scr(0,irandom_range(delay_min_var,delay_max_var));
+                        }
                     }
                 }
             }

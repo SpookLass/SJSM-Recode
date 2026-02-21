@@ -46,6 +46,11 @@ for (local.i=0; local.i<8; local.i+=1;)
     input_menu_hold_arr[2,local.i] = 0;
     input_menu_hold_arr[3,local.i] = 0;
 }
+global.fog_var = false;
+global.fog_dark_var = true;
+global.fog_color_var = c_black;
+global.fog_start_var = 0;
+global.fog_end_var = 0;
 // Lists
 global.mon_list = ds_list_create();
 ds_list_clear(global.mon_list);

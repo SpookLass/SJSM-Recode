@@ -18,6 +18,7 @@ object_event_add
     // Animate
     anim_var = !global.reduce_flash_var;
     spr_spd_var = 1;
+    spr_id_var = 0;
     rand_var = true;
     rand_rate_var = 15;
     rand_chance_var = 2;

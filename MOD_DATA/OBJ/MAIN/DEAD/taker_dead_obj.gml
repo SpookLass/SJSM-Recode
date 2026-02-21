@@ -58,9 +58,11 @@ object_event_add
     }
     else
     {
+        draw_set_font(taker_font);
         off_len_var = round(720/(string_height(str_var)*image_yscale));
         for (local.i=0; local.i < off_len_var; local.i+=1;)
         { off_arr_var[local.i] = random(string_width(str_var)*image_xscale); }
+        draw_set_font(main_font);
     }
 ');
 // Destroy
@@ -130,7 +132,7 @@ object_event_add
     draw_set_color(image_blend); draw_set_font(taker_font);
     // Calculate width for tiling
     local.width = string_width(str_var)*local.xscale;
-    local.height = string_height(str_var)*local.yscale;
+    local.height = (string_height(str_var)+8)*local.yscale;
     // Loop top to bottom
     for (local.i=0; local.i<round(view_hview[view_current]/local.height)+(off_len_var*2); local.i+=1;)
     {

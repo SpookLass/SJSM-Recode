@@ -10,24 +10,8 @@ object_set_visible(argument0,false);
 object_event_add
 (argument0,ev_create,0,'
     event_inherited();
-    // Im gonna                                  !
-    if frac_chance_scr(1,33333) && !instance_exists(mon_par_obj)
-    {
-        instance_create(3,3,w_mus_obj);
-        with player_obj
-        {
-            local.eff = instance_create(3,3,w_eff_obj);
-            local.eff.par_var = id;
-            local.player = id;
-            with hud_obj
-            {
-                if par_var == local.player
-                { par_var = local.eff; }
-            }
-        }
-    }
     // Im gonna plusinate!
-    else if !irandom(63)
+    if !irandom(63)
     {
         local.len = 0;
         if current_month == 6 { local.arr[local.len] = global.pride_arr[irandom(global.pride_len_var-1)]; local.len += 1; }

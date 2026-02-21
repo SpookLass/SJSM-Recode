@@ -14,6 +14,7 @@ object_event_add
     alarm_ini_scr();
     alarm_min_var = 60;
     alarm_max_var = 120;
+    spr_id_var = 0;
     event_perform(ev_alarm,0);
 ');
 // Alarm

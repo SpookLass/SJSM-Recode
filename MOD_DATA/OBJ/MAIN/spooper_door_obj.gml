@@ -33,29 +33,33 @@ object_event_add
     {
         image_blend = c_red; 
         set_alarm_scr(0,6);
-        cam_id_var = other.cam_id_var;
+        cam_id_var = other.hurt_target_var.cam_id_var;
     }
-    switch (global.shake_type_var)
+    with player_obj
     {
-        case shake_classic_const:
+        local.player = id;
+        switch (global.shake_type_var)
         {
-            with instance_create(0,0,shake_eff_obj)
+            case shake_classic_const:
             {
-                player_var = other.id;
-                mult_var = other.shake_pos_base_var;
-                type_var = 0; // Constant
+                with instance_create(0,0,shake_eff_obj)
+                {
+                    player_var = local.player;
+                    mult_var = local.player.shake_pos_base_var;
+                    type_var = 0; // Constant
+                }
+                break;
             }
-            break;
-        }
-        case shake_modern_const:
-        {
-            with instance_create(0,0,shake_eff_obj)
+            case shake_modern_const:
             {
-                player_var = other.id;
-                mult_var = other.shake_angle_base_var;
-                type_var = 1; // Fade out
+                with instance_create(0,0,shake_eff_obj)
+                {
+                    player_var = local.player;
+                    mult_var = local.player.shake_angle_base_var;
+                    type_var = 1; // Fade out
+                }
+                break;
             }
-            break;
         }
     }
     // Function

@@ -9,6 +9,8 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,0,'
+    do_possess_var = false;
+    event_inherited();
     // Render
     spr_var = taker_spr;
     spr_id_var = 0;
@@ -59,6 +61,8 @@ object_event_add
         }
     }
     // Start
+    on_var = false;
+    visible_var = false;
     set_alarm_scr(0,delay_var);
     yaw_var = global.spawn_arr[0,3];
     x = global.spawn_arr[0,0]-lengthdir_x(32,yaw_var);
@@ -87,7 +91,7 @@ object_event_add
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,'
-    if possess_var { local.target = instance_exists(target_var) && target_var.possess_var && !target_var.enter_var && target_var.on_var; }
+    if target_possess_var { local.target = instance_exists(target_var) && target_var.possess_var && !target_var.enter_var && target_var.on_var; }
     else { local.target = instance_exists(target_var) && !target_var.dead_var && target_var.on_var; }
     if local.target
     {
@@ -101,9 +105,10 @@ object_event_add
             spr_id_var = (spr_id_var+(spr_spd_var*global.delta_time_var)) mod sprite_get_number(spr_var);
             tex_var = sprite_get_texture(spr_var,floor(spr_id_var));
             // Attack
+            local.success = false;
             with target_var
             {
-                if other.possess_var
+                if other.target_possess_var
                 {
                     if on_var && !enter_var && possess_var
                     {
@@ -140,7 +145,7 @@ object_event_add
                                     set_alarm_scr(0,other.dmg_alarm_var);
                                 }
                                 hurt_target_var = other.id;
-                                event_perform(ev_other,ev_user0);
+                                event_user(0);
                             }
                             else
                             {
@@ -156,7 +161,7 @@ object_event_add
             }
             if local.success
             {
-                if !possess_var
+                if !target_possess_var
                 {
                     local.dead = true;
                     with player_obj { if !dead_var { local.dead = false; break; } }
@@ -182,7 +187,7 @@ object_event_add
                             {
                                 image_blend = c_red; 
                                 set_alarm_scr(0,6);
-                                cam_id_var = other.attack_target_var.cam_id_var;
+                                cam_id_var = other.atk_target_var.cam_id_var;
                             }
                         }
                     }
