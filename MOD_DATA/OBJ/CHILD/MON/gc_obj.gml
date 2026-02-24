@@ -138,6 +138,7 @@ object_event_add
     eff_old_var = true;
     eff_var = true;
     reflect_var= -1;
+    fog_var = false;
     // Spawn
     spawn_dist_var = 200;
     // Funny

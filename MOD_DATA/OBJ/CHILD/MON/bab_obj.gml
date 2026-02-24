@@ -56,6 +56,7 @@ object_event_add
     // Special
     stop_var = false;
     drain_var = false;
+    do_amb_var = false;
     eff_var = true;
     eff_alpha_min_var = 0.2;
     eff_alpha_max_var = 0.6;
@@ -191,7 +192,7 @@ object_event_add
             autobrake_dir_var = 60;
             break;
         }
-        case 3: // Old
+        case global.type_len_var: // Old
         {
             spr_var = old_spr_var;
             spr_spd_var = 1/6;

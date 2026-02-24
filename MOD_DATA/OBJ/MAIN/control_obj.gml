@@ -204,7 +204,6 @@ object_event_add
                 break;
             }
             case 10: { global.count_var = get_integer("Set Count", global.count_var); break; }
-            case 11: { global.violence_var = get_integer("Set LOVE", global.violence_var); break; }
             case 12: { global.rm_count_var = get_integer("Set Room Count", global.rm_count_var); break; }
             case 13: { with player_obj { invuln_var = !invuln_var; } break; }
             case 14: { with player_obj { do_coll_var = !do_coll_var; } break; }

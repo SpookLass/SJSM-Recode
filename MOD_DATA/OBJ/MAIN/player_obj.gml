@@ -58,7 +58,6 @@ object_event_add
     // Crouch
     crouch_var = false;
     can_crouch_var = global.crouch_var;
-    crouch_toggle_var = global.crouch_toggle_var;
     crouch_spd_mult_var = 0.6;
     // Camera
     base_eye_h_var = 114/7; // 16 + 2/7
@@ -280,6 +279,8 @@ object_event_add
     in_door_var = false;
     hurt_var = false;
     turn_var = false;
+    if !global.dynamic_fov_var
+    { current_fov_var = fov_var; }
     // Maybe reset?
     do_sprint_var = true;
     do_stam_var = true;
@@ -413,8 +414,8 @@ object_event_add
                 // Crouch!
                 if can_crouch_var
                 {
-                    if (global.input_press_arr[crouch_input_const,player_id_var] && crouch_toggle_var) 
-                    || (global.input_arr[crouch_input_const,player_id_var] != crouch_var && !crouch_toggle_var)
+                    if (global.input_press_arr[crouch_input_const,player_id_var] && global.crouch_toggle_var[player_id_var]) 
+                    || (global.input_arr[crouch_input_const,player_id_var] != crouch_var && !global.crouch_toggle_var[player_id_var])
                     {
                         local.znext = z;
                         if !on_floor_var
@@ -685,12 +686,15 @@ object_event_add
         hp_var = max(0,hp_var); // median(0,hp_max_var,hp_var); Allow overheal
         hp_infect_var = median(0,hp_max_var-hp_var,hp_infect_var);
         // Calculate FOV
-        local.target_fov = fov_var*power(max(1,spd_var/spd_base_var),0.25); // 0.6
-        if current_fov_var != local.target_fov
+        if global.dynamic_fov_var
         {
-            local.fov_diff = abs(local.target_fov-current_fov_var);
-            local.fov_rate = max(fov_rate_min_var,local.fov_diff*fov_rate_var)*global.delta_time_var;
-            current_fov_var += min(local.fov_diff,local.fov_rate)*sign(local.target_fov-current_fov_var);
+            local.target_fov = fov_var*power(max(1,spd_var/spd_base_var),0.25); // 0.6
+            if current_fov_var != local.target_fov
+            {
+                local.fov_diff = abs(local.target_fov-current_fov_var);
+                local.fov_rate = max(fov_rate_min_var,local.fov_diff*fov_rate_var)*global.delta_time_var;
+                current_fov_var += min(local.fov_diff,local.fov_rate)*sign(local.target_fov-current_fov_var);
+            }
         }
         // Calculate eye height
         if target_eye_h_var != eye_h_var

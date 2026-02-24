@@ -21,6 +21,4 @@ switch argument7
     case fa_middle: { local.ytmp += view_hview[view_current]/2; break; }
     case fa_bottom: { local.ytmp += view_hview[view_current]; break; }
 }
-draw_set_halign(argument6); draw_set_valign(argument7);
 draw_text_transformed(local.xtmp,local.ytmp,argument0,local.xscale,local.yscale,argument8);
-draw_set_halign(fa_left); draw_set_valign(fa_top);

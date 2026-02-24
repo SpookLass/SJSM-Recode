@@ -18,6 +18,7 @@ globalvar float_grid;
 globalvar phys_grid;
 globalvar input_arr;
 globalvar input_prev_arr;
+globalvar input_press_arr;
 globalvar input_key_arr;
 globalvar input_menu_hold_arr;
 globalvar spawn_arr;
@@ -58,29 +59,34 @@ global.mon_spawn_list = ds_list_create();
 ds_list_clear(global.mon_spawn_list);
 global.mon_curr_list = ds_list_create();
 ds_list_clear(global.mon_curr_list);
+global.save_list = ds_list_create();
+ds_list_clear(global.save_list);
 // Draw Text
 draw_set_halign(fa_center); draw_set_valign(fa_bottom);
 set_automatic_draw(false);
-// execute_file(main_directory_const+"\SCR\LOAD\scr_load_scr.gml");
+// Initialize mods and dlls
 joy_ini_scr();
 if gamemaker_version == 800 { sf_ini_scr(); }
-execute_file(main_directory_const+"\SCR\LOAD\set_load_scr.gml");
 execute_file(main_directory_const+"\SCR\LOAD\mod_load_01_scr.gml");
+// Assets
 execute_file(main_directory_const+"\SCR\LOAD\spr_load_scr.gml");
 execute_file(main_directory_const+"\SCR\LOAD\bg_load_scr.gml");
 execute_file(main_directory_const+"\SCR\LOAD\snd_load_scr.gml");
 execute_file(main_directory_const+"\SCR\LOAD\mdl_load_scr.gml");
 execute_file(main_directory_const+"\SCR\LOAD\coll_load_scr.gml");
 execute_file(main_directory_const+"\SCR\LOAD\part_load_scr.gml");
-if gamemaker_version == 800 { shader_load_scr(); }
 execute_file(main_directory_const+"\SCR\LOAD\obj_load_scr.gml");
 execute_file(main_directory_const+"\SCR\LOAD\rm_load_scr.gml");
 execute_file(main_directory_const+"\SCR\LOAD\zone_load_scr.gml",true);
 execute_file(main_directory_const+"\SCR\LOAD\tex_load_scr.gml");
 execute_file(main_directory_const+"\SCR\LOAD\js_load_scr.gml");
+if gamemaker_version == 800 { shader_load_scr(); }
+// Settings
 execute_file(main_directory_const+"\SCR\LOAD\menu_load_scr.gml");
 // Load Mods
 execute_file(main_directory_const+"\SCR\LOAD\mod_load_02_scr.gml");
+// Load Settings
+execute_file(main_directory_const+"\SCR\LOAD\set_load_scr.gml");
 // In case mods load more controls
 for (local.i=0; local.i<global.input_len_var; local.i+=1)
 {
@@ -126,5 +132,5 @@ global.pride_arr[29] = xenogender_color_obj;
 draw_set_halign(fa_left); draw_set_valign(fa_top);
 // Load
 global.player_len_var = 1;
-instance_create(0,0,global.control_obj);
+instance_create(0,0,control_obj);
 rm_goto_menu_scr(splash_rm);

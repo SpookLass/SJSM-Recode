@@ -12,11 +12,11 @@ ini_open("save_"+string(global.save_name_var)+".ini");
 // Main
     // Saved variables
 ini_write_real("MAIN","rm_count",global.rm_count_var);
-ini_write_real("MAIN","violence",global.violence_var);
 ini_write_real("MAIN","note",global.note_var);
 ini_write_real("MAIN","room",room);
 ini_write_real("MAIN","tex",global.tex_var);
 ini_write_real("MAIN","count",global.count_var);
+ini_write_real("MAIN","mon_fail_var",global.mon_fail_var);
 ini_write_real("MAIN","zone",global.zone_var);
 ini_write_real("MAIN","zone_num",global.zone_num_var);
     // Main settings
@@ -24,7 +24,8 @@ ini_write_real("MAIN","mode",global.mode_var);
 ini_write_real("MAIN","type",global.main_type_var);
 ini_write_real("MAIN","diff",global.diff_var);
 ini_write_real("MAIN","custom",global.custom_var);
-ini_write_string("MAIN","mod",ds_list_size(global.mod_list)>0);
+local.bool = ds_list_size(global.mod_list)>0;
+ini_write_string("MAIN","mod",local.bool);
     // Lists
 ini_write_string("MAIN","rm_list",ds_list_write(global.rm_list_var));
 ini_write_string("MAIN","mon_curr_list",ds_list_write(global.mon_curr_list));

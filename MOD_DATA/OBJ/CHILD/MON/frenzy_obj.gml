@@ -41,6 +41,7 @@ object_event_add
     alpha_min_var = 0;
     alpha_max_var = 0.2;
     fade_alarm_var = 500;
+    impatience_alarm_var = 0;
     // Spawning
     spawn_attempt_var = 30;
     spawn_dist_var = 64;

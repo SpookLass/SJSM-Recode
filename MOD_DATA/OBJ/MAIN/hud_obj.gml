@@ -228,8 +228,10 @@ object_event_add
                     local.hp_str = hp_str_var+": "+string(round(par_var.hp_var))+" / "+string(par_var.hp_max_var);
                     local.stam_str = stam_str_var+": "+string(round(par_var.stam_var))+" / "+string(par_var.stam_max_var);
                     // I really gotta make text alignment separate from view alignment
-                    draw_str_outline_scr(local.hp_str,107,68,0.25,0.25,scale_min_var,fa_left,fa_top,1,1,make_color_rgb(100,0,0),c_white,1,4); // 77
-                    draw_str_outline_scr(local.stam_str,107,98,0.25,0.25,scale_min_var,fa_left,fa_top,1,1,make_color_rgb(0,100,0),c_white,1,4); // 107
+                    draw_set_valign(fa_middle);
+                    draw_str_outline_scr(local.hp_str,107,77,0.25,0.25,scale_min_var,fa_left,fa_top,1,1,make_color_rgb(100,0,0),c_white,1,4); // 68
+                    draw_str_outline_scr(local.stam_str,107,107,0.25,0.25,scale_min_var,fa_left,fa_top,1,1,make_color_rgb(0,100,0),c_white,1,4); // 98
+                    draw_set_valign(fa_top);
                     break;
                 }
                 case bar_hud_old_const:
@@ -253,7 +255,9 @@ object_event_add
                         {
                             local.str = name_var;
                             if global.mon_hud_var == 2 { local.str += ": "+string(dur_var); }
+                            draw_set_valign(fa_bottom);
                             draw_str_shadow_scr(local.str,54,local.offset,0.5,0.5,other.scale_min_var,fa_left,fa_bottom,-2,2,make_color_rgb(30,0,50),c_yellow,1,0);
+                            draw_set_valign(fa_top);
                             local.offset -= 36;
                         }
                     }
@@ -263,12 +267,16 @@ object_event_add
             if global.game_spd_var != 1 && !global.pause_var
             {
                 local.str = spd_str_var+": "+string(global.game_spd_var);
+                draw_set_halign(fa_right); draw_set_valign(fa_bottom);
                 draw_str_shadow_scr(local.str,-54,-54,0.5,0.5,scale_min_var,fa_right,fa_bottom,-2,2,make_color_rgb(100,0,0),c_white,1,0);
+                draw_set_valign(fa_left); draw_set_halign(fa_top);
             }
             // Room Count
             local.str = rm_str_var+": "+string(global.rm_count_var);
+            draw_set_halign(fa_right); 
             draw_str_shadow_scr(local.str,-54,54,0.75,0.75,scale_min_var,fa_right,fa_top,-2,2,make_color_rgb(30,0,50),c_yellow,1,0);
             if global.rm_hud_var { draw_str_shadow_scr(global.rm_name_var,-54,108,0.5,0.5,scale_min_var,fa_right,fa_top,-2,2,make_color_rgb(30,0,50),c_yellow,1,0); }
+            draw_set_valign(fa_left);
             // Debug text
             if global.debug_var && !global.hide_debug_var
             {

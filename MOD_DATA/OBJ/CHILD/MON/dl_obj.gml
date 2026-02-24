@@ -45,6 +45,7 @@ object_event_add
     eff_min_var = 30;
     eff_max_var = 60;
     // Special
+    open_var = false;
     open_dist_var = 48;
     close_dist_var = 48;
     do_warp_var = false;

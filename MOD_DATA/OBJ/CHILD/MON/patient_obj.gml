@@ -77,7 +77,9 @@ object_event_add
     // Hang
     hang_var = true;
     seen_yaw_01_var = 3.434; // 3.r43
+    seen_pitch_01_var = -1;
     seen_yaw_02_var = 30;
+    seen_pitch_02_var = -1;
     spr_spd_var = 1;
     // Overlay
     overlay_var = true;

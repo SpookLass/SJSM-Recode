@@ -26,7 +26,8 @@ object_event_add
 // Room Start
 object_event_add // ev_create,0
 (argument0,ev_other,ev_room_start,'
-    event_user(0);
+    event_inherited();
+    //event_user(0);
 ');
 // Check music
 object_event_add

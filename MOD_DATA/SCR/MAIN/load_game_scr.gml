@@ -8,8 +8,8 @@ ini_open("save_"+argument0+".ini");
     // Saved variables
 global.save_name_var = argument0;
 global.rm_count_var = ini_read_real("MAIN","rm_count",0);
-global.violence_var = ini_read_real("MAIN","violence",0);
 global.count_var = ini_read_real("MAIN","count",0);
+global.mon_fail_var = ini_read_real("MAIN","mon_fail_var",0);
 global.tex_var = ini_read_real("MAIN","tex",-1);
 local.rm = ini_read_real("MAIN","room",0);
 global.note_var = ini_read_real("MAIN","note",0);

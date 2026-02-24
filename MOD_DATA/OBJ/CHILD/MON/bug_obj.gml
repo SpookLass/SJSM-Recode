@@ -49,6 +49,8 @@ object_event_add
     stun_var = true;
     hurt_snd_var = 1; // Axe hit
     hurt_die_var = 0; // Dont die
+    do_coward_var = false;
+    coward_var = false;
     // Collision
     coll_var[0] = global.mon_short_coll[0];
     coll_var[1] = global.mon_short_coll[1];
@@ -125,7 +127,7 @@ object_event_add
     {
         case 0: // Recode
         {
-            spd_base_var = 1.2;
+            spd_base_var = 10/3;//1.2;
             hurt_alarm_var = 90;
             dmg_alarm_var = 60;
             do_acc_var = true;

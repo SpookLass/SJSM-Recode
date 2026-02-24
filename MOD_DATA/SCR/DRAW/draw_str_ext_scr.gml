@@ -28,6 +28,4 @@ if argument8 > 0 { local.sep = argument8/argument4; }
 else { local.sep = argument8; }
 if argument9 > 0 { local.width = (view_wview[view_current]-(argument9*local.viewscale))/local.xscale; }
 else { local.width = argument9; }
-draw_set_halign(argument6); draw_set_valign(argument7);
 draw_text_ext_transformed(local.xtmp,local.ytmp,argument0,local.sep,local.width,local.xscale,local.yscale,argument10);
-draw_set_halign(fa_left); draw_set_valign(fa_top);

@@ -26,7 +26,7 @@ switch argument7
     case fa_middle: { local.ytmp += view_hview[view_current]/2; break; }
     case fa_bottom: { local.ytmp += view_hview[view_current]; break; }
 }
-draw_set_halign(argument6); draw_set_valign(argument7); draw_set_color(argument10);
+draw_set_color(argument10);
 local.shadownum = max(1,argument12);
 for (local.i=local.shadownum; local.i>=1; local.i-=1;)
 {
@@ -42,4 +42,4 @@ for (local.i=local.shadownum; local.i>=1; local.i-=1;)
 }
 draw_set_color(argument11);
 draw_text_transformed(local.xtmp,local.ytmp,argument0,local.xscale,local.yscale,0);
-draw_set_halign(fa_left); draw_set_valign(fa_top); draw_set_color(c_white);
+draw_set_color(c_white);

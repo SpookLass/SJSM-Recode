@@ -23,6 +23,7 @@ object_event_add
     alarm_ini_scr();
     color_var = true;
     do_possess_var = false;
+    smart_var = false;
     // Zone
     zone_var = true;
     zone_start_var = 0;
@@ -96,8 +97,8 @@ object_event_add
     else { local.type = global.flesh_type_var; }
     switch local.type
     {
-        case 0: { zone_var = false; }
-        case 3:
+        case 3: { zone_var = false; }
+        case 0:
         {
             angle_var = 5;
             smart_var = true;
