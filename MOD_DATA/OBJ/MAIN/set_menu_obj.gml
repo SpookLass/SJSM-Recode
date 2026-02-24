@@ -348,7 +348,7 @@ object_event_add
                         fmod_update_take_over_done_scr();
                         global.input_press_arr[confirm_input_const,0] = false;
                     }
-                    case -6: // Preset
+                    case -5: // Load Preset
                     {
                         if show_message_ext(preset_question_str_var,yes_str_var,no_str_var,"") == 1
                         {
@@ -359,7 +359,7 @@ object_event_add
                                 case 2: { preset_var = "ps"; break; }
                                 case 3: { preset_var = "switch"; break; }
                                 case 4: { preset_var = "snes"; break; }
-                                case 5:
+                                default:
                                 {
                                     preset_var = get_string("Custom preset","");
                                     break;
@@ -482,14 +482,14 @@ object_event_add
             {
                 switch local.setid
                 {
-                    case -5: // Current Player
+                    case -4: // Current Player
                     {
                         player_id_var = mod_scr(player_id_var+local.input,8);
                         break;
                     }
-                    case -6:
+                    case -5: // Load Preset
                     {
-                        preset_id_var = mod_scr(preset_id_var+local.input,7);
+                        preset_id_var = mod_scr(preset_id_var+local.input,6);
                         break;
                     }
                     default: { local.snd = false; break; }
@@ -618,9 +618,9 @@ object_event_add
         for (local.i=0; local.i<global.set_len_var; local.i+=1;)
         {
             if !set_arr[local.i,9] || set_arr[local.i,4] == 8 { continue; } // If not player specific or category, skip.
-            if !ini_key_exists("PLAYER",set_arr[local.i,0]+"_"+string(player_id_var)) { continue; } // If key doesnt exist, skip.
-            if set_arr[local.i,4] == 5 { value_arr_var[local.i,player_id_var] = ini_read_string("PLAYER",set_arr[local.i,0]+"_"+string(player_id_var),""); }
-            else { value_arr_var[local.i,player_id_var] = ini_read_real("PLAYER",set_arr[local.i,0]+"_"+string(player_id_var),0); }
+            if !ini_key_exists("PLAYER",set_arr[local.i,0]) { continue; } // If key doesnt exist, skip.
+            if set_arr[local.i,4] == 5 { value_arr_var[local.i,player_id_var] = ini_read_string("PLAYER",set_arr[local.i,0],""); }
+            else { value_arr_var[local.i,player_id_var] = ini_read_real("PLAYER",set_arr[local.i,0],0); }
         }
         ini_close();
         has_set_var = true;
@@ -635,12 +635,14 @@ object_event_add
 
     draw_bg_tiled_stretch_scr(settings_bg,bg_scroll_var,0,512,0,2);
     
+    draw_set_halign(fa_right);
     draw_str_shadow_scr
     (
         "SETTINGS",
         -20,20,0.95,0.95,0.125,fa_right,fa_top,
         -4,4,str_bg_color_var,c_yellow,2,0
     );
+    draw_set_halign(fa_left);
 
     for (local.i=0; local.i<state_arr_var[state_var,0]; local.i+=1)
     {
@@ -698,12 +700,14 @@ object_event_add
             }
             if is_string(local.str)
             {
+                draw_set_halign(fa_center);
                 draw_str_shadow_scr
                 (
                     local.str,
-                    500,144+(96*local.i)+scroll_var,0.75,0.75,0.125,fa_left,fa_top,
+                    0,144+(96*local.i)+scroll_var,0.75,0.75,0.125,fa_center,fa_top,
                     -4,4,str_bg_color_var,c_yellow,2,0
                 );
+                draw_set_halign(fa_left);
             }
         }
     }
@@ -715,6 +719,15 @@ object_event_add
         96,local.ytmp,str_scale_var,0.75,0.125,fa_left,fa_top,
         -4,4,str_bg_select_color_var,c_white,2,0,0.75
     );
+    draw_set_halign(fa_right);
+    local.margin = (view_wview[view_current]/2)+192;
+    draw_str_ext_shadow_scr
+    (
+        desc_arr_var[state_var,set_var],
+        -20,144,0.4,0.4,0.125,fa_right,fa_top,-1,local.margin,
+        -4,4,str_bg_color_var,c_yellow,2,0
+    );
+    draw_set_halign(fa_left);
 
     local.str = 0;
     local.setid = id_arr_var[state_var,set_var];
@@ -760,11 +773,13 @@ object_event_add
     }
     if is_string(local.str)
     {
+        draw_set_halign(fa_center);
         draw_str_shadow_scr
         (
             local.str,
-            500,144+(96*set_var)+scroll_var,0.75,0.75,0.125,fa_left,fa_top,
+            0,144+(96*set_var)+scroll_var,0.75,0.75,0.125,fa_center,fa_top,
             -4,4,str_bg_color_var,c_yellow,2,0
         );
+        draw_set_halign(fa_left);
     }
 ');

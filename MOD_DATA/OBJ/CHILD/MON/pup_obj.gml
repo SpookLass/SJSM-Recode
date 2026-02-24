@@ -42,6 +42,8 @@ object_event_add
     hd_var = false;
     hd_snd_var = false;
     terrible_var = false;
+    do_ascend_var = false;
+    temp_hd_var = false;
     // Anim
     anim_type_var = 3; // Random
     // Seen

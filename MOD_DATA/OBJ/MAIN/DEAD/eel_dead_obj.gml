@@ -126,8 +126,10 @@ object_event_add
         draw_rectangle(0,0,view_wview[view_current],view_hview[view_current],false);
         draw_set_blend_mode(bm_normal);
     }
+    draw_set_halign(fa_center); draw_set_valign(fa_middle);
     draw_str_scr(str_var,0,0,0.5,0.5,0.125,fa_center,fa_middle,0);
     draw_spr_tiled_scale_ext_scr(spr_04_var,floor(spr_04_id_var),0,0,256,256,2,0,c_white,0.25);
+    draw_set_halign(fa_left); draw_set_valign(fa_top);
     draw_spr_stretch_scr(spr_01_var,0,0,-chomp_y_var,1280,0,fa_center,fa_middle);
     draw_spr_stretch_scr(spr_02_var,0,0,chomp_y_var,1280,0,fa_center,fa_middle);
 ');

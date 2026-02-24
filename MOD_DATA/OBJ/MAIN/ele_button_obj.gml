@@ -34,6 +34,7 @@ object_event_add
     z_end_var = 160;
     alarm_var = 586.2;
     fast_alarm_var = 80;
+    fast_var = false;
     // Collisions
     coll_var[0] = global.ele_button_coll[0];
     coll_var[1] = global.ele_button_coll[1];

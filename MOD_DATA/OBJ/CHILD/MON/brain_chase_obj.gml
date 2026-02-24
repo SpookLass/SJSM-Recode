@@ -26,6 +26,7 @@ object_event_add
     target_spd_mult_var = 0.3;
     eff_var = false;
     smart_var = false;
+    atk_range_var = 32;
     // Sounds
     do_snd_var = true;
     loop_snd_var[0] = true;
@@ -55,6 +56,7 @@ object_event_add
     {
         case 0:
         {
+            atk_range_var = global.mon_coll[2];
             if global.mode_var != 0
             {
                 mus_prio_var = theme_mus_prio_const;

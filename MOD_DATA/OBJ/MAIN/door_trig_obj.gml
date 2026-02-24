@@ -109,12 +109,12 @@ object_event_add
                     other.cam_id_var = cam_id_var
                     if global.input_press_arr[interact_input_const,player_id_var] == 1
                     {
+                        local.player = id;
                         if !other.lock_var
                         {
                             on_var = false;
                             in_door_var = true;
                             local.active = true;
-                            local.player = id;
                             local.remaining -= 1;
                             with instance_create(0,0,fade_eff_obj)
                             {
@@ -129,8 +129,11 @@ object_event_add
                         }
                         else if !instance_exists(txt_obj)
                         {
-                            local.txt = instance_create(0,0,txt_obj);
-                            local.txt.str_var = local.door.txt_lock_var;
+                            with instance_create(0,0,txt_obj)
+                            {
+                                cam_id_var = local.player.cam_id_var;
+                                str_var = local.door.txt_lock_var;
+                            }
                             fmod_snd_play_scr(deny_snd);
                         }
                     }

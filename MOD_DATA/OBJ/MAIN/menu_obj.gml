@@ -190,6 +190,7 @@ object_event_add
     on_str_var = ini_read_string("LABEL","on","LABEL_on");
     off_str_var = ini_read_string("LABEL","off","LABEL_off");
     def_str_var = ini_read_string("LABEL","def","LABEL_def");
+    rand_str_var = ini_read_string("LABEL","rand","LABEL_rand");
     yes_str_var = ini_read_string("LABEL","yes","LABEL_yes");
     no_str_var = ini_read_string("LABEL","no","LABEL_no");
     for (local.i=0; local.i<global.diff_len_var; local.i+=1;)
@@ -307,7 +308,7 @@ object_event_add
     custom_button_arr_var[custom_button_len_var,0] = noone;
     custom_button_arr_var[custom_button_len_var,1] = ini_read_string("MENU","type","MENU_type");
     custom_button_arr_var[custom_button_len_var,2] = ini_read_string("DESC","type","DESC_type");
-    custom_button_arr_var[custom_button_len_var,3] = -1; // Not custom
+    custom_button_arr_var[custom_button_len_var,3] = -2; // Not custom
     custom_button_len_var += 1;
     custom_button_arr_var[custom_button_len_var,0] = noone;
     custom_button_arr_var[custom_button_len_var,1] = back_str_var;
@@ -323,7 +324,7 @@ object_event_add
         type_button_arr_var[local.i,1] = global.type_len_var+mon_arr[local.i,8]; // Max value
         if mon_arr[local.i,4] // Translate
         {
-            type_button_arr_var[local.i,2] = translate_mon_str_scr(mon_arr[local.i,1],global.name_var);
+            type_button_arr_var[local.i,2] = string_upper(translate_mon_str_scr(mon_arr[local.i,1],global.name_var));
             type_button_arr_var[local.i,3] = ini_read_string("DESC",mon_arr[local.i,2],"DESC_"+mon_arr[local.i,2]);
         }
         else
@@ -340,6 +341,13 @@ object_event_add
                 { type_button_label_arr_var[local.i,local.j] = ini_read_string("LABEL",mon_type_arr[local.i,local.j*2],"LABEL_"+mon_type_arr[local.i,local.j*2]); }
                 else { type_button_label_arr_var[local.i,local.j] = mon_type_arr[local.i,local.j*2]; }
             }
+        }
+        // Descriptions
+        for (local.j=0; local.j<global.type_len_var+mon_arr[local.i,8]; local.j+=1;)
+        {
+            if mon_desc_arr[local.i,(local.j*2)+1] // Translate
+            { type_button_desc_arr_var[local.i,local.j] = ini_read_string("DESC",mon_desc_arr[local.i,local.j*2],"DESC_"+mon_desc_arr[local.i,local.j*2]); }
+            else { type_button_desc_arr_var[local.i,local.j] = mon_desc_arr[local.i,local.j*2]; }
         }
         type_button_arr_var[local.i,4] = local.i; // Monster ID
     }
@@ -499,7 +507,7 @@ object_event_add
             {
                 state_var = 8;
                 event_user(0);
-                inst_var = fmod_snd_play_scr(menu_mus_snd_var); // start_snd_var
+                inst_var = fmod_snd_loop_scr(menu_mus_snd_var); // start_snd_var
                 set_alarm_scr(1,80);
             }
             break;
@@ -871,6 +879,7 @@ object_event_add
                         {
                             state_var = 3;
                             event_user(0);
+                            break;
                         }
                     }
                 }
@@ -1995,29 +2004,30 @@ object_event_add
                 96,local.ytmp,str_scale_var,0.75,0.125,fa_left,fa_top,
                 -4,4,str_bg_select_color_var,c_white,2,0,0.75
             );
-            draw_set_halign(fa_right);
-            local.margin = (view_wview[view_current]/2)+192;
-            draw_str_ext_shadow_scr
-            (
-                type_button_arr_var[button_state_var,3],
-                -20,144,0.4,0.4,0.125,fa_right,fa_top,-1,local.margin,
-                -4,4,str_bg_color_var,c_yellow,2,0
-            );
-            draw_set_halign(fa_left);
 
             if type_button_arr_var[button_state_var,4] >= 0
             {
+                local.desc = type_button_arr_var[button_state_var,3];
                 switch type_button_arr_var[button_state_var,0]
                 {
                     case -2: { local.str = rand_str_var; break; }
                     case -1: { local.str = def_str_var; break; }
                     default:
                     {
+                        local.desc += "##"+type_button_desc_arr_var[button_state_var,type_button_arr_var[button_state_var,0]];
                         if type_button_arr_var[button_state_var,0] < global.type_len_var
                         { local.str = type_arr_var[type_button_arr_var[button_state_var,0],0]; }
                         else { local.str = type_button_label_arr_var[button_state_var,type_button_arr_var[button_state_var,0]-global.type_len_var]; }
                     }
                 }
+                draw_set_halign(fa_right);
+                local.margin = (view_wview[view_current]/2)+192;
+                draw_str_ext_shadow_scr
+                (
+                    local.desc,
+                    -20,144,0.4,0.4,0.125,fa_right,fa_top,-1,local.margin,
+                    -4,4,str_bg_color_var,c_yellow,2,0
+                );
                 draw_set_halign(fa_center);
                 draw_str_shadow_scr
                 (
@@ -2250,7 +2260,9 @@ object_event_add
 			draw_rectangle((view_wview[view_current]-local.width)/2,(view_hview[view_current]-local.height)/2,(view_wview[view_current]+local.width)/2,(view_hview[view_current]+local.height)/2,0);
 			draw_set_color(c_white); draw_set_alpha(1);
 
+            draw_set_valign(fa_middle);
             draw_str_scr(keyboard_string,0,0,0.75,0.75,0.125,fa_center,fa_middle);
+            draw_set_valign(fa_top);
 			
 			draw_set_alpha(0.5);
 			

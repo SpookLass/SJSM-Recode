@@ -111,7 +111,9 @@ object_event_add
     if str_visible_var
     {
         draw_set_alpha(image_alpha);
+        draw_set_halign(fa_center); draw_set_valign(fa_middle);
         draw_str_scr(str_var,0,0,0.6,0.6,0.125,fa_center,fa_middle,0);
+        draw_set_halign(fa_left); draw_set_valign(fa_top);
         draw_set_alpha(1);
     }
     draw_set_blend_mode_ext(bm_dest_color,bm_src_color);

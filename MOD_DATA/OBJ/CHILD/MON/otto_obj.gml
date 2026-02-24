@@ -41,6 +41,7 @@ object_event_add
     spr_num_var = 4;
     anim_type_var = 4;
     sil_dist_var = -0.1;
+    eye_var = false;
     // Assets
         // Search for existing assets to save memory
     local.loaded = false;

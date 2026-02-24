@@ -39,6 +39,7 @@ object_event_add
     spr_spd_var = 1;
     fog_prio_var = 2;
     dead_rm_var = gc_dead_rm;
+    atk_range_var = 48;
     // Collision
     coll_var[0] = global.mon_wide_coll[0];
     coll_var[1] = global.mon_wide_coll[1];
@@ -170,6 +171,7 @@ object_event_add
             cam_end_var = -1;
             fog_var = true;
             blood_spr_var = blood_kh_spr;
+            atk_range_var = global.mon_coll[2];
             break;
         }
         case 6: // KH Recode
@@ -182,6 +184,7 @@ object_event_add
             acc_var = 0.1;
             frick_var = acc_var;
             blood_spr_var = blood_kh_spr;
+            atk_range_var = global.mon_coll[2];
             // Other
             dmg_var = 20;
             dmg_alarm_var = 120;
@@ -252,6 +255,7 @@ object_event_add
             eff_old_var = false;
             fog_var = true;
             atk_snd_var = 2;
+            atk_range_var = 32;
             if !local.set
             {
                 spd_base_var = 44/45; // 0.9r7

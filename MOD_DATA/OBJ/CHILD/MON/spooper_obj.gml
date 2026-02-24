@@ -22,6 +22,7 @@ object_event_add
     delay_var = 0;
     do_atk_var = false;
     dmg_var = 0.01;
+    dmg_min_var = -1;
     w_var = 20;
     h_var = 20;
     z_off_var = 3;
@@ -65,6 +66,7 @@ object_event_add
     puke_turn_var = true;
     // Mark
     mark_seen_yaw_var = 30;
+    mark_seen_pitch_var = 0;
     mark_seen_dist_var = 64;
     // Dark
     fog_start_var = 2;
@@ -271,6 +273,7 @@ object_event_add
         local.start = dur_start_var-dur_var;
         if local.start >= mark_start_var && frac_chance_scr(1,mark_chance_var)
         {
+            local.door = false;
             if door_chance_var > 0 && global.spawn_len_var > 1 { local.door = frac_chance_scr(1,door_chance_var); }
             local.tex = sprite_get_texture(door_spr_var,sprite_get_number(door_spr_var)-1);
             if local.door

@@ -138,8 +138,9 @@ object_event_add
                 local.distoff = ((2*local.i/str_stretch_var)-1)*local.dist;
                 for (local.j=0; local.j<4; local.j+=1;)
                 {
-                    local.dir = 360*local.j/8;
-                    
+                    local.dir = 360*local.j/4;
+                    local.xdist = 4*local.viewscale;
+                    local.ydist = 4*local.viewscale;
                     local.xoff = local.xtmp+local.distoff+(sign(local.distoff)*lengthdir_x(local.xdist,local.dir));
                     local.yoff = local.ytmp+(sign(local.distoff)*lengthdir_y(local.ydist,local.dir));
                     draw_text_ext_transformed(local.xoff,local.yoff,str_var,local.sep,local.width,local.scale,str_scale_var,0);
@@ -155,7 +156,12 @@ object_event_add
             // Reset
             draw_set_halign(fa_left); draw_set_valign(fa_top); draw_set_color(c_white); draw_set_alpha(1);
         }
-        else { draw_str_ext_outline_scr(str_var,0,464,str_scale_var,str_scale_var,0.125,fa_center,fa_top,-1,margin_var,4,4,c_black,c_yellow,1,8); }
+        else
+        {
+            draw_set_halign(fa_center);
+            draw_str_ext_outline_scr(str_var,0,464,str_scale_var,str_scale_var,0.125,fa_center,fa_top,-1,margin_var,4,4,c_black,c_yellow,1,8);
+            draw_set_halign(fa_left);
+        }
     }
     draw_bg_tiled_scale_ext_scr(bg_var,x,y,image_xscale,image_yscale,2,image_angle,image_blend,image_alpha);
     if fade_spr_id_var < sprite_get_number(fade_spr_var) { draw_spr_tiled_scale_scr(fade_spr_var,floor(fade_spr_id_var),0,0,64,192,2); }

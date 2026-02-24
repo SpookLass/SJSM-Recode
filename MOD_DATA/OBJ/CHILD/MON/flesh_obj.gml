@@ -24,6 +24,8 @@ object_event_add
     color_var = true;
     do_possess_var = false;
     smart_var = false;
+    arrow_var = false;
+    angle_var = 0;
     // Zone
     zone_var = true;
     zone_start_var = 0;

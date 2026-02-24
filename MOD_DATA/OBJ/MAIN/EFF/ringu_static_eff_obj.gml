@@ -9,6 +9,7 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,0,'
+    event_inherited();
     // Static
     spr_var = static_01_spr;
     spr_id_var = 0;
@@ -24,7 +25,6 @@ object_event_add
     alarm_ini_scr();
     alarm_arr[0,2] = false;
     set_alarm_scr(0,alarm_var);
-    event_inherited();
 ');
 // Room Start Event
 object_event_add

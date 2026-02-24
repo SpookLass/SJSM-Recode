@@ -95,6 +95,7 @@ object_event_add
     coll_var[0] = global.mon_wide_coll[0];
     coll_var[1] = global.mon_wide_coll[1];
     coll_var[2] = global.mon_wide_coll[2];
+    atk_range_var = 48;
     // Movement
     move_type_var = 1;
     stop_dist_var = 4; // OG only
@@ -140,6 +141,7 @@ object_event_add
             move_type_var = 0;
             hurt_snd_var = 1;
             blood_spr_var = blood_kh_spr;
+            atk_range_var = coll_var[2];
             break;
         }
         case 4: // Karamari HD
@@ -155,6 +157,7 @@ object_event_add
             inv_chance_var = 5;
             tp_dist_max_var = 640/3; // 213.r3
             atk_snd_var = 2;
+            atk_range_var = 32;
             break;
         }
         case 5: // Old HD
@@ -182,6 +185,7 @@ object_event_add
             tp_dist_max_var = 640/3; // 213.r3
             hurt_snd_var = 3;
             dupe_var = 0;
+            atk_range_var = 544/15; // 36.2r6
             break;
         }
         case 3: // Karamari

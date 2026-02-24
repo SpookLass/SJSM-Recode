@@ -6,6 +6,13 @@ object_set_persistent(argument0,true);
 object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
+// Create
+object_event_add
+(argument0,ev_create,0,'
+    event_inherited();
+    do_wiggle_var = false;
+    wiggle_var = 0;
+');
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,'

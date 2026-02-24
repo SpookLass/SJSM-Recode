@@ -92,6 +92,8 @@ object_event_add
 (argument0,ev_draw,0,'
     if spr_visible_var { draw_spr_stretch_scr(spr_var,0,0,0,2864,0,fa_center,fa_middle); }
     draw_set_alpha(image_alpha);
+    draw_set_halign(fa_center); draw_set_valign(fa_middle);
     draw_str_scr(str_var,0,0,1,1,0.125,fa_center,fa_middle,0);
+    draw_set_halign(fa_left); draw_set_valign(fa_top);
     draw_set_alpha(1);
 ');

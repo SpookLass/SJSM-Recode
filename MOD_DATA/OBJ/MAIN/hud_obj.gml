@@ -269,14 +269,14 @@ object_event_add
                 local.str = spd_str_var+": "+string(global.game_spd_var);
                 draw_set_halign(fa_right); draw_set_valign(fa_bottom);
                 draw_str_shadow_scr(local.str,-54,-54,0.5,0.5,scale_min_var,fa_right,fa_bottom,-2,2,make_color_rgb(100,0,0),c_white,1,0);
-                draw_set_valign(fa_left); draw_set_halign(fa_top);
+                draw_set_halign(fa_left); draw_set_valign(fa_top);
             }
             // Room Count
             local.str = rm_str_var+": "+string(global.rm_count_var);
             draw_set_halign(fa_right); 
             draw_str_shadow_scr(local.str,-54,54,0.75,0.75,scale_min_var,fa_right,fa_top,-2,2,make_color_rgb(30,0,50),c_yellow,1,0);
             if global.rm_hud_var { draw_str_shadow_scr(global.rm_name_var,-54,108,0.5,0.5,scale_min_var,fa_right,fa_top,-2,2,make_color_rgb(30,0,50),c_yellow,1,0); }
-            draw_set_valign(fa_left);
+            draw_set_halign(fa_left);
             // Debug text
             if global.debug_var && !global.hide_debug_var
             {

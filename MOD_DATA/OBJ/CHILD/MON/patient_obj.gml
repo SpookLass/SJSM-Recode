@@ -22,6 +22,7 @@ object_event_add
     dmg_alarm_var = 30;
     dead_rm_var = patient_dead_rm;
     inv_time_var = 0;
+    atk_range_var = 48;
     // Theme
     mus_delay_var = 144
     // Assets
@@ -119,6 +120,7 @@ object_event_add
             weird_var = true;
             weird_chance_var = 16;
             blood_spr_var = blood_kh_spr;
+            atk_range_var = global.mon_coll[2];
             // Corporeal?
             type_var = 2;
             // Silhouette (Lazy)
@@ -147,6 +149,7 @@ object_event_add
             tp_alarm_var = 480;
             overlay_var = false;
             atk_snd_var = 2;
+            atk_range_var = 32;
             // HD Only
             seen_spd_mult_var = 1;
             seen_rage_var = true;
@@ -180,6 +183,7 @@ object_event_add
             draw_pos_var = true;
             weird_var = true;
             weird_chance_var = 16;
+            atk_range_var = global.mon_coll[2];
             break;
         }
     }

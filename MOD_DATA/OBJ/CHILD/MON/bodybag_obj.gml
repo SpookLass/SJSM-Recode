@@ -25,6 +25,7 @@ object_event_add
     h_var = 20;
     dupe_var = dupe_canon_const;
     blood_spr_var = blood_kh_spr;
+    atk_range_var = 48;
     // Sound
     wake_snd_var[0] = true;
     mus_prio_var = theme_mus_prio_const;
@@ -90,6 +91,7 @@ object_event_add
             shake_var = 0.32;
             eff_fade_var = true;
             strobe_var = false;
+            atk_range_var = global.mon_coll[2];
             // Autobrake
             autobrake_var = true;
             autobrake_spd_var = 1;
@@ -115,6 +117,7 @@ object_event_add
             shake_var = 0.32;
             eff_delay_var = 0;
             strobe_var = false;
+            atk_range_var = 32;
             // Autobrake (close enough)
             autobrake_var = true;
             autobrake_spd_var = 0;

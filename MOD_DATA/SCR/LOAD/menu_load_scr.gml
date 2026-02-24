@@ -557,8 +557,8 @@ custom_clamp_arr[global.custom_len_var,2] = true; // Wrap
 custom_arr_add_len_scr(0,1);
 custom_arr_set_scr(ele_type_const,global.custom_len_var,-1,-1,-1); // Default
 custom_arr_set_scr(2,global.custom_len_var,-1,-1,1); // OG
-custom_arr_set_scr(1,global.custom_len_var,-1,0,1); // HD Story
-custom_arr_set_scr(0,global.custom_len_var,-1,1,1); // HD Endless
+custom_arr_set_scr(1,global.custom_len_var,-1,0,2); // HD Story
+custom_arr_set_scr(0,global.custom_len_var,-1,1,2); // HD Endless
 global.custom_len_var += 1;
     // Elevator End 1
 // Name
@@ -604,7 +604,7 @@ custom_clamp_arr[global.custom_len_var,2] = false; // Wrap
 // Defaults
 custom_arr_add_len_scr(0,1);
 custom_arr_set_scr(ele_rate_01_const,global.custom_len_var,-1,-1,-1); // Default
-custom_arr_set_scr(100,global.custom_len_var,-1,1,1); // HD Endless
+custom_arr_set_scr(100,global.custom_len_var,-1,1,2); // HD Endless
 global.custom_len_var += 1;
     // Elevator Rate 2
 // Name
@@ -669,20 +669,22 @@ custom_label_arr[global.custom_len_var,2] = "all"; // Value 2
 custom_label_arr[global.custom_len_var,3] = true; // Translate
 custom_label_arr[global.custom_len_var,4] = "story"; // Value 3
 custom_label_arr[global.custom_len_var,5] = true; // Translate
-custom_label_arr[global.custom_len_var,6] = "beta"; // Value 4
+custom_label_arr[global.custom_len_var,6] = "old"; // Value 4
 custom_label_arr[global.custom_len_var,7] = true; // Translate
 custom_label_arr[global.custom_len_var,8] = "no_ringu"; // Value 5
 custom_label_arr[global.custom_len_var,9] = true; // Translate
+custom_label_arr[global.custom_len_var,10] = "og"; // Value 6
+custom_label_arr[global.custom_len_var,11] = true; // Translate
 // Clamp
 custom_clamp_arr[global.custom_len_var,0] = 0; // Min
-custom_clamp_arr[global.custom_len_var,1] = 4; // Max
+custom_clamp_arr[global.custom_len_var,1] = 5; // Max
 custom_clamp_arr[global.custom_len_var,2] = true; // Wrap
 // Defaults
 custom_arr_add_len_scr(0,1);
 custom_arr_set_scr(1,global.custom_len_var,-1,-1,-1); // Default (All)
 custom_arr_set_scr(2,global.custom_len_var,-1,0,-1); // Story
-custom_arr_set_scr(2,global.custom_len_var,-1,-1,1); // OG
-custom_arr_set_scr(2,global.custom_len_var,-1,-1,2); // HD
+custom_arr_set_scr(5,global.custom_len_var,-1,1,1); // OG Endless
+custom_arr_set_scr(2,global.custom_len_var,-1,1,2); // HD Endless
 global.custom_len_var += 1;
     // Monster List / KH
 // Name
@@ -745,9 +747,9 @@ if file_exists(working_directory+"\The_Doll_House\SDH.exe")
 }
     // Endless Specimen List
 // Name
-custom_arr[global.custom_len_var,0] = "em_spec_list"; // Variable name
-custom_arr[global.custom_len_var,1] = "em_spec_list"; // Name
-custom_arr[global.custom_len_var,2] = "em_spec_list"; // Description
+custom_arr[global.custom_len_var,0] = "endless_list"; // Variable name
+custom_arr[global.custom_len_var,1] = "endless_list"; // Name
+custom_arr[global.custom_len_var,2] = "endless_list"; // Description
 custom_arr[global.custom_len_var,3] = true; // Translate name and descripion
 custom_arr[global.custom_len_var,4] = 6; // Type (Monster list)
 custom_arr[global.custom_len_var,5] = 4; // Special (Array index)
@@ -800,6 +802,7 @@ It will also be used for the CAT-DOS, chase pool, and locale pool in the future.
 globalvar mon_arr;
 globalvar mon_group_arr;
 globalvar mon_type_arr;
+globalvar mon_desc_arr;
 global.mon_len_var = 0;
     // Groups
 global.mon_group_len_var = 6;
@@ -1016,7 +1019,7 @@ mon_arr[global.mon_len_var,10] = noone; // Locale
 // Types
 mon_type_arr[global.mon_len_var,0] = "old";
 mon_type_arr[global.mon_len_var,1] = true; // Translate
-mon_type_arr[global.mon_len_var,2] = "dh_og";
+mon_type_arr[global.mon_len_var,2] = "dh";
 mon_type_arr[global.mon_len_var,3] = true; // Translate
 mon_type_arr[global.mon_len_var,4] = "dh_hd";
 mon_type_arr[global.mon_len_var,5] = true; // Translate
@@ -1750,6 +1753,7 @@ mon_list_arr[1,0] = noone;
 mon_list_arr[1,1] = ds_list_create();
 ds_list_clear(mon_list_arr[1,1]);
 ds_list_add(mon_list_arr[1,1],local.gel);
+ds_list_add(mon_list_arr[1,1],local.brain);
 ds_list_add(mon_list_arr[1,1],local.bug);
 ds_list_add(mon_list_arr[1,1],local.ringu);
 ds_list_add(mon_list_arr[1,1],local.bab);
@@ -1793,6 +1797,7 @@ ds_list_add(mon_list_arr[1,3],local.mur);
 mon_list_arr[1,4] = ds_list_create();
 ds_list_clear(mon_list_arr[1,4]);
 ds_list_add(mon_list_arr[1,4],local.gel);
+ds_list_add(mon_list_arr[1,4],local.brain);
 ds_list_add(mon_list_arr[1,4],local.bug);
 ds_list_add(mon_list_arr[1,4],local.bab);
 ds_list_add(mon_list_arr[1,4],local.pup);
@@ -1803,6 +1808,18 @@ ds_list_add(mon_list_arr[1,4],local.para);
 ds_list_add(mon_list_arr[1,4],local.fd);
 ds_list_add(mon_list_arr[1,4],local.killer);
 ds_list_add(mon_list_arr[1,4],local.mur);
+// OG Endless
+mon_list_arr[1,5] = ds_list_create();
+ds_list_clear(mon_list_arr[1,5]);
+ds_list_add(mon_list_arr[1,5],local.gel);
+ds_list_add(mon_list_arr[1,5],local.bug);
+ds_list_add(mon_list_arr[1,5],local.ringu);
+ds_list_add(mon_list_arr[1,5],local.bab);
+ds_list_add(mon_list_arr[1,5],local.pup);
+ds_list_add(mon_list_arr[1,5],local.dl);
+ds_list_add(mon_list_arr[1,5],local.para);
+ds_list_add(mon_list_arr[1,5],local.fd);
+ds_list_add(mon_list_arr[1,5],local.killer);
 // Karamari
 mon_list_arr[2,0] = noone;
 // OG Endless

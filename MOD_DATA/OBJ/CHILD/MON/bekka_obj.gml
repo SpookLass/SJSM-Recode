@@ -29,6 +29,7 @@ object_event_add
     w_var = 14;
     h_var = 21;
     dead_rm_var = bekka_dead_rm;
+    atk_range_var = 48;
     // mus
     mus_prio_var = theme_mus_prio_const;
     // Assets
@@ -123,6 +124,7 @@ object_event_add
             bright_var = true;
             derand_var = true;
             blood_spr_var = blood_kh_spr;
+            atk_range_var = global.mon_coll[2];
             break;
         }
         case 2: // HD
@@ -136,6 +138,7 @@ object_event_add
             overlay_color_var = c_white;
             overlay_alpha_var = 0.1;
             dark_var = false;
+            atk_range_var = 32;
             break;
         }
         case 3: // Remodeled

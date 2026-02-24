@@ -225,13 +225,16 @@ object_event_add
     if view_current == cam_id_var
     {
         // Title
+        draw_set_halign(fa_center);
         draw_str_shadow_scr
         (
             str_var,
             0,120,1,1,0.125,fa_center,fa_top,
             -4,4,str_bg_select_color_var,c_white,2,0
         );
+        draw_set_halign(fa_left);
         // Buttons
+        draw_set_valign(fa_bottom);
         for (local.i=0; local.i<button_len_var; local.i+=1)
         {
             if local.i != button_state_var
@@ -255,6 +258,7 @@ object_event_add
             96,local.ytmp,str_scale_var,0.75,0.125,fa_left,fa_bottom,
             -4,4,str_bg_select_color_var,c_white,2,0,0.75
         );
+        draw_set_valign(fa_top);
     }
     // Hidden
     d3d_set_hidden(true);

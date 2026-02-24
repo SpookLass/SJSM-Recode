@@ -14,6 +14,7 @@ object_event_add
     str_color_var = c_dkgray;
     reflect_var = true;
     spr_id_var = 0;
+    spooky_var = false;
 ');
 // Destroy Event
 object_event_add
