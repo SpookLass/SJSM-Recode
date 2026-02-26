@@ -112,6 +112,7 @@ object_event_add
         {
             delay_var = 0;
             spd_base_var = 44/225; // 0.19r5
+            angle_var = 15;
             break;
         }
     }

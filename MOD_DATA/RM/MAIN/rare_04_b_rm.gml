@@ -123,6 +123,6 @@ room_instance_add(argument0,292,520,table_obj);
 room_instance_add(argument0,240,512,chair_east_obj);
 room_instance_add(argument0,292,508,table_obj);
 // Phone
-/*room_instance_add(argument0,292,508,fan_obj);
-room_instance_add(argument0,272,512,phone_trig_obj);
-room_instance_add(argument0,292,517,phone_obj);*/
+room_instance_add(argument0,288,512,phone_trig_obj);
+room_instance_add(argument0,292,517,phone_obj);
+room_instance_add(argument0,292,508,fan_obj);

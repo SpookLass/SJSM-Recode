@@ -36,12 +36,36 @@ object_event_add
         freeze_var = true;
         rotate_var = false;
         look_var = false;
+        stop_snd_var = true;
+        // Main
+        event_inherited();
+        solid_var = true;
+        type_var = 9;
+        z += 8;
+        w_var = 14;
+        h_var = 14;
+        radius_var = 1;
+        if variable_local_exists("base_dir_var") { base_dir_var += 180; }
+        else { base_dir_var = 180; }
+        jump_dir_var = -90;
+        direction = base_dir_var;
+        dist_var = 0.1;
+        tex_w_var = -1;
+        // Special
+        delay_var = 6;
+        alarm_len_var = 1;
+        alarm_ini_scr();
+        weapon_var = true;
+        // Collisions
+        coll_var[0] = global.jsr_coll[0];
+        coll_var[1] = global.js_coll[1];
+        coll_var[2] = global.js_coll[2];
         // Behavior
         if global.js_type_var == -1 { local.type = irandom(3); }
         else { local.type = global.js_type_var; }
         switch local.type
         {
-            case 3:
+            case global.type_len_var:
             {
                 look_var = true;
             }
@@ -58,10 +82,11 @@ object_event_add
                 freeze_var = false;
                 rotate_var = true;
                 snd_dist_max_var = 600;
+                stop_snd_var = false;
                 break;
             }
         }
-        // Texture
+        // Assets
         load_var = true;
         if global.mode_var == 0
         {
@@ -73,33 +98,11 @@ object_event_add
         bg_02_var = background_add(global.js_arr[local.tex,1],false,false);
         snd_var = fmod_snd_add_scr(local.snd,snd_3d_var);
         store_tex_var = background_get_texture(bg_01_var);
+        tex_var = store_tex_var;
         store_tex_02_var = background_get_texture(bg_02_var);
         tex_02_var = store_tex_02_var;
         if snd_dist_max_var > 0
         { fmod_snd_set_minmax_dist_scr(snd_var,0,snd_dist_max_var); }
-        // Main
-        event_inherited();
-        solid_var = true;
-        type_var = 9;
-        z += 8;
-        w_var = 14;
-        h_var = 14;
-        radius_var = 1;
-        if variable_local_exists("base_dir_var") { base_dir_var += 180; }
-        else { base_dir_var = 180; }
-        jump_dir_var = -90;
-        direction = base_dir_var;
-        dist_var = 0.1;
-        tex_w_var = -1;
-        // Special
-        delay_var = 10;
-        alarm_len_var = 1;
-        alarm_ini_scr();
-        weapon_var = true;
-        // Collisions
-        coll_var[0] = global.jsr_coll[0];
-        coll_var[1] = global.js_coll[1];
-        coll_var[2] = global.js_coll[2];
         // Trigger
         if !variable_local_exists("trig_var")
         {
@@ -268,7 +271,7 @@ object_event_add
         solid_var = false;
         w_var *= 0.25;
         tex_w_var *= 0.25;
-        fmod_inst_stop_scr(inst_var);
+        if stop_snd_var { fmod_inst_stop_scr(inst_var); }
         fmod_snd_play_scr(choose(card_01_snd,card_02_snd,card_03_snd,card_04_snd));
         hurt_target_var.violence_var += 1;
         if instance_exists(note_var)

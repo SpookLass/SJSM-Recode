@@ -884,6 +884,26 @@ mon_desc_arr[global.mon_len_var,5] = true;
 mon_desc_arr[global.mon_len_var,6] = mon_arr[global.mon_len_var,2]+"_"+mon_type_arr[global.mon_len_var,0];
 mon_desc_arr[global.mon_len_var,7] = true;
 global.mon_len_var += 1;
+    // Howard
+mon_arr[global.mon_len_var,0] = "howard"; // Variable
+mon_arr[global.mon_len_var,1] = "howard"; // Name
+mon_arr[global.mon_len_var,2] = "howard"; // Description
+mon_arr[global.mon_len_var,3] = "howard"; // CAT-DOS
+mon_arr[global.mon_len_var,4] = true; // Translate
+mon_arr[global.mon_len_var,5] = false; // Chases
+mon_arr[global.mon_len_var,6] = false; // Has CAT-DOS
+mon_arr[global.mon_len_var,7] = 0; // Group
+mon_arr[global.mon_len_var,8] = 0; // Extra behaviors
+mon_arr[global.mon_len_var,9] = howard_obj; // Object
+mon_arr[global.mon_len_var,10] = noone; // Locale
+// Descriptions
+mon_desc_arr[global.mon_len_var,0] = mon_arr[global.mon_len_var,2]+"_"+type_arr[0,1];
+mon_desc_arr[global.mon_len_var,1] = true;
+mon_desc_arr[global.mon_len_var,2] = mon_arr[global.mon_len_var,2]+"_"+type_arr[1,1];
+mon_desc_arr[global.mon_len_var,3] = true;
+mon_desc_arr[global.mon_len_var,4] = mon_arr[global.mon_len_var,2]+"_"+type_arr[2,1];
+mon_desc_arr[global.mon_len_var,5] = true;
+global.mon_len_var += 1;
     // Gel
 mon_arr[global.mon_len_var,0] = "gel"; // Variable
 mon_arr[global.mon_len_var,1] = "gel"; // Name
@@ -2431,7 +2451,26 @@ set_label_arr[global.set_len_var,1] = true; // Translate
 set_label_arr[global.set_len_var,2] = "on"; // Value 2
 set_label_arr[global.set_len_var,3] = true; // Translate
     // Default
-set_default_arr[global.set_len_var,0] = amb_3d_const; // Default
+set_default_arr[global.set_len_var,0] = wake_3d_const; // Default
+global.set_len_var += 1;
+// Pitch bending
+set_arr[global.set_len_var,0] = "pitch_bend"; // Variable name
+set_arr[global.set_len_var,1] = "pitch_bend"; // Name
+set_arr[global.set_len_var,2] = "pitch_bend"; // Description
+set_arr[global.set_len_var,3] = true; // Translate name and descripion
+set_arr[global.set_len_var,4] = 0; // Type (Enum)
+set_arr[global.set_len_var,5] = false; // Min
+set_arr[global.set_len_var,6] = true; // Max
+set_arr[global.set_len_var,7] = true; // Wrap
+set_arr[global.set_len_var,8] = 3; // Category (Audio)
+set_arr[global.set_len_var,9] = false; // Player Specific
+    // Label
+set_label_arr[global.set_len_var,0] = "off"; // Value 1
+set_label_arr[global.set_len_var,1] = true; // Translate
+set_label_arr[global.set_len_var,2] = "on"; // Value 2
+set_label_arr[global.set_len_var,3] = true; // Translate
+    // Default
+set_default_arr[global.set_len_var,0] = pitch_bend_const; // Default
 global.set_len_var += 1;
 /*
 -----------

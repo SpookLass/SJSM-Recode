@@ -70,6 +70,7 @@ object_event_add
     no_fun_var = true;
     // Movement
     spd_base_real_var = 0.9;
+    spd_min_var = 0;
     spd_delay_min_var = 1;
     spd_delay_max_var = 6;
     seen_acc_var = 100/6; // 16.r6 GOOD GOD

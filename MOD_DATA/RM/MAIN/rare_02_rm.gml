@@ -36,7 +36,7 @@ room_instance_add(argument0,0,0,maze_fog_obj);
 room_instance_add(argument0,0,0,maze_color_obj);
 room_instance_add(argument0,0,0,amb_control_obj);
 room_instance_add(argument0,208,272,maze_control_obj);
-room_instance_add(argument0,144,208,maze_origin_obj);
+room_instance_add(argument0,144,208,tp_origin_obj);
 room_instance_add(argument0,208,144,maze_tp_left_obj);
 room_instance_add(argument0,272,208,maze_tp_forward_obj);
 room_instance_add(argument0,208,272,maze_tp_right_obj);

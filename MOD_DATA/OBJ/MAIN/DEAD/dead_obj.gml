@@ -143,7 +143,7 @@ object_event_add
                     local.ydist = 4*local.viewscale;
                     local.xoff = local.xtmp+local.distoff+(sign(local.distoff)*lengthdir_x(local.xdist,local.dir));
                     local.yoff = local.ytmp+(sign(local.distoff)*lengthdir_y(local.ydist,local.dir));
-                    draw_text_ext_transformed(local.xoff,local.yoff,str_var,local.sep,local.width,local.scale,str_scale_var,0);
+                    draw_text_ext_transformed(local.xoff,local.yoff,str_var,-1,local.width,local.scale,str_scale_var,0);
                 }
             }
             // Stretched Text
@@ -151,7 +151,7 @@ object_event_add
             for (local.i=0; local.i<str_stretch_var; local.i+=1)
             {
                 local.distoff = ((2*local.i/str_stretch_var)-1)*local.dist;
-                draw_text_ext_transformed(local.xtmp+local.distoff,local.ytmp,str_var,local.sep,local.width,local.scale,str_scale_var,0);
+                draw_text_ext_transformed(local.xtmp+local.distoff,local.ytmp,str_var,-1,local.width,local.scale,str_scale_var,0);
             }
             // Reset
             draw_set_halign(fa_left); draw_set_valign(fa_top); draw_set_color(c_white); draw_set_alpha(1);

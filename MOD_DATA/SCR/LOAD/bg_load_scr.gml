@@ -74,6 +74,8 @@ file_to_bg_scr(vanilla_directory_const+"\TEX\RARE\WIRE_03.png","wire_03_bg",fals
 file_to_bg_scr(vanilla_directory_const+"\TEX\mobile\MID_02_tex.png","fan_blade_bg",false,false,argument0);
 file_to_bg_scr(vanilla_directory_const+"\TEX\mobile\MID_03_tex.png","fan_bg",false,false,argument0);
 file_to_bg_scr(vanilla_directory_const+"\TEX\mobile\MID_04_tex.png","phone_bg",false,false,argument0);
+// Howard
+file_to_bg_scr(vanilla_directory_const+"\TEX\sprites\EX_10_spr.png","howard_bg",false,false,argument0);
 // Art
 file_to_bg_scr(vanilla_directory_const+"\MAT\ART\ART_01.png","art_01_bg",false,false,argument0);
 file_to_bg_scr(vanilla_directory_const+"\MAT\ART\ART_02.png","art_02_bg",false,false,argument0);

@@ -8,7 +8,7 @@ object_set_visible(argument0,false);
 // Room Start
 object_event_add
 (argument0,ev_other,ev_room_start,'
-    with maze_origin_obj
+    with tp_origin_obj
     {
         if id_var == other.id_var || id_var == -1
         { other.origin_var = id; break; }

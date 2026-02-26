@@ -25,6 +25,7 @@ object_event_add
     dmg_min_var = -1;
     w_var = 20;
     h_var = 20;
+    z_off_base_var = 3;
     z_off_var = 3;
     dupe_var = dupe_never_const;
     dead_rm_var = spooper_dead_rm;
@@ -186,6 +187,9 @@ object_event_add
             puke_turn_var = false;
             puke_alarm_02_var = 120;
             puke_alarm_03_var = 72;
+            drain_start_var = -1;
+            hp_max_var = 5;
+            hp_var = hp_max_var;
             break;
         }
     }
@@ -481,7 +485,7 @@ object_event_add
             fetus_tex_var = other.fetus_tex_var;
             snd_var = other.puke_snd_var;
             alarm_02_var = other.puke_alarm_02_var;
-            alarm_03_var = local.spooper.puke_alarm_03_var;
+            alarm_03_var = other.puke_alarm_03_var;
             slow_var = local.spooper.puke_slow_var;
             set_alarm_scr(0,other.puke_alarm_01_var);
         }

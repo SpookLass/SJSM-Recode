@@ -2,7 +2,7 @@
 object_set_depth(argument0,0);
 object_set_mask(argument0,noone);
 object_set_parent(argument0,enemy_par_obj);
-object_set_persistent(argument0,true);
+object_set_persistent(argument0,false);
 object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
@@ -22,7 +22,7 @@ object_event_add
     // Damage
     dmg_var = 60;
     dmg_alarm_var = 120;
-    dead_rm_var = taker_dead_3d_rm;
+    dead_rm_var = taker_dead_rm;
     // Movement
     spd_var = 0.8;
     delay_var = 600;
@@ -40,6 +40,7 @@ object_event_add
         {
             dmg_var = 999;
             delay_var = 60;
+            dead_rm_var = taker_dead_3d_rm;
             break;
         }
         case 2: // HD
@@ -47,6 +48,7 @@ object_event_add
             dmg_var = 120;
             dmg_alarm_var = 45;
             spd_var = 1.6;
+            dead_rm_var = taker_dead_3d_rm;
             break;
         }
         case 3: // DH
@@ -80,6 +82,16 @@ object_event_add
 // Destroy Event
 object_event_add
 (argument0,ev_destroy,0,'
+    event_user(0);
+');
+// Room End Event
+object_event_add
+(argument0,ev_other,ev_room_end,'
+    event_user(0);
+');
+// Unload
+object_event_add
+(argument0,ev_other,ev_user0,'
     with mus_par_obj { if par_var == other.id { instance_destroy(); }}
     with mus_control_obj { event_user(0); }
 ');

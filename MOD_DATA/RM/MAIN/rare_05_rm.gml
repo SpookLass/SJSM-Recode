@@ -99,7 +99,7 @@ room_instance_add(argument0,608,448,wall_2high_vert_obj);
 room_instance_add(argument0,608,416,wall_2high_vert_obj);
 room_instance_add(argument0,608,384,wall_2high_vert_obj);
 // Map
-//room_instance_add(argument0,608,448,map_obj);
+room_instance_add(argument0,606,448,map_obj);
 // Unused
 /*room_instance_add(argument0,0,0,map_control);
 room_instance_add(argument0,0,-16,map_mini_01);

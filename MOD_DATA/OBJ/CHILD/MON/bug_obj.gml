@@ -127,7 +127,7 @@ object_event_add
     {
         case 0: // Recode
         {
-            spd_base_var = 10/3;//1.2;
+            spd_base_var = 1.2;
             hurt_alarm_var = 90;
             dmg_alarm_var = 60;
             do_acc_var = true;

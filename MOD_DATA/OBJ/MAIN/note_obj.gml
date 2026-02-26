@@ -9,29 +9,33 @@ object_set_visible(argument0,true);
 // Create event
 object_event_add
 (argument0,ev_create,0,'
-    bg_var = note_bg;
+    if !variable_local_exists("bg_var") { bg_var = note_bg; }
     cam_id_var = -1;
     player_id_var = 0;
     // String
-    str_var = note_scr();
-    str_margin_x_var = 30;
-    str_margin_y_var = 96;
-    str_scale_var = 0.4;
-    str_color_var = c_black;
-    story_var = !global.note_override_var;
+    if !variable_local_exists("str_margin_x_var") { str_margin_x_var = 30; }
+    if !variable_local_exists("str_margin_y_var") { str_margin_y_var = 96; }
+    if !variable_local_exists("str_scale_var") { str_scale_var = 0.4; }
+    if !variable_local_exists("str_color_var") { str_color_var = c_black; }
+    if !variable_local_exists("str_var")
+    {
+        str_var = note_scr();
+        story_var = !global.note_override_var;
+    }
+    else { story_var = false; }
     read_var = false;
-    // Sound
-    snd_len_var = 4;
-    snd_arr[0] = paper_01_snd;
-    snd_arr[1] = paper_02_snd;
-    snd_arr[2] = paper_03_snd;
-    snd_arr[3] = paper_04_snd;
     // Surface
     surf_w_var = 600;
     surf_h_var = 680;
     surf_var = surface_create(surf_w_var,surf_h_var);
     event_user(1);
     store_tex_var = surface_get_texture(surf_var);
+    // Sound
+    snd_len_var = 4;
+    snd_arr[0] = paper_01_snd;
+    snd_arr[1] = paper_02_snd;
+    snd_arr[2] = paper_03_snd;
+    snd_arr[3] = paper_04_snd;
     // Prop
     event_inherited();
     solid_var = false;
@@ -88,6 +92,7 @@ object_event_add
     player_id_var = interact_target_var.player_id_var;
     global.input_press_arr[interact_input_const,player_id_var] = 0;
     trig_var.on_var = false;
+    trig_var.read_var = true;
     read_var = true;
     cam_id_var = interact_target_var.cam_id_var;
     with instance_create(0,0,note_read_obj)
@@ -106,6 +111,7 @@ object_event_add
 (argument0,ev_other,ev_user3,'
     global.input_press_arr[interact_input_const,player_id_var] = 0;
     trig_var.on_var = true;
+    trig_var.read_var = false;
     cam_id_var = -1;
     with note_read_obj { if par_var == other.id { instance_destroy(); }}
     fmod_snd_play_scr(snd_arr[irandom(snd_len_var-1)]);

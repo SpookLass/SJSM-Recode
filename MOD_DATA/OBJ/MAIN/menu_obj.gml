@@ -317,7 +317,7 @@ object_event_add
     custom_button_len_var += 1;
     // Behavior
         // Defaults
-    state_str_arr_var[5] = ini_read_string("MENU","behavior","MENU_behavior");
+    state_str_arr_var[5] = ini_read_string("MENU","type","MENU_type");
     for (local.i=0; local.i<global.mon_len_var; local.i+=1)
     {
         type_button_arr_var[local.i,0] = -1;

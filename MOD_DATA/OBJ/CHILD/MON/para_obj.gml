@@ -192,6 +192,7 @@ object_event_add
             // Autobrake
             autobrake_var = true;
             autobrake_spd_var = 1;
+            autobrake_dist_var = -1;
             autobrake_dir_var = 60;
             break;
         }

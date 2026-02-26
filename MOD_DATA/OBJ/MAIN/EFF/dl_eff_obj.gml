@@ -18,10 +18,10 @@ object_event_add
     // Random
     alpha_min_var = 0.2;
     alpha_max_var = 0.6;
-    scale_min_var = 1;
-    scale_max_var = 6;
-    scale_big_var = 100;
-    scale_bigger_var = 1000;
+    scale_min_var = 128;
+    scale_max_var = 768;
+    scale_big_var = 12800;
+    scale_bigger_var = 128000;
     rand_chance_var = 2;
     scale_big_chance_var = 6;
     scale_bigger_chance_var = 8;
@@ -30,7 +30,7 @@ object_event_add
     slender_var = false;
     // Set
     image_alpha = random_range(alpha_min_var,alpha_max_var);
-    image_xscale = 1;
+    image_xscale = 128;
     image_yscale = random_range(scale_min_var,scale_max_var);
     // Alarm
     alarm_len_var = 1;
@@ -63,19 +63,15 @@ object_event_add
 (argument0,ev_draw,0,'
     if global.cam_type_var[view_current] == cam_alive_const
     {
-        // Calculate Scale
-        if view_wview[view_current] >= view_hview[view_current]
-        { local.scale = view_hview[view_current]/720; }
-        else { local.scale = view_wview[view_current]/1280; }
         // Draw
         d3d_set_fog(false,c_black,0,0);
         d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
         d3d_set_hidden(false);
-        draw_sprite_tiled_ext
+        draw_spr_tiled_scale_ext_scr
         (
             spr_var,floor(spr_id_var),0,0,
-            image_xscale*local.scale,image_yscale*local.scale,
-            image_blend,image_alpha
+            image_xscale,image_yscale,2,
+            0,image_blend,image_alpha
         );
         d3d_set_hidden(true);
     }

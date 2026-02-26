@@ -33,7 +33,7 @@ global.door_trig_coll[1] = 20;
 global.door_trig_coll[2] = 16;
 local.radius = global.door_trig_coll[2]/2;
 global.door_trig_coll[0] = p3dc_begin_mdl_scr();
-p3dc_add_block_scr(-local.radius,-local.radius,global.door_trig_coll[1],local.radius,local.radius,0,true,8);
+p3dc_add_block_scr(-local.radius,-local.radius,global.door_trig_coll[1],local.radius,local.radius,0);
 p3dc_end_mdl_scr();
 // Trigger
 globalvar trig_coll;
@@ -41,7 +41,7 @@ global.trig_coll[1] = 20;
 global.trig_coll[2] = 24;
 local.radius = global.trig_coll[2]/2;
 global.trig_coll[0] = p3dc_begin_mdl_scr();
-p3dc_add_block_scr(-local.radius,-local.radius,global.trig_coll[1],local.radius,local.radius,0,true,8);
+p3dc_add_block_scr(-local.radius,-local.radius,global.trig_coll[1],local.radius,local.radius,0);
 p3dc_end_mdl_scr();
 // Jumpscare trigger
 globalvar js_trig_coll;
@@ -52,7 +52,7 @@ local.radius_z = global.js_trig_coll[1]/2;
 local.radius_x = global.js_trig_coll[2]/2;
 local.radius_y = global.js_trig_coll[3]/2;
 global.js_trig_coll[0] = p3dc_begin_mdl_scr();
-p3dc_add_cylinder_scr(-local.radius_x,-local.radius_y,-local.radius_z,local.radius_x,local.radius_y,local.radius_z,true,8);
+p3dc_add_block_scr(-local.radius_x,-local.radius_y,-local.radius_z,local.radius_x,local.radius_y,local.radius_z);
 p3dc_end_mdl_scr();
 // Monster
 globalvar mon_coll;

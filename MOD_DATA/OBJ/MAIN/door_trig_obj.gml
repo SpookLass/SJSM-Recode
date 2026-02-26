@@ -17,8 +17,8 @@ object_event_add
     // Text
     do_txt_var = true;
     ini_open(global.lang_var)
-    txt_var = ini_read_string("UI","open","UI_open");
-    txt_lock_var = ini_read_string("UI","lock","UI_lock");
+    if !variable_local_exists("txt_var") { txt_var = ini_read_string("UI","open","UI_open"); }
+    if !variable_local_exists("txt_lock_var") { txt_lock_var = ini_read_string("UI","lock","UI_lock"); }
     ini_close();
     shadow_off_var = 2;
     // Sound
@@ -28,6 +28,7 @@ object_event_add
     snd_arr[2] = door_03_snd;
     snd_arr[3] = door_04_snd;
     // Function
+    player_id_var = noone;
     rm_count_var = 1;
     delay_var = 20;
     zone_var = -1;
@@ -106,60 +107,33 @@ object_event_add
                 if box_coll_scr(x,y,z,coll_var[2],coll_var[2],coll_var[1],other.x,other.y,other.z,other.coll_var[2],other.coll_var[2],other.coll_var[1])
                 {
                     other.visible = other.do_txt_var && !instance_exists(txt_obj);
-                    other.cam_id_var = cam_id_var
+                    other.cam_id_var = cam_id_var;
                     if global.input_press_arr[interact_input_const,player_id_var] == 1
                     {
                         local.player = id;
+                        local.active = true;
                         if !other.lock_var
                         {
                             on_var = false;
                             in_door_var = true;
-                            local.active = true;
                             local.remaining -= 1;
-                            with instance_create(0,0,fade_eff_obj)
-                            {
-                                image_blend = c_black;
-                                image_alpha = 0;
-                                set_alarm_scr(0,local.door.delay_var); 
-                                invert_var = true;
-                                stay_var = true;
-                                cam_id_var = local.player.cam_id_var;
-                            }
                             other.player_var += 1;
-                        }
-                        else if !instance_exists(txt_obj)
-                        {
-                            with instance_create(0,0,txt_obj)
-                            {
-                                cam_id_var = local.player.cam_id_var;
-                                str_var = local.door.txt_lock_var;
-                            }
-                            fmod_snd_play_scr(deny_snd);
                         }
                     }
                 }
             }
         }
-        // If no remaining players, check most voted door
-        if !global.in_door_var && local.remaining == 0
-        && (local.active || global.player_len_var > 1 || !global.debug_var) // Dont go in single player if not opened (testing)
+        // Activate
+        if local.active
         {
-            local.bestdoor = id;
-            local.bestnum = player_var;
-            with door_trig_obj
-            {
-                if player_var > local.bestnum
-                {
-                    local.bestdoor = id;
-                    local.bestnum = player_var;
-                }
-            }
-            with local.bestdoor
-            { set_alarm_scr(0,delay_var); }
-            global.in_door_var = true;
-            // Play sound
-            fmod_snd_play_scr(snd_arr[irandom(snd_len_var-1)]);
+            player_id_var = local.player;
+            if lock_var { event_user(3) }
+            else { event_user(1); }
         }
+        // If no remaining players, check most voted door
+        if !lock_var && !global.in_door_var && local.remaining == 0
+        && (local.active || global.player_len_var > 1 || !global.debug_var) // Dont go in single player if not opened (testing)
+        { event_user(2); }
     }
 ');
 // Recalculate Door
@@ -186,6 +160,51 @@ object_event_add
             rm_var = ds_list_find_value(global.rm_list_var,0);
             ds_list_delete(global.rm_list_var,0);
         }
+    }
+');
+// Interact Event
+object_event_add
+(argument0,ev_other,ev_user1,'
+    with instance_create(0,0,fade_eff_obj)
+    {
+        image_blend = c_black;
+        image_alpha = 0;
+        set_alarm_scr(0,other.delay_var); 
+        invert_var = true;
+        stay_var = true;
+        cam_id_var = other.player_id_var.cam_id_var;
+    }
+');
+// Open Event
+object_event_add
+(argument0,ev_other,ev_user2,'
+    local.bestdoor = id;
+    local.bestnum = player_var;
+    with door_trig_obj
+    {
+        if player_var > local.bestnum
+        {
+            local.bestdoor = id;
+            local.bestnum = player_var;
+        }
+    }
+    with local.bestdoor
+    { set_alarm_scr(0,delay_var); }
+    global.in_door_var = true;
+    // Play sound
+    fmod_snd_play_scr(snd_arr[irandom(snd_len_var-1)]);
+');
+// Lock Event
+object_event_add
+(argument0,ev_other,ev_user3,'
+    if !instance_exists(txt_obj)
+    {
+        with instance_create(0,0,txt_obj)
+        {
+            cam_id_var = other.player_id_var.cam_id_var;
+            str_var = other.txt_lock_var;
+        }
+        fmod_snd_play_scr(deny_snd);
     }
 ');
 // Draw Event

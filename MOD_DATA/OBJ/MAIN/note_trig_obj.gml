@@ -13,12 +13,14 @@ object_event_add
     ini_open(global.lang_var);
     str_var = ini_read_string("UI","read","UI_read");
     ini_close();
+    read_var = false;
+    interact_target_var = noone;
 ');
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,'
     event_inherited();
-    if !on_var
+    if !on_var && read_var
     {
         local.active = false;
         with interact_target_var

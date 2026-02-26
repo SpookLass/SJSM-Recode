@@ -19,6 +19,7 @@ object_event_add
     spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS_02_spr.png",1,false,false,0,0);
     sprite_set_offset(spr_var,sprite_get_width(spr_var)/2,sprite_get_height(spr_var)/2);
     scale_base_var = 1280;
+    scale_var = scale_base_var;
     // Text
     x = 100;
     y = 200;
@@ -26,6 +27,7 @@ object_event_add
     image_yscale = 0.5;
     halign_var = fa_left;
     valign_var = fa_top;
+    scale_min_var = 0.125;
     // Sound
     load_var = true;
     snd_01_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_wake_snd.wav");
