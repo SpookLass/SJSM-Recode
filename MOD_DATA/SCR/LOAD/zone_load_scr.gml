@@ -1822,7 +1822,7 @@ ds_list_add(global.rare_zone_arr[0],rare_03_rm); ds_list_add(global.rare_zone_ar
 ds_list_add(global.rare_zone_arr[0],rare_04_a_rm); // Rare Room
 ds_list_add(global.rare_zone_arr[0],rare_04_b_rm); // Phone Room
 ds_list_add(global.rare_zone_arr[0],rare_05_rm); ds_list_add(global.rare_zone_arr[0],rare_05_rm); // Map Room
-//ds_list_add(global.rare_zone_arr[0],rare_06_rm); ds_list_add(global.rare_zone_arr[0],rare_06_rm); // Howard Room
+ds_list_add(global.rare_zone_arr[0],rare_06_rm); ds_list_add(global.rare_zone_arr[0],rare_06_rm); // Howard Room
 ds_list_add(global.rare_zone_arr[0],rare_07_rm); ds_list_add(global.rare_zone_arr[0],rare_07_rm); // Brain Room
 ds_list_add(global.rare_zone_arr[0],rare_08_rm); ds_list_add(global.rare_zone_arr[0],rare_08_rm); // Endless Hall
 //ds_list_add(global.rare_zone_arr[0],rare_09_rm); ds_list_add(global.rare_zone_arr[0],rare_09_rm); ds_list_add(global.rare_zone_arr[0],rare_09_rm); ds_list_add(global.rare_zone_arr[0],rare_09_rm); // CAT-DOS Room
@@ -1860,7 +1860,7 @@ ds_list_add(global.rare_zone_arr[9],rare_03_rm); // LP Room
 ds_list_add(global.rare_zone_arr[9],rare_04_a_rm); // Rare Room
 ds_list_add(global.rare_zone_arr[9],rare_04_b_rm); // Phone Room
 ds_list_add(global.rare_zone_arr[9],rare_05_rm); // Map Room
-//ds_list_add(global.rare_zone_arr[9],rare_06_rm); // Howard Room
+ds_list_add(global.rare_zone_arr[9],rare_06_rm); // Howard Room
 ds_list_add(global.rare_zone_arr[9],rare_07_rm); // Brain Room
 ds_list_add(global.rare_zone_arr[9],rare_08_rm); // Endless Hall
 //ds_list_add(global.rare_zone_arr[9],rare_09_rm); // CAT-DOS Room
