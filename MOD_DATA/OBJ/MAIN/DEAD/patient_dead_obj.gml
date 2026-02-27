@@ -22,6 +22,7 @@ object_event_add
     // Sound
     fmod_snd_play_scr(snd_var);
     // Background
+    spr_id_var = 0;
     spr_x_var = random_range(-8,8);
     spr_y_var = random_range(-8,8);
     spr_xscale_var = random_range(1280,1344);
@@ -59,7 +60,7 @@ object_event_add
 (argument0,ev_other,ev_user0,'
     if load_var
     {
-        background_delete(bg_var);
+        sprite_delete(spr_var);
         fmod_snd_free_scr(snd_var);
         load_var = false;
     }

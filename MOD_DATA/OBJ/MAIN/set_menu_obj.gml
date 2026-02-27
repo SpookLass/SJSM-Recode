@@ -347,6 +347,7 @@ object_event_add
                         global.last_time_var = current_time;
                         fmod_update_take_over_done_scr();
                         global.input_press_arr[confirm_input_const,0] = false;
+                        break;
                     }
                     case -5: // Load Preset
                     {

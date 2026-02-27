@@ -219,10 +219,10 @@ object_event_add
         if !variable_local_exists("seen_dist_var") { seen_dist_var = 0; }
     }
     // Movement
+    if !variable_local_exists("wander_var") { wander_var = false; }
     if !variable_local_exists("do_move_var") { do_move_var = true; }
     if do_move_var
     {
-        if !variable_local_exists("wander_var") { wander_var = false; }
         if !variable_local_exists("do_acc_var") { do_acc_var = false; }
         if do_acc_var
         {

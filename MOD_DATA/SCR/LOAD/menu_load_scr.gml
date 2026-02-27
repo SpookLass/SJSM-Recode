@@ -731,8 +731,8 @@ if file_exists(working_directory+"\The_Doll_House\SDH.exe")
     custom_label_arr[global.custom_len_var,1] = true; // Translate
     custom_label_arr[global.custom_len_var,2] = "all"; // Value 2
     custom_label_arr[global.custom_len_var,3] = true; // Translate
-    custom_label_arr[global.custom_len_var,6] = "hd"; // Value 4
-    custom_label_arr[global.custom_len_var,7] = true; // Translate
+    custom_label_arr[global.custom_len_var,4] = "hd"; // Value 4
+    custom_label_arr[global.custom_len_var,5] = true; // Translate
     // Clamp
     custom_clamp_arr[global.custom_len_var,0] = 0; // Min
     custom_clamp_arr[global.custom_len_var,1] = 2; // Max
@@ -769,9 +769,9 @@ custom_arr_set_scr(0,global.custom_len_var,-1,0,-1); // Story (None)
 global.custom_len_var += 1;
     // Unknown Specimen List
 // Name
-custom_arr[global.custom_len_var,0] = "unkown_list"; // Variable name
-custom_arr[global.custom_len_var,1] = "unkown_list"; // Name
-custom_arr[global.custom_len_var,2] = "unkown_list"; // Description
+custom_arr[global.custom_len_var,0] = "unknown_list"; // Variable name
+custom_arr[global.custom_len_var,1] = "unknown_list"; // Name
+custom_arr[global.custom_len_var,2] = "unknown_list"; // Description
 custom_arr[global.custom_len_var,3] = true; // Translate name and descripion
 custom_arr[global.custom_len_var,4] = 6; // Type (Monster list)
 custom_arr[global.custom_len_var,5] = 5; // Special (Array index)

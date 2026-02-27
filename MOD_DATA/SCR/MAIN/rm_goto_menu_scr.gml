@@ -4,20 +4,36 @@ Argument 1: Reset All
 */
 if room_exists(argument0) && argument0 != 0
 {
+    switch argument1
+    {
+        case 1:
+        {
+            // Remove persistent objects
+            with all
+            {
+                if persistent && object_index != pause_menu_obj && object_index != control_obj
+                { instance_destroy(); }
+            }
+            // Stop sounds
+            fmod_all_stop_scr();
+            // Reset players
+            for (local.i=0; local.i<global.player_len_var; local.i+=1;)
+            { global.player_arr[local.i] = noone; }
+            break;
+        }
+        case 2:
+        {
+            for (local.i=0; local.i<global.player_len_var; local.i+=1;)
+            {
+                if instance_exists(global.player_arr[local.i])
+                { global.player_arr[local.i].on_var = false; }
+            }
+            break;
+        }
+    }
     if argument1
     {
-        // Remove persistent objects
-        with all
-        {
-            if persistent && object_index != pause_menu_obj && object_index != control_obj
-            { instance_destroy(); }
-        }
-        // Stop sounds
-        fmod_all_stop_scr();
-        // Reset players
-        for (local.i=0; local.i<global.player_len_var; local.i+=1;)
-        { global.player_arr[local.i] = noone; }
-        global.player_len_var = 1;
+        
     }
     if global.res_override_var
     {

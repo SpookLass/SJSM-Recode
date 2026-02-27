@@ -278,7 +278,7 @@ object_event_add
                 local.dist = point_distance_3d_scr(x,y,z,other.x,other.y,other.z);
                 local.yaw = abs(deg_diff_scr(point_direction(other.x,other.y,x,y),other.yaw_var));
                 local.radius = coll_var[2]/2; local.angle = radtodeg(arctan2(local.radius,local.dist));
-                if local.yaw <= seen_yaw_var+local.angle || local.dist < other.sight_dist_var
+                if local.yaw <= other.sight_yaw_var+local.angle || local.dist < other.sight_dist_var
                 {
                     local.xvec = (x-other.x)/local.dist;
                     local.yvec = (y-other.y)/local.dist;

@@ -18,6 +18,8 @@ object_event_add
     tex_var = sprite_get_texture(spr_var,floor(spr_id_var));
     w_var = 6;
     h_var = 12;
+    x_off_var = 0;
+    y_off_var = 0;
     z_off_var = 10;
     // Damage
     dmg_var = 60;

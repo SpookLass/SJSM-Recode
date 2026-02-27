@@ -28,12 +28,19 @@ object_event_add
     alarm_ini_scr();
     set_alarm_scr(0,340);
     set_alarm_scr(2,1);
+    // Static Fade
+    with instance_create(0,0,static_fade_obj)
+    {
+        cam_id_var = -1;
+        image_blend = c_black;
+        set_alarm_scr(0,other.fade_alarm_var);
+    }
     // FLASH!!!
     with instance_create(0,0,flash_eff_obj)
     {
         image_blend = c_red; 
         set_alarm_scr(0,6);
-        cam_id_var = other.atk_target_var.cam_id_var;
+        cam_id_var = -1;
     }
 ');
 // Destroy
@@ -67,7 +74,7 @@ object_event_add
 object_event_add
 (argument0,ev_alarm,0,'
     set_alarm_scr(1,fade_alarm_var);
-    with instance_create(0,0,fade_eff_obj)
+    with instance_create(0,0,static_fade_obj)
     {
         cam_id_var = -1;
         image_blend = c_black;

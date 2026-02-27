@@ -51,7 +51,7 @@ object_event_add
     snd_dist_min_var = 0;
     snd_dist_max_var = 768; // Kinda, maybe 512
     leave_snd_len_var = 2;
-    mus_prio_var = theme_mus_prio_const;
+    mus_prio_var = amb_mus_prio_const;
     // Assets
         // Search for existing assets to save memory
     local.loaded = false;
@@ -105,6 +105,7 @@ object_event_add
         {
             seen_yaw_var = 60;
             seen_pitch_var = 60;
+            mus_prio_var = theme_mus_prio_const;
             break;
         }
         case 2: // HD

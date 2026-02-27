@@ -141,6 +141,7 @@ object_event_add
         }
         case 2: // HD
         {
+            type_var = 2;
             do_warp_var = true;
             spd_base_var = 32/45; // 0.7r1
             dur_var = irandom_range(10,20);

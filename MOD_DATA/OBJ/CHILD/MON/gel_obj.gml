@@ -53,6 +53,7 @@ object_event_add
     // Slime
     slime_var = true;
     do_slime_spawn_var = false;
+    slime_spawn_var = false;
     slime_alarm_var = 60;
     slime_anim_var = 0;
     slime_angle_var = random(360);

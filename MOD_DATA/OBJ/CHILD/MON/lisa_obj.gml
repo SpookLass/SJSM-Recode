@@ -51,6 +51,7 @@ object_event_add
     unseen_mult_var = 30;
     frick_var = 0.2;
     do_acc_var = 3; // Friction only
+    player_spawn_var = false;
     // Attack
     attack_tp_var = true;
     tp_dist_var = 300;

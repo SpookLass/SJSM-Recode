@@ -324,6 +324,7 @@ object_event_add
     stam_spawn_min_var = 0;
     stam_spawn_max_var = 75;
     stam_per_var = false;
+    stam_var = 0;
     sprint_mult_var = 5;
     sprint_acc_var = 8/135;  // 0.0r592
     acc_base_var = 4/225; // 0.01r7

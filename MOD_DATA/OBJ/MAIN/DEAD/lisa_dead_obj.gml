@@ -36,13 +36,6 @@ object_event_add
     set_alarm_scr(0,270);
     set_alarm_scr(2,1);
     set_alarm_scr(3,irandom_range(3,6));
-    // FLASH!!!
-    with instance_create(0,0,flash_eff_obj)
-    {
-        image_blend = c_red; 
-        set_alarm_scr(0,6);
-        cam_id_var = other.atk_target_var.cam_id_var;
-    }
 ');
 // Destroy
 object_event_add
