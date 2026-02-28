@@ -4,9 +4,9 @@ Argument 0: Room Variable (same for all rooms)
 // Spawn spots// Name
 room_set_code
 (
-    argument0,"
+    argument0,'
     ini_open(global.lang_var);
-	global.rm_name_var = ini_read_string('ROOM','hotel','ROOM_hotel')+' 8';
+	global.rm_name_var = ini_read_string("ROOM","hotel","ROOM_hotel")+" 8";
 	ini_close();
     // Spawn
     global.spawn_len_var = 3;
@@ -58,8 +58,7 @@ room_set_code
     // 3D Draw
     d3d_start();
     global.draw_3d_var = true;
-");
-
+');
 // Room settings
 room_set_width(argument0,1280);
 room_set_height(argument0,720);
@@ -133,9 +132,10 @@ room_instance_add(argument0,336,192,wall_vert_obj);
 room_instance_add(argument0,336,224,wall_vert_obj);
 room_instance_add(argument0,336,256,wall_vert_obj);
 room_instance_add(argument0,336,288,wall_vert_obj);
-// Torches
 // Props
 room_instance_add(argument0,320,240,doorframe_01_hor_obj);
 room_instance_add(argument0,320,176,doorframe_01_hor_obj);
 room_instance_add(argument0,320,176,doorframe_02_hor_obj);
 room_instance_add(argument0,320,240,doorframe_02_hor_obj);
+// Flesh
+room_instance_add(argument0,320,192,flesh_arrow_obj);

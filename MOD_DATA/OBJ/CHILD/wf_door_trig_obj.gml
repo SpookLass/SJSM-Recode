@@ -21,7 +21,7 @@ object_event_add
             set_alarm_scr(0,other.par_var.eff_02_alarm_var); 
             invert_var = 2;
             stay_var = false;
-            cam_id_var = other.player_id_var.cam_id_var;
+            cam_id_var = other.interact_target_var.cam_id_var;
         }
     }
 ');

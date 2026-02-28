@@ -28,12 +28,13 @@ if room_exists(argument0) && argument0 != 0
                 if instance_exists(global.player_arr[local.i])
                 { global.player_arr[local.i].on_var = false; }
             }
+            with mus_control_obj
+            {
+                on_var = false;
+                fmod_inst_stop_scr(snd_var);
+            }
             break;
         }
-    }
-    if argument1
-    {
-        
     }
     if global.res_override_var
     {

@@ -16,4 +16,5 @@ object_event_add
     w_var = 12;
     h_var = -16; // Hang down
     solid_var = false;
+    flesh_var = false;
 ');

@@ -148,3 +148,7 @@ room_instance_add(argument0,160,400,wall_vert_obj);
 room_instance_add(argument0,160,432,wall_vert_obj);
 // Jumpscare
 room_instance_add(argument0,320,480,js_obj);
+// Flesh
+room_instance_add(argument0,176,464,flesh_arrow_obj);
+room_instance_add(argument0,272,464,flesh_arrow_obj);
+room_instance_add(argument0,368,464,flesh_arrow_obj);

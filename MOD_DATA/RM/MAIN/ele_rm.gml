@@ -35,9 +35,9 @@ for (local.i=0; local.i<8; local.i+=1;)
 room_set_view(argument0,0,true,0,0,1280,720,0,0,1280,720,32,32,-1,-1,noone);
 // Effects
 room_instance_add(argument0,0,0,fog_01_obj);
-room_instance_add(argument0,0,0,amb_control_obj);
 room_instance_add(argument0,0,0,ele_rock_obj);
 room_instance_add(argument0,0,0,destroy_mon_obj);
+room_instance_add(argument0,0,0,silent_mus_obj);
 // Walls (Horizontal)
 room_instance_add(argument0,80,32,ele_wall_hor_obj);
 room_instance_add(argument0,80,128,ele_wall_hor_obj);

@@ -42,13 +42,13 @@ object_event_add
 object_event_add
 (argument0,ev_step,ev_step_normal,'
     event_inherited();
-    if global.input_press_arr[confirm_input_const,global.dead_player_var] == 1
+    if global.input_press_arr[confirm_input_const,global.menu_player_var] == 1
     {
         reset_alarm_scr();
         if state_var < 2 { event_perform(ev_alarm,1); }
         else { event_perform(ev_alarm,3); }
     }
-    if global.input_press_arr[back_input_const,global.dead_player_var] == 1
+    if global.input_press_arr[back_input_const,global.menu_player_var] == 1
     {
         reset_alarm_scr();
         event_perform(ev_alarm,3);

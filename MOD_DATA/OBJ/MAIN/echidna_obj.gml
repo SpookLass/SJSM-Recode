@@ -207,6 +207,8 @@ object_event_add
         if !variable_local_exists("hurt_dur_var") { hurt_dur_var = 0; }
         if !variable_local_exists("hurt_dist_var") { hurt_dist_var = 0; }
         if !variable_local_exists("hurt_snd_var") { hurt_snd_var = 0; }
+        if !variable_local_exists("hurt_snd_num_var") { hurt_snd_num_var = 1; }
+        if !variable_local_exists("hurt_snd_den_var") { hurt_snd_den_var = 1; }
         if !variable_local_exists("hurt_hp_var") { hurt_hp_var = 0; }
         if !variable_local_exists("stun_var") { stun_var = false; }
     }
@@ -853,7 +855,7 @@ object_event_add
         if local.dead && kill_var && !global.debug_var && !possess_var
         {
             global.dead_mon_var = object_index;
-            global.dead_player_var = atk_target_var.player_id_var;
+            global.menu_player_var = atk_target_var.player_id_var;
             if global.permadeath_var { delete_save_scr(global.save_name_var); }
             rm_goto_menu_scr(dead_rm_var,true);
         }
@@ -968,7 +970,7 @@ object_event_add
             }
         }
         // Hurt sound
-        if hurt_snd_var && (do_hurt_var != 3 || hurt_type_var == 1)
+        if hurt_snd_var && frac_chance_scr(hurt_snd_num_var,hurt_snd_den_var) && (do_hurt_var != 3 || hurt_type_var == 1)
         {
             switch hurt_snd_var
             {

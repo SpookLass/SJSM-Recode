@@ -28,10 +28,11 @@ object_event_add
     snd_arr[2] = door_03_snd;
     snd_arr[3] = door_04_snd;
     // Function
-    player_id_var = noone;
+    interact_target_var = noone;
     rm_count_var = 1;
     delay_var = 20;
     zone_var = -1;
+    ele_var = false;
     if !variable_local_exists("lock_var") { lock_var = false; }
     player_var = 0;
     // Alarm
@@ -45,25 +46,26 @@ object_event_add
     event_inherited(); 
     if !variable_local_exists("rm_var")
     {
+        ele_var = false;
         // Elevator
         switch global.ele_type_var
         {
             case 2:
             {
                 if mod_scr(global.rm_count_var+1,global.ele_rate_03_var) == 0
-                { rm_var = ele_rm; }
+                { rm_var = ele_rm; ele_var = true; break; }
                 if global.rm_count_var >= global.ele_end_02_var { break; }
             }
             case 1:
             {
                 if mod_scr(global.rm_count_var+1,global.ele_rate_02_var) == 0
-                { rm_var = ele_rm; }
+                { rm_var = ele_rm; ele_var = true; break; }
                 if global.rm_count_var >= global.ele_end_01_var { break; }
             }
             case 0:
             {
                 if mod_scr(global.rm_count_var+1,global.ele_rate_01_var) == 0
-                { rm_var = ele_rm; }
+                { rm_var = ele_rm; ele_var = true; }
                 break;
             }
         }
@@ -83,9 +85,10 @@ object_event_add
 // Alarm 0 Event
 object_event_add
 (argument0,ev_alarm,0,'
+    global.rm_count_var += rm_count_var;
+    if ele_var { zone_scr(-1,true); tex_scr(-1); }
     if room_exists(rm_var) && rm_var != 0 { rm_goto_scr(rm_var); }
     else { show_error("Room "+string(rm_var)+" does not exist!",false); rm_goto_scr(hall_01_rm); }
-    global.rm_count_var += rm_count_var;
 ')
 // Step Event
 object_event_add
@@ -114,7 +117,6 @@ object_event_add
                         local.active = true;
                         if !other.lock_var
                         {
-                            on_var = false;
                             in_door_var = true;
                             local.remaining -= 1;
                             other.player_var += 1;
@@ -126,7 +128,7 @@ object_event_add
         // Activate
         if local.active
         {
-            player_id_var = local.player;
+            interact_target_var = local.player;
             if lock_var { event_user(3) }
             else { event_user(1); }
         }
@@ -172,7 +174,7 @@ object_event_add
         set_alarm_scr(0,other.delay_var); 
         invert_var = true;
         stay_var = true;
-        cam_id_var = other.player_id_var.cam_id_var;
+        cam_id_var = other.interact_target_var.cam_id_var;
     }
 ');
 // Open Event
@@ -192,7 +194,8 @@ object_event_add
     { set_alarm_scr(0,delay_var); }
     global.in_door_var = true;
     // Play sound
-    fmod_snd_play_scr(snd_arr[irandom(snd_len_var-1)]);
+    if snd_len_var > 0
+    { fmod_snd_play_scr(snd_arr[irandom(snd_len_var-1)]); }
 ');
 // Lock Event
 object_event_add
@@ -201,7 +204,7 @@ object_event_add
     {
         with instance_create(0,0,txt_obj)
         {
-            cam_id_var = other.player_id_var.cam_id_var;
+            cam_id_var = other.interact_target_var.cam_id_var;
             str_var = other.txt_lock_var;
         }
         fmod_snd_play_scr(deny_snd);

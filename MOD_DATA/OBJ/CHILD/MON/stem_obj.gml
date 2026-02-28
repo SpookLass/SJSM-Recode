@@ -124,7 +124,7 @@ object_event_add
     rand_alarm_var = 6;
     inv_chance_var = 3;
     // Thing
-    hurt_efF_var = false;
+    hurt_eff_var = false;
     // Behavior
     if global.stem_type_var == -1 { local.type = irandom(3); }
     else { local.type = global.stem_type_var; }

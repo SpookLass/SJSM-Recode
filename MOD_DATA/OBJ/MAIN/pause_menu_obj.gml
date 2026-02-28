@@ -16,7 +16,7 @@ object_event_add
     action_set_cursor(-1,global.mouse_free_var);
     fmod_group_set_pause_scr(snd_group_mon_const,true);
     fmod_group_set_pause_scr(snd_group_voice_const,true);
-    fmod_inst_set_pause_scr(mus_control_obj.snd_var,true);
+    with mus_control_obj { fmod_inst_set_pause_scr(snd_var,true); }
     global.pause_var = true;
     fmod_snd_play_scr(deny_snd);
     time_var = 0;
@@ -39,16 +39,20 @@ object_event_add
     spook_alpha_max_var = 0.08;
     spook_x_var = random(1280)-640;
     spook_y_var = random(1280)-640;
-    // Music
-    mus_snd_var = fmod_snd_loop_scr(pause_drum_mus_snd);
-    fmod_inst_set_vol_scr(mus_snd_var,0);
-    //fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
-    // fmod_inst_set_mute_scr(mus_snd_var,true);
+    // Alarms
     alarm_len_var = 6;
     alarm_ini_scr();
-    set_alarm_scr(0,60);
     set_alarm_scr(1,scale_alarm_var);
     set_alarm_scr(2,2400);
+    // Music
+    if global.pause_theme_var
+    {
+        mus_snd_var = fmod_snd_loop_scr(pause_drum_mus_snd);
+        fmod_inst_set_vol_scr(mus_snd_var,0);
+        //fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
+        // fmod_inst_set_mute_scr(mus_snd_var,true);
+        set_alarm_scr(0,60);
+    }
     // Menu
     image_blend = make_color_rgb(59,59,119)
     button_len_var = 4;
@@ -71,10 +75,8 @@ object_event_add
 object_event_add
 (argument0,ev_step,ev_step_normal,'
     event_inherited();
-    if alarm_arr[0,0] > 0
-    {
-        fmod_inst_set_vol_scr(mus_snd_var,1-(alarm_arr[0,0]/alarm_arr[0,1]));
-    }
+    if global.pause_theme_var && alarm_arr[0,0] > 0
+    { fmod_inst_set_vol_scr(mus_snd_var,1-(alarm_arr[0,0]/alarm_arr[0,1])); }
     time_var = (time_var+global.true_delta_time_var) mod 80;
     str_scale_var = 0.8+(cos(2*time_var*pi/80)*0.2);
     spr_id_var = (spr_id_var+(spr_spd_var*global.true_delta_time_var)) mod sprite_get_number(spr_var);
@@ -144,11 +146,10 @@ object_event_add
     global.mouse_free_var = false;
     action_set_cursor(-1,global.mouse_free_var);
     display_mouse_set(display_get_width()/2,display_get_height()/2);
-    fmod_inst_stop_scr(mus_snd_var);
+    if global.pause_theme_var { fmod_inst_stop_scr(mus_snd_var); }
     fmod_group_set_pause_scr(snd_group_mon_const,false);
     fmod_group_set_pause_scr(snd_group_voice_const,false);
-    if instance_exists(mus_control_obj)
-    { fmod_inst_set_pause_scr(mus_control_obj.snd_var,false); }
+    with mus_control_obj { fmod_inst_set_pause_scr(snd_var,false); }
     global.pause_var = false;
 ');
 // Alarm 0 Event

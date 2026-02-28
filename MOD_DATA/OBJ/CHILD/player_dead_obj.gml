@@ -11,7 +11,7 @@ object_event_add
 (argument0,ev_create,0,'
     event_inherited();
     cam_id_var = 0;
-    player_id_var = global.dead_player_var;
+    player_id_var = global.menu_player_var;
     do_stam_var = false;
     do_taker_var = false;
     invuln_var = true;

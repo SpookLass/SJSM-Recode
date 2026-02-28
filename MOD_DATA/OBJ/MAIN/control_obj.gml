@@ -153,7 +153,7 @@ object_event_add
                 local.rm = get_string("Go To Menu Room","");
                 if local.rm != ""
                 {
-                    global.dead_player_var = 0;
+                    global.menu_player_var = 0;
                     execute_string
                     ("
                         if room_exists("+local.rm+") && "+local.rm+" != 0
@@ -200,7 +200,7 @@ object_event_add
             case 9:
             {
                 local.zone = get_integer("Zone",global.zone_num_var);
-                zone_scr(local.zone);
+                zone_scr(local.zone,true);
                 break;
             }
             case 10: { global.count_var = get_integer("Set Count", global.count_var); break; }

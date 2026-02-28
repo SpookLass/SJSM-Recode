@@ -25,6 +25,7 @@ object_event_add
     smart_var = false;
     arrow_var = false;
     angle_var = 0;
+    color_prio_var = 0;
     // Zone
     zone_var = true;
     zone_start_var = 0;
@@ -104,6 +105,7 @@ object_event_add
             angle_var = 5;
             smart_var = true;
             dmg_var = 0.5;
+            // No Gold, Only Arrow
             arrow_var = true;
             break;
         }
@@ -309,6 +311,8 @@ Difference: "+string(local.newdelay)+"
             visible = true;
             event_user(0);
         }
+        with torch_obj
+        { instance_destroy(); }
     }
     // Effect
     if !instance_exists(flesh_eff_obj)
@@ -333,6 +337,13 @@ Difference: "+string(local.newdelay)+"
             fog_dark_var = false;
             event_user(0);
         }
+    }
+    // Color
+    if color_prio_var > 0
+    {
+        with color_par_obj { if prio_var < other.color_prio_var { instance_destroy(); }}
+        if !instance_exists(color_par_obj)
+        { with instance_create(0,0,bright_color_obj) { prio_var = other.color_prio_var; }}
     }
     // Skybox
     fog_immune_var = instance_exists(skybox_par_obj);
@@ -412,7 +423,7 @@ object_event_add
         if local.kill
         {
             global.dead_mon_var = object_index;
-            global.dead_player_var = atk_target_var.player_id_var;
+            global.menu_player_var = atk_target_var.player_id_var;
             if global.permadeath_var { delete_save_scr(global.save_name_var); }
             rm_goto_menu_scr(dead_rm_var,true);
         }

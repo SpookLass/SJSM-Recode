@@ -12,6 +12,7 @@ object_event_add
     event_inherited();
     player_id_var = 0;
     violence_var = 0;
+    on_var = true;
     // Collision
     do_coll_var = true;
     coll_var[0] = global.player_coll[0];
@@ -201,7 +202,7 @@ object_event_add
 // Taker Alarm
 object_event_add
 (argument0,ev_alarm,3,'
-    if !active_var && !taker_spawn_var
+    if on_var && !in_door_var && !active_var && !taker_spawn_var
     {
         if possess_var { local.bool = mon_var.on_var && !mon_var.enter_var; }
         else { local.bool = on_var && !dead_var; }
@@ -228,124 +229,126 @@ object_event_add
 // Room Start Event
 object_event_add
 (argument0,ev_other,ev_room_start,'
-    // Position
-    eye_yaw_var = 0;
-    if global.spawn_len_var
+    if on_var
     {
-        x = global.spawn_arr[0,0];
-        y = global.spawn_arr[0,1];
-        z = global.spawn_arr[0,2];
-        eye_yaw_var = global.spawn_arr[0,3];
-    }
-    if global.player_len_var > 1
-    {
-        switch global.player_len_var
+        // Position
+        eye_yaw_var = 0;
+        if global.spawn_len_var
         {
-            case 2:
-            {
-                if player_id_var { y += 8; }
-                else { y -= 8; }
-                break;
-            }
-            case 4:
-            {
-                local.dist = sqrt(128);
-                local.dir = (player_id_var*-90)+45;
-                x += lengthdir_x(local.dist,local.dir);
-                y += lengthdir_y(local.dist,local.dir);
-                break;
-            }
-            default:
-            {
-                local.dist = 8;
-                local.dir = 360*player_id_var/global.player_len_var;
-                x += lengthdir_x(local.dist,local.dir);
-                y += lengthdir_y(local.dist,local.dir);
-                break;
-            }
+            x = global.spawn_arr[0,0];
+            y = global.spawn_arr[0,1];
+            z = global.spawn_arr[0,2];
+            eye_yaw_var = global.spawn_arr[0,3];
         }
-        
-    }
-    eye_pitch_var = 0;
-    eye_roll_var = 0;
-    set_motion_3d_scr(0,false,eye_yaw_var,true,eye_pitch_var,true);
-    display_mouse_set(display_get_width()/2,display_get_height()/2);
-    // Reset variables
-    shake_var = 0;
-    jump_var = false;
-    on_floor_var = true;
-    jump_hold_var = false;
-    grav_var = grav_base_var;
-    fall_temp_var = false;
-    in_door_var = false;
-    hurt_var = false;
-    turn_var = false;
-    if !global.dynamic_fov_var
-    { current_fov_var = fov_var; }
-    // Maybe reset?
-    do_sprint_var = true;
-    do_stam_var = true;
-    // Healing
-    if heal_delay_var <= 0 || alarm_arr[0,1] <= 0
-    { heal_var = true; }
-    // Bob
-    bob_time_var = 45;
-    breath_time_var = 0;
-    // Camera
-    cam_x_var = x;
-    cam_y_var = y;
-    cam_z_var = z+eye_h_var;
-    cam_yaw_var = eye_yaw_var;
-    cam_pitch_var = eye_pitch_var;
-    cam_roll_var = eye_roll_var;
-    cam_set_scr(cam_id_var,cam_x_var,cam_y_var,cam_z_var,cam_yaw_var,cam_pitch_var,current_fov_var,cam_roll_var,dead_var);
-    // View
-    view_visible[cam_id_var] = true;
-    view_enabled = true;
-    // Clear time
-    clear_time_var = -1;
-    walk_clear_time_var = -1;
-    if global.spawn_len_var > 0
-    {
-        if global.unlock_var > 0 { local.spawn = global.unlock_var; }
-        else { local.spawn = irandom_range(1,global.spawn_len_var-1); }
-        if mp_grid_path(grid_var,path_var,x,y,global.spawn_arr[local.spawn,0],global.spawn_arr[local.spawn,1],true)
+        if global.player_len_var > 1
         {
-            if do_sprint_var
+            switch global.player_len_var
             {
-                if do_stam_var { local.spd = spd_base_var*(1+sprint_spd_mult_var)*9/19; }
-                else { local.spd = spd_base_var*sprint_spd_mult_var; }
+                case 2:
+                {
+                    if player_id_var { y += 8; }
+                    else { y -= 8; }
+                    break;
+                }
+                case 4:
+                {
+                    local.dist = sqrt(128);
+                    local.dir = (player_id_var*-90)+45;
+                    x += lengthdir_x(local.dist,local.dir);
+                    y += lengthdir_y(local.dist,local.dir);
+                    break;
+                }
+                default:
+                {
+                    local.dist = 8;
+                    local.dir = 360*player_id_var/global.player_len_var;
+                    x += lengthdir_x(local.dist,local.dir);
+                    y += lengthdir_y(local.dist,local.dir);
+                    break;
+                }
             }
-            else { local.spd = spd_base_var; }
-            clear_time_var = path_get_length(path_var)/local.spd;
-            walk_clear_time_var = path_get_length(path_var)/spd_base_var;
-        } 
-    }
-    // Start room
-    possess_delay_var = max(possess_delay_var-1,0);
-    taker_spawn_var = false;
-    if !global.stam_per_var
-    {
-        stam_var = stam_max_var;
-        start_stam_var = start_stam_base_var;
-    }
-    on_var = true;
-    hurt_var = true;
-    set_alarm_scr(0,enter_delay_var);
-    set_alarm_scr(3,taker_alarm_var);
-    with instance_create(0,0,fade_eff_obj)
-    {
-        image_blend = c_black; 
-        set_alarm_scr(0,other.enter_delay_var); 
-        invert_var = false;
-        stay_var = false;
-        cam_id_var = other.cam_id_var;
+            
+        }
+        eye_pitch_var = 0;
+        eye_roll_var = 0;
+        set_motion_3d_scr(0,false,eye_yaw_var,true,eye_pitch_var,true);
+        display_mouse_set(display_get_width()/2,display_get_height()/2);
+        // Reset variables
+        shake_var = 0;
+        jump_var = false;
+        on_floor_var = true;
+        jump_hold_var = false;
+        grav_var = grav_base_var;
+        fall_temp_var = false;
+        in_door_var = false;
+        hurt_var = false;
+        turn_var = false;
+        if !global.dynamic_fov_var
+        { current_fov_var = fov_var; }
+        // Maybe reset?
+        do_sprint_var = true;
+        do_stam_var = true;
+        // Healing
+        if heal_delay_var <= 0 || alarm_arr[0,1] <= 0
+        { heal_var = true; }
+        // Bob
+        bob_time_var = 45;
+        breath_time_var = 0;
+        // Camera
+        cam_x_var = x;
+        cam_y_var = y;
+        cam_z_var = z+eye_h_var;
+        cam_yaw_var = eye_yaw_var;
+        cam_pitch_var = eye_pitch_var;
+        cam_roll_var = eye_roll_var;
+        cam_set_scr(cam_id_var,cam_x_var,cam_y_var,cam_z_var,cam_yaw_var,cam_pitch_var,current_fov_var,cam_roll_var,dead_var);
+        // View
+        view_visible[cam_id_var] = true;
+        view_enabled = true;
+        // Clear time
+        clear_time_var = -1;
+        walk_clear_time_var = -1;
+        if global.spawn_len_var > 0
+        {
+            if global.unlock_var > 0 { local.spawn = global.unlock_var; }
+            else { local.spawn = irandom_range(1,global.spawn_len_var-1); }
+            if mp_grid_path(grid_var,path_var,x,y,global.spawn_arr[local.spawn,0],global.spawn_arr[local.spawn,1],true)
+            {
+                if do_sprint_var
+                {
+                    if do_stam_var { local.spd = spd_base_var*(1+sprint_spd_mult_var)*9/19; }
+                    else { local.spd = spd_base_var*sprint_spd_mult_var; }
+                }
+                else { local.spd = spd_base_var; }
+                clear_time_var = path_get_length(path_var)/local.spd;
+                walk_clear_time_var = path_get_length(path_var)/spd_base_var;
+            } 
+        }
+        // Start room
+        possess_delay_var = max(possess_delay_var-1,0);
+        taker_spawn_var = false;
+        if !global.stam_per_var
+        {
+            stam_var = stam_max_var;
+            start_stam_var = start_stam_base_var;
+        }
+        hurt_var = true;
+        set_alarm_scr(0,enter_delay_var);
+        set_alarm_scr(3,taker_alarm_var);
+        with instance_create(0,0,fade_eff_obj)
+        {
+            image_blend = c_black; 
+            set_alarm_scr(0,other.enter_delay_var); 
+            invert_var = false;
+            stay_var = false;
+            cam_id_var = other.cam_id_var;
+        }
     }
 ');
 // Step
 object_event_add
 (argument0,ev_step,ev_step_normal,'
-    if on_var
+    if on_var && !in_door_var
     {
         if !possess_var
         {
@@ -629,7 +632,7 @@ object_event_add
 // End Step
 object_event_add
 (argument0,ev_step,ev_step_end,'
-    if on_var && !possess_var
+    if on_var && !in_door_var && !possess_var
     {
         event_inherited();
         // Get real speed for bobbing and stamina (already delta-timed)
@@ -788,7 +791,7 @@ object_event_add
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,'
-    cam_draw_scr(cam_id_var);
+    if on_var { cam_draw_scr(cam_id_var); }
 ');
 // Hurt event
 object_event_add

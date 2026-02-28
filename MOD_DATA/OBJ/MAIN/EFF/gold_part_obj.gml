@@ -10,6 +10,7 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,0,'
     event_inherited();
+    par_var = noone;
     z = 21.2;
     w_var = 3;
     l_var = 3;

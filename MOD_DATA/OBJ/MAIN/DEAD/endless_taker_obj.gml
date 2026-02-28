@@ -30,12 +30,6 @@ object_event_add
     coll_var[1] = global.mon_coll[1];
     coll_var[2] = global.mon_coll[2];
 ');
-// Destroy Event
-object_event_add
-(argument0,ev_destroy,0,'
-    with mus_par_obj { if par_var == other.id { instance_destroy(); }}
-    with mus_control_obj { event_user(0); }
-');
 // Alarm
 object_event_add
 (argument0,ev_alarm,0,'

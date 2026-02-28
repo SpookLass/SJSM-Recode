@@ -1,5 +1,6 @@
 /*
 Argument 0: Zone to load (-1 for default)
+Argument 1: Go to room
 Loads a zone, it's default, and automatically loads the room to prevent door shenanigans
 */
 if argument0 < 0
@@ -27,6 +28,9 @@ if argument0 < 0
 }
 else { local.zone = argument0; }
 zone_from_num_scr(local.zone);
-local.rm = ds_list_find_value(global.rm_list_var,0);
-ds_list_delete(global.rm_list_var,0);
-rm_goto_scr(local.rm);
+if argument1
+{
+    local.rm = ds_list_find_value(global.rm_list_var,0);
+    ds_list_delete(global.rm_list_var,0);
+    rm_goto_scr(local.rm);
+}

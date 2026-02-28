@@ -60,8 +60,8 @@ object_event_add
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,'
-    if global.input_press_arr[confirm_input_const,global.dead_player_var] == 1
-    || global.input_press_arr[back_input_const,global.dead_player_var] == 1
+    if global.input_press_arr[confirm_input_const,global.menu_player_var] == 1
+    || global.input_press_arr[back_input_const,global.menu_player_var] == 1
     { event_perform(ev_alarm,1); }
 ');
 // Alarm 0

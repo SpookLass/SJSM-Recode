@@ -201,14 +201,17 @@ object_event_add
             do_hurt_var = false;
             dur_var = irandom_range(10,15);
             do_warn_var = true;
+            atk_range_var = 128/3; // 42.r6
+            // Delay (uhh leech)
             delay_calc_var = false;
             delay_min_var = 90;
             delay_max_var = 180;
+            // State Stuff
             state_delay_var = 72;
             state_rm_var = true;
             state_atk_var = false;
             state_dmg_alarm_var[0] = 180;
-            state_spd_var[0] = 4/9;
+            state_spd_var[0] = 4/9; // 0.r4
             state_dmg_var[2] = 45;
             state_chance_var[0] = 1;
             state_acc_var[0] = true;
@@ -228,9 +231,13 @@ object_event_add
             state_check_var = true;
             state_eff_min_var = 6;
             state_eff_max_var = 6;
+            // Movement
             acc_var = 8/225; // 0.03r5
             frick_var = acc_var;
-            atk_range_var = 128/3; // 42.r6
+            // Sounds
+            snd_alarm_min_var = 90;
+            snd_alarm_max_var = 240;
+            snd_den_var = 1;
             // Autobrake (close enough)
             autobrake_var = true;
             autobrake_spd_var = 0;

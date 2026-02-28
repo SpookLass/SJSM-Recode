@@ -4,9 +4,9 @@ Argument 0: Room Variable (same for all rooms)
 // Spawn spots// Name
 room_set_code
 (
-    argument0,"
+    argument0,'
     ini_open(global.lang_var);
-	global.rm_name_var = ini_read_string('ROOM','w','ROOM_w')+' 11 B / 16';
+	global.rm_name_var = ini_read_string("ROOM","w","ROOM_w")+" 11 B / 16";
 	ini_close();
     // Spawn
     global.spawn_len_var = 2;
@@ -55,7 +55,7 @@ room_set_code
         instance_create(0,0,color_control_02_obj);
         instance_create(0,0,fog_01_obj);
     }
-");
+');
 // Room settings
 room_set_width(argument0,1280);
 room_set_height(argument0,720);
@@ -171,3 +171,5 @@ room_instance_add(argument0,288,144,wall_pit_vert_obj);
 room_instance_add(argument0,352,144,wall_pit_vert_obj);
 // Props
 room_instance_add(argument0,352,144,bar_vert_obj);
+// Flesh
+room_instance_add(argument0,240,208,flesh_arrow_obj);

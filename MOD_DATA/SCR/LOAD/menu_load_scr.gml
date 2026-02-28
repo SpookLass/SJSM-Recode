@@ -2516,6 +2516,25 @@ set_label_arr[global.set_len_var,3] = true; // Translate
     // Default
 set_default_arr[global.set_len_var,0] = pitch_bend_const; // Default
 global.set_len_var += 1;
+// Pause Theme
+set_arr[global.set_len_var,0] = "pause_theme"; // Variable name
+set_arr[global.set_len_var,1] = "pause_theme"; // Name
+set_arr[global.set_len_var,2] = "pause_theme"; // Description
+set_arr[global.set_len_var,3] = true; // Translate name and descripion
+set_arr[global.set_len_var,4] = 0; // Type (Enum)
+set_arr[global.set_len_var,5] = false; // Min
+set_arr[global.set_len_var,6] = true; // Max
+set_arr[global.set_len_var,7] = true; // Wrap
+set_arr[global.set_len_var,8] = 3; // Category (Audio)
+set_arr[global.set_len_var,9] = false; // Player Specific
+    // Label
+set_label_arr[global.set_len_var,0] = "off"; // Value 1
+set_label_arr[global.set_len_var,1] = true; // Translate
+set_label_arr[global.set_len_var,2] = "on"; // Value 2
+set_label_arr[global.set_len_var,3] = true; // Translate
+    // Default
+set_default_arr[global.set_len_var,0] = pause_theme_const; // Default
+global.set_len_var += 1;
 /*
 -----------
 Performance

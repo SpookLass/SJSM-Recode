@@ -1438,7 +1438,7 @@ object_event_add
                 if save_name_var == "1987" { instance_create(0,0,otter8_js_obj); }
                 // Random Zone and Tex
                 tex_scr(-1);
-                zone_scr(-1);
+                zone_scr(-1,true);
 			}
 			break;
 		}

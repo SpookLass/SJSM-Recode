@@ -62,9 +62,9 @@ object_event_add
 object_event_add
 (argument0,ev_step,ev_step_normal,'
     event_inherited();
-    if global.input_press_arr[interact_input_const,global.dead_player_var] == 1
-    || global.input_press_arr[back_input_const,global.dead_player_var] == 1
-    || global.input_press_arr[pause_input_const,global.dead_player_var] == 1
+    if global.input_press_arr[interact_input_const,global.menu_player_var] == 1
+    || global.input_press_arr[back_input_const,global.menu_player_var] == 1
+    || global.input_press_arr[pause_input_const,global.menu_player_var] == 1
     {
         fmod_update_take_over_when_lock_scr();
         highscore_show_ext(global.rm_count_var,menu_score_bg,true,c_yellow,c_purple,"Lunchtime Doubly So",16);

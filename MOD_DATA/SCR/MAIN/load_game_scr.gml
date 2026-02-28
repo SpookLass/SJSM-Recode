@@ -11,7 +11,7 @@ global.rm_count_var = ini_read_real("MAIN","rm_count",0);
 global.count_var = ini_read_real("MAIN","count",0);
 global.mon_fail_var = ini_read_real("MAIN","mon_fail_var",0);
 global.tex_var = ini_read_real("MAIN","tex",-1);
-local.rm = ini_read_real("MAIN","room",0);
+local.rm = ini_read_real("MAIN","room",hall_01_rm);
 global.note_var = ini_read_real("MAIN","note",0);
 global.zone_var = ini_read_real("MAIN","zone",global.zone_arr[0]);
 global.zone_num_var = ini_read_real("MAIN","zone_num",-1);
@@ -22,9 +22,9 @@ global.diff_var = ini_read_real("MAIN","diff",0);
 global.custom_var = ini_read_real("MAIN","custom",0);
     // Lists
 ds_list_clear(global.rm_list_var);
-ds_list_read(global.rm_list_var,ini_read_string("MAIN","rm_list",""));
+ds_list_read(global.rm_list_var,ini_read_string("MAIN","rm_list","2F01000000000000"));
 ds_list_clear(global.mon_curr_list);
-ds_list_read(global.mon_curr_list,ini_read_string("MAIN","mon_curr_list",""));
+ds_list_read(global.mon_curr_list,ini_read_string("MAIN","mon_curr_list","2F01000000000000"));
 // Settings
 for (local.i=0; local.i<global.custom_len_var; local.i+=1)
 {

@@ -4,9 +4,9 @@ Argument 0: Room Variable (same for all rooms)
 // Spawn spots// Name
 room_set_code
 (
-    argument0,"
+    argument0,'
     ini_open(global.lang_var);
-	global.rm_name_var = ini_read_string('ROOM','jail','ROOM_jail')+' 15 '+ini_read_string('ROOM','gold','ROOM_gold');
+	global.rm_name_var = ini_read_string("ROOM","jail","ROOM_jail")+" 15 "+ini_read_string("ROOM","gold","ROOM_gold");
 	ini_close();
     // Spawn
     global.spawn_len_var = 4;
@@ -82,7 +82,7 @@ room_set_code
         instance_create(0,0,color_control_02_obj);
         instance_create(0,0,fog_01_obj);
     }
-")
+');
 // Room settings
 room_set_width(argument0,1280);
 room_set_height(argument0,720);
@@ -277,3 +277,5 @@ room_instance_add(argument0,208,272,bar_hor_obj);
 room_instance_add(argument0,208,336,bar_hor_obj);
 // Jumpscare
 room_instance_add(argument0,272,320,js_obj)
+// Flesh
+room_instance_add(argument0,304,304,flesh_arrow_obj);

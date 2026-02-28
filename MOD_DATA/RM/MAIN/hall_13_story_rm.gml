@@ -4,10 +4,10 @@ Argument 0: Room Variable (same for all rooms)
 // Spawn spots
 room_set_code
 (
-    argument0,"
+    argument0,'
     // Name
     ini_open(global.lang_var);
-    global.rm_name_var = ini_read_string('ROOM','hall','ROOM_hall')+' 13 '+ini_read_string('ROOM','story','ROOM_story');
+    global.rm_name_var = ini_read_string("ROOM","hall","ROOM_hall")+" 13 "+ini_read_string("ROOM","story","ROOM_story");
     ini_close();
     // Spawn
     global.spawn_len_var = 3;
@@ -79,7 +79,7 @@ room_set_code
     // 3D Draw
     d3d_start();
     global.draw_3d_var = true;
-");
+');
 // Room settings
 room_set_width(argument0,1280);
 room_set_height(argument0,720);
@@ -151,3 +151,5 @@ room_instance_add(argument0,240,224,wall_hor_obj);
 room_instance_add(argument0,240,256,wall_hor_obj);
 // Jumpscare
 room_instance_add(argument0,324,160,global.js_obj);
+// Flesh
+room_instance_add(argument0,144,144,flesh_arrow_obj);

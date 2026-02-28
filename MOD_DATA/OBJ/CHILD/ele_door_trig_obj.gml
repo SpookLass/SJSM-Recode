@@ -9,15 +9,14 @@ object_set_visible(argument0,false);
 // Create Event
 object_event_add
 (argument0,ev_create,0,'
-    rm_var = -1;
+    rm_var = ele_menu_rm;
     event_inherited();
-    snd_len_var = 1;
-    snd_arr[0] = door_m_02_snd;
+    snd_len_var = 0;
+
 ');
 // Alarm 0 Event
 object_event_add
 (argument0,ev_alarm,0,'
-    tex_scr(-1);
-    zone_scr(-1);
-    global.rm_count_var += rm_count_var;
+    global.menu_player_var = interact_target_var.player_id_var;
+    rm_goto_menu_scr(rm_var,2); // Turn off players
 ');

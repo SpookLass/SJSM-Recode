@@ -118,6 +118,30 @@ object_event_add
             atk_range_var = global.mon_coll[2];
             break;
         }
+        case 2: // HD (Pretend)
+        {
+            dur_var = irandom_range(10,15);
+            atk_range_var = 32;
+            // Alarms
+            delay_min_var = 90;
+            delay_max_var = 180;
+            dmg_alarm_var = 180;
+            // Sound
+            snd_alarm_min_var = 90;
+            snd_alarm_max_var = 240;
+            snd_den_var = 1;
+            snd_dist_max_var = 500;
+            // Acceleration (HD Moment)
+            spd_var = 16/45; // 0.3r5
+            do_acc_var = true;
+            acc_var = 8/225; // 0.03r5
+            frick_var = acc_var;
+            // Autobrake (close enough)
+            autobrake_var = true;
+            autobrake_spd_var = 0;
+            autobrake_dir_var = 60;
+            break;
+        }
         case 3: // Remodeled
         {
             delay_var = 112;

@@ -6,6 +6,12 @@ object_set_persistent(argument0,false);
 object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
+// Create
+object_event_add
+(argument0,ev_create,0,'
+    event_inherited();
+    load_var = false;
+');
 // Destroy
 object_event_add
 (argument0,ev_destroy,0,'
@@ -22,6 +28,6 @@ object_event_add
     if load_var
     {
         fmod_snd_free_scr(snd_var);
-        bg_load_var = false;
+        load_var = false;
     }
 ');

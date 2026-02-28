@@ -40,6 +40,8 @@ object_event_add
     snd_dist_min_var = 0;
     snd_dist_max_var = 600;
     hurt_snd_var = 4;
+    hurt_snd_num_var = 1;
+    hurt_snd_den_var = 2;
     // Theme
     mus_prio_var = theme_mus_prio_const;
     // Assets
@@ -86,6 +88,8 @@ object_event_add
         {
             dmg_var = 30;
             atk_range_var = global.mon_coll[2];
+            hurt_snd_num_var = 1;
+            hurt_snd_den_var = 1;
             // Silhouette
             sil_var = true;
             sil_type_var = 1; // Pure color
@@ -106,6 +110,8 @@ object_event_add
             delay_max_var = 180;
             do_enter_var = true;
             atk_range_var = 32;
+            hurt_snd_num_var = 1;
+            hurt_snd_den_var = 1;
             // Sound
             snd_alarm_min_var = 90;
             snd_alarm_max_var = 240;

@@ -24,7 +24,7 @@ object_event_add
     if !variable_local_exists("dead_rm_var") { dead_rm_var = dead_rm; }
     dur_start_var = dur_var;
     // Theme
-    if !variable_local_exists("mus_prio_var") { mus_prio_var = -1; }
+    if !variable_local_exists("mus_prio_var") || (global.rand_theme_var && frac_chance_scr(1,2)) { mus_prio_var = -1; }
     if mus_prio_var > amb_mus_prio_const
     {
         fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);

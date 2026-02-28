@@ -275,3 +275,7 @@ room_instance_add(argument0,480,251,bone_rand_obj);
 room_instance_add(argument0,485,270,bone_rand_obj);
 room_instance_add(argument0,288,208,chain_hor_rand_obj);
 room_instance_add(argument0,288,304,chain_hor_rand_obj);
+// Flesh
+room_instance_add(argument0,384,128,flesh_arrow_obj);
+room_instance_add(argument0,384,256,flesh_arrow_obj);
+room_instance_add(argument0,384,384,flesh_arrow_obj);

@@ -29,6 +29,17 @@ object_event_add
     // Gold
     door_var = noone;
 ');
+// Create
+object_event_add
+(argument0,ev_destroy,0,'
+    with light_par_obj
+    { if par_var == other.id { instance_destroy(); }}
+    if gold_var
+    {
+        with gold_part_obj
+        { if par_var == other.id { instance_destroy(); }}
+    }
+');
 // Step
 object_event_add
 (argument0,ev_step,ev_step_normal,'

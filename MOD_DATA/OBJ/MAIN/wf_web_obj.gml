@@ -14,4 +14,5 @@ object_event_add
     solid_var = false;
     z -= 32;
     direction = random(360);
+    flesh_var = false;
 ');

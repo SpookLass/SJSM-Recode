@@ -36,6 +36,8 @@ object_event_add
     snd_alarm_max_var = 240;
     snd_dist_min_var = 0;
     snd_dist_max_var = 600;
+    hurt_snd_num_var = 1;
+    hurt_snd_den_var = 2;
     // Theme
     mus_prio_var = theme_mus_prio_const;
     // Assets
@@ -157,6 +159,7 @@ object_event_add
                 state_spd_var[0] = 1222/1125; // 1.086r2
                 state_seen_spd_var[0] = 188/225; // 0.83r5
             }
+            do_hurt_var = false;
             // Sound
             snd_alarm_min_var = 90;
             snd_alarm_max_var = 240;

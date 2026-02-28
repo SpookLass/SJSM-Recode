@@ -4,10 +4,10 @@ Argument 0: Room Variable (same for all rooms)
 // Spawn spots
 room_set_code
 (
-    argument0,"
+    argument0,'
     // Name
     ini_open(global.lang_var);
-    global.rm_name_var = ini_read_string('ROOM','hall','ROOM_hall')+' 31 '+ini_read_string('ROOM','gold','ROOM_gold');
+    global.rm_name_var = ini_read_string("ROOM","hall","ROOM_hall")+" 31 "+ini_read_string("ROOM","gold","ROOM_gold");
     ini_close();
     // Spawn
     global.spawn_len_var = 4;
@@ -87,7 +87,7 @@ room_set_code
         instance_create(256,432,torch_east_obj);
         instance_create(256,240,torch_east_obj);
     }
-");
+');
 // Room settings
 room_set_width(argument0,1280);
 room_set_height(argument0,720);
@@ -198,3 +198,5 @@ room_instance_add(argument0,143,457,web_rand_obj);
 room_instance_add(argument0,307,326,web_rand_obj);
 // Jumpscare
 room_instance_add(argument0,192,480,js_obj);
+// Flesh
+room_instance_add(argument0,240,336,flesh_arrow_obj);
