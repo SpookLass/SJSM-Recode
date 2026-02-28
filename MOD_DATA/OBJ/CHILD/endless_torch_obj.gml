@@ -15,18 +15,24 @@ object_event_add
     dist_max_var = 957;
     dist_var = dist_min_var;
     // Light Wall
-    light_wall_var = instance_create(x,y,light_wall_par_obj);
-    light_wall_var.z = z;
-    light_wall_var.gold_var = gold_var;
-    light_wall_var.color_var = !gold_var;
-    light_wall_var.par_var = id;
-    light_wall_var.direction = mod_scr(direction+90,180);
+    with instance_create(x,y,light_wall_par_obj)
+    {
+        z = other.z;
+        gold_var = other.gold_var;
+        if gold_var { color_var = false; }
+        par_var = other.id;
+        direction = mod_scr(other.direction+90,180);
+        other.light_wall_var = id;
+    }
     // Light Floor
-    light_floor_var = instance_create(x+lengthdir_x(-16,direction+90),y+lengthdir_y(-16,direction+90),light_floor_par_obj);
-    light_floor_var.z = z;
-    light_floor_var.gold_var = gold_var;
-    light_floor_var.color_var = !gold_var;
-    light_floor_var.par_var = id;
+    with instance_create(x+lengthdir_x(-16,direction+90),y+lengthdir_y(-16,direction+90),light_floor_par_obj)
+    {
+        z = other.z;
+        gold_var = other.gold_var;
+        if gold_var { color_var = false; }
+        par_var = other.id;
+        other.light_floor_var = id;
+    }
 ');
 // Step
 object_event_add

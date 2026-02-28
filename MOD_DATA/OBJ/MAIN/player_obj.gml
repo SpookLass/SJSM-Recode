@@ -18,7 +18,7 @@ object_event_add
     coll_var[1] = global.player_coll[1];
     coll_var[2] = global.player_coll[2];
     // HP
-    if false /*global.one_hit_var*/ { hp_max_var = 1; }
+    if global.one_shot_var { hp_max_var = 0; }
     else { hp_max_var = 100; }
     hp_var = hp_max_var;
     heal_rate_var = 1/60;
@@ -128,6 +128,7 @@ object_event_add
     // Alarms
     alarm_len_var = 5;
     alarm_ini_scr();
+    alarm_arr[1,2] = true; // Persistant
     revive_alarm_var = 300;
     // Possess
     possess_var = false;

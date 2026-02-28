@@ -12,10 +12,8 @@ object_event_add
     event_inherited();
     spr_var = global.blood_spr;
     spr_id_var = irandom(sprite_get_number(spr_var)-1);
-    image_xscale = random_range(2,4);
-    image_yscale = image_xscale;
-    image_speed = 0;
-    x = random_range(30,1250);
+    image_xscale = random_range(512,1024);
+    x = random_range(-610,610);
     y = random_range(50,500);
     image_angle = random_range(45,-45);
     state_var = 0;
@@ -50,13 +48,10 @@ object_event_add
 (argument0,ev_draw,0,'
     if view_current == cam_id_var 
     {
-        if view_wview[view_current] >= view_hview[view_current]
-        { local.scale = view_hview[view_current]/720; }
-        else { local.scale = view_wview[view_current]/1280; }
         d3d_set_fog(false,c_black,0,0);
         d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
         d3d_set_hidden(false);
-        draw_sprite_ext(spr_var,spr_id_var,x,y,local.scale*image_xscale,local.scale*image_yscale,image_angle,image_blend,image_alpha);
-        draw_set_color(c_white); draw_set_alpha(1); d3d_set_hidden(true);
+        draw_spr_stretch_ext_scr(spr_var,spr_id_var,x,y,image_xscale,0,fa_center,fa_top,image_angle,image_blend,image_alpha);
+        d3d_set_hidden(true);
     }
 ');

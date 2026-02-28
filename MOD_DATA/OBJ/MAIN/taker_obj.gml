@@ -183,6 +183,7 @@ object_event_add
                     {
                         global.dead_mon_var = object_index;
                         global.dead_player_var = target_var.player_id_var;
+                        if global.permadeath_var { delete_save_scr(global.save_name_var); }
                         rm_goto_menu_scr(dead_rm_var,true);
                     }
                     else

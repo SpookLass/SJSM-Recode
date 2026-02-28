@@ -291,8 +291,8 @@ object_event_add
 // Room Start Event
 object_event_add
 (argument0,ev_other,ev_room_start,'
-    // Chance forms
-    if state_var < 2 || !state_rm_var
+    // Change forms
+    if (state_close_var && state_var < 2) || !state_rm_var
     {
         state_var = 0;
         event_user(15);

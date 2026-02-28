@@ -10,6 +10,8 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,0,'
     event_inherited();
+    if !variable_local_exists("color_var") { color_var = false; }
+    if !variable_local_exists("reflect_var") { reflect_var = false; }
     spd_var = 0;
     x_spd_var = 0;
     y_spd_var = 0;

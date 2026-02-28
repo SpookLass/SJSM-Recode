@@ -16,15 +16,19 @@ object_event_add
     spr_spd_var = 0.25;
     y_spd_var = 0.5;
     alpha_02_var = 0.4;
-    alpha_03_var = 0.2;
+    alpha_03_max_var = 0.2;
+    alpha_03_var = random(alpha_03_max_var);
     color_02_var = c_black;
+    image_xscale = 128;
+    image_yscale = 128;
     image_alpha = 0;
     // Alarm
     alarm_var = 250; // 420 for HD
-    alarm_len_var = 1;
+    alarm_len_var = 2;
     alarm_ini_scr();
     alarm_arr[0,2] = false;
     set_alarm_scr(0,alarm_var);
+    set_alarm_scr(1,1);
 ');
 // Room Start Event
 object_event_add
@@ -45,11 +49,17 @@ object_event_add
     { event_user(15); }
     set_alarm_scr(0,alarm_var);
 ');
+// Alarm 1 Event
+object_event_add
+(argument0,ev_alarm,1,'
+    alpha_03_var = random(alpha_03_max_var);
+    set_alarm_scr(1,1);
+');
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,'
     event_inherited();
-    y = (y+(y_spd_var*global.delta_time_var)) mod sprite_get_height(spr_var);
+    y = y+(y_spd_var*global.delta_time_var);
     spr_id_var = (spr_id_var+(spr_spd_var*global.delta_time_var)) mod sprite_get_number(spr_var);
     local.per = alarm_arr[0,0]/alarm_arr[0,1];
     image_alpha = 1.25*(1-local.per);
@@ -59,18 +69,15 @@ object_event_add
 (argument0,ev_draw,0,'
     if global.cam_type_var[view_current] == cam_alive_const
     {
-        if view_wview[view_current] >= view_hview[view_current]
-        { local.scale = view_hview[view_current]/720; }
-        else { local.scale = view_wview[view_current]/1280; }
         d3d_set_fog(false,c_black,0,0);
         d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
         d3d_set_hidden(false);
         draw_set_color(color_02_var); draw_set_alpha(image_alpha);
         draw_rectangle(0,0,view_wview[view_current],view_hview[view_current],false);
-        draw_set_alpha(random(alpha_03_var));
+        draw_set_alpha(alpha_03_var);
         draw_rectangle(0,0,view_wview[view_current],view_hview[view_current],false);
         draw_set_color(c_white); draw_set_alpha(1);
-        draw_sprite_tiled_ext(spr_var,spr_id_var,0,y,local.scale,local.scale,image_blend,alpha_02_var);
+        draw_spr_tiled_scale_ext_scr(spr_var,floor(spr_id_var),0,y,image_xscale,image_yscale,2,image_angle,image_blend,alpha_02_var);
         d3d_set_hidden(true);
     }
 ');

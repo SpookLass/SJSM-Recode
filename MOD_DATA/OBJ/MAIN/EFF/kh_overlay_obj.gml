@@ -16,8 +16,8 @@ object_event_add
     spr_spd_var = 0.1;
     image_blend = c_white;
     image_alpha = 0.025;
-    image_xscale = 4;
-    image_yscale = 4;
+    image_xscale = 512;
+    image_yscale = 512;
     // Overlay
     overlay_var = false;
     overlay_bg_var = noone;
@@ -40,8 +40,8 @@ object_event_add
 (argument0,ev_alarm,0,'
     if rand_var
     {
-        x = random(sprite_get_width(spr_var));
-        y = random(sprite_get_height(spr_var));
+        x = random(image_xscale);
+        y = random(image_yscale);
         set_alarm_scr(0,rand_rate_var);
     }
 ');
@@ -57,6 +57,6 @@ object_event_add
     if overlay_var && background_exists(overlay_bg_var)
     { draw_background_stretched_ext(overlay_bg_var,0,0,view_wview[view_current],view_hview[view_current],overlay_color_var,overlay_alpha_var); }
     draw_set_blend_mode(bm_add);
-    draw_sprite_tiled_ext(spr_var,floor(spr_id_var),x*local.scale*image_xscale,y*local.scale*image_yscale,local.scale*image_xscale,local.scale*image_yscale,image_blend,image_alpha);
+    draw_spr_tiled_scale_ext_scr(spr_var,floor(spr_id_var),x,y,image_xscale,image_yscale,2,image_angle,image_blend,image_alpha);
     draw_set_blend_mode(bm_normal); d3d_set_hidden(true);
 ');

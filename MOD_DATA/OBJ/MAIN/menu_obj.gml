@@ -1089,13 +1089,7 @@ object_event_add
 						if show_message_ext(del_question_str_var,yes_str_var,no_str_var,"")
                         {
                             local.name = string(ds_list_find_value(global.save_list,button_state_var-1));
-                            ds_list_delete(global.save_list,ds_list_find_index(global.save_list,local.name));
-                        
-                            ini_open("saves.ini");
-                            ini_write_string("SAVES","SAVES",ds_list_write(global.save_list));
-                            ini_close();
-
-                            file_delete("save_"+string(local.name)+".ini");
+                            delete_save_scr(local.name);
                             
                             if ds_list_size(global.save_list) > 0
                             {
@@ -1343,6 +1337,7 @@ object_event_add
                 global.mode_var = save_mode_var;
                 global.main_type_var = save_type_var;
                 global.custom_var = save_custom_var;
+                ds_list_clear(global.mon_list);
 				
 				// Difficulty
                 if global.main_type_var == 1 || global.main_type_var == 2 { global.diff_var = -1; } // OG and HD

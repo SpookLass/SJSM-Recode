@@ -53,6 +53,7 @@ object_event_add
     h_var = h_base_var;
     z_off_var = z_off_base_var;
     flame_z_off_var = flame_z_off_base_var;
+    tp_door_var = false;
     // Seen
     do_seen_var = true;
     seen_type_var = 1;
@@ -177,6 +178,7 @@ object_event_add
             hurt_tp_var = 2;
             stun_var = true;
             atk_range_var = 64/3; // 21.r3
+            tp_door_var = true;
             // Sound
             snd_alarm_min_var = 90;
             snd_alarm_max_var = 240;
@@ -220,9 +222,8 @@ object_event_add
     flame_z_off_var = flame_z_off_base_var;
     spr_spd_var = spr_spd_base_var;
     anim_type_var = 0;
-    if global.color_var < 2 && instance_exists(color_par_obj)
-    { flame_color_var = color_par_obj.light_color_var; }
-    else { flame_color_var = c_white; }
+    if global.color_var == 0
+    { flame_color_var = light_color_scr(image_blend); }
     if hide_per_var
     {
         with door_obj { visible = !other.door_hide_var; }
@@ -377,11 +378,22 @@ object_event_add
         enter_var = false;
         event_user(6);
     }
+    if tp_door_var
+    {
+        x = global.spawn_arr[0,0];
+        y = global.spawn_arr[0,1];
+        z = global.spawn_arr[0,2];
+    }
+    else
+    {
+        x = target_x_var;
+        y = target_y_var;
+        z = target_z_var;
+    }
     local.dir = random(360);
     local.dist = random_range(tp_dist_min_var,tp_dist_max_var);
-    x = target_x_var+lengthdir_x(local.dist,local.dir);
-    y = target_y_var+lengthdir_y(local.dist,local.dir);
-    z = target_z_var;
+    x += lengthdir_x(local.dist,local.dir);
+    y += lengthdir_y(local.dist,local.dir);
 ');
 // Draw
 object_event_add

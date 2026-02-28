@@ -24,7 +24,7 @@ object_event_add
     spr_swing_var = axe_swing_spr;
     spr_var = spr_raise_var;
     spr_id_var = 0;
-    color_var = true;
+    color_var = 2;
     coll_var[0] = global.axe_coll[0];
     coll_var[1] = global.axe_coll[1];
     coll_var[2] = global.axe_coll[2];
@@ -91,6 +91,8 @@ object_event_add
                     state_var = 3;
                     if par_var.do_stam_var
                     { par_var.stam_var -= stam_end_var; }
+                    local.collided = false;
+                    local.ding = false;
                     local.player = par_var;
                     local.xtmp = par_var.x;
                     local.ytmp = par_var.y;
@@ -109,6 +111,22 @@ object_event_add
                             // p3dc_ray_scr(coll_var[0],x,y,z,local.xtmp,local.ytmp,local.ztmp,local.xvel,local.yvel,local.zvel)
                             if p3dc_check_rot_scr(coll_var[0],x,y,z,other.coll_var[0],local.xtmp+local.xvel,local.ytmp+local.yvel,local.ztmp+local.zvel,0,0,0,0,local.ydir,local.zdir)
                             {
+                                local.collided = true;
+                                hurt_weapon_var = other.id;
+                                hurt_target_var = local.player;
+                                hurt_power_var = other.power_var;
+                                hurt_type_var = other.type_var;
+                                event_user(4);
+                            }
+                        }
+                    }
+                    with interact_trig_obj
+                    {
+                        if weapon_var && on_var
+                        {
+                            if p3dc_check_rot_scr(coll_var[0],x,y,z,other.coll_var[0],local.xtmp+local.xvel,local.ytmp+local.yvel,local.ztmp+local.zvel,0,0,0,0,local.ydir,local.zdir)
+                            {
+                                local.collided = true;
                                 hurt_weapon_var = other.id;
                                 hurt_target_var = local.player;
                                 hurt_power_var = other.power_var;
@@ -124,6 +142,7 @@ object_event_add
                             // p3dc_ray_scr(coll_var[0],x,y,z,local.xtmp,local.ytmp,local.ztmp,local.xvel,local.yvel,local.zvel)
                             if p3dc_check_rot_scr(coll_var[0],x,y,z,other.coll_var[0],local.xtmp+local.xvel,local.ytmp+local.yvel,local.ztmp+local.zvel,0,0,degtorad(direction),0,local.ydir,local.zdir)
                             {
+                                local.collided = true;
                                 hurt_weapon_var = other.id;
                                 hurt_target_var = local.player;
                                 hurt_power_var = other.power_var;
@@ -131,21 +150,18 @@ object_event_add
                                 event_user(4);
                             }
                         }
-                    }
-                    with interact_trig_obj
-                    {
-                        if weapon_var && on_var
+                        else if solid_var && !local.collided
                         {
-                            if p3dc_check_rot_scr(coll_var[0],x,y,z,other.coll_var[0],local.xtmp+local.xvel,local.ytmp+local.yvel,local.ztmp+local.zvel,0,0,0,0,local.ydir,local.zdir)
-                            {
-                                hurt_weapon_var = other.id;
-                                hurt_target_var = local.player;
-                                hurt_power_var = other.power_var;
-                                hurt_type_var = other.type_var;
-                                event_user(4);
-                            }
+                            if p3dc_check_rot_scr(coll_var[0],x,y,z,other.coll_var[0],local.xtmp+local.xvel,local.ytmp+local.yvel,local.ztmp+local.zvel,0,0,degtorad(direction),0,local.ydir,local.zdir)
+                            { local.collided = true; local.ding = true; }
                         }
                     }
+                    if !local.collided
+                    {
+                        if p3dc_check_rot_scr(global.room_coll,0,0,0,coll_var[0],local.xtmp+local.xvel,local.ytmp+local.yvel,local.ztmp+local.zvel,0,0,0,0,local.ydir,local.zdir)
+                        { local.collided = true; local.ding = true; }
+                    }
+                    if local.ding { fmod_snd_play_scr(choose(axe_01_snd,axe_02_snd,axe_03_snd)); }
                 }
                 break;
             }

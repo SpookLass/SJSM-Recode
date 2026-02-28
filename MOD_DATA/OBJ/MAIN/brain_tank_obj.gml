@@ -27,7 +27,7 @@ object_event_add
     step_var = 8;
     close_var = true;
     image_alpha = 0.6;
-    color_var = false
+    color_var = 3;
     // Collisions
     coll_var[0] = global.brain_tank_coll[0];
     coll_var[1] = global.brain_tank_coll[1];

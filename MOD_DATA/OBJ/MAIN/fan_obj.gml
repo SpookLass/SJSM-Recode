@@ -47,7 +47,7 @@ object_event_add
     else { local.tex = tex_var; }
     // Draw
     draw_set_alpha(image_alpha);
-    if color_var == 2
+    if tone_var >= 0
     { draw_set_color(color_mult_scr(image_blend,tone_var)); }
     else { draw_set_color(image_blend); }
     // Transform

@@ -18,18 +18,29 @@ object_event_add
     light_color_var = light_color_scr(color_arr[0]);
     if global.color_var < 2
     {
-        with floor_par_obj { if color_var { image_blend = other.color_arr[mod_scr(floor(x/other.dist_var),other.color_len_var)]; }}
-        with ceil_par_obj { if color_var { image_blend = other.color_arr[mod_scr(floor(x/other.dist_var),other.color_len_var)]; }}
-        with wall_par_obj { if color_var { image_blend = other.color_arr[mod_scr(floor(x/other.dist_var),other.color_len_var)]; }}
-        // Recode
-        if global.color_var != 1
+        with par_3d_obj
         {
-            with axe_obj { if color_var { image_blend = other.image_blend; }}
-            with prop_par_obj { if color_var { image_blend = other.color_arr[mod_scr(floor(x/other.dist_var),other.color_len_var)]; }}
-            with enemy_par_obj { if color_var { image_blend = other.color_arr[mod_scr(floor(x/other.dist_var),other.color_len_var)]; }}
-            with light_floor_par_obj { if color_var { image_blend = light_color_scr(other.color_arr[mod_scr(floor(x/other.dist_var),other.color_len_var)]); }}
-            with light_wall_par_obj { if color_var { image_blend = light_color_scr(other.color_arr[mod_scr(floor(x/other.dist_var),other.color_len_var)]); }}
-            with light_torch_obj { if color_var { image_blend = light_color_scr(other.color_arr[mod_scr(floor(x/other.dist_var),other.color_len_var)]); }}
+            if variable_local_exists("color_var")
+            {
+                if color_var == 1 || (color_var && global.color_var != 1)
+                {
+                    local.color = other.color_arr[mod_scr(floor(x/other.dist_var),other.color_len_var)];
+                    if color_var == 3 { image_blend = light_color_scr(local.color); }
+                    else { image_blend = local.color; }
+                }
+            }
+        }
+        with axe_obj
+        {
+            if variable_local_exists("color_var")
+            {
+                if color_var == 1 || (color_var && global.color_var != 1)
+                {
+                    local.color = other.color_arr[mod_scr(floor(par_var.x/other.dist_var),other.color_len_var)];
+                    if color_var == 3 { image_blend = light_color_scr(local.color); }
+                    else { image_blend = local.color; }
+                }
+            }
         }
         visible = false;
     }
@@ -42,13 +53,36 @@ object_event_add
 // Step event
 object_event_add
 (argument0,ev_step,ev_step_normal,'
-    if global.color_var <= 0 
+    if global.color_var < 2
     {
-        with enemy_par_obj 
+        with par_3d_obj
         {
-            if color_var
+            if spd_var > 0
             {
-                image_blend = other.color_arr[mod_scr(floor(x/other.dist_var),other.color_len_var)];
+                if variable_local_exists("color_var")
+                {
+                    if color_var == 1 || (color_var && global.color_var != 1)
+                    {
+                        local.color = other.color_arr[mod_scr(floor(x/other.dist_var),other.color_len_var)];
+                        if color_var == 3 { image_blend = light_color_scr(local.color); }
+                        else { image_blend = local.color; }
+                    }
+                }
+            }
+        }
+        with axe_obj
+        {
+            if par_var.spd_var > 0
+            {
+                if variable_local_exists("color_var")
+                {
+                    if color_var == 1 || (color_var && global.color_var != 1)
+                    {
+                        local.color = other.color_arr[mod_scr(floor(par_var.x/other.dist_var),other.color_len_var)];
+                        if color_var == 3 { image_blend = light_color_scr(local.color); }
+                        else { image_blend = local.color; }
+                    }
+                }
             }
         }
     }
@@ -59,13 +93,16 @@ object_event_add
     if global.color_var == 2 // HD style
     {
         d3d_set_fog(false,c_black,0,0);
-        d3d_set_projection_ortho(0,0,1,1,0);
+        d3d_set_projection_ortho(0,0,1,color_len_var,0);
         d3d_set_hidden(false);
         // draw_set_blend_mode_ext(bm_dest_color,bm_src_color);
         draw_set_blend_mode(bm_subtract);
-        draw_set_color(c_white-image_blend);
-        draw_rectangle(0,0,1,1,false);
-        draw_set_color(c_white);
+        for (local.i=0; local.i<color_len_var; local.i+=1;)
+        {
+            draw_set_color(c_white-color_arr[local.i]);
+            draw_rectangle(0,local.i,1,local.i+1,false);
+            draw_set_color(c_white);
+        }
         draw_set_blend_mode(bm_normal);
         d3d_set_hidden(true);
     }

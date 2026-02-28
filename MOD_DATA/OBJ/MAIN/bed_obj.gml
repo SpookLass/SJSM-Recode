@@ -27,7 +27,6 @@ object_event_add
     coll_var[2] = global.bed_coll[2];
     coll_var[3] = global.bed_coll[3];
     // Color
-    color_var = 2;
     tone_var = choose(c_white,c_fuchsia,c_dkgray,c_teal,c_red);
     // Pillow
     local.offset = (w_var/2)-3.5;

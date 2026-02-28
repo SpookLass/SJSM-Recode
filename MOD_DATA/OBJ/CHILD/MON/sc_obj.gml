@@ -168,6 +168,8 @@ object_event_add
         {
             par_var = other.id;
             bg_var = other.fog_bg_var;
+            image_xscale = 512;
+            image_yscale = 512;
             image_alpha = other.fog_alpha_var*local.per;
         }
     }

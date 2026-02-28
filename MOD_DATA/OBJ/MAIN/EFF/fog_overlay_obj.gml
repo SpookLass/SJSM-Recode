@@ -11,8 +11,10 @@ object_event_add
 (argument0,ev_create,0,'
     event_inherited();
     y_spd_var = -0.25;
-    image_xscale = 4;
-    image_yscale = 4;
+    image_xscale = 1280;
+    image_yscale = 720;
+    cam_mult_var = 4;
+    small_mult_var = 0.5;
 ');
 // Step Event
 object_event_add
@@ -22,24 +24,12 @@ object_event_add
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,'
-    if view_wview[view_current] >= view_hview[view_current]
-    { local.scale = view_hview[view_current]/720; }
-    else { local.scale = view_wview[view_current]/1280; }
-    local.xscale = local.scale*image_xscale;
-    local.yscale = local.scale*image_yscale;
     d3d_set_fog(false,c_black,0,0);
     d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
     d3d_set_hidden(false);
-    local.ytmp = y+(global.cam_pitch_var[view_current]*4);
-    /*if abs(yaw_prev_var[view_current]-global.cam_yaw_var[view_current]) > 180
-    {
-        if x_off_var[view_current] != 0 { x_off_var[view_current] = 0; }
-        else { x_off_var[view_current] = 5760; }
-    }
-    local.xtmp = x_off_var[view_current]+(global.cam_yaw_var[view_current]*16);*/
-    local.xtmp = global.cam_yaw_var[view_current]*background_get_width(bg_var)*round(1440/background_get_width(bg_var))/360;
-    yaw_prev_var[view_current] = global.cam_yaw_var[view_current];
-    draw_background_tiled_ext(bg_var,local.xscale*local.xtmp/2,local.yscale*local.ytmp/2,local.xscale/2,local.yscale/2,image_blend,image_alpha/2);
-    draw_background_tiled_ext(bg_var,local.xscale*local.xtmp,local.yscale*local.ytmp,local.xscale,local.yscale,image_blend,image_alpha); 
+    local.xtmp = image_xscale*round(cam_mult_var*360/image_xscale)*global.cam_yaw_var[view_current]/360;
+    local.ytmp = y+(global.cam_pitch_var[view_current]*cam_mult_var);
+    draw_bg_tiled_scale_ext_scr(bg_var,local.xtmp*small_mult_var,local.ytmp*small_mult_var,image_xscale*small_mult_var,image_yscale*small_mult_var,2,image_angle,image_blend,image_alpha);
+    draw_bg_tiled_scale_ext_scr(bg_var,local.xtmp,local.ytmp,image_xscale,image_yscale,2,image_angle,image_blend,image_alpha);
     d3d_set_hidden(true);
 ');

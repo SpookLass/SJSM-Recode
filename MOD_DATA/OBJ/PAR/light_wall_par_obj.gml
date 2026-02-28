@@ -19,7 +19,7 @@ object_event_add
     spr_var = store_spr_var;
     spr_id_var = 0;
     par_var = noone;
-    color_var = true;
+    color_var = 3;
 ');
 // Step event
 object_event_add

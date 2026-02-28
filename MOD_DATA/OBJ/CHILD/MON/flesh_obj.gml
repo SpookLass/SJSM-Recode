@@ -21,7 +21,6 @@ object_event_add
     dupe_var = dupe_never_const;
     alarm_len_var = 1;
     alarm_ini_scr();
-    color_var = true;
     do_possess_var = false;
     smart_var = false;
     arrow_var = false;
@@ -207,9 +206,6 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_room_start,'
     event_inherited();
-    // Color
-    if !color_var || !instance_exists(color_par_obj) || global.color_var == 1
-    { image_blend = c_white; }
     // Reset Position
     local.minx = -1; local.miny = -1; local.maxx = -1; local.maxy = -1;
     with floor_par_obj
@@ -417,6 +413,7 @@ object_event_add
         {
             global.dead_mon_var = object_index;
             global.dead_player_var = atk_target_var.player_id_var;
+            if global.permadeath_var { delete_save_scr(global.save_name_var); }
             rm_goto_menu_scr(dead_rm_var,true);
         }
     }

@@ -9,6 +9,7 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,0,'
+    if !variable_local_exists("color_var") { color_var = 2; }
     event_inherited();
     if !variable_local_exists("do_hurt_var") { do_hurt_var = false; }
     if !variable_local_exists("do_possess_var") { do_possess_var = true; }

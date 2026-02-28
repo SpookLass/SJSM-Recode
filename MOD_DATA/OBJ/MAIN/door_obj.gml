@@ -13,4 +13,5 @@ object_event_add
     event_inherited();
     mdl_var = door_mdl;
     mdl_path_var = door_mdl_path;
+    flesh_var = 2;
 ');

@@ -6,6 +6,38 @@ object_set_persistent(argument0,true);
 object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
+// Create Event
+object_event_add
+(argument0,ev_create,0,'
+    event_inherited();
+    cam_id_var = -1;
+    anim_alarm_var = 1;
+    char_alarm_var = 6;
+    char_delay_var = 30;
+    str_alarm_min_var = 240;
+    str_alarm_max_var = 460;
+    ini_open(global.lang_var);
+    str_wake_var = ini_read_string("MON","brain_wake","MON_brain_wake");
+    str_len_var = 9;
+    for (local.i=0; local.i<str_len_var; local.i+=1;)
+    {
+        local.num = string(local.i+1);
+        if string_length(local.num) < 2 { local.num = "0"+local.num; }
+        local.str = "brain_"+local.num;
+        str_arr_var[0,local.i] = ini_read_string("MON",local.str,"MON_"+local.str);
+    }
+    ini_close();
+    str_var = str_wake_var;
+    alarm_len_var = 2;
+    alarm_ini_scr();
+    set_alarm_scr(0,anim_alarm_var);
+    set_alarm_scr(1,char_alarm_var);
+    char_var = 1;
+    str_draw_var = string_copy(str_var, 0, char_var);
+    str_color_var = c_white;
+    image_blend = c_black;
+    scale_min_var = 0.25;
+');
 // Room Start
 object_event_add
 (argument0,ev_other,ev_room_start,'
@@ -60,47 +92,10 @@ object_event_add
         d3d_set_hidden(false);
         draw_set_color(image_blend); draw_set_alpha(image_alpha);
         draw_rectangle(0,0,view_wview[view_current],view_hview[view_current],false);
-        // Scale
-        if view_wview[view_current] >= view_hview[view_current]
-        { local.scale = view_hview[view_current]/720; }
-        else { local.scale = view_wview[view_current]/1280; }
-        local.scale = max(local.scale,scale_min_var);
         // Text
         draw_set_color(str_color_var); draw_set_halign(fa_center); draw_set_valign(fa_middle);
-        draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]/2,str_draw_var,local.scale,local.scale,0);
+        draw_str_ext_scr(str_draw_var,0,0,1,1,scale_min_var,fa_center,fa_middle,0);
         draw_set_halign(fa_left); draw_set_valign(fa_top); draw_set_color(c_white); draw_set_alpha(1);
         d3d_set_hidden(true);
     }
-');
-// Create Event
-object_event_add
-(argument0,ev_create,0,'
-    event_inherited();
-    cam_id_var = -1;
-    anim_alarm_var = 1;
-    char_alarm_var = 6;
-    char_delay_var = 30;
-    str_alarm_min_var = 240;
-    str_alarm_max_var = 460;
-    ini_open(global.lang_var);
-    str_wake_var = ini_read_string("MON","brain_wake","MON_brain_wake");
-    str_len_var = 9;
-    for (local.i=0; local.i<str_len_var; local.i+=1;)
-    {
-        local.num = string(local.i+1);
-        if string_length(local.num) < 2 { local.num = "0"+local.num; }
-        local.str = "brain_"+local.num;
-        str_arr_var[0,local.i] = ini_read_string("MON",local.str,"MON_"+local.str);
-    }
-    ini_close();
-    str_var = str_wake_var;
-    alarm_len_var = 2;
-    alarm_ini_scr();
-    set_alarm_scr(0,anim_alarm_var);
-    set_alarm_scr(1,char_alarm_var);
-    char_var = 1;
-    str_draw_var = string_copy(str_var, 0, char_var);
-    str_color_var = c_white;
-    image_blend = c_black;
-    scale_min_var = 0.25;
 ');

@@ -175,7 +175,7 @@ object_event_add
         {
             seen_yaw_var = 60;
             seen_dist_var = 32/3;
-            if !local.set { dmg_var = 1/300; }
+            if !local.set { dmg_var = 0.003;  } // 1/300
             spd_base_var = 16/45;
             door_type_var = 2;
             tp_off_var = 320;
@@ -421,6 +421,7 @@ object_event_add
             {
                 global.dead_mon_var = object_index;
                 global.dead_player_var = local.player.player_id_var;
+                if global.permadeath_var { delete_save_scr(global.save_name_var); }
                 rm_goto_menu_scr(dead_rm_var,true);
             }
         }

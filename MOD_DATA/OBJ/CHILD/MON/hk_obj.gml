@@ -18,7 +18,7 @@ object_event_add
     type_var = 0;
     spd_base_var = 1;
 	accel_var = 0;
-	color_var = -1;
+	color_var = false;
     spr_spd_var = 1/3;
     dur_var = irandom_range(7,23);
     delay_var = 0;
@@ -141,6 +141,7 @@ object_event_add
     {
 		case 0:
 		{
+			color_var = 3;
 			do_look_snd_var = true;
 			spd_anim_var = true;
 			eff_color_var = make_color_rgb(211,77,98); // 110 45 60
@@ -370,8 +371,8 @@ object_event_add
 			overlay_alpha_var = 0.35;
 			rand_var = true;
 			spr_spd_var = 0;
-			image_xscale = 2;
-			image_yscale = 2;
+			image_xscale = 256;
+			image_yscale = 256;
 			image_alpha = 0.05;
 		}
 	}

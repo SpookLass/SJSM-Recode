@@ -251,8 +251,6 @@ object_event_add
 			overlay_var = true;
 			overlay_alpha_var = 0.5;
 			spr_spd_var = 0.1;
-			image_xscale = 2;
-			image_yscale = 2;
 			image_alpha = 0.025;
 		}
 	}

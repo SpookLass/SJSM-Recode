@@ -20,7 +20,7 @@ object_event_add
     w_var = 10;
     h_var = 10;
     step_var = 8;
-    color_var = false;
+    color_var = 3;
     // Collisions
     coll_var[0] = global.brain_coll[0];
     coll_var[1] = global.brain_coll[1];

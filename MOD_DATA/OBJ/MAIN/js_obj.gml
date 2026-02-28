@@ -37,6 +37,7 @@ object_event_add
         rotate_var = false;
         look_var = false;
         stop_snd_var = true;
+        flesh_var = false;
         // Main
         event_inherited();
         solid_var = true;

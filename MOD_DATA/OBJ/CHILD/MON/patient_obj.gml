@@ -67,6 +67,7 @@ object_event_add
     tp_dist_min_var = 128;
     tp_dist_max_var = 512;
     back_tp_alarm_var = -1;
+    rage_var = false;
     // Render
     tex_var = sprite_get_texture(spr_var,0);
     mdl_var = mdl_01_var;
@@ -502,7 +503,7 @@ object_event_add
         with instance_create(0,0,flash_eff_obj)
         {
             image_blend = c_red;
-            cam_id_var = hurt_target_var.cam_id_var;
+            cam_id_var = other.hurt_target_var.cam_id_var;
             set_alarm_scr(0,18);
         }
     }

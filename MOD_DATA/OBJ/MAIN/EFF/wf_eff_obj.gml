@@ -14,8 +14,8 @@ object_event_add
     spr_spd_var = 0.1;
     spr_id_var = 0;
     image_alpha = 0.01;
-    image_xscale = 4;
-    image_yscale = 4;
+    image_xscale = 256;
+    image_yscale = 256;
 ');
 // Step Event
 object_event_add
@@ -27,13 +27,10 @@ object_event_add
 (argument0,ev_draw,0,'
     if global.cam_type_var[view_current] == cam_alive_const
     {
-        if view_wview[view_current] >= view_hview[view_current]
-        { local.scale = view_hview[view_current]/720; }
-        else { local.scale = view_wview[view_current]/1280; }
         d3d_set_fog(false,c_black,0,0);
         d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
         d3d_set_hidden(false);
-        draw_sprite_tiled_ext(spr_var,floor(spr_id_var),0,0,local.scale*image_xscale,local.scale*image_yscale,image_blend,image_alpha);
+        draw_spr_tiled_stretch_ext_scr(spr_var,floor(spr_id_var),0,0,image_xscale,0,2,image_angle,image_blend,image_alpha);
         d3d_set_hidden(true);
     }
 ');

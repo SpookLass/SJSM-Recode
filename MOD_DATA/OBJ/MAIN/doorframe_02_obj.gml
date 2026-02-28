@@ -17,6 +17,7 @@ object_event_add
     mdl_var = doorframe_02_mdl;
     mdl_path_var = doorframe_02_mdl_path;
     grid_var = false;
+    color_var = true;
     // Collisions
     coll_var[0] = global.doorframe_02_coll[0];
 ');

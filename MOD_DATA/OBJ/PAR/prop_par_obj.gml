@@ -40,13 +40,15 @@ object_event_add
     if !variable_local_exists("l_var") { l_var = 1; }
     if !variable_local_exists("h_var") { h_var = 1; }
     if !variable_local_exists("dist_var") { dist_var = 0; }
-    if !variable_local_exists("color_var") { color_var = true; }
+    if !variable_local_exists("color_var") { color_var = 2; }
     if !variable_local_exists("close_var") { close_var = true; }
     if !variable_local_exists("step_var") { step_var = 8; }
     if !variable_local_exists("snap_var") { snap_var = false; }
     if !variable_local_exists("solid_var") { solid_var = 0; }
     if !variable_local_exists("grid_var") { grid_var = true; }
     if !variable_local_exists("weapon_var") { weapon_var = false; }
+    if !variable_local_exists("tone_var") { tone_var = -1; }
+    if !variable_local_exists("flesh_var") { flesh_var = true; }
     tex_var = store_tex_var;
     if snap_var > 0
     {
@@ -100,7 +102,7 @@ object_event_add
     }
     // Draw
     draw_set_alpha(image_alpha);
-    if color_var == 2
+    if tone_var >= 0
     { draw_set_color(color_mult_scr(image_blend,tone_var)); }
     else { draw_set_color(image_blend); }
     // Prop types

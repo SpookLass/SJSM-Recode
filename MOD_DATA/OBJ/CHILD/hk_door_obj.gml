@@ -10,10 +10,7 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,0,'
     event_inherited();
-    color_var = false;
-    if global.color_var < 1
-    { image_blend = color_par_obj.light_color_var; }
-    else { image_blend = c_white; }
+    color_var = 3;
 ');
 // Draw
 object_event_add
@@ -21,7 +18,7 @@ object_event_add
     if global.fog_dark_var { d3d_set_fog(false,c_black,0,1); }
 	event_inherited();
     draw_set_alpha(image_alpha);
-    if color_var == 2 { draw_set_color(color_mult_scr(image_blend,tone_var)); }
+    if tone_var >= 0 { draw_set_color(color_mult_scr(image_blend,tone_var)); }
     else { draw_set_color(image_blend); }
     d3d_transform_set_identity();
     d3d_transform_add_rotation_z(direction);

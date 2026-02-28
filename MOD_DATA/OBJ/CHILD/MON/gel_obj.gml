@@ -166,6 +166,10 @@ object_event_add
             violence_var = 2;
             hurt_eff_var = true;
             slime_snd_var[0] = true;
+            // Autobrake (close enough)
+            autobrake_var = true;
+            autobrake_spd_var = 0;
+            autobrake_dir_var = 60;
             break;
         }
     }
@@ -284,6 +288,7 @@ object_event_add
             snd_var = fmod_snd_3d_play_scr(slime_snd_var[1]);
             sub_var[0] = slime_snd_var[2];
             sub_var[1] = slime_snd_var[3];
+            set_alarm_scr(6,irandom_range(snd_delay_min_var,snd_delay_max_var));
         }
         // Slime Spawning
         event_user(6);
@@ -344,7 +349,7 @@ object_event_add
             with instance_create(0,0,flash_eff_obj)
             {
                 image_blend = c_red;
-                cam_id_var = hurt_target_var.cam_id_var;
+                cam_id_var = other.hurt_target_var.cam_id_var;
                 set_alarm_scr(0,18);
             }
         }
@@ -404,6 +409,7 @@ object_event_add
             snd_var = fmod_snd_3d_play_scr(slime_snd_var[1]);
             sub_var[0] = slime_snd_var[2];
             sub_var[1] = slime_snd_var[3];
+            set_alarm_scr(6,irandom_range(snd_delay_min_var,snd_delay_max_var));
         }
     }
 ');

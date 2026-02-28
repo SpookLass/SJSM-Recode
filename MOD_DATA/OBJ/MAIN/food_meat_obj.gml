@@ -61,7 +61,7 @@ object_event_add
     d3d_transform_add_rotation_z(point_direction(local.xtmp,local.ytmp,global.cam_x_var[view_current],global.cam_y_var[view_current]));
     d3d_transform_add_translation(local.xtmp,local.ytmp,local.ztmp);
     draw_set_alpha(image_alpha);
-    if color_var == 2
+    if tone_var >= 0
     { draw_set_color(color_mult_scr(image_blend,tone_var)); }
     else { draw_set_color(image_blend); }
     // Prop types

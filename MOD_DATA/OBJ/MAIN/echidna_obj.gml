@@ -197,6 +197,7 @@ object_event_add
         if !variable_local_exists("blood_spr_var") { blood_spr_var = blood_spr; }
         if !variable_local_exists("atk_flash_var") { atk_flash_var = true; }
         if !variable_local_exists("atk_snd_var") { atk_snd_var = 0; }
+        if !variable_local_exists("kill_var") { kill_var = true; }
     }
     // Hurt
     if do_hurt_var
@@ -260,7 +261,6 @@ object_event_add
     if !variable_local_exists("x_off_var") { x_off_var = 0; }
     if !variable_local_exists("y_off_var") { y_off_var = 0; }
     if !variable_local_exists("z_off_var") { z_off_var = 0; }
-    if !variable_local_exists("color_var") { color_var = true; }
     if !variable_local_exists("reflect_var") { reflect_var = true; }
     if !variable_local_exists("do_anim_var") { do_anim_var = true; }
     if !variable_local_exists("do_mdl_var") { do_mdl_var = false; }
@@ -408,9 +408,6 @@ object_event_add
     hurt_var = false;
     enter_var = do_enter_var;
     do_coll_var = false;
-    // Color
-    if !color_var || !instance_exists(color_par_obj) || global.color_var == 1
-    { image_blend = c_white; }
     // Reset Position
     yaw_var = global.spawn_arr[0,3];
     x = global.spawn_arr[0,0]-lengthdir_x(32,yaw_var);
@@ -853,10 +850,11 @@ object_event_add
     }
     if local.success
     {
-        if local.dead && !global.debug_var && !possess_var
+        if local.dead && kill_var && !global.debug_var && !possess_var
         {
             global.dead_mon_var = object_index;
             global.dead_player_var = atk_target_var.player_id_var;
+            if global.permadeath_var { delete_save_scr(global.save_name_var); }
             rm_goto_menu_scr(dead_rm_var,true);
         }
         else { event_user(3); }

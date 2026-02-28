@@ -8,7 +8,7 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create event
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
     fog_var = true;
     fog_color_var = c_black;
     fog_base_start_var = 32;
@@ -17,4 +17,4 @@ object_event_add
     fog_end_var = fog_base_end_var; // OG: 200, HD: 320?
     fog_dark_var = true;
     event_inherited();
-");
+');

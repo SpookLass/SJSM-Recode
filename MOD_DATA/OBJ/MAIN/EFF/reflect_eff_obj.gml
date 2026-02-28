@@ -21,11 +21,8 @@ object_event_add
     global.reflect_axis_var = reflect_axis_var;
     with par_3d_obj
     {
-        if variable_local_exists("reflect_var")
-        {
-            if reflect_var && object_index != other.object_index && visible
-            { event_perform(ev_draw,0); }
-        }
+        if reflect_var && object_index != other.object_index && visible
+        { event_perform(ev_draw,0); }
     }
     global.reflect_var = false;
 ');

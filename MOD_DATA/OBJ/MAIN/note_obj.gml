@@ -51,6 +51,8 @@ object_event_add
         str_var = "Read";
         other.trig_var = id;
     }
+    // Main type
+    if global.main_type_var == 0 { color_var = 3; }
 ');
 // Destroy Event
 object_event_add

@@ -16,6 +16,7 @@ object_event_add
     w_var = 32;
     h_var = 32;
     radius_var = 0;
+    color_var = true;
     // Collisions
     coll_var[0] = fake_wall_coll[0];
     coll_var[1] = fake_wall_coll[1];

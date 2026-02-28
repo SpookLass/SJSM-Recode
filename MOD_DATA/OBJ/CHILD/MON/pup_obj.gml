@@ -52,6 +52,7 @@ object_event_add
     seen_delay_var = 60;
     seen_start_delay_var = 0;
     seen_type_var = 1;
+    unseen_atk_var = false;
     // TP
     tp_sight_var = false;
     tp_alarm_var = 480;
@@ -84,6 +85,8 @@ object_event_add
     start_alarm_var = 600;
     seen_agg_max_var = 600;
     unseen_agg_max_var = 90;
+    unseen_agg_var = 0;
+    seen_agg_var = 0;
     // Theme
     mus_prio_var = theme_mus_prio_const;
     // Assets
@@ -138,8 +141,9 @@ object_event_add
             seen_yaw_var = 60;
             seen_pitch_var = 60;
             visible_var = true;
+            unseen_atk_var = true;
             // hurt_tp_var = false;
-            hurt_multi_var = true;
+            // hurt_multi_var = true;
             tp_dist_min_var = 0;
             tp_dist_max_var = 16;
             ascend_alarm_var = 60;
@@ -217,7 +221,8 @@ object_event_add
     z = global.spawn_arr[0,2];
     move_var = false;
     anim_var = false;
-    atk_var = false;
+    if unseen_atk_var
+    { atk_var = false; }
     anim_type_var = 3;
     w_var = w_base_var;
     h_var = h_base_var;
@@ -269,15 +274,17 @@ object_event_add
     {
         set_alarm_scr(1,seen_start_delay_var);
         set_alarm_scr(2,seen_start_delay_var);
-        set_alarm_scr(4,seen_start_delay_var);
         set_alarm_scr(6,seen_start_delay_var);
+        if unseen_atk_var
+        { set_alarm_scr(4,seen_start_delay_var); }
         state_var = 2;
     }
     else
     {
         move_var = do_move_var;
         anim_var = do_anim_var;
-        atk_var = do_atk_var;
+        if unseen_atk_var
+        { atk_var = do_atk_var; }
         state_var = false;
     }
 ');
@@ -385,7 +392,8 @@ object_event_add
                     {
                         move_var = false;
                         anim_var = false;
-                        atk_var = false;
+                        if unseen_atk_var
+                        { atk_var = false; }
                         set_motion_scr(0,true);
                         set_alarm_scr(6,-1);
                         if do_ascend_var
@@ -403,8 +411,9 @@ object_event_add
                         {
                             set_alarm_scr(1,-1);
                             set_alarm_scr(2,-1);
-                            set_alarm_scr(4,-1);
                             set_alarm_scr(6,-1);
+                            if unseen_atk_var
+                            { set_alarm_scr(4,-1); }
                             state_var = false;
                         }
                     }
@@ -421,11 +430,12 @@ object_event_add
                             if ascend_agg_var >= 1
                             {
                                 move_var = true;
-                                atk_var = true;
                                 anim_var = true;
                                 event_perform(ev_alarm,6);
                                 z_off_var = ascend_z_var;
                                 ascend_agg_var = 1;
+                                if unseen_atk_var
+                                { atk_var = do_atk_var; }
                                 state_var = 2;
                             }
                         }
@@ -433,8 +443,9 @@ object_event_add
                         {
                             set_alarm_scr(1,seen_delay_var);
                             set_alarm_scr(2,seen_delay_var);
-                            set_alarm_scr(4,seen_delay_var);
                             set_alarm_scr(6,seen_delay_var);
+                            if unseen_atk_var
+                            { set_alarm_scr(4,seen_delay_var); }
                             state_var = 2;
                         }
                     }
@@ -532,6 +543,7 @@ object_event_add
     down_var = false;
     hurt_var = false;
     hurt_dur_var = hurt_dur_base_var;
+    atk_var = do_atk_var;
     if hd_var
     {
         state_var = 1;
@@ -636,7 +648,7 @@ object_event_add
             with instance_create(0,0,flash_eff_obj)
             {
                 image_blend = c_red;
-                cam_id_var = hurt_target_var.cam_id_var;
+                cam_id_var = other.hurt_target_var.cam_id_var;
                 set_alarm_scr(0,18);
             }
         }

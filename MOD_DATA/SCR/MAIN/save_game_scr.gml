@@ -1,4 +1,4 @@
-if ds_list_find_index(global.save_list,global.save_name_var) = -1
+if ds_list_find_index(global.save_list,global.save_name_var) == -1
 {
     ds_list_add(global.save_list,string(global.save_name_var));
     

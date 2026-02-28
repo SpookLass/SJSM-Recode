@@ -10,14 +10,12 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,0,'
     event_inherited();
-    reflect_var = true;
     z = 18.8; // 21.2
     h_var = 4.8;
     w_var = 3;
     spr_var = torch_spr;
     spr_id_var = 0;
     par_var = noone;
-    color_var = true;
 ');
 // Step event
 object_event_add

@@ -208,13 +208,16 @@ object_event_add
                 local.width = background_get_width(bar_stam_bg)*par_var.stam_var/par_var.stam_max_var;
                 draw_background_part_ext(local.stam_bg,background_get_width(bar_stam_bg)-local.width,0,local.width,20,99*local.viewscale,96*local.viewscale,local.viewscale,local.viewscale,c_white,1);
                 // Health
-                local.width = background_get_width(bar_hp_bg)*median(0,1,hp_var/par_var.hp_max_var);
-                draw_background_part_ext(bar_hp_bg,background_get_width(bar_hp_bg)-local.width,0,local.width,27,99*local.viewscale,62*local.viewscale,local.viewscale,local.viewscale,c_white,1);
-                // Extra Health
-                if par_var.hp_var > par_var.hp_max_var
+                if par_var.hp_max_var > 0
                 {
-                    local.width = background_get_width(bar_hp_ex_bg)*median(0,1,(par_var.hp_var/par_var.hp_max_var)-1);
-                    draw_background_part_ext(bar_hp_ex_bg,background_get_width(bar_hp_ex_bg)-local.width,0,local.width,27,99*local.viewscale,62*local.viewscale,local.viewscale,local.viewscale,c_white,1);
+                    local.width = background_get_width(bar_hp_bg)*median(0,1,hp_var/par_var.hp_max_var);
+                    draw_background_part_ext(bar_hp_bg,background_get_width(bar_hp_bg)-local.width,0,local.width,27,99*local.viewscale,62*local.viewscale,local.viewscale,local.viewscale,c_white,1);
+                    // Extra Health
+                    if par_var.hp_var > par_var.hp_max_var
+                    {
+                        local.width = background_get_width(bar_hp_ex_bg)*median(0,1,(par_var.hp_var/par_var.hp_max_var)-1);
+                        draw_background_part_ext(bar_hp_ex_bg,background_get_width(bar_hp_ex_bg)-local.width,0,local.width,27,99*local.viewscale,62*local.viewscale,local.viewscale,local.viewscale,c_white,1);
+                    }
                 }
                 // Icon
                 draw_bg_stretch_scr(bar_icon_bg,37,34,69,0);

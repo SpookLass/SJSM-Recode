@@ -258,6 +258,28 @@ custom_arr_set_scr(true,global.custom_len_var,5,-1,-1); // :)
 custom_arr_set_scr(true,global.custom_len_var,-1,-1,1); // OG
 custom_arr_set_scr(false,global.custom_len_var,-1,-1,1); // HD
 global.custom_len_var += 1;
+    // Permadeath
+// Name
+custom_arr[global.custom_len_var,0] = "permadeath"; // Variable name
+custom_arr[global.custom_len_var,1] = "permadeath"; // Name
+custom_arr[global.custom_len_var,2] = "permadeath"; // Description
+custom_arr[global.custom_len_var,3] = true; // Translate name and descripion
+custom_arr[global.custom_len_var,4] = 0; // Type
+// Label
+custom_label_arr[global.custom_len_var,0] = "off"; // Value 1
+custom_label_arr[global.custom_len_var,1] = true; // Translate
+custom_label_arr[global.custom_len_var,2] = "on"; // Value 2
+custom_label_arr[global.custom_len_var,3] = true; // Translate
+// Clamp
+custom_clamp_arr[global.custom_len_var,0] = 0; // Min
+custom_clamp_arr[global.custom_len_var,1] = 1; // Max
+custom_clamp_arr[global.custom_len_var,2] = true; // Wrap
+// Defaults
+custom_arr_add_len_scr(0,1);
+custom_arr_set_scr(false,global.custom_len_var,-1,-1,-1); // Default
+custom_arr_set_scr(true,global.custom_len_var,5,-1,-1); // :)
+custom_arr_set_scr(true,global.custom_len_var,-1,1,-1); // Endless
+global.custom_len_var += 1;
     // Locales
 // Name
 custom_arr[global.custom_len_var,0] = "locale"; // Variable name
@@ -650,9 +672,10 @@ custom_clamp_arr[global.custom_len_var,2] = false; // Wrap
 // Defaults
 custom_arr_add_len_scr(0,1);
 custom_arr_set_scr(rare_chance_const,global.custom_len_var,-1,-1,-1); // Default
-custom_arr_set_scr(16,global.custom_len_var,-1,1,0); // Recode Endless
-custom_arr_set_scr(0,global.custom_len_var,-1,1,1); // OG Endless
+custom_arr_set_scr(16,global.custom_len_var,-1,1,-1); // Endless
 custom_arr_set_scr(16,global.custom_len_var,-1,2,-1); // Sandbox
+custom_arr_set_scr(0,global.custom_len_var,-1,1,1); // OG Endless
+custom_arr_set_scr(8,global.custom_len_var,-1,1,2); // HD Endless
 global.custom_len_var += 1;
     // Specimen List
 // Name
@@ -788,6 +811,27 @@ custom_clamp_arr[global.custom_len_var,2] = true; // Wrap
 custom_arr_add_len_scr(0,1);
 custom_arr_set_scr(1,global.custom_len_var,-1,-1,-1); // Default (All)
 custom_arr_set_scr(0,global.custom_len_var,-1,0,-1); // Story (None)
+global.custom_len_var += 1;
+    // One Shot
+// Name
+custom_arr[global.custom_len_var,0] = "one_shot"; // Variable name
+custom_arr[global.custom_len_var,1] = "one_shot"; // Name
+custom_arr[global.custom_len_var,2] = "one_shot"; // Description
+custom_arr[global.custom_len_var,3] = true; // Translate name and descripion
+custom_arr[global.custom_len_var,4] = 0; // Type
+// Label
+custom_label_arr[global.custom_len_var,0] = "off"; // Value 1
+custom_label_arr[global.custom_len_var,1] = true; // Translate
+custom_label_arr[global.custom_len_var,2] = "on"; // Value 2
+custom_label_arr[global.custom_len_var,3] = true; // Translate
+// Clamp
+custom_clamp_arr[global.custom_len_var,0] = 0; // Min
+custom_clamp_arr[global.custom_len_var,1] = 1; // Max
+custom_clamp_arr[global.custom_len_var,2] = true; // Wrap
+// Defaults
+custom_arr_add_len_scr(0,1);
+custom_arr_set_scr(false,global.custom_len_var,-1,-1,-1); // Default
+custom_arr_set_scr(true,global.custom_len_var,5,-1,-1); // :)
 global.custom_len_var += 1;
 /*
 -----------------

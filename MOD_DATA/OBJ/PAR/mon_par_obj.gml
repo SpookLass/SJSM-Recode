@@ -57,6 +57,8 @@ object_event_add
             exit;
         }
     }
+    if color_var
+    { image_blend = c_white; }
     hurt_var = false;
     event_inherited();
 ');

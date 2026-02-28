@@ -17,11 +17,14 @@ object_event_add
     if !variable_local_exists("gold_var") { gold_var = false; }
     if !variable_local_exists("auto_var") { auto_var = false; }
     // Light stuff
-    light_var = instance_create(x+lengthdir_x(-1.5,direction+90),y+lengthdir_y(-1.5,direction+90),light_torch_obj);
-    light_var.z += z;
-    light_var.gold_var = gold_var;
-    light_var.color_var = !gold_var;
-    light_var.par_var = id;
+    with instance_create(x+lengthdir_x(-1.5,direction+90),y+lengthdir_y(-1.5,direction+90),light_torch_obj)
+    {
+        z += other.z;
+        gold_var = other.gold_var;
+        if gold_var { color_var = false; }
+        par_var = other.id;
+        other.light_var = id;
+    }
     if auto_var { event_user(0); }
     // Gold
     door_var = noone;
@@ -67,7 +70,7 @@ object_event_add
                 local.light.direction = direction;
                 local.light.z = other.z;
                 local.light.gold_var = other.gold_var;
-                local.light.color_var = !other.gold_var;
+                if other.gold_var { local.light.color_var = false; }
                 local.light.par_var = other.id;
             }
         }
@@ -88,7 +91,7 @@ object_event_add
                 local.light.direction = direction;
                 local.light.z = z;
                 local.light.gold_var = other.gold_var;
-                local.light.color_var = !other.gold_var;
+                if other.gold_var { local.light.color_var = false; }
                 local.light.par_var = other.id;
             }
         }

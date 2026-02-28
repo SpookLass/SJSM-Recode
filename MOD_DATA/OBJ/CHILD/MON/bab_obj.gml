@@ -166,7 +166,6 @@ object_event_add
             dmg_alarm_var = 180;
             delay_min_var = 90;
             delay_max_var = 180;
-            spr_spd_var = 1/3;
             w_01_var = 7.7; // 7
             w_02_var = 2.8; // 3.5
             flesh_door_var = false;

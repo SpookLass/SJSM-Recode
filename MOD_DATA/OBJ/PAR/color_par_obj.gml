@@ -11,25 +11,29 @@ object_event_add
 (argument0,ev_create,0,'
     prio_var = 0;
     event_inherited();
-    event_user(0);
+    light_color_var = light_color_scr(image_blend);
+    //event_user(0);
 ');
 object_event_add
 (argument0,ev_other,ev_user0,'
     light_color_var = light_color_scr(image_blend);
     if global.color_var < 2
     {
-        with floor_par_obj { if variable_local_exists("color_var") { if color_var { image_blend = other.image_blend; }}}
-        with ceil_par_obj { if variable_local_exists("color_var") { if color_var { image_blend = other.image_blend; }}}
-        with wall_par_obj { if variable_local_exists("color_var") { if color_var { image_blend = other.image_blend; }}}
-        // Recode
-        if global.color_var != 1
+        with par_3d_obj
         {
-            with prop_par_obj { if variable_local_exists("color_var") { if color_var { image_blend = other.image_blend; }}}
-            with enemy_par_obj { if variable_local_exists("color_var") { if color_var { image_blend = other.image_blend; }}}
-            with axe_obj { if variable_local_exists("color_var") { if color_var { image_blend = other.image_blend; }}}
-            with light_floor_par_obj { if variable_local_exists("color_var") { if color_var { image_blend = other.light_color_var; }}}
-            with light_wall_par_obj { if variable_local_exists("color_var") { if color_var { image_blend = other.light_color_var; }}}
-            with light_torch_obj { if variable_local_exists("color_var") { if color_var { image_blend = other.light_color_var; }}}
+            if color_var == 1 || (color_var && global.color_var != 1)
+            {
+                if color_var == 3 { image_blend = other.light_color_var; }
+                else { image_blend = other.image_blend; }
+            }
+        }
+        with axe_obj
+        {
+            if color_var == 1 || (color_var && global.color_var != 1)
+            {
+                if color_var == 3 { image_blend = other.light_color_var; }
+                else { image_blend = other.image_blend; }
+            }
         }
         visible = false;
     }

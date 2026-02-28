@@ -70,8 +70,8 @@ object_event_add
         with wall_par_obj { tex_var = other.tex_var; }
         with prop_par_obj
         {
-            if other.door_var || (object_index != door_obj && !object_is_ancestor(object_index,door_obj))
-            tex_var = other.tex_var;
+            if flesh_var && (other.door_var || flesh_var == 1)
+            { tex_var = other.tex_var; }
         }
     }
     if alarm_arr[0,0] <= 0
@@ -92,8 +92,8 @@ object_event_add
             with wall_par_obj { tex_var = other.tex_var; }
             with prop_par_obj
             {
-                if other.door_var || (object_index != door_obj && !object_is_ancestor(object_index,door_obj))
-                tex_var = other.tex_var;
+                if flesh_var && (other.door_var || flesh_var == 1)
+                { tex_var = other.tex_var; }
             }
         }
         else
@@ -103,7 +103,11 @@ object_event_add
             with floor_par_obj { tex_var = store_tex_var; }
             with ceil_par_obj { tex_var = store_tex_var; }
             with wall_par_obj { tex_var = store_tex_var; }
-            with prop_par_obj { tex_var = store_tex_var; }
+            with prop_par_obj
+            {
+                if flesh_var && (other.door_var || flesh_var == 1)
+                { tex_var = store_tex_var; }
+            }
         }
     }
     set_alarm_scr(0,irandom_range(alarm_min_var,alarm_max_var));

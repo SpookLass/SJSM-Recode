@@ -19,8 +19,7 @@ object_event_add
     coll_var[1] = h_var;
     coll_var[2] = w_var;
     on_var = true;
-    if instance_exists(color_par_obj) && global.color_var == 0
-    { image_blend = color_par_obj.image_blend; }
+    color_var = 2;
 ');
 // Step Event
 object_event_add

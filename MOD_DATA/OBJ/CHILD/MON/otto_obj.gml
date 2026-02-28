@@ -42,6 +42,7 @@ object_event_add
     anim_type_var = 4;
     sil_dist_var = -0.1;
     eye_var = false;
+    eye_color_var = c_white;
     // Assets
         // Search for existing assets to save memory
     local.loaded = false;
@@ -119,7 +120,9 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_room_start,'
     event_inherited();
-    if global.color_var < 2 && instance_exists(color_par_obj)
+    if global.color_var == 0
+    { eye_color_var = light_color_scr(image_blend); }
+    if color_var && global.color_var == 0 && instance_exists(color_par_obj)
     { eye_color_var = color_par_obj.light_color_var; }
     else { eye_color_var = c_white; }
 ');
