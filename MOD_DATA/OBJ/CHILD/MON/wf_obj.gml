@@ -347,7 +347,7 @@ object_event_add
         d3d_model_destroy(web_mdl_var);
         ds_list_destroy(zone_list_var);
         for (local.i=0; local.i<glitch_snd_len_var; local.i+=1;)
-        { fmod_snd_free_scr(glitch_snd_arr[local.i,0]); }
+        { fmod_snd_free_scr(glitch_snd_arr[local.i]); }
         fmod_snd_free_scr(loop_snd_var[1]);
         fmod_snd_free_scr(wake_snd_var[1]);
         fmod_snd_free_scr(mus_snd_var);

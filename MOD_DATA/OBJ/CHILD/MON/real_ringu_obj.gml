@@ -152,13 +152,13 @@ object_event_add
             delay_min_var = 90;
             delay_max_var = 180;
             do_enter_var = true;
-            state_spd_var[1] = state_spd_var[0];
-            state_seen_spd_var[1] = state_seen_spd_var[0];
             if !local.set
             {
                 state_spd_var[0] = 1222/1125; // 1.086r2
                 state_seen_spd_var[0] = 188/225; // 0.83r5
             }
+            state_spd_var[1] = state_spd_var[0];
+            state_seen_spd_var[1] = state_seen_spd_var[0];
             do_hurt_var = false;
             // Sound
             snd_alarm_min_var = 90;
