@@ -43,6 +43,7 @@ object_event_add
     sil_dist_var = -0.1;
     eye_var = false;
     eye_color_var = c_white;
+    atk_range_var = 48;
     // Assets
         // Search for existing assets to save memory
     local.loaded = false;
@@ -87,6 +88,7 @@ object_event_add
             griddy_var = frac_chance_scr(1,1987);
             mus_prio_var = mon_mus_prio_const;
             eye_var = true;
+            atk_range_var = global.mon_coll[2];
             break;
         }
         case 3: // Old HD
@@ -112,6 +114,7 @@ object_event_add
             atk_stun_var = 0;
             acc_var = 16/675; // 0.02r370
             frick_var = acc_var;
+            atk_range_var = 4/pixel_meter_rate_const;
             break;
         }
     }

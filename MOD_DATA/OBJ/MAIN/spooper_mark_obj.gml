@@ -28,6 +28,7 @@ object_event_add
 (argument0,ev_step,ev_step_normal,'
     // Turn
     local.bestdist = -1;
+    local.seen = false;
     with player_obj
     {
         if on_var && !dead_var && !in_door_var

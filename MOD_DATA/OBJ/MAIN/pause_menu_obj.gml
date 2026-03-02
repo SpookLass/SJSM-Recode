@@ -45,6 +45,7 @@ object_event_add
     set_alarm_scr(1,scale_alarm_var);
     set_alarm_scr(2,2400);
     // Music
+    mus_snd_var = noone;
     if global.pause_theme_var
     {
         mus_snd_var = fmod_snd_loop_scr(pause_drum_mus_snd);

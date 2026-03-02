@@ -26,6 +26,7 @@ object_event_add
     dmg_alarm_var = 120;
     h_var = 20;
     z_off_var = 2;
+    atk_range_var = 48;
     dead_rm_var = real_ringu_dead_rm;
     // Sounds
     snd_len_var = 5;
@@ -115,6 +116,7 @@ object_event_add
         {
             seen_pitch_var = 30;
             dmg_var = 40;
+            atk_range_var = global.mon_coll[2];
             eff_fog_var = true;
             eff_fog_start_var = 128;
             eff_fog_end_var = 256;
@@ -152,6 +154,7 @@ object_event_add
             delay_min_var = 90;
             delay_max_var = 180;
             do_enter_var = true;
+            atk_range_var = 32;
             if !local.set
             {
                 state_spd_var[0] = 1222/1125; // 1.086r2

@@ -215,6 +215,7 @@ object_event_add
         if !variable_local_exists("hurt_snd_num_var") { hurt_snd_num_var = 1; }
         if !variable_local_exists("hurt_snd_den_var") { hurt_snd_den_var = 1; }
         if !variable_local_exists("hurt_hp_var") { hurt_hp_var = 0; }
+        if !variable_local_exists("hurt_die_var") { hurt_die_var = 0; }
         if !variable_local_exists("stun_var") { stun_var = false; }
     }
     // Seen

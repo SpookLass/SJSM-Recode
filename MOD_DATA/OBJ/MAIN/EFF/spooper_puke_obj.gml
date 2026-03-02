@@ -11,6 +11,7 @@ object_event_add
 (argument0,ev_create,0,'
     event_inherited();
     image_alpha = 0;
+    unheal_var = false;
     // Alarm
     alarm_len_var = 3;
     alarm_ini_scr();
@@ -42,6 +43,8 @@ object_event_add
                     hurt_target_var = other.id;
                     event_user(0);
                     local.player = id;
+                    if hp_var < hp_max_var && other.unheal_var
+                    { unheal_var += other.dmg_var; }
                 }
                 else
                 {

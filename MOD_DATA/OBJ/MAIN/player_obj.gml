@@ -30,6 +30,7 @@ object_event_add
     dead_var = false;
     alarm_arr[1,2] = true; // Persists between rooms
     hp_infect_var = 0;
+    unheal_var = 0;
     invuln_var = false;
     // Speed
     spd_base_var = 1;
@@ -676,11 +677,11 @@ object_event_add
         breath_time_var = (breath_time_var+local.breath_rate) mod 360;
         breath_var = breath_mult_var*sin(degtorad(breath_time_var));
         // Calculate health
-        if !hurt_var && !in_door_var && heal_var && !dead_var && hp_var < hp_max_var
+        if !hurt_var && !in_door_var && heal_var && !dead_var && hp_var < hp_max_var-unheal_var
         {
             local.heal_rate = heal_rate_var*heal_mult_var*global.delta_time_var;
             if !instance_exists(enemy_par_obj) { local.heal_rate *= heal_safe_var; }
-            hp_var = min(hp_max_var,hp_var+local.heal_rate);
+            hp_var = min(hp_max_var-unheal_var,hp_var+local.heal_rate);
             hp_infect_var -= local.heal_rate;
             heal_mult_var = 1;
         }

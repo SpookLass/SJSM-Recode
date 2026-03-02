@@ -29,6 +29,7 @@ object_event_add
     dmg_var = 30;
     dmg_alarm_var = 60;
     dead_rm_var = lisa_dead_rm;
+    atk_range_var = 48;
     // Sounds
     wake_snd_var[0] = 2;
     snd_dist_min_var = 0;
@@ -172,11 +173,11 @@ object_event_add
             cyan_rand_max_var = 155;
             zone_end_var = 16;
             js_chance_var = 2;
+            atk_range_var = global.mon_coll[2];
             // Timing
             start_var = 15;
             js_start_var = 3;
             js_end_var = 15;
-            
             red_start_var = 1;
             red_end_var = 15;
             vis_phase_end_var = 19;
@@ -204,6 +205,7 @@ object_event_add
             attack_alpha_var = 2;
             snd_dist_max_var = 500;
             vis_phase_end_var = -1;
+            atk_range_var = 32;
             // Room stuffs
             start_var = 16;
             zone_end_var = 15;

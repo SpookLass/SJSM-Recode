@@ -15,6 +15,7 @@ object_event_add
 	hurt_snd_var[2] = string_replace(ini_read_string("SUB","hk_hurt","SUB_hk_hurt"),"@n",name_var); hurt_snd_var[3] = false;
 	snd_arr[0,1] = string_replace(ini_read_string("SUB","hk_breath","SUB_hk_breath"),"@n",name_var); snd_arr[0,2] = false;
     ini_close();
+	// Variable
     type_var = 0;
     spd_base_var = 1;
 	accel_var = 0;
@@ -26,6 +27,7 @@ object_event_add
     dmg_alarm_var = 10;
     z_off_var = -1.5;
 	blood_spr_var = blood_kh_spr;
+	atk_range_var = 12;
     // Assets
         // Search for existing assets to save memory
 	local.loaded = false;
@@ -136,7 +138,7 @@ object_event_add
 	dmg_dist_max_var = 18;
 	dmg_rate_var = 0.7; // 7/180 to 3.5
 	// Behavior
-	if global.hk_type_var == -1 { local.type = irandom(2); }
+	if global.hk_type_var == -1 { local.type = irandom(3); }
     else { local.type = global.hk_type_var; }
     switch local.type
     {
@@ -150,6 +152,7 @@ object_event_add
 			fog_end_var = 72;
 			door_var = true;
 			dur_var = irandom_range(10,20);
+			atk_range_var = global.mon_coll[2];
 			// Seen
 			seen_pitch_var = 40.5;
 			seen_dist_var = 128;
@@ -173,6 +176,7 @@ object_event_add
 			base_w_var = 30;
 			base_h_var = 30;
 			z_off_var = 1;
+			atk_range_var = 0.8/pixel_meter_rate_const;
 			// Seen
 			shake_var = 0;
 			seen_yaw_var = 22.5;
@@ -200,6 +204,7 @@ object_event_add
 			wall_start_var = 26;
 			wall_end_var = 72;
 			door_var = true;
+			atk_range_var = global.mon_coll[2];
 			// Render
 			base_w_var = 29;
 			base_h_var = 29;

@@ -11,6 +11,8 @@ object_event_add
 (argument0,ev_create,0,'
     store_tex_var = candle_bg_tex
     event_inherited();
+    if !variable_local_exists("gold_var")
+    { gold_var = false; }
     solid_var = false;
     type_var = 5; // Billboard
     w_var = 2;
@@ -25,5 +27,6 @@ object_event_add
         w_var = 1;
         h_var = 1.6;
         visible = other.on_var;
+        gold_var = other.gold_var;
     }
 ');

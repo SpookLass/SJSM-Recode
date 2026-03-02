@@ -68,11 +68,16 @@ object_event_add
     tp_dist_max_var = 512;
     back_tp_alarm_var = -1;
     rage_var = false;
+    seen_rage_var = false;
+    inv_move_var = false;
     // Render
     tex_var = sprite_get_texture(spr_var,0);
     mdl_var = mdl_01_var;
     draw_pos_var = false;
     weird_var = false;
+    draw_x_var = x;
+    draw_y_var = y;
+    draw_z_var = z;
     // Rand
     rand_chance_var = 3;
     rand_alarm_min_var = 3;

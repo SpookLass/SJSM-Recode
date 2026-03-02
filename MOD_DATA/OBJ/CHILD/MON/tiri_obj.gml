@@ -16,6 +16,7 @@ object_event_add
     snd_arr[2,1] = ini_read_string("SUB","tiri_03","SUB_tiri_03"); snd_arr[2,2] = true;
     snd_arr[3,1] = ini_read_string("SUB","tiri_04","SUB_tiri_04"); snd_arr[3,2] = true;
     ini_close();
+    // Variables
     type_var = 0;
     spd_base_var = 0.7;
     spr_spd_var = 1/6;
@@ -26,6 +27,7 @@ object_event_add
     w_var = 8.6;
     h_var = 22;
     z_off_var = 1;
+    atk_range_var = 48;
     // Sounds
     snd_len_var = 4;
     snd_num_var = 1;
@@ -105,6 +107,7 @@ object_event_add
             shadow_scale_var = 24;
             shadow_num_var = 3;
             shadow_den_var = 5;
+            atk_range_var = coll_var[2];
             if current_month == 6
             {
                 gay_var = irandom_range(1,2);
@@ -142,6 +145,7 @@ object_event_add
             shadow_scale_var = 24;
             shadow_num_var = 3;
             shadow_den_var = 5;
+            atk_range_var = 32;
             // Sound
             snd_alarm_min_var = 180;
             snd_alarm_max_var = 480;

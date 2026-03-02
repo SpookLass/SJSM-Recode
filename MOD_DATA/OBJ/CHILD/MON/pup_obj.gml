@@ -44,6 +44,7 @@ object_event_add
     terrible_var = false;
     do_ascend_var = false;
     temp_hd_var = false;
+    atk_range_var = 33.6;
     // Anim
     anim_type_var = 3; // Random
     // Seen
@@ -149,6 +150,7 @@ object_event_add
             ascend_alarm_var = 60;
             descend_alarm_var = 30;
             descend_start_alarm_var = 30;
+            atk_range_var = global.mon_coll[2];
             break;
         }
         case 5: // HD Hellgate

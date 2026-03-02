@@ -48,6 +48,7 @@ object_event_add
     anim_prog_var = 0;
     anim_spd_var = 1;
     reflect_var = -1;
+    unheal_var = false;
     // Teleport
     tp_type_var = 1;
     tp_off_var = 300;
@@ -158,6 +159,7 @@ object_event_add
             door_chance_var = 3;
             do_snd_var = true;
             loop_snd_var[0] = true;
+            unheal_var = true;
             // Silhouette
             sil_var = true;
             sil_type_var = 1; // Pure color
@@ -225,6 +227,7 @@ object_event_add
     with spooper_fetus_obj { if par_var == other.id { instance_destroy(); }}
     with spooper_door_obj { if par_var == other.id { instance_destroy(); }}
     with spooper_mark_obj { if par_var == other.id { instance_destroy(); }}
+    if unheal_var { with player_obj { unheal_var = 0; }}
 ');
 // Room Start Event
 object_event_add
@@ -401,10 +404,16 @@ object_event_add
             }
             with player_obj
             {
-                heal_mult_var = 0;
+                if !other.unheal_var { heal_mult_var = 0; }
                 if !dead_var && !hurt_var && !in_door_var && !invuln_var && on_var
                 {
-                    if hp_var > local.min { hp_var -= other.dmg_var*global.delta_time_var; }
+                    if hp_var > local.min
+                    {
+                        local.dmg = other.dmg_var*global.delta_time_var
+                        hp_var -= local.dmg;
+                        if hp_var < hp_max_var && other.unheal_var
+                        { unheal_var += local.dmg; }
+                    }
                     else if local.dokill
                     {
                         hp_var = 0;
@@ -487,7 +496,8 @@ object_event_add
             snd_var = other.puke_snd_var;
             alarm_02_var = other.puke_alarm_02_var;
             alarm_03_var = other.puke_alarm_03_var;
-            slow_var = local.spooper.puke_slow_var;
+            unheal_var = other.unheal_var;
+            slow_var = other.puke_slow_var;
             set_alarm_scr(0,other.puke_alarm_01_var);
         }
     }
@@ -533,6 +543,7 @@ object_event_add
                     alarm_02_var = local.spooper.puke_alarm_02_var;
                     alarm_03_var = local.spooper.puke_alarm_03_var;
                     slow_var = local.spooper.puke_slow_var;
+                    unheal_var = local.spooper.unheal_var;
                     set_alarm_scr(0,local.spooper.puke_alarm_01_var);
                 }
                 local.success = true;

@@ -154,6 +154,7 @@ object_event_add
             acc_var = 2/45; // 0.0r4
             frick_var = acc_var;
             do_rise_var = 2;
+            atk_range_var = 4/pixel_meter_rate_const;
             // Autobrake (close enough)
             autobrake_var = true;
             autobrake_spd_var = 0;

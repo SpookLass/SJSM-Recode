@@ -27,6 +27,7 @@ object_event_add
     z_off_var = 14;
     dupe_var = dupe_canon_const;
     move_type_var = 0;
+    atk_range_var = 48;
     // Sounds
     do_snd_var = 1; // At least for now
     loop_snd_var[0] = true;
@@ -179,6 +180,7 @@ object_event_add
             start_var = -1;
             web_start_var = 15;
             mus_prio_var = mon_mus_prio_const;
+            atk_range_var = global.mon_coll[2];
             // zone_start_var = -1;
             exit_spawn_var = false;
             tp_spawn_var = 1;
@@ -190,8 +192,6 @@ object_event_add
             // Smaller Resolution
             res_w_var = 640;
             res_h_var = 480;
-            // Dist
-            snd_dist_max_var = 600;
             // Better Loop
             loop_var = 2;
             break;
@@ -216,6 +216,7 @@ object_event_add
             do_fog_var = false;
             web_start_var = 0;
             door_trig_var = false;
+            atk_range_var = 4/pixel_meter_rate_const;
             // Teleport
             tp_dist_min_var = 320/3; // 106.r6
             tp_dist_max_var = 2560/3; // 853.r3
@@ -306,6 +307,7 @@ object_event_add
             zone_start_var = -1;
             res_w_var = 640;
             res_h_var = 480;
+            atk_range_var = global.mon_coll[2];
             // Remove some stuff from SJSM White Face
             tp_spawn_var = false;
             exit_spawn_var = false;

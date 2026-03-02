@@ -4,9 +4,9 @@ Argument 0: Room Variable (same for all rooms)
 // Spawn spots// Name
 room_set_code
 (
-    argument0,"
+    argument0,'
     ini_open(global.lang_var);
-	global.rm_name_var = ini_read_string('ROOM','jail','ROOM_jail')+' 6 A';
+	global.rm_name_var = ini_read_string("ROOM","jail","ROOM_jail")+" 6 A";
 	ini_close();
     // Spawn
     global.spawn_len_var = 2;
@@ -19,23 +19,13 @@ room_set_code
     global.spawn_arr[1,2] = 0;
     global.spawn_arr[1,3] = 180;
     // Mark
-    global.mark_len_var = 3;
-    global.mark_arr[0,0] = 175;
-    global.mark_arr[0,1] = 253;
-    global.mark_arr[0,2] = 0;
-    global.mark_arr[1,0] = 177;
-    global.mark_arr[1,1] = 344;
-    global.mark_arr[1,2] = 0;
-    global.mark_arr[2,0] = 298;
-    global.mark_arr[2,1] = 241;
-    global.mark_arr[2,2] = 0;
-    mark_create_scr();
+    global.mark_len_var = -1;
     // 3D Draw
     d3d_start();
     global.draw_3d_var = true;
     // Doors
     spawn_create_scr(true,false);
-")
+');
 // Room settings
 room_set_width(argument0,1280);
 room_set_height(argument0,720);
