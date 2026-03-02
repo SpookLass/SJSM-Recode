@@ -12,7 +12,23 @@ object_event_add
     event_inherited();
     cam_id_var = 0;
     player_id_var = global.menu_player_var;
-    do_stam_var = false;
     do_taker_var = false;
     invuln_var = true;
+    do_stam_var = false;
+    switch global.player_type_var
+    {
+        case 1:
+        {
+            back_var = false;
+            do_sprint_var = false;
+            spd_base_var = 1.2;
+            acc_var = 0.6;
+            break;
+        }
+        case 2:
+        {
+            do_sprint_var = false;
+            break;
+        }
+    }
 ');

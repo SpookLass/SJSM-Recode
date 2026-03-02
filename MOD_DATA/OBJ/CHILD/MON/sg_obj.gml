@@ -36,7 +36,6 @@ object_event_add
     alarm_len_var = 10;
     alarm_ini_scr();
     blood_spr_var = blood_kh_spr;
-    do_wander_var = false;
     atk_type_var = 0;
     atk_flash_var = true;
     atk_snd_var = 0;
@@ -58,6 +57,9 @@ object_event_add
     charge_alarm_01_var = 30;
     charge_alarm_02_var = 15;
     charge_alarm_03_var = 15;
+    // Wander
+    do_wander_var = false;
+    chase_dist_var = 128/3;
     // Effects
     fog_end_var = 96;
 	do_fog_var = true;
@@ -141,7 +143,6 @@ object_event_add
             do_atk_var = true;
             do_wander_var = true;
             wander_attempt_var = 30;
-            chase_dist_var = 128/3;
             // Variables
             atk_range_var = 416/15; // 27.7r3
             dmg_alarm_var = 180;
@@ -174,11 +175,7 @@ object_event_add
 // Room Start
 object_event_add
 (argument0,ev_other,ev_room_start,'
-    if do_wander_var
-    {
-        event_user(13); // Not doing automatically for some reason
-        wander_var = true;
-    }
+    if do_wander_var { wander_var = true; }
     event_inherited();
     // Spawn
     for (local.i=0; local.i<spawn_attempt_var; local.i+=1;)

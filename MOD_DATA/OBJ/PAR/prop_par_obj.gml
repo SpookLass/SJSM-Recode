@@ -29,8 +29,8 @@ snap_var
 // Create event
 object_event_add
 (argument0,ev_create,0,'
-    event_inherited();
     if !variable_local_exists("reflect_var") { reflect_var = true; }
+    event_inherited();
     if !variable_local_exists("type_var") { type_var = 0; }
     if !variable_local_exists("store_tex_var") { store_tex_var = -1; }
     if !variable_local_exists("tex_w_var") { tex_w_var = 1; }

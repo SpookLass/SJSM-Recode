@@ -677,12 +677,15 @@ object_event_add
 // Hurt Event
 object_event_add
 (argument0,ev_other,ev_user4,'
-    event_inherited();
-    with instance_create(0,0,fade_eff_obj)
+    if !enter_var
     {
-        image_blend = c_white;
-        cam_id_var = other.hurt_target_var.cam_id_var;
-        set_alarm_scr(0,8);
+        event_inherited();
+        with instance_create(0,0,fade_eff_obj)
+        {
+            image_blend = c_white;
+            cam_id_var = other.hurt_target_var.cam_id_var;
+            set_alarm_scr(0,8);
+        }
     }
 ');
 // Sound update

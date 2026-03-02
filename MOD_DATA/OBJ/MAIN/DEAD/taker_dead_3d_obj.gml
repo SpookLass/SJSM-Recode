@@ -16,6 +16,7 @@ object_event_add
     spot_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DEAD\taker_spot_snd.wav",true);
     fmod_snd_set_minmax_dist_scr(spot_snd_var,0,600)
     load_var = true;
+    spot_id_var = 0;
     // Alarm
     alarm_len_var = 2;
     alarm_ini_scr();

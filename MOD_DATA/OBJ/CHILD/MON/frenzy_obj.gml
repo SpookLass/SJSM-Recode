@@ -43,6 +43,7 @@ object_event_add
     fade_alarm_var = 500;
     impatience_alarm_var = 0;
     respawn_alarm_var = 0;
+    respawn_alone_var = false;
     // Spawning
     spawn_attempt_var = 30;
     spawn_dist_var = 64;
@@ -278,14 +279,17 @@ object_event_add
 // Hurt Event
 object_event_add
 (argument0,ev_other,ev_user4,'
-    event_inherited();
-    set_motion_3d_scr(0,false);
-    on_var = false;
-    fmod_snd_play_scr(scare_snd_var);
-    with instance_create(0,0,fade_eff_obj)
+    if !enter_var
     {
-        cam_id_var = other.hurt_target_var.cam_id_var;
-        set_alarm_scr(0,other.fade_alarm_var);
+        event_inherited();
+        set_motion_3d_scr(0,false);
+        on_var = false;
+        fmod_snd_play_scr(scare_snd_var);
+        with instance_create(0,0,fade_eff_obj)
+        {
+            cam_id_var = other.hurt_target_var.cam_id_var;
+            set_alarm_scr(0,other.fade_alarm_var);
+        }
     }
 ');
 // Draw Event

@@ -121,7 +121,7 @@ object_event_add
         atk_start_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\wc_atk_snd.wav",true);
         hurt_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\doll_hurt_snd.wav",true);
         dead_snd_var[0]  = fmod_snd_add_scr(main_directory_const+"\SND\MON\wc_dead_snd.wav",true);
-        if global.classic_mus_var { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DH\wc_static_snd.wav"); }
+        if global.old_theme_var { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DH\wc_static_snd.wav"); }
         else { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\wc_mus_snd.mp3"); }
         fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
     }
@@ -339,24 +339,27 @@ object_event_add
 // Hurt Event
 object_event_add
 (argument0,ev_other,ev_user4,'
-    event_inherited();
-    if dead_var
+    if !enter_var
     {
-        set_alarm_scr(5,dead_alarm_var);
-        anim_type_var = 1; // End on last
-        spr_id_var = 0;
-        if dead_var == 2
+        event_inherited();
+        if dead_var
         {
-            with instance_create(x,y,doll_blood_obj)
+            set_alarm_scr(5,dead_alarm_var);
+            anim_type_var = 1; // End on last
+            spr_id_var = 0;
+            if dead_var == 2
             {
-                par_var = other.id;
-                store_tex_var = background_get_texture(other.doll_blood_bg_var);
-                tex_var = store_tex_var;
+                with instance_create(x,y,doll_blood_obj)
+                {
+                    par_var = other.id;
+                    store_tex_var = background_get_texture(other.doll_blood_bg_var);
+                    tex_var = store_tex_var;
+                }
             }
+            else { dead_var += 1; }
         }
-        else { dead_var += 1; }
+        else { tone_var = c_red; }
     }
-    else { tone_var = c_red; }
 ');
 // Die event
 object_event_add

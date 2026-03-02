@@ -54,7 +54,7 @@ object_event_add(argument0,ev_step,ev_step_begin,'
                 global.input_press_arr[local.i,local.j] = global.input_arr[local.i,local.j]-global.input_prev_arr[local.i,local.j];
             }
         }
-        if global.input_press_arr[pause_input_const,local.j] == 1 && !instance_exists(pause_menu_obj) && global.draw_3d_var
+        if global.input_press_arr[pause_input_const,local.j] == 1 && !instance_exists(pause_menu_obj) && global.draw_3d_var && global.can_pause_var
         {
             with instance_create(0,0,pause_menu_obj)
             {

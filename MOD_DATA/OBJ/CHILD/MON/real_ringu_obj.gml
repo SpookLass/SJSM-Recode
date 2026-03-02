@@ -247,10 +247,13 @@ object_event_add
 ');
 // Hurt Event
 object_event_add
-(argument0,ev_other,ev_user4,"
-    snd_var = fmod_snd_3d_play_scr(snd_arr[4,0]);
-    event_inherited();
-");
+(argument0,ev_other,ev_user4,'
+    if !enter_var
+    {
+        snd_var = fmod_snd_3d_play_scr(snd_arr[4,0]);
+        event_inherited();
+    }
+');
 // Delay
 object_event_add
 (argument0,ev_alarm,0,"

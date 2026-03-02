@@ -506,7 +506,7 @@ object_event_add
 // Hurt
 object_event_add
 (argument0,ev_other,ev_user4,'
-    if state_var < 2 && (!state_miniboss_var || instance_number(mon_par_obj) <= 1)
+    if !enter_var && state_var < 2 && (!state_miniboss_var || instance_number(mon_par_obj) <= 1)
     {
         event_inherited();
         state_var = 2;

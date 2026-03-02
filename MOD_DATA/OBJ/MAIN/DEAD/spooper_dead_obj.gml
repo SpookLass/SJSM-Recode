@@ -99,7 +99,7 @@ object_event_add
     draw_set_halign(fa_left); draw_set_valign(fa_top);
     draw_set_alpha(1);
     draw_set_blend_mode_ext(bm_dest_color,bm_src_color);
-    draw_spr_fit_scr(spr_var,spr_id_var,0,0);
+    draw_sprite_stretched_ext(spr_var,spr_id_var,0,0,view_wview[view_current],view_hview[view_current],c_white,0.5)
     draw_set_blend_mode(bm_normal);
     draw_spr_tiled_scale_ext_scr(static_spr_var,floor(static_spr_id_var),x,y,image_xscale,image_yscale,2,0,c_white,0.5);
 ');

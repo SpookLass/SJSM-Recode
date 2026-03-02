@@ -11,7 +11,7 @@ if argument0 != "" && file_exists(argument0)
 {
     if !variable_global_exists(argument1)
     {
-        local.settings_file = filename_change_ext(argument0,".txt");
+        local.settings_file = filename_change_ext(argument0,".gml");
         // If settings file exists, read it.
         if file_exists(local.settings_file)
         {

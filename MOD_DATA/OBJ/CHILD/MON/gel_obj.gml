@@ -78,7 +78,7 @@ object_event_add
         {
             other.spr_var = spr_var;
             other.slime_bg_var = slime_bg_var;
-            other.overlay_var = overlay_var;
+            other.overlay_bg_var = overlay_bg_var;
             for (local.i=0; local.i<snd_len_var; local.i+=1;)
             { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
             other.wake_snd_var[1] = wake_snd_var[1];
@@ -341,54 +341,57 @@ object_event_add
 // Hurt Event
 object_event_add
 (argument0,ev_other,ev_user4,'
-    event_inherited();
-    if do_slime_spawn_var && stun_var == 2
+    if !enter_var
     {
-        if hurt_eff_var
+        event_inherited();
+        if do_slime_spawn_var && stun_var == 2
         {
-            with instance_create(0,0,flash_eff_obj)
+            if hurt_eff_var
             {
-                image_blend = c_red;
-                cam_id_var = other.hurt_target_var.cam_id_var;
-                set_alarm_scr(0,18);
+                with instance_create(0,0,flash_eff_obj)
+                {
+                    image_blend = c_red;
+                    cam_id_var = other.hurt_target_var.cam_id_var;
+                    set_alarm_scr(0,18);
+                }
             }
-        }
-        set_motion_3d_scr(0,true);
-        local.dist = check_ray_scr(x,y,z+(coll_var[2]/2),0,0,-1);
-        if local.dist < 10000000
-        {
-            slime_spawn_var = 3;
-            if slime_anim_var > 0
-            { h_var = 0; }
-            z_off_var = z_off_start_var;
-            slime_w_var = slime_w_base_var;
-            slime_angle_var = random(360);
-            // Snap to floor
-            z = local.dist-(coll_var[2]/2);
-            // Stun
-            move_var = false;
-            atk_var = false;
-            // Stop the alarms!
-            set_alarm_scr(1,-1);
-            set_alarm_scr(4,-1);
-            set_alarm_scr(8,-1);
-            set_alarm_scr(6,hurt_alarm_var+irandom_range(snd_delay_min_var,snd_delay_min_var));
+            set_motion_3d_scr(0,true);
+            local.dist = check_ray_scr(x,y,z+(coll_var[2]/2),0,0,-1);
+            if local.dist < 10000000
+            {
+                slime_spawn_var = 3;
+                if slime_anim_var > 0
+                { h_var = 0; }
+                z_off_var = z_off_start_var;
+                slime_w_var = slime_w_base_var;
+                slime_angle_var = random(360);
+                // Snap to floor
+                z = local.dist-(coll_var[2]/2);
+                // Stun
+                move_var = false;
+                atk_var = false;
+                // Stop the alarms!
+                set_alarm_scr(1,-1);
+                set_alarm_scr(4,-1);
+                set_alarm_scr(8,-1);
+                set_alarm_scr(6,hurt_alarm_var+irandom_range(snd_delay_min_var,snd_delay_min_var));
+            }
+            else
+            {
+                on_var = false;
+                reset_alarm_scr();
+            }
         }
         else
         {
-            on_var = false;
-            reset_alarm_scr();
+            if fmod_inst_is_play_scr(snd_var) && fmod_inst_is_3d_scr(snd_var)
+            { fmod_inst_stop_scr(snd_var); }
+            local.snd = irandom(snd_len_var-1);
+            snd_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0]);
+            sub_var[0] = snd_arr[local.snd,1];
+            sub_var[1] = snd_arr[local.snd,2];
+            set_alarm_scr(6,irandom_range(snd_delay_min_var,snd_delay_min_var));
         }
-    }
-    else
-    {
-        if fmod_inst_is_play_scr(snd_var) && fmod_inst_is_3d_scr(snd_var)
-        { fmod_inst_stop_scr(snd_var); }
-        local.snd = irandom(snd_len_var-1);
-        snd_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0]);
-        sub_var[0] = snd_arr[local.snd,1];
-        sub_var[1] = snd_arr[local.snd,2];
-        set_alarm_scr(6,irandom_range(snd_delay_min_var,snd_delay_min_var));
     }
 ');
 // Hurt Alarm

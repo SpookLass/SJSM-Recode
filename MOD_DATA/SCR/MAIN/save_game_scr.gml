@@ -24,8 +24,8 @@ ini_write_real("MAIN","mode",global.mode_var);
 ini_write_real("MAIN","type",global.main_type_var);
 ini_write_real("MAIN","diff",global.diff_var);
 ini_write_real("MAIN","custom",global.custom_var);
-local.bool = ds_list_size(global.mod_list)>0;
-ini_write_string("MAIN","mod",local.bool);
+if ds_list_size(global.mod_list)>0 { ini_write_string("MAIN","mod",true); }
+else { ini_write_string("MAIN","mod",false); }
     // Lists
 ini_write_string("MAIN","rm_list",ds_list_write(global.rm_list_var));
 ini_write_string("MAIN","mon_curr_list",ds_list_write(global.mon_curr_list));

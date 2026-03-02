@@ -198,6 +198,11 @@ object_event_add
         if !variable_local_exists("atk_flash_var") { atk_flash_var = true; }
         if !variable_local_exists("atk_snd_var") { atk_snd_var = 0; }
         if !variable_local_exists("kill_var") { kill_var = true; }
+        if atk_type_var > 0
+        {
+            if !variable_local_exists("atk_start_snd_var") { atk_start_snd_var = 0; }
+            if !variable_local_exists("atk_dist_var") { atk_dist_var = atk_range_var; }
+        }
     }
     // Hurt
     if do_hurt_var
@@ -222,7 +227,11 @@ object_event_add
         if !variable_local_exists("seen_dist_var") { seen_dist_var = 0; }
     }
     // Movement
-    if !variable_local_exists("wander_var") { wander_var = false; }
+    if !variable_local_exists("do_wander_var") { do_wander_var = false; }
+    if do_wander_var
+    {
+        if !variable_local_exists("wander_attempt_var") { wander_attempt_var = 30; }
+    }
     if !variable_local_exists("do_move_var") { do_move_var = true; }
     if do_move_var
     {
@@ -305,6 +314,7 @@ object_event_add
     is_seen_var = -1;
     spr_id_var = 0;
     spr_prog_var = 1;
+    wander_var = false;
     // Sound
     sub_var[0] = "";
     sub_var[1] = false;
@@ -419,6 +429,7 @@ object_event_add
     eye_yaw_var = yaw_var;
     eye_pitch_var = 0;
     // Set target
+    if do_wander_var { event_user(13); }
     event_user(6);
     // Sound
     if do_snd_var
@@ -433,7 +444,6 @@ object_event_add
         set_alarm_scr(0,irandom_range(delay_min_var,delay_max_var));
     }
     else { event_perform(ev_alarm,0); }
-    if wander_var { event_user(13); }
 ');
 // Step Event
 object_event_add
@@ -852,12 +862,16 @@ object_event_add
     }
     if local.success
     {
-        if local.dead && kill_var && !global.debug_var && !possess_var
+        if local.dead && !global.debug_var && !possess_var
         {
             global.dead_mon_var = object_index;
             global.menu_player_var = atk_target_var.player_id_var;
-            if global.permadeath_var { delete_save_scr(global.save_name_var); }
-            rm_goto_menu_scr(dead_rm_var,true);
+            if kill_var
+            {
+                if global.permadeath_var { delete_save_scr(global.save_name_var); }
+                rm_goto_menu_scr(dead_rm_var,true);
+            }
+            else { rm_goto_menu_scr(dead_rm_var,2); }
         }
         else { event_user(3); }
     }

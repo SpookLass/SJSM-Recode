@@ -378,23 +378,26 @@ object_event_add
 // Hurt Event
 object_event_add
 (argument0,ev_other,ev_user4,'
-    if do_coward_var
+    if !enter_var
     {
-        coward_var = true;
-        set_alarm_scr(8,hurt_alarm_var);
-        set_motion_3d_scr(0,true);
+        if do_coward_var
+        {
+            coward_var = true;
+            set_alarm_scr(8,hurt_alarm_var);
+            set_motion_3d_scr(0,true);
+        }
+        if stun_var { set_alarm_scr(9,weird_alarm_var); }
+        // Play sound
+        if fmod_inst_is_play_scr(snd_var) && fmod_inst_is_3d_scr(snd_var)
+        { fmod_inst_stop_scr(snd_var); }
+        local.snd = irandom(snd_len_var-1);
+        snd_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0]);
+        sub_var[0] = snd_arr[local.snd,1];
+        sub_var[1] = snd_arr[local.snd,2];
+        set_alarm_scr(6,irandom_range(snd_delay_min_var,snd_delay_min_var));
+        // Inherited
+        event_inherited();
     }
-    if stun_var { set_alarm_scr(9,weird_alarm_var); }
-    // Play sound
-    if fmod_inst_is_play_scr(snd_var) && fmod_inst_is_3d_scr(snd_var)
-    { fmod_inst_stop_scr(snd_var); }
-    local.snd = irandom(snd_len_var-1);
-    snd_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0]);
-    sub_var[0] = snd_arr[local.snd,1];
-    sub_var[1] = snd_arr[local.snd,2];
-    set_alarm_scr(6,irandom_range(snd_delay_min_var,snd_delay_min_var));
-    // Inherited
-    event_inherited();
 ');
 // Attack Success
 object_event_add

@@ -374,21 +374,24 @@ object_event_add
 // Hurt Event
 object_event_add
 (argument0,ev_other,ev_user4,'
-    event_inherited();
-    if stun_var
+    if !enter_var
     {
-        if warp_var { alarm_arr[8,0] += hurt_alarm_var; }
-        else if stun_var == 2
+        event_inherited();
+        if stun_var
         {
-            set_motion_3d_scr(0,true);
-            move_var = false;
-            anim_var = false;
-            atk_var = false;
-            if hurt_alarm_var
+            if warp_var { alarm_arr[8,0] += hurt_alarm_var; }
+            else if stun_var == 2
             {
-                set_alarm_scr(1,hurt_alarm_var);
-                set_alarm_scr(2,hurt_alarm_var);
-                set_alarm_scr(4,hurt_alarm_var);
+                set_motion_3d_scr(0,true);
+                move_var = false;
+                anim_var = false;
+                atk_var = false;
+                if hurt_alarm_var
+                {
+                    set_alarm_scr(1,hurt_alarm_var);
+                    set_alarm_scr(2,hurt_alarm_var);
+                    set_alarm_scr(4,hurt_alarm_var);
+                }
             }
         }
     }

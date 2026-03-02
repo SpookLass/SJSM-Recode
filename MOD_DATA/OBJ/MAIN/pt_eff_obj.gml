@@ -15,6 +15,7 @@ object_event_add
     spr_spd_var = 0.1;
     spr_id_var = 0;
     // Set
+    image_blend = make_color_rgb(179,179,179); // 178.5
     image_alpha = 0.1;
     image_xscale = 128;
     image_yscale = 384;

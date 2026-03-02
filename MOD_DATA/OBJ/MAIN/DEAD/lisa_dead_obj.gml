@@ -15,15 +15,16 @@ object_event_add
 ");
     ini_close();
     // Load assets
-    bg_var = background_add(vanilla_directory_const+"\TEX\sprites\MS25_01_spr.png",false,false);
-    spr_var = execute_file(main_directory_const+"\SPR\DEAD\lisa_dead_spr.gml",main_directory_const+"\SPR\DEAD\lisa_dead_spr.png");
+    spr_01_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS25_01_spr.png",1,false,false,0,0);
+    sprite_set_offset(spr_01_var,sprite_get_width(spr_01_var)/2,sprite_get_height(spr_01_var)/2);
+    spr_02_var = execute_file(main_directory_const+"\SPR\DEAD\lisa_dead_spr.gml",main_directory_const+"\SPR\DEAD\lisa_dead_spr.png");
     snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\lisa_wake_snd.wav");
     load_var = true;
     // Sprite
     y = random_range(-0.5,-2);
-    bg_visible_var = frac_chance_scr(3,4);
-    bg_y_var = y+random_range(-8,8);
-    spr_id_var = irandom(sprite_get_number(spr_var)-1);
+    spr_visible_var = frac_chance_scr(3,4);
+    spr_y_var = y+random_range(-8,8);
+    spr_id_var = irandom(sprite_get_number(spr_02_var)-1);
     // Sound
     fmod_snd_play_scr(snd_var);
     // String
@@ -52,7 +53,8 @@ object_event_add
 (argument0,ev_other,ev_user0,'
     if load_var
     {
-        sprite_delete(spr_var);
+        sprite_delete(spr_01_var);
+        sprite_delete(spr_02_var);
         fmod_snd_free_scr(snd_var);
         load_var = false;
     }
@@ -84,11 +86,11 @@ object_event_add
 // Effect Alarm
 object_event_add
 (argument0,ev_alarm,2,'
-    spr_id_var = irandom(sprite_get_number(spr_var)-1);
-    bg_visible_var = frac_chance_scr(3,4);
+    spr_id_var = irandom(sprite_get_number(spr_02_var)-1);
+    spr_visible_var = frac_chance_scr(3,4);
     str_visible_var = frac_chance_scr(1,3);
     image_alpha = random_range(0.7,1);
-    bg_y_var = y+random_range(-8,8);
+    spr_y_var = y+random_range(-8,8);
     set_alarm_scr(2,1);
 ');
 // Effect Alarm
@@ -100,7 +102,8 @@ object_event_add
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,'
-    if bg_visible_var { draw_bg_fit_scr(bg_var,0,bg_y_var)}
+    if spr_visible_var
+    { draw_spr_stretch_scr(spr_01_var,0,0,spr_y_var,1280,1,fa_center,fa_middle); }
     if str_visible_var
     {
         draw_set_alpha(image_alpha);
@@ -110,6 +113,6 @@ object_event_add
         draw_set_alpha(1);
     }
     draw_set_blend_mode_ext(bm_dest_color,bm_src_color);
-    draw_spr_fit_scr(spr_var,spr_id_var,0,0);
+    draw_sprite_stretched(spr_02_var,spr_id_var,0,0,view_wview[view_current],view_hview[view_current]);
     draw_set_blend_mode(bm_normal);
 ');

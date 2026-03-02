@@ -109,6 +109,7 @@ object_event_add
 	spr_spd_min_var = spr_spd_var;
 	spr_spd_max_var = spr_spd_var;
 	do_look_snd_var = false;
+	look_inst_var = noone;
 	// Effects
 	eff_color_var = make_color_rgb(97,97,106);
 	fog_end_var = 64;
@@ -275,8 +276,8 @@ object_event_add
 		static_alpha_var = 0;
 	}
 	event_inherited();
-	fmod_inst_set_3d_pos_scr(look_inst_var,x,y,z);
-	fmod_inst_set_3d_pos_scr(loop_inst_var,x,y,z);
+	if do_look_snd_var
+	{ fmod_inst_set_3d_pos_scr(look_inst_var,x,y,z); }
 ');
 // Teleport Alarm
 object_event_add

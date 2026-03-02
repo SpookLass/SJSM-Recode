@@ -15,10 +15,9 @@ object_event_add
     h_var = 32;
     tex_w_var = 1;
     tex_h_var = 1;
-    if !variable_local_exists("store_tex_var")
-    { store_tex_var = -1; }
-    mask_var = -1;
+    if !variable_local_exists("store_tex_var") { store_tex_var = -1; }
     tex_var = store_tex_var;
+    mask_var = -1;
     solid_var = true;
     color_var = true;
     grid_var = true;
@@ -30,7 +29,7 @@ object_event_add
     if tex_var == -1 { local.tex = wall_bg_tex; } 
     else { local.tex = tex_var; }
     local.tex_w = tex_w_var*w_var/32;
-    local.tex_h = tex_h_var*(texture_get_width(local.tex)/texture_get_height(local.tex))*h_var/32;
+    local.tex_h = tex_h_var*h_var/32;
     // Position
     d3d_transform_set_identity();
     d3d_transform_add_rotation_z(direction);

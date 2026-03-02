@@ -192,7 +192,7 @@ object_event_add
                 h_var = other.shadow_scale_var;
                 tex_var = store_tex_var;
                 hp_var = other.shadow_hp_var;
-                image_blend = other.fog_color_01_var;
+                image_blend = other.eff_color_var;
             }
             global.mark_arr[local.i,3] = true;
         }

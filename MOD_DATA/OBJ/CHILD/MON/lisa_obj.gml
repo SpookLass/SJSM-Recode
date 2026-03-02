@@ -43,6 +43,9 @@ object_event_add
     head_alarm_min_var = 1;
     head_alarm_max_var = 3;
     seen_alpha_rate_var = 0.02;
+    head_x_var = random_range(-0.05,0.05);
+    head_y_var = random_range(-0.05,0.05);
+    head_z_var = random_range(-0.05,0.05);
     // Movement
     do_seen_var = true;
     do_seen_mult_var = true; // Experimental!

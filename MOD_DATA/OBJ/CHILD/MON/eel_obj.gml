@@ -225,18 +225,21 @@ object_event_add
 ');
 // Delay Alarm
 object_event_add
-(argument0,ev_alarm,0,"
+(argument0,ev_alarm,0,'
     event_inherited();
     with bod_obj
     {
         if par_var == other.id
         { on_var = true; }
     }
-");
+');
 // Hurt
 object_event_add
-(argument0,ev_other,ev_user4,"
-    if hurt_snd_var
-    { fmod_snd_play_scr(choose(axe_hit_01_snd,axe_hit_02_snd)); }
-    event_inherited();
-");
+(argument0,ev_other,ev_user4,'
+    if !enter_var
+    {
+        if hurt_snd_var
+        { fmod_snd_play_scr(choose(axe_hit_01_snd,axe_hit_02_snd)); }
+        event_inherited();
+    }
+');

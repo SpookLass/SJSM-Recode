@@ -68,6 +68,7 @@ object_event_add
     res_w_var = 640;
     res_h_var = 360;
     no_fun_var = true;
+    door_trig_var = true;
     // Movement
     spd_base_real_var = 0.9;
     spd_min_var = 0;
@@ -212,6 +213,7 @@ object_event_add
             move_type_var = 2;
             do_fog_var = false;
             web_start_var = 0;
+            door_trig_var = false;
             // Teleport
             tp_dist_min_var = 320/3; // 106.r6
             tp_dist_max_var = 2560/3; // 853.r3
@@ -276,6 +278,7 @@ object_event_add
             start_var = -1;
             web_start_var = -1;
             do_fog_var = false;
+            door_trig_var = false;
             // Smaller Resolution
             res_w_var = 180;
             res_h_var = 180;
@@ -307,6 +310,7 @@ object_event_add
             tp_dist_var = -1;
             do_seen_var = false;
             attack_stun_var = false;
+            door_trig_var = false;
             // Special Imscared stuff
             delay_var = 60;
             tp_alarm_var = 120;
@@ -445,14 +449,17 @@ object_event_add
         }
     }
     // Damn Doors
-    local.mon = id;
-    with door_trig_obj
+    if door_trig_var
     {
-        if object_index != wf_door_trig_obj
+        local.mon = id;
+        with door_trig_obj
         {
-            event_perform(ev_other,ev_room_start);
-            par_var = other.id;
-            instance_change(wf_door_trig_obj,false)
+            if object_index != wf_door_trig_obj
+            {
+                event_perform(ev_other,ev_room_start);
+                par_var = other.id;
+                instance_change(wf_door_trig_obj,false)
+            }
         }
     }
     // Effects

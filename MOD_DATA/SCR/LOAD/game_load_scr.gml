@@ -38,6 +38,7 @@ global.mon_fail_var = 0;
 global.hide_hud_var = false;
 global.hide_debug_var = false;
 global.pause_var = false;
+global.can_pause_var = true;
 global.mouse_free_var = false;
 global.debug_unlock_var = true;
 for (local.i=0; local.i<8; local.i+=1;)

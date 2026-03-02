@@ -18,6 +18,7 @@ object_event_add
     wake_snd_var[2] = string_replace(ini_read_string("SUB","fd_wake","SUB_fd_wake"),"@n",name_var); wake_snd_var[3] = false;
     hurt_snd_var[2] = string_replace(ini_read_string("SUB","fd_hurt","SUB_fd_hurt"),"@n",name_var); hurt_snd_var[3] = false;
     ini_close();
+    // Variables
     type_var = 0;
     spd_base_var = 0.8;
     dur_var = irandom_range(15,25);
@@ -25,6 +26,7 @@ object_event_add
     dmg_var = 45;
     dmg_alarm_var = 120;
     atk_range_var = 48;
+    dead_rm_var = fd_dead_load_rm;
     // Sounds
     snd_len_var = 4;
     snd_num_var = 1;
@@ -86,7 +88,6 @@ object_event_add
     flame_spr_spd_var = 0.25;
     flame_h_var = 4.8;
     flame_w_var = 3;
-    flame_z_off_var = 19.2; // Gone Rouge
     flame_off_var = 105/330; // Maybe 90/330
     flame_tex_var = sprite_get_texture(flame_spr_var,0);
     flame_alpha_var = 1;
@@ -353,8 +354,11 @@ object_event_add
 // Hurt
 object_event_add
 (argument0,ev_other,ev_user4,'
-    event_inherited();
-    if hurt_tp_var == 1 { event_user(15); }
+    if !enter_var
+    {
+        event_inherited();
+        if hurt_tp_var == 1 { event_user(15); }
+    }
 ');
 // Hurt Alarm
 object_event_add
@@ -401,13 +405,29 @@ object_event_add
     event_inherited();
     if flame_var && (on_var || visible_var)
     {
-        if global.fog_dark_var { d3d_set_fog(false,c_black,0,0); }
         d3d_transform_set_identity();
-        d3d_transform_add_rotation_y(point_direction_3d_scr(x,y,z+z_off_var+flame_z_off_var,global.cam_x_var[view_current],global.cam_y_var[view_current],global.cam_z_var[view_current]));
-        d3d_transform_add_rotation_z(point_direction(x,y,global.cam_x_var[view_current],global.cam_y_var[view_current]));
-        d3d_transform_add_translation(x,y,z+z_off_var+flame_z_off_var);
+        // Reflection handling (more complex for billboarded sprites)
+        local.xtmp = x;
+        local.ytmp = y;
+        local.ztmp = z+z_off_var+flame_z_off_var;
+        if global.reflect_var
+        {
+            switch (global.reflect_axis_var)
+            {
+                case 0: { local.xtmp = global.reflect_pos_var-local.xtmp; d3d_transform_add_scaling(-1,1,1); break; }
+                case 1: { local.ytmp = global.reflect_pos_var-local.ytmp; d3d_transform_add_scaling(1,-1,1); break; }
+                case 2: { local.ztmp = global.reflect_pos_var-local.ztmp; d3d_transform_add_scaling(1,1,-1); break; }
+            }
+        }
+        // Transformations
+        d3d_transform_add_rotation_y(point_direction_3d_scr(local.xtmp,local.ytmp,local.ztmp,global.cam_x_var[view_current],global.cam_y_var[view_current],global.cam_z_var[view_current]));
+        d3d_transform_add_rotation_z(point_direction(local.xtmp,local.ytmp,global.cam_x_var[view_current],global.cam_y_var[view_current]));
+        d3d_transform_add_translation(local.xtmp,local.ytmp,local.ztmp);
+        // Draw
         draw_set_color(flame_color_var); draw_set_alpha(flame_alpha_var);
+        if global.fog_dark_var { d3d_set_fog(false,c_black,0,0); }
         d3d_draw_wall(0,(flame_w_var/2)+flame_off_var,flame_h_var/2,0,(-flame_w_var/2)+flame_off_var,-flame_h_var/2,flame_tex_var,1,1);
+        // Reset
         d3d_transform_set_identity();
         draw_set_color(c_white); draw_set_alpha(1);
         if global.fog_dark_var 

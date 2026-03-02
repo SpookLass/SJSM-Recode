@@ -340,15 +340,18 @@ object_event_add
 // Hurt Event
 object_event_add
 (argument0,ev_other,ev_user4,'
-    event_inherited();
-    if hurt_tp_var { event_user(15); }
-    if hurt_eff_var
+    if !enter_var
     {
-        with instance_create(0,0,flash_eff_obj)
+        event_inherited();
+        if hurt_tp_var { event_user(15); }
+        if hurt_eff_var
         {
-            image_blend = c_red;
-            cam_id_var = other.hurt_target_var.cam_id_var;
-            set_alarm_scr(0,18);
+            with instance_create(0,0,flash_eff_obj)
+            {
+                image_blend = c_red;
+                cam_id_var = other.hurt_target_var.cam_id_var;
+                set_alarm_scr(0,18);
+            }
         }
     }
 ');

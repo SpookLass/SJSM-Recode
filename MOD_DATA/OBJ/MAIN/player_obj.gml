@@ -40,7 +40,7 @@ object_event_add
     invert_var = false;
     // Stamina
     do_stam_var = true;
-    do_sprint_var = true; // Uhh yeah I sure it does
+    do_sprint_var = true; // Uhh yeah I sure hope it does
     sprint_var = 0;
     stam_max_var = 100;
     stam_var = stam_max_var;
@@ -285,9 +285,6 @@ object_event_add
         turn_var = false;
         if !global.dynamic_fov_var
         { current_fov_var = fov_var; }
-        // Maybe reset?
-        do_sprint_var = true;
-        do_stam_var = true;
         // Healing
         if heal_delay_var <= 0 || alarm_arr[0,1] <= 0
         { heal_var = true; }

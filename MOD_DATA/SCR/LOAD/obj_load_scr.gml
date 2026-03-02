@@ -74,6 +74,16 @@ while (local.file != "")
     draw_load_scr("Loading objects ("+string(local.i)+")...");
 }
 file_find_close();
+local.file = file_find_first(main_directory_const+"\OBJ\MAIN\SPAWN\*.gml",-1);
+while (local.file != "")
+{
+    file_to_obj_scr(main_directory_const+"\OBJ\MAIN\SPAWN\"+local.file,filename_change_ext(local.file,""),argument0);
+    local.file = file_find_next();
+    local.i += 1;
+    // Draw
+    draw_load_scr("Loading objects ("+string(local.i)+")...");
+}
+file_find_close();
 // Get the first file in the child directory
 local.file = file_find_first(main_directory_const+"\OBJ\CHILD\*.gml",-1);
 while (local.file != "")
@@ -99,6 +109,16 @@ local.file = file_find_first(main_directory_const+"\OBJ\CHILD\MON\*.gml",-1);
 while (local.file != "")
 {
     file_to_obj_scr(main_directory_const+"\OBJ\CHILD\MON\"+local.file,filename_change_ext(local.file,""),argument0);
+    local.file = file_find_next();
+    local.i += 1;
+    // Draw
+    draw_load_scr("Loading objects ("+string(local.i)+")...");
+}
+file_find_close();
+local.file = file_find_first(main_directory_const+"\OBJ\CHILD\SPAWN\*.gml",-1);
+while (local.file != "")
+{
+    file_to_obj_scr(main_directory_const+"\OBJ\CHILD\SPAWN\"+local.file,filename_change_ext(local.file,""),argument0);
     local.file = file_find_next();
     local.i += 1;
     // Draw

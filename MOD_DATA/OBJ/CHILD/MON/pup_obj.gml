@@ -222,7 +222,7 @@ object_event_add
     move_var = false;
     anim_var = false;
     if type_var > 0 { do_coll_var = true; }
-    if unseen_atk_var
+    if unseen_atk_var || temp_hd_var || hd_var
     { atk_var = false; }
     anim_type_var = 3;
     w_var = w_base_var;
@@ -270,6 +270,8 @@ object_event_add
         ascend_agg_var = 0;
         z_off_var = 0;
         state_var = false;
+        if unseen_atk_var
+        { atk_var = false; }
     }
     else if seen_start_delay_var > 0
     {
@@ -600,57 +602,60 @@ object_event_add
 // Hurt Event
 object_event_add
 (argument0,ev_other,ev_user4,'
-    if hurt_tp_var && frac_chance_scr(hurt_tp_num_var,hurt_tp_den_var)
+    if !enter_var
     {
-        if down_var { event_perform(ev_alarm,10); }
-        else { event_perform(ev_alarm,8); }
-    }
-    else
-    {
-        reset_alarm_scr();
-        event_inherited();
-        down_var = true;
-        w_var = hurt_w_var;
-        h_var = hurt_h_var;
-        anim_type_var = 1;
-        move_var = false;
-        atk_var = false;
-        anim_var = true;
-        set_motion_3d_scr(0,true);
-        visible_var = true;
-        spr_var = hurt_spr_var;
-        spr_id_var = 0;
-        tex_var = sprite_get_texture(spr_var,spr_id_var);
-        set_alarm_scr(5,hurt_anim_alarm_var);
-        z_off_var = 0;
-        // Hellgate
-        if hurt_up_var
-        { set_alarm_scr(10,irandom_range(hurt_alarm_min_var,hurt_alarm_max_var)); }
-        // Can hit multiple times
-        if !hurt_multi_var
+        if hurt_tp_var && frac_chance_scr(hurt_tp_num_var,hurt_tp_den_var)
         {
-            hurt_var = true;
-            set_alarm_scr(3,-1);
+            if down_var { event_perform(ev_alarm,10); }
+            else { event_perform(ev_alarm,8); }
         }
-        if !hurt_dur_multi_var { hurt_dur_var = 0; }
-        // Sound
-        if hd_snd_var
+        else
         {
-            if fmod_inst_is_play_scr(snd_var) && fmod_inst_is_3d_scr(snd_var)
-            { fmod_inst_stop_scr(snd_var); }
-            local.snd = irandom(snd_len_var-1);
-            snd_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0]);
-            sub_var[0] = snd_arr[local.snd,1];
-            sub_var[1] = snd_arr[local.snd,2];
-        }
-        // Effect
-        if hurt_eff_var
-        {
-            with instance_create(0,0,flash_eff_obj)
+            reset_alarm_scr();
+            event_inherited();
+            down_var = true;
+            w_var = hurt_w_var;
+            h_var = hurt_h_var;
+            anim_type_var = 1;
+            move_var = false;
+            atk_var = false;
+            anim_var = true;
+            set_motion_3d_scr(0,true);
+            visible_var = true;
+            spr_var = hurt_spr_var;
+            spr_id_var = 0;
+            tex_var = sprite_get_texture(spr_var,spr_id_var);
+            set_alarm_scr(5,hurt_anim_alarm_var);
+            z_off_var = 0;
+            // Hellgate
+            if hurt_up_var
+            { set_alarm_scr(10,irandom_range(hurt_alarm_min_var,hurt_alarm_max_var)); }
+            // Can hit multiple times
+            if !hurt_multi_var
             {
-                image_blend = c_red;
-                cam_id_var = other.hurt_target_var.cam_id_var;
-                set_alarm_scr(0,18);
+                hurt_var = true;
+                set_alarm_scr(3,-1);
+            }
+            if !hurt_dur_multi_var { hurt_dur_var = 0; }
+            // Sound
+            if hd_snd_var
+            {
+                if fmod_inst_is_play_scr(snd_var) && fmod_inst_is_3d_scr(snd_var)
+                { fmod_inst_stop_scr(snd_var); }
+                local.snd = irandom(snd_len_var-1);
+                snd_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0]);
+                sub_var[0] = snd_arr[local.snd,1];
+                sub_var[1] = snd_arr[local.snd,2];
+            }
+            // Effect
+            if hurt_eff_var
+            {
+                with instance_create(0,0,flash_eff_obj)
+                {
+                    image_blend = c_red;
+                    cam_id_var = other.hurt_target_var.cam_id_var;
+                    set_alarm_scr(0,18);
+                }
             }
         }
     }

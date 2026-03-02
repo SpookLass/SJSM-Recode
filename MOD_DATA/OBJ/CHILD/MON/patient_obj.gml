@@ -72,6 +72,7 @@ object_event_add
     tex_var = sprite_get_texture(spr_var,0);
     mdl_var = mdl_01_var;
     draw_pos_var = false;
+    weird_var = false;
     // Rand
     rand_chance_var = 3;
     rand_alarm_min_var = 3;
@@ -495,16 +496,19 @@ object_event_add
 // Hurt Event
 object_event_add
 (argument0,ev_other,ev_user4,'
-    event_inherited();
-    if stun_var == 2
+    if !enter_var
     {
-        on_var = false;
-        set_motion_3d_scr(0,true);
-        with instance_create(0,0,flash_eff_obj)
+        event_inherited();
+        if stun_var == 2
         {
-            image_blend = c_red;
-            cam_id_var = other.hurt_target_var.cam_id_var;
-            set_alarm_scr(0,18);
+            on_var = false;
+            set_motion_3d_scr(0,true);
+            with instance_create(0,0,flash_eff_obj)
+            {
+                image_blend = c_red;
+                cam_id_var = other.hurt_target_var.cam_id_var;
+                set_alarm_scr(0,18);
+            }
         }
     }
 ');

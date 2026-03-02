@@ -40,5 +40,4 @@ object_event_add
             event_user(0);
         }
     }
-    
 ');
