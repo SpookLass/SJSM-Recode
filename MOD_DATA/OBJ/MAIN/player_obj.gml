@@ -97,6 +97,7 @@ object_event_add
     bob_rate_var = 3.75;
     bob_mult_var = global.move_bob_var/100; // 12/7
     bob_var = 0;
+    ft_snd_var = true;
     // Idle Bob
     breath_rate_var = 1;
     breath_mult_var = global.idle_bob_var/100;
@@ -657,7 +658,7 @@ object_event_add
                 local.bobprev = bob_time_var;
                 bob_time_var = (bob_time_var+(bob_rate_var*local.real_spd)) mod 180;
                 bob_var = bob_mult_var*(sin(degtorad(bob_time_var))-0.5);
-                if local.bobprev > bob_time_var
+                if local.bobprev > bob_time_var && ft_snd_var
                 {
                     // Play footsteps
                     switch floor_mask_var

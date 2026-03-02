@@ -26,9 +26,14 @@ object_event_add
     spr_arr_var[0,4] = false;
     spr_arr_var[0,5] = 0;
     spr_arr_var[0,6] = 0;
+    snd_len_var = 1;
+    snd_arr_var[0,1] = vanilla_directory_const+"\SND\AMB\FD_AMB.mp3";
+    snd_arr_var[0,2] = false;
     rm_var = fd_dead_3d_rm;
     global.can_pause_var = false;
     event_inherited();
+    fmod_snd_set_group_scr(snd_arr_var[0,0],snd_group_mus_const);
+    fmod_snd_loop_scr(snd_arr_var[0,0]);
 ');
 // Destroy Event
 object_event_add

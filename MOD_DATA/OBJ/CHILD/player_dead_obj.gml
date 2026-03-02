@@ -23,6 +23,7 @@ object_event_add
             do_sprint_var = false;
             spd_base_var = 1.2;
             acc_var = 0.6;
+            ft_snd_var = false;
             break;
         }
         case 2:
