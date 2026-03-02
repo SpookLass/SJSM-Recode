@@ -84,6 +84,7 @@ object_event_add
     cyan_rand_min_var = 51;
     cyan_rand_max_var = 178.5;
     color_prio_var = 3;
+    loop_fake_var = false;
     // Assets
         // Search for existing assets to save memory
     local.loaded = false;
@@ -151,11 +152,8 @@ object_event_add
     local.set = false;
     switch local.type
     {
-        case 3: // Alternate (no loop)
-        {
-            loop_start_var = -1;
-            local.set = true;
-        }
+        case 3: // Alternate (Normal Loop)
+        { local.set = true; }
         case 0: // Recode
         {
             dur_var = 35;
@@ -178,12 +176,13 @@ object_event_add
             start_var = 15;
             js_start_var = 3;
             js_end_var = 15;
-            loop_start_var = 19; // Gotta be 1 early because pain
+            
             red_start_var = 1;
             red_end_var = 15;
             vis_phase_end_var = 19;
             amb_start_var = 5;
-            if !local.set { loop_start_var = 19; }
+            loop_start_var = 19; // Gotta be 1 early because pain
+            if !local.set { loop_fake_var = true; }
             break;
         }
         case 2: // HD
@@ -252,6 +251,8 @@ object_event_add
     }
     if zone_end_var > 0
     { zone_from_num_scr(global.zone_num_var); }
+    if loop_fake_var && loop_start_var > 0
+    { global.rm_count_override_var = noone; }
 ');
 // Room Start
 object_event_add
@@ -294,7 +295,13 @@ object_event_add
         with mus_control_obj { event_user(0); }
     }
     if loop_start_var > 0 && local.start >= loop_start_var
-    { door_trig_obj.rm_count_var = 0; }
+    {
+        if !loop_fake_var
+        { with door_trig_obj { rm_count_var = 0; }}
+        else if global.rm_count_override_var == noone
+        { global.rm_count_override_var = global.rm_count_var; }
+    }
+    
     if red_start_var > 0 && local.start >= red_start_var
     {
         with color_par_obj { if prio_var < other.color_prio_var { instance_destroy(); }}

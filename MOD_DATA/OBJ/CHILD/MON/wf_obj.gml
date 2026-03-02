@@ -192,6 +192,8 @@ object_event_add
             res_h_var = 480;
             // Dist
             snd_dist_max_var = 600;
+            // Better Loop
+            loop_var = 2;
             break;
         }
         case 4: // Old HD
@@ -367,6 +369,8 @@ object_event_add
     { zone_from_num_scr(global.zone_num_var); }
     with wf_eff_obj
     { if par_var == other.id { instance_destroy(); }}
+    if loop_var == 2 && zone_start_var > 0
+    { global.rm_count_override_var = noone; }
 ');
 // Room Start Event
 object_event_add
@@ -430,7 +434,13 @@ object_event_add
             global.zone_var = zone_list_var;
             zone_reset_scr();
         }
-        if loop_var { door_trig_obj.rm_count_var = 0; }
+        if loop_var
+        {
+            if loop_var != 2
+            { with door_trig_obj { rm_count_var = 0; }}
+            else if global.rm_count_override_var == noone
+            { global.rm_count_override_var = global.rm_count_var; }
+        }
         global.rm_name_var = string_replace(global.rm_name_var,"Long","My");
     }
     // Webs

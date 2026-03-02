@@ -275,7 +275,10 @@ object_event_add
                 draw_set_halign(fa_left); draw_set_valign(fa_top);
             }
             // Room Count
-            local.str = rm_str_var+": "+string(global.rm_count_var);
+            local.str = rm_str_var+": ";
+            if global.rm_count_override_var != noone
+            { local.str += string(global.rm_count_override_var); }
+            else { local.str += string(global.rm_count_var); }
             draw_set_halign(fa_right); 
             draw_str_shadow_scr(local.str,-54,54,0.75,0.75,scale_min_var,fa_right,fa_top,-2,2,make_color_rgb(30,0,50),c_yellow,1,0);
             if global.rm_hud_var { draw_str_shadow_scr(global.rm_name_var,-54,108,0.5,0.5,scale_min_var,fa_right,fa_top,-2,2,make_color_rgb(30,0,50),c_yellow,1,0); }

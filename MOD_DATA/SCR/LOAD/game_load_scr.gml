@@ -27,6 +27,7 @@ global.spawn_len_extra_var = -1;
 global.mark_len_var = -1;
 global.js_mark_len_var = -1;
 global.rm_count_var = 0;
+global.rm_count_override_var = noone;
 global.input_len_var = 24;
 global.debug_var = false;
 global.last_time_var = current_time;

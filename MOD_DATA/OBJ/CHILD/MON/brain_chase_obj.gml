@@ -61,10 +61,11 @@ object_event_add
             {
                 mus_prio_var = theme_mus_prio_const;
                 dur_var = irandom_range(10,15);
-                spd_var = 8/15; // Old HD
+                spd_var = 8/15; // Old HD: 0.5r3
                 target_spd_mult_var = 0.6;
                 smart_var = true;
                 eff_var = true;
+                eff_mult_var = true;
                 dmg_var = 60;
                 // Silhouette
                 sil_var = true;
@@ -105,18 +106,20 @@ object_event_add
         with instance_create(0,0,brain_eff_obj)
         {
             par_var = other.id;
+            do_mult_var = other.eff_mult_var;
+            target_spd_mult_var = other.target_spd_mult_var;
         }
     }
 ');
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,'
-    if instance_number(mon_par_obj) < 2
+    if instance_number(mon_par_obj) < 2 && !eff_mult_var
     {
         with (player_obj)
         {
             if spd_mult_var > other.target_spd_mult_var
-            { spd_mult_var = other.target_spd_mult_var; }
+            { spd_mult_var *= other.target_spd_mult_var; }
         }
     }
     event_inherited();

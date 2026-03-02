@@ -499,7 +499,11 @@ object_event_add
     on_var = true;
     if do_snd_var
     {
-        if loop_snd_var[0] == 1 { loop_inst_var = fmod_snd_3d_loop_scr(loop_snd_var[1]); }
+        if loop_snd_var[0] == 1
+        {
+            fmod_inst_stop_scr(loop_inst_var);
+            loop_inst_var = fmod_snd_3d_loop_scr(loop_snd_var[1]);
+        }
         if snd_len_var > 0 { set_alarm_scr(6,irandom_range(snd_delay_min_var,snd_delay_max_var)); }
     }
     if do_door_var

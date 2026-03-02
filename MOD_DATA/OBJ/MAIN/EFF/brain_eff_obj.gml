@@ -45,6 +45,19 @@ object_event_add
     event_inherited();
     set_alarm_scr(1,irandom_range(str_alarm_min_var,str_alarm_max_var));
 ');
+// Step Event
+object_event_add
+(argument0,ev_step,ev_step_normal,'
+    if visible && do_mult_var // && instance_number(mon_par_obj) < 2
+    {
+        with (player_obj)
+        {
+            if spd_mult_var > other.target_spd_mult_var
+            { spd_mult_var *= other.target_spd_mult_var; }
+        }
+    }
+    event_inherited();
+');
 // Anim
 object_event_add
 (argument0,ev_alarm,0,'
@@ -94,7 +107,7 @@ object_event_add
         draw_rectangle(0,0,view_wview[view_current],view_hview[view_current],false);
         // Text
         draw_set_color(str_color_var); draw_set_halign(fa_center); draw_set_valign(fa_middle);
-        draw_str_ext_scr(str_draw_var,0,0,1,1,scale_min_var,fa_center,fa_middle,0);
+        draw_str_ext_scr(str_draw_var,0,0,1,1,scale_min_var,fa_center,fa_middle,-1,108,0);
         draw_set_halign(fa_left); draw_set_valign(fa_top); draw_set_color(c_white); draw_set_alpha(1);
         d3d_set_hidden(true);
     }
