@@ -187,6 +187,7 @@ object_event_add
             hurt_snd_var = 3;
             dupe_var = 0;
             atk_range_var = 544/15; // 36.2r6
+            mus_prio_var = -1;
             break;
         }
         case 3: // Karamari

@@ -193,6 +193,7 @@ object_event_add
             drain_start_var = -1;
             hp_max_var = 5;
             hp_var = hp_max_var;
+            mus_prio_var = mb_mus_prio_const;
             break;
         }
     }

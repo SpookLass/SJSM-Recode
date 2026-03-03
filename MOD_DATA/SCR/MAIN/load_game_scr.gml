@@ -21,10 +21,9 @@ global.main_type_var = ini_read_real("MAIN","type",0);
 global.diff_var = ini_read_real("MAIN","diff",0);
 global.custom_var = ini_read_real("MAIN","custom",0);
     // Lists
-ds_list_clear(global.rm_list_var);
-ds_list_read(global.rm_list_var,ini_read_string("MAIN","rm_list","2F01000000000000"));
-ds_list_clear(global.mon_curr_list);
-ds_list_read(global.mon_curr_list,ini_read_string("MAIN","mon_curr_list","2F01000000000000"));
+ini_read_list_scr("MAIN","rm_list",global.rm_list_var);
+ini_read_list_scr("MAIN","mon_curr_list",global.mon_curr_list);
+ini_read_list_scr("MAIN","mon_list",global.mon_list);
 // Settings
 for (local.i=0; local.i<global.custom_len_var; local.i+=1)
 {

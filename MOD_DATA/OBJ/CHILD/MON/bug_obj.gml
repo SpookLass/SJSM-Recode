@@ -66,7 +66,7 @@ object_event_add
     hole_spawn_den_var = 2;
     hole_alarm_min_var = 60;
     hole_alarm_max_var = 240;
-    hole_dur_var = true;
+    hole_dur_var = false; // It is uncertain what Kiras intentions were
     // Body
     bod_len_var = 3;
     bod_dist_var = 8;
@@ -143,6 +143,7 @@ object_event_add
             hole_alarm_min_var = 30;
             hole_alarm_max_var = 30;
             hole_spawn_den_var = 1;
+            hole_dur_var = true;
             // rotate_var = true;
             bod_len_var = 10;
             do_wiggle_var = true;

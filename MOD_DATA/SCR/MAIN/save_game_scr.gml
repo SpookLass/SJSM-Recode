@@ -24,12 +24,13 @@ ini_write_real("MAIN","mode",global.mode_var);
 ini_write_real("MAIN","type",global.main_type_var);
 ini_write_real("MAIN","diff",global.diff_var);
 ini_write_real("MAIN","custom",global.custom_var);
-if ds_list_size(global.mod_list)>0 { ini_write_string("MAIN","mod",true); }
-else { ini_write_string("MAIN","mod",false); }
+if ds_list_size(global.mod_list)>0 { ini_write_string("MAIN","mod",1); }
+else { ini_write_string("MAIN","mod",0); }
     // Lists
-ini_write_string("MAIN","rm_list",ds_list_write(global.rm_list_var));
-ini_write_string("MAIN","mon_curr_list",ds_list_write(global.mon_curr_list));
-ini_write_string("MAIN","mod_list",ds_list_write(global.mod_list));
+ini_write_list_scr("MAIN","rm_list",global.rm_list_var);
+ini_write_list_scr("MAIN","mon_curr_list",global.mon_curr_list);
+ini_write_list_scr("MAIN","mon_list",global.mon_list);
+ini_write_list_scr("MAIN","mod_list",global.mod_list);
 // Settings
 for (local.i=0; local.i<global.custom_len_var; local.i+=1)
 {

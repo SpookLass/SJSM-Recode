@@ -35,6 +35,9 @@ object_event_add
     loop_snd_dist_min_var = 0;
     loop_snd_dist_max_var = 600;
     glitch_snd_len_var = 4;
+    // Music
+    mus_snd_var = -1;
+    mus_prio_var = mon_mus_prio_const;
     // White Face Specific
     vis_num_var = 2;
     vis_den_var = 3;
@@ -119,7 +122,7 @@ object_event_add
             other.wake_snd_var[1] = wake_snd_var[1];
             for (local.i=0; local.i<glitch_snd_len_var; local.i+=1;)
             { other.glitch_snd_arr[local.i,0] = glitch_snd_arr[local.i,0]; }
-            other.mus_snd_var = mus_snd_var;
+            other.mus_imscared_snd_var = mus_imscared_snd_var;
             local.loaded = true;
             break;
         }
@@ -156,8 +159,8 @@ object_event_add
         glitch_snd_arr[3] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_04_snd.wav");
         for (local.i=0; local.i<glitch_snd_len_var; local.i+=1;)
         { fmod_snd_set_group_scr(glitch_snd_arr[local.i],snd_group_mon_const); }
-        mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\wf_mus_test_snd.wav");
-        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
+        mus_imscared_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\wf_mus_test_snd.wav");
+        fmod_snd_set_group_scr(mus_imscared_snd_var,snd_group_mus_const);
     }
     tex_02_var = background_get_texture(bg_var);
     web_tex_var = background_get_texture(web_bg_var);
@@ -180,7 +183,7 @@ object_event_add
             dur_var = 30;
             start_var = -1;
             web_start_var = 15;
-            mus_prio_var = mon_mus_prio_const;
+            mus_snd_var = mus_imscared_snd_var;
             atk_range_var = global.mon_coll[2];
             // zone_start_var = -1;
             exit_spawn_var = false;
@@ -218,6 +221,7 @@ object_event_add
             web_start_var = 0;
             door_trig_var = false;
             atk_range_var = 4/pixel_meter_rate_const;
+            mus_prio_var = -1;
             // Teleport
             tp_dist_min_var = 320/3; // 106.r6
             tp_dist_max_var = 2560/3; // 853.r3
@@ -283,6 +287,7 @@ object_event_add
             web_start_var = -1;
             do_fog_var = false;
             door_trig_var = false;
+            mus_snd_var = mus_imscared_snd_var;
             // Smaller Resolution
             res_w_var = 180;
             res_h_var = 180;
@@ -309,6 +314,7 @@ object_event_add
             res_w_var = 640;
             res_h_var = 480;
             atk_range_var = global.mon_coll[2];
+            mus_snd_var = mus_imscared_snd_var;
             // Remove some stuff from SJSM White Face
             tp_spawn_var = false;
             exit_spawn_var = false;
@@ -359,7 +365,7 @@ object_event_add
         { fmod_snd_free_scr(glitch_snd_arr[local.i]); }
         fmod_snd_free_scr(loop_snd_var[1]);
         fmod_snd_free_scr(wake_snd_var[1]);
-        fmod_snd_free_scr(mus_snd_var);
+        fmod_snd_free_scr(mus_imscared_snd_var);
         if no_fun_var { global.js_override_var = false; }
         if res_var
         {

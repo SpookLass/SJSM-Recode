@@ -152,6 +152,7 @@ object_event_add
                 z = other.z+(other.h_var/2)-(h_var/2);
                 other.note_var = id;
                 visible = false;
+                direction = other.direction;
             }
         }
     }

@@ -40,22 +40,29 @@ object_event_add
         local.mus = curr_snd_var;
         with mon_par_obj
         {
-            if mus_prio_var > other.curr_prio_var
-            || (mus_prio_var > amb_mus_prio_const && mus_prio_var == other.curr_prio_var && id > local.curr_id)
+            if variable_local_exists("mus_prio_var")
             {
-                local.curr_id = id;
-                other.curr_prio_var = mus_prio_var;
-                local.mus = mus_snd_var;
+                if mus_prio_var > other.curr_prio_var
+                || (mus_prio_var > amb_mus_prio_const && mus_prio_var == other.curr_prio_var && id > local.curr_id)
+                {
+                    local.curr_id = id;
+                    other.curr_prio_var = mus_prio_var;
+                    local.mus = mus_snd_var;
+                }
             }
         }
         with mus_par_obj
         {
-            if prio_var > other.curr_prio_var
-            || (prio_var > amb_mus_prio_const && prio_var == other.curr_prio_var && id > local.curr_id)
+            // This can run before the create event for some reason
+            if variable_local_exists("prio_var")
             {
-                local.curr_id = id;
-                other.curr_prio_var = prio_var;
-                local.mus = snd_var;
+                if prio_var > other.curr_prio_var
+                || (prio_var > amb_mus_prio_const && prio_var == other.curr_prio_var && id > local.curr_id)
+                {
+                    local.curr_id = id;
+                    other.curr_prio_var = prio_var;
+                    local.mus = snd_var;
+                }
             }
         }
         if curr_prio_var > amb_mus_prio_const

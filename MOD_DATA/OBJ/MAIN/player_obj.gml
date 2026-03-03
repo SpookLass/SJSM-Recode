@@ -285,7 +285,7 @@ object_event_add
         in_door_var = false;
         hurt_var = false;
         turn_var = false;
-        if !global.dynamic_fov_var
+        if global.dynamic_fov_var <= 0
         { current_fov_var = fov_var; }
         // Healing
         if heal_delay_var <= 0 || alarm_arr[0,1] <= 0
@@ -689,9 +689,9 @@ object_event_add
         hp_var = max(0,hp_var); // median(0,hp_max_var,hp_var); Allow overheal
         hp_infect_var = median(0,hp_max_var-hp_var,hp_infect_var);
         // Calculate FOV
-        if global.dynamic_fov_var
+        if global.dynamic_fov_var > 0
         {
-            local.target_fov = fov_var*power(max(1,spd_var/spd_base_var),0.25); // 0.6
+            local.target_fov = fov_var*power(max(1,spd_var/spd_base_var),global.dynamic_fov_var/200); // 0.6
             if current_fov_var != local.target_fov
             {
                 local.fov_diff = abs(local.target_fov-current_fov_var);
