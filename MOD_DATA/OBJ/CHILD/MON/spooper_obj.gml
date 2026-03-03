@@ -25,6 +25,7 @@ object_event_add
     dmg_min_var = -1;
     w_var = 20;
     h_var = 20;
+    eye_h_var = 16.7;
     z_off_base_var = 3;
     z_off_var = 3;
     dupe_var = dupe_never_const;

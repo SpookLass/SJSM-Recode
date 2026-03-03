@@ -24,6 +24,7 @@ object_event_add
     dmg_alarm_var = -1;
     w_var = 16.8;
     h_var = 25.2;
+    eye_h_var = 22.6;
     atk_range_var = 12;
     blood_spr_var = blood_kh_spr;
     dupe_var = dupe_canon_const;

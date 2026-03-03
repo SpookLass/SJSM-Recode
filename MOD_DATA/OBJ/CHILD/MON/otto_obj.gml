@@ -38,6 +38,7 @@ object_event_add
     atk_stun_var = 30;
     w_var = 11;
     h_var = 24;
+    eye_h_var = 21.8;
     spr_num_var = 4;
     anim_type_var = 4;
     sil_dist_var = -0.1;

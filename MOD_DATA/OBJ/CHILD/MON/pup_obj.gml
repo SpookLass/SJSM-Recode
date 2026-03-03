@@ -39,6 +39,7 @@ object_event_add
     dmg_alarm_var = 120;
     w_base_var = 10;
     h_base_var = 20;
+    eye_h_var = 17.7;
     hd_var = false;
     hd_snd_var = false;
     terrible_var = false;

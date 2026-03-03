@@ -33,6 +33,7 @@ object_event_add
     delay_var = 0;
     w_var = 24.7;
     h_var = 25.3;
+    eye_h_var = 23.4;
     z_off_var = -0.3;
     blood_spr_var = blood_kh_spr;
     // Special

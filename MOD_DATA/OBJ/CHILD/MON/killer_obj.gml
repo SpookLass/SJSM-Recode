@@ -119,6 +119,7 @@ object_event_add
     dmg_var = 45;
     dmg_alarm_var = 30;
     h_var = 22;
+    eye_h_var = 18.4;
     atk_range_var = 48;
     dead_rm_var = killer_dead_rm;
     scary_var = false;

@@ -21,8 +21,9 @@ object_event_add
     delay_var = 180;
     dmg_var = 20;
     dmg_alarm_var = 60;
-    w_var = 10;
-    h_var = 20;
+    w_var = 11;
+    h_var = 28.9;
+    eye_h_var = 24.8;
     dupe_var = dupe_canon_const;
     blood_spr_var = blood_kh_spr;
     atk_range_var = 48;

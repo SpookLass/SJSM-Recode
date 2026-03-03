@@ -36,6 +36,7 @@ object_event_add
     dmg_alarm_var = 60;
     w_var = 10;
     h_var = 20;
+    eye_h_var = 28.6; // 10.6
     spr_spd_var = 1;
     fog_prio_var = 2;
     dead_rm_var = gc_dead_rm;

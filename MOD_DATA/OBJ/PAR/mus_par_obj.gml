@@ -11,6 +11,9 @@ object_event_add
 (argument0,ev_create,0,'
     event_inherited();
     load_var = false;
+    if !variable_local_exists("prio_var")
+    { prio_var = -1; }
+    par_var = noone;
 ');
 // Destroy
 object_event_add

@@ -26,6 +26,7 @@ object_event_add
     dmg_alarm_var = 90;
     w_var = 8.6;
     h_var = 22;
+    eye_h_var = 16.8;
     z_off_var = 1;
     atk_range_var = 48;
     // Sounds
@@ -107,7 +108,7 @@ object_event_add
             shadow_scale_var = 24;
             shadow_num_var = 3;
             shadow_den_var = 5;
-            atk_range_var = coll_var[2];
+            atk_range_var = global.mon_coll_var[2];
             if current_month == 6
             {
                 gay_var = irandom_range(1,2);

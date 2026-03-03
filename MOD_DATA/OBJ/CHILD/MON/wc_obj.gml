@@ -37,6 +37,7 @@ object_event_add
     dmg_alarm_var = 36;
     w_var = 12.5;
     h_var = 30.3;
+    eye_h_var = 25.5;
     z_off_var = -0.3;
     blood_spr_var = blood_kh_spr;
     dead_var = false;
@@ -58,6 +59,8 @@ object_event_add
     hurt_alarm_var = 3;
     hurt_dist_var = 5;
     hurt_snd_var = 4;
+    hurt_snd_num_var = 1;
+    hurt_snd_den_var = 1;
         // Gotta set these manually since do_hurt_var is false
     violence_var = 0;
     hurt_dur_var = 0;

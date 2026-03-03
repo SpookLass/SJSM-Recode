@@ -28,6 +28,7 @@ object_event_add
     dmg_alarm_var = 30;
     w_var = 14;
     h_var = 21;
+    eye_h_var = 18.9;
     dead_rm_var = bekka_dead_rm;
     atk_range_var = 48;
     // mus

@@ -39,6 +39,7 @@ object_event_add
     atk_type_var = 0;
     atk_flash_var = true;
     atk_snd_var = 0;
+    eye_h_var = 17.7;
     // No official value
     dur_var = irandom_range(10,20); 
     delay_var = 120;

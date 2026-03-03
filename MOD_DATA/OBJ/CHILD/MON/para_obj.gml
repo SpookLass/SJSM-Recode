@@ -78,6 +78,7 @@ object_event_add
     state_dmg_alarm_var[0] = 120;
     state_w_var[0] = 5.5;
     state_h_var[0] = 22;
+    state_eye_h_var[0] = 19.9;
     state_dist_var[0] = 128;
     state_chance_var[0] = 6;
     state_alarm_var[0] = 12;
@@ -89,6 +90,7 @@ object_event_add
     state_dmg_alarm_var[1] = 120;
     state_w_var[1] = 17.8;
     state_h_var[1] = 22;
+    state_eye_h_var[0] = 19.9;
     state_dist_var[1] = 56;
     state_chance_var[1] = 6;
     state_alarm_var[1] = 12;
@@ -100,6 +102,7 @@ object_event_add
     state_dmg_alarm_var[2] = 120;
     state_w_var[2] = 7.5;
     state_h_var[2] = 10;
+    state_eye_h_var[0] = 2.6;
     state_dist_var[2] = 240;
     state_chance_var[2] = 2;
     state_alarm_var[2] = 60;
@@ -267,6 +270,7 @@ object_event_add
     dmg_alarm_var = state_dmg_alarm_var[0];
     w_var = state_w_var[0];
     h_var = state_h_var[0];
+    eye_h_var = state_eye_h_var[0];
     do_acc_var = state_acc_var[0];
 ');
 // Destroy Event
@@ -547,6 +551,7 @@ object_event_add
     dmg_alarm_var = state_dmg_alarm_var[state_var];
     w_var = state_w_var[state_var];
     h_var = state_h_var[state_var];
+    eye_h_var = state_eye_h_var[state_var];
     do_acc_var = state_acc_var[state_var];
     spr_id_var = 0;
     tex_var = sprite_get_texture(spr_var,0);

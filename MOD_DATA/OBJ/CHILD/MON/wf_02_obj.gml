@@ -23,6 +23,7 @@ object_event_add
     dmg_alarm_var = 90;
     w_var = 12;
     h_var = 16.5;
+    eye_h_var = 20.5;
     z_off_base_var = 10;
     z_off_var = z_off_base_var;
     dupe_var = dupe_canon_const;

@@ -30,6 +30,7 @@ object_event_add
     dmg_alarm_var = 60;
     dead_rm_var = lisa_dead_rm;
     atk_range_var = 48;
+    eye_h_var = 18.6;
     // Sounds
     wake_snd_var[0] = 2;
     snd_dist_min_var = 0;

@@ -26,6 +26,7 @@ object_event_add
     dmg_var = 20;
     dmg_alarm_var = 10;
     z_off_var = -1.5;
+	eye_h_var = 18.75;
 	blood_spr_var = blood_kh_spr;
 	atk_range_var = 12;
     // Assets
@@ -249,6 +250,7 @@ object_event_add
 	{
 		local.dmg = dmg_rate_var/target_dist_var;
 		target_var.hp_var -= local.dmg*global.delta_time_var;
+		target_var.heal_mult_var = 0;
 	}
 	if is_seen_var == 1
 	{
@@ -395,7 +397,7 @@ object_event_add
 		with instance_create(0,0,dh_eff_obj)
 		{ par_var = other.id; }
 	}
-	if !instance_exists(hk_door_obj)
+	if door_var && !instance_exists(hk_door_obj)
 	{
 		local.par = id;
 		with door_obj

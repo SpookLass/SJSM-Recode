@@ -202,6 +202,7 @@ object_event_add
         {
             if !variable_local_exists("atk_start_snd_var") { atk_start_snd_var = 0; }
             if !variable_local_exists("atk_dist_var") { atk_dist_var = atk_range_var; }
+            if !variable_local_exists("atk_anim_var") { atk_anim_var = 0; }
         }
     }
     // Hurt
@@ -231,6 +232,9 @@ object_event_add
     if !variable_local_exists("do_wander_var") { do_wander_var = false; }
     if do_wander_var
     {
+        wander_x_var = x;
+        wander_y_var = y;
+        wander_z_var = z;
         if !variable_local_exists("wander_attempt_var") { wander_attempt_var = 30; }
     }
     if !variable_local_exists("do_move_var") { do_move_var = true; }
@@ -483,7 +487,7 @@ object_event_add
             possess_var = false;
         }
         // Set camera and listener position
-        cam_set_scr(cam_id_var,x,y,z+18,eye_yaw_var,eye_pitch_var,global.fov_var,0,cam_mon_const);
+        cam_set_scr(cam_id_var,x,y,z+eye_h_var,eye_yaw_var,eye_pitch_var,global.fov_var,0,cam_mon_const);
         // Could put this in control, but needs extra camera boolean
         fmod_listen_pos_ex_scr
         (
@@ -1276,13 +1280,18 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user13,'
     // Find applicable floor to wander to
+    wander_x_var = x;
+    wander_y_var = y;
+    wander_z_var = z;
     for (local.i=0; local.i<wander_attempt_var; local.i+=1;)
     {
         local.flr = instance_find(floor_par_obj,irandom(instance_number(floor_par_obj)-1));
         local.xtmp = local.flr.x+random_range(-local.flr.w_var/2,local.flr.w_var/2);
         local.ytmp = local.flr.y+random_range(-local.flr.h_var/2,local.flr.h_var/2);
         local.ztmp = local.flr.z;
-        if do_coll_var && !check_coll_scr(0,0,0,0,local.xtmp,local.ytmp,local.ztmp)
+        local.bool = true;
+        if do_coll_var { if check_coll_scr(0,0,0,0,local.xtmp,local.ytmp,local.ztmp) { local.bool = false; }}
+        if local.bool
         {
             wander_x_var = local.xtmp;
             wander_y_var = local.ytmp;

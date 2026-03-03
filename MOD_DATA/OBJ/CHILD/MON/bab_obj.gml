@@ -52,6 +52,7 @@ object_event_add
     w_01_var = 7;
     w_02_var = 3.5;
     h_var = 20;
+    eye_h_var = 18
     atk_range_var = 48;
     // Special
     stop_var = false;

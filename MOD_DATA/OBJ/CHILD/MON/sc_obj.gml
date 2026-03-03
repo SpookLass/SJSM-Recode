@@ -23,6 +23,7 @@ object_event_add
     dmg_alarm_var = 120;
     w_var = 10;
     h_var = 17;
+    eye_h_var = 14.9;
     z_off_var = 5;
     do_anim_var = false;
     blood_spr_var = blood_kh_spr;

@@ -12,13 +12,14 @@ object_event_add
     event_inherited();
     if !variable_local_exists("color_var") { color_var = false; }
     if !variable_local_exists("reflect_var") { reflect_var = false; }
+    if !variable_local_exists("z") { z = 0; }
     spd_var = 0;
     x_spd_var = 0;
     y_spd_var = 0;
     z_spd_var = 0;
     yaw_var = 0;
     pitch_var = 0;
-    z = 0;
+    
     zstart = z;
     do_coll_var = false;
     grav_var = 0;

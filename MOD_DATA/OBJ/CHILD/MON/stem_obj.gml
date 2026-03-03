@@ -42,6 +42,7 @@ object_event_add
     frick_var = acc_var;
     w_var = 10;
     h_var = 10;
+    eye_h_var = 18; // Temp
     dupe_var = dupe_canon_const;
     spr_spd_var = 1;
     if !irandom(3)

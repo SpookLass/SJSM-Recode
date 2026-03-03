@@ -9,6 +9,7 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,0,'
+    event_inherited();
     // Render
     spr_var = taker_spr;
     spr_id_var = 0;
@@ -18,7 +19,6 @@ object_event_add
     h_var = 12;
     x_off_var = 0;
     y_off_var = 0;
-    z_off_var = 10;
     z_off_var = 10;
     // Alarms
     alarm_len_var = 3;

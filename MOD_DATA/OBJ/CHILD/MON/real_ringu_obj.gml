@@ -25,6 +25,7 @@ object_event_add
     dmg_var = 45;
     dmg_alarm_var = 120;
     h_var = 20;
+    eye_h_var = 18.6;
     z_off_var = 2;
     atk_range_var = 48;
     dead_rm_var = real_ringu_dead_rm;
@@ -259,23 +260,23 @@ object_event_add
 ');
 // Delay
 object_event_add
-(argument0,ev_alarm,0,"
+(argument0,ev_alarm,0,'
     set_alarm_scr(8,rand_alarm_var);
     event_inherited();
-");
+');
 // Step event
 object_event_add
-(argument0,ev_step,ev_step_normal,"
+(argument0,ev_step,ev_step_normal,'
     if on_var
     {
         if is_seen_var == 1 { spd_base_var = state_seen_spd_var[state_var]; }
         else { spd_base_var = state_spd_var[state_var]; }
     }
     event_inherited();
-");
+');
 // Animation
 object_event_add
-(argument0,ev_other,ev_user1,"
+(argument0,ev_other,ev_user1,'
     event_inherited();
     if state_var == 1
     {
@@ -286,14 +287,14 @@ object_event_add
             image_alpha = random_range(0.2,1);
         }
     }
-");
+');
 // Random anim
 object_event_add
-(argument0,ev_alarm,8,"
+(argument0,ev_alarm,8,'
     if state_var == 1 && frac_chance_scr(1,rand_chance_var)
     { spr_id_var = irandom(sprite_get_number(spr_var)-1); }
     set_alarm_scr(8,rand_alarm_var);
-");
+');
 // Change form event
 object_event_add
 (argument0,ev_other,ev_user14,'

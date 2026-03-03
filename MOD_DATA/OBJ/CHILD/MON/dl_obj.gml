@@ -26,6 +26,7 @@ object_event_add
     dmg_alarm_var = 160;
     w_var = 10;
     h_var = 24.28;
+    eye_h_var = 19.2;
     z_off_var = 0;
     atk_range_var = 48;
     // Sounds

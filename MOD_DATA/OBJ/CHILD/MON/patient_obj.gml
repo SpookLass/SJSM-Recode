@@ -23,6 +23,7 @@ object_event_add
     dead_rm_var = patient_dead_rm;
     inv_time_var = 0;
     atk_range_var = 48;
+    eye_h_var = 18.7;
     // Theme
     mus_delay_var = 144
     // Assets
