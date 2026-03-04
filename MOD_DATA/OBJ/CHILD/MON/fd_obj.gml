@@ -163,6 +163,7 @@ object_event_add
         { meat_var = true; }
         case 2: // HD
         {
+            dur_var = irandom_range(10,20);
             hide_reset_var = true; // Not certain on this
             flame_var = true;
             spd_base_var = 8/9; // 0.r8

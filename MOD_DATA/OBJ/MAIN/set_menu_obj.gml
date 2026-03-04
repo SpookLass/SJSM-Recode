@@ -587,7 +587,7 @@ object_event_add
     if instance_exists(pause_menu_obj)
     {
         if !global.pause_theme_var
-        { fmod_inst_stop_scr(mus_snd_var); }
+        { fmod_inst_stop_scr(pause_menu_obj.mus_snd_var); }
     }
 ');
 // Reset Settings

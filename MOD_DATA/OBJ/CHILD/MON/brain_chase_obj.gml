@@ -28,6 +28,7 @@ object_event_add
     eff_var = false;
     smart_var = false;
     atk_range_var = 32;
+    eff_mult_var = false;
     // Sounds
     do_snd_var = true;
     loop_snd_var[0] = true;

@@ -2552,7 +2552,7 @@ set_label_arr[global.set_len_var,1] = true; // Translate
 set_label_arr[global.set_len_var,2] = "on"; // Value 2
 set_label_arr[global.set_len_var,3] = true; // Translate
     // Default
-set_default_arr[global.set_len_var,0] = pause_theme_const; // Default
+set_default_arr[global.set_len_var,0] = old_theme_const; // Default
 global.set_len_var += 1;
 /*
 -----------

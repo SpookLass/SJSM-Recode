@@ -26,6 +26,7 @@ object_event_add
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,'
+    local.player = noone;
     // Turn
     local.bestdist = -1;
     local.seen = false;

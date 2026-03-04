@@ -30,7 +30,7 @@ object_event_add
     type_var = 1;
     spd_base_var = 0.2;
     spr_spd_var = 1/15;
-    dmg_var = 60;
+    dmg_var = 40;
     dmg_alarm_var = 120;
     atk_range_var = 48;
     alarm_len_var = 10;

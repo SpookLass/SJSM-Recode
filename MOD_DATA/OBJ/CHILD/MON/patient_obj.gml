@@ -71,6 +71,7 @@ object_event_add
     rage_var = false;
     seen_rage_var = false;
     inv_move_var = false;
+    inv_limit_var = -1;
     // Render
     tex_var = sprite_get_texture(spr_var,0);
     mdl_var = mdl_01_var;

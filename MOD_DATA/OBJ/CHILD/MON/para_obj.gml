@@ -90,7 +90,7 @@ object_event_add
     state_dmg_alarm_var[1] = 120;
     state_w_var[1] = 17.8;
     state_h_var[1] = 22;
-    state_eye_h_var[0] = 19.9;
+    state_eye_h_var[1] = 19.9;
     state_dist_var[1] = 56;
     state_chance_var[1] = 6;
     state_alarm_var[1] = 12;
@@ -102,7 +102,7 @@ object_event_add
     state_dmg_alarm_var[2] = 120;
     state_w_var[2] = 7.5;
     state_h_var[2] = 10;
-    state_eye_h_var[0] = 2.6;
+    state_eye_h_var[2] = 2.6;
     state_dist_var[2] = 240;
     state_chance_var[2] = 2;
     state_alarm_var[2] = 60;

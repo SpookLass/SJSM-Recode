@@ -47,7 +47,7 @@ object_event_add
 			other.mus_snd_var = mus_snd_var;
 			
 			other.lamp_mdl_var = lamp_mdl_var
-			other.lamp_texture_var = lamp_texture_var;
+			other.lamp_bg_var = lamp_bg_var;
 			
             local.loaded = true;
             break;
