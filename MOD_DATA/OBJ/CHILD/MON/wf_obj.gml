@@ -678,26 +678,33 @@ object_event_add
             {
                 case 0:
                 {
-                    with instance_create(0,0,flash_eff_obj)
+                    if !global.reduce_flash_var
                     {
-                        image_blend = c_red; 
-                        set_alarm_scr(0,other.eff_01_alarm_var);
-                        cam_id_var = other.target_var.cam_id_var;
+                        with instance_create(0,0,flash_eff_obj)
+                        {
+                            image_blend = c_red; 
+                            set_alarm_scr(0,other.eff_01_alarm_var);
+                            cam_id_var = other.target_var.cam_id_var;
+                        }
                     }
+                    else { fmod_snd_play_scr(glitch_snd_arr[irandom(glitch_snd_len_var-1)]); }
                     break;
                 }
                 case 1:
                 case 2:
                 {
                     fmod_snd_play_scr(glitch_snd_arr[irandom(glitch_snd_len_var-1)]);
-                    with instance_create(0,0,fade_eff_obj)
+                    if !global.reduce_flash_var
                     {
-                        if local.rand == 2 { image_blend = c_black; }
-                        else { image_blend = c_red; }
-                        set_alarm_scr(0,other.eff_02_alarm_var); 
-                        invert_var = 2;
-                        stay_var = false;
-                        cam_id_var = other.target_var.cam_id_var;
+                        with instance_create(0,0,fade_eff_obj)
+                        {
+                            if local.rand == 2 { image_blend = c_black; }
+                            else { image_blend = c_red; }
+                            set_alarm_scr(0,other.eff_02_alarm_var); 
+                            invert_var = 2;
+                            stay_var = false;
+                            cam_id_var = other.target_var.cam_id_var;
+                        }
                     }
                     break;
                 }

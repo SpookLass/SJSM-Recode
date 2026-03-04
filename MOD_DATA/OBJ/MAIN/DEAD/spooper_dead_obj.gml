@@ -18,8 +18,6 @@ object_event_add
     spr_var = execute_file(main_directory_const+"\SPR\DEAD\lisa_dead_spr.gml",main_directory_const+"\SPR\DEAD\lisa_dead_spr.png");
     snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DEAD\spooper_dead_snd.wav");
     load_var = true;
-    // Sprite
-    spr_id_var = irandom(sprite_get_number(spr_var)-1);
     // Static
     static_spr_var = static_01_spr;
     image_xscale = 256;
@@ -35,7 +33,13 @@ object_event_add
     alarm_len_var = 3;
     alarm_ini_scr();
     set_alarm_scr(0,270);
-    set_alarm_scr(2,1);
+    // Flash
+    if !global.reduce_flash_var
+    { 
+        set_alarm_scr(2,1);
+        spr_id_var = irandom(sprite_get_number(spr_var)-1);
+    }
+    else { spr_id_var = 5; }
 ');
 // Destroy
 object_event_add

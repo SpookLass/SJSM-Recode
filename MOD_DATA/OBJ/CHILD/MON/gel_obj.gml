@@ -347,7 +347,7 @@ object_event_add
         event_inherited();
         if do_slime_spawn_var && stun_var == 2
         {
-            if hurt_eff_var
+            if hurt_eff_var && !global.reduce_flash_var
             {
                 with instance_create(0,0,flash_eff_obj)
                 {

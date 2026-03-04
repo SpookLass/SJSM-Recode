@@ -108,7 +108,7 @@ object_event_add
             shadow_scale_var = 24;
             shadow_num_var = 3;
             shadow_den_var = 5;
-            atk_range_var = global.mon_coll_var[2];
+            atk_range_var = global.mon_coll[2];
             if current_month == 6
             {
                 gay_var = irandom_range(1,2);
@@ -228,7 +228,7 @@ object_event_add
                 {
                     prio_var = other.color_prio_var;
                     image_blend = other.eff_color_var;
-                    event_perform(ev_create,0);
+                    event_user(0);
                 }
                 break;
             }

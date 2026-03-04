@@ -36,11 +36,14 @@ object_event_add
         set_alarm_scr(0,other.fade_alarm_var);
     }
     // FLASH!!!
-    with instance_create(0,0,flash_eff_obj)
+    if !global.reduce_flash_var
     {
-        image_blend = c_red; 
-        set_alarm_scr(0,6);
-        cam_id_var = -1;
+        with instance_create(0,0,flash_eff_obj)
+        {
+            image_blend = c_red; 
+            set_alarm_scr(0,6);
+            cam_id_var = -1;
+        }
     }
 ');
 // Destroy

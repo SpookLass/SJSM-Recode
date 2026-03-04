@@ -21,7 +21,7 @@ object_event_add
     {
         with par_3d_obj
         {
-            if color_var == 1 || (color_var && global.color_var != 1)
+            if color_var == 1 || (color_var > 0 && global.color_var != 1)
             {
                 if color_var == 3 { image_blend = other.light_color_var; }
                 else { image_blend = other.image_blend; }
@@ -29,7 +29,7 @@ object_event_add
         }
         with axe_obj
         {
-            if color_var == 1 || (color_var && global.color_var != 1)
+            if color_var == 1 || (color_var > 0 && global.color_var != 1)
             {
                 if color_var == 3 { image_blend = other.light_color_var; }
                 else { image_blend = other.image_blend; }

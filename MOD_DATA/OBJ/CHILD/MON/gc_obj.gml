@@ -626,14 +626,17 @@ object_event_add
         if !irandom(3) && seen_flash_var
         {
             fmod_snd_play_scr(glitch_snd_arr[irandom(glitch_snd_len_var-1)]);
-            with instance_create(0,0,fade_eff_obj)
+            if !global.reduce_flash_var
             {
-                if !irandom(1) { image_blend = c_black; }
-                else { image_blend = c_red; }
-                set_alarm_scr(0,20); 
-                invert_var = 2;
-                stay_var = false;
-                cam_id_var = -1;
+                with instance_create(0,0,fade_eff_obj)
+                {
+                    if !irandom(1) { image_blend = c_black; }
+                    else { image_blend = c_red; }
+                    set_alarm_scr(0,20); 
+                    invert_var = 2;
+                    stay_var = false;
+                    cam_id_var = -1;
+                }
             }
         }
         set_alarm_scr(10,irandom_range(spd_delay_min_var,spd_delay_max_var));
@@ -675,11 +678,14 @@ object_event_add
             y = global.spawn_arr[0,1];
             z = global.spawn_arr[0,2];
             set_motion_scr(0,true);
-            with instance_create(0,0,flash_eff_obj)
+            if !global.reduce_flash_var
             {
-                image_blend = c_red;
-                cam_id_var = other.hurt_target_var.cam_id_var;
-                set_alarm_scr(0,18);
+                with instance_create(0,0,flash_eff_obj)
+                {
+                    image_blend = c_red;
+                    cam_id_var = other.hurt_target_var.cam_id_var;
+                    set_alarm_scr(0,18);
+                }
             }
             with instance_create(0,0,fade_eff_obj)
             {

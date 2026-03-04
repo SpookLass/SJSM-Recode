@@ -30,11 +30,14 @@ object_event_add
 (argument0,ev_other,ev_user4,'
     // Effects
     fmod_snd_play_scr(choose(axe_hit_01_snd,axe_hit_02_snd));
-    with instance_create(0,0,flash_eff_obj)
+    if !global.reduce_flash_var
     {
-        image_blend = c_red; 
-        set_alarm_scr(0,6);
-        cam_id_var = other.hurt_target_var.cam_id_var;
+        with instance_create(0,0,flash_eff_obj)
+        {
+            image_blend = c_red; 
+            set_alarm_scr(0,6);
+            cam_id_var = other.hurt_target_var.cam_id_var;
+        }
     }
     with player_obj
     {

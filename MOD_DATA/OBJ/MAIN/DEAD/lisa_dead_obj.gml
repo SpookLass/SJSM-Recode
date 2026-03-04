@@ -22,21 +22,32 @@ object_event_add
     load_var = true;
     // Sprite
     y = random_range(-0.5,-2);
-    spr_visible_var = frac_chance_scr(3,4);
     spr_y_var = y+random_range(-8,8);
-    spr_id_var = irandom(sprite_get_number(spr_02_var)-1);
     // Sound
     fmod_snd_play_scr(snd_var);
     // String
-    str_visible_var = frac_chance_scr(1,3);
     image_alpha = random_range(0.7,1);
     // Alarm
     fade_alarm_var = 30;
     alarm_len_var = 4;
     alarm_ini_scr();
     set_alarm_scr(0,270);
-    set_alarm_scr(2,1);
-    set_alarm_scr(3,irandom_range(3,6));
+    // Flashing
+    if !global.reduce_flash_var
+    {
+        set_alarm_scr(2,1);
+        set_alarm_scr(3,irandom_range(3,6));
+        spr_id_var = irandom(sprite_get_number(spr_02_var)-1);
+        spr_visible_var = frac_chance_scr(3,4);
+        str_visible_var = frac_chance_scr(1,3);
+    }
+    else
+    {
+        spr_id_var = 5;
+        spr_visible_var = true;
+        str_visible_var = true;
+    }
+    
 ');
 // Destroy
 object_event_add

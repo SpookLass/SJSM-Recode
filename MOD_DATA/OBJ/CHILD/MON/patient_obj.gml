@@ -509,11 +509,14 @@ object_event_add
         {
             on_var = false;
             set_motion_3d_scr(0,true);
-            with instance_create(0,0,flash_eff_obj)
+            if !global.reduce_flash_var
             {
-                image_blend = c_red;
-                cam_id_var = other.hurt_target_var.cam_id_var;
-                set_alarm_scr(0,18);
+                with instance_create(0,0,flash_eff_obj)
+                {
+                    image_blend = c_red;
+                    cam_id_var = other.hurt_target_var.cam_id_var;
+                    set_alarm_scr(0,18);
+                }
             }
         }
     }

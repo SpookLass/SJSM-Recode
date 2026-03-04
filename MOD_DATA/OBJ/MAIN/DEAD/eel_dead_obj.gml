@@ -41,7 +41,7 @@ object_event_add
     alarm_ini_scr();
     set_alarm_scr(0,prechomp_alarm_var);
     set_alarm_scr(3,15);
-    set_alarm_scr(4,irandom_range(3,6));
+    if !global.reduce_flash_var { set_alarm_scr(4,irandom_range(3,6)); }
 ');
 // Destroy
 object_event_add

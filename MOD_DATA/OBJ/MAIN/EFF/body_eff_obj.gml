@@ -56,7 +56,7 @@ object_event_add
 // Alarm 1 Event (Strobe)
 object_event_add
 (argument0,ev_alarm,1,'
-    if strobe_var
+    if strobe_var && !global.reduce_flash_var
     {
         if frac_chance_scr(1,strobe_chance_var)
         {

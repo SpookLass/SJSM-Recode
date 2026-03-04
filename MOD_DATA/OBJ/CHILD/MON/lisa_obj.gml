@@ -318,7 +318,7 @@ object_event_add
                 {
                     prio_var = other.color_prio_var;
                     image_blend = make_color_rgb(255,local.cyan,local.cyan);
-                    event_perform(ev_create,0);
+                    event_user(0);
                 }
             }
             else if red_rand_var
@@ -328,7 +328,7 @@ object_event_add
                 {
                     prio_var = other.color_prio_var;
                     image_blend = make_color_rgb(255,local.cyan,local.cyan);
-                    event_perform(ev_create,0);
+                    event_user(0);
                 }
             }
             else
@@ -337,7 +337,7 @@ object_event_add
                 {
                     prio_var = other.color_prio_var;
                     image_blend = make_color_rgb(255,other.cyan_min_var,other.cyan_min_var);
-                    event_perform(ev_create,0);
+                    event_user(0);
                 }
             }
         }

@@ -11,4 +11,5 @@ object_event_add
 (argument0,ev_create,0,"
     store_tex_var = white_bg_tex
     event_inherited();
+    color_var = false;
 ");

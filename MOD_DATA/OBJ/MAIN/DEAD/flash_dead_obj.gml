@@ -20,7 +20,7 @@ object_event_add
 // Draw Event
 object_event_add
 (argument0,ev_alarm,0,'
-    if frac_chance_scr(1,flash_chance_var)
+    if frac_chance_scr(1,flash_chance_var) && !global.reduce_flash_var
     {
         with instance_create(0,0,flash_eff_obj)
         {

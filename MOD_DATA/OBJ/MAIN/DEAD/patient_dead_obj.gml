@@ -42,8 +42,9 @@ object_event_add
     alarm_len_var = 4;
     alarm_ini_scr();
     set_alarm_scr(0,300);
-    set_alarm_scr(2,1);
     set_alarm_scr(3,30);
+    if !global.reduce_flash_var
+    { set_alarm_scr(2,1); }
 ');
 // Destroy
 object_event_add

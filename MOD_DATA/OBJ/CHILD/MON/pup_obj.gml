@@ -651,7 +651,7 @@ object_event_add
                 sub_var[1] = snd_arr[local.snd,2];
             }
             // Effect
-            if hurt_eff_var
+            if hurt_eff_var && !global.reduce_flash_var
             {
                 with instance_create(0,0,flash_eff_obj)
                 {

@@ -213,7 +213,7 @@ object_event_add
             {
                 prio_var = other.color_prio_var;
                 image_blend = other.dark_color_var;
-                event_perform(ev_create,0);
+                event_user(0);
             }
         }
         with fog_par_obj { if prio_var < other.fog_prio_var { instance_destroy(); }}

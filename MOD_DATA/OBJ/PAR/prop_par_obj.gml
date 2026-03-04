@@ -30,6 +30,7 @@ snap_var
 object_event_add
 (argument0,ev_create,0,'
     if !variable_local_exists("reflect_var") { reflect_var = true; }
+    if !variable_local_exists("color_var") { color_var = 2; }
     event_inherited();
     if !variable_local_exists("type_var") { type_var = 0; }
     if !variable_local_exists("store_tex_var") { store_tex_var = -1; }
@@ -40,7 +41,6 @@ object_event_add
     if !variable_local_exists("l_var") { l_var = 1; }
     if !variable_local_exists("h_var") { h_var = 1; }
     if !variable_local_exists("dist_var") { dist_var = 0; }
-    if !variable_local_exists("color_var") { color_var = 2; }
     if !variable_local_exists("close_var") { close_var = true; }
     if !variable_local_exists("step_var") { step_var = 8; }
     if !variable_local_exists("snap_var") { snap_var = false; }
