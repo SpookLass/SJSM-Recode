@@ -232,7 +232,7 @@ object_event_add
             set_alarm_scr(1,rise_alarm_var);
             set_alarm_scr(5,rise_alarm_var);
             set_alarm_scr(6,rise_alarm_var+irandom_range(snd_alarm_min_var,snd_alarm_max_var));
-            if !wander_var { set_alarm_scr(8,rise_alarm_var); }
+            if !do_wander_var { set_alarm_scr(8,rise_alarm_var); }
         }
         else
         {
@@ -244,7 +244,7 @@ object_event_add
     {
         par_var = other.id;
         bg_var = other.static_bg_var;
-        visible = !local.rise;
+        visible = !local.rise && !other.do_wander_var;
     }
 ');
 // Room End Event

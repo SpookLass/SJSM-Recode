@@ -50,6 +50,8 @@ for (local.i=0; local.i<global.player_len_var; local.i+=1;)
         cam_id_var = local.i;
         hp_var = ini_read_real("PLAYER","hp_"+string(local.i),hp_var);
         violence_var = ini_read_real("PLAYER","violence_"+string(local.i),violence_var);
+        dead_var = ini_read_real("PLAYER","dead_"+string(local.i),dead_var);
+        if dead_var { do_coll_var = false; }
         with instance_create(0,0,hud_obj) { par_var = local.player; }
         with instance_create(0,0,axe_obj) { par_var = local.player; }
         if global.player_len_var > 1

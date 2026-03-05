@@ -93,7 +93,7 @@ object_event_add
     with player_obj
     {
         hp_var = hp_max_var;
-        if dead_var
+        if dead_var && !global.permadeath_var
         {
             // Revive
             dead_var = false;

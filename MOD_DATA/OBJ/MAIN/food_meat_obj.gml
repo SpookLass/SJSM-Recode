@@ -35,6 +35,7 @@ object_event_add
     alarm_ini_scr();
     alarm_var = 60;
     angle_max_var = -10;
+    angle_var = 0;
 ');
 // Draw Event
 object_event_add

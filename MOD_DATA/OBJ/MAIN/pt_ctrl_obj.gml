@@ -25,6 +25,15 @@ object_event_add
     howard_fail_var = 0;
     howard_num_var = 1;
     howard_den_var = 5;
+    // Type
+    switch global.howard_type_var
+    {
+        case 2:
+        {
+            note_den_var = 1;
+            break;
+        }
+    }
 ');
 // Step
 object_event_add

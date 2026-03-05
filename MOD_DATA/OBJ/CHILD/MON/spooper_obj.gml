@@ -404,6 +404,7 @@ object_event_add
                 local.min = dmg_var*global.delta_time_var;
                 local.dokill = true;
             }
+            local.kill = 0;
             with player_obj
             {
                 if !other.unheal_var { heal_mult_var = 0; }
@@ -424,11 +425,36 @@ object_event_add
                         grav_var = false;
                         if local.kill == 0
                         { local.kill = true; local.player = id; }
+                        // Possess thing
+                        if other.possess_var
+                        {
+                            local.dead = false;
+                            local.player = id;
+                            other.possess_var = false;
+                            with global.player_arr[other.player_id_var]
+                            {
+                                // Revive
+                                possess_var = false;
+                                dead_var = false;
+                                do_coll_var = true;
+                                grav_var = grav_const;
+                                hp_var = hp_max_var;
+                                // Become other player
+                                x = local.player.x;
+                                y = local.player.y;
+                                z = local.player.z;
+                                eye_yaw_var = local.player.eye_yaw_var;
+                                eye_pitch_var = local.player.eye_pitch_var;
+                                // Iframes
+                                hurt_var = true;
+                                set_alarm_scr(0,revive_alarm_var);
+                            }
+                        }
                     }
                 }
                 if !dead_var { local.kill = -1; }
             }
-            if local.kill && local.dokill
+            if local.kill && local.dokill && !global.debug_var && !possess_var
             {
                 global.dead_mon_var = object_index;
                 global.menu_player_var = local.player.player_id_var;
@@ -500,6 +526,7 @@ object_event_add
             alarm_03_var = other.puke_alarm_03_var;
             unheal_var = other.unheal_var;
             slow_var = other.puke_slow_var;
+            possess_var = other.possess_var;
             set_alarm_scr(0,other.puke_alarm_01_var);
         }
     }
@@ -546,6 +573,7 @@ object_event_add
                     alarm_03_var = local.spooper.puke_alarm_03_var;
                     slow_var = local.spooper.puke_slow_var;
                     unheal_var = local.spooper.unheal_var;
+                    possess_var = local.spooper.possess_var;
                     set_alarm_scr(0,local.spooper.puke_alarm_01_var);
                 }
                 local.success = true;

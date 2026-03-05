@@ -52,11 +52,36 @@ object_event_add
                     dead_var = true;
                     do_coll_var = false;
                     grav_var = false;
+                    // Revive
+                    if other.possess_var
+                    {
+                        local.dead = false;
+                        local.player = id;
+                        other.par_var.possess_var = false;
+                        with global.player_arr[other.par_var.player_id_var]
+                        {
+                            // Revive
+                            possess_var = false;
+                            dead_var = false;
+                            do_coll_var = true;
+                            grav_var = grav_const;
+                            hp_var = hp_max_var;
+                            // Become other player
+                            x = local.player.x;
+                            y = local.player.y;
+                            z = local.player.z;
+                            eye_yaw_var = local.player.eye_yaw_var;
+                            eye_pitch_var = local.player.eye_pitch_var;
+                            // Iframes
+                            hurt_var = true;
+                            set_alarm_scr(0,revive_alarm_var);
+                        }
+                    }
                 }
             }
             if !dead_var { local.dead = false; }
         }
-        if local.dead
+        if local.dead && !global.debug_var && !possess_var
         {
             global.dead_mon_var = par_var.object_index;
             global.menu_player_var = local.player.player_id_var;

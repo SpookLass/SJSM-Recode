@@ -30,7 +30,7 @@ object_event_add
         spr_id_var = (spr_id_var+(spr_spd_var*global.delta_time_var)) mod sprite_get_number(spr_var);
         tex_01_var = sprite_get_texture(spr_var,floor(spr_id_var));
     }
-    visible = (par_var.on_var && !par_var.possess_var);
+    visible = (par_var.on_var && !par_var.possess_var && !par_var.in_door_var);
 ');
 // Initialize
 object_event_add
@@ -79,7 +79,8 @@ object_event_add
 // Draw
 object_event_add
 (argument0,ev_draw,0,'
-    if (view_current != par_var.cam_id_var || global.reflect_var) && (!par_var.dead_var || global.cam_type_var[view_current] == cam_dead_const)
+    if (view_current != par_var.cam_id_var || global.reflect_var)
+    && (!par_var.dead_var || global.cam_type_var[view_current] == cam_dead_const)
     {
         // Color types
         if tint_var { d3d_set_fog(true,image_blend,0,0); }

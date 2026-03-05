@@ -249,7 +249,7 @@ object_event_add
                 local.dist = point_distance_3d_scr(local.xtmp,local.ytmp,local.ztmp,x,y,z);
                 if local.dist < local.bestdist || local.bestdist == -1 { local.bestdist = local.dist; }
             }
-            local.bool = local.dist >= spawn_dist_var;
+            local.bool = local.bestdist >= spawn_dist_var;
         }
         else { local.bool = true; }
         if local.bool

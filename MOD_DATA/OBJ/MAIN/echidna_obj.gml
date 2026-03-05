@@ -277,7 +277,6 @@ object_event_add
     if !variable_local_exists("x_off_var") { x_off_var = 0; }
     if !variable_local_exists("y_off_var") { y_off_var = 0; }
     if !variable_local_exists("z_off_var") { z_off_var = 0; }
-    if !variable_local_exists("reflect_var") { reflect_var = true; }
     if !variable_local_exists("do_anim_var") { do_anim_var = true; }
     if !variable_local_exists("do_mdl_var") { do_mdl_var = false; }
     if do_anim_var
@@ -320,6 +319,7 @@ object_event_add
     spr_id_var = 0;
     spr_prog_var = 1;
     wander_var = false;
+    enter_var = do_enter_var;
     // Sound
     sub_var[0] = "";
     sub_var[1] = false;

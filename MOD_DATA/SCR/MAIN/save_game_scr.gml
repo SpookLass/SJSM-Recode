@@ -50,5 +50,6 @@ for (local.i=0; local.i<global.player_len_var; local.i+=1;)
 {
     ini_write_real("PLAYER","violence_"+string(local.i),global.player_arr[local.i].violence_var);
     ini_write_real("PLAYER","hp_"+string(local.i),global.player_arr[local.i].hp_var);
+    ini_write_real("PLAYER","dead_"+string(local.i),global.player_arr[local.i].dead_var);
 }
 ini_close();

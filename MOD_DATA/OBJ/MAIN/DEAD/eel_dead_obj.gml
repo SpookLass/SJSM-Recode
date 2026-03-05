@@ -19,7 +19,7 @@ object_event_add
     spr_02_var = execute_file(main_directory_const+"\SPR\DEAD\eel_dead_02_spr.gml",main_directory_const+"\SPR\DEAD\eel_dead_02_spr.png");
     spr_03_var = execute_file(main_directory_const+"\SPR\DEAD\eel_dead_03_spr.gml",main_directory_const+"\SPR\DEAD\eel_dead_03_spr.png");
     spr_04_var = static_01_spr;
-    snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DEAD\gel_dead_snd.wav");
+    snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DEAD\eel_dead_snd.ogg");
     load_var = true;
     // Sprite
     spr_03_id_var = irandom(sprite_get_number(spr_03_var)-1);

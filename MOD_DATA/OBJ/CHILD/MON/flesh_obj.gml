@@ -26,6 +26,7 @@ object_event_add
     arrow_var = false;
     angle_var = 0;
     color_prio_var = 0;
+    reflect_var = false;
     // Zone
     zone_var = true;
     zone_start_var = 0;
@@ -420,7 +421,7 @@ object_event_add
             }
             if !dead_var { local.kill = -1; }
         }
-        if local.kill
+        if local.kill && !global.debug_var
         {
             global.dead_mon_var = object_index;
             global.menu_player_var = atk_target_var.player_id_var;
