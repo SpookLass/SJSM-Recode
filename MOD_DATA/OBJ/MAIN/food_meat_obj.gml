@@ -29,6 +29,7 @@ object_event_add
     coll_var[0] = food_meat_coll[0];
     coll_var[1] = food_meat_coll[1];
     coll_var[2] = food_meat_coll[2];
+    coll_var[3] = food_meat_coll[2];
     // Axe
     weapon_var = true;
     alarm_len_var = 1;

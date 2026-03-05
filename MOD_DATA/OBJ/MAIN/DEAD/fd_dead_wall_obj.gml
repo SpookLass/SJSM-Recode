@@ -29,4 +29,5 @@ object_event_add
     coll_var[0] = fd_dead_wall_coll[0];
     coll_var[1] = fd_dead_wall_coll[1];
     coll_var[2] = fd_dead_wall_coll[2];
+    coll_var[3] = 0;
 ');

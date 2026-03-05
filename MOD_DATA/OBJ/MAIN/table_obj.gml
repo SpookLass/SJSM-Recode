@@ -22,4 +22,7 @@ object_event_add
     h_var = 9.5;
     // Collisions
     coll_var[0] = global.table_coll[0];
+    coll_var[1] = h_var;
+    coll_var[2] = w_var;
+    coll_var[3] = l_var;
 ');

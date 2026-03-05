@@ -15,7 +15,7 @@ global.brain_tank_coll[0] = prop_to_coll_scr(3,'',global.brain_tank_coll[2],glob
 p3dc_set_trimask_scr(mask_basic_const);
 // Create event
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
     store_tex_var = glass_bg_tex;
     event_inherited();
     solid_var = true;
@@ -33,12 +33,12 @@ object_event_add
     coll_var[1] = global.brain_tank_coll[1];
     coll_var[2] = global.brain_tank_coll[2];
     coll_var[3] = global.brain_tank_coll[3];
-");
+');
 // Draw
 object_event_add
-(argument0,ev_draw,0,"
+(argument0,ev_draw,0,'
     if global.fog_dark_var { d3d_set_fog(false,c_black,0,0); }
     event_inherited();
     if global.fog_dark_var 
     { d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var); }
-");
+');

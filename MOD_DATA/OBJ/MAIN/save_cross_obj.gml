@@ -25,8 +25,8 @@ object_event_add
     direction = 270;
     z += 9.5;
     type_var = 7;
-    w_var = 1;
-    l_var = 2;
+    w_var = 2;
+    l_var = 1;
     h_var = 8;
     close_var = false;
     tex_w_var = 1;
@@ -38,6 +38,7 @@ object_event_add
     coll_var[0] = save_cross_coll[0];
     coll_var[1] = save_cross_coll[1];
     coll_var[2] = save_cross_coll[2];
+    coll_var[3] = 1;
     // Trigger
     ini_open(global.lang_var);
     str_var = ini_read_string("UI","save","UI_save");

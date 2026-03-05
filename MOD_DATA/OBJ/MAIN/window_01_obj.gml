@@ -17,6 +17,13 @@ object_event_add
     mdl_var = window_01_mdl;
     mdl_path_var = window_01_mdl_path;
     grid_var = false;
+    // Grid (unsure)
+    w_var = 0;
+    h_var = 32;
+    l_var = 32;
     // Collisions
     coll_var[0] = global.window_01_coll[0];
+    coll_var[1] = h_var;
+    coll_var[2] = w_var;
+    coll_var[3] = l_var;
 ');

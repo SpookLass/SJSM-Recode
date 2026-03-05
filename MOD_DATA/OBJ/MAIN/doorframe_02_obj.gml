@@ -18,6 +18,13 @@ object_event_add
     mdl_path_var = doorframe_02_mdl_path;
     grid_var = false;
     color_var = true;
+    // Grid stuff (unsure)
+    w_var = 4;
+    h_var = 24;
+    l_var = 32;
     // Collisions
     coll_var[0] = global.doorframe_02_coll[0];
+    coll_var[1] = h_var;
+    coll_var[2] = w_var;
+    coll_var[3] = l_var;
 ');

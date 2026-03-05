@@ -26,4 +26,5 @@ object_event_add
     coll_var[0] = global.rail_coll[0];
     coll_var[1] = global.rail_coll[1];
     coll_var[2] = global.rail_coll[2];
+    coll_var[3] = 0;
 ');

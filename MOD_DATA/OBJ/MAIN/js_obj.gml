@@ -61,6 +61,7 @@ object_event_add
         coll_var[0] = global.jsr_coll[0];
         coll_var[1] = global.js_coll[1];
         coll_var[2] = global.js_coll[2];
+        coll_var[3] = 0;
         // Behavior
         if global.js_type_var == -1 { local.type = irandom(3); }
         else { local.type = global.js_type_var; }

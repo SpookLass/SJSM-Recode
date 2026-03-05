@@ -15,12 +15,14 @@ object_event_add
     type_var = 1;
     w_var = 32;
     h_var = 32;
+    l_var = 0;
     radius_var = 0;
     color_var = true;
     // Collisions
     coll_var[0] = fake_wall_coll[0];
     coll_var[1] = fake_wall_coll[1];
     coll_var[2] = fake_wall_coll[2];
+    coll_var[3] = 0;
     // Movement
     yaw_var = 0;
 ');

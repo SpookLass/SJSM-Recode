@@ -26,6 +26,7 @@ object_event_add
     coll_var[0] = global.tiri_shadow_coll[0];
     coll_var[1] = global.tiri_shadow_coll[1];
     coll_var[2] = global.tiri_shadow_coll[2];
+    coll_var[3] = global.tiri_shadow_coll[2];
     // Weapon
     weapon_var = true;
     weapon_alarm_var = 6;

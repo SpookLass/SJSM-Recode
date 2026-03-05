@@ -42,6 +42,7 @@ object_event_add
     coll_var[0] = save_ped_coll[0];
     coll_var[1] = save_ped_coll[1];
     coll_var[2] = save_ped_coll[2];
+    coll_var[3] = save_ped_coll[2];
 ');
 // Draw Event
 object_event_add

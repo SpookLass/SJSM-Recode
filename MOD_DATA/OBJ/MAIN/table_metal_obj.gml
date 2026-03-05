@@ -21,6 +21,10 @@ object_event_add
     // For grid (I dont really know how wide it is)
     w_var = 16;
     l_var = w_var;
+    h_var = 9.5;
     // Collisions
     coll_var[0] = global.table_coll[0];
+    coll_var[1] = h_var;
+    coll_var[2] = w_var;
+    coll_var[3] = l_var;
 ');

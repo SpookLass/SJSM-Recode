@@ -19,6 +19,10 @@ object_event_add
     // For grid
     w_var = 8;
     l_var = w_var;
+    h_var = 8; // Not sure
     // Collisions
     coll_var[0] = global.chair_coll[0];
+    coll_var[1] = h_var;
+    coll_var[2] = w_var;
+    coll_var[3] = l_var;
 ');

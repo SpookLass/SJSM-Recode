@@ -10,7 +10,7 @@ room_set_code
     global.rm_name_var = ini_read_string("ROOM","menu","ROOM_menu");
     ini_close();
     // Spawns
-    global.spawn_len_var = 2;
+    global.spawn_len_var = 1;
     // Spawn 0 (entrance)
     global.spawn_arr[0,0] = 176;    // X
     global.spawn_arr[0,1] = 288;    // Y

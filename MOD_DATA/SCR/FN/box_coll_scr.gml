@@ -15,22 +15,6 @@ Argument 11: Box 2 height
 
 Making Coca-Cola the old fashioned way because otherwise box collisions suck
 */
-local.radiusx = argument3/2;
-local.radiusy = argument4/2;
-local.box1_x1 = argument0-local.radiusx;
-local.box1_x2 = argument0+local.radiusx;
-local.box1_y1 = argument1-local.radiusy;
-local.box1_y2 = argument1+local.radiusy;
-local.box1_z1 = argument2;
-local.box1_z2 = argument2+argument5;
-local.radiusx = argument9/2;
-local.radiusy = argument10/2;
-local.box2_x1 = argument6-local.radiusx;
-local.box2_x2 = argument6+local.radiusx;
-local.box2_y1 = argument7-local.radiusy;
-local.box2_y2 = argument7+local.radiusy;
-local.box2_z1 = argument8;
-local.box2_z2 = argument8+argument11;
-return local.box1_x2 >= local.box2_x1 && local.box2_x2 >= local.box1_x1
-&& local.box1_y2 >= local.box2_y1 && local.box2_y2 >= local.box1_y1
-&& local.box1_z2 >= local.box2_z1 && local.box2_z2 >= local.box1_z1
+return abs(argument0-argument6) < (argument3+argument9)/2
+&& abs(argument1-argument7) < (argument4+argument10)/2
+&& abs(argument2-argument8) < (argument5+argument11)/2;

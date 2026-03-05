@@ -21,8 +21,12 @@ object_event_add
     // For grid (I dont really know how wide it is)
     w_var = 22;
     l_var = w_var;
+    h_var = 24;
     // Collisions
     coll_var[0] = global.tank_coll[0];
+    coll_var[1] = h_var;
+    coll_var[2] = w_var;
+    coll_var[3] = l_var;
     // More stuff
     store_tex_02_var = sprite_get_texture(tank_spr,1);
     tex_02_var = store_tex_02_var;

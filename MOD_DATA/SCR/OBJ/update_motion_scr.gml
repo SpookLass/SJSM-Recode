@@ -29,17 +29,28 @@ if local.xspd != 0 || local.yspd != 0 || local.zspd != 0 || (grav_var > 0 && do_
         local.coll_arr_len += 1;
     }
     // Props, needed here since rotation lol
+    local.collmax = max(coll_var[1],coll_var[2]);
     with prop_par_obj
     {
         // Equivalent to split size
-        if solid_var && point_distance_3d_scr(other.x,other.y,other.z,x,y,z) < 36+other.spd_var
+        if solid_var
         {
-            local.coll_arr[local.coll_arr_len,0] = coll_var[0];
-            local.coll_arr[local.coll_arr_len,1] = x;
-            local.coll_arr[local.coll_arr_len,2] = y;
-            local.coll_arr[local.coll_arr_len,3] = z;
-            local.coll_arr[local.coll_arr_len,4] = degtorad(direction)
-            local.coll_arr_len += 1;
+            if box_coll_scr
+            (
+                other.x,other.y,other.z,
+                other.coll_var[2]+4+abs(local.xspd*2),
+                other.coll_var[2]+4+abs(local.yspd*2),
+                other.coll_var[1]+4+abs(local.zspd*2),
+                x,y,z,coll_var[2],coll_var[3],coll_var[1]
+            )
+            {
+                local.coll_arr[local.coll_arr_len,0] = coll_var[0];
+                local.coll_arr[local.coll_arr_len,1] = x;
+                local.coll_arr[local.coll_arr_len,2] = y;
+                local.coll_arr[local.coll_arr_len,3] = z;
+                local.coll_arr[local.coll_arr_len,4] = degtorad(direction)
+                local.coll_arr_len += 1;
+            }
         }
     }
 }
