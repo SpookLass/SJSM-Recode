@@ -22,7 +22,7 @@ object_event_add
     coll_var[0] = fake_wall_coll[0];
     coll_var[1] = fake_wall_coll[1];
     coll_var[2] = fake_wall_coll[2];
-    coll_var[3] = 0;
+    coll_var[3] = fake_wall_coll[3];
     // Movement
     yaw_var = 0;
 ');

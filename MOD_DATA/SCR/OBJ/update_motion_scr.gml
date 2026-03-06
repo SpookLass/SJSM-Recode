@@ -37,11 +37,16 @@ if local.xspd != 0 || local.yspd != 0 || local.zspd != 0 || (grav_var > 0 && do_
         {
             if box_coll_scr
             (
-                other.x,other.y,other.z,
-                other.coll_var[2]+4+abs(local.xspd*2),
-                other.coll_var[2]+4+abs(local.yspd*2),
-                other.coll_var[1]+4+abs(local.zspd*2),
-                x,y,z,coll_var[2],coll_var[3],coll_var[1]
+                other.x+local.xspd,
+                other.y+local.yspd,
+                other.z+local.zspd-other.grav_var,
+                other.coll_var[2]+4+abs(local.xspd),
+                other.coll_var[2]+4+abs(local.yspd),
+                other.coll_var[1]+4+abs(local.zspd)+other.grav_var,
+                x,y,z,
+                abs(lengthdir_x(coll_var[2],direction))+abs(lengthdir_y(coll_var[3],direction)),
+                abs(lengthdir_x(coll_var[3],direction))+abs(lengthdir_y(coll_var[2],direction)),
+                coll_var[1]
             )
             {
                 local.coll_arr[local.coll_arr_len,0] = coll_var[0];

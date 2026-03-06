@@ -96,6 +96,7 @@ for (local.i=0; local.i<global.input_len_var; local.i+=1)
     {
         global.input_arr[local.i,local.j] = false;
         global.input_prev_arr[local.i,local.j] = 0;
+        global.input_press_arr[local.i,local.j] = 0;
     }
 }
 // Gay

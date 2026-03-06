@@ -8,9 +8,10 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Fake wall
 globalvar fd_dead_wall_coll;
-global.fd_dead_wall_coll[1] = 48;
-global.fd_dead_wall_coll[2] = 32;
-local.radius = global.fd_dead_wall_coll[2]/2;
+global.fd_dead_wall_coll[1] = 40;
+global.fd_dead_wall_coll[2] = 0;
+global.fd_dead_wall_coll[3] = 32;
+local.radius = global.fd_dead_wall_coll[3]/2;
 global.fd_dead_wall_coll[0] = p3dc_begin_mdl_scr();
 p3dc_add_wall_scr(0,-local.radius,global.fd_dead_wall_coll[1],0,local.radius,0)
 p3dc_end_mdl_scr();
@@ -29,5 +30,5 @@ object_event_add
     coll_var[0] = fd_dead_wall_coll[0];
     coll_var[1] = fd_dead_wall_coll[1];
     coll_var[2] = fd_dead_wall_coll[2];
-    coll_var[3] = 0;
+    coll_var[3] = fd_dead_wall_coll[3];
 ');

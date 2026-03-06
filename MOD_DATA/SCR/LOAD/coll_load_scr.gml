@@ -100,8 +100,9 @@ p3dc_end_mdl_scr();
 // Fake wall
 globalvar fake_wall_coll;
 global.fake_wall_coll[1] = 32;
-global.fake_wall_coll[2] = 32;
-local.radius = global.fake_wall_coll[2]/2;
+global.fake_wall_coll[2] = 0;
+global.fake_wall_coll[3] = 32;
+local.radius = global.fake_wall_coll[3]/2;
 global.fake_wall_coll[0] = p3dc_begin_mdl_scr();
 p3dc_add_wall_scr(0,-local.radius,global.fake_wall_coll[1],0,local.radius,0)
 p3dc_end_mdl_scr();

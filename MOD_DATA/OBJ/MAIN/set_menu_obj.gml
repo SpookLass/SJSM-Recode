@@ -589,6 +589,16 @@ object_event_add
         if !global.pause_theme_var
         { fmod_inst_stop_scr(pause_menu_obj.mus_snd_var); }
     }
+    // Reset button inputs
+    for (local.i=0; local.i<global.input_len_var; local.i+=1)
+    {
+        for (local.j=0; local.j<8; local.j+=1;)
+        {
+            global.input_arr[local.i,local.j] = false;
+            global.input_prev_arr[local.i,local.j] = 0;
+            global.input_press_arr[local.i,local.j] = 0;
+        }
+    }
 ');
 // Reset Settings
 object_event_add

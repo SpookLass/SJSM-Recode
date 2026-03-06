@@ -54,6 +54,7 @@ object_event_add
     h_var = 20;
     eye_h_var = 18
     atk_range_var = 48;
+    dead_rm_var = bab_dead_rm;
     // Special
     stop_var = false;
     drain_var = false;

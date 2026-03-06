@@ -13,6 +13,13 @@ switch global.input_move_var[argument0]
     { if abs(joy_r_scr(global.joy_id_var[argument0])) > global.joy_sens_var[argument0]/100 { return -joy_r_scr(global.joy_id_var[argument0]); } return 0; }
     // D-Pad
     case move_dpad_const:
-    { if joy_hats_scr(global.joy_id_var[argument0]) > 0 { return lengthdir_x(1,joy_hat_scr(global.joy_id_var[argument0])); } return 0;}
+    {
+        if joy_hats_scr(global.joy_id_var[argument0]) > 0
+        {
+            local.dir = joy_hat_scr(global.joy_id_var[argument0]);
+            if local.dir >= 0 { return lengthdir_x(1,local.dir); }
+        }
+        return 0;
+    }
     default: { return 0;}
 }

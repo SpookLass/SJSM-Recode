@@ -12,7 +12,7 @@ object_event_add
     reflect_var = true;
     event_inherited();
     dist_var = 32;
-    rm_var = dead_rm;
+    rm_var = dl_dead_rm;
     image_blend = c_red;
     // Draw
     w_var = 10;
