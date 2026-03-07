@@ -9,7 +9,8 @@ object_set_visible(argument0,true);
 // Collisions
 globalvar save_cross_coll;
 save_cross_coll[1] = 9.5;
-save_cross_coll[2] = 12;
+save_cross_coll[2] = 1;
+save_cross_coll[3] = 6;
 // Collision
 save_cross_coll[0] = p3dc_begin_mdl_scr();
 p3dc_add_block_scr(-0.5,-1,8,0.5,1,0,true,6);
@@ -25,8 +26,8 @@ object_event_add
     direction = 270;
     z += 9.5;
     type_var = 7;
-    w_var = 2;
-    l_var = 1;
+    w_var = 1;
+    l_var = 2;
     h_var = 8;
     close_var = false;
     tex_w_var = 1;
@@ -38,7 +39,7 @@ object_event_add
     coll_var[0] = save_cross_coll[0];
     coll_var[1] = save_cross_coll[1];
     coll_var[2] = save_cross_coll[2];
-    coll_var[3] = 1;
+    coll_var[3] = save_cross_coll[3];
     // Trigger
     ini_open(global.lang_var);
     str_var = ini_read_string("UI","save","UI_save");
@@ -94,7 +95,7 @@ object_event_add
     with player_obj
     {
         hp_var = hp_max_var;
-        if dead_var && !global.permadeath_var
+        if dead_var //&& !global.permadeath_var
         {
             // Revive
             dead_var = false;

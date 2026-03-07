@@ -60,6 +60,7 @@ object_event_add
     button_state_var = 0;
     str_bg_color_var = make_color_rgb(57,0,91);
     str_bg_select_color_var = make_color_rgb(138,0,0);
+    str_scale_var = 0.8;
     // String
     str_var = "GAME PAUSED"
     button_arr[0] = "CONTINUE"

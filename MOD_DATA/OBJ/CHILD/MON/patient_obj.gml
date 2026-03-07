@@ -196,6 +196,11 @@ object_event_add
             break;
         }
     }
+    // Alarms
+    alarm_len_var = 15;
+    alarm_ini_scr();
+    alarm_arr[11,2] = true;
+    // Hang
     if hang_var
     {
         wake_snd_var[0] = 2;
@@ -205,17 +210,14 @@ object_event_add
     }
     else
     {
-        wake_snd_var[0] = 1;
+        wake_snd_var[0] = true;
         seen_yaw_var = seen_yaw_02_var;
         seen_pitch_var = seen_pitch_02_var;
         do_anim_var = false;
+        set_alarm_scr(11,144);
     }
-    // Alarms
-    alarm_len_var = 15;
-    alarm_ini_scr();
     // Bools
     do_mdl_var = true;
-    do_snd_var = false;
 ');
 // Destroy Event
 object_event_add
@@ -264,7 +266,7 @@ object_event_add
         tex_var = sprite_get_texture(spr_var,0);
         if mus_prio_var <= amb_mus_prio_const && alarm_arr[11,0] <= 0
         {
-            if fmod_inst_is_play_scr(snd_var) { set_alarm_scr(11,fmod_inst_get_len_scr(snd_var)*(1-fmod_inst_get_pos_scr(snd_var))*milli_frame_rate_const/global.game_spd_var); }
+            if fmod_inst_is_play_scr(snd_var) { set_alarm_scr(11,fmod_inst_get_len_scr(snd_var)*(1-fmod_inst_get_pos_scr(snd_var))*milli_frame_rate_const); }
             else { event_perform(ev_alarm,11); }
         }
         x = global.spawn_arr[0,0];

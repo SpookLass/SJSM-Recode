@@ -320,6 +320,7 @@ object_event_add
     spr_prog_var = 1;
     wander_var = false;
     enter_var = do_enter_var;
+    active_var = true;
     // Sound
     sub_var[0] = "";
     sub_var[1] = false;
@@ -425,6 +426,7 @@ object_event_add
     hurt_var = false;
     enter_var = do_enter_var;
     do_coll_var = false;
+    active_var = true;
     // Reset Position
     yaw_var = global.spawn_arr[0,3];
     x = global.spawn_arr[0,0]-lengthdir_x(32,yaw_var);
@@ -700,6 +702,7 @@ object_event_add
                 {
                     local.input_dir_z = input_z_scr(player_id_var);
                     local.pitch = radtodeg(arctan2(local.input_dir_z,sqrt(sqr(local.input_dir_x)+sqr(local.input_dir_y))))+(eye_pitch_var*lengthdir_x(1,local.input_dir_z));
+                    if abs(local.input_dir_z) { active_var = true; }
                 }
             }
             else

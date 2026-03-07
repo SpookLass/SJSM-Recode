@@ -303,8 +303,11 @@ object_event_add
                     {
                         with player_obj
                         {
-                            if box_coll_scr(x,y,z,coll_var[2],coll_var[2],coll_var[1],other.x,other.y,other.z,other.trig_w_var,other.trig_w_var,other.trig_h_var)
-                            { local.active = true; break; }
+                            if !dead_var && !in_door_var && !invuln_var && on_var
+                            {
+                                if box_coll_scr(x,y,z,coll_var[2],coll_var[2],coll_var[1],other.x,other.y,other.z,other.trig_w_var,other.trig_w_var,other.trig_h_var)
+                                { local.active = true; break; }
+                            }
                         }
                         break;
                     }
@@ -312,29 +315,36 @@ object_event_add
                     {
                         with player_obj
                         {
-                            if point_distance_3d_scr(x,y,z,other.x,other.y,other.z) < other.trig_dist_var
-                            { local.active = true; break; }
+                            if !dead_var && !in_door_var && !invuln_var && on_var
+                            {
+                                if point_distance_3d_scr(x,y,z,other.x,other.y,other.z) < other.trig_dist_var
+                                { local.active = true; break; }
+                            }
                         }
+                        break;
                     }
                     case 2: // Smart Circle
                     {
                         with player_obj
                         {
-                            local.dist = point_distance_3d_scr(x,y,z,global.spawn_arr[other.spawn_var,0],global.spawn_arr[other.spawn_var,1],global.spawn_arr[other.spawn_var,2]);
-                            if local.dist < other.trig_dist_var
+                            if !dead_var && !in_door_var && !invuln_var && on_var
                             {
-                                local.xvec = (x-global.spawn_arr[other.spawn_var,0])/local.dist;
-                                local.yvec = (y-global.spawn_arr[other.spawn_var,1])/local.dist;
-                                local.zvec = (z-global.spawn_arr[other.spawn_var,2])/local.dist;
-                                local.newdist = check_ray_scr
-                                (
-                                    global.spawn_arr[other.spawn_var,0],global.spawn_arr[other.spawn_var,1],global.spawn_arr[other.spawn_var,2],
-                                    local.xvec,local.yvec,local.zvec
-                                );
-                                if local.dist <= local.newdist+1 { local.active = true; break; }
+                                local.dist = point_distance_3d_scr(x,y,z,global.spawn_arr[other.spawn_var,0],global.spawn_arr[other.spawn_var,1],global.spawn_arr[other.spawn_var,2]);
+                                if local.dist < other.trig_dist_var
+                                {
+                                    local.xvec = (x-global.spawn_arr[other.spawn_var,0])/local.dist;
+                                    local.yvec = (y-global.spawn_arr[other.spawn_var,1])/local.dist;
+                                    local.zvec = (z-global.spawn_arr[other.spawn_var,2])/local.dist;
+                                    local.newdist = check_ray_scr
+                                    (
+                                        global.spawn_arr[other.spawn_var,0],global.spawn_arr[other.spawn_var,1],global.spawn_arr[other.spawn_var,2],
+                                        local.xvec,local.yvec,local.zvec
+                                    );
+                                    if local.dist <= local.newdist+1 { local.active = true; break; }
+                                }
                             }
-                            
                         }
+                        break;
                     }
                 }
                 if local.active

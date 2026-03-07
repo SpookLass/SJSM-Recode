@@ -28,6 +28,7 @@ object_event_add
     atk_range_var = 12;
     blood_spr_var = blood_kh_spr;
     dupe_var = dupe_canon_const;
+    dead_rm_var = frenzy_dead_rm;
     // Sounds
     do_snd_var = true;
     snd_dist_min_var = -1;

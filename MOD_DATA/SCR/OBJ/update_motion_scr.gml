@@ -9,7 +9,7 @@ local.xspd = x_spd_var*argument0;
 local.yspd = y_spd_var*argument0;
 local.zspd = z_spd_var*argument0;
 // If moving or gravity, check stuff to collide with
-if local.xspd != 0 || local.yspd != 0 || local.zspd != 0 || (grav_var > 0 && do_coll_var)
+if (local.xspd != 0 || local.yspd != 0 || local.zspd != 0 || grav_var > 0) && do_coll_var
 {
     // Always check split
     local.coll_arr[0,0] = -1;

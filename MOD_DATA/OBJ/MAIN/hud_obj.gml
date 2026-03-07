@@ -363,7 +363,7 @@ Spawning
                 }
                 case para_obj:
                 {
-                    local.per = par_var.mon_var.target_dist_var/par_var.mon_var.state_dist_var[2];
+                    local.per = median(0,1,par_var.mon_var.target_dist_var/par_var.mon_var.state_dist_var[2]);
                     draw_sprite_stretched_ext(par_var.mon_var.spr_overlay_var,2,0,0,view_wview[view_current],view_hview[view_current],c_white,local.per-0.4);
                     draw_sprite_stretched_ext(par_var.mon_var.spr_overlay_var,1,0,0,view_wview[view_current],view_hview[view_current],c_white,local.per-0.2);
                     draw_sprite_stretched_ext(par_var.mon_var.spr_overlay_var,0,0,0,view_wview[view_current],view_hview[view_current],c_white,local.per);

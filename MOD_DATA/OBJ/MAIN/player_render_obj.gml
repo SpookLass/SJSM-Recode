@@ -48,10 +48,12 @@ object_event_add
         h_01_var = 20;
         w_01_var = 7.5;
         spooky_var = true;
+        tint_var = false;
     }
     else
     {
         tex_01_var = sprite_get_texture(ghost_spr,global.player_spr_id_var[player_id_var]);
+        h_01_var = 20;
         w_01_var = 10;
         tint_var = true;
     }

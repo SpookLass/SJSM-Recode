@@ -112,7 +112,7 @@ object_event_add
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,'
-    if target_possess_var { local.target = instance_exists(target_var) && target_var.possess_var && !target_var.enter_var && target_var.on_var; }
+    if target_possess_var { local.target = instance_exists(target_var) && target_var.possess_var && target_var.on_var; }
     else { local.target = instance_exists(target_var) && !target_var.dead_var && target_var.on_var; }
     if local.target
     {
@@ -131,7 +131,7 @@ object_event_add
             {
                 if other.target_possess_var
                 {
-                    if on_var && !enter_var && possess_var
+                    if on_var && possess_var
                     {
                         if cyl_coll_scr(x,y,z,coll_var[2],coll_var[1],other.x,other.y,other.z,other.coll_var[2],other.coll_var[1])
                         {

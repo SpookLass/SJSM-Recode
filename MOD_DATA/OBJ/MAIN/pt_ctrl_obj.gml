@@ -10,7 +10,7 @@ object_event_add
 (argument0,ev_create,0,'
     if global.player_len_var > 1
     {
-        with pt_note_var { event_user(4); }
+        with pt_note_obj { event_user(4); }
         with howard_obj { on_var = true; }
         instance_destroy();
         exit;

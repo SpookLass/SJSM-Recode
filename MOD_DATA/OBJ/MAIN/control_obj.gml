@@ -11,6 +11,7 @@ object_event_add
 (argument0,ev_create,0,'
     event_inherited();
     alarm_len_var = 1;
+    frame_var = 0;
     alarm_ini_scr();
     window_x_var = window_get_x();
     window_y_var = window_get_y();
@@ -68,6 +69,19 @@ object_event_add(argument0,ev_step,ev_step_begin,'
 // Step event
 object_event_add
 (argument0,ev_step,ev_step_begin,'
+    // Framerate
+    global.draw_time_var += current_time-global.last_time_var;
+    if !global.autodraw_var
+    {
+        local.rate = fps/global.fps_var;
+        frame_var += 1;
+        if frame_var >= local.rate
+        {
+            screen_redraw();
+            if local.rate { frame_var = frame_var mod local.rate; }
+            else {frame_var = 0; }
+        }
+    }
     // Speed!
     if global.draw_3d_var
     {
@@ -80,19 +94,6 @@ object_event_add
     global.true_delta_time_var = (current_time-global.last_time_var)*milli_frame_rate_const;
     global.delta_time_var = global.true_delta_time_var*global.game_spd_var;
     global.last_time_var = current_time;
-    // Framerate
-    global.draw_time_var += global.true_delta_time_var;
-    if !global.autodraw_var
-    {
-        local.rate = fps/global.fps_var;
-        frame_var += 1;
-        if frame_var >= local.rate
-        {
-            screen_redraw();
-            if local.rate { frame_var = frame_var mod local.rate; }
-            else {frame_var = 0; }
-        }
-    }
     // Check for debug
     if global.input_press_arr[debug_input_const,0] == 1
     {
@@ -278,7 +279,7 @@ object_event_add
         if global.autodraw_var { global.fps_curr_var = fps; }
         else
         {
-            if global.draw_time_var != 0 { global.fps_curr_var = floor(global.fps_var/global.draw_time_var); }
+            if global.draw_time_var != 0 { global.fps_curr_var = floor(1000/global.draw_time_var); }
             // else { global.fps_curr_var = 0; } // I still dont know what causes this
         }
         if global.fps_update_var > 0 { update_fps_var = false; }
