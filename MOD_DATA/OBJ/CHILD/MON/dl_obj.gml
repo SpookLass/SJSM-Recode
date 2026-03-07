@@ -29,7 +29,7 @@ object_event_add
     eye_h_var = 19.2;
     z_off_var = 0;
     atk_range_var = 48;
-    dead_rm = dl_dead_load_rm;
+    dead_rm_var = dl_dead_load_rm;
     // Sounds
     snd_len_var = 4;
     snd_num_var = 1;

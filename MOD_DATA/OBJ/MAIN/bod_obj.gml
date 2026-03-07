@@ -9,6 +9,7 @@ object_set_visible(argument0,true);
 // Create
 object_event_add
 (argument0,ev_create,0,'
+    do_possess_var = false;
     event_inherited();
     on_var = false;
     spr_id_var = 0;

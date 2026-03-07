@@ -46,6 +46,7 @@ object_event_add
     do_ascend_var = false;
     temp_hd_var = false;
     atk_range_var = 33.6;
+    dead_rm_var = pup_dead_rm;
     // Anim
     anim_type_var = 3; // Random
     // Seen

@@ -218,7 +218,6 @@ object_event_add
             red_rand_var = true;
             amb_start_var = 7;
             vis_phase_end_var = -1;
-            mus_prio_var = -1;
             js_chance_var = 3;
             note_rand_var = true;
             break;

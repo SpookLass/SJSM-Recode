@@ -7,4 +7,4 @@ Argument 5: Tile Type
     1: Y
     2: Both
 */
-draw_spr_tiled_scale_ext_scr(argument0,argument1,argument2,argument3,argument4,argument5,0,c_white,1);
+draw_bg_tiled_scale_ext_scr(argument0,argument1,argument2,argument3,argument4,argument5,0,c_white,1);

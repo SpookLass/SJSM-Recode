@@ -73,7 +73,7 @@ object_event_add
         rm_goto_menu_scr(menu_rm);
     }
     if do_str_var && alarm_arr[1,0] > 0 { str_prog_var = 1-(alarm_arr[1,0]/alarm_arr[1,1]); }
-    if fade_spr_id_var < sprite_get_number(fade_spr_var) { fade_spr_id_var += fade_spr_spd_var; }
+    if fade_spr_id_var < sprite_get_number(fade_spr_var) { fade_spr_id_var += fade_spr_spd_var*global.delta_time_var; }
     x = mod_scr(x+x_spd_var,image_xscale);
     y = mod_scr(y+y_spd_var,image_yscale);
 ');

@@ -91,9 +91,12 @@ object_event_add
     if delay_var { delay_var = false; }
     else if !state_var
     {
-        if global.input_press_arr[up_input_const,player_id_var] { button_state_var -= 1; fmod_snd_play_scr(select_snd); }
-        if global.input_press_arr[down_input_const,player_id_var] { button_state_var += 1; fmod_snd_play_scr(select_snd); }
-        button_state_var = mod_scr(button_state_var,button_len_var);
+        local.input = input_menu_hold_y_scr(0);
+        if local.input != 0
+        {
+            button_state_var = mod_scr(button_state_var-local.input,button_len_var);
+            fmod_snd_play_scr(select_snd);
+        }
         if global.input_press_arr[back_input_const,player_id_var]
         {
             instance_destroy();
