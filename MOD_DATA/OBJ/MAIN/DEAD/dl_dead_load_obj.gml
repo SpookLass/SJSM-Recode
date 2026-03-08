@@ -9,6 +9,7 @@ object_set_visible(argument0,false);
 // Create Event
 object_event_add
 (argument0,ev_create,0,'
+    menu_var = true;
     bg_len_var = 2;
     bg_arr_var[0,1] = vanilla_directory_const+"\TEX\mobile\MB6_15_tex.png";
     bg_arr_var[0,2] = false;

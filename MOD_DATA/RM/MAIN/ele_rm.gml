@@ -36,7 +36,6 @@ room_set_view(argument0,0,true,0,0,1280,720,0,0,1280,720,32,32,-1,-1,noone);
 // Effects
 room_instance_add(argument0,0,0,fog_01_obj);
 room_instance_add(argument0,0,0,ele_rock_obj);
-room_instance_add(argument0,0,0,destroy_mon_obj);
 room_instance_add(argument0,0,0,silent_mus_obj);
 // Walls (Horizontal)
 room_instance_add(argument0,80,32,ele_wall_hor_obj);
@@ -93,3 +92,5 @@ room_instance_add(argument0,68,120,pole_metal_obj);
 room_instance_add(argument0,92,120,pole_metal_obj);
 room_instance_add(argument0,80,128,poster_01_obj);
 room_instance_add(argument0,32,108,poster_02_obj);
+// Kill Monster
+room_instance_add(argument0,0,0,destroy_mon_obj);

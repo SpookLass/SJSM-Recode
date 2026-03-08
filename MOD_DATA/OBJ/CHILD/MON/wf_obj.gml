@@ -29,6 +29,8 @@ object_event_add
     dupe_var = dupe_canon_const;
     move_type_var = 0;
     atk_range_var = 48;
+    dead_rm_var = dead_fake_rm;
+    kill_var = false;
     // Sounds
     do_snd_var = 1; // At least for now
     loop_snd_var[0] = true;

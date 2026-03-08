@@ -10,7 +10,9 @@ object_set_visible(argument0,false);
 object_event_add
 (argument0,ev_create,0,'
     event_inherited();
+    with control_obj { event_perform(ev_other,ev_room_start); } // Prevent window shenanigans
     // Array
+    if !variable_local_exists("menu_var") { menu_var = false; }
     if !variable_local_exists("bg_len_var") { bg_len_var = 0; }
     if !variable_local_exists("snd_len_var") { snd_len_var = 0; }
     if !variable_local_exists("spr_len_var") { spr_len_var = 0; }
@@ -73,7 +75,8 @@ object_event_add
     set_automatic_draw(global.autodraw_var);
     d3d_set_hidden(true);
     // Leave
-    rm_goto_scr(rm_var);
+    if menu_var { rm_goto_menu_scr(rm_var,false); }
+    else { rm_goto_scr(rm_var); }
 ');
 // Destroy
 object_event_add

@@ -102,6 +102,7 @@ object_event_add
             { other.head_mdl_arr[local.i] = head_mdl_arr[local.i]; }
             other.wake_snd_var[1] = wake_snd_var[1];
             other.amb_mus_snd_var = amb_mus_snd_var;
+            other.chase_mus_snd_var = chase_mus_snd_var;
             other.zone_list_var = zone_list_var;
             local.loaded = true;
             break;

@@ -23,6 +23,7 @@ if room_exists(argument0) && argument0 != 0
         }
         case 2:
         {
+            with enemy_par_obj { instance_destroy(); }
             for (local.i=0; local.i<global.player_len_var; local.i+=1;)
             {
                 if instance_exists(global.player_arr[local.i])

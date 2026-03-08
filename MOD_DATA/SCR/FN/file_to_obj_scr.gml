@@ -12,6 +12,7 @@ if argument0 != "" && file_exists(argument0)
         execute_file(argument0,local.obj,argument1);
         execute_string("globalvar "+argument1);
         variable_global_set(argument1,local.obj);
+        obj_name_arr[local.obj] = argument1;
         if argument2 { show_message("Initialized object at "+argument1); }
     }
     else if argument2 { show_error("Variable "+argument1+" already in use!",false); }

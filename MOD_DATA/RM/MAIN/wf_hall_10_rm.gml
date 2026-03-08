@@ -4,8 +4,10 @@ Argument 0: Room Variable (same for all rooms)
 // Spawn spots// Name
 room_set_code
 (
-    argument0,"
-    global.rm_name_var = 'My Hall 10'
+    argument0,'
+    ini_open(global.lang_var);
+    global.rm_name_var = ini_read_string("ROOM","wf","ROOM_wf");
+    ini_close();
     // Spawn
     global.spawn_len_var = 2;
     global.spawn_arr[0,0] = 656;
@@ -33,7 +35,9 @@ room_set_code
     global.draw_3d_var = true;
     // Doors
     spawn_create_scr(false,false);
-");
+    // Monster par
+    instance_create(880,464,mon_spawn_obj);
+');
 // Room settings
 room_set_width(argument0,1280);
 room_set_height(argument0,720);
@@ -46,6 +50,7 @@ room_set_view(argument0,0,true,0,0,1280,720,0,0,1280,720,32,32,-1,-1,noone);
 room_instance_add(argument0,0,0,fog_01_obj);
 room_instance_add(argument0,0,0,color_control_02_obj);
 room_instance_add(argument0,0,0,amb_control_obj);
+//room_instance_add(argument0,880,464,mon_spawn_obj);
 // Floors
 room_instance_add(argument0,112,464,floor_obj);
 room_instance_add(argument0,144,464,floor_obj);
@@ -156,5 +161,3 @@ room_instance_add(argument0,912,480,wall_hor_obj);
 // Walls (Vertical)
 room_instance_add(argument0,96,464,wall_vert_obj);
 room_instance_add(argument0,928,464,wall_vert_obj);
-// White Face
-// room_instance_add(argument0,880,464,wf_02_obj);

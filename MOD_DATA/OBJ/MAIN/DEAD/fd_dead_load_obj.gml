@@ -9,6 +9,7 @@ object_set_visible(argument0,false);
 // Create Event
 object_event_add
 (argument0,ev_create,0,'
+    menu_var = true;
     bg_len_var = 3;
     bg_arr_var[0,1] = main_directory_const+"\BG\DEAD\fd_wall_bg.png";
     bg_arr_var[0,2] = false;

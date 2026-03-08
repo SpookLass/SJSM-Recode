@@ -22,6 +22,7 @@ globalvar input_press_arr;
 globalvar input_key_arr;
 globalvar input_menu_hold_arr;
 globalvar spawn_arr;
+globalvar obj_name_arr;
 global.spawn_len_var = -1;
 global.spawn_len_extra_var = -1;
 global.mark_len_var = -1;

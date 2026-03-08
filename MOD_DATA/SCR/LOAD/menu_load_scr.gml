@@ -1796,6 +1796,14 @@ mon_desc_arr[global.mon_len_var,14] = mon_arr[global.mon_len_var,2]+"_"+mon_type
 mon_desc_arr[global.mon_len_var,15] = true;
 local.wf = global.mon_len_var;
 global.mon_len_var += 1;
+// Reverse array
+globalvar mon_obj_arr;
+globalvar mon_rm_arr;
+for (local.i=0; local.i<global.mon_len_var; local.i+=1;)
+{
+    if mon_arr[local.i,9] != noone { mon_obj_arr[mon_arr[local.i,9]] = local.i; }
+    if mon_arr[local.i,10] != noone { mon_rm_arr[mon_arr[local.i,10]] = local.i; }
+}
 /*
 -------------
 Monster lists

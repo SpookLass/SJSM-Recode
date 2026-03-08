@@ -14,8 +14,8 @@ object_event_add
     spr_spd_var = 0.1;
     spr_id_var = 0;
     image_alpha = 0.01;
-    image_xscale = 256;
-    image_yscale = 256;
+    image_xscale = 512;
+    image_yscale = 512;
 ');
 // Step Event
 object_event_add

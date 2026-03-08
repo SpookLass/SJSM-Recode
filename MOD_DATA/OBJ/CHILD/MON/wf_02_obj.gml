@@ -29,6 +29,7 @@ object_event_add
     dupe_var = dupe_canon_const;
     boss_var = true;
     atk_range_var = 48;
+    dead_rm_var = dead_crash_rm;
     // Sounds
     do_snd_var = 1; // At least for now
     loop_snd_var[0] = true;
@@ -323,6 +324,7 @@ object_event_add
 // Animation
 object_event_add
 (argument0,ev_other,ev_user1,'
+    event_inherited();
     if anim_type_var == 4
     {
         spr_prog_var -= spr_spd_var*global.delta_time_var;
@@ -337,7 +339,6 @@ object_event_add
             z_off_var = z_off_base_var+random_range(-anim_off_var,anim_off_var);
         }
     }
-    event_inherited();
 ');
 // Draw Event
 object_event_add

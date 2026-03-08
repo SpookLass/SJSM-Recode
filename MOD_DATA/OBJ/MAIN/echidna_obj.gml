@@ -515,7 +515,7 @@ object_event_add
     }
     if do_door_var
     {
-        if global.spawn_arr[0,5] != 0
+        if global.spawn_arr[0,5] != noone
         {
             with global.spawn_arr[0,5] // Entrance door
             {
@@ -839,7 +839,6 @@ object_event_add
                     hp_var = 0;
                     dead_var = true;
                     do_coll_var = false;
-                    grav_var = false;
                     // Revive
                     if other.possess_var
                     {

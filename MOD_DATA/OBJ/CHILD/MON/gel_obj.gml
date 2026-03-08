@@ -70,6 +70,10 @@ object_event_add
     z_off_start_var = -h_base_var;
     // Theme
     mus_prio_var = mon_mus_prio_const;
+    // Abuse
+    abuse_var = 0;
+    abuse_max_var = 3;
+    do_abuse_var = false;
     // Assets
         // Search for existing assets to save memory
     local.loaded = false;
@@ -130,6 +134,8 @@ object_event_add
             do_slime_spawn_var = true;
             stun_var = 2;
             do_hurt_var = 1;
+            // Abuse
+            do_abuse_var = true;
             break;
         }
         case 2: // HD
@@ -376,6 +382,44 @@ object_event_add
                 set_alarm_scr(4,-1);
                 set_alarm_scr(8,-1);
                 set_alarm_scr(6,hurt_alarm_var+irandom_range(snd_delay_min_var,snd_delay_min_var));
+                // Abuse Prevention
+                if do_abuse_var
+                {
+                    abuse_var += 1;
+                    if abuse_var > abuse_max_var
+                    {
+                        // Slime Spawning
+                        event_user(6);
+                        local.bestdist = target_dist_var;
+                        local.slime_len = 0;
+                        with slime_obj
+                        {
+                            if par_var == other.id && tp_var
+                            {
+                                local.slime[local.slime_len] = id;
+                                local.slime_len += 1;
+                            }
+                        }
+                        if local.slime_len > 0
+                        {
+                            with local.slime[irandom(local.slime_len-1)]
+                            {
+                                local.xtmp = x;
+                                local.ytmp = y;
+                                local.ztmp = z;
+                                local.dir = direction;
+                                x = other.x;
+                                y = other.y;
+                                z = other.z;
+                                direction = other.slime_angle_var;
+                                other.x = local.xtmp;
+                                other.y = local.ytmp;
+                                other.z = local.ztmp;
+                                other.slime_angle_var = local.dir;
+                            }
+                        }
+                    }
+                }
             }
             else
             {

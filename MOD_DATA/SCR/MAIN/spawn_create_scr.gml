@@ -3,10 +3,14 @@ Argument 0: Has Entrance
 Argument 1: Lock
 */
 // Entrance
-local.entrance = instance_create(global.spawn_arr[0,0]-lengthdir_x(16,global.spawn_arr[0,3]),global.spawn_arr[0,1]-lengthdir_y(16,global.spawn_arr[0,3]),door_entrance_obj);
-local.entrance.z = global.spawn_arr[0,2];
-local.entrance.direction = global.spawn_arr[0,3]+180;
-global.spawn_arr[0,5] = local.entrance;
+if argument0
+{
+    local.entrance = instance_create(global.spawn_arr[0,0]-lengthdir_x(16,global.spawn_arr[0,3]),global.spawn_arr[0,1]-lengthdir_y(16,global.spawn_arr[0,3]),door_entrance_obj);
+    local.entrance.z = global.spawn_arr[0,2];
+    local.entrance.direction = global.spawn_arr[0,3]+180;
+    global.spawn_arr[0,5] = local.entrance;
+}
+else { global.spawn_arr[0,5] = noone; }
 // Exit
 global.unlock_var = -1;
 if argument1 { global.unlock_var = irandom_range(1,global.spawn_len_var-1); }

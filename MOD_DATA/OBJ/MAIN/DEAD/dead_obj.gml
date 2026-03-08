@@ -35,6 +35,7 @@ object_event_add
             break;
         }
     }
+    ini_close();
     // Fade in
     fade_spr_spd_var = 0.1;
     fade_spr_id_var = 0;

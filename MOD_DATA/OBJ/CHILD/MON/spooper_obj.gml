@@ -54,7 +54,7 @@ object_event_add
     tp_type_var = 1;
     tp_off_var = 300;
     tp_dist_min_var = 0;
-    tp_dist_max_var = tp_dist_min_var;
+    tp_dist_max_var = 200;
     tp_seen_var = false;
     // Puke
     alarm_len_var = 9;
@@ -422,7 +422,6 @@ object_event_add
                         hp_var = 0;
                         dead_var = true;
                         do_coll_var = false;
-                        grav_var = false;
                         if local.kill == 0
                         { local.kill = true; local.player = id; }
                         // Possess thing
