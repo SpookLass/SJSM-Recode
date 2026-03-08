@@ -156,3 +156,14 @@ This demo only includes Endless Mode at the moment, but will get Story Mode supp
 - Tilda Swinton
 
 ### Special Thanks (Sheena):
+
+- Jake 'Virt' Kaufman
+- A_Rival
+- Ryan Morrison
+- Caleb 'Gathma' Burke
+- David Miller
+- Justin Moravetz
+- Jeremy Pearson
+- Miles Roozen
+- Sean Velasco
+- Wikia Community Disconnect
