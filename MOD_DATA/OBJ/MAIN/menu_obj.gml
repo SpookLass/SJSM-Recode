@@ -8,6 +8,7 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create event
 /*
+Author: Birdbonanza
 This is going to be a MESS to code
 Menu and button States
     0: Story

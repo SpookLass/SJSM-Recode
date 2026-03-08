@@ -45,6 +45,7 @@ object_event_add
     eye_var = false;
     eye_color_var = c_white;
     atk_range_var = 48;
+    dead_rm_var = otto_dead_rm;
     // Assets
         // Search for existing assets to save memory
     local.loaded = false;

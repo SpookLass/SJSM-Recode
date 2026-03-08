@@ -1,3 +1,4 @@
+// Author: Birdbonanza
 // Builtin Variables
 object_set_depth(argument0,0);
 object_set_mask(argument0,noone);
