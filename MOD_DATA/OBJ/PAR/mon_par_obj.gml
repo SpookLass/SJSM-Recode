@@ -16,12 +16,15 @@ object_event_add
 (argument0,ev_create,2,'
     // Variables
     if !variable_local_exists("dur_var") { dur_var = -1; }
+    if !variable_local_exists("hp_var") { hp_var = -1; }
     if !variable_local_exists("boss_var") { boss_var = false; }
     if !variable_local_exists("intro_var") { intro_var = false; }
     if !variable_local_exists("dupe_var") { dupe_var = 0; }
     if !variable_local_exists("name_var") { name_var = "Unknown"; }
     if !variable_local_exists("hide_var") { hide_var = false; }
     if !variable_local_exists("dead_rm_var") { dead_rm_var = dead_rm; }
+    if boss_var { global.boss_var = object_index; }
+    hp_max_var = hp_var;
     dur_start_var = dur_var;
     // Theme
     if !variable_local_exists("mus_prio_var") || (global.rand_theme_var && frac_chance_scr(1,2)) { mus_prio_var = -1; }
@@ -67,6 +70,7 @@ object_event_add
 (argument0,ev_destroy,0,'
     event_inherited();
     global.mon_fail_var = 0;
+    if boss_var { global.boss_var = noone; }
     if mus_prio_var > amb_mus_prio_const
     {
         mus_prio_var = -1;

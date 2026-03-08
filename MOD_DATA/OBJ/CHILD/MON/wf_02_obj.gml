@@ -27,9 +27,11 @@ object_event_add
     z_off_base_var = 10;
     z_off_var = z_off_base_var;
     dupe_var = dupe_canon_const;
-    boss_var = true;
     atk_range_var = 48;
     dead_rm_var = dead_crash_rm;
+    // Boss
+    boss_var = 2;
+    boss_color_var = c_white;
     // Sounds
     do_snd_var = 1; // At least for now
     loop_snd_var[0] = true;
@@ -61,6 +63,7 @@ object_event_add
     {
         if id != other.id && object_index == other.object_index
         {
+            other.boss_icon_var = boss_icon_var;
             other.spr_var = spr_var;
             other.bg_var = bg_var;
             other.tex_spr_var = tex_spr_var;
@@ -82,6 +85,7 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
+        boss_icon_var = execute_file(main_directory_const+"\SPR\MON\wf_icon_spr.gml",main_directory_const+"\SPR\MON\wf_icon_spr.png");
         spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS28_01_spr.png",8,false,false,0,0);
         bg_var = background_add(vanilla_directory_const+"\TEX\sprites\MS28_02_spr.png",false,false);
         tex_spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS28_08_spr.png",3,false,false,0,0);
@@ -190,6 +194,7 @@ object_event_add
     with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
     if !local.bool
     {
+        sprite_delete(boss_icon_var);
         sprite_delete(spr_var);
         background_delete(bg_var);
         sprite_delete(tex_spr_var);

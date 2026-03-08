@@ -134,7 +134,6 @@ object_event_add
     // Main
     if !variable_local_exists("type_var") { type_var = 0; }
     if !variable_local_exists("visible_var") { visible_var = false; }
-    if !variable_local_exists("hp_var") { hp_var = -1; }
     // Behavior
     if !variable_local_exists("do_enter_var") { do_enter_var = (type_var > 0); }
     if !variable_local_exists("do_door_var") { do_door_var = (type_var == 1 && do_enter_var); }

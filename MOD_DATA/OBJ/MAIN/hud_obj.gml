@@ -275,14 +275,36 @@ object_event_add
                 draw_set_halign(fa_left); draw_set_valign(fa_top);
             }
             // Room Count
-            local.str = rm_str_var+": ";
-            if global.rm_count_override_var != noone
-            { local.str += string(global.rm_count_override_var); }
-            else { local.str += string(global.rm_count_var); }
-            draw_set_halign(fa_right); 
-            draw_str_shadow_scr(local.str,-54,54,0.75,0.75,scale_min_var,fa_right,fa_top,-2,2,make_color_rgb(30,0,50),c_yellow,1,0);
-            if global.rm_hud_var { draw_str_shadow_scr(global.rm_name_var,-54,108,0.5,0.5,scale_min_var,fa_right,fa_top,-2,2,make_color_rgb(30,0,50),c_yellow,1,0); }
-            draw_set_halign(fa_left);
+            if global.boss_var == noone
+            {
+                local.str = rm_str_var+": ";
+                if global.rm_count_override_var != noone
+                { local.str += string(global.rm_count_override_var); }
+                else { local.str += string(global.rm_count_var); }
+                draw_set_halign(fa_right); 
+                draw_str_shadow_scr(local.str,-54,54,0.75,0.75,scale_min_var,fa_right,fa_top,-2,2,make_color_rgb(30,0,50),c_yellow,1,0);
+                if global.rm_hud_var { draw_str_shadow_scr(global.rm_name_var,-54,108,0.5,0.5,scale_min_var,fa_right,fa_top,-2,2,make_color_rgb(30,0,50),c_yellow,1,0); }
+                draw_set_halign(fa_left);
+            }
+            else
+            {
+                with global.boss_var
+                {
+                    if boss_var == 2 { local.per = dur_var/dur_start_var; }
+                    else { local.per = hp_var/hp_max_var; }
+                    local.per = median(0,1,local.per);
+                    local.color = boss_color_var;
+                    local.icon = boss_icon_var;
+                }
+                draw_spr_stretch_scr(bar_boss_spr,0,-91,57,308,0,fa_right,fa_top);
+                // Bar
+                local.width = background_get_width(bar_hp_bg)*local.per;
+                local.xtmp = view_wview[view_current]-((local.width+99)*local.viewscale);
+                draw_background_part_ext(bar_boss_hp_bg,0,0,local.width,27,local.xtmp,62*local.viewscale,local.viewscale,local.viewscale,local.color,1);
+                // Icon
+                draw_spr_stretch_scr(bar_boss_icon_spr,0,-37,34,69,0,fa_right,fa_top);
+                if local.icon != noone { draw_spr_stretch_scr(local.icon,0,-37,34,69,0,fa_right,fa_top); }
+            }
             // Debug text
             if global.debug_var && !global.hide_debug_var
             {
