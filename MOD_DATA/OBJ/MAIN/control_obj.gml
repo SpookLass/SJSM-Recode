@@ -69,8 +69,10 @@ object_event_add(argument0,ev_step,ev_step_begin,'
 // Step event
 object_event_add
 (argument0,ev_step,ev_step_begin,'
+    local.time_diff = current_time-global.last_time_var;
+    global.last_time_var = current_time;
     // Framerate
-    global.draw_time_var += current_time-global.last_time_var;
+    global.draw_time_var += local.time_diff;
     if !global.autodraw_var
     {
         local.rate = fps/global.fps_var;
@@ -82,6 +84,8 @@ object_event_add
             else {frame_var = 0; }
         }
     }
+    // Game Time
+    if global.game_var { global.game_time_var += local.time_diff; }
     // Speed!
     if global.draw_3d_var
     {
@@ -91,9 +95,8 @@ object_event_add
     else if global.game_spd_var != 1 { global.game_spd_var = 1; fmod_group_set_pitch_scr(0,global.game_spd_var); }
     // Delta Time
     // Goes by frames rather than seconds (at 60 fps)
-    global.true_delta_time_var = (current_time-global.last_time_var)*milli_frame_rate_const;
+    global.true_delta_time_var = local.time_diff*milli_frame_rate_const;
     global.delta_time_var = global.true_delta_time_var*global.game_spd_var;
-    global.last_time_var = current_time;
     // Check for debug
     if global.input_press_arr[debug_input_const,0] == 1
     {
@@ -284,8 +287,14 @@ object_event_add
         }
         if global.fps_update_var > 0 { update_fps_var = false; }
     }
+    if global.game_var
+    {
+        local.rm_str = " | Room: "+string(global.rm_count_var)+" ("+global.rm_name_var+")";
+        local.time_str = " | Time: "+dhms_str_scr(global.game_time_var,1000);
+    }
+    else { local.rm_str = " | "+global.rm_name_var; local.time_str = ""; }
     local.fps_str = " | FPS: "+string(global.fps_curr_var);
-    room_caption = "Spookys Jump Scare Mansion - Project Recode | Room: "+string(global.rm_count_var)+" ("+global.rm_name_var+") | TPS: "+string(fps)+local.fps_str;
+    room_caption = "Spookys Jump Scare Mansion - Project Recode "+local.rm_str+local.time_str+" | TPS: "+string(fps)+local.fps_str;
     global.draw_time_var = 0;
 ')
 // Room End Eventt

@@ -6,7 +6,7 @@ room_set_code
 (
     argument0,'
     ini_open(global.lang_var);
-	global.rm_name_var = ini_read_string("ROOM","menu","ROOM_menu");
+	global.rm_name_var = ini_read_string("ROOM","dead","ROOM_dead");
 	ini_close();
     // 3D Draw
     d3d_start();

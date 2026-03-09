@@ -19,6 +19,7 @@ ini_write_real("MAIN","count",global.count_var);
 ini_write_real("MAIN","mon_fail_var",global.mon_fail_var);
 ini_write_real("MAIN","zone",global.zone_var);
 ini_write_real("MAIN","zone_num",global.zone_num_var);
+ini_write_real("MAIN","game_time",global.game_time_var);
     // Main settings
 ini_write_real("MAIN","mode",global.mode_var);
 ini_write_real("MAIN","type",global.main_type_var);
@@ -53,3 +54,4 @@ for (local.i=0; local.i<global.player_len_var; local.i+=1;)
     ini_write_real("PLAYER","dead_"+string(local.i),global.player_arr[local.i].dead_var);
 }
 ini_close();
+global.last_time_var = current_time;

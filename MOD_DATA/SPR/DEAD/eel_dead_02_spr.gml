@@ -1,6 +1,6 @@
 /*
 Argument 0: Sprite file path
-Author: The Rut
+Author: TheRut01
 */
 local.spr = sprite_add(argument0,1,false,true,0,0);
 // Only include if sprite is centered

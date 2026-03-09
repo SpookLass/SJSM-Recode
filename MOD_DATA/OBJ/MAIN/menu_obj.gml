@@ -84,8 +84,8 @@ object_event_add
 	subbgalpha_var = 0;
 	player_id_var = 0;
     // Sprites
-    set_spr_var = sprite_add(main_directory_const+"\SPR\UI\settings_spr.png",2,false,false,0,0);
-    sprite_set_offset(set_spr_var,sprite_get_width(set_spr_var)/2,sprite_get_height(set_spr_var)/2);
+    set_spr_var = sprite_add(main_directory_const+"\SPR\UI\settings_spr.png",2,false,false,46,48);
+    multi_spr_var = sprite_add(main_directory_const+"\SPR\UI\multi_spr.png",2,false,false,45,45);
     old_var = false;
     if !irandom(7)
     {
@@ -464,6 +464,7 @@ object_event_add
     background_delete(path_cloud_bg_var);
     background_delete(multi_bg_var);
     sprite_delete(set_spr_var);
+    sprite_delete(multi_spr_var);
     sprite_delete(title_spr_var);
     if old_var { sprite_delete(title_02_spr_var); }
 	fmod_snd_free_scr(menu_mus_snd_var);
@@ -1435,6 +1436,8 @@ object_event_add
                     }
                 }
                 event_user(1);
+                global.game_var = true;
+                global.game_time_var = 0;
 				instance_create(0,0,mus_control_obj);
                 if save_name_var == "1987" { instance_create(0,0,otter8_js_obj); }
                 // Random Zone and Tex
@@ -1662,7 +1665,7 @@ object_event_add
                 );
             }
             draw_spr_stretch_scr(set_spr_var,button_state_var == 4,-105,-183,81,0,fa_right,fa_bottom);
-            draw_spr_stretch_scr(set_spr_var,button_state_var == 5,-105,-90,81,0,fa_right,fa_bottom);
+            draw_spr_stretch_scr(multi_spr_var,button_state_var == 5,-105,-90,80,0,fa_right,fa_bottom);
             break;
         }
         case 3: // Save Creation

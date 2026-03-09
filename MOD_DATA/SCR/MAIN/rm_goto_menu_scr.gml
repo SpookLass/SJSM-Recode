@@ -8,6 +8,7 @@ if room_exists(argument0) && argument0 != 0
     {
         case 1:
         {
+            global.game_var = false;
             // Remove persistent objects
             with all
             {

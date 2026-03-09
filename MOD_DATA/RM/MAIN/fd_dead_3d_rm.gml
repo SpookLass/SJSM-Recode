@@ -7,7 +7,7 @@ room_set_code
     '
     // Name
     ini_open(global.lang_var);
-    global.rm_name_var = ini_read_string("ROOM","menu","ROOM_menu");
+    global.rm_name_var = ini_read_string("ROOM","dead","ROOM_dead");
     ini_close();
     // Spawns
     global.spawn_len_var = 1;

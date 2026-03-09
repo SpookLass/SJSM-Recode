@@ -1,6 +1,6 @@
 /*
 Argument 0: Sprite file path
-Author: EverlastingMaya
+Author: Everlasting Maya
 */
 local.spr = sprite_add(argument0,15,false,false,0,0);
 // Only include if sprite is centered

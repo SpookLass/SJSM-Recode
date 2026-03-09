@@ -15,6 +15,7 @@ local.rm = ini_read_real("MAIN","room",hall_01_rm);
 global.note_var = ini_read_real("MAIN","note",0);
 global.zone_var = ini_read_real("MAIN","zone",global.zone_arr[0]);
 global.zone_num_var = ini_read_real("MAIN","zone_num",-1);
+global.game_time_var = ini_read_real("MAIN","game_time",0);
     // Main settings
 global.mode_var = ini_read_real("MAIN","mode",1);
 global.main_type_var = ini_read_real("MAIN","type",0);
@@ -66,6 +67,7 @@ for (local.i=0; local.i<global.player_len_var; local.i+=1;)
     }
 }
 ini_close();
+global.game_var = true;
 instance_create(0,0,mus_control_obj);
 // Spawn present specimens
 for (local.i=0; local.i<ds_list_size(global.mon_curr_list); local.i+=1;)

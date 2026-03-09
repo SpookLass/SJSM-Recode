@@ -27,6 +27,7 @@ object_event_add
     angle_var = 0;
     color_prio_var = 0;
     reflect_var = false;
+    dead_rm_var = flesh_dead_rm;
     // Zone
     zone_var = true;
     zone_start_var = 0;

@@ -27,6 +27,7 @@ object_event_add
     dupe_var = dupe_canon_const;
     blood_spr_var = blood_kh_spr;
     atk_range_var = 48;
+    dead_rm_var = body_dead_rm;
     // Sound
     wake_snd_var[0] = true;
     mus_prio_var = theme_mus_prio_const;

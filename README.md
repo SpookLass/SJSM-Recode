@@ -21,39 +21,55 @@ This demo only includes Endless Mode at the moment, but will get Story Mode supp
 - Spook Lass
 - Yoshicraft64
 - Birdbonanza
-- Maya
+- Everlasting Maya
 - Myetal
 
 ### Programmers:
 
 - Yoshicraft64: Sprite adding system
 - Birdbonanza: Menu design and Hooked Doll
-- Maya: Room porting
+- Everlasting Maya: Room porting
 - Spook Lass: Everything else
 
 ### Art:
 
 - Dondytrap: Torch textures
-- Uncanny Goat: Bodybag death screen
 - Lunnay: HD style stamina bar
-- The Rut: Eel death screen (jaws)
-- Cole: Eel death screen (background)
+- Uncanny Goat: Bodybag death screen
+- Baka-Chan: Flesh death screen
+- TheRut01: Eel death screen (jaws)
+- StupidFizz: Eel death screen (background)
+- Everlasting Maya: Multiplayer icon
 - Spook Lass: Various art edits
+
+### Models:
+
+- Dondytrap: Golden torch model
 
 ### Music:
 
 - Sammy: Eel death screen theme
 - Uncanny Goat: Eel chase theme
+- Spook Lass: Brain and Frenzy chase theme, Bekka death screen theme
 
 ### Sounds:
 
 - Ryan J: Ryan Specimen 12
 - Spook Lass: Recode Specimen 12, various audio edits
 
+## Plugins
+
+- Brett Binnersley: P3DC
+- LSnK: Shaders
+- Cellulose Man: Joy DLL
+- Evan Balster: Zlib
+- Alyssa Dierking: Surface Fix
+- FMOD
+
 ### QA Testers:
 
 - Myetal: HD, multiplayer
-- Maya: OG, multiplayer
+- Everlasting Maya: OG, multiplayer
 - Birdbonanza: Multiplayer
 - Timber: Multiplayer
 - Spook Lass: Various
