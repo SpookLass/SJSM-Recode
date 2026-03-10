@@ -46,6 +46,7 @@ object_event_add
     { snd_arr[local.i,1] = local.sub; snd_arr[local.i,2] = false; }
     wake_snd_var[2] = local.sub;
     ini_close();
+    // Variables
     type_var = 1;
     dur_var = irandom_range(10,20);
     do_hurt_var = 2;
@@ -57,6 +58,7 @@ object_event_add
     check_all_var = false;
     check_path_var = false;
     atk_range_var = 48;
+    dead_rm_var = para_dead_rm;
     // Theme
     mus_prio_var = theme_mus_prio_const;
     // Delay calculations

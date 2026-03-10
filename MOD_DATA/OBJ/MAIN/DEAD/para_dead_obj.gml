@@ -11,97 +11,47 @@ object_event_add
 (argument0,ev_create,0,'
     // Translation
     ini_open(global.lang_var);
-    str_var = ini_read_string("DEAD","gel","DEAD_gel");
+    str_main_var =  string_replace_all(ini_read_string("DEAD","para","DEAD_para"),"@l","
+");
+    str_binary_var = ini_read_string("DEAD","para_binary","DEAD_para_binary");
     ini_close();
-    // State 0
-    state_var = 0;
-    color_var = c_white;
-    spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS_02_spr.png",1,false,false,0,0);
-    sprite_set_offset(spr_var,sprite_get_width(spr_var)/2,sprite_get_height(spr_var)/2);
-    scale_base_var = 1280;
-    // Text
-    x = 100;
-    y = 200;
-    image_xscale = 0.5;
-    image_yscale = 0.5;
-    halign_var = fa_left;
-    valign_var = fa_top;
-    // Sound
+    // String
+    do_str_var = false;
+    if !irandom(9)
+    {
+        str_var = str_binary_var;
+        image_xscale = 0.4;
+        image_yscale = 0.4;
+    }
+    else
+    {
+        str_var = str_main_var;
+        if !irandom(7) { image_xscale = 0.6; }
+        else { image_xscale = 0.8; }
+        image_yscale = 1;
+    }
+    if !irandom(5) { str_color_var = c_red; }
+    else { str_color_var = c_white; }
+    // Sprite
     load_var = true;
-    snd_01_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_wake_snd.wav");
-    snd_02_var = fmod_snd_add_scr(main_directory_const+"\SND\DEAD\gel_dead_snd.wav");
-    inst_var = fmod_snd_play_scr(snd_01_var);
-    // Alarms
+    spr_01_var = execute_file(main_directory_const+"\SPR\MON\para_eff_spr.gml",main_directory_const+"\SPR\MON\para_eff_spr.png");
+    spr_02_var = execute_file(main_directory_const+"\SPR\DEAD\para_dead_spr.gml",main_directory_const+"\SPR\DEAD\para_dead_spr.png");
+    spr_id_01_var = irandom(sprite_get_number(spr_01_var)-1);
+    spr_id_02_var = 0;
+    spr_len_var = 12;
+    image_alpha = 0.4;
+    // Sound
+    snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DEAD\para_dead_snd.wav",false);
+    fmod_snd_loop_scr(snd_var);
+    // Alarm
+    fade_alarm_var = 60;
     alarm_len_var = 5;
     alarm_ini_scr();
-    fade_alarm_var = 20;
-    set_alarm_scr(0,30);
-    set_alarm_scr(4,1);
-');
-// Step Event
-object_event_add
-(argument0,ev_step,ev_step_normal,'
-    event_inherited();
-    if global.input_press_arr[confirm_input_const,global.menu_player_var] == 1
-    {
-        reset_alarm_scr();
-        if state_var < 2 { event_perform(ev_alarm,1); }
-        else { event_perform(ev_alarm,3); }
-    }
-    if global.input_press_arr[back_input_const,global.menu_player_var] == 1
-    {
-        reset_alarm_scr();
-        event_perform(ev_alarm,3);
-    }
-    if state_var < 2
-    {
-        scale_var = scale_base_var;
-        if state_var == 1
-        { scale_var *= 1.2^(alarm_arr[1,1]-alarm_arr[1,0]);}
-    }
-');
-// Alarm 0 Event
-object_event_add
-(argument0,ev_alarm,0,'
-    color_var = c_red;
-    state_var = 1;
-    set_alarm_scr(1,30);
-');
-// Alarm 1 Event
-object_event_add
-(argument0,ev_alarm,1,'
-    state_var = 2;
-    fmod_inst_stop_scr(inst_var);
-    inst_var = fmod_snd_loop_scr(snd_02_var);
-    instance_create(0,0,flash_dead_obj);
-    instance_create(0,0,static_dead_obj);
-    set_alarm_scr(2,180);
-');
-// Alarm 2 Event
-object_event_add
-(argument0,ev_alarm,2,'
-    set_alarm_scr(3,fade_alarm_var);
-    with instance_create(0,0,fade_eff_obj)
-    {
-        cam_id_var = -1;
-        image_blend = c_black;
-        invert_var = true;
-        set_alarm_scr(0,other.fade_alarm_var);
-    }
-');
-// Alarm 3 Event
-object_event_add
-(argument0,ev_alarm,3,'
-    rm_goto_menu_scr(dead_rm,true);
-');
-// Alarm 4 Event
-object_event_add
-(argument0,ev_alarm,4,'
-    if state_var < 2
-    {
-        scale_base_var = random_range(1280,1536);
-        set_alarm_scr(4,1);
-    }
+    set_alarm_scr(0,160);
+    set_alarm_scr(3,irandom_range(30,60));
+    // Animate
+    if global.reduce_flash_var { spr_spd_01_var = 0; spr_spd_02_var = 0; }
+    else { spr_spd_01_var = 0.5; spr_spd_02_var = 0.25; }
 ');
 // Destroy
 object_event_add
@@ -118,12 +68,72 @@ object_event_add
 (argument0,ev_other,ev_user0,'
     if load_var
     {
-        fmod_inst_stop_scr(inst_var);
-        fmod_snd_free_scr(snd_01_var);
-        fmod_snd_free_scr(snd_02_var);
-        sprite_delete(spr_var);
+        fmod_snd_free_scr(snd_var);
+        sprite_delete(spr_01_var);
+        sprite_delete(spr_02_var);
         load_var = false;
     }
+');
+// Step Event
+object_event_add
+(argument0,ev_step,ev_step_normal,'
+    event_inherited();
+    if global.input_press_arr[confirm_input_const,global.menu_player_var] == 1
+    || global.input_press_arr[back_input_const,global.menu_player_var] == 1
+    { event_perform(ev_alarm,2); }
+    spr_id_01_var = mod_scr(spr_id_01_var+(spr_spd_01_var*global.delta_time_var),sprite_get_number(spr_01_var));
+    spr_id_02_var = mod_scr(spr_id_02_var+(spr_spd_02_var*global.delta_time_var),sprite_get_number(spr_02_var));
+');
+// Alarm 0 Event
+object_event_add
+(argument0,ev_alarm,0,'
+    do_str_var = true;
+    set_alarm_scr(1,666); // 660
+    if !global.reduce_flash_var { set_alarm_scr(4,1); }
+');
+// Alarm 1 Event
+object_event_add
+(argument0,ev_alarm,1,'
+    set_alarm_scr(2,fade_alarm_var);
+    with instance_create(0,0,fade_eff_obj)
+    {
+        cam_id_var = -1;
+        image_blend = c_black;
+        invert_var = true;
+        set_alarm_scr(0,other.fade_alarm_var);
+    }
+');
+// Alarm 2 Event
+object_event_add
+(argument0,ev_alarm,2,'
+    rm_goto_menu_scr(dead_rm,true);
+');
+// Alarm 3 Event
+object_event_add
+(argument0,ev_alarm,3,'
+    if !irandom(1)
+    { spr_id_01_var = irandom(sprite_get_number(spr_01_var)-1); }
+    set_alarm_scr(3,irandom_range(30,60));
+');
+// Alarm 4 Event
+object_event_add
+(argument0,ev_alarm,4,'
+    if !irandom(9)
+    {
+        str_var = str_binary_var;
+        image_xscale = 0.4;
+        image_yscale = 0.4;
+    }
+    else
+    {
+        str_var = str_main_var;
+        if !irandom(7) { image_xscale = 0.6; }
+        else { image_xscale = 0.8; }
+        image_yscale = 1;
+    }
+    if !irandom(5) { str_color_var = c_red; }
+    else { str_color_var = c_white; }
+    set_alarm_scr(4,1);
 ');
 // Draw Event
 object_event_add
@@ -131,12 +141,14 @@ object_event_add
     d3d_set_fog(false,c_black,0,0);
     d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
     d3d_set_hidden(false);
-    if state_var < 2 { draw_spr_stretch_ext_scr(spr_var,0,0,0,scale_var,0,fa_center,fa_middle,0,color_var,1); }
-    else
+    draw_spr_fit_ext_scr(spr_01_var,floor(spr_id_01_var),0,0,image_alpha,image_blend,image_alpha);
+    for (local.i=0; local.i<spr_len_var; local.i+=1;)
+    { draw_spr_stretch_ext_scr(spr_02_var,floor(spr_id_02_var),0,0,1024,0,fa_center,fa_middle,360*local.i/spr_len_var,c_white,0.6); }
+    if do_str_var
     {
-        draw_set_alpha(image_alpha); draw_set_color(image_blend);
-        draw_str_scr(str_var,x,y,image_xscale,image_yscale,scale_min_var,halign_var,valign_var,image_angle);
-        draw_set_alpha(1); draw_set_color(c_white);
+        draw_set_color(str_color_var); draw_set_halign(fa_center); draw_set_valign(fa_middle);
+        draw_str_ext_scr(str_var,0,0,image_xscale,image_yscale,0.125,fa_center,fa_middle,-1,54,0);
+        draw_set_color(c_white); draw_set_halign(fa_left); draw_set_valign(fa_top);
     }
     d3d_set_hidden(true);
 ');

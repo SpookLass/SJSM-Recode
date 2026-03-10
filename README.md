@@ -57,14 +57,19 @@ This demo only includes Endless Mode at the moment, but will get Story Mode supp
 - Ryan J: Ryan Specimen 12
 - Spook Lass: Recode Specimen 12, various audio edits
 
-## Plugins
+### Plugins
 
+- FMOD
 - Brett Binnersley: P3DC
 - LSnK: Shaders
 - Cellulose Man: Joy DLL
 - Evan Balster: Zlib
 - Alyssa Dierking: Surface Fix
-- FMOD
+- Floogle: GM8x Fix, GM8 Decompiler
+- Dmitry D. Chernov: GM8 Decompiler
+- Adam: GM8 Decompiler
+- Viri: GM8 Decompiler
+
 
 ### QA Testers:
 
@@ -79,18 +84,23 @@ This demo only includes Endless Mode at the moment, but will get Story Mode supp
 - Ryan J
 - Ricky-Simo
 - Maneki
+- Holly
 - Serial_Hotdog_Lain
 - Trigam
 - Adamoto
 - Charlotte
-- I didn't put any of the devs here for sake of brevity, but I'd like to thank them too!
+- Sunken
+- renex
+- Serendie
+- All of the contributors!
+- You!
 
-## Original Credits:
+## Original / HD Renovation Credits:
 
 ### Directors:
 
 - Akuma Kira
-- AMGSheena
+- Travis 'StealthyMoose' Rupp-Greene: HD Renovation
 
 ### Public Relations:
 
@@ -100,22 +110,35 @@ This demo only includes Endless Mode at the moment, but will get Story Mode supp
 
 - Akuma Kira
 - AMGSheena
-- Travis 'StealthyMoose' Rupp-Greene: Controller Wrangling
+- Travis 'StealthyMoose' Rupp-Greene: HD Renovation, Controller Wrangling
 
 ### Art:
 
 - Akuma Kira
 - Adam Wong Perez & Hot Pepper Gaming: Peter the Pepper
+- Adam 'Adexo' Malinowski: Promotional / Achievements
+- Caeleigh 'Alerane' Boara: Promotional / Achievements
+- Michelle 'Souzou Inc.' Sladek: Promotional / Achievements
+- Mowtendoo: Promotional / Achievements
+- Dreamsbell: Promotional / Achievements
 
 ### Models:
 
 - Akuma Kira
+- Norbert 'SeriousNorbo' Pujan: HD Renovation Story and Endless Mode monsters
+- Phillip Fortunat: HD Renovation
+- Travis 'StealthyMoose' Rupp-Greene: HD Renovation
+- Ash Dickens: HD Renovation
+- Nathan Ayres: HD Renovation
+- ffSade: HD Renovation
 
 ### Music:
 
 - Akuma Kira
 - Jarren Crist
 - Nolan Reese: Dollhouse
+- Mouses 'beat_shobon' Alvarez: HD Renovation pause music
+- A_Rival: AMG logo jingle
 
 ### Sounds:
 
@@ -123,11 +146,20 @@ This demo only includes Endless Mode at the moment, but will get Story Mode supp
 - AMGSheena: Phone Gal, various
 - Abigail Klima: White Cat
 - Jessica Nix: Deer Lord
-- Vernon Shaw: Specimen 12 (OG)
+- Vernon Shaw: Original Specimen 12
 - Matt McSkeleton: Screaming Man
 - Ashley K.: Demon Child
 - Roxy Klima: Ghost Cow
 - Josh Tomar: The Clown
+- Chris 'DirectorFlik' Serani: HD Renovation Specimen 12
+
+### Video
+
+- Phillip Fortunat: AMG logo reveal
+
+### Font
+
+- Jeti: Cartridge
 
 ### QA Testers:
 
@@ -136,16 +168,20 @@ This demo only includes Endless Mode at the moment, but will get Story Mode supp
 - Tucker Murray (Hux)
 - Philip K.
 - Andrew K.
-- Ashley N.
 - Haruno 'Wurf' Tenshi
+- Ashley Nix: Story & Dollhouse
 - Jarren Crist: Karamari & Dollhouse
 - Evan Przydzial: Karamari
 - Carl 'Euron' Strain: Karamari
 - Jessica Nix: Karamari & Dollhouse
 - Abigail Klima: Dollhouse
-- Ashley Nix: Dollhouse
 - LUCIIFER: Dollhouse
-- Serious Sean: Dollhouse
+- Serious Sean: Dollhouse & HD Renovation
+- Andrew 'clericofmadness' Movitz: HD Renovation
+- Laura 'Centaura' Ladore: HD Renovation
+- Leyen 'Soah1086' Brown: HD Renovation
+- Mathew Nieves: HD Renovation
+- Teshno: HD Renovation
 
 ### Special Thanks:
 
@@ -153,7 +189,7 @@ This demo only includes Endless Mode at the moment, but will get Story Mode supp
 - PewDiePie
 - Markiplier
 - Game Grumps
-- Harshly Critical
+- ~HarshlyCritical~ John Wolfe
 - Boogie2988
 - Hot Pepper Gaming
 - Ivan Zanotti
@@ -170,6 +206,18 @@ This demo only includes Endless Mode at the moment, but will get Story Mode supp
 - Luca Guadagnino
 - Thom Yorke
 - Tilda Swinton
+- Sinow
+- KatFTWynn
+- DAGames
+- The Living Tombstone
+- CyborgRachel
+- Doug Bogart
+
+### Special Thanks (Kira):
+
+- Akuma Kira's Wife
+- Akuma Kira's Parents
+- God
 
 ### Special Thanks (Sheena):
 
@@ -183,3 +231,33 @@ This demo only includes Endless Mode at the moment, but will get Story Mode supp
 - Miles Roozen
 - Sean Velasco
 - Wikia Community Disconnect
+- Travis 'StealthyMoose' Rupp-Greene
+- Phil Fortunat
+- Sheena's Mom
+
+### Special Thanks (StealthyMoose):
+
+- AMGSheena
+- Travis' Parents
+
+### Kira LLC Supporters
+
+- Henry Hoare
+- Mr. Hollywood
+- The Gameshed
+- Fungo
+- Oix
+- FASTA
+- cody kennedy
+- X2H
+- smarko
+- Gggmanlives
+- TwitchyAnimation
+- Rusty Fisher
+- Mad Scientist
+- Doctor Meme
+- Zilpe
+- venen0791
+- LUCIIFER
+- Vrisk
+- The new porcupine on the block with the buff chest
