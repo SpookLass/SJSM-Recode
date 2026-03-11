@@ -43,6 +43,7 @@ object_event_add
     w_var = 3;
     l_var = 4;
     z += 0.1;
+    flesh_var = false;
     // Trigger
     with instance_create(x,y,note_trig_obj)
     {

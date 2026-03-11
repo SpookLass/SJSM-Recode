@@ -139,7 +139,7 @@ object_event_add
                 local.distoff = ((2*local.i/str_stretch_var)-1)*local.dist;
                 for (local.j=0; local.j<4; local.j+=1;)
                 {
-                    local.dir = 360*local.j/4;
+                    local.dir = 360*local.j*0.25;
                     local.xdist = 4*local.viewscale;
                     local.ydist = 4*local.viewscale;
                     local.xoff = local.xtmp+local.distoff+(sign(local.distoff)*lengthdir_x(local.xdist,local.dir));

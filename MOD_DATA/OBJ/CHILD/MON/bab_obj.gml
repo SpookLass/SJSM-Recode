@@ -160,6 +160,11 @@ object_event_add
             amb_den_var = 3;
             amb_alarm_min_var = 400; // 399.6 for HD
             amb_alarm_max_var = 600; // 600 for HD
+            // Do hurt?
+            do_hurt_var = true;
+            violence_var = 3;
+            hurt_dist_var = 8;
+            hurt_snd_var = 3;
             break;
         }
         case 2: // HD

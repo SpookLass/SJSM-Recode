@@ -40,15 +40,19 @@ object_event_add
                 local.bestdist = local.dist;
                 local.player = id;
             }
-            local.seen = seen_scr
-            (
-                other.seen_yaw_var,other.seen_pitch_var,other.seen_dist_var,
-                eye_yaw_var,eye_pitch_var,
-                x,y,z+eye_h_var,
-                false,false,
-                other.coll_var[1],other.coll_var[2],
-                other.x,other.y,other.z
-            ) > 0;
+            if !local.seen
+            {
+                if seen_scr
+                (
+                    other.seen_yaw_var,other.seen_pitch_var,other.seen_dist_var,
+                    eye_yaw_var,eye_pitch_var,
+                    x,y,z+eye_h_var,
+                    false,false,
+                    other.coll_var[1],other.coll_var[2],
+                    other.x,other.y,other.z
+                ) > 0
+                { local.seen = true; }
+            }
         }
     }
     if local.seen { instance_destroy(); exit; }

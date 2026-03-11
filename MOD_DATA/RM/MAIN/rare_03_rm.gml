@@ -143,7 +143,7 @@ room_instance_add(argument0,440,167,bush_obj);
 room_instance_add(argument0,373,121,bush_obj);
 room_instance_add(argument0,229,139,bush_obj);
 room_instance_add(argument0,224,336,table_obj);
-// room_instance_add(argument0,272,344,seat_obj);
+room_instance_add(argument0,272,341.5,seat_obj);
 room_instance_add(argument0,384,288,lp_pic_fs_obj);
 room_instance_add(argument0,408,288,lp_pic_jel_obj);
 room_instance_add(argument0,432,288,lp_pic_bb_obj);

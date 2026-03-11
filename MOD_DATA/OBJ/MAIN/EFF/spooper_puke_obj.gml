@@ -51,7 +51,6 @@ object_event_add
                     hp_var = 0;
                     dead_var = true;
                     do_coll_var = false;
-                    grav_var = false;
                     // Revive
                     if other.possess_var
                     {

@@ -275,7 +275,7 @@ object_event_add
                 draw_set_halign(fa_left); draw_set_valign(fa_top);
             }
             // Room Count
-            if global.boss_var == noone
+            if !global.hide_rm_var
             {
                 local.str = rm_str_var+": ";
                 if global.rm_count_override_var != noone
@@ -286,7 +286,8 @@ object_event_add
                 if global.rm_hud_var { draw_str_shadow_scr(global.rm_name_var,-54,108,0.5,0.5,scale_min_var,fa_right,fa_top,-2,2,make_color_rgb(30,0,50),c_yellow,1,0); }
                 draw_set_halign(fa_left);
             }
-            else
+            // Boss Bar (canned for now)
+            if false // global.boss_var != noone
             {
                 with global.boss_var
                 {

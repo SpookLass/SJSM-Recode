@@ -180,6 +180,7 @@ object_event_add
         global.zone_var = zone_list_var;
         zone_reset_scr();
     }
+    global.hide_rm_var = true;
 ');
 // Destroy Event
 object_event_add
@@ -220,6 +221,7 @@ object_event_add
     if zone_var { zone_from_num_scr(global.zone_num_var); }
     with wf_eff_obj { if par_var == other.id { instance_destroy(); }}
     with player_obj { unheal_var = 0; hp_var = hp_max_var; }
+    global.hide_rm_var = false;
 ');
 // Room Start Event
 object_event_add

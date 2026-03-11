@@ -141,7 +141,7 @@ object_event_add
         if target_var.spd_var > 0
         {
             local.time = target_dist_var/spd_var;
-            local.raydist = check_ray_scr(target_x_var,target_y_var,target_z_var,target_var.x_spd_var,target_var.y_spd_var,target_var.z_spd_var)-(target_var.coll_var[1]/2);
+            local.raydist = check_ray_scr(target_x_var,target_y_var,target_z_var,target_var.x_spd_var,target_var.y_spd_var,target_var.z_spd_var)-(target_var.coll_var[1]*0.5);
             local.dist = min(local.time*target_var.spd_var,local.raydist);
             target_x_var += lengthdir_x(lengthdir_x(local.dist,target_var.yaw_var),target_var.pitch_var);
             target_y_var += lengthdir_x(lengthdir_y(local.dist,target_var.yaw_var),target_var.pitch_var);

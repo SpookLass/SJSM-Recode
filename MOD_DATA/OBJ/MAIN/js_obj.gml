@@ -7,10 +7,10 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,false);
 // Collision
 global.js_coll[1] = 14;
-global.js_coll[2] = 14;
-global.js_coll[3] = 1;
-global.jsr_coll[0] = prop_to_coll_scr(9,'',global.js_coll[2],0,global.js_coll[1],false,0,global.js_coll[3]);
-global.jsl_coll[0] = prop_to_coll_scr(9,'',-global.js_coll[2],0,global.js_coll[1],false,0,global.js_coll[3]);
+global.js_coll[2] = 2;
+global.js_coll[3] = 28;
+global.jsr_coll[0] = prop_to_coll_scr(9,'',global.js_coll[3]*0.5,0,global.js_coll[1],false,0,global.js_coll[2]*0.5);
+global.jsl_coll[0] = prop_to_coll_scr(9,'',-global.js_coll[3]*0.5,0,global.js_coll[1],false,0,global.js_coll[2]*0.5);
 // Create event
 object_event_add
 (argument0,ev_create,0,'
@@ -61,8 +61,8 @@ object_event_add
         // Collisions
         coll_var[0] = global.jsr_coll[0];
         coll_var[1] = global.js_coll[1];
-        coll_var[2] = global.js_coll[2]*2;
-        coll_var[3] = global.js_coll[3]*2;
+        coll_var[2] = global.js_coll[2];
+        coll_var[3] = global.js_coll[3]+global.js_coll[2];
         // Behavior
         if global.js_type_var == -1 { local.type = irandom(3); }
         else { local.type = global.js_type_var; }

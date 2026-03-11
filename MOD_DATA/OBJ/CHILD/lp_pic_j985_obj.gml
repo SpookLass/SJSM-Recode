@@ -9,7 +9,7 @@ object_set_visible(argument0,true);
 // Create event
 object_event_add
 (argument0,ev_create,0,'
-    store_tex_var = sprite_get_texture(lp_spr,3);
+    store_tex_var = sprite_get_texture(lp_spr,4);
     name_var = "Jerma985";
     link_var = "https://www.youtube.com/watch?v=CqJzm_M62oY";
     // https://www.youtube.com/@Jerma985

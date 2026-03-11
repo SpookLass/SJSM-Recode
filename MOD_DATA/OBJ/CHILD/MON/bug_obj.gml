@@ -335,7 +335,7 @@ object_event_add
         local.rate = global.delta_time_var;
         if spd_anim_var { local.rate *= spd_var/spd_base_var; }
         wiggle_time_var = (wiggle_time_var+local.rate) mod wiggle_rate_var;
-        wiggle_var = sin(2*wiggle_time_var*pi/wiggle_rate_var)*wiggle_mult_var/2;
+        wiggle_var = sin(2*wiggle_time_var*pi/wiggle_rate_var)*wiggle_mult_var*0.5;
     }
 ');
 // Delay Alarm
@@ -458,8 +458,8 @@ object_event_add
             if rotate_var
             { d3d_transform_add_rotation_y(point_direction_3d_scr(x,y,z,global.cam_x_var[view_current],global.cam_y_var[view_current],global.cam_z_var[view_current])); }
             d3d_transform_add_rotation_z(point_direction(x,y,global.cam_x_var[view_current],global.cam_y_var[view_current]));
-            d3d_transform_add_translation(x+x_off_var,y+y_off_var,z+z_off_var+(h_var/2));
-            d3d_draw_wall(0,(w_var/2)+wiggle_var,h_var/2,0,(-w_var/2)+wiggle_var,-h_var/2,tex_var,1,1);
+            d3d_transform_add_translation(x+x_off_var,y+y_off_var,z+z_off_var+(h_var*0.5));
+            d3d_draw_wall(0,(w_var*0.5)+wiggle_var,h_var*0.5,0,(-w_var*0.5)+wiggle_var,-h_var*0.5,tex_var,1,1);
             d3d_transform_set_identity();
             draw_set_color(c_white); draw_set_alpha(1);
             if global.debug_var && type_var > 0

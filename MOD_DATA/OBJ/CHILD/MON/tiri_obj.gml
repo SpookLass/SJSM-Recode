@@ -29,6 +29,7 @@ object_event_add
     eye_h_var = 16.8;
     z_off_var = 1;
     atk_range_var = 48;
+    dead_rm_var = tiri_dead_rm;
     // Sounds
     snd_len_var = 4;
     snd_num_var = 1;

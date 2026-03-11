@@ -15,12 +15,13 @@ object_event_add
     w_var = 3;
     spr_var = torch_spr;
     spr_id_var = 0;
+    spr_spd_var = 0.25;
     par_var = noone;
 ');
 // Step event
 object_event_add
 (argument0,ev_step,ev_step_normal,'
-    spr_id_var = (spr_id_var+(global.delta_time_var/4)) mod sprite_get_number(spr_var);
+    spr_id_var = (spr_id_var+(spr_spd_var*global.delta_time_var)) mod sprite_get_number(spr_var);
     if instance_exists(par_var) { visible = par_var.on_var; }
 ')
 // Draw Event

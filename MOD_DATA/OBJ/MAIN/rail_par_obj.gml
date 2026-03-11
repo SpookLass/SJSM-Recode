@@ -10,12 +10,10 @@ object_set_visible(argument0,true);
 global.rail_coll[1] = 14;
 global.rail_coll[2] = 6;
 global.rail_coll[3] = 32;
-global.rail_coll[0] = prop_to_coll_scr(1,'',global.rail_coll[3],0,global.rail_coll[1],false,0,global.rail_coll[2]/2);
+global.rail_coll[0] = prop_to_coll_scr(1,'',global.rail_coll[3],0,global.rail_coll[1],false,0,global.rail_coll[2]*0.5);
 p3dc_set_trimask_scr(mask_metal_const);
-global.rail_metal_coll[0] = prop_to_coll_scr(1,'',global.rail_coll[3],0,global.rail_coll[1],false,0,global.rail_coll[2]/2);
+global.rail_metal_coll[0] = prop_to_coll_scr(1,'',global.rail_coll[3],0,global.rail_coll[1],false,0,global.rail_coll[2]*0.5);
 p3dc_set_trimask_scr(mask_basic_const);
-// Messy
-global.rail_coll[3] += global.rail_coll[2];
 // Create event
 object_event_add
 (argument0,ev_create,0,'
@@ -29,5 +27,5 @@ object_event_add
     coll_var[0] = global.rail_coll[0];
     coll_var[1] = global.rail_coll[1];
     coll_var[2] = global.rail_coll[2];
-    coll_var[3] = global.rail_coll[3];
+    coll_var[3] = global.rail_coll[3]+global.rail_coll[2];
 ');

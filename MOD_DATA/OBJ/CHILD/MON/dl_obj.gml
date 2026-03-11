@@ -346,7 +346,7 @@ object_event_add
         local.yvec = (start_y_var-target_y_var)/local.dist_2d;
         local.zvec = 0;
         // Calculate warp
-        local.dist = check_ray_scr(target_x_var,target_y_var,target_z_var+(target_var.coll_var[1]/2),local.xvec,local.yvec,local.zvec);
+        local.dist = check_ray_scr(target_x_var,target_y_var,target_z_var+(target_var.coll_var[1]*0.5),local.xvec,local.yvec,local.zvec);
         local.dir = point_direction(target_x_var,target_y_var,start_x_var,start_y_var);
         local.xtmp = target_x_var+lengthdir_x(local.dist-coll_var[2],local.dir);
         local.ytmp = target_y_var+lengthdir_y(local.dist-coll_var[2],local.dir);
@@ -412,7 +412,7 @@ object_event_add
         do_snd_var = true;
         snd_var = fmod_snd_play_scr(other.eff_snd_arr[irandom(other.eff_snd_len_var-1)]);
         rand_rate_var = 15;
-        set_alarm_scr(0,min(other.dmg_alarm_var/2,irandom_range(other.eff_min_var,other.eff_max_var)));
+        set_alarm_scr(0,min(other.dmg_alarm_var*0.5,irandom_range(other.eff_min_var,other.eff_max_var)));
         // Set camera to player
         cam_id_var = other.atk_target_var.cam_id_var;
     }

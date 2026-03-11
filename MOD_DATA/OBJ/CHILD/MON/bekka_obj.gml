@@ -184,6 +184,7 @@ object_event_add
     }
     with fog_overlay_obj
     { if par_var == other.id { instance_destroy(); }}
+    with bekka_fade_obj { if par_var == other.id { instance_destroy(); }}
 ');
 // Room Start Event
 object_event_add
@@ -380,6 +381,8 @@ object_event_add
         // Remodeled only
         with instance_create(0,0,bekka_fade_obj)
         {
+            par_var = other.id;
+            possess_var = other.possess_var;
             dmg_var = other.fade_dmg_var;
             dmg_alarm_var = other.fade_dmg_alarm_var;
             dead_rm_var = other.dead_rm_var;
