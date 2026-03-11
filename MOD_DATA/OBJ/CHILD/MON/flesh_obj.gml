@@ -36,6 +36,10 @@ object_event_add
     fog_prio_var = 2;
     fog_start_var = 0;
     fog_end_var = 200;
+    fog_start_consume_var = 0;
+    fog_end_consume_var = 64;
+    for (local.i=0; local.i<global.player_len_var; local.i+=1;)
+    { fog_consume_var[local.i] = false; }
     // Theme
     mus_prio_var = theme_mus_prio_const;
     // Assets
@@ -162,6 +166,7 @@ object_event_add
     }
     with flesh_tex_obj { if par_var == other.id { instance_destroy(); }}
     with flesh_eff_obj { if par_var == other.id { instance_destroy(); }}
+    with fog_flesh_obj { if par_var == other.id { instance_destroy(); }}
     with skybox_par_obj { if par_var == other.id { instance_destroy(); }}
     with mad_door_obj
     {
@@ -329,13 +334,16 @@ Difference: "+string(local.newdelay)+"
     with fog_par_obj { if prio_var < other.fog_prio_var { instance_destroy(); }}
     if !instance_exists(fog_par_obj)
     {
-        with instance_create(0,0,fog_par_obj)
+        with instance_create(0,0,fog_flesh_obj)
         {
+            par_var = other.id;
             prio_var = other.fog_prio_var;
             fog_var = true;
             fog_color_var = other.fog_color_var;
             fog_start_var = other.fog_start_var;
             fog_end_var = other.fog_end_var;
+            fog_start_consume_var = other.fog_start_consume_var;
+            fog_end_consume_var = other.fog_end_consume_var;
             fog_dark_var = false;
             event_user(0);
         }
@@ -400,13 +408,17 @@ object_event_add
         local.dmg = dmg_var*global.delta_time_var;
         with player_obj
         {
+            other.fog_consume_var[cam_id_var] = false;
             if !dead_var && !hurt_var && !in_door_var && !invuln_var && on_var
             {
                 // p3dc_check_scr(coll_var[0],x,y,z,other.coll_var[0],other.x,other.y,other.z)
                 if abs(deg_diff_scr(other.yaw_var,point_direction(other.x,other.y,x,y))) > 90
                 {
                     if hp_var > local.dmg
-                    { hp_var -= local.dmg; }
+                    {
+                        other.fog_consume_var[cam_id_var] = true;
+                        hp_var -= local.dmg;
+                    }
                     else
                     {
                         hp_var = 0;

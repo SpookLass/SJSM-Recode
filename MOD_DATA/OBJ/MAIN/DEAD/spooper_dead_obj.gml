@@ -24,6 +24,7 @@ object_event_add
     image_yscale = 128;
     y_spd_var = -5;
     static_spr_spd_var = 0.5;
+    static_spr_id_var = 0;
     // Sound
     fmod_snd_play_scr(snd_var);
     // String

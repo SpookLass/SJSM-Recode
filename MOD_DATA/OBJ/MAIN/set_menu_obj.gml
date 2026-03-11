@@ -584,6 +584,8 @@ object_event_add
     fmod_set_group_vol_scr(snd_group_mon_const,global.mon_vol_var/100);
     fmod_set_group_vol_scr(snd_group_mus_const,global.mus_vol_var/100);
     fmod_set_group_vol_scr(snd_group_voice_const,global.voice_vol_var/100);
+    if global.doppler_var { fmod_set_doppler_fps_scr(fps); }
+    else { fmod_set_doppler_fps_scr(0); }
     if instance_exists(pause_menu_obj)
     {
         if !global.pause_theme_var

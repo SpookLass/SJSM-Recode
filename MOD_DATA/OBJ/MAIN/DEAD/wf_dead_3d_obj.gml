@@ -158,6 +158,9 @@ object_event_add
     { rm_goto_menu_scr(wf_dead_rm,2); }
     else
     {
+        global.res_override_var = false;
+        global.res_override_w_var = global.res_w_var;
+        global.res_override_h_var = global.res_h_var;
         if global.permadeath_var { delete_save_scr(global.save_name_var); }
         rm_goto_menu_scr(dead_crash_rm,true);
     }

@@ -262,7 +262,7 @@ object_event_add
 object_event_add(argument0,ev_step,ev_step_end,'
     update_alarm_scr(global.true_delta_time_var);
     // Update FMOD!
-    //fmod_set_doppler_fps_scr(fps);
+    if global.doppler_var { fmod_set_doppler_fps_scr(fps); }
     fmod_update_scr();
 ');
 // Draw

@@ -28,6 +28,8 @@ object_event_add
         image_xscale = 966;
         halign_var = fa_center;
         valign_var = fa_middle;
+        // Sprite
+        spr_id_var = 0;
         // Sound
         load_var = 2;
         snd_01_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_real_wake_snd.wav");

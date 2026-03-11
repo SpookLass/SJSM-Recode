@@ -3,6 +3,8 @@ Argument 0: Print
 */
 fmod_load_scr();
 fmod_ini_scr(100,false); // 100 is max sounds, second argument is web sounds
+fmod_listen_set_num_scr(1);
+fmod_set_world_scale_scr(pixel_meter_rate_const);
 // Get the first file in the main directory
 local.i = 0;
 // Wave

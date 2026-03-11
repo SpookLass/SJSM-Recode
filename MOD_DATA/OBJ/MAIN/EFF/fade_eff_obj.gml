@@ -10,6 +10,7 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,0,'
     event_inherited();
+    power_var = 1;
     //Defaults
     image_blend = c_black;
     invert_var = false;
@@ -37,6 +38,7 @@ object_event_add
     if alarm_arr[0,0] > 0
     {
         image_alpha = alarm_arr[0,0]/alarm_arr[0,1];
+        
         switch invert_var
         {
             case 1: { image_alpha = 1-image_alpha; break; }
@@ -47,6 +49,7 @@ object_event_add
                 break;
             }
         }
+        if power_var > 1 { image_alpha = power(image_alpha,power_var); }
     }
 ');
 // Draw Event

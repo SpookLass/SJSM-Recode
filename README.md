@@ -77,14 +77,17 @@ This demo only includes Endless Mode at the moment, but will get Story Mode supp
 - Everlasting Maya: OG, multiplayer
 - Birdbonanza: Multiplayer
 - Timber: Multiplayer
+- Cottoncandycat: Multiplayer
+- demonAndrew495 Two: Multiplayer
 - Spook Lass: Various
 
 ### Special Thanks
 
-- Ryan J
 - Ricky-Simo
+- MajoraMedia
 - Maneki
 - Holly
+- Wasabi
 - Serial_Hotdog_Lain
 - Trigam
 - Adamoto
@@ -92,8 +95,17 @@ This demo only includes Endless Mode at the moment, but will get Story Mode supp
 - Sunken
 - renex
 - Serendie
+- Starlight
+- bob ///b!
 - All of the contributors!
 - You!
+
+### Special Thanks?
+
+- Maya's Pet Rock
+- Bob's 6th grade math teacher
+- Mario for fixing Tofu's plumbing
+- All the DOOM.EXE fans
 
 ## Original / HD Renovation Credits:
 

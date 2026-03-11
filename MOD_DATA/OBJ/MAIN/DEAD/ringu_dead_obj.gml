@@ -17,6 +17,8 @@ object_event_add
     state_var = 0;
     spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS3_02_spr.png",12,false,false,0,0);
     bg_var = background_add(vanilla_directory_const+"\TEX\menu\hand_tex.png",false,false);
+    // Sprite
+    spr_id_var = 0;
     // Text
     x = 300;
     y = 200;

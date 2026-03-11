@@ -9,6 +9,7 @@ if room_exists(argument0) && argument0 != 0
         case 1:
         {
             global.game_var = false;
+            fmod_listen_set_num_scr(1);
             // Remove persistent objects
             with all
             {
@@ -24,6 +25,7 @@ if room_exists(argument0) && argument0 != 0
         }
         case 2:
         {
+            fmod_listen_set_num_scr(1);
             with enemy_par_obj { instance_destroy(); }
             for (local.i=0; local.i<global.player_len_var; local.i+=1;)
             {

@@ -68,6 +68,7 @@ for (local.i=0; local.i<global.player_len_var; local.i+=1;)
 }
 ini_close();
 global.game_var = true;
+fmod_listen_set_num_scr(global.player_len_var);
 instance_create(0,0,mus_control_obj);
 // Spawn present specimens
 for (local.i=0; local.i<ds_list_size(global.mon_curr_list); local.i+=1;)

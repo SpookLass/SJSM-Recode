@@ -11,7 +11,7 @@ switch global.input_menu_var[argument0]
         if joy_hats_scr(global.joy_id_var[argument0]) > 0
         {
             local.dir = joy_hat_scr(global.joy_id_var[argument0]);
-            if local.dir >= 0 { return -lengthdir_y(1,local.dir); }
+            if local.dir >= 0 { return -sign(lengthdir_y(1,local.dir)); }
         }
         return 0;
     }

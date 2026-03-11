@@ -1435,6 +1435,7 @@ object_event_add
                         }
                     }
                 }
+                fmod_listen_set_num_scr(global.player_len_var);
                 event_user(1);
                 global.game_var = true;
                 global.game_time_var = 0;
