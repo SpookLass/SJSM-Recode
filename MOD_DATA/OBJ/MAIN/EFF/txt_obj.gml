@@ -22,6 +22,8 @@ object_event_add
     valign_var = fa_bottom;
     cam_id_var = 0;
     fade_var = false;
+    sep_var = -1;
+    margin_var = 108;
     // Shadow
     shadow_x_var = -4;
     shadow_y_var = 4;
@@ -52,7 +54,7 @@ object_event_add
         d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
         d3d_set_hidden(false); draw_set_alpha(image_alpha);
         draw_set_halign(halign_var); draw_set_valign(valign_var);
-        draw_str_shadow_scr(str_var,x,y,image_xscale,image_yscale,min_scale_var,halign_var,valign_var,shadow_x_var,shadow_y_var,shadow_color_var,image_blend,shadow_var,image_angle);
+        draw_str_ext_shadow_scr(str_var,x,y,image_xscale,image_yscale,min_scale_var,halign_var,valign_var,sep_var,margin_var,shadow_x_var,shadow_y_var,shadow_color_var,image_blend,shadow_var,image_angle);
         draw_set_halign(fa_left); draw_set_valign(fa_top);
         draw_set_alpha(1); d3d_set_hidden(true);
     }

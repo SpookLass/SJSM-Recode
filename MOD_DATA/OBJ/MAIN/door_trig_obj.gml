@@ -20,7 +20,18 @@ object_event_add
     if !variable_local_exists("txt_var") { txt_var = ini_read_string("UI","open","UI_open"); }
     if !variable_local_exists("txt_lock_var") { txt_lock_var = ini_read_string("UI","lock","UI_lock"); }
     ini_close();
-    shadow_off_var = 2;
+    min_scale_var = 0.125;
+    str_x_var = 0;
+    str_y_var = -72;
+    halign_var = fa_center;
+    valign_var = fa_bottom;
+    sep_var = -1;
+    margin_var = 108;
+    // Shadow
+    shadow_x_var = -4;
+    shadow_y_var = 4;
+    shadow_var = 2;
+    shadow_color_var = make_color_rgb(30,0,50);
     // Sound
     snd_len_var = 4;
     snd_arr[0] = door_01_snd;
@@ -73,7 +84,10 @@ object_event_add
         {
             // Rare Rooms
             if !instance_exists(mon_par_obj) && global.rare_chance_var > 0 && frac_chance_scr(1,global.rare_chance_var)
-            { rm_var = ds_list_find_value(global.rare_zone_var,irandom(ds_list_size(global.rare_zone_var)-1)); }
+            {
+                if global.save_name_var == "1235" && frac_chance_scr(1,1235) { rm_var = dev_rm; }
+                else { rm_var = ds_list_find_value(global.rare_zone_var,irandom(ds_list_size(global.rare_zone_var)-1)); }
+            }
             else
             {
                 zone_var = global.zone_var;
@@ -213,37 +227,17 @@ object_event_add
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,'
-    if view_current == cam_id_var 
+    if view_current == cam_id_var || cam_id_var == -1
     {
-        if view_wview[view_current] >= view_hview[view_current]
-        { local.scale = view_hview[view_current]/720; }
-        else { local.scale = view_wview[view_current]/1280; }
-
         if lock_var { local.txt = txt_lock_var; }
         else {local.txt = txt_var; }
 
         d3d_set_fog(false,c_black,0,0);
         d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
-        d3d_set_hidden(false);
-
-        draw_set_halign(fa_center);
-        draw_set_valign(fa_bottom);
-
-        local.xtmp = view_wview[view_current]/2;
-        local.ytmp = view_hview[view_current]*0.9;
-
-        local.shadow = shadow_off_var*local.scale;
-
-        draw_set_color(make_color_rgb(30,0,50));
-        draw_text_transformed(local.xtmp-(local.shadow*2),local.ytmp+(local.shadow*2),local.txt,local.scale,local.scale,0);
-        draw_text_transformed(local.xtmp-local.shadow,local.ytmp+local.shadow,local.txt,local.scale,local.scale,0);
-        
-        draw_set_color(c_white);
-        draw_text_transformed(local.xtmp,local.ytmp,local.txt,local.scale,local.scale,0);
-
-        draw_set_halign(fa_left);
-        draw_set_valign(fa_top);
-
-        d3d_set_hidden(true);
+        d3d_set_hidden(false); draw_set_alpha(image_alpha);
+        draw_set_halign(halign_var); draw_set_valign(valign_var);
+        draw_str_ext_shadow_scr(str_var,str_x_var,str_y_var,image_xscale,image_yscale,min_scale_var,halign_var,valign_var,sep_var,margin_var,shadow_x_var,shadow_y_var,shadow_color_var,image_blend,shadow_var,image_angle);
+        draw_set_halign(fa_left); draw_set_valign(fa_top);
+        draw_set_alpha(1); d3d_set_hidden(true);
     }
 ');

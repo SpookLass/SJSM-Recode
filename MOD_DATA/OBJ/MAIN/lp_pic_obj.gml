@@ -24,8 +24,9 @@ object_event_add
     radius_var = 1;
     dist_var = 0.1;
     z = 14;
-    direction = 270;
     solid_var = false;
+    if direction == 0
+    { direction = 270; }
     // Trigger
     local.xtmp = x+lengthdir_x(global.door_trig_coll[2]/2,direction);
     local.ytmp = y+lengthdir_y(global.door_trig_coll[2]/2,direction);

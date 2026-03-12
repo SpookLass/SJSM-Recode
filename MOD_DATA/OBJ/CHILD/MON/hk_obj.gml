@@ -30,6 +30,7 @@ object_event_add
 	eye_h_var = 18.75;
 	blood_spr_var = blood_kh_spr;
 	atk_range_var = 12;
+	dead_rm_var = hk_dead_rm;
     // Assets
         // Search for existing assets to save memory
 	local.loaded = false;
@@ -61,12 +62,12 @@ object_event_add
 		static_bg_var = background_add(main_directory_const+"\BG\DH\tile_static_bg.png",false,false);
 		overlay_bg_var = background_add(main_directory_const+"\BG\KH\olga_bg.png",false,false);
 
-		snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\hk_breath_snd.wav",true);
-		loop_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\hk_loop_02_snd.wav",true);
-		look_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\hk_loop_01_snd.wav",true);
-		mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\hk_mus_snd.mp3");
+		snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\DH\hk_breath_snd.wav",true);
+		loop_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\DH\hk_loop_02_snd.wav",true);
+		look_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DH\hk_loop_01_snd.wav",true);
+		mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DH\hk_mus_snd.mp3");
 		fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
-		hurt_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\doll_hurt_snd.wav",true);
+		hurt_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\DH\doll_hurt_snd.wav",true);
 		
 		lamp_mdl_var = d3d_model_create();
         d3d_model_load(lamp_mdl_var,main_directory_const+"\MDL\MON\hk_lamp_mdl.gmmod");
@@ -412,6 +413,8 @@ object_event_add
 				mdl_02_var = local.par.lamp_mdl_var;
 				store_tex_02_var = background_get_texture(local.par.lamp_bg_var);
 				tex_02_var = store_tex_02_var;
+				if global.color_var < 1
+    			{ image_blend = color_par_obj.light_color_var; }
 			}
 			local.flr = instance_nearest(x,y,floor_par_obj);
 			if local.flr.tex_var == -1 && !instance_position(local.flr.x,local.flr.y,light_floor_par_obj)

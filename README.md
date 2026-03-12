@@ -48,13 +48,13 @@ This demo only includes Endless Mode at the moment, but will get Story Mode supp
 
 ### Music:
 
-- Sammy: Eel death screen theme
+- SammyDaGurl: Eel death screen theme
 - Uncanny Goat: Eel chase theme
 - Spook Lass: Brain and Frenzy chase theme, Bekka death screen theme
 
 ### Sounds:
 
-- Ryan J: Ryan Specimen 12
+- Ryan J.: Ryan Specimen 12
 - Spook Lass: Recode Specimen 12, various audio edits
 
 ### Plugins
@@ -95,6 +95,7 @@ This demo only includes Endless Mode at the moment, but will get Story Mode supp
 - Sunken
 - renex
 - Serendie
+- IInfectr
 - Starlight
 - bob ///b!
 - All of the contributors!
