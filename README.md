@@ -27,7 +27,7 @@ This demo only includes Endless Mode at the moment, but will get Story Mode supp
 ### Programmers:
 
 - Yoshicraft64: Sprite adding system
-- Birdbonanza: Menu design and Hooked Doll
+- Birdbonanza: Menu design, Hooked Doll, and Silhoette system
 - Everlasting Maya: Room porting
 - Spook Lass: Everything else
 
@@ -274,3 +274,10 @@ This demo only includes Endless Mode at the moment, but will get Story Mode supp
 - LUCIIFER
 - Vrisk
 - The new porcupine on the block with the buff chest
+
+## ???
+
+A named file is the one you need.
+To find a room special to me.
+The name is a number unlike the rest.
+It is found by the brain that knows best.

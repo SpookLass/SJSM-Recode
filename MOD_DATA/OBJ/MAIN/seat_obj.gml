@@ -8,14 +8,19 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Collisions
 global.seat_coll[1] = 12;
-global.seat_coll[2] = 20;
+global.seat_coll[2] = 24; // 20
 global.seat_coll[3] = 11;
 global.seat_coll[0] = p3dc_begin_mdl_scr();
 local.radiusx = global.seat_coll[2]*0.5;
 local.radiusy = global.seat_coll[3]*0.5;
 local.radiusz = global.seat_coll[1]*0.5;
-p3dc_add_block_scr(-local.radiusx,-local.radiusy,0,local.radiusx,local.radiusy,local.radiusz);
-p3dc_add_block_scr(-local.radiusx,local.radiusy-3,local.radiusz,local.radiusx,local.radiusy,global.seat_coll[1]);
+// Bottom
+p3dc_add_block_scr(-local.radiusx+2,-local.radiusy,0,local.radiusx-2,local.radiusy,local.radiusz);
+// Top
+p3dc_add_block_scr(-local.radiusx+2,local.radiusy-3,local.radiusz,local.radiusx-2,local.radiusy,global.seat_coll[1]);
+// Armrests
+p3dc_add_block_scr(-local.radiusx,-local.radiusy,0,-local.radiusx+2,local.radiusy,global.seat_coll[1]-3);
+p3dc_add_block_scr(local.radiusx-2,-local.radiusy,0,local.radiusx,local.radiusy,global.seat_coll[1]-3);
 p3dc_end_mdl_scr();
 // Create event
 object_event_add
@@ -26,9 +31,12 @@ object_event_add
     solid_var = true;
     store_tex_02_var = seat_02_bg_tex;
     tex_02_var = store_tex_02_var;
-    w_var = 20;
+    w_var = 24; // 20
     h_var = 12;
     l_var = 11;
+    arm_w_var = 2;
+    back_l_var = 3;
+    arm_h_var = 9;
     // Collision
     coll_var[0] = global.seat_coll[0];
     coll_var[1] = global.seat_coll[1];
@@ -62,20 +70,50 @@ object_event_add
     local.width = w_var*0.5;
     local.length = l_var*0.5;
     local.height = h_var*0.5;
+    local.armwidth = local.width-arm_w_var;
+    local.backlength = local.length-back_l_var;
     // Top
-    d3d_draw_floor(-local.width,local.length-3,h_var,local.width,local.length,h_var,local.tex,3,1);
-    d3d_draw_wall(-local.width,local.length-3,h_var,local.width,local.length-3,local.height,tex_02_var,3,1);
+    d3d_draw_floor(-local.armwidth,local.backlength,h_var,local.armwidth,local.length,h_var,local.tex,3,1);
+    d3d_draw_wall(-local.armwidth,local.backlength,h_var,local.armwidth,local.backlength,local.height,tex_02_var,3,1);
+    d3d_draw_wall(-local.armwidth,local.backlength,h_var,-local.armwidth,local.length,local.height,local.tex,1,1);
+    d3d_draw_wall(local.armwidth,local.backlength,h_var,local.armwidth,local.length,local.height,local.tex,1,1);
     // Seat
-    d3d_draw_floor(-local.width,-local.length,local.height,local.width,local.length-3,local.height,tex_02_var,3,1);
-    d3d_draw_wall(-local.width,-local.length,local.height,local.width,-local.length,0,local.tex,3,1);
-    d3d_draw_wall(-local.width,-local.length,local.height,-local.width,local.length-3,0,local.tex,1,1);
-    d3d_draw_wall(local.width,-local.length,local.height,local.width,local.length-3,0,local.tex,1,1);
-    // Sides, back, and bottom
-    d3d_draw_floor(-local.width,-local.length,0,local.width,local.length,0,local.tex,3,1);
-    d3d_draw_wall(-local.width,local.length,h_var,local.width,local.length,0,local.tex,3,1);
-    d3d_draw_wall(-local.width,local.length-3,h_var,-local.width,local.length,0,local.tex,1,1);
-    d3d_draw_wall(local.width,local.length-3,h_var,local.width,local.length,0,local.tex,1,1);
+    d3d_draw_floor(-local.armwidth,-local.length,local.height,local.armwidth,local.backlength,local.height,tex_02_var,3,1);
+    d3d_draw_wall(-local.armwidth,-local.length,local.height,local.armwidth,-local.length,0,local.tex,3,1);
+    // Back and bottom
+    d3d_draw_floor(-local.armwidth,-local.length,0,local.armwidth,local.length,0,local.tex,3,1);
+    d3d_draw_wall(-local.armwidth,local.length,h_var,local.armwidth,local.length,0,local.tex,3,1);
+    // Left Armrest
+    d3d_draw_floor(-local.width,-local.length,arm_h_var,-local.armwidth,local.length,arm_h_var,local.tex,1,1);
+    d3d_draw_floor(-local.width,-local.length,0,-local.armwidth,local.length,0,local.tex,1,1);
+    d3d_draw_wall(-local.width,-local.length,arm_h_var,-local.width,local.length,0,local.tex,1,1);
+    d3d_draw_wall(-local.armwidth,-local.length,arm_h_var,-local.armwidth,local.backlength,local.height,local.tex,1,1);
+    d3d_draw_wall(-local.width,-local.length,arm_h_var,-local.armwidth,-local.length,0,local.tex,1,1);
+    d3d_draw_wall(-local.width,local.length,arm_h_var,-local.armwidth,local.length,0,local.tex,1,1);
+    // Right Armrest
+    d3d_draw_floor(local.armwidth,-local.length,arm_h_var,local.width,local.length,arm_h_var,local.tex,1,1);
+    d3d_draw_floor(local.armwidth,-local.length,0,local.width,local.length,0,local.tex,1,1);
+    d3d_draw_wall(local.width,-local.length,arm_h_var,local.width,local.length,0,local.tex,1,1);
+    d3d_draw_wall(local.armwidth,-local.length,arm_h_var,local.armwidth,local.backlength,local.height,local.tex,1,1);
+    d3d_draw_wall(local.armwidth,-local.length,arm_h_var,local.width,-local.length,0,local.tex,1,1);
+    d3d_draw_wall(local.armwidth,local.length,arm_h_var,local.width,local.length,0,local.tex,1,1);
     // Reset
     d3d_transform_set_identity();
     draw_set_color(c_white); draw_set_alpha(1);
 ');
+/*
+Old
+
+d3d_draw_floor(-local.width,local.backlength,h_var,local.width,local.length,h_var,local.tex,3,1);
+d3d_draw_wall(-local.width,local.backlength,h_var,local.width,local.backlength,local.height,tex_02_var,3,1);
+// Seat
+d3d_draw_floor(-local.width,-local.length,local.height,local.width,local.backlength,local.height,tex_02_var,3,1);
+d3d_draw_wall(-local.width,-local.length,local.height,local.width,-local.length,0,local.tex,3,1);
+d3d_draw_wall(-local.width,-local.length,local.height,-local.width,local.backlength,0,local.tex,1,1);
+d3d_draw_wall(local.width,-local.length,local.height,local.width,local.backlength,0,local.tex,1,1);
+// Sides, back, and bottom
+d3d_draw_floor(-local.width,-local.length,0,local.width,local.length,0,local.tex,3,1);
+d3d_draw_wall(-local.width,local.length,h_var,local.width,local.length,0,local.tex,3,1);
+d3d_draw_wall(-local.width,local.backlength,h_var,-local.width,local.length,0,local.tex,1,1);
+d3d_draw_wall(local.width,local.backlength,h_var,local.width,local.length,0,local.tex,1,1);
+*/

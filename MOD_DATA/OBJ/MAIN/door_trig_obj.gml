@@ -236,7 +236,7 @@ object_event_add
         d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
         d3d_set_hidden(false); draw_set_alpha(image_alpha);
         draw_set_halign(halign_var); draw_set_valign(valign_var);
-        draw_str_ext_shadow_scr(str_var,str_x_var,str_y_var,image_xscale,image_yscale,min_scale_var,halign_var,valign_var,sep_var,margin_var,shadow_x_var,shadow_y_var,shadow_color_var,image_blend,shadow_var,image_angle);
+        draw_str_ext_shadow_scr(local.txt,str_x_var,str_y_var,image_xscale,image_yscale,min_scale_var,halign_var,valign_var,sep_var,margin_var,shadow_x_var,shadow_y_var,shadow_color_var,image_blend,shadow_var,image_angle);
         draw_set_halign(fa_left); draw_set_valign(fa_top);
         draw_set_alpha(1); d3d_set_hidden(true);
     }
