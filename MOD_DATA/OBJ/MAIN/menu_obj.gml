@@ -89,9 +89,9 @@ object_event_add
     old_var = false;
     if !irandom(7)
     {
-        switch irandom(5)
+        switch irandom(6)
         {
-            case 0:
+            case 0: // HD
             {
                 title_spr_var = execute_file(main_directory_const+"\SPR\UI\menu_title_hd_spr.gml",main_directory_const+"\SPR\UI\menu_title_hd_spr.png");
                 bg_var = background_add(main_directory_const+"\BG\UI\menu_hd_bg.png",false,false);
@@ -102,7 +102,7 @@ object_event_add
                 rain_var = true;
                 break;
             }
-            case 1:
+            case 1: // OG
             {
                 title_spr_var = execute_file(main_directory_const+"\SPR\UI\menu_title_old_01_spr.gml",main_directory_const+"\SPR\UI\menu_title_old_01_spr.png");
                 title_02_spr_var = execute_file(main_directory_const+"\SPR\UI\menu_title_old_02_spr.gml",main_directory_const+"\SPR\UI\menu_title_old_02_spr.png");
@@ -116,7 +116,18 @@ object_event_add
                 rain_var = true;
                 break;
             }
-            default:
+            case 2: // New / Promotional
+            {
+                title_spr_var = execute_file(main_directory_const+"\SPR\UI\menu_title_spr.gml",main_directory_const+"\SPR\UI\menu_title_spr.png");
+                rain_var = false;
+                bg_var = background_add(main_directory_const+"\BG\UI\menu_bg.png",false,false);
+                path_bg_var = background_add(main_directory_const+"\BG\UI\menu_path_bg.png",false,false);
+                menu_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\menu_mus_snd.mp3");
+                background_color = make_color_rgb(31,37,89);
+                menu_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\menu_mus_snd.mp3");
+                break;
+            }
+            default: // Random OG
             {
                 local.path = vanilla_directory_const+"\TEX\menu\"+choose("name_uhh_spr","name_uhh_spr2","name_uhh_spr3","name_uhh_spr4")+".png";
                 title_spr_var = sprite_add(local.path,1,false,false,0,0);
@@ -131,7 +142,7 @@ object_event_add
             }
         }
     }
-    else
+    else // Recode
     {
         title_spr_var = execute_file(main_directory_const+"\SPR\UI\menu_title_spr.gml",main_directory_const+"\SPR\UI\menu_title_spr.png");
         rain_var = (current_hour <= 6 || current_hour >= 18);
@@ -176,6 +187,7 @@ object_event_add
     cancel_str_var = string_replace(ini_read_string("MENU","cancel","MENU_cancel"),"@k",key_to_str_scr(global.input_key_arr[back_input_const,0]));
     story_str_var = ini_read_string("MENU","story","MENU_story");
     back_str_var = ini_read_string("MENU","back","MENU_back");
+    copy_str_var = ini_read_string("MENU","copy","MENU_copy");
     rm_str_var = ini_read_string("MENU","rm","MENU_rm");
     mode_str_var = ini_read_string("MENU","mode","MENU_mode");
     type_str_var = ini_read_string("MENU","type","MENU_type");
@@ -1640,8 +1652,15 @@ object_event_add
         }
         case 2: // Main
         {
-            draw_spr_stretch_scr(title_spr_var,title_spr_id_var,393,title_y_var,666,0,fa_left,fa_top);
+            // Title
+            draw_spr_stretch_scr(title_spr_var,title_spr_id_var,393,title_y_var,240,1,fa_left,fa_top); // 666,0
             if old_var { draw_spr_scale_scr(title_02_spr_var,0,394.5,title_02_y_var,339,title_02_scale_var,fa_left,fa_top); }
+            // Copyright and version
+            draw_set_halign(fa_right); draw_set_alpha(0.3);
+            draw_str_ext_scr(global.version_var+"
+"+copy_str_var,-40,40,0.3,0.3,0.125,fa_right,fa_top,-1,900,0);
+            draw_set_halign(fa_left); draw_set_alpha(1);
+            // Buttons
             for (local.i=0; local.i<4; local.i+=1)
             {
                 if local.i != button_state_var

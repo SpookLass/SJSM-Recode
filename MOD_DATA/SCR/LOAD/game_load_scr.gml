@@ -9,6 +9,7 @@ d3d_set_culling(false);
 d3d_set_hidden(false);
 draw_set_font(main_font);
 splash_set_close_button(false);
+global.version_var = "Spooky's Jump Scare Mansion - Project Recode: v3.13.26";
 global.game_var = false;
 global.game_spd_var = 1;
 global.game_time_var = 0;

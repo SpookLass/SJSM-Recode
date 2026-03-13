@@ -294,7 +294,7 @@ object_event_add
     }
     else { local.rm_str = " | "+global.rm_name_var; local.time_str = ""; }
     local.fps_str = " | FPS: "+string(global.fps_curr_var);
-    room_caption = "Spookys Jump Scare Mansion - Project Recode "+local.rm_str+local.time_str+" | TPS: "+string(fps)+local.fps_str;
+    room_caption = global.version_var+local.rm_str+local.time_str+" | TPS: "+string(fps)+local.fps_str;
     global.draw_time_var = 0;
 ')
 // Room End Eventt

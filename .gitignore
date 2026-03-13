@@ -4,12 +4,16 @@ Karamari_Hospital/
 The_Doll_House/
 # Mod stuff
 MODS/
+EDITOR/
 # I don't want screenshots or saves
 screenshot*.png
 *.ini
 *.log
 *.gb1
 *.zip
+*.7z
+*.exe
+*.gmk
 # Except these
 !en_us.ini
 !control_preset_pc.ini

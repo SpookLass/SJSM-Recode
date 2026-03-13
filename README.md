@@ -39,7 +39,7 @@ This demo only includes Endless Mode at the moment, but will get Story Mode supp
 - Baka-Chan: Flesh death screen
 - TheRut01: Eel death screen (jaws)
 - StupidFizz: Eel death screen (background)
-- Everlasting Maya: Multiplayer icon
+- Everlasting Maya: Icons
 - Spook Lass: Various art edits
 
 ### Models:
@@ -98,6 +98,7 @@ This demo only includes Endless Mode at the moment, but will get Story Mode supp
 - IInfectr
 - Starlight
 - bob ///b!
+- Lexi
 - All of the contributors!
 - You!
 
