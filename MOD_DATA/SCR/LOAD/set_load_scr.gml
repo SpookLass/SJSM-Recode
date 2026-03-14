@@ -92,17 +92,17 @@ for (local.i=0; local.i<global.set_len_var; local.i+=1;)
 for (local.i=0; local.i<8; local.i+=1;)
 {
     // Multiplayer
-    global.player_name_var[local.i] = ini_read_string("MULTIPLAYER","name_"+string(local.i),"PLAYER "+string(local.i));
+    global.player_name_var[local.i] = ini_read_string("MULTIPLAYER","name_"+string(local.i),"PLAYER "+string(local.i+1));
     switch local.i
     {
-        case 0: { local.color = make_color_rgb(127,0,255); break; }
-        case 1: { local.color = make_color_rgb(127,255,0); break; }
-        case 2: { local.color = make_color_rgb(255,127,0); break; }
-        case 3: { local.color = make_color_rgb(255,0,127); break; }
-        case 4: { local.color = make_color_rgb(0,255,127); break; }
-        case 5: { local.color = make_color_rgb(0,127,255); break; }
-        case 6: { local.color = make_color_rgb(255,255,255); break; }
-        case 7: { local.color = make_color_rgb(0,0,0); break; }
+        case 0: { local.color = make_color_rgb(168,88,188); break; } // Purple
+        case 1: { local.color = make_color_rgb(255,31,27); break; } // Red
+        case 2: { local.color = make_color_rgb(255,255,28); break; } // Yellow
+        case 3: { local.color = make_color_rgb(255,255,255); break; } // White
+        case 4: { local.color = make_color_rgb(59,59,119); break; } // Blue
+        case 5: { local.color = make_color_rgb(255,255,255); break; } // White
+        case 6: { local.color = make_color_rgb(226,205,124); break; } // Gold
+        case 7: { local.color = make_color_rgb(40,3,47); break; } // Black
     }
     global.player_color_var[local.i] = ini_read_real("MULTIPLAYER","color_"+string(local.i),local.color);
     global.player_spr_var[local.i] = ini_read_real("MULTIPLAYER","spr_"+string(local.i),0);

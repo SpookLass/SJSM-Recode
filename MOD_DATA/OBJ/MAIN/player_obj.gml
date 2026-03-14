@@ -522,7 +522,7 @@ object_event_add
             // Calculate friction and acceleration
             local.acc = acc_var;
             local.frick = frick_var;
-            if !on_floor_var
+            if !on_floor_var && do_coll_var && grav_var > 0
             {
                 local.acc *= air_frick_mult_var;
                 local.frick *= air_frick_mult_var;
@@ -533,7 +533,6 @@ object_event_add
             // Accelerate and move
             if !do_coll_var || grav_var <= 0
             {
-                on_floor_var = true;
                 if global.input_move_var[player_id_var] != move_button_const { local.spd *= median(0,1,sqrt(sqr(local.input_dir_x)+sqr(local.input_dir_y)+sqr(local.input_dir_z))); }
                 if back_var { local.spd *= lerp_scr(1,back_spd_mult_var,abs(local.input_dir)/180); }
                 if do_acc_var { acc_3d_scr(global.delta_time_var,local.acc,local.frick,local.input_dir+eye_yaw_var,local.input_dir_pitch+(eye_pitch_var*lengthdir_x(1,local.input_dir)),local.spd); }
@@ -566,6 +565,20 @@ object_event_add
                     hp_var = 0;
                     dead_var = true;
                     do_coll_var = false;
+                    do_stam_var = false;
+                    // Death screen
+                    if !global.debug_var
+                    {
+                        local.dead = true;
+                        if global.player_len_var > 1 { with player_obj { if !dead_var { local.dead = false; }}}
+                        if local.dead
+                        {
+                            global.dead_mon_var = noone;
+                            global.menu_player_var = player_id_var;
+                            if global.permadeath_var { delete_save_scr(global.save_name_var); }
+                            rm_goto_menu_scr(dead_rm,true);
+                        }
+                    }
                 }
             }
             else if normal_var
@@ -636,7 +649,7 @@ object_event_add
         // Get real speed for bobbing and stamina (already delta-timed)
         local.real_spd = point_distance(xprevious,yprevious,x,y);
         local.stam_rate = 0;
-        if on_floor_var
+        if on_floor_var && do_coll_var && grav_var > 0
         {
             // Calculate stamina
             if do_stam_var

@@ -77,6 +77,7 @@ object_event_add
 // Alarm
 object_event_add
 (argument0,ev_alarm,0,'
+    fmod_update_take_over_when_lock_scr();
     with instance_create(x,y,brain_chase_obj)
     {
         set_alarm_scr(0,-1);
@@ -94,5 +95,7 @@ object_event_add
         h_var = other.h_var;
         if loop_snd_var[0] == 1 { loop_inst_var = fmod_snd_3d_loop_scr(loop_snd_var[1]); }
     }
+    global.last_time_var = current_time;
+    fmod_update_take_over_done_scr();
     instance_destroy();
 ')

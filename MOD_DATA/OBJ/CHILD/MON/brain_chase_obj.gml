@@ -11,7 +11,9 @@ object_event_add
 (argument0,ev_create,1,'
     ini_open(global.lang_var);
     name_var = translate_mon_str_scr("brain",global.name_var);
-    loop_snd_var[2] = string_replace(ini_read_string("SUB","brain","SUB_brain"),"@n",name_var); loop_snd_var[3] = false;
+    local.sub = string_replace(ini_read_string("SUB","brain","SUB_brain"),"@n",name_var);
+    loop_snd_var[2] = local.sub; loop_snd_var[3] = false;
+    wake_snd_var[2] = local.sub; wake_snd_var[3] = false;
     ini_close();
     type_var = 0;
     spd_base_var = 0.8;
@@ -31,7 +33,9 @@ object_event_add
     eff_mult_var = false;
     // Sounds
     do_snd_var = true;
-    loop_snd_var[0] = true;
+    loop_snd_var[0] = false;
+    wake_snd_var[0] = true;
+    wake_snd_var[1] = brain_snd;
     loop_snd_dist_min_var = 0;
     loop_snd_dist_max_var = 600;
     // Assets
@@ -51,7 +55,7 @@ object_event_add
     if !local.loaded
     {
         loop_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\brain_loop_snd.wav",true);
-        mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\brain_mus_snd.mp3");
+        mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\brain_mus_snd.ogg");
         fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
     }
     if global.brain_type_var == -1 { local.type = irandom(2); }
@@ -63,6 +67,8 @@ object_event_add
             atk_range_var = global.mon_coll[2];
             if global.mode_var != 0
             {
+                loop_snd_var[0] = true;
+                wake_snd_var[0] = false;
                 mus_prio_var = theme_mus_prio_const;
                 dur_var = irandom_range(10,15);
                 spd_var = 8/15; // Old HD: 0.5r3

@@ -229,9 +229,9 @@ object_event_add
                     {
                         dead_var = false;
                         do_coll_var = true;
-                        grav_var = grav_const;
                         hp_var = hp_max_var;
                         possess_var = false;
+                        do_stam_var = true;
                     }
                 }
                 with mon_par_obj { possess_var = false; }
@@ -306,7 +306,9 @@ object_event_add
     window_y_var = window_get_y();
     window_w_var = window_get_width();
     window_h_var = window_get_height();
+    // Prevent freezing
     io_handle();
+    fmod_update_take_over_when_lock_scr();
 ');
 // Room Start
 object_event_add
@@ -330,6 +332,8 @@ object_event_add
     { window_set_rectangle(window_x_var,window_y_var,window_w_var,window_h_var); }
     // Window Color
     if !instance_exists(fog_par_obj) { window_set_color(make_color_rgb(30,0,50)); }
+    // Prevent freezing
+    fmod_update_take_over_done_scr();
 ');
 // Update FPS
 object_event_add

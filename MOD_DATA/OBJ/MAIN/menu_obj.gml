@@ -93,6 +93,7 @@ object_event_add
         {
             case 0: // HD
             {
+                title_01_scale_var = 240;
                 title_spr_var = execute_file(main_directory_const+"\SPR\UI\menu_title_hd_spr.gml",main_directory_const+"\SPR\UI\menu_title_hd_spr.png");
                 bg_var = background_add(main_directory_const+"\BG\UI\menu_hd_bg.png",false,false);
                 light_01_bg_var = background_add(vanilla_directory_const+"\MAT\blank.png",false,false);
@@ -102,8 +103,9 @@ object_event_add
                 rain_var = true;
                 break;
             }
-            case 1: // OG
+            case 1: // Old OG
             {
+                title_01_scale_var = 162;
                 title_spr_var = execute_file(main_directory_const+"\SPR\UI\menu_title_old_01_spr.gml",main_directory_const+"\SPR\UI\menu_title_old_01_spr.png");
                 title_02_spr_var = execute_file(main_directory_const+"\SPR\UI\menu_title_old_02_spr.gml",main_directory_const+"\SPR\UI\menu_title_old_02_spr.png");
                 old_var = true;
@@ -118,6 +120,7 @@ object_event_add
             }
             case 2: // New / Promotional
             {
+                title_01_scale_var = 240;
                 title_spr_var = execute_file(main_directory_const+"\SPR\UI\menu_title_spr.gml",main_directory_const+"\SPR\UI\menu_title_spr.png");
                 rain_var = false;
                 bg_var = background_add(main_directory_const+"\BG\UI\menu_bg.png",false,false);
@@ -129,6 +132,7 @@ object_event_add
             }
             default: // Random OG
             {
+                title_01_scale_var = 240;
                 local.path = vanilla_directory_const+"\TEX\menu\"+choose("name_uhh_spr","name_uhh_spr2","name_uhh_spr3","name_uhh_spr4")+".png";
                 title_spr_var = sprite_add(local.path,1,false,false,0,0);
                 sprite_set_offset(title_spr_var,sprite_get_width(title_spr_var)/2,sprite_get_height(title_spr_var)/2);
@@ -144,6 +148,7 @@ object_event_add
     }
     else // Recode
     {
+        title_01_scale_var = 240;
         title_spr_var = execute_file(main_directory_const+"\SPR\UI\menu_title_spr.gml",main_directory_const+"\SPR\UI\menu_title_spr.png");
         rain_var = (current_hour <= 6 || current_hour >= 18);
         if rain_var // Night
@@ -1653,7 +1658,7 @@ object_event_add
         case 2: // Main
         {
             // Title
-            draw_spr_stretch_scr(title_spr_var,title_spr_id_var,393,title_y_var,240,1,fa_left,fa_top); // 666,0
+            draw_spr_stretch_scr(title_spr_var,title_spr_id_var,393,title_y_var,title_01_scale_var,1,fa_left,fa_top); // 666,0
             if old_var { draw_spr_scale_scr(title_02_spr_var,0,394.5,title_02_y_var,339,title_02_scale_var,fa_left,fa_top); }
             // Copyright and version
             draw_set_halign(fa_right); draw_set_alpha(0.3);

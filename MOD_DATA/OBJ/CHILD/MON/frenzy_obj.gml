@@ -80,7 +80,7 @@ object_event_add
         spr_var = sprite_add(dh_directory_const+"\TEX\sprites\frenzy2_spr.png",8,false,false,0,0); // working_directory+"\MODS\PLUS\SPR\MON\gangnam_frenzy_spr.gif"
         bg_var = background_add(dh_directory_const+"\TEX\sprites\frenzy_spr.png",false,false);
         charge_snd_var[0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\frenzy_atk_short_snd.wav",true);
-        mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\frenzy_mus_snd.mp3");
+        mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\frenzy_mus_snd.ogg");
         hurt_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\DH\frenzy_hurt_snd.wav",true);
         scare_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\scare_short_snd.wav");
         fmod_snd_set_group_scr(charge_snd_var[0],snd_group_mon_const);

@@ -117,6 +117,9 @@ object_event_add
             acc_var = 16/675; // 0.02r370
             frick_var = acc_var;
             atk_range_var = 4/pixel_meter_rate_const;
+            snd_den_var = 1;
+            snd_alarm_min_var = 90;
+            snd_alarm_max_var = 240;
             break;
         }
     }

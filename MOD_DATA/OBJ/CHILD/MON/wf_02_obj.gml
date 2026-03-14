@@ -76,7 +76,7 @@ object_event_add
             other.zone_list_var = zone_list_var;
             other.loop_snd_var[1] = loop_snd_var[1];
             for (local.i=0; local.i<glitch_snd_len_var; local.i+=1;)
-            { other.glitch_snd_arr[local.i,0] = glitch_snd_arr[local.i,0]; }
+            { other.glitch_snd_arr[local.i] = glitch_snd_arr[local.i]; }
             other.mus_snd_var = mus_snd_var;
             local.loaded = true;
             break;

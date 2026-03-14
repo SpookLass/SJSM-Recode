@@ -126,6 +126,10 @@ object_event_add
         {
             bod_form_var = true;
             atk_range_var = global.mon_coll[2];
+            // New
+            spd_base_var = 1.1; // 1.7
+            stun_var = true;
+            hurt_alarm_var = 60; // 60
             break;
         }
         case 2: // HD (Pretend)

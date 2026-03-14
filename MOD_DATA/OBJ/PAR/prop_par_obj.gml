@@ -54,8 +54,17 @@ object_event_add
     {
         switch snap_var
         {
-            case 1: { z = instance_nearest(x,y,floor_par_obj).z; break; }
-            case 2: { z = instance_nearest(x,y,ceil_par_obj).z; break; }
+            case 1:
+            {
+                if instance_exists(floor_par_obj) { z = instance_nearest(x,y,floor_par_obj).z; break; }
+                else { instance_destroy(); exit; }
+            }
+            case 2:
+            {
+                if instance_exists(ceil_par_obj)
+                { z = instance_nearest(x,y,ceil_par_obj).z; break; }
+                else { instance_destroy(); exit; }
+            }
         }
     }
 ');

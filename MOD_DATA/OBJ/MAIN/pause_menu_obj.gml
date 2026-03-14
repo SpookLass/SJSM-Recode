@@ -54,19 +54,31 @@ object_event_add
         // fmod_inst_set_mute_scr(mus_snd_var,true);
         set_alarm_scr(0,60);
     }
+    // No Escape
+    no_escape_var = (global.permadeath_var && instance_exists(mon_par_obj) && !global.debug_var);
     // Menu
-    image_blend = make_color_rgb(59,59,119)
+    image_blend = make_color_rgb(59,59,119);
     button_len_var = 4;
     button_state_var = 0;
     str_bg_color_var = make_color_rgb(57,0,91);
     str_bg_select_color_var = make_color_rgb(138,0,0);
     str_scale_var = 0.8;
     // String
-    str_var = "GAME PAUSED"
-    button_arr[0] = "CONTINUE"
-    button_arr[1] = "SETTINGS"
-    button_arr[2] = "EXIT TO MENU"
-    button_arr[3] = "QUIT"
+    ini_open(global.lang_var);
+    str_var = ini_read_string("MENU","pause","MENU_pause");
+    button_arr[0] = ini_read_string("MENU","continue","MENU_continue");
+    button_arr[1] = ini_read_string("MENU","setting","MENU_setting");
+    if no_escape_var
+    {
+        button_arr[2] = ini_read_string("MENU","no_escape","MENU_no_escape");
+        button_arr[3] = ini_read_string("MENU","no_escape","MENU_no_escape");
+    }
+    else
+    {
+        button_arr[2] = ini_read_string("MENU","exit_to_menu","MENU_exit_to_menu");
+        button_arr[3] = ini_read_string("MENU","exit","MENU_exit");
+    }
+    ini_close();
 ');
 // Step Begin
 object_event_add
@@ -122,12 +134,14 @@ object_event_add
                 }
                 case 2: // Exit to Menu
                 {
-                    rm_goto_menu_scr(menu_rm,true);
+                    if no_escape_var { fmod_snd_play_scr(deny_snd);}
+                    else { rm_goto_menu_scr(menu_rm,true); }
                     break;
                 }
                 case 3: // Quit
                 {
-                    game_end();
+                    if no_escape_var { fmod_snd_play_scr(deny_snd);}
+                    else { game_end(); }
                     break;
                 }
             }

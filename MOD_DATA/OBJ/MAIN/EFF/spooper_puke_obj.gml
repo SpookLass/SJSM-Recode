@@ -51,6 +51,7 @@ object_event_add
                     hp_var = 0;
                     dead_var = true;
                     do_coll_var = false;
+                    do_stam_var = false;
                     // Revive
                     if other.possess_var
                     {
@@ -63,7 +64,7 @@ object_event_add
                             possess_var = false;
                             dead_var = false;
                             do_coll_var = true;
-                            grav_var = grav_const;
+                            do_stam_var = true;
                             hp_var = hp_max_var;
                             // Become other player
                             x = local.player.x;

@@ -69,11 +69,13 @@ object_event_add
     // Sounds
     snd_len_var = -1;
     // Special
+    mdl_yaw_var = 0;
     mdl_pitch_var = 90;
     shake_var = 0.1;
     inf_stam_var = true;
     spin_var = false;
     spin_rate_var = 5;
+    atk_spawn_delay_var = 0;
     // Effects
     eff_fade_var = false;
     eff_delay_var = 60;

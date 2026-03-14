@@ -100,7 +100,7 @@ object_event_add
             // Revive
             dead_var = false;
             do_coll_var = true;
-            grav_var = grav_const;
+            do_stam_var = true;
             hp_var = hp_max_var;
             possess_var = false;
             // Respawn

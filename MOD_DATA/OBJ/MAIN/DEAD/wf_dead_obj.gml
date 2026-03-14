@@ -70,7 +70,7 @@ object_event_add
 // Alarm 1 Event
 object_event_add
 (argument0,ev_alarm,1,'
-    with global.player_arr[global.menu_player_var] { dead_var = false; do_coll_var = true; }
+    with global.player_arr[global.menu_player_var] { dead_var = false; do_coll_var = true; do_stam_var = true; }
     instance_create(0,0,wf_02_obj);
     rm_leave_menu_scr(wf_hall_10_rm);
 ');

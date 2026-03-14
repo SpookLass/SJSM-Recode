@@ -424,6 +424,7 @@ object_event_add
                         hp_var = 0;
                         dead_var = true;
                         do_coll_var = false;
+                        do_stam_var = false;
                         if local.kill == 0
                         { local.kill = 1; }
                     }
