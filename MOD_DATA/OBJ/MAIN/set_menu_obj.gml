@@ -284,7 +284,7 @@ object_event_add
                 }
                 global.last_time_var = current_time;
                 fmod_update_take_over_done_scr();
-                global.input_arr[confirm_input_const,0] = 0;
+                global.input_press_arr[confirm_input_const,0] = 0;
                 if local.set { has_set_var = true; }
             }
             else
@@ -296,7 +296,7 @@ object_event_add
                         if has_set_var
                         {
                             if show_message_ext(apply_question_str_var,yes_str_var,no_str_var,"") == 1 { event_user(0); }
-                            global.input_arr[confirm_input_const,0] = 0;
+                            global.input_press_arr[confirm_input_const,0] = 0;
                         }
                         break;
                     }
@@ -318,7 +318,7 @@ object_event_add
                                 if local.message == 1 { event_user(0); }
                                 global.last_time_var = current_time;
                                 fmod_update_take_over_done_scr();
-                                global.input_arr[confirm_input_const,0] = 0;
+                                global.input_press_arr[confirm_input_const,0] = 0;
                             }
                             if !local.dont
                             {
@@ -349,7 +349,7 @@ object_event_add
                         if show_message_ext(reset_question_str_var,yes_str_var,no_str_var,"") == 1 { event_user(1); }
                         global.last_time_var = current_time;
                         fmod_update_take_over_done_scr();
-                        global.input_arr[confirm_input_const,0] = 0;
+                        global.input_press_arr[confirm_input_const,0] = 0;
                         break;
                     }
                     case -5: // Load Preset
@@ -374,7 +374,7 @@ object_event_add
                         }
                         global.last_time_var = current_time;
                         fmod_update_take_over_done_scr();
-                        global.input_arr[confirm_input_const,0] = 0;
+                        global.input_press_arr[confirm_input_const,0] = 0;
                         break;
                     }
                 }
@@ -409,7 +409,7 @@ object_event_add
                         local.message = show_message_ext(back_question_str_var,yes_str_var,no_str_var,cancel_str_var);
                         if local.message == 0 || local.message == 3 { local.dont = true; }
                         if local.message == 1 { event_user(0); }
-                        global.input_arr[confirm_input_const,0] = 0;
+                        global.input_press_arr[confirm_input_const,0] = 0;
                     }
                     if !local.dont
                     {
@@ -744,7 +744,7 @@ object_event_add
         -4,4,str_bg_select_color_var,c_white,2,0,0.75
     );
     draw_set_halign(fa_right);
-    local.margin = (view_wview[view_current]/2)+192;
+    local.margin = 832;
     draw_str_ext_shadow_scr
     (
         desc_arr_var[state_var,set_var],

@@ -44,6 +44,7 @@ object_event_add
             case 1: { spr_var = player_02_spr; break; }
             case 2: { spr_var = player_03_spr; break; }
         }
+        tex_01_var = sprite_get_texture(spr_var,spr_id_var);
         spr_spd_var = 0.1;
         h_01_var = 20;
         w_01_var = 7.5;

@@ -138,7 +138,9 @@ object_event_add
     possess_delay_var = 0;
     possess_delay_max_var = 10;
     // Behavior
-    switch global.player_type_var
+    if global.player_type_var == -1 { local.type = irandom(2); }
+    else { local.type = global.player_type_var; }
+    switch local.type
     {
         case 1:
         {

@@ -224,7 +224,7 @@ object_event_add
         {
             sight_type_var = 1;
             event_user(8);
-            if target_visible_var && target_dist_var <= sight_dist_var || sight_dist_var <= 0
+            if target_visible_var && (target_dist_var <= sight_dist_var || sight_dist_var <= 0)
             {
                 event_perform(ev_alarm,8);
                 set_alarm_scr(8,-1);

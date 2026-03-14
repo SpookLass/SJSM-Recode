@@ -453,6 +453,7 @@ object_event_add
             sprint_mult_var = 24; // WOW!
             dmg_var = 30;
             atk_range_var = global.mon_coll[2];
+            loop_snd_var[0] = true;
             break;
         }
     }
@@ -518,7 +519,6 @@ object_event_add
             delay_max_var = delay_min_var;
         }
     }
-    loop_snd_var[0] = false;
     event_inherited();
     if do_stam_var
     {
@@ -541,7 +541,6 @@ object_event_add
     {
         stam_var = stam_max_var;
         sprint_var = true;
-        spd_mult_var *= sprint_mult_var;
         spr_spd_var = sprint_spr_spd_var;
         h_var = sprint_h_var;
         z_off_var = sprint_z_off_var;
@@ -552,55 +551,62 @@ object_event_add
         }
     }      
 ');
+// Room End Event
+object_event_add
+(argument0,ev_other,ev_room_end,'
+    event_inherited();
+');
 // Movement
 object_event_add
 (argument0,ev_other,ev_user0,'
     if do_sprint_var
     {
-        if sprint_var
+        if !scary_var
         {
-            if do_stam_var { stam_var -= stam_drain_var*global.delta_time_var; }
-            if stam_var <= 0
-            || (global.input_press_arr[sprint_input_const,player_id_var] == -1 && possess_var)
+            // Switch sprint
+            if sprint_var
             {
-                sprint_var = false;
-                spr_spd_var = spr_spd_base_var;
-                h_var = h_base_var;
-                z_off_var = z_off_base_var;
-                if sprint_acc_var > 0 
+                if do_stam_var { stam_var -= stam_drain_var*global.delta_time_var; }
+                if stam_var <= 0
+                || (global.input_press_arr[sprint_input_const,player_id_var] == -1 && possess_var)
                 {
-                    acc_var = acc_base_var;
-                    frick_var = acc_base_var;
+                    sprint_var = false;
+                    spr_spd_var = spr_spd_base_var;
+                    h_var = h_base_var;
+                    z_off_var = z_off_base_var;
+                    if sprint_acc_var > 0 
+                    {
+                        acc_var = acc_base_var;
+                        frick_var = acc_base_var;
+                    }
                 }
             }
-            else { spd_mult_var *= sprint_mult_var; }
-        }
-        else
-        {
-            if do_stam_var { stam_var += stam_rate_var*global.delta_time_var; }
-            if (stam_var >= stam_max_var && !possess_var)
-            || (!do_stam_var && !scary_var)
-            || (global.input_press_arr[sprint_input_const,player_id_var] == 1 && possess_var)
+            else
             {
-                sprint_var = true;
-                spd_mult_var *= sprint_mult_var;
-                spr_spd_var = sprint_spr_spd_var;
-                h_var = sprint_h_var;
-                z_off_var = sprint_z_off_var;
-                if sprint_acc_var > 0 
+                if do_stam_var { stam_var += stam_rate_var*global.delta_time_var; }
+                if (stam_var >= stam_max_var && !possess_var) || !do_stam_var
+                || (global.input_press_arr[sprint_input_const,player_id_var] == 1 && possess_var)
                 {
-                    acc_var = sprint_acc_var;
-                    frick_var = sprint_acc_var;
+                    sprint_var = true;
+                    spr_spd_var = sprint_spr_spd_var;
+                    h_var = sprint_h_var;
+                    z_off_var = sprint_z_off_var;
+                    if sprint_acc_var > 0 
+                    {
+                        acc_var = sprint_acc_var;
+                        frick_var = sprint_acc_var;
+                    }
+                    // Somebody scream!
+                    if fmod_inst_is_play_scr(snd_var) && fmod_inst_is_3d_scr(snd_var)
+                    { fmod_inst_stop_scr(snd_var); }
+                    local.index = irandom(charge_snd_len_var-1);
+                    snd_var = fmod_snd_3d_play_scr(charge_snd_arr[local.index,0]);
+                    sub_var[0] = charge_snd_arr[local.index,1];
+                    sub_var[1] = charge_snd_arr[local.index,2];
                 }
-                // Somebody scream!
-                if fmod_inst_is_play_scr(snd_var) && fmod_inst_is_3d_scr(snd_var)
-                { fmod_inst_stop_scr(snd_var); }
-                local.index = irandom(charge_snd_len_var-1);
-                snd_var = fmod_snd_3d_play_scr(charge_snd_arr[local.index,0]);
-                sub_var[0] = charge_snd_arr[local.index,1];
-                sub_var[1] = charge_snd_arr[local.index,2];
             }
         }
+        if sprint_var { spd_mult_var *= sprint_mult_var; }
         stam_var = median(0,stam_max_var,stam_var);
     }
     event_inherited();
@@ -609,10 +615,17 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user3,'
     event_inherited();
-    if scary_var
+    if scary_var && sprint_var
     {
-        stam_var = 0;
-        loop_snd_var[0] = false;
+        sprint_var = false;
+        spr_spd_var = spr_spd_base_var;
+        h_var = h_base_var;
+        z_off_var = z_off_base_var;
+        if sprint_acc_var > 0 
+        {
+            acc_var = acc_base_var;
+            frick_var = acc_base_var;
+        }
         fmod_inst_stop_scr(loop_inst_var);
     }
     if dmg_stun_var > 0
@@ -632,16 +645,11 @@ object_event_add
     event_inherited();
     if do_snd_var && drag_snd_len_var > 0
     { set_alarm_scr(8,drag_snd_alarm_var); }
-    if scary_var
-    {
-        loop_inst_var = fmod_snd_3d_loop_scr(loop_snd_var[1]);
-        loop_snd_var[0] = true;
-    }
 ');
 // Sound alarm
 object_event_add
 (argument0,ev_alarm,6,'
-    if do_snd_var && !loop_snd_var[0] && frac_chance_scr(snd_num_var,snd_den_var)
+    if do_snd_var && frac_chance_scr(snd_num_var,snd_den_var)//&& (!scary_var || !sprint_var)
     {
         if fmod_inst_is_play_scr(snd_var) && fmod_inst_is_3d_scr(snd_var)
         { fmod_inst_stop_scr(snd_var); }

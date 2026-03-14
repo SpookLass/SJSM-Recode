@@ -43,7 +43,9 @@ object_event_add
     prog_var = 60;
     on_var = false;
     // Behavior
-    switch global.player_type_var
+    if global.player_type_var == -1 { local.type = irandom(2); }
+    else { local.type = global.player_type_var; }
+    switch local.type
     {
         case 0:
         {

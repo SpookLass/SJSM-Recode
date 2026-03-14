@@ -111,6 +111,8 @@ object_event_add
         }
         case 2: // HD
         {
+            seen_pitch_var = global.fov_var;
+            seen_yaw_var = convert_fov_scr(seen_pitch_var,global.res_w_var,global.res_h_var,1);
             spd_base_var = 8/9; // 0.r8
             do_acc_var = true;
             acc_var = 16/675; // 0.02r370

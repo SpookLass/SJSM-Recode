@@ -103,8 +103,8 @@ object_event_add
             x += 32;
             y -= 4.72;
             // Props
-            body_x_var = 48+(1.77/pixel_meter_rate_const);
-            body_y_var = 48+(5.24/pixel_meter_rate_const);
+            body_x_var = 48+(5.24/pixel_meter_rate_const);
+            body_y_var = 48+(1.77/pixel_meter_rate_const);
             body_z_var = 1.24/pixel_meter_rate_const;
             chair_x_var = 48+(5/pixel_meter_rate_const);
             chair_y_var = 48+(1.4/pixel_meter_rate_const);

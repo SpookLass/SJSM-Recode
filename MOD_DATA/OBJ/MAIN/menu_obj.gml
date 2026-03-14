@@ -643,8 +643,8 @@ object_event_add
                     {
                         state_var = 7;
                         global.input_press_arr[confirm_input_const,0] = 0;
-                        global.input_arr[confirm_input_const,0] = 0;
                         instance_create(0,0,set_menu_obj);
+                        //global.input_arr[confirm_input_const,0] = 0;
                         event_user(0);
                         break;
                     }
@@ -1811,7 +1811,7 @@ object_event_add
             if is_string(local.desc)
             {
                 draw_set_halign(fa_right);
-                local.margin = (view_wview[view_current]/2)+192;
+                local.margin = 832;
                 draw_str_ext_shadow_scr
                 (
                     local.desc,
@@ -1915,7 +1915,7 @@ object_event_add
                 -4,4,str_bg_select_color_var,c_white,2,0,0.75
             );
             draw_set_halign(fa_right);
-            local.margin = (view_wview[view_current]/2)+192;
+            local.margin = 832;
             draw_str_ext_shadow_scr
             (
                 custom_button_arr_var[button_state_var,2],
@@ -2045,7 +2045,7 @@ object_event_add
                     }
                 }
                 draw_set_halign(fa_right);
-                local.margin = (view_wview[view_current]/2)+192;
+                local.margin = 832;
                 draw_str_ext_shadow_scr
                 (
                     local.desc,
