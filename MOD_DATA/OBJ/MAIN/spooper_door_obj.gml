@@ -42,28 +42,31 @@ object_event_add
     }
     with player_obj
     {
-        local.player = id;
-        switch (global.shake_type_var)
+        if on_var && !dead_var && !in_door_var
         {
-            case shake_classic_const:
+            local.player = id;
+            switch (global.shake_type_var)
             {
-                with instance_create(0,0,shake_eff_obj)
+                case shake_classic_const:
                 {
-                    player_var = local.player;
-                    mult_var = local.player.shake_pos_base_var;
-                    type_var = 0; // Constant
+                    with instance_create(0,0,shake_eff_obj)
+                    {
+                        player_var = local.player;
+                        mult_var = local.player.shake_pos_base_var;
+                        type_var = 0; // Constant
+                    }
+                    break;
                 }
-                break;
-            }
-            case shake_modern_const:
-            {
-                with instance_create(0,0,shake_eff_obj)
+                case shake_modern_const:
                 {
-                    player_var = local.player;
-                    mult_var = local.player.shake_angle_base_var;
-                    type_var = 1; // Fade out
+                    with instance_create(0,0,shake_eff_obj)
+                    {
+                        player_var = local.player;
+                        mult_var = local.player.shake_angle_base_var;
+                        type_var = 1; // Fade out
+                    }
+                    break;
                 }
-                break;
             }
         }
     }

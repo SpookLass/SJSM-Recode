@@ -40,14 +40,17 @@ object_event_add
     local.bestspd = 0;
     with player_obj
     {
-        if abs(deg_diff_scr(other.direction,point_direction(other.x,other.y,x,y))) <= 90
+        if on_var && !dead_var && !in_door_var
         {
-            local.spd = (x_spd_var*local.dx)+(y_spd_var*local.dy)
-            if local.spd > local.bestspd { local.bestspd = local.spd;}
-            if ((x-other.x)*local.dx) + ((y-other.y)*local.dy) > other.dist_var
+            if abs(deg_diff_scr(other.direction,point_direction(other.x,other.y,x,y))) <= 90
             {
-                x -= local.dx*other.dist_var;
-                y -= local.dy*other.dist_var;
+                local.spd = (x_spd_var*local.dx)+(y_spd_var*local.dy)
+                if local.spd > local.bestspd { local.bestspd = local.spd;}
+                if ((x-other.x)*local.dx) + ((y-other.y)*local.dy) > other.dist_var
+                {
+                    x -= local.dx*other.dist_var;
+                    y -= local.dy*other.dist_var;
+                }
             }
         }
     }

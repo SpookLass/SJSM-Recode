@@ -161,7 +161,7 @@ object_event_add
         fmod_snd_free_scr(eff_snd_var);
     }
     if inf_stam_var
-    { with player_obj { do_stam_var = true; }}
+    { with player_obj { if !dead_var { do_stam_var = true; }}}
     with spr_flash_eff_obj
     { if par_var == other.id { instance_destroy(); }}
     with body_eff_obj
@@ -171,7 +171,7 @@ object_event_add
 object_event_add
 (argument0,ev_alarm,8,'
     if inf_stam_var
-    { with player_obj { do_stam_var = false; }}
+    { with player_obj { if !dead_var { do_stam_var = false; }}}
     with instance_create(0,0,spr_flash_eff_obj)
     {
         par_var = other.id;
@@ -193,7 +193,7 @@ object_event_add
 (argument0,ev_other,ev_room_start,'
     event_inherited();
     if inf_stam_var
-    { with player_obj { do_stam_var = false; }}
+    { with player_obj { if !dead_var { do_stam_var = false; }}}
     if !instance_exists(body_eff_obj)
     {
         with instance_create(0,0,body_eff_obj)

@@ -26,5 +26,8 @@ object_event_add
 object_event_add
 (argument0,ev_step,ev_step_normal,'
     with player_var // Can be singular player or player_obj
-    { spd_mult_var = other.spd_mult_var; }
+    {
+        if on_var && !dead_var && !in_door_var && !invuln_var
+        { spd_mult_var = other.spd_mult_var; }
+    }
 ');

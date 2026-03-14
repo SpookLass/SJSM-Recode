@@ -188,8 +188,11 @@ object_event_add
         local.bestdist = -1;
         with player_obj
         {
-            local.dist = point_distance_3d_scr(local.xtmp,local.ytmp,local.ztmp,x,y,z);
-            if local.dist < local.bestdist || local.bestdist == -1 { local.bestdist = local.dist; }
+            if !dead_var
+            {
+                local.dist = point_distance_3d_scr(local.xtmp,local.ytmp,local.ztmp,x,y,z);
+                if local.dist < local.bestdist || local.bestdist == -1 { local.bestdist = local.dist; }
+            }
         }
         if local.dist >= spawn_dist_var
         {

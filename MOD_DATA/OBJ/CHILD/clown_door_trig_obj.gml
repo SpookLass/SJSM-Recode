@@ -36,7 +36,7 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user1,'
     local.remaining = 0;
-    with player_obj { if !in_door_var && !dead_var { local.remaining += 1; }}
+    with player_obj { if on_var && !in_door_var && !dead_var { local.remaining += 1; }}
     if local.remaining > 0 || !instance_exists(clown_obj)
     { event_inherited(); }
 ');

@@ -41,15 +41,18 @@ object_event_add
     local.dothing = false;
     with player_obj
     {
-        local.dir = deg_diff_scr(other.direction,point_direction(other.x,other.y,x,y));
-        if abs(local.dir) <= 90
+        if !dead_var && !in_door_var
         {
-            local.dist = point_distance(x,y,other.x,other.y);
-            x = tp_origin_obj.x+lengthdir_x(local.dist,tp_origin_obj.direction-local.dir);
-            y = tp_origin_obj.y+lengthdir_y(local.dist,tp_origin_obj.direction-local.dir);
-            eye_yaw_var += tp_origin_obj.direction-other.direction;
-            set_motion_scr(0,false,yaw_var+tp_origin_obj.direction-other.direction,true);
-            local.dothing = true;
+            local.dir = deg_diff_scr(other.direction,point_direction(other.x,other.y,x,y));
+            if abs(local.dir) <= 90
+            {
+                local.dist = point_distance(x,y,other.x,other.y);
+                x = tp_origin_obj.x+lengthdir_x(local.dist,tp_origin_obj.direction-local.dir);
+                y = tp_origin_obj.y+lengthdir_y(local.dist,tp_origin_obj.direction-local.dir);
+                eye_yaw_var += tp_origin_obj.direction-other.direction;
+                set_motion_scr(0,false,yaw_var+tp_origin_obj.direction-other.direction,true);
+                local.dothing = true;
+            }
         }
     }
     if local.dothing

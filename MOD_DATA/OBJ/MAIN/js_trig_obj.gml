@@ -22,9 +22,12 @@ object_event_add
     local.player = noone;
     with player_obj
     {
-        // p3dc_check_scr(coll_var[0],x,y,z,other.coll_var[0],other.x,other.y,other.z)
-        if box_coll_scr(x,y,z,coll_var[2],coll_var[2],coll_var[1],other.x,other.y,other.z,other.coll_var[2],other.coll_var[3],other.coll_var[1])
-        { local.player = id; }
+        if on_var && !dead_var && !invuln_var && !in_door_var
+        {
+            // p3dc_check_scr(coll_var[0],x,y,z,other.coll_var[0],other.x,other.y,other.z)
+            if box_coll_scr(x,y,z,coll_var[2],coll_var[2],coll_var[1],other.x,other.y,other.z,other.coll_var[2],other.coll_var[3],other.coll_var[1])
+            { local.player = id; }
+        }
     }
     if local.player != noone
     {

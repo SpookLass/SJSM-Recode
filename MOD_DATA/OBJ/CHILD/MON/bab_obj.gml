@@ -335,7 +335,7 @@ object_event_add
         {
             with player_obj
             {
-                if do_stam_var 
+                if !dead_var && !in_door_var && do_stam_var && !invuln_var
                 { stam_var = 0; }
             }
         }

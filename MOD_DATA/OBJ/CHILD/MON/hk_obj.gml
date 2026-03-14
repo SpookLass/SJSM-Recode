@@ -451,7 +451,7 @@ object_event_add
 				local.ytmp = local.flr.y+random_range(-local.flr.h_var/2,local.flr.h_var/2);
 				local.ztmp = local.flr.z;
 				local.dist = tp_dist_max_var;
-				with player_obj { local.dist = min(local.dist,point_distance_3d_scr(local.xtmp,local.ytmp,local.ztmp,x,y,z));}
+				with player_obj { if !dead_var && !in_door_var { local.dist = min(local.dist,point_distance_3d_scr(local.xtmp,local.ytmp,local.ztmp,x,y,z)); }}
 				if local.dist >= tp_dist_min_var && local.dist <= tp_dist_max_var
 				{
 					x = local.xtmp;
@@ -477,7 +477,7 @@ object_event_add
 					local.ytmp = global.mark_arr[local.mark_choice,1];
 					local.ztmp = global.mark_arr[local.mark_choice,2];
 					local.dist = tp_dist_max_var;
-					with player_obj { local.dist = min(local.dist,point_distance_3d_scr(local.xtmp,local.ytmp,local.ztmp,x,y,z));}
+					with player_obj { if !dead_var && !in_door_var { local.dist = min(local.dist,point_distance_3d_scr(local.xtmp,local.ytmp,local.ztmp,x,y,z)); }}
 					if local.dist >= tp_dist_min_var && local.dist <= tp_dist_max_var
 					{
 						x = local.xtmp;

@@ -48,5 +48,8 @@ object_event_add
         }
     }
     with player_var // Can be singular player or player_obj
-    { shake_var = local.mult; }
+    {
+        if on_var && !dead_var && !in_door_var
+        { shake_var = local.mult; }
+    }
 ');

@@ -54,25 +54,28 @@ object_event_add
     target_dir_var = point_direction(x,y,global.spawn_arr[1,0],global.spawn_arr[1,1]);
     with player_obj
     {
-        if path_exists(path_var) && clear_time_var > 0
+        if on_var && !dead_var
         {
-            local.bestdist = -1;
-            for (local.i=0; local.i<path_get_number(path_var); local.i+=1;)
+            if path_exists(path_var) && clear_time_var > 0
             {
-                local.xtmp = path_get_point_x(path_var,local.i);
-                local.ytmp = path_get_point_y(path_var,local.i);
-                local.dist = point_distance(other.x,other.y,local.xtmp,local.ytmp);
-                if local.dist < local.bestdist || local.bestdist == -1
+                local.bestdist = -1;
+                for (local.i=0; local.i<path_get_number(path_var); local.i+=1;)
                 {
-                    local.bestdist = local.dist;
-                    other.target_dir_var = point_direction
-                    (
-                        local.xtmp,local.ytmp,
-                        path_get_point_x(path_var,local.i+8),path_get_point_y(path_var,local.i+8)
-                    );
+                    local.xtmp = path_get_point_x(path_var,local.i);
+                    local.ytmp = path_get_point_y(path_var,local.i);
+                    local.dist = point_distance(other.x,other.y,local.xtmp,local.ytmp);
+                    if local.dist < local.bestdist || local.bestdist == -1
+                    {
+                        local.bestdist = local.dist;
+                        other.target_dir_var = point_direction
+                        (
+                            local.xtmp,local.ytmp,
+                            path_get_point_x(path_var,local.i+8),path_get_point_y(path_var,local.i+8)
+                        );
+                    }
                 }
+                break;
             }
-            break;
         }
     }
     if turn_rate_var <= 0 { direction = target_dir_var; }

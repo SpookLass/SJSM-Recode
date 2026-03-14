@@ -29,8 +29,11 @@ object_event_add
         local.trigger = false;
         with player_obj
         {
-            if cyl_coll_scr(x,y,z,coll_var[2],coll_var[1],other.x,other.y,other.z,other.coll_var[2],other.coll_var[1])
-            { local.trigger = true; }
+            if on_var && !invuln_var && !dead_var && !in_door_var
+            {
+                if cyl_coll_scr(x,y,z,coll_var[2],coll_var[1],other.x,other.y,other.z,other.coll_var[2],other.coll_var[1])
+                { local.trigger = true; }
+            }
         }
         if local.trigger
         {

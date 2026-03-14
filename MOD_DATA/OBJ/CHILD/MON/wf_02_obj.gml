@@ -324,8 +324,11 @@ object_event_add
     }
     with player_obj
     {
-        hp_var = 0;
-        unheal_var = hp_max_var;
+        if !dead_var
+        {
+            hp_var = 0;
+            unheal_var = hp_max_var;
+        }
     }
 ');
 // Animation

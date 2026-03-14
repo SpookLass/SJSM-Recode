@@ -239,22 +239,24 @@ object_event_add
         local.nerf = (instance_number(mon_par_obj) > 1);
         with player_obj
         {
-            local.dist = path_get_length(path_var);
-            if local.dist > 0
+            if !dead_var
             {
-                local.check = local.dist/other.path_prec_var;
-                for (local.i=0; local.i<local.check; local.i+=1;)
+                local.dist = path_get_length(path_var);
+                if local.dist > 0
                 {
-                    local.per = local.i/local.check;
-                    local.xtmp = path_get_x(path_var,local.per);
-                    local.ytmp = path_get_y(path_var,local.per);
-                    local.dist = point_line_dist_scr(other.x,other.y,other.yaw_var+90,local.xtmp,local.ytmp);
-                    local.fleshtime = local.dist/other.spd_base_var;
-                    if local.nerf { local.time = walk_clear_time_var*local.per; }
-                    else { local.time = clear_time_var*local.per; }
-                    local.newdelay = local.time-local.fleshtime;
-                    local.delay = max(local.delay,local.newdelay);
-                    /*show_message("Percentage: "+string(local.per)+"
+                    local.check = local.dist/other.path_prec_var;
+                    for (local.i=0; local.i<local.check; local.i+=1;)
+                    {
+                        local.per = local.i/local.check;
+                        local.xtmp = path_get_x(path_var,local.per);
+                        local.ytmp = path_get_y(path_var,local.per);
+                        local.dist = point_line_dist_scr(other.x,other.y,other.yaw_var+90,local.xtmp,local.ytmp);
+                        local.fleshtime = local.dist/other.spd_base_var;
+                        if local.nerf { local.time = walk_clear_time_var*local.per; }
+                        else { local.time = clear_time_var*local.per; }
+                        local.newdelay = local.time-local.fleshtime;
+                        local.delay = max(local.delay,local.newdelay);
+                        /*show_message("Percentage: "+string(local.per)+"
 X: "+string(local.xtmp)+"
 Y: "+string(local.ytmp)+"
 Flesh Distance: "+string(local.dist)+"
@@ -262,6 +264,7 @@ Flesh Time: "+string(local.fleshtime)+"
 Player Time: "+string(local.time)+"
 Difference: "+string(local.newdelay)+"
 ");*/
+                    }
                 }
             }
         }

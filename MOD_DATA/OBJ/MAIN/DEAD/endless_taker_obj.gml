@@ -72,7 +72,7 @@ object_event_add
         tex_var = sprite_get_texture(spr_var,floor(spr_id_var));
     }
     // Get stuck!
-    with player_obj { spd_mult_var = 0; }
+    with player_obj { if !invuln_var && !dead_var && !in_door_var && on_var && { spd_mult_var = 0; }}
 ');
 // Draw Event
 object_event_add

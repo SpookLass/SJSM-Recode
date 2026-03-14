@@ -281,17 +281,21 @@ object_event_add
             spd_mult_var *= wander_mult_var;
             with player_obj
             {
-                local.dist = point_distance_3d_scr(x,y,z,other.x,other.y,other.z);
-                local.yaw = abs(deg_diff_scr(point_direction(other.x,other.y,x,y),other.yaw_var));
-                local.radius = coll_var[2]/2; local.angle = radtodeg(arctan2(local.radius,local.dist));
-                if local.yaw <= other.sight_yaw_var+local.angle || local.dist < other.sight_dist_var
+                if !dead_var && !in_door_var && !invuln_var
                 {
-                    local.xvec = (x-other.x)/local.dist;
-                    local.yvec = (y-other.y)/local.dist;
-                    local.zvec = (z-other.z)/local.dist;
-                    local.ztmp = other.z+(other.coll_var[1]/2);
-                    if local.dist < check_ray_scr(other.x,other.y,local.ztmp,local.xvec,local.yvec,local.zvec)
-                    { other.wander_var = false; break; }
+                    local.dist = point_distance_3d_scr(x,y,z,other.x,other.y,other.z);
+                    local.yaw = abs(deg_diff_scr(point_direction(other.x,other.y,x,y),other.yaw_var));
+                    local.radius = coll_var[2]/2; local.angle = radtodeg(arctan2(local.radius,local.dist));
+                    if local.dist == 0 { other.wander_var = false; break; }
+                    else if local.yaw <= other.sight_yaw_var+local.angle || local.dist < other.sight_dist_var
+                    {
+                        local.xvec = (x-other.x)/local.dist;
+                        local.yvec = (y-other.y)/local.dist;
+                        local.zvec = (z-other.z)/local.dist;
+                        local.ztmp = other.z+(other.coll_var[1]/2);
+                        if local.dist < check_ray_scr(other.x,other.y,local.ztmp,local.xvec,local.yvec,local.zvec)
+                        { other.wander_var = false; break; }
+                    }
                 }
             }
             if !wander_var { with wc_eff_obj { visible = true; }}

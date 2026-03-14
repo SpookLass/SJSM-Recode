@@ -85,7 +85,7 @@ object_event_add
             // Rare Rooms
             if !instance_exists(mon_par_obj) && global.rare_chance_var > 0 && frac_chance_scr(1,global.rare_chance_var)
             {
-                if global.save_name_var == "1235" && frac_chance_scr(1,1235) { rm_var = dev_rm; }
+                if global.save_name_var == "1235" && frac_chance_scr(123,1235) { rm_var = dev_rm; }
                 else { rm_var = ds_list_find_value(global.rare_zone_var,irandom(ds_list_size(global.rare_zone_var)-1)); }
             }
             else

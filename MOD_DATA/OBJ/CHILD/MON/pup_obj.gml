@@ -372,8 +372,11 @@ object_event_add
                         local.start = true;
                         with player_obj
                         {
-                            if point_distance_3d_scr(x,y,z,global.spawn_arr[0,0],global.spawn_arr[0,1],global.spawn_arr[0,2]) < other.start_dist_var
-                            { local.start = false; }
+                            if on_var && !dead_var && !in_door_var
+                            {
+                                if point_distance_3d_scr(x,y,z,global.spawn_arr[0,0],global.spawn_arr[0,1],global.spawn_arr[0,2]) < other.start_dist_var
+                                { local.start = false; }
+                            }
                         }
                         if local.start
                         {

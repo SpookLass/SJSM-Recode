@@ -365,7 +365,7 @@ object_event_add
     if fov_var > 0
     {
         with player_obj
-        { if fov_var > other.fov_var { fov_var = other.fov_var; }}
+        { if !dead_var && fov_var > other.fov_var { fov_var = other.fov_var; }}
     }
     
     if cam_end_var > 0 { global.cam_end_var = cam_end_var; }

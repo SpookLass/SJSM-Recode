@@ -202,8 +202,11 @@ object_event_add
             local.ztmp = z+(h_var/2);
             with player_var
             {
-                eye_yaw_var = point_direction(x,y,local.xtmp,local.ytmp);
-                eye_pitch_var = point_direction_3d_scr(x,y,z+eye_h_var,local.xtmp,local.ytmp,local.ztmp)
+                if on_var && !dead_var && !invuln_var && !in_door_var
+                {
+                    eye_yaw_var = point_direction(x,y,local.xtmp,local.ytmp);
+                    eye_pitch_var = point_direction_3d_scr(x,y,z+eye_h_var,local.xtmp,local.ytmp,local.ztmp);
+                }
             }
         }
         with instance_create(0,0,player_freeze_obj) { player_var = other.player_var; }
