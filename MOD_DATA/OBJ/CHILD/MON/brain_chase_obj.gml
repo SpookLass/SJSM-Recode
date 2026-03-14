@@ -54,7 +54,9 @@ object_event_add
         mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\brain_mus_snd.mp3");
         fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
     }
-    switch global.brain_type_var
+    if global.brain_type_var == -1 { local.type = irandom(2); }
+    else { local.type = global.brain_type_var;}
+    switch local.type
     {
         case 0:
         {

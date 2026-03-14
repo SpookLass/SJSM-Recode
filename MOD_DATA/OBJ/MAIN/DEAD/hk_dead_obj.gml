@@ -30,7 +30,7 @@ object_event_add
     str_alpha_var = 0.4;
     str_visible_var = true;
     str_xscale_var = 0.6;
-    str_yscale_var = 0.6;
+    str_yscale_var = 0.6; // Height equals 576 times scale
     // Sprites
     spr_01_var = sprite_add(dh_directory_const+"\TEX\sprites\HK_SPR3.png",11,false,false,0,0);
     sprite_set_offset(spr_01_var,sprite_get_width(spr_01_var)*0.5,sprite_get_height(spr_01_var)*0.5);
@@ -153,7 +153,12 @@ object_event_add
     switch substate_var
     {
         // Hooked Doll
-        case 1: { spr_id_01_var = mod_scr(spr_id_01_var+(spr_spd_01_var*global.delta_time_var),sprite_get_number(spr_01_var)); break; }
+        case 1:
+        {
+            spr_id_01_var += spr_spd_01_var*global.delta_time_var;
+            if spr_id_01_var >= sprite_get_number(spr_01_var) { substate_var = 0; }
+            break;
+        }
         // Hook
         case 2:
         {
@@ -177,6 +182,12 @@ object_event_add
         substate_var = substate_arr_var[state_var];
         switch substate_var
         {
+            // Hooked Doll
+            case 1:
+            {
+                spr_id_01_var = 0;
+                break;
+            }
             // Hook
             case 2:
             {
@@ -254,7 +265,7 @@ object_event_add
             if str_visible_var // String
             {
                 draw_set_halign(fa_center); draw_set_valign(fa_middle); draw_set_alpha(str_alpha_var);
-                draw_str_scr(str_var,0,-120,str_xscale_var,str_yscale_var,0.125,fa_center,fa_middle,0);
+                draw_str_scr(str_var,0,-59.2,str_xscale_var,str_yscale_var,0.125,fa_center,fa_middle,0);
                 draw_set_halign(fa_left); draw_set_valign(fa_top); draw_set_alpha(1);
             }
             // Hook

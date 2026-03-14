@@ -26,6 +26,7 @@ object_event_add
     image_yscale = 0.5;
     halign_var = fa_left;
     valign_var = fa_top;
+    scale_min_var = 0.125;
     // Sound
     load_var = true;
     snd_01_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_wake_snd.wav");

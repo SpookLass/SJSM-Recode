@@ -1,8 +1,8 @@
-# Spooky's Jump Scare Mansion: Recode
+# Spooky's Jump Scare Mansion - Project Recode
 
 ## Description:
 
-Spooky's Jump Scare Mansion: Recode is a complete reconstruction of Spooky's Jump Scare Mansion from the ground up built in Game Maker 8, the same engine as the original.
+Spooky's Jump Scare Mansion - Project Recode is a complete reconstruction of Spooky's Jump Scare Mansion from the ground up built in Game Maker 8, the same engine as the original.
 The goal of Recode is to be the best version of the game possible, with lots of settings, quality of life features, couch co-op, and mod loading.
 Recode also attempts to emulate the Original and HD Renovation experience as close as possible to the original vision, while still fixing bugs and quirks, through behaviors.
 This demo only includes Endless Mode at the moment, but will get Story Mode support as well.
@@ -18,18 +18,19 @@ This demo only includes Endless Mode at the moment, but will get Story Mode supp
 
 ### Directors:
 
-- Spook Lass
-- Yoshicraft64
-- Birdbonanza
-- Everlasting Maya
-- Myetal
+- Spook Lass: Lead director
+- Yoshicraft64: Director
+- Birdbonanza: Director
+- Everlasting Maya: Director
+- Myetal: Multiplayer Director
 
 ### Programmers:
 
+- Spook Lass: Lead programmer
 - Yoshicraft64: Sprite adding system
-- Birdbonanza: Menu design, Hooked Doll, and Silhoette system
+- Birdbonanza: Menu, Hooked Doll, and Silhouettes
 - Everlasting Maya: Room porting
-- Spook Lass: Everything else
+
 
 ### Art:
 
@@ -67,7 +68,7 @@ This demo only includes Endless Mode at the moment, but will get Story Mode supp
 - Alyssa Dierking: Surface Fix
 - Floogle: GM8x Fix, GM8 Decompiler
 - Dmitry D. Chernov: GM8 Decompiler
-- Adam: GM8 Decompiler
+- Adamcake: GM8 Decompiler
 - Viri: GM8 Decompiler
 
 

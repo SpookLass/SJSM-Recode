@@ -28,6 +28,7 @@ object_event_add
         image_xscale = 966;
         halign_var = fa_center;
         valign_var = fa_middle;
+        scale_min_var = 0.125; // Just in case
         // Sprite
         spr_id_var = 0;
         // Sound

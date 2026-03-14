@@ -38,9 +38,9 @@ object_event_add
     alarm_len_var = 1;
     alarm_ini_scr();
     // Slow
-    target_spd_mult_var = 0.6;
-    if global.mode_var == 0 || global.main_type_var == 2
-    { target_spd_mult_var = 0.3; }
+    target_spd_mult_var = 0.3;
+    if global.brain_type_var < 1 && global.mode_var != 0
+    { target_spd_mult_var = 0.6; }
 ');
 // Draw
 object_event_add

@@ -41,6 +41,9 @@ object_event_add
 // Delete background
 object_event_add
 (argument0,ev_other,ev_user0,'
+    global.res_override_var = false;
+    global.res_override_w_var = global.res_w_var;
+    global.res_override_h_var = global.res_h_var;
     if load_var
     {
         fmod_snd_free_scr(snd_var);

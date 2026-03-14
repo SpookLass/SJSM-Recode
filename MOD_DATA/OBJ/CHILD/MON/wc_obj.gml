@@ -42,6 +42,7 @@ object_event_add
     blood_spr_var = blood_kh_spr;
     dead_var = false;
     temp_var = false;
+    dead_rm_var = wc_dead_rm;
     // Attack
     atk_type_var = 3; // Stop moving while delay
     atk_anim_var = 2;
