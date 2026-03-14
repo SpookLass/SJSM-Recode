@@ -191,7 +191,7 @@ object_event_add
             autobrake_dir_var = 60;
             break;
         }
-        case 3: // Gone Rouge
+        case 3: // Gone Rogue
         {
             do_acc_var = 2; // Classic
             bod_len_var = 7;

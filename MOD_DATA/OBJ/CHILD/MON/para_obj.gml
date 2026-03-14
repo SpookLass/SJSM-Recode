@@ -163,7 +163,7 @@ object_event_add
     }
     mus_snd_var = main_mus_snd_var;
     // Type
-    if global.para_type_var == -1 { local.type = irandom(2); }
+    if global.para_type_var == -1 { local.type = irandom(3); }
     else { local.type = global.para_type_var; }
     switch local.type
     {

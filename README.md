@@ -11,7 +11,7 @@ This demo only includes Endless Mode at the moment, but will get Story Mode supp
 
 - Step 1: Backup your copy of the original Spooky's Jump Scare Mansion on Steam, including DLCs if you have them.
 - Step 2: Drop the contents of Recode into the same folder. MOD_DATA and DATA should be in the same directory.
-- Step 3: Open Deltapatcher, select SPOOKY.exe for the original file, and RECODE.xdelta for the patch.
+- Step 3: Open Deltapatcher, select SPOOKY.exe for the original file, and RECODE.exe.xdelta for the patch.
 - Step 4: Boot up the game, and have fun! Make sure to visit the settings menu.
 
 ## Recode Credits:

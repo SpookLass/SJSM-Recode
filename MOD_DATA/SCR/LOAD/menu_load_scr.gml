@@ -69,7 +69,7 @@ global.mode_default_var = 1;
 mode_arr[0,0] = "story"; // Name
 mode_arr[0,1] = "story"; // Description
 mode_arr[0,2] = true; // Translate
-mode_arr[0,3] = false; // Custom Only
+mode_arr[0,3] = true; // Custom Only
 mode_arr[0,4] = global.mode_default_var; // Defaults to
 mode_arr[1,0] = "endless";
 mode_arr[1,1] = "endless";
@@ -1003,7 +1003,7 @@ mon_arr[global.mon_len_var,8] = 1; // Extra behaviors
 mon_arr[global.mon_len_var,9] = bug_obj; // Object
 mon_arr[global.mon_len_var,10] = noone; // Locale
 // Types
-mon_type_arr[global.mon_len_var,0] = "rouge";
+mon_type_arr[global.mon_len_var,0] = "rogue";
 mon_type_arr[global.mon_len_var,1] = true; // Translate
 // Descriptions
 mon_desc_arr[global.mon_len_var,0] = mon_arr[global.mon_len_var,2]+"_"+type_arr[0,1];
@@ -1168,7 +1168,7 @@ mon_arr[global.mon_len_var,10] = noone; // Locale
 // Types
 mon_type_arr[global.mon_len_var,0] = "old";
 mon_type_arr[global.mon_len_var,1] = true; // Translate
-mon_type_arr[global.mon_len_var,2] = "rouge";
+mon_type_arr[global.mon_len_var,2] = "rogue";
 mon_type_arr[global.mon_len_var,3] = true; // Translate
 mon_type_arr[global.mon_len_var,4] = "remodeled";
 mon_type_arr[global.mon_len_var,5] = true; // Translate
@@ -1222,9 +1222,12 @@ mon_arr[global.mon_len_var,4] = true; // Translate
 mon_arr[global.mon_len_var,5] = true; // Chases
 mon_arr[global.mon_len_var,6] = true; // Has CAT-DOS
 mon_arr[global.mon_len_var,7] = 1; // Group
-mon_arr[global.mon_len_var,8] = 0; // Extra behaviors
+mon_arr[global.mon_len_var,8] = 1; // Extra behaviors
 mon_arr[global.mon_len_var,9] = para_obj; // Object
 mon_arr[global.mon_len_var,10] = noone; // Locale
+// Types
+mon_type_arr[global.mon_len_var,0] = "old";
+mon_type_arr[global.mon_len_var,1] = true; // Translate
 // Descriptions
 mon_desc_arr[global.mon_len_var,0] = mon_arr[global.mon_len_var,2]+"_"+type_arr[0,1];
 mon_desc_arr[global.mon_len_var,1] = true;
@@ -1232,6 +1235,8 @@ mon_desc_arr[global.mon_len_var,2] = mon_arr[global.mon_len_var,2]+"_"+type_arr[
 mon_desc_arr[global.mon_len_var,3] = true;
 mon_desc_arr[global.mon_len_var,4] = mon_arr[global.mon_len_var,2]+"_"+type_arr[2,1];
 mon_desc_arr[global.mon_len_var,5] = true;
+mon_desc_arr[global.mon_len_var,6] = mon_arr[global.mon_len_var,2]+"_"+type_arr[3,1];
+mon_desc_arr[global.mon_len_var,7] = true;
 local.para = global.mon_len_var;
 global.mon_len_var += 1;
     // Food Demon
@@ -1272,7 +1277,7 @@ mon_type_arr[global.mon_len_var,0] = "old";
 mon_type_arr[global.mon_len_var,1] = true; // Translate
 mon_type_arr[global.mon_len_var,2] = "remodeled";
 mon_type_arr[global.mon_len_var,3] = true; // Translate
-mon_type_arr[global.mon_len_var,4] = "rouge";
+mon_type_arr[global.mon_len_var,4] = "rogue";
 mon_type_arr[global.mon_len_var,5] = true; // Translate
 mon_type_arr[global.mon_len_var,6] = "alt_01";
 mon_type_arr[global.mon_len_var,7] = true; // Translate
@@ -1490,7 +1495,7 @@ mon_arr[global.mon_len_var,10] = noone; // Locale
 // Types
 mon_type_arr[global.mon_len_var,0] = "remodeled";
 mon_type_arr[global.mon_len_var,1] = true; // Translate
-mon_type_arr[global.mon_len_var,2] = "rouge";
+mon_type_arr[global.mon_len_var,2] = "rogue";
 mon_type_arr[global.mon_len_var,3] = true; // Translate
 mon_type_arr[global.mon_len_var,4] = "alt";
 mon_type_arr[global.mon_len_var,5] = true; // Translate
@@ -1595,7 +1600,7 @@ mon_arr[global.mon_len_var,8] = 1; // Extra behaviors
 mon_arr[global.mon_len_var,9] = hk_obj; // Object
 mon_arr[global.mon_len_var,10] = noone; // Locale
 // Types
-mon_type_arr[global.mon_len_var,0] = "rouge";
+mon_type_arr[global.mon_len_var,0] = "rogue";
 mon_type_arr[global.mon_len_var,1] = true; // Translate
 // Descriptions
 mon_desc_arr[global.mon_len_var,0] = mon_arr[global.mon_len_var,2]+"_"+type_arr[0,1];

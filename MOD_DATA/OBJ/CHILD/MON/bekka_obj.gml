@@ -151,7 +151,7 @@ object_event_add
             exit_fade_alarm_var = 20;
             break;
         }
-        case 4: // Rouge
+        case 4: // Rogue
         {
             draw_chance_var = 5;
             dur_var = irandom_range(17,23);
@@ -425,7 +425,7 @@ object_event_add
         on_var = false;
     }
 ');
-// Rouge
+// Rogue
 object_event_add
 (argument0,ev_alarm,10,'
     event_user(6);

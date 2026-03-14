@@ -331,7 +331,7 @@ object_event_add
     acc_base_var = 4/225; // 0.01r7
     // Sprint animation
     spr_spd_base_var = 1/6;
-    sprint_spr_spd_var = 5/6; // Don"t look at me, stealing this from Gone Rouge
+    sprint_spr_spd_var = 5/6; // Don"t look at me, stealing this from Gone Rogue
     h_base_var = 22;
     sprint_h_var = 25;
     z_off_base_var = 0;
@@ -417,7 +417,7 @@ object_event_add
             stam_per_var = true;
             break;
         }
-        case 5: // Gone Rouge
+        case 5: // Gone Rogue
         {
             do_sprint_var = true;
             do_stam_var = true;

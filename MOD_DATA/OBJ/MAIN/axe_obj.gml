@@ -12,8 +12,8 @@ object_event_add
     event_inherited();
     power_var = 1;
     type_var = 0;
-    stam_start_var = 10;
-    stam_end_var = 10;
+    stam_start_var = 0;
+    stam_end_var = 20;
     check_stam_var = false;
     good_var = true;
     state_var = false;
@@ -29,12 +29,14 @@ object_event_add
     coll_var[1] = global.axe_coll[1];
     coll_var[2] = global.axe_coll[2];
     coll_var[3] = global.axe_coll[3];
-    switch global.axe_type_var
+    if global.axe_type_var == -1 { local.type = irandom(2); }
+    else { local.type = global.axe_type_var; }
+    switch local.type
     {
-        case 1:
+        case 0:
         {
-            stam_start_var = 0;
-            stam_end_var = 20;
+            stam_start_var = 10;
+            stam_end_var = 10;
             break;
         }
         case 2:
@@ -43,6 +45,7 @@ object_event_add
             good_var = false;
             spr_spd_raise_var = 30/69; // 13.8 frames
             spr_spd_swing_var = 1; // 6 frames
+            break;
         }
     }
 ');

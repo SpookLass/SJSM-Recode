@@ -61,7 +61,7 @@ object_event_add
     slender_rate_var = 0.02;
     slender_alpha_var = 0;
     slender_spd_var = 6;
-    // Rouge
+    // Rogue
     rb_var = false;
     rb_dist_var = 48;
     xray_var = false;
@@ -166,7 +166,7 @@ object_event_add
             snd_dist_max_var = 500;
             break;
         }
-        case 4: // Gone Rouge
+        case 4: // Gone Rogue
         {
             // Rubberband
             spd_min_var = 0.1;
