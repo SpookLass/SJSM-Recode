@@ -18,7 +18,7 @@ object_event_add
     dmg_var = 10;
     dmg_alarm_var = 30;
     mon_var = noone;
-    dead_rm_var = gameover_rm;
+    dead_rm_var = bekka_dead_rm;
     // Alarm
     alarm_len_var = 1;
     alarm_ini_scr();
@@ -53,6 +53,24 @@ object_event_add
                     hurt_target_var = other.mon_var;
                     event_user(0);
                     local.player = id;
+                    // HELP
+                    fmod_snd_play_scr(claw_snd);
+                    with instance_create(0,0,blood_eff_obj)
+                    {
+                        spr_var = blood_spr;
+                        spr_id_var = irandom(sprite_get_number(spr_var)-1);
+                        // Set camera to player
+                        cam_id_var = local.player.cam_id_var;
+                    }
+                    if !global.reduce_flash_var
+                    {
+                        with instance_create(0,0,flash_eff_obj)
+                        {
+                            image_blend = c_red; 
+                            set_alarm_scr(0,6);
+                            cam_id_var = local.player.cam_id_var;
+                        }
+                    }
                 }
                 else
                 {
@@ -60,11 +78,11 @@ object_event_add
                     dead_var = true;
                     do_coll_var = false;
                     do_stam_var = false;
+                    local.player = id;
                     // Revive
                     if other.possess_var
                     {
                         local.dead = false;
-                        local.player = id;
                         other.par_var.possess_var = false;
                         with global.player_arr[other.par_var.player_id_var]
                         {
