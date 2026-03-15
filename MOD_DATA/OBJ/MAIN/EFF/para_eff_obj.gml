@@ -19,12 +19,19 @@ object_event_add
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,'
-    if instance_exists(play_var) { per_var = play_var.hp_infect_var/play_var.hp_max_var; }
-    else { per_var = 1; }
-    image_alpha = per_var-0.5;
-    alpha_01_var = per_var;
-    alpha_02_var = per_var-0.2;
-    alpha_03_var = per_var-0.4;
+    local.per = 1;
+    if instance_exists(play_var)
+    {
+        with play_var
+        {
+            if hp_max_var > 0 { local.per = hp_infect_var/hp_max_var; }
+            else { local.per = 0; }
+        }
+    }
+    image_alpha = local.per-0.5;
+    alpha_01_var = local.per;
+    alpha_02_var = local.per-0.2;
+    alpha_03_var = local.per-0.4;
 ');
 // Draw Event
 object_event_add
