@@ -9,21 +9,29 @@ object_set_visible(argument0,true);
 // Create
 object_event_add
 (argument0,ev_create,0,'
-    store_tex_var = torch_bg_tex;
+    if !variable_local_exists("store_tex_var") { store_tex_var = torch_bg_tex; }
     event_inherited();
+    light_var = noone;
+    part_var = noone;
+    spr_var = noone;
+    spr_id_var = 0;
     mdl_var = torch_mdl;
     mdl_path_var = torch_mdl_path;
     on_var = true;
     if !variable_local_exists("gold_var") { gold_var = false; }
+    if !variable_local_exists("do_light_var") { do_light_var = true; }
     if !variable_local_exists("auto_var") { auto_var = false; }
     // Light stuff
-    with instance_create(x+lengthdir_x(-1.5,direction+90),y+lengthdir_y(-1.5,direction+90),light_torch_obj)
+    if do_light_var
     {
-        z += other.z;
-        gold_var = other.gold_var;
-        if gold_var { color_var = false; }
-        par_var = other.id;
-        other.light_var = id;
+        with instance_create(x+lengthdir_x(-1.5,direction+90),y+lengthdir_y(-1.5,direction+90),light_torch_obj)
+        {
+            z += other.z;
+            gold_var = other.gold_var;
+            if gold_var { color_var = false; }
+            par_var = other.id;
+            other.light_var = id;
+        }
     }
     if auto_var { event_user(0); }
     // Gold
@@ -47,6 +55,15 @@ object_event_add
     {
         if instance_exists(door_var) 
         { on_var = (door_var.lock_var != 1); }
+    }
+    if spr_var != noone
+    {
+        if spr_id_var != on_var
+        { 
+            spr_id_var = on_var;
+            store_tex_var = sprite_get_texture(spr_var,spr_id_var);
+            tex_var = store_tex_var;
+        }
     }
 ');
 // Draw

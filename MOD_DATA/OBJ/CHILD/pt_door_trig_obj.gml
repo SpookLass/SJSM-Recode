@@ -14,7 +14,9 @@ object_event_add
     prog_press_var = true;
     note_var = false;
     prog_txt_var = false;
-    switch global.howard_type_var
+    if global.howard_type_var == -1 { local.type = irandom(2); }
+    else { local.type = global.howard_type_var; }
+    switch local.type
     {
         case 0:
         {

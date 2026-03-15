@@ -26,7 +26,9 @@ object_event_add
     howard_num_var = 1;
     howard_den_var = 5;
     // Type
-    switch global.howard_type_var
+    if global.howard_type_var == -1 { local.type = irandom(2); }
+    else { local.type = global.howard_type_var; }
+    switch local.type
     {
         case 2:
         {

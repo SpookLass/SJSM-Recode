@@ -12,10 +12,13 @@ object_event_add
     gold_var = true;
     auto_var = true;
     color_var = false;
+    do_light_var = false;
+    store_tex_var = sprite_get_texture(gold_lamp_spr,0);
     event_inherited();
-    local.light = instance_create(x+lengthdir_x(-1.5,direction+90),y+lengthdir_y(-1.5,direction+90),gold_part_obj);
-    local.light.z += z;
-    local.light.par_var = id;
-    store_tex_var = background_get_texture(torch_gold_bg);
-    tex_var = store_tex_var;
+    spr_var = gold_lamp_spr;
+    mdl_var = lamp_mdl;
+    mdl_path_var = lamp_mdl_path;
+    part_var = instance_create(x+lengthdir_x(-1.5,direction+90),y+lengthdir_y(-1.5,direction+90),gold_part_obj);
+    part_var.z += z;
+    part_var.par_var = id;
 ');

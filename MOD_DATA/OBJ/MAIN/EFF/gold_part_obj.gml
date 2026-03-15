@@ -11,7 +11,7 @@ object_event_add
 (argument0,ev_create,0,'
     event_inherited();
     par_var = noone;
-    z = 21.2;
+    z = 16; // 21.2
     w_var = 3;
     l_var = 3;
     h_var = 3;
