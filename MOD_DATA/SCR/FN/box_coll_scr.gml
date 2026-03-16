@@ -15,6 +15,6 @@ Argument 11: Box 2 height
 
 Making Coca-Cola the old fashioned way because otherwise box collisions suck
 */
-return abs(argument0-argument6) < (argument3+argument9)/2
-&& abs(argument1-argument7) < (argument4+argument10)/2
-&& abs(argument2-argument8) < (argument5+argument11)/2;
+return abs(argument0-argument6) < (abs(argument3)+abs(argument9))*0.5
+&& abs(argument1-argument7) < (abs(argument4)+abs(argument10))*0.5
+&& abs(argument2-argument8+((argument5-argument11)*0.5)) < (abs(argument5)+abs(argument11))*0.5;
