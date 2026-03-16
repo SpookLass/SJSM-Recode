@@ -70,6 +70,7 @@ This demo only includes Endless Mode at the moment, but will get Story Mode supp
 - Dmitry D. Chernov: GM8 Decompiler
 - Adamcake: GM8 Decompiler
 - Viri: GM8 Decompiler
+- Apis035: GM8x Lua Fix
 
 
 ### QA Testers:

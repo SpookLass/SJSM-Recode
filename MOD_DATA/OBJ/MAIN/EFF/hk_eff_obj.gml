@@ -10,8 +10,7 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,0,'
     event_inherited();
-    image_xscale = 2;
-    image_yscale = 2;
+    image_xscale = 256;
     old_var = false;
     // Dollhouse
     rand_rate_var = 1;
@@ -28,8 +27,8 @@ object_event_add
 // Rand alarm
 object_event_add
 (argument0,ev_alarm,0,'
-    x = random(background_get_width(bg_var));
-    y = random(background_get_height(bg_var));
+    x = random(image_xscale);
+    y = random(image_xscale);
     set_alarm_scr(0,rand_rate_var);
 ');
 // Draw Event
@@ -48,14 +47,16 @@ object_event_add
         }
         if local.alpha > 0
         {
-            if view_wview[view_current] >= view_hview[view_current]
-            { local.scale = view_hview[view_current]/720; }
-            else { local.scale = view_wview[view_current]/1280; }
             d3d_set_fog(false,c_black,0,0);
             d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
             d3d_set_hidden(false);
-            if old_var { draw_set_color(c_red); draw_rectangle(0,0,view_wview[view_current],view_hview[view_current],false); draw_set_color(c_white); }
-            draw_background_tiled_ext(bg_var,x*local.scale*image_xscale,y*local.scale*image_yscale,local.scale*image_xscale,local.scale*image_yscale,image_blend,local.alpha);
+            if old_var
+            {
+                draw_set_color(c_red); draw_set_alpha(local.alpha);
+                draw_rectangle(0,0,view_wview[view_current],view_hview[view_current],false);
+                draw_set_color(c_white); draw_set_alpha(1);
+            }
+            draw_bg_tiled_stretch_ext_scr(bg_var,x,y,image_xscale,0,2,0,image_blend,local.alpha);
             d3d_set_hidden(true);
         }
     }

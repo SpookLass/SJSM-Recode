@@ -57,6 +57,7 @@ object_event_add
     event_inherited(); 
     if !variable_local_exists("rm_var")
     {
+        local.set = false;
         ele_var = false;
         // Elevator
         switch global.ele_type_var
@@ -64,35 +65,36 @@ object_event_add
             case 2:
             {
                 if mod_scr(global.rm_count_var+1,global.ele_rate_03_var) == 0
-                { rm_var = ele_rm; ele_var = true; break; }
+                { rm_var = ele_rm; ele_var = true; local.set = true; break; }
                 if global.rm_count_var >= global.ele_end_02_var { break; }
             }
             case 1:
             {
                 if mod_scr(global.rm_count_var+1,global.ele_rate_02_var) == 0
-                { rm_var = ele_rm; ele_var = true; break; }
+                { rm_var = ele_rm; ele_var = true; local.set = true; break; }
                 if global.rm_count_var >= global.ele_end_01_var { break; }
             }
-            case 0:
+            default:
             {
                 if mod_scr(global.rm_count_var+1,global.ele_rate_01_var) == 0
-                { rm_var = ele_rm; ele_var = true; }
+                { rm_var = ele_rm; ele_var = true; local.set = true; break; }
                 break;
             }
         }
-        if !variable_local_exists("rm_var")
+        // Rare Rooms
+        if !instance_exists(mon_par_obj) && !local.set
         {
-            // Rare Rooms
-            if !instance_exists(mon_par_obj) && global.rare_chance_var > 0 && frac_chance_scr(1,global.rare_chance_var)
-            {
-                if global.save_name_var == "1235" && frac_chance_scr(123,1235) { rm_var = dev_rm; }
-                else { rm_var = ds_list_find_value(global.rare_zone_var,irandom(ds_list_size(global.rare_zone_var)-1)); }
-            }
-            else
-            {
-                zone_var = global.zone_var;
-                event_user(0);
-            }
+            // Dev
+            if global.save_name_var == "1235" && frac_chance_scr(1,235) { rm_var = dev_rm; local.set = true; }
+            // Other
+            if !local.set && global.rare_chance_var > 0 && frac_chance_scr(1,global.rare_chance_var)
+            { rm_var = ds_list_find_value(global.rare_zone_var,irandom(ds_list_size(global.rare_zone_var)-1)); local.set = true; }
+        }
+        // Default
+        if !local.set
+        {
+            zone_var = global.zone_var;
+            event_user(0);
         }
     }
 ');

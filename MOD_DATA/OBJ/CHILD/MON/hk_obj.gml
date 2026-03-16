@@ -125,6 +125,7 @@ object_event_add
 	wall_start_var = 24;
 	wall_end_var = 64;
 	fog_color_var = make_color_rgb(0,107,168);
+	fog_cyl_var = false;
 	door_var = false;
 	color_prio_var = 2;
     fog_prio_var = 2;
@@ -145,7 +146,7 @@ object_event_add
     else { local.type = global.hk_type_var; }
     switch local.type
     {
-		case 0:
+		case 0: // Recode
 		{
 			color_var = 3;
 			do_look_snd_var = true;
@@ -170,7 +171,7 @@ object_event_add
 			tp_dist_min_var = 96;
 			break;
 		}
-		case 2:
+		case 2: // HD
         {
 			// Render
 			fog_end_var = 256/3;
@@ -197,7 +198,7 @@ object_event_add
 			dmg_rate_var = 16/45; // 64/3
             break;
         }
-		case 3:
+		case 3: // Gone Rogue
         {
 			// Effects
 			eff_color_var = make_color_rgb(65,40,50);
@@ -207,6 +208,7 @@ object_event_add
 			wall_start_var = 26;
 			wall_end_var = 72;
 			door_var = true;
+			fog_cyl_var = true;
 			atk_range_var = global.mon_coll[2];
 			// Render
 			base_w_var = 29;
@@ -369,6 +371,7 @@ object_event_add
 			wall_num_var = other.wall_num_var;
 			wall_start_var = other.wall_start_var;
 			wall_end_var = other.wall_end_var;
+			cyl_var = other.fog_cyl_var;
 		}
 	}
 	if !instance_exists(kh_overlay_obj)
