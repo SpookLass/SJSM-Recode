@@ -72,6 +72,7 @@ object_event_add
     seen_rage_var = false;
     inv_move_var = false;
     inv_limit_var = -1;
+    atk_seen_delay_var = -1;
     // Render
     tex_var = sprite_get_texture(spr_var,0);
     mdl_var = mdl_01_var;
@@ -108,7 +109,7 @@ object_event_add
     die_alarm_03_var = 300;
     die_alarm_03_var = 300;
     // Behavior
-    if global.patient_type_var == -1 { local.type = irandom(2); }
+    if global.patient_type_var == -1 { local.type = irandom(4); }
     else { local.type = global.patient_type_var; }
     local.set = false;
     switch local.type
@@ -124,12 +125,15 @@ object_event_add
             rage_alarm_var = 480;
             seen_spd_mult_var = 1;
             seen_rage_var = 2;
-            inv_move_var = true;
+            inv_move_var = 2;
             inv_limit_var = 30;
             weird_var = true;
             weird_chance_var = 16;
             blood_spr_var = blood_kh_spr;
             atk_range_var = global.mon_coll[2];
+            atk_seen_delay_var = 18;
+            hurt_dist_var = 8;
+            stun_var = 3;
             // Corporeal?
             type_var = 2;
             // Silhouette (Lazy)
@@ -321,7 +325,8 @@ object_event_add
 // Random anim
 object_event_add
 (argument0,ev_alarm,8,'
-    if seen_rage_var
+    if is_seen_var == 0 && inv_move_var == 2 { local.chance = true; }
+    else if seen_rage_var
     {
         if alarm_arr[12,0] <= 0 || rage_var { local.chance = true; }
         else { local.chance = (random(1) >= alarm_arr[12,0]/alarm_arr[12,1]); }
@@ -478,8 +483,8 @@ object_event_add
                 else if alarm_arr[10,0] > 0 { set_alarm_scr(10,-1); }
             }
         }
-        else if alarm_arr[12,0] > 0
-        { image_alpha = alarm_arr[12,0]/alarm_arr[12,1]; }
+        else if alarm_arr[13,0] > 0
+        { image_alpha = alarm_arr[13,0]/alarm_arr[13,1]; }
     }
     if !draw_pos_var
     {
@@ -501,6 +506,7 @@ object_event_add
     if alarm_arr[9,0] > 0 { set_alarm_scr(9,-1); }
     if alarm_arr[12,0] > 0 { set_alarm_scr(12,-1); }
     if seen_rage_var == 2 { rage_var = false; }
+    if atk_seen_delay_var > 0 { set_alarm_scr(8,atk_seen_delay_var); }
 ');
 // Hurt Event
 object_event_add
@@ -508,18 +514,33 @@ object_event_add
     if !enter_var
     {
         event_inherited();
-        if stun_var == 2
+        switch stun_var
         {
-            on_var = false;
-            set_motion_3d_scr(0,true);
-            if !global.reduce_flash_var
+            case 2:
             {
-                with instance_create(0,0,flash_eff_obj)
+                if do_hurt_var != 3 || hurt_type_var == 1
                 {
-                    image_blend = c_red;
-                    cam_id_var = other.hurt_target_var.cam_id_var;
-                    set_alarm_scr(0,18);
+                    on_var = false;
+                    set_motion_3d_scr(0,true);
+                    if !global.reduce_flash_var
+                    {
+                        with instance_create(0,0,flash_eff_obj)
+                        {
+                            image_blend = c_red;
+                            cam_id_var = other.hurt_target_var.cam_id_var;
+                            set_alarm_scr(0,18);
+                        }
+                    }
                 }
+                break;
+            }
+            case 3:
+            {
+                // Become visible
+                event_user(14);
+                // If its not vulnerable to the axe, clink to show its not very effective
+                if do_hurt_var == 3 && hurt_type_var != 1
+                { fmod_snd_play_scr(choose(axe_01_snd,axe_02_snd,axe_03_snd)); }
             }
         }
     }

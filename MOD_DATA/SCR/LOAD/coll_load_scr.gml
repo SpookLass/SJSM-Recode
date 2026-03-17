@@ -88,9 +88,9 @@ p3dc_add_cylinder_scr(-local.radius,-local.radius,global.slime_trig_coll[1],loca
 p3dc_end_mdl_scr();
 // Axe
 globalvar axe_coll;
-global.axe_coll[1] = 12; // 18?
-global.axe_coll[2] = 48; // 64?
-global.axe_coll[3] = 12; // 18?
+global.axe_coll[1] = 18; // 12
+global.axe_coll[2] = 64; // 48
+global.axe_coll[3] = 18; // 12
 local.radius_z = global.axe_coll[1]/2;
 local.radius_x = global.axe_coll[2]/2;
 local.radius_y = global.axe_coll[3]/2;

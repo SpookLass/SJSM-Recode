@@ -100,7 +100,7 @@ for (local.i=0; local.i<8; local.i+=1;)
         case 2: { local.color = make_color_rgb(255,255,28); break; } // Yellow
         case 3: { local.color = make_color_rgb(255,255,255); break; } // White
         case 4: { local.color = make_color_rgb(59,59,119); break; } // Blue
-        case 5: { local.color = make_color_rgb(255,255,255); break; } // White
+        case 5: { local.color = make_color_rgb(6,213,119); break; } // Stamina Green
         case 6: { local.color = make_color_rgb(226,205,124); break; } // Gold
         case 7: { local.color = make_color_rgb(40,3,47); break; } // Black
     }

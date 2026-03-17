@@ -127,7 +127,7 @@ object_event_add
     // Thing
     hurt_eff_var = false;
     // Behavior
-    if global.stem_type_var == -1 { local.type = irandom(3); }
+    if global.stem_type_var == -1 { local.type = irandom(6); }
     else { local.type = global.stem_type_var; }
     switch local.type
     {
@@ -345,14 +345,17 @@ object_event_add
     if !enter_var
     {
         event_inherited();
-        if hurt_tp_var { event_user(15); }
-        if hurt_eff_var && !global.reduce_flash_var
+        if do_hurt_var != 3 || hurt_type_var == 1
         {
-            with instance_create(0,0,flash_eff_obj)
+            if hurt_tp_var { event_user(15); }
+            if hurt_eff_var && !global.reduce_flash_var
             {
-                image_blend = c_red;
-                cam_id_var = other.hurt_target_var.cam_id_var;
-                set_alarm_scr(0,18);
+                with instance_create(0,0,flash_eff_obj)
+                {
+                    image_blend = c_red;
+                    cam_id_var = other.hurt_target_var.cam_id_var;
+                    set_alarm_scr(0,18);
+                }
             }
         }
     }
