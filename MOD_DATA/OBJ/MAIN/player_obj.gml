@@ -22,7 +22,7 @@ object_event_add
     if global.one_shot_var { hp_max_var = 0; }
     else { hp_max_var = 100; }
     hp_var = hp_max_var;
-    heal_rate_var = 1/60;
+    heal_rate_var = 0.02;
     heal_var = true;
     heal_delay_var = 0;
     heal_safe_var = 10;
@@ -144,6 +144,7 @@ object_event_add
     {
         case 1:
         {
+            heal_rate_var = 1/60;
             back_var = true;
             breath_do_var = false;
             flare_pitch_var = 0;

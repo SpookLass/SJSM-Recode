@@ -104,7 +104,7 @@ object_event_add
     if delay_var { delay_var = false; }
     else if !state_var
     {
-        local.input = input_menu_hold_y_scr(0);
+        local.input = input_menu_hold_y_scr(player_id_var);
         if local.input != 0
         {
             button_state_var = mod_scr(button_state_var-local.input,button_len_var);
