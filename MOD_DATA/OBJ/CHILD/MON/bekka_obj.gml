@@ -454,6 +454,12 @@ object_event_add
         event_perform(ev_alarm,9);
         set_alarm_scr(9,-1);
     }
+    if scare_var
+    {
+        on_var = false;
+        set_motion_3d_scr(0,true);
+        set_alarm_scr(0,irandom_range(delay_min_var,delay_max_var));
+    }
 ');
 // Draw
 object_event_add

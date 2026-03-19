@@ -12,6 +12,5 @@ object_event_add
     store_tex_var = sprite_get_texture(dev_spr,11);
     name_var = "Lunnay";
     link_var = "https://lunnay.github.io/portfolio/";
-    direction = 90;
     event_inherited();
 ');

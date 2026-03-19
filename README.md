@@ -41,6 +41,7 @@ This demo only includes Endless Mode at the moment, but will get Story Mode supp
 - TheRut01: Eel death screen (jaws)
 - StupidFizz: Eel death screen (background)
 - Everlasting Maya: Icons
+- WASAB1: Team Recode Logo
 - Spook Lass: Various art edits
 
 ### Models:
@@ -51,6 +52,7 @@ This demo only includes Endless Mode at the moment, but will get Story Mode supp
 
 - SammyDaGurl: Eel death screen theme
 - Uncanny Goat: Eel chase theme
+- Birdbonanza: Team Recode Jingle
 - Spook Lass: Brain and Frenzy chase theme, Bekka death screen theme
 
 ### Sounds:
@@ -72,7 +74,6 @@ This demo only includes Endless Mode at the moment, but will get Story Mode supp
 - Viri: GM8 Decompiler
 - Apis035: GM8x Lua Fix
 
-
 ### QA Testers:
 
 - Myetal: HD, multiplayer
@@ -89,7 +90,6 @@ This demo only includes Endless Mode at the moment, but will get Story Mode supp
 - MajoraMedia
 - Maneki
 - Holly
-- Wasabi
 - Serial_Hotdog_Lain
 - Trigam
 - Adamoto

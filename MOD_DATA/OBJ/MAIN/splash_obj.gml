@@ -14,7 +14,10 @@ object_event_add
     kira_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\kira_snd.wav");
     amg_vid_var = main_directory_const+"\VID\UI\amg_silent_vid.wmv";
     amg_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\amg_snd.wav");
-    recode_spr_var = execute_file(main_directory_const+"\SPR\UI\recode_spr.gml",main_directory_const+"\SPR\UI\recode_spr.png");
+    if !irandom(7) || current_month == 10
+    { recode_spr_var = execute_file(main_directory_const+"\SPR\UI\recode_pumpkin_spr.gml",main_directory_const+"\SPR\UI\recode_pumpkin_spr.png"); }
+    else { recode_spr_var = execute_file(main_directory_const+"\SPR\UI\recode_gear_spr.gml",main_directory_const+"\SPR\UI\recode_gear_spr.png"); }
+    recode_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\acheese_snd.wav");
     fmod_spr_var = execute_file(main_directory_const+"\SPR\UI\fmod_spr.gml",main_directory_const+"\SPR\UI\fmod_spr.png");
     warn_bg_var = background_add(main_directory_const+"\BG\UI\warn_bg.png",false,false);
     ini_open(global.lang_var);
@@ -22,8 +25,8 @@ object_event_add
     warn_str_02_var = ini_read_string("MENU","warn_02","MENU_warn_02");
     warn_str_03_var = ini_read_string("MENU","warn_03","MENU_warn_03");
     ini_close();
-    image_xscale = 0.01;
-    image_yscale = 0.01;
+    warn_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\warn_snd.wav");
+    image_xscale = 2.16;
     image_alpha = 0;
     shadow_off_var = 4;
     
@@ -45,6 +48,8 @@ object_event_add
     background_delete(warn_bg_var);
     fmod_snd_free_scr(kira_snd_var);
     fmod_snd_free_scr(amg_snd_var);
+    fmod_snd_free_scr(recode_snd_var);
+    fmod_snd_free_scr(warn_snd_var);
 ');
 // Step Event
 object_event_add
@@ -59,8 +64,7 @@ object_event_add
     {
         case 0: // Kira
         {
-            image_xscale += 0.001*global.delta_time_var;
-            image_yscale += 0.001*global.delta_time_var;
+            image_xscale += 0.216*global.delta_time_var;
             image_alpha += 0.001*global.delta_time_var;
             break;
         }
@@ -89,9 +93,11 @@ object_event_add
         }
         case 2: // Recode
         {
+            background_color = make_color_rgb(30,0,50);
+            window_set_color(background_color);
             fmod_inst_stop_scr(inst_var);
-            image_xscale = 0.5;
-            image_yscale = 0.5;
+            inst_var = fmod_snd_play_scr(recode_snd_var);
+            image_xscale = 720;
             image_alpha = 1;
             set_alarm_scr(1,60);
             set_alarm_scr(2,300);
@@ -100,8 +106,10 @@ object_event_add
         }
         case 3: // FMOD
         {
-            image_xscale = 1;
-            image_yscale = 1;
+            background_color = c_black;
+            window_set_color(background_color);
+            fmod_inst_stop_scr(inst_var);
+            image_xscale = 732;
             image_alpha = 1;
             set_alarm_scr(1,60);
             set_alarm_scr(2,300);
@@ -110,6 +118,8 @@ object_event_add
         }
         case 4: // Warning
         {
+            fmod_inst_stop_scr(inst_var);
+            inst_var = fmod_snd_play_scr(warn_snd_var);
             set_alarm_scr(1,60);
             set_alarm_scr(2,360);
             set_alarm_scr(4,240);
@@ -117,6 +127,7 @@ object_event_add
         }
         case 5: // Leave
         {
+            fmod_inst_stop_scr(inst_var);
             rm_goto_menu_scr(menu_rm);
             break;
         }
@@ -141,8 +152,7 @@ object_event_add
 object_event_add
 (argument0,ev_alarm,3,'
     image_alpha = 1;
-    image_xscale = 1;
-    image_yscale = 1;
+    image_xscale = 216;
     set_alarm_scr(4,60);
     set_alarm_scr(2,180);
 ');
@@ -163,20 +173,17 @@ object_event_add
     {
         case 0:
         {
-            local.scale = view_hview[view_current]/720;
-            draw_sprite_ext(kira_spr_var,0,view_wview[view_current]/2,view_hview[view_current]/2,image_xscale*local.scale,image_yscale*local.scale,image_angle,image_blend,image_alpha);
+            draw_spr_stretch_ext_scr(kira_spr_var,0,0,0,image_xscale,0,fa_center,fa_middle,image_angle,image_blend,image_alpha);
             break;
         }
         case 2:
         {
-            local.scale = view_hview[view_current]/720;
-            draw_sprite_ext(recode_spr_var,0,view_wview[view_current]/2,view_hview[view_current]/2,image_xscale*local.scale,image_yscale*local.scale,image_angle,image_blend,image_alpha);
+            draw_spr_stretch_ext_scr(recode_spr_var,0,0,0,image_xscale,0,fa_center,fa_middle,image_angle,image_blend,image_alpha);
             break;
         }
         case 3:
         {
-            local.scale = view_hview[view_current]/720;
-            draw_sprite_ext(fmod_spr_var,0,view_wview[view_current]/2,view_hview[view_current]/2,image_xscale*local.scale,image_yscale*local.scale,image_angle,image_blend,image_alpha);
+            draw_spr_stretch_ext_scr(fmod_spr_var,0,0,0,image_xscale,0,fa_center,fa_middle,image_angle,image_blend,image_alpha);
             break;
         }
         case 4:
@@ -184,7 +191,11 @@ object_event_add
             local.scale = view_hview[view_current]/720;
             draw_background_stretched(warn_bg_var,0,0,view_wview[view_current],view_hview[view_current]);
             draw_set_font(warn_font); draw_set_halign(fa_center);
-            local.center = view_wview[view_current]/2;
+            draw_str_outline_scr(warn_str_01_var,-15,139,2,2,0.125,fa_center,fa_top,shadow_off_var,shadow_off_var,c_black,c_white,1,8);
+            draw_str_ext_outline_scr(warn_str_02_var,-6,336,1.5,1.5,0.125,fa_center,fa_top,-1,400,shadow_off_var,shadow_off_var,c_black,c_white,1,8);
+            draw_str_outline_scr(warn_str_03_var,-6,580,0.5,0.5,0.125,fa_center,fa_top,shadow_off_var,shadow_off_var,c_black,c_white,1,8);
+            draw_set_font(main_font); draw_set_halign(fa_left);
+            /*local.center = view_wview[view_current]/2;
             for (local.i=0; local.i<9; local.i+=1)
             {
                 if local.i < 8
@@ -204,7 +215,7 @@ object_event_add
                 draw_text_ext_transformed(local.center+local.xtmp-6,(336*local.scale)+local.ytmp,warn_str_02_var,-1,local.wrap,1.5*local.scale,1.5*local.scale,0);
                 draw_text_transformed(local.center+local.xtmp,(580*local.scale)+local.ytmp,warn_str_03_var,0.5*local.scale,0.5*local.scale,0);
             }
-            draw_set_font(main_font); draw_set_halign(fa_left); draw_set_color(c_white);
+            draw_set_color(c_white);*/
             break;
         }
     }

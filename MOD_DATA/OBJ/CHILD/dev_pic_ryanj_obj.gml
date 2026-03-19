@@ -13,6 +13,5 @@ object_event_add
     name_var = "Ryan J.
 I'+"'"+'m a man, dammit!";
     link_var = "https://www.youtube.com/@TheSpookyKing";
-    direction = 90;
     event_inherited();
 ');

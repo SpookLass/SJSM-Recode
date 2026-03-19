@@ -9,11 +9,10 @@ object_set_visible(argument0,true);
 // Create event
 object_event_add
 (argument0,ev_create,0,'
-    store_tex_var = sprite_get_texture(dev_spr,8);
-    name_var = "TheRut01
-You cannot grasp the true form of Giygas'+"'"+' attack! 
-(PATOOIE heh)";
-    link_var = 0;
+    store_tex_var = sprite_get_texture(dev_spr,13);
+    name_var = "WASAB1
+i hate weeping angels";
+    link_var = "https://www.youtube.com/@WASAB1_T4n/";
     direction = 90;
     event_inherited();
 ');

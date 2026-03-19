@@ -415,8 +415,8 @@ Spawning
                     // Other
                     draw_bg_stretch_scr(bar_bg,91,57,308,0);
                     // Stamina
-                    if !par_var.do_sprint_var { local.stam_bg = bar_stam_fake_bg; }
-                    else if !par_var.do_stam_var { local.stam_bg = bar_stam_inf_bg; }
+                    if !par_var.mon_var.do_sprint_var { local.stam_bg = bar_stam_fake_bg; }
+                    else if !par_var.mon_var.do_stam_var { local.stam_bg = bar_stam_inf_bg; }
                     else { local.stam_bg = bar_stam_bg; }
                     local.width = background_get_width(bar_stam_bg)*par_var.mon_var.stam_var/par_var.mon_var.stam_max_var;
                     draw_background_part_ext(local.stam_bg,background_get_width(bar_stam_bg)-local.width,0,local.width,20,99*local.viewscale,96*local.viewscale,local.viewscale,local.viewscale,c_white,1);

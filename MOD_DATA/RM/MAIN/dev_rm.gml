@@ -287,9 +287,10 @@ room_instance_add(argument0,368,128,dev_pic_ug_obj);
 room_instance_add(argument0,400,128,dev_pic_bc_obj);
 room_instance_add(argument0,336,224,dev_pic_tr_obj);
 room_instance_add(argument0,368,224,dev_pic_sf_obj);
-room_instance_add(argument0,400,224,dev_pic_lunnay_obj);
-room_instance_add(argument0,592,128,dev_pic_sdg_obj);
-room_instance_add(argument0,592,224,dev_pic_ryanj_obj);
+room_instance_add(argument0,400,224,dev_pic_wasabi_obj);
+room_instance_add(argument0,592,128,dev_pic_lunnay_obj);
+room_instance_add(argument0,624,128,dev_pic_ryanj_obj);
+room_instance_add(argument0,592,224,dev_pic_sdg_obj);
 // Seats
 room_instance_add(argument0,48,144,tree_pot_obj);
 room_instance_add(argument0,48,208,tree_pot_obj);

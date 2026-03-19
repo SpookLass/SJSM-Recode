@@ -13,5 +13,6 @@ object_event_add
     name_var = "SammyDaGurl
 Very thankful I was brought onto help with this project! Also very very excited for the future regarding my work for this mod :D";
     link_var = "https://youtube.com/@thatsillygurlsammy";
+    direction = 90;
     event_inherited();
 ');
