@@ -9,7 +9,7 @@ d3d_set_culling(false);
 d3d_set_hidden(false);
 draw_set_font(main_font);
 splash_set_close_button(false);
-global.version_var = "Spooky's Jump Scare Mansion - Project Recode: v3.19.26";
+global.version_var = "Spooky's Jump Scare Mansion - Project Recode: v3.20.26";
 global.game_var = false;
 global.game_spd_var = 1;
 global.game_time_var = 0;
@@ -46,7 +46,7 @@ global.hide_debug_var = false;
 global.pause_var = false;
 global.can_pause_var = true;
 global.mouse_free_var = false;
-global.debug_unlock_var = true; // Change to false on release!!!
+global.debug_unlock_var = false; // Change to false on release!!!
 global.draw_time_var = 0;
 global.fps_curr_var = 0;
 global.boss_var = noone;
