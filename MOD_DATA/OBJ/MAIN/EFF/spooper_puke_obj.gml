@@ -42,7 +42,6 @@ object_event_add
                     set_alarm_scr(0,other.alarm_02_var);
                     hurt_target_var = other.id;
                     event_user(0);
-                    local.player = id;
                     if hp_var < hp_max_var && other.unheal_var
                     { unheal_var += other.dmg_var; }
                 }
@@ -84,7 +83,7 @@ object_event_add
         if local.dead && !global.debug_var && !possess_var
         {
             global.dead_mon_var = par_var.object_index;
-            global.menu_player_var = local.player.player_id_var;
+            global.menu_player_var = player_var.player_id_var; // Hopefully should fix it
             if global.permadeath_var { delete_save_scr(global.save_name_var); }
             rm_goto_menu_scr(par_var.dead_rm_var,true);
             exit;

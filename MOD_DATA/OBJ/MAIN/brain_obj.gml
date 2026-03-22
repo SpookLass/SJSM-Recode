@@ -97,5 +97,7 @@ object_event_add
     }
     global.last_time_var = current_time;
     fmod_update_take_over_done_scr();
+    if global.reset_spd_var > 0 && global.game_spd_var > 1
+    { global.game_spd_var = 1; fmod_group_set_pitch_scr(0,global.game_spd_var); }
     instance_destroy();
 ')

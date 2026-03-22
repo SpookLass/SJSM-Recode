@@ -21,14 +21,17 @@ object_event_add
 object_event_add
 (argument0,ev_alarm,1,'
     temp_var = false;
-    with instance_create(0,0,fade_eff_obj)
+    if instance_exists(interact_target_var)
     {
-        image_blend = c_black;
-        image_alpha = 0;
-        set_alarm_scr(0,other.delay_var); 
-        invert_var = true;
-        stay_var = true;
-        cam_id_var = other.interact_target_var.cam_id_var;
+        with instance_create(0,0,fade_eff_obj)
+        {
+            image_blend = c_black;
+            image_alpha = 0;
+            set_alarm_scr(0,other.delay_var); 
+            invert_var = true;
+            stay_var = true;
+            cam_id_var = other.interact_target_var.cam_id_var;
+        }
     }
     event_user(2);
 ');

@@ -183,14 +183,17 @@ object_event_add
 // Interact Event
 object_event_add
 (argument0,ev_other,ev_user1,'
-    with instance_create(0,0,fade_eff_obj)
+    if instance_exists(interact_target_var)
     {
-        image_blend = c_black;
-        image_alpha = 0;
-        set_alarm_scr(0,other.delay_var); 
-        invert_var = true;
-        stay_var = true;
-        cam_id_var = other.interact_target_var.cam_id_var;
+        with instance_create(0,0,fade_eff_obj)
+        {
+            image_blend = c_black;
+            image_alpha = 0;
+            set_alarm_scr(0,other.delay_var); 
+            invert_var = true;
+            stay_var = true;
+            cam_id_var = other.interact_target_var.cam_id_var;
+        }
     }
 ');
 // Open Event
@@ -216,14 +219,17 @@ object_event_add
 // Lock Event
 object_event_add
 (argument0,ev_other,ev_user3,'
-    if !instance_exists(txt_obj)
+    if instance_exists(interact_target_var)
     {
-        with instance_create(0,0,txt_obj)
+        if !instance_exists(txt_obj)
         {
-            cam_id_var = other.interact_target_var.cam_id_var;
-            str_var = other.txt_lock_var;
+            with instance_create(0,0,txt_obj)
+            {
+                cam_id_var = other.interact_target_var.cam_id_var;
+                str_var = other.txt_lock_var;
+            }
+            fmod_snd_play_scr(deny_snd);
         }
-        fmod_snd_play_scr(deny_snd);
     }
 ');
 // Draw Event

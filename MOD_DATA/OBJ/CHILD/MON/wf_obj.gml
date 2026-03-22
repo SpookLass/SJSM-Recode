@@ -123,7 +123,7 @@ object_event_add
             other.loop_snd_var[1] = loop_snd_var[1];
             other.wake_snd_var[1] = wake_snd_var[1];
             for (local.i=0; local.i<glitch_snd_len_var; local.i+=1;)
-            { other.glitch_snd_arr[local.i,0] = glitch_snd_arr[local.i,0]; }
+            { other.glitch_snd_arr[local.i] = glitch_snd_arr[local.i]; }
             other.mus_imscared_snd_var = mus_imscared_snd_var;
             local.loaded = true;
             break;

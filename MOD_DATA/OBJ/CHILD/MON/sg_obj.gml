@@ -62,6 +62,8 @@ object_event_add
     // Wander
     do_wander_var = false;
     chase_dist_var = 128/3;
+    // HD Weirdness
+    stam_dmg_var = false;
     // Effects
     fog_end_var = 96;
 	do_fog_var = true;
@@ -126,7 +128,7 @@ object_event_add
     tex_var = background_get_texture(bg_var);
     mdl_var = mdl_arr[0];
     // Behavior
-    if global.sg_type_var == -1 { local.type = irandom(2); }
+    if global.sg_type_var == -1 { local.type = irandom(3); }
     else { local.type = global.sg_type_var; }
     switch local.type
     {
@@ -139,6 +141,10 @@ object_event_add
             break;
         }
         case 2: // HD
+        {
+            stam_dmg_var = true;
+        }
+        case 3: // KH HD
         {
             // I hate this
             charge_var = false;
@@ -303,6 +309,95 @@ object_event_add
         mdl_var = mdl_arr[floor(spr_id_var)];
     }
     else { event_inherited(); }
+');
+// Attack Event
+object_event_add
+(argument0,ev_other,ev_user2,'
+    if !stam_dmg_var { event_inherited(); }
+    else
+    {
+        local.dead = true;
+        local.success = false;
+        with player_obj
+        {
+            if !dead_var && !hurt_var && !in_door_var && !invuln_var && on_var && do_stam_var
+            {
+                // p3dc_check_scr(coll_var[0],x,y,z,other.coll_var[0],other.x,other.y,other.z)
+                if cyl_coll_scr(x,y,z,coll_var[2],coll_var[1],other.x,other.y,other.z,other.atk_range_var,other.coll_var[1])
+                {
+                    if other.dmg_alarm_var
+                    {
+                        hurt_var = true;
+                        set_alarm_scr(0,other.dmg_alarm_var);
+                    }
+                    hurt_target_var = other.id;
+                    event_user(0);
+                    // Drain Stamina
+                    local.dmg = other.dmg_var;
+                    if stam_var > 0
+                    {
+                        local.dmg = local.dmg-stam_var;
+                        stam_var = max(0,stam_var-other.dmg_var);
+                    }
+                    // Proceed as normal
+                    if local.dmg > 0
+                    {
+                        if hp_var > local.dmg { hp_var -= local.dmg; }
+                        else
+                        {
+                            hp_var = 0;
+                            dead_var = true;
+                            do_coll_var = false;
+                            do_stam_var = false;
+                            // Revive
+                            if other.possess_var
+                            {
+                                local.dead = false;
+                                local.player = id;
+                                other.possess_var = false;
+                                with global.player_arr[other.player_id_var]
+                                {
+                                    // Revive
+                                    possess_var = false;
+                                    dead_var = false;
+                                    do_coll_var = true;
+                                    do_stam_var = true;
+                                    hp_var = hp_max_var;
+                                    // Become other player
+                                    x = local.player.x;
+                                    y = local.player.y;
+                                    z = local.player.z;
+                                    eye_yaw_var = local.player.eye_yaw_var;
+                                    eye_pitch_var = local.player.eye_pitch_var;
+                                    // Iframes
+                                    hurt_var = true;
+                                    set_alarm_scr(0,revive_alarm_var);
+                                }
+                            }
+                        }
+                    }
+                    other.atk_target_var = id;
+                    local.success = true;
+                }
+            }
+            if !dead_var { local.dead = false; }
+        }
+        if local.success
+        {
+            if local.dead && !global.debug_var && !possess_var
+            {
+                global.dead_mon_var = object_index;
+                global.menu_player_var = atk_target_var.player_id_var;
+                if kill_var
+                {
+                    if global.permadeath_var { delete_save_scr(global.save_name_var); }
+                    rm_goto_menu_scr(dead_rm_var,true);
+                }
+                else { rm_goto_menu_scr(dead_rm_var,2); }
+            }
+            else { event_user(3); }
+        }
+    }
 ');
 // Draw Event
 object_event_add

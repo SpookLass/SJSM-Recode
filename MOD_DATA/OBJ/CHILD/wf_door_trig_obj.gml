@@ -11,7 +11,7 @@ object_event_add
 (argument0,ev_other,ev_user1,'
     event_inherited();
     // WHY (te Face)
-    if !irandom(1) && instance_exists(par_var)
+    if !irandom(1) && instance_exists(par_var) && instance_exists(interact_target_var)
     {
         fmod_snd_play_scr(par_var.glitch_snd_arr[irandom(par_var.glitch_snd_len_var-1)]);
         with instance_create(0,0,fade_eff_obj)

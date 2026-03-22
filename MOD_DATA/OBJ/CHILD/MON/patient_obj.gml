@@ -306,7 +306,11 @@ object_event_add
         visible = true;
         seen_yaw_var = seen_yaw_02_var;
         seen_pitch_var = seen_pitch_02_var;
-        if fmod_snd_is_3d_scr(wake_snd_var[1]) { snd_var = fmod_snd_3d_play_scr(wake_snd_var[1]); }
+        if fmod_snd_is_3d_scr(wake_snd_var[1])
+        {
+            snd_var = fmod_snd_3d_play_scr(wake_snd_var[1]);
+            if global.pitch_bend_var { fmod_inst_set_pitch_scr(snd_var,random_range(0.95,1.05)); }
+        }
         else { snd_var = fmod_snd_play_scr(wake_snd_var[1]); }
         sub_var[0] = wake_snd_var[2];
         sub_var[1] = wake_snd_var[3];
@@ -384,7 +388,11 @@ object_event_add
 (argument0,ev_alarm,12,'
     if seen_rage_var == 2
     {
-        if fmod_snd_is_3d_scr(wake_snd_var[1]) { snd_var = fmod_snd_3d_play_scr(wake_snd_var[1]); }
+        if fmod_snd_is_3d_scr(wake_snd_var[1])
+        {
+            snd_var = fmod_snd_3d_play_scr(wake_snd_var[1]);
+            if global.pitch_bend_var { fmod_inst_set_pitch_scr(snd_var,random_range(0.95,1.05)); }
+        }
         else { snd_var = fmod_snd_play_scr(wake_snd_var[1]); }
         sub_var[0] = wake_snd_var[2];
         sub_var[1] = wake_snd_var[3];
@@ -449,7 +457,11 @@ object_event_add
                 visible = true;
                 seen_yaw_var = seen_yaw_02_var;
                 seen_pitch_var = seen_pitch_02_var;
-                if fmod_snd_is_3d_scr(wake_snd_var[1]) { snd_var = fmod_snd_3d_play_scr(wake_snd_var[1]); }
+                if fmod_snd_is_3d_scr(wake_snd_var[1])
+                {
+                    snd_var = fmod_snd_3d_play_scr(wake_snd_var[1]);
+                    if global.pitch_bend_var { fmod_inst_set_pitch_scr(snd_var,random_range(0.95,1.05)); }
+                }
                 else { snd_var = fmod_snd_play_scr(wake_snd_var[1]); }
                 sub_var[0] = wake_snd_var[2];
                 sub_var[1] = wake_snd_var[3];

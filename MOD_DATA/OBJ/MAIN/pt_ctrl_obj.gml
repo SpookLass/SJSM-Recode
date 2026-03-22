@@ -8,13 +8,6 @@ object_set_visible(argument0,false);
 // Create
 object_event_add
 (argument0,ev_create,0,'
-    if global.player_len_var > 1
-    {
-        with pt_note_obj { event_user(4); }
-        with howard_obj { on_var = true; }
-        instance_destroy();
-        exit;
-    }
     event_inherited();
     direction = 90;
     note_var = false;
@@ -36,6 +29,18 @@ object_event_add
             break;
         }
     }
+');
+// Room Start
+object_event_add
+(argument0,ev_other,ev_room_start,'
+    if global.player_len_var > 1
+    {
+        with pt_note_obj { event_user(4); }
+        with howard_obj { on_var = true; }
+        instance_destroy();
+        exit;
+    }
+    event_inherited();
 ');
 // Step
 object_event_add
