@@ -28,9 +28,8 @@ This demo only includes Endless Mode at the moment, but will get Story Mode supp
 
 - Spook Lass: Lead programmer
 - Yoshicraft64: Sprite adding system
-- Birdbonanza: Menu, Hooked Doll, and Silhouettes
+- Birdbonanza: Menu, Save System, Hooked Doll, and Silhouettes
 - Everlasting Maya: Room porting
-
 
 ### Art:
 

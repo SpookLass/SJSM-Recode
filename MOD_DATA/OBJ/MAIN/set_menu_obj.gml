@@ -243,6 +243,7 @@ object_event_add
                             set_arr[local.setid,5],
                             set_arr[local.setid,6]
                         );
+                        break;
                     }
                     case 3: // Max clamped number
                     {

@@ -9,10 +9,9 @@ d3d_set_culling(false);
 d3d_set_hidden(false);
 draw_set_font(main_font);
 splash_set_close_button(false);
-global.version_var = "Spooky's Jump Scare Mansion - Project Recode: v3.20.26";
+global.version_var = "Spooky's Jump Scare Mansion - Project Recode: v3.22.26";
 global.game_var = false;
 global.game_spd_var = 1;
-global.game_time_var = 0;
 global.draw_3d_var = false;
 global.res_override_var = false;
 global.js_override_var = false;
@@ -34,7 +33,6 @@ global.rm_count_var = 0;
 global.rm_count_override_var = noone;
 global.input_len_var = 24;
 global.debug_var = false;
-global.last_time_var = current_time;
 global.reflect_var = false;
 global.reflect_pos_var = 0;
 global.reflect_axis_var = 0;
@@ -54,14 +52,23 @@ for (local.i=0; local.i<8; local.i+=1;)
 {
     input_menu_hold_arr[0,local.i] = 0;
     input_menu_hold_arr[1,local.i] = 0;
-    input_menu_hold_arr[2,local.i] = 0;
+    input_menu_hold_arr[2,local.i] = true;
     input_menu_hold_arr[3,local.i] = 0;
+    input_menu_hold_arr[4,local.i] = 0;
+    input_menu_hold_arr[5,local.i] = true;
 }
+// Fog
 global.fog_var = false;
 global.fog_dark_var = true;
 global.fog_color_var = c_black;
 global.fog_start_var = 0;
 global.fog_end_var = 0;
+// Timing
+global.last_time_var = current_time;
+global.time_diff_var = 0;
+global.true_delta_time_var = 0;
+global.delta_time_var = 0;
+global.game_time_var = 0;
 // Lists
 global.mon_list = ds_list_create();
 ds_list_clear(global.mon_list);

@@ -11,6 +11,7 @@ object_event_add
 (argument0,ev_create,0,'
     event_inherited();
     player_var = noone;
+    cam_var = false;
     mult_var = 5;
     type_var = 0;
     // Alarm
@@ -48,8 +49,5 @@ object_event_add
         }
     }
     with player_var // Can be singular player or player_obj
-    {
-        if on_var && !dead_var && !in_door_var
-        { shake_var = local.mult; }
-    }
+    { shake_var = local.mult; }
 ');
