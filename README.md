@@ -280,7 +280,7 @@ This demo only includes Endless Mode at the moment, but will get Story Mode supp
 
 ## ???
 
-A named file is the one you need.
-To find a room special to me.
-The name is a number unlike the rest.
+A named file is the one you need.<br>
+To find a room special to me.<br>
+The name is a number unlike the rest.<br>
 It is found by the brain that knows best.
