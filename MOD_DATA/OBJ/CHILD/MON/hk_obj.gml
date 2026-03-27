@@ -153,7 +153,7 @@ object_event_add
 			spd_anim_var = true;
 			eff_color_var = make_color_rgb(211,77,98); // 110 45 60
 			fog_type_var = 1;
-			fog_end_var = 72;
+			fog_end_var = 96; // New Nerf, 72
 			door_var = true;
 			dur_var = irandom_range(10,20);
 			atk_range_var = global.mon_coll[2];

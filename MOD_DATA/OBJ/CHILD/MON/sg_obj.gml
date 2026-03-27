@@ -138,6 +138,7 @@ object_event_add
             spawn_dist_var = 96;
             dmg_var = 30;
             atk_range_var = global.mon_coll[2];
+            fog_end_var = 128;
             break;
         }
         case 2: // HD

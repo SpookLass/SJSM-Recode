@@ -9,6 +9,7 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,0,'
+    event_inherited();
     // Render
     spr_var = taker_spr;
     spr_id_var = 0;
@@ -50,6 +51,7 @@ object_event_add
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,'
+    event_inherited();
     if alarm_arr[0,0] > 0
     {
         local.per = alarm_arr[0,0]/alarm_arr[0,1];

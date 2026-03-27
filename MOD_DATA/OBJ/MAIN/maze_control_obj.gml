@@ -14,67 +14,73 @@ object_event_add
     str_01_var = ini_read_string("UI","harp_01","UI_harp_01");
     str_02_var = ini_read_string("UI","harp_02","UI_harp_02");
     ini_close();
+    reset_prog_var = true;
     len_var = 4;
-    if global.main_type_var == 2
+    switch irandom(5)
     {
-        for (local.i=0; local.i<len_var; local.i+=1;)
-        { arr_var[local.i] = irandom(2); }
-    }
-    else
-    {
-        switch irandom(5)
+        case 0:
         {
-            case 0:
-            {
-                arr_var[0] = 0; // L
-                arr_var[1] = 0; // L
-                arr_var[2] = 1; // F
-                arr_var[3] = 0; // L
-                break;
-            }
-            case 1:
-            {
-                arr_var[0] = 1; // F
-                arr_var[1] = 1; // F
-                arr_var[2] = 1; // F
-                arr_var[3] = 0; // L
-                break;
-            }
-            case 2:
-            {
-                arr_var[0] = 1; // F
-                arr_var[1] = 2; // R
-                arr_var[2] = 1; // F
-                arr_var[3] = 0; // L
-                break;
-            }
-            case 3:
-            {
-                arr_var[0] = 2; // R
-                arr_var[1] = 2; // R
-                arr_var[2] = 1; // F
-                arr_var[3] = 0; // L
-                break;
-            }
-            case 4:
-            {
-                arr_var[0] = 0; // L
-                arr_var[1] = -1; // A
-                arr_var[2] = 1; // F
-                arr_var[3] = 1; // F
-                break;
-            }
-            case 5:
-            {
-                arr_var[0] = 0; // L
-                arr_var[1] = 1; // F
-                arr_var[2] = 1; // F
-                arr_var[3] = 0; // L
-                break;
-            }
+            arr_var[0] = 0; // L
+            arr_var[1] = 0; // L
+            arr_var[2] = 1; // F
+            arr_var[3] = 0; // L
+            break;
+        }
+        case 1:
+        {
+            arr_var[0] = 1; // F
+            arr_var[1] = 1; // F
+            arr_var[2] = 1; // F
+            arr_var[3] = 0; // L
+            break;
+        }
+        case 2:
+        {
+            arr_var[0] = 1; // F
+            arr_var[1] = 2; // R
+            arr_var[2] = 1; // F
+            arr_var[3] = 0; // L
+            break;
+        }
+        case 3:
+        {
+            arr_var[0] = 2; // R
+            arr_var[1] = 2; // R
+            arr_var[2] = 1; // F
+            arr_var[3] = 0; // L
+            break;
+        }
+        case 4:
+        {
+            arr_var[0] = 0; // L
+            arr_var[1] = -1; // A
+            arr_var[2] = 1; // F
+            arr_var[3] = 1; // F
+            break;
+        }
+        case 5:
+        {
+            arr_var[0] = 0; // L
+            arr_var[1] = 1; // F
+            arr_var[2] = 1; // F
+            arr_var[3] = 0; // L
+            break;
         }
     }
-    reset_prog_var = false;
+    switch global.main_type_var
+    {
+        case 0:
+        {
+            reset_prog_var = false;
+            break;
+        }
+        case 2:
+        {
+            for (local.i=0; local.i<len_var; local.i+=1;)
+            { arr_var[local.i] = irandom(2); }
+            break;
+        }
+    }
 ');
 // Room Start
 object_event_add

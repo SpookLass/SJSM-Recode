@@ -87,7 +87,8 @@ object_event_add
     // Game Time
     if global.game_var { global.game_time_var += global.time_diff_var; }
     // Speed!
-    if global.draw_3d_var
+    if global.pause_var { if global.game_spd_var != 0 { global.game_spd_var = 0; }}
+    else if global.draw_3d_var
     {
         if global.input_press_arr[ff_input_const,0] == 1 { global.game_spd_var = min(3,global.game_spd_var+0.25); fmod_group_set_pitch_scr(0,global.game_spd_var); }
         if global.input_press_arr[slow_input_const,0] == 1 { global.game_spd_var = max(1,global.game_spd_var-0.25); fmod_group_set_pitch_scr(0,global.game_spd_var); }

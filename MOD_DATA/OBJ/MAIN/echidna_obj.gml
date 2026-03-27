@@ -400,6 +400,7 @@ object_event_add
         { path_delete(path_var); }
     }
     fmod_inst_stop_scr(snd_var);
+    fmod_inst_stop_scr(loop_inst_var);
     if possess_var
     {
         with global.player_arr[player_id_var]

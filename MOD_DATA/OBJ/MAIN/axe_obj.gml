@@ -17,6 +17,8 @@ object_event_add
     check_stam_var = false;
     good_var = true;
     state_var = false;
+    image_xscale = 960;
+    image_yscale = 680;
     spr_spd_var = 0;
     spr_spd_raise_var = 0.5;
     spr_spd_swing_var = 0.25;
@@ -185,13 +187,7 @@ object_event_add
 // Room Start
 object_event_add
 (argument0,ev_other,ev_room_start,'
-    if view_wview[par_var.cam_id_var] >= view_hview[par_var.cam_id_var]
-    { scale_var = view_hview[par_var.cam_id_var]/720; }
-    else { scale_var = view_wview[par_var.cam_id_var]/1280; }
-    w_var = sprite_get_width(spr_raise_var)*2*scale_var;
-    h_var = sprite_get_height(spr_raise_var)*2*scale_var;
-    right_var = max((view_wview[par_var.cam_id_var]/2)-(w_var/3),view_wview[par_var.cam_id_var]-w_var);
-    bottom_var = view_hview[par_var.cam_id_var]-h_var;
+    event_inherited();
     if !color_var || !instance_exists(color_par_obj) || global.color_var == 1
     { image_blend = c_white; }
 ');
@@ -200,10 +196,17 @@ object_event_add
 (argument0,ev_draw,0,'
     if view_current == par_var.cam_id_var && !par_var.dead_var && par_var.on_var
     {
+        // Scale
+        local.viewscale = min(view_wview[view_current]/1280,view_hview[view_current]/720);
+        local.xscale = image_xscale*local.viewscale;
+        local.yscale = image_yscale*local.viewscale;
+        local.right = max((view_wview[view_current]/2)-(local.xscale/3),view_wview[view_current]-local.xscale);
+        local.bottom = view_hview[view_current]-local.yscale;
+        // Draw
         d3d_set_fog(false,c_black,0,0);
         d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
         d3d_set_hidden(false);
-        draw_sprite_stretched_ext(spr_var,floor(spr_id_var),right_var,bottom_var,w_var,h_var,image_blend,image_alpha);
+        draw_sprite_stretched_ext(spr_var,floor(spr_id_var),local.right,local.bottom,local.xscale,local.yscale,image_blend,image_alpha);
         d3d_set_hidden(true);
     }
 ');

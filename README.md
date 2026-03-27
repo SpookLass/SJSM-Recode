@@ -14,6 +14,23 @@ This demo only includes Endless Mode at the moment, but will get Story Mode supp
 - Step 3: Open Deltapatcher, select SPOOKY.exe for the original file, and RECODE.exe.xdelta for the patch.
 - Step 4: Boot up the game, and have fun! Make sure to visit the settings menu.
 
+## Multiplayer Instructions:
+
+- Ensure you have the people you want to do multiplayer with either with you or on parsec. This is local co-op after all!
+- Ensure everyone's controllers are connected before booting up recode. Recode can't register new controllers after the exe has already been run.
+- When you boot up the game, go to the option with an image of a gear and wrench, and go down to controls. Here is where you can set the controls for each person.
+- When setting the controls of each person, remember that outside of PC, you will have to set the controller ID for each person who has one. This can be done by going to "controls" (within the control menu itself, don't overthink it) and change "Controller ID" to the controller you wish to have the person control. Now that may sound confusing, but to put it simply, there can be up to 8 controllers, which are valued between 0 to 7. 0 is the first, with 7 being the eighth. The controller ID of each person's controller is determined by who connected first, including both those using parsec and any controllers you may have connected to your computer. If you are unsure, boot up a multiplayer round after getting everything set up to find out who's who. Anyways after getting each player's controls set up, you can leave the controls menu and hit "apply" to apply them. They will remain even after you close the program.
+- Now go back to the menu and click on the option with an image of a person and a plus sign, and change "max players" to the maximum amount of people who will be playing. Feel free to customize the characters as you wish! It should be noted that the "max players" is reset everytime you reboot the game, so make sure you remember to set it whenever you plan to do your next multiplayer match.
+- You are now ready for multiplayer! Boot up a round and troubleshoot to ensure everything works.
+
+### Extra Notes
+
+- When another player is killed, they will become a ghost, and will be able to possess any specimen they like. Some specific specimen behaviors don't really work when possessed, so do keep that in mind.
+- If you kill a player as a possessed specimen, that player will become a ghost and you will be revived.
+- All players are revived at the elevator, so don't worry about your friends being dead forever.
+- When everyone has died, the last person killed will experience the deathscreen, including being the one to have to bring up the score menu after the game over and being the one to explore the 3D deathscreens.
+- If you still struggle, don't be afraid to reach out! There are plenty of people who are willing to help out. There will also be a video tutorial at some point in the future, so be on the lookout for that.
+
 ## Recode Credits:
 
 ### Directors:

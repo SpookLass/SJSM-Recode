@@ -107,6 +107,7 @@ object_event_add
         slime_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_wake_snd.wav",true);
         mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_mus_snd.mp3");
         fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
+        fmod_snd_set_group_scr(slime_snd_var[1],snd_group_mon_const);
     }
     slime_tex_var = background_get_texture(slime_bg_var);
     // Behavior
@@ -180,6 +181,7 @@ object_event_add
             break;
         }
     }
+    fmod_snd_set_minmax_dist_scr(slime_snd_var[1],snd_dist_min_var,snd_dist_max_var);
     alarm_len_var = 9;
     alarm_ini_scr();
 ');

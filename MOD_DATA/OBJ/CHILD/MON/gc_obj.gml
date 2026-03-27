@@ -139,6 +139,7 @@ object_event_add
     fov_var = 40;
     eff_old_var = true;
     eff_var = true;
+    eff_alpha_var = 0.5;
     reflect_var= -1;
     fog_var = false;
     // Spawn
@@ -171,6 +172,8 @@ object_event_add
             eff_old_var = false;
             cam_end_var = -1;
             fog_var = true;
+            fov_var = 50; // New Nerf
+            eff_alpha_var = 0.33; // New Nerf
             blood_spr_var = blood_kh_spr;
             atk_range_var = global.mon_coll[2];
             break;
@@ -373,6 +376,7 @@ object_event_add
     {
         with instance_create(0,0,gc_eff_obj)
         {
+            image_alpha = other.eff_alpha_var;
             par_var = other.id;
             bg_var = other.eff_bg_var;
             old_var = other.eff_old_var;

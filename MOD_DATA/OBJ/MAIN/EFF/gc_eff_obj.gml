@@ -13,9 +13,10 @@ object_event_add
     image_alpha = 0.5;
     scale_var = 1
     // Alarm
-    alarm_len_var = 1;
+    alarm_len_var = 2;
     alarm_ini_scr();
     set_alarm_scr(0,irandom_range(6,30));
+    if !global.reduce_flash_var { set_alarm_scr(1,1); }
     // Old
     old_var = true;
     top_off_var = random(20);
@@ -29,9 +30,7 @@ object_event_add
 // Step
 object_event_add
 (argument0,ev_step,ev_step_normal,'
-    if old_var
-    { image_alpha = random_range(0.5,1); }
-    else
+    if !old_var
     {
         sine_time_var = (sine_time_var+global.delta_time_var) mod sine_rate_var;
         scale_var = sine_base_var+(sine_mult_var*(sin(2*sine_time_var*pi/sine_rate_var)+1)/2);
@@ -40,9 +39,22 @@ object_event_add
 // Alarm 0 Event
 object_event_add
 (argument0,ev_alarm,0,'
-    top_off_var = random(20);
-    bottom_off_var = random(20);
-    set_alarm_scr(0,irandom_range(6,30));
+    if old_var
+    {
+        top_off_var = random(20);
+        bottom_off_var = random(20);
+        set_alarm_scr(0,irandom_range(6,30));
+    }
+');
+// Alarm 1 Event
+object_event_add
+(argument0,ev_alarm,1,'
+    if old_var && !global.reduce_flash_var
+    {
+        image_alpha = random_range(0.5,1);
+        set_alarm_scr(1,1);
+    }
+    
 ');
 // Draw Event
 object_event_add

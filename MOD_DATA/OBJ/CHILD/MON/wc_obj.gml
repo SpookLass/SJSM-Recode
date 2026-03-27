@@ -241,11 +241,14 @@ object_event_add
             rise_var = true;
         }
     }
-    with instance_create(0,0,wc_eff_obj)
+    if !instance_exists(wc_eff_obj)
     {
-        par_var = other.id;
-        bg_var = other.static_bg_var;
-        visible = !local.rise && !other.do_wander_var;
+        with instance_create(0,0,wc_eff_obj)
+        {
+            par_var = other.id;
+            bg_var = other.static_bg_var;
+            visible = !local.rise && !other.do_wander_var;
+        }
     }
 ');
 // Room End Event

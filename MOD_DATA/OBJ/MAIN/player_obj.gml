@@ -288,10 +288,11 @@ object_event_add
         in_door_var = false;
         hurt_var = false;
         turn_var = false;
+        fov_var = global.fov_var;
         if global.dynamic_fov_var <= 0
         { current_fov_var = fov_var; }
         // Healing
-        if heal_delay_var <= 0 || alarm_arr[0,1] <= 0
+        if heal_delay_var <= 0 || alarm_arr[1,1] <= 0
         { heal_var = true; }
         // Bob
         bob_time_var = 45;
@@ -350,7 +351,7 @@ object_event_add
 // Step
 object_event_add
 (argument0,ev_step,ev_step_normal,'
-    if on_var && !in_door_var
+    if on_var && !in_door_var && !global.pause_var
     {
         if !possess_var
         {

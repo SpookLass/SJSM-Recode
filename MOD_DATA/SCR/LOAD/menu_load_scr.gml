@@ -373,6 +373,7 @@ custom_clamp_arr[global.custom_len_var,2] = false; // Wrap
 // Defaults
 custom_arr_add_len_scr(0,1);
 custom_arr_set_scr(1,global.custom_len_var,-1,-1,-1); // Default
+custom_arr_set_scr(0,global.custom_len_var,0,-1,-1); // Easiest
 global.custom_len_var += 1;
     // Multichase Max
 // Name
@@ -1840,138 +1841,145 @@ Let's just hope this doesn't use up too much memory.
 -------------
 */
 globalvar mon_list_arr;
+global.mon_list_len_var = 0;
 // Blank
-mon_list_arr[0,0] = noone;
+mon_list_arr[global.mon_list_len_var,0] = noone;
+global.mon_list_len_var += 1;
 // Story
-mon_list_arr[1,0] = noone;
+mon_list_arr[global.mon_list_len_var,0] = noone;
 // All
-mon_list_arr[1,1] = ds_list_create();
-ds_list_clear(mon_list_arr[1,1]);
-ds_list_add(mon_list_arr[1,1],local.gel);
-ds_list_add(mon_list_arr[1,1],local.brain);
-ds_list_add(mon_list_arr[1,1],local.bug);
-ds_list_add(mon_list_arr[1,1],local.ringu);
-ds_list_add(mon_list_arr[1,1],local.bab);
-ds_list_add(mon_list_arr[1,1],local.pup);
-ds_list_add(mon_list_arr[1,1],local.flesh);
-ds_list_add(mon_list_arr[1,1],local.dl);
-ds_list_add(mon_list_arr[1,1],local.eel);
-ds_list_add(mon_list_arr[1,1],local.para);
-ds_list_add(mon_list_arr[1,1],local.fd);
-ds_list_add(mon_list_arr[1,1],local.killer);
-ds_list_add(mon_list_arr[1,1],local.mur);
+mon_list_arr[global.mon_list_len_var,1] = ds_list_create();
+ds_list_clear(mon_list_arr[global.mon_list_len_var,1]);
+ds_list_add(mon_list_arr[global.mon_list_len_var,1],local.gel);
+ds_list_add(mon_list_arr[global.mon_list_len_var,1],local.brain);
+ds_list_add(mon_list_arr[global.mon_list_len_var,1],local.bug);
+ds_list_add(mon_list_arr[global.mon_list_len_var,1],local.ringu);
+ds_list_add(mon_list_arr[global.mon_list_len_var,1],local.bab);
+ds_list_add(mon_list_arr[global.mon_list_len_var,1],local.pup);
+ds_list_add(mon_list_arr[global.mon_list_len_var,1],local.flesh);
+ds_list_add(mon_list_arr[global.mon_list_len_var,1],local.dl);
+ds_list_add(mon_list_arr[global.mon_list_len_var,1],local.eel);
+ds_list_add(mon_list_arr[global.mon_list_len_var,1],local.para);
+ds_list_add(mon_list_arr[global.mon_list_len_var,1],local.fd);
+ds_list_add(mon_list_arr[global.mon_list_len_var,1],local.killer);
+ds_list_add(mon_list_arr[global.mon_list_len_var,1],local.mur);
 // Story Mode
-mon_list_arr[1,2] = ds_list_create();
-ds_list_clear(mon_list_arr[1,2]);
-ds_list_add(mon_list_arr[1,2],local.gel);
-ds_list_add(mon_list_arr[1,2],local.bug);
-ds_list_add(mon_list_arr[1,2],local.ringu);
-ds_list_add(mon_list_arr[1,2],local.bab);
-ds_list_add(mon_list_arr[1,2],local.pup);
-ds_list_add(mon_list_arr[1,2],local.flesh);
-ds_list_add(mon_list_arr[1,2],local.dl);
-ds_list_add(mon_list_arr[1,2],local.para);
-ds_list_add(mon_list_arr[1,2],local.fd);
-ds_list_add(mon_list_arr[1,2],local.killer);
-ds_list_add(mon_list_arr[1,2],local.mur);
+mon_list_arr[global.mon_list_len_var,2] = ds_list_create();
+ds_list_clear(mon_list_arr[global.mon_list_len_var,2]);
+ds_list_add(mon_list_arr[global.mon_list_len_var,2],local.gel);
+ds_list_add(mon_list_arr[global.mon_list_len_var,2],local.bug);
+ds_list_add(mon_list_arr[global.mon_list_len_var,2],local.ringu);
+ds_list_add(mon_list_arr[global.mon_list_len_var,2],local.bab);
+ds_list_add(mon_list_arr[global.mon_list_len_var,2],local.pup);
+ds_list_add(mon_list_arr[global.mon_list_len_var,2],local.flesh);
+ds_list_add(mon_list_arr[global.mon_list_len_var,2],local.dl);
+ds_list_add(mon_list_arr[global.mon_list_len_var,2],local.para);
+ds_list_add(mon_list_arr[global.mon_list_len_var,2],local.fd);
+ds_list_add(mon_list_arr[global.mon_list_len_var,2],local.killer);
+ds_list_add(mon_list_arr[global.mon_list_len_var,2],local.mur);
 // Beta
-mon_list_arr[1,3] = ds_list_create();
-ds_list_clear(mon_list_arr[1,3]);
-ds_list_add(mon_list_arr[1,3],local.gel);
-ds_list_add(mon_list_arr[1,3],local.brain);
-ds_list_add(mon_list_arr[1,3],local.ringu);
-ds_list_add(mon_list_arr[1,3],local.bab);
-ds_list_add(mon_list_arr[1,3],local.pup);
-ds_list_add(mon_list_arr[1,3],local.flesh);
-ds_list_add(mon_list_arr[1,3],local.dl);
-ds_list_add(mon_list_arr[1,3],local.eel);
-ds_list_add(mon_list_arr[1,3],local.fd);
-ds_list_add(mon_list_arr[1,3],local.killer);
-ds_list_add(mon_list_arr[1,3],local.mur);
+mon_list_arr[global.mon_list_len_var,3] = ds_list_create();
+ds_list_clear(mon_list_arr[global.mon_list_len_var,3]);
+ds_list_add(mon_list_arr[global.mon_list_len_var,3],local.gel);
+ds_list_add(mon_list_arr[global.mon_list_len_var,3],local.brain);
+ds_list_add(mon_list_arr[global.mon_list_len_var,3],local.ringu);
+ds_list_add(mon_list_arr[global.mon_list_len_var,3],local.bab);
+ds_list_add(mon_list_arr[global.mon_list_len_var,3],local.pup);
+ds_list_add(mon_list_arr[global.mon_list_len_var,3],local.flesh);
+ds_list_add(mon_list_arr[global.mon_list_len_var,3],local.dl);
+ds_list_add(mon_list_arr[global.mon_list_len_var,3],local.eel);
+ds_list_add(mon_list_arr[global.mon_list_len_var,3],local.fd);
+ds_list_add(mon_list_arr[global.mon_list_len_var,3],local.killer);
+ds_list_add(mon_list_arr[global.mon_list_len_var,3],local.mur);
 // No Ringu
-mon_list_arr[1,4] = ds_list_create();
-ds_list_clear(mon_list_arr[1,4]);
-ds_list_add(mon_list_arr[1,4],local.gel);
-ds_list_add(mon_list_arr[1,4],local.brain);
-ds_list_add(mon_list_arr[1,4],local.bug);
-ds_list_add(mon_list_arr[1,4],local.bab);
-ds_list_add(mon_list_arr[1,4],local.pup);
-ds_list_add(mon_list_arr[1,4],local.flesh);
-ds_list_add(mon_list_arr[1,4],local.dl);
-ds_list_add(mon_list_arr[1,4],local.eel);
-ds_list_add(mon_list_arr[1,4],local.para);
-ds_list_add(mon_list_arr[1,4],local.fd);
-ds_list_add(mon_list_arr[1,4],local.killer);
-ds_list_add(mon_list_arr[1,4],local.mur);
+mon_list_arr[global.mon_list_len_var,4] = ds_list_create();
+ds_list_clear(mon_list_arr[global.mon_list_len_var,4]);
+ds_list_add(mon_list_arr[global.mon_list_len_var,4],local.gel);
+ds_list_add(mon_list_arr[global.mon_list_len_var,4],local.brain);
+ds_list_add(mon_list_arr[global.mon_list_len_var,4],local.bug);
+ds_list_add(mon_list_arr[global.mon_list_len_var,4],local.bab);
+ds_list_add(mon_list_arr[global.mon_list_len_var,4],local.pup);
+ds_list_add(mon_list_arr[global.mon_list_len_var,4],local.flesh);
+ds_list_add(mon_list_arr[global.mon_list_len_var,4],local.dl);
+ds_list_add(mon_list_arr[global.mon_list_len_var,4],local.eel);
+ds_list_add(mon_list_arr[global.mon_list_len_var,4],local.para);
+ds_list_add(mon_list_arr[global.mon_list_len_var,4],local.fd);
+ds_list_add(mon_list_arr[global.mon_list_len_var,4],local.killer);
+ds_list_add(mon_list_arr[global.mon_list_len_var,4],local.mur);
 // OG Endless
-mon_list_arr[1,5] = ds_list_create();
-ds_list_clear(mon_list_arr[1,5]);
-ds_list_add(mon_list_arr[1,5],local.gel);
-ds_list_add(mon_list_arr[1,5],local.bug);
-ds_list_add(mon_list_arr[1,5],local.ringu);
-ds_list_add(mon_list_arr[1,5],local.bab);
-ds_list_add(mon_list_arr[1,5],local.pup);
-ds_list_add(mon_list_arr[1,5],local.dl);
-ds_list_add(mon_list_arr[1,5],local.para);
-ds_list_add(mon_list_arr[1,5],local.fd);
-ds_list_add(mon_list_arr[1,5],local.killer);
+mon_list_arr[global.mon_list_len_var,5] = ds_list_create();
+ds_list_clear(mon_list_arr[global.mon_list_len_var,5]);
+ds_list_add(mon_list_arr[global.mon_list_len_var,5],local.gel);
+ds_list_add(mon_list_arr[global.mon_list_len_var,5],local.bug);
+ds_list_add(mon_list_arr[global.mon_list_len_var,5],local.ringu);
+ds_list_add(mon_list_arr[global.mon_list_len_var,5],local.bab);
+ds_list_add(mon_list_arr[global.mon_list_len_var,5],local.pup);
+ds_list_add(mon_list_arr[global.mon_list_len_var,5],local.dl);
+ds_list_add(mon_list_arr[global.mon_list_len_var,5],local.para);
+ds_list_add(mon_list_arr[global.mon_list_len_var,5],local.fd);
+ds_list_add(mon_list_arr[global.mon_list_len_var,5],local.killer);
+global.mon_list_len_var += 1;
 // Karamari
-mon_list_arr[2,0] = noone;
+mon_list_arr[global.mon_list_len_var,0] = noone;
 // OG Endless
-mon_list_arr[2,2] = ds_list_create();
-ds_list_clear(mon_list_arr[2,2]);
-ds_list_add(mon_list_arr[2,2],local.stem);
-ds_list_add(mon_list_arr[2,2],local.patient);
-ds_list_add(mon_list_arr[2,2],local.gc);
-ds_list_add(mon_list_arr[2,2],local.bekka);
+mon_list_arr[global.mon_list_len_var,2] = ds_list_create();
+ds_list_clear(mon_list_arr[global.mon_list_len_var,2]);
+ds_list_add(mon_list_arr[global.mon_list_len_var,2],local.stem);
+ds_list_add(mon_list_arr[global.mon_list_len_var,2],local.patient);
+ds_list_add(mon_list_arr[global.mon_list_len_var,2],local.gc);
+ds_list_add(mon_list_arr[global.mon_list_len_var,2],local.bekka);
 // HD Endless
-mon_list_arr[2,3] = ds_list_create();
-ds_list_clear(mon_list_arr[2,3]);
-ds_list_copy(mon_list_arr[2,3],mon_list_arr[2,2]);
+mon_list_arr[global.mon_list_len_var,3] = ds_list_create();
+ds_list_clear(mon_list_arr[global.mon_list_len_var,3]);
+ds_list_copy(mon_list_arr[global.mon_list_len_var,3],mon_list_arr[global.mon_list_len_var,2]);
 if file_exists(working_directory+"\Karamari_Hospital\KH.exe")
-{ ds_list_add(mon_list_arr[2,3],local.body); }
+{ ds_list_add(mon_list_arr[global.mon_list_len_var,3],local.body); }
 // All
-mon_list_arr[2,1] = ds_list_create();
-ds_list_clear(mon_list_arr[2,1]);
-ds_list_copy(mon_list_arr[2,1],mon_list_arr[2,3]);
+mon_list_arr[global.mon_list_len_var,1] = ds_list_create();
+ds_list_clear(mon_list_arr[global.mon_list_len_var,1]);
+ds_list_copy(mon_list_arr[global.mon_list_len_var,1],mon_list_arr[global.mon_list_len_var,3]);
 if file_exists(working_directory+"\Karamari_Hospital\KH.exe")
-{ ds_list_add(mon_list_arr[2,1],local.sg); }
+{ ds_list_add(mon_list_arr[global.mon_list_len_var,1],local.sg); }
+global.mon_list_len_var += 1;
 // Dollhouse
-mon_list_arr[3,0] = noone;
+mon_list_arr[global.mon_list_len_var,0] = noone;
 if file_exists(working_directory+"\The_Doll_House\SDH.exe")
 {
     // HD Endless
-    mon_list_arr[3,2] = ds_list_create();
-    ds_list_clear(mon_list_arr[3,2]);
-    ds_list_add(mon_list_arr[3,2],local.husk);
-    ds_list_add(mon_list_arr[3,2],local.wc);
-    ds_list_add(mon_list_arr[3,2],local.clown);
-    ds_list_add(mon_list_arr[3,2],local.hk);
+    mon_list_arr[global.mon_list_len_var,2] = ds_list_create();
+    ds_list_clear(mon_list_arr[global.mon_list_len_var,2]);
+    ds_list_add(mon_list_arr[global.mon_list_len_var,2],local.husk);
+    ds_list_add(mon_list_arr[global.mon_list_len_var,2],local.wc);
+    ds_list_add(mon_list_arr[global.mon_list_len_var,2],local.clown);
+    ds_list_add(mon_list_arr[global.mon_list_len_var,2],local.hk);
     // All
-    mon_list_arr[3,1] = ds_list_create();
-    ds_list_clear(mon_list_arr[3,1]);
-    ds_list_copy(mon_list_arr[3,1],mon_list_arr[3,2]);
-    ds_list_add(mon_list_arr[3,1],local.frenzy);
+    mon_list_arr[global.mon_list_len_var,1] = ds_list_create();
+    ds_list_clear(mon_list_arr[global.mon_list_len_var,1]);
+    ds_list_copy(mon_list_arr[global.mon_list_len_var,1],mon_list_arr[global.mon_list_len_var,2]);
+    ds_list_add(mon_list_arr[global.mon_list_len_var,1],local.frenzy);
 }
 else
 {
-    mon_list_arr[3,1] = noone;
-    mon_list_arr[3,2] = noone;
+    mon_list_arr[global.mon_list_len_var,1] = noone;
+    mon_list_arr[global.mon_list_len_var,2] = noone;
 }
+global.mon_list_len_var += 1; // Weird but kinda required?
 // Endless
-mon_list_arr[4,0] = noone;
-mon_list_arr[4,1] = ds_list_create();
-ds_list_clear(mon_list_arr[4,1]);
-ds_list_add(mon_list_arr[4,1],local.real_ringu);
+mon_list_arr[global.mon_list_len_var,0] = noone;
+mon_list_arr[global.mon_list_len_var,1] = ds_list_create();
+ds_list_clear(mon_list_arr[global.mon_list_len_var,1]);
+ds_list_add(mon_list_arr[global.mon_list_len_var,1],local.real_ringu);
+global.mon_list_len_var += 1;
 // Unknown
-mon_list_arr[5,0] = noone;
-mon_list_arr[5,1] = ds_list_create();
-ds_list_clear(mon_list_arr[5,1]);
-ds_list_add(mon_list_arr[5,1],local.tiri);
-ds_list_add(mon_list_arr[5,1],local.lisa);
-ds_list_add(mon_list_arr[5,1],local.otto);
-ds_list_add(mon_list_arr[5,1],local.spooper);
-ds_list_add(mon_list_arr[5,1],local.wf);
+mon_list_arr[global.mon_list_len_var,0] = noone;
+mon_list_arr[global.mon_list_len_var,1] = ds_list_create();
+ds_list_clear(mon_list_arr[global.mon_list_len_var,1]);
+ds_list_add(mon_list_arr[global.mon_list_len_var,1],local.tiri);
+ds_list_add(mon_list_arr[global.mon_list_len_var,1],local.lisa);
+ds_list_add(mon_list_arr[global.mon_list_len_var,1],local.otto);
+ds_list_add(mon_list_arr[global.mon_list_len_var,1],local.spooper);
+ds_list_add(mon_list_arr[global.mon_list_len_var,1],local.wf);
+global.mon_list_len_var += 1;
 /*
 -----------------
 Settings

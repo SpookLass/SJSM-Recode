@@ -87,6 +87,10 @@ object_event_add
     dark_chance_var = 3;
     puke_start_var = 9;
     puke_chance_var = 5;
+    // Behavior
+    if global.spooper_type_var == -1 { local.type = irandom(2); }
+    else { local.type = global.spooper_type_var; }
+    local.set = false;
     // Assets
         // Search for existing assets to save memory
     local.loaded = false;
@@ -130,13 +134,18 @@ object_event_add
         mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\SPOOPER_AMB.mp3");
         fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
         loop_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\spooper_loop_snd.wav",true);
+        // Duration
         dur_var = irandom_range(24,31);
+        switch local.type
+        {
+            // Recode, HD, Old HD
+            case 0: 
+            case 2:
+            case 3: { irandom_range(24,30); break; }
+        }
     }
     fetus_tex_var = background_get_texture(fetus_bg_var);
     // Behavior
-    if global.spooper_type_var == -1 { local.type = irandom(2); }
-    else { local.type = global.spooper_type_var; }
-    local.set = false;
     switch local.type
     {
         case 0: // Recode
@@ -191,8 +200,6 @@ object_event_add
             puke_alarm_02_var = 120;
             puke_alarm_03_var = 72;
             drain_start_var = -1;
-            hp_max_var = 5;
-            hp_var = hp_max_var;
             mus_prio_var = mb_mus_prio_const;
             break;
         }

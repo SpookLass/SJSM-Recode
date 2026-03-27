@@ -22,8 +22,8 @@ object_event_add
     warn_bg_var = background_add(main_directory_const+"\BG\UI\warn_bg.png",false,false);
     ini_open(global.lang_var);
     warn_str_01_var = ini_read_string("MENU","warn_01","MENU_warn_01");
-    warn_str_02_var = ini_read_string("MENU","warn_02","MENU_warn_02");
-    warn_str_03_var = ini_read_string("MENU","warn_03","MENU_warn_03");
+    warn_str_02_var = ini_read_string("MENU","warn_02_hd","MENU_warn_02_hd");
+    warn_str_03_var = ""; //ini_read_string("MENU","warn_03","MENU_warn_03");
     ini_close();
     warn_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\warn_snd.wav");
     image_xscale = 2.16;

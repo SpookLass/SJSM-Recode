@@ -121,7 +121,7 @@ object_event_add
             case 2: // New / Promotional
             {
                 title_01_scale_var = 240;
-                title_spr_var = execute_file(main_directory_const+"\SPR\UI\menu_title_spr.gml",main_directory_const+"\SPR\UI\menu_title_spr.png");
+                title_spr_var = execute_file(main_directory_const+"\SPR\UI\menu_title_new_spr.gml",main_directory_const+"\SPR\UI\menu_title_new_spr.png");
                 rain_var = false;
                 bg_var = background_add(main_directory_const+"\BG\UI\menu_bg.png",false,false);
                 path_bg_var = background_add(main_directory_const+"\BG\UI\menu_path_bg.png",false,false);
@@ -444,21 +444,6 @@ object_event_add
 	ini_close();
     // Scale
     scale_min_var = 0.125;
-    if view_wview[0] >= view_hview[0]
-    { scale_var = view_hview[0]/720; }
-    else { scale_var = view_wview[0]/1280; }
-    scale_var = max(scale_var,scale_min_var);
-    left_var = 54*scale_var;
-    right_var = view_wview[0]-(54*scale_var);
-    top_var = 54*scale_var;
-    bottom_var = view_hview[0]-(54*scale_var);
-    shadow_off_var = 2*scale_var;
-    scale_big_var = max(0.75*scale_var,scale_min_var);
-    scale_med_var = max(0.5*scale_var,scale_min_var);
-    scale_small_var = max(0.25*scale_var,scale_min_var);
-    center_var = view_wview[0]/2;
-    scale_story_var = max(0.4*scale_var,scale_min_var);
-    scale_skip_var = max(0.3*scale_var,scale_min_var);
     // Alarms
     alarm_len_var = 14;
     alarm_ini_scr();

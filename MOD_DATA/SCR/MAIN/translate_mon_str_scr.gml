@@ -31,6 +31,7 @@ switch argument1
     case name_fanon_const:
     {
         if ini_key_exists("NAME",argument0+"_fanon") { return ini_read_string("NAME",argument0+"_fanon","NAME_"+argument0+"_fanon"); }
+        if ini_key_exists("NAME",argument0+"_hd") { return ini_read_string("NAME",argument0+"_hd","NAME_"+argument0+"_hd"); }
     }
     // Recode
     default: { return ini_read_string("NAME",argument0,"NAME_"+argument0); }

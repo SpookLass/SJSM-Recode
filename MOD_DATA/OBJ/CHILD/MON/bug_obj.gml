@@ -273,6 +273,7 @@ object_event_add
 // Room End Event
 object_event_add
 (argument0,ev_other,ev_room_end,'
+    fmod_inst_stop_scr(loop_inst_var);
     if hole_var || !hole_dur_var { event_inherited(); }
     else { reset_alarm_scr(); }
 ');

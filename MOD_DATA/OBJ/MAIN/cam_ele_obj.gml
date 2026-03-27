@@ -94,6 +94,7 @@ object_event_add
         prog_var -= spd_var*global.delta_time_var;
         if prog_var <= 0
         {
+            global.rm_count_var += 1;
             local.rm = ds_list_find_value(global.rm_list_var,0);
             ds_list_delete(global.rm_list_var,0);
             rm_leave_menu_scr(local.rm);

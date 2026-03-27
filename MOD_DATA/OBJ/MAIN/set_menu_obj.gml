@@ -39,6 +39,13 @@ object_event_add
     str_scale_var = 0.8;
 
     ini_open(global.lang_var);
+    set_str_var = ini_read_string("SET","set","SET_set");
+    pc_str_var = ini_read_string("SET_LABEL","pc","SET_LABEL_pc");
+    xbox_str_var = ini_read_string("SET_LABEL","xbox","SET_LABEL_xbox");
+    ps_str_var = ini_read_string("SET_LABEL","ps","SET_LABEL_ps");
+    switch_str_var = ini_read_string("SET_LABEL","switch","SET_LABEL_switch");
+    snes_str_var = ini_read_string("SET_LABEL","snes","SET_LABEL_snes");
+    custom_str_var = ini_read_string("SET_LABEL","custom","SET_LABEL_custom");
     back_question_str_var = ini_read_string("SET","back_question","SET_back_question");
     apply_question_str_var = ini_read_string("SET","apply_question","SET_apply_question");
     reset_question_str_var = ini_read_string("SET","reset_question","SET_reset_question");
@@ -663,7 +670,7 @@ object_event_add
     draw_set_halign(fa_right);
     draw_str_shadow_scr
     (
-        "SETTINGS",
+        set_str_var,
         -20,20,0.95,0.95,0.125,fa_right,fa_top,
         -4,4,str_bg_color_var,c_yellow,2,0
     );
@@ -711,12 +718,12 @@ object_event_add
                     {
                         switch preset_id_var
                         {
-                            case 0: { local.str = "PC"; break; }
-                            case 1: { local.str = "XBOX"; break; }
-                            case 2: { local.str = "PLAYSTATION"; break; }
-                            case 3: { local.str = "SWITCH"; break; }
-                            case 4: { local.str = "SNES"; break; }
-                            default: { local.str = "CUSTOM"; break; }
+                            case 0: { local.str = pc_str_var; break; }
+                            case 1: { local.str = xbox_str_var; break; }
+                            case 2: { local.str = ps_str_var; break; }
+                            case 3: { local.str = switch_str_var; break; }
+                            case 4: { local.str = snes_str_var; break; }
+                            default: { local.str = custom_str_var; break; }
                         }
                         break;
                     }
@@ -784,12 +791,12 @@ object_event_add
             {
                 switch preset_id_var
                 {
-                    case 0: { local.str = "PC"; break; }
-                    case 1: { local.str = "XBOX"; break; }
-                    case 2: { local.str = "PLAYSTATION"; break; }
-                    case 3: { local.str = "SWITCH"; break; }
-                    case 4: { local.str = "SNES"; break; }
-                    default: { local.str = "CUSTOM"; break; }
+                    case 0: { local.str = pc_str_var; break; }
+                    case 1: { local.str = xbox_str_var; break; }
+                    case 2: { local.str = ps_str_var; break; }
+                    case 3: { local.str = switch_str_var; break; }
+                    case 4: { local.str = snes_str_var; break; }
+                    default: { local.str = custom_str_var; break; }
                 }
                 break;
             }

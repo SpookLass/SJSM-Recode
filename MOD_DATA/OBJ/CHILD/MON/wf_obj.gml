@@ -183,14 +183,14 @@ object_event_add
             seen_yaw_var = 5.856;
             seen_pitch_var = 5.856;
             dur_var = 30;
-            start_var = -1;
             web_start_var = 15;
             mus_snd_var = mus_imscared_snd_var;
             atk_range_var = global.mon_coll[2];
-            // zone_start_var = -1;
             exit_spawn_var = false;
             tp_spawn_var = 1;
             tp_type_var = 1; // Check sight
+            // start_var = -1;
+            // zone_start_var = -1;
             // Draw
             w_var = 9;
             h_var = 12.3;
