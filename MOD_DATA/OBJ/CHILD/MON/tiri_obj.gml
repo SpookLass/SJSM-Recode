@@ -67,7 +67,11 @@ object_event_add
         snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\tiri_02_snd.wav",true);
         snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\tiri_03_snd.wav",true);
         snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\tiri_04_snd.wav",true);
-        mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\TIRSIAK_AMB.mp3");
+        switch global.old_theme_var
+        {
+            case 2: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\tiri_rom_mus_snd.ogg"); break; }
+            default: { mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\TIRSIAK_AMB.mp3"); break; }
+        }
         fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
     }
     // Coward
@@ -110,7 +114,8 @@ object_event_add
             shadow_num_var = 3;
             shadow_den_var = 5;
             atk_range_var = global.mon_coll[2];
-            if current_month == 6
+            // Pride Month or Trans Day of Visibility
+            if ((current_month == 6 || global.pride_var > 0) && !irandom(7)) || (current_month == 3 && current_month == 31)
             {
                 gay_var = irandom_range(1,2);
                 eff_color_var = make_color_hsv(138,160,250);

@@ -51,7 +51,7 @@ This demo only includes Endless Mode at the moment, but will get Story Mode supp
 ### Art:
 
 - Dondytrap: Torch textures
-- Lunnay: HD style stamina bar
+- Lunnay: Warning Screen and HD style stamina bar
 - Uncanny Goat: Bodybag death screen
 - Baka-Chan: Flesh death screen
 - TheRut01: Eel death screen (jaws)
@@ -69,6 +69,7 @@ This demo only includes Endless Mode at the moment, but will get Story Mode supp
 - SammyDaGurl: Eel death screen theme
 - Uncanny Goat: Eel chase theme
 - Birdbonanza: Team Recode Jingle
+- Rom M: Rom M Soundtrack
 - Spook Lass: Brain and Frenzy chase theme, Bekka death screen theme
 
 ### Sounds:
@@ -117,6 +118,8 @@ This demo only includes Endless Mode at the moment, but will get Story Mode supp
 - Starlight
 - bob ///b!
 - Lexi
+- Thaddeus Crews
+- EchoesReal
 - All of the contributors!
 - You!
 

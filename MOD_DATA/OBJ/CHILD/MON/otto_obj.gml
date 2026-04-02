@@ -68,14 +68,21 @@ object_event_add
     {
         spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS26_01_spr.png",3,false,false,0,0);
         eye_spr_var = execute_file(main_directory_const+"\SPR\MON\otto_eye_spr.gml",main_directory_const+"\SPR\MON\otto_eye_spr.png");
-        mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\otto_mus_test_snd.wav");
-        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
-        fmod_snd_set_loop_point_scr(mus_snd_var,0.0234541577825,0.977967306326);
         wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\otto_01_snd.wav",global.wake_3d_var);
         snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\otto_01_snd.wav",true);
         snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\otto_02_snd.wav",true);
         snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\otto_03_snd.wav",true);
         snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\otto_04_snd.wav",true);
+        switch global.old_theme_var
+        {
+            case 2: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\otto_rom_mus_snd.ogg"); break; }
+            default:
+            {
+                mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\otto_mus_test_snd.wav");
+                fmod_snd_set_loop_point_scr(mus_snd_var,0.0234541577825,0.977967306326);
+                break;
+            }
+        }
         fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
     }
     eye_tex_var = sprite_get_texture(eye_spr_var,0);

@@ -103,6 +103,7 @@ object_event_add
     color_prio_var = 1;
     fog_prio_var = 1;
     reflect_var= -1;
+    mus_start_var = -1;
     // Assets
         // Search for existing assets to save memory
     local.loaded = false;
@@ -161,7 +162,11 @@ object_event_add
         glitch_snd_arr[3] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_04_snd.wav");
         for (local.i=0; local.i<glitch_snd_len_var; local.i+=1;)
         { fmod_snd_set_group_scr(glitch_snd_arr[local.i],snd_group_mon_const); }
-        mus_imscared_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\wf_mus_test_snd.wav");
+        switch global.old_theme_var
+        {
+            case 2: { mus_imscared_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\wf_rom_mus_snd.ogg"); break; }
+            default: { mus_imscared_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\wf_mus_snd.ogg"); break; }
+        }
         fmod_snd_set_group_scr(mus_imscared_snd_var,snd_group_mus_const);
     }
     tex_02_var = background_get_texture(bg_var);
@@ -173,22 +178,19 @@ object_event_add
     switch local.type
     {
         
-        case 6: // Mayas Idea
-        {
-            move_type_var = 1;
-            local.maya = true;
-        }
-        case 0: // Recode
+        case 0: // Mayas Idea
+        { move_type_var = 1; }
+        case 6: // Old Recode
         {
             seen_yaw_var = 5.856;
             seen_pitch_var = 5.856;
             dur_var = 30;
             web_start_var = 15;
-            mus_snd_var = mus_imscared_snd_var;
             atk_range_var = global.mon_coll[2];
             exit_spawn_var = false;
             tp_spawn_var = 1;
             tp_type_var = 1; // Check sight
+            mus_start_var = start_var;
             // start_var = -1;
             // zone_start_var = -1;
             // Draw
@@ -387,11 +389,12 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_room_start,'
     event_inherited();
+    local.start = dur_start_var-dur_var;
     // Reset
     spd_base_var = spd_base_real_var;
     if do_seen_agg_var { seen_agg_var = 0; }
     // Spawn
-    if start_var <= 0 || dur_start_var-dur_var >= start_var
+    if start_var <= 0 || local.start >= start_var
     {
         visible = true;
         if exit_spawn_var && !irandom(5)
@@ -438,9 +441,9 @@ object_event_add
         fmod_inst_stop_scr(loop_inst_var);
     }
     // Zone
-    if zone_start_var > 0 && dur_start_var-dur_var >= zone_start_var-1
+    if zone_start_var > 0 && local.start >= zone_start_var-1
     {
-        if dur_start_var-dur_var == zone_start_var-1
+        if local.start == zone_start_var-1
         {
             global.zone_var = zone_list_var;
             zone_reset_scr();
@@ -455,7 +458,7 @@ object_event_add
         global.rm_name_var = string_replace(global.rm_name_var,"Long","My");
     }
     // Webs
-    if web_start_var > 0 && dur_start_var-dur_var >= web_start_var
+    if web_start_var > 0 && local.start >= web_start_var
     {
         for (local.i=0; local.i<global.mark_len_var; local.i+=1;)
         {
@@ -468,6 +471,12 @@ object_event_add
                 }
             }
         }
+    }
+    // Music
+    if mus_start_var > 0 && local.start >= mus_start_var && mus_snd_var != mus_imscared_snd_var
+    {
+        mus_snd_var = mus_imscared_snd_var;
+        with mus_control_obj { event_user(0); }
     }
     // Damn Doors
     if door_trig_var
@@ -518,7 +527,14 @@ object_event_add
         with candle_obj { if !gold_var { on_var = false; }}
         with color_par_obj { if prio_var < other.color_prio_var { instance_destroy(); }}
         if !instance_exists(color_par_obj)
-        { with instance_create(0,0,bright_color_obj) { prio_var = other.color_prio_var; }}
+        {
+            with instance_create(0,0,bright_color_obj)
+            {
+                par_var = other.id;
+                prio_var = other.color_prio_var;
+                event_user(0);
+            }
+        }
         with fog_par_obj { if prio_var < other.fog_prio_var { instance_destroy(); }}
         if !instance_exists(fog_par_obj)
         {

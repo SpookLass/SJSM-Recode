@@ -117,7 +117,11 @@ object_event_add
         wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\lisa_wake_snd.wav",global.wake_3d_var);
         amb_mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\LISA_AMB.mp3");
         fmod_snd_set_group_scr(amb_mus_snd_var,snd_group_mus_const);
-        chase_mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\LISA_AMB2.mp3");
+        switch global.old_theme_var
+        {
+            case 2: { chase_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\lisa_rom_mus_snd.ogg"); break; }
+            default: { chase_mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\LISA_AMB2.mp3"); break; }
+        }
         fmod_snd_set_group_scr(chase_mus_snd_var,snd_group_mus_const);
         mdl_var = d3d_model_create();
         d3d_model_load(mdl_var,main_directory_const+"\MDL\MON\lisa_mdl.gmmod");

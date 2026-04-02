@@ -131,7 +131,11 @@ object_event_add
         puke_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\spooper_puke_snd.wav");
         choke_01_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\spooper_choke_01_snd.wav");
         choke_02_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\spooper_choke_02_snd.wav");
-        mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\SPOOPER_AMB.mp3");
+        switch global.old_theme_var
+        {
+            case 2: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\spooper_rom_mus_snd.ogg"); break; }
+            default: { mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\SPOOPER_AMB.mp3"); break; }
+        }
         fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
         loop_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\spooper_loop_snd.wav",true);
         // Duration
@@ -139,9 +143,7 @@ object_event_add
         switch local.type
         {
             // Recode, HD, Old HD
-            case 0: 
-            case 2:
-            case 3: { irandom_range(24,30); break; }
+            case 0: case 2: case 3: { irandom_range(24,30); break; }
         }
     }
     fetus_tex_var = background_get_texture(fetus_bg_var);
@@ -342,7 +344,14 @@ object_event_add
             with candle_obj { if !gold_var { on_var = false; }}
             with color_par_obj { if prio_var < other.color_prio_var { instance_destroy(); }}
             if !instance_exists(color_par_obj)
-            { with instance_create(0,0,dark_color_obj) { prio_var = other.color_prio_var; }}
+            {
+                with instance_create(0,0,dark_color_obj)
+                {
+                    par_var = other.id;
+                    prio_var = other.color_prio_var;
+                    event_user(0);
+                }
+            }
             with fog_par_obj { if prio_var < other.fog_prio_var { instance_destroy(); }}
             if !instance_exists(fog_par_obj)
             {

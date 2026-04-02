@@ -9,7 +9,7 @@ d3d_set_culling(false);
 d3d_set_hidden(false);
 draw_set_font(main_font);
 splash_set_close_button(false);
-global.version_var = "Spooky's Jump Scare Mansion - Project Recode: v3.22.26";
+global.version_var = "Project Recode - Mod Loader: v3.29.26";
 global.game_var = false;
 global.game_spd_var = 1;
 global.draw_3d_var = false;
@@ -78,20 +78,31 @@ global.mon_curr_list = ds_list_create();
 ds_list_clear(global.mon_curr_list);
 global.save_list = ds_list_create();
 ds_list_clear(global.save_list);
+// Workarounds
+globalvar fog_par_obj;
+fog_par_obj = noone;
+pause_menu_obj = noone;
 // Draw Text
 draw_set_halign(fa_center); draw_set_valign(fa_bottom);
 set_automatic_draw(false);
-// Initialize mods and dlls
+// Initialize dlls
 joy_ini_scr();
 if gamemaker_version == 800 { sf_ini_scr(); }
+fmod_load_scr();
+fmod_ini_scr(100,false); // 100 is max sounds, second argument is web sounds
+fmod_listen_set_num_scr(1);
+fmod_set_world_scale_scr(pixel_meter_rate_const);
 // Assets
+file_to_spr_scr(main_directory_const+"\SPR\MAIN\select_spr.png","select_spr",false,false,false);
 file_to_bg_scr(main_directory_const+"\BG\MAIN\settings_bg.png","settings_bg",false,false,false);
-file_to_snd_scr(main_directory_const+"\BG\MAIN\confirm_snd.wav","confirm_snd",false,snd_group_sfx_const,false);
-file_to_snd_scr(main_directory_const+"\BG\MAIN\deny_snd.wav","deny_snd",false,snd_group_sfx_const,false);
-file_to_snd_scr(main_directory_const+"\BG\MAIN\select_snd.wav","select_snd",false,snd_group_sfx_const,false);
-file_to_snd_scr(main_directory_const+"\BG\MAIN\result_mus_snd.ogg","result_mus_snd",false,snd_group_sfx_const,false);
+file_to_snd_scr(main_directory_const+"\SND\MAIN\confirm_snd.wav","confirm_snd",false,snd_group_sfx_const,false);
+file_to_snd_scr(main_directory_const+"\SND\MAIN\deny_snd.wav","deny_snd",false,snd_group_sfx_const,false);
+file_to_snd_scr(main_directory_const+"\SND\MAIN\select_snd.wav","select_snd",false,snd_group_sfx_const,false);
+file_to_snd_scr(main_directory_const+"\SND\MAIN\result_mus_snd.ogg","result_mus_snd",false,snd_group_sfx_const,false);
 file_to_obj_scr(main_directory_const+"\OBJ\par_obj.gml","par_obj",false);
+file_to_obj_scr(main_directory_const+"\OBJ\PAR\fog_par_obj.gml","fog_par_obj",false);
 file_to_obj_scr(main_directory_const+"\OBJ\MAIN\control_obj.gml","control_obj",false);
+file_to_obj_scr(main_directory_const+"\OBJ\MAIN\pause_menu_obj.gml","pause_menu_obj",false);
 file_to_obj_scr(main_directory_const+"\OBJ\MOD\mod_obj.gml","mod_obj",false);
 file_to_rm_scr(main_directory_const+"\RM\MOD\mod_rm.gml","mod_rm",false);
 execute_file(main_directory_const+"\SCR\LOAD\mod_load_01_scr.gml");
@@ -108,7 +119,7 @@ execute_file(main_directory_const+"\SCR\LOAD\rm_load_scr.gml");
 */
 if gamemaker_version == 800 { shader_load_scr(); }
 // Settings
-execute_file(main_directory_const+"\SCR\LOAD\menu_load_scr.gml");
+execute_file(main_directory_const+"\SCR\LOAD\menu_load_02_scr.gml");
 // Load Settings
 execute_file(main_directory_const+"\SCR\LOAD\set_load_scr.gml");
 // In case mods load more controls

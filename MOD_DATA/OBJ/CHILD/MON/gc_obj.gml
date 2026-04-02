@@ -101,7 +101,11 @@ object_event_add
         dmg_snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\cow_02_snd.wav");
         for (local.i=0; local.i<dmg_snd_len_var; local.i+=1;)
         { fmod_snd_set_group_scr(dmg_snd_arr[local.i,0],snd_group_mon_const); }
-        mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\M7_AMB.mp3");
+        switch global.old_theme_var
+        {
+            case 2: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\gc_rom_mus_snd.ogg"); break; }
+            default: { mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\M7_AMB.mp3"); break; }
+        }
         fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
     }
     tex_var = background_get_texture(bg_var);
@@ -176,6 +180,7 @@ object_event_add
             eff_alpha_var = 0.33; // New Nerf
             blood_spr_var = blood_kh_spr;
             atk_range_var = global.mon_coll[2];
+            // mus_prio_var = mb_mus_prio_const; // Miniboss?
             break;
         }
         case 6: // KH Recode

@@ -100,6 +100,14 @@ object_event_add
             local.str = tps_str_var+": "+string(fps)+" | "+fps_str_var+": "+string(global.fps_curr_var);
             draw_str_shadow_scr(local.str,1,1,0.25,0.25,scale_min_var,fa_left,fa_top,-1,1,make_color_rgb(30,0,50),c_yellow,1,0);
         }
+        // Time
+        if global.time_hud_var
+        {
+            local.str = dhms_str_scr(global.game_time_var,1000);
+            draw_set_halign(fa_right);
+            draw_str_shadow_scr(local.str,1,1,0.25,0.25,scale_min_var,fa_right,fa_top,-1,1,make_color_rgb(30,0,50),c_yellow,1,0);
+            draw_set_halign(fa_left);
+        }
         // Monster Sub
         if global.sub_var > 0
         {

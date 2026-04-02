@@ -65,7 +65,11 @@ object_event_add
 		snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\DH\hk_breath_snd.wav",true);
 		loop_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\DH\hk_loop_02_snd.wav",true);
 		look_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DH\hk_loop_01_snd.wav",true);
-		mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DH\hk_mus_snd.mp3");
+		switch global.old_theme_var
+        {
+            case 2: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\hk_rom_mus_snd.ogg"); break; }
+            default: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DH\hk_mus_snd.mp3"); break; }
+        }
 		fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
 		hurt_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\DH\doll_hurt_snd.wav",true);
 		

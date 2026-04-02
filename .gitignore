@@ -3,7 +3,7 @@ DATA/
 Karamari_Hospital/
 The_Doll_House/
 # Mod stuff
-MODS/
+MODS/**
 EDITOR/
 # I don't want screenshots or saves
 screenshot*.png
@@ -21,3 +21,7 @@ screenshot*.png
 !control_preset_ps.ini
 !control_preset_switch.ini
 !control_preset_snes.ini
+# New mod support!
+!MODS/EXAMPLE_MOD/
+!RECODE_EDITOR.exe
+!RECODE_MOD.exe

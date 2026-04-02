@@ -156,7 +156,11 @@ object_event_add
         for (local.i=0; local.i<eff_snd_len_var; local.i+=1;)
         { fmod_snd_set_group_scr(eff_snd_arr[local.i],snd_group_mon_const); }
         wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\para_wake_snd.wav",global.wake_3d_var);
-        main_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\para_mus_snd.mp3");
+        switch global.old_theme_var
+        {
+            case 2: { main_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\para_rom_mus_snd.ogg"); break; }
+            default: { main_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\para_mus_snd.mp3"); break; }
+        }
         fmod_snd_set_group_scr(main_mus_snd_var,snd_group_mus_const);
         leech_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\para_leech_mus_snd.mp3");
         fmod_snd_set_group_scr(leech_mus_snd_var,snd_group_mus_const);
@@ -178,7 +182,7 @@ object_event_add
             state_spd_var[1] = 0.5;
             state_chance_var[1] = 1;
             state_dmg_var[1] = 30;
-            state_spd_var[2] = 1.6; // 1.8
+            state_spd_var[2] = 1.7; // 1.6
             state_chance_var[2] = 1;
             state_acc_var[2] = true;
             // state_dmg_alarm_var[2] = 60;
@@ -188,7 +192,7 @@ object_event_add
             state_eff_min_var = 6;
             state_eff_max_var = 6;
             state_miniboss_var = true;
-            acc_var = 0.16;
+            acc_var = 0.12; // 0.16
             frick_var = acc_var;
             do_hurt_var = 1;
             check_all_var = true;

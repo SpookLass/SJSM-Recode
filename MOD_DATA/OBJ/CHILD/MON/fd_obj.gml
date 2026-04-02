@@ -130,8 +130,16 @@ object_event_add
         snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\fd_04_snd.wav",true);
         wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\fd_wake_snd.wav",global.wake_3d_var);
         hurt_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\fd_hurt_snd.wav",true);
-        mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\fd_mus_snd.mp3");
-        fmod_snd_set_loop_point_scr(mus_snd_var,0,0.972669769662);
+        switch global.old_theme_var
+        {
+            case 2: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\fd_rom_mus_snd.ogg"); break; }
+            default:
+            {
+                mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\fd_mus_snd.mp3");
+                fmod_snd_set_loop_point_scr(mus_snd_var,0,0.972669769662);
+                break;
+            }
+        }
         fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
     }
     meat_tex_var = background_get_texture(meat_bg_var);

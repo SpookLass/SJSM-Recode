@@ -81,8 +81,16 @@ object_event_add
         // Overlay
         overlay_bg_var = background_add(main_directory_const+"\BG\MON\flesh_overlay_bg.png",false,false);
         // Music
-        mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\flesh_mus_snd.mp3");
-        fmod_snd_set_loop_point_scr(mus_snd_var,5/22,9/11); // Ohhh 9/11
+        switch global.old_theme_var
+        {
+            case 2: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\flesh_rom_mus_snd.ogg"); break; }
+            default:
+            {
+                mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\flesh_mus_snd.mp3");
+                fmod_snd_set_loop_point_scr(mus_snd_var,5/22,9/11); // Ohhh 9/11
+                break;
+            }
+        }
         fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
         // Zone
         zone_list_var = ds_list_create();

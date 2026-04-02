@@ -183,7 +183,7 @@ object_event_add
     story_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\story_mus_snd.mp3");
     fmod_snd_set_group_scr(story_mus_snd_var,snd_group_mus_const);
     fmod_snd_set_group_scr(menu_mus_snd_var,snd_group_mus_const);
-    fmod_snd_set_loop_point_scr(menu_mus_snd_var,6/71,70/71);
+    fmod_snd_set_loop_point_scr(menu_mus_snd_var,5/70,69/70);
     // Text
     ini_open(global.lang_var);
     skip_str_var = string_replace(ini_read_string("MENU","skip","MENU_skip"),"@k",key_to_str_scr(global.input_key_arr[confirm_input_const,0]));
@@ -1060,7 +1060,7 @@ object_event_add
                         if save_mod_var != (ds_list_size(global.mod_list)>0)
                         {
                             fmod_update_take_over_when_lock_scr();
-                            local.bool = show_message_ext(mod_question_str_var,yes_str_var,no_str_var,"")
+                            local.bool = (show_message_ext(mod_question_str_var,yes_str_var,no_str_var,"") == 1)
                             global.last_time_var = current_time;
                             fmod_update_take_over_done_scr();
                             global.input_press_arr[confirm_input_const,0] = false;
@@ -1090,7 +1090,7 @@ object_event_add
 					default: // Delete save
 					{
                         fmod_update_take_over_when_lock_scr();
-						if show_message_ext(del_question_str_var,yes_str_var,no_str_var,"")
+						if show_message_ext(del_question_str_var,yes_str_var,no_str_var,"") == 1
                         {
                             local.name = string(ds_list_find_value(global.save_list,button_state_var-1));
                             delete_save_scr(local.name);
@@ -1671,7 +1671,7 @@ object_event_add
                 (
                     button_str_arr_var[state_var,button_state_var],
                     96,local.ytmp,str_scale_var,0.75,0.125,fa_left,fa_top,
-                    -4,4,str_bg_select_color_var,c_white,2,0,0.75
+                    -4,4,str_bg_select_color_var,c_white,2,0,0.75,fa_left
                 );
             }
             draw_spr_stretch_scr(set_spr_var,button_state_var == 4,-105,-183,81,0,fa_right,fa_bottom);
@@ -1752,7 +1752,7 @@ object_event_add
             (
                 button_str_arr_var[state_var,button_state_var],
                 96,local.ytmp,str_scale_var,0.75,0.125,fa_left,fa_top,
-                -4,4,str_bg_select_color_var,local.color,2,0,0.75
+                -4,4,str_bg_select_color_var,local.color,2,0,0.75,fa_left
             );
 
             local.str = 0;
@@ -1897,7 +1897,7 @@ object_event_add
             (
                 custom_button_arr_var[button_state_var,1],
                 96,local.ytmp,str_scale_var,0.75,0.125,fa_left,fa_top,
-                -4,4,str_bg_select_color_var,c_white,2,0,0.75
+                -4,4,str_bg_select_color_var,c_white,2,0,0.75,fa_left
             );
             draw_set_halign(fa_right);
             local.margin = 832;
@@ -2011,7 +2011,7 @@ object_event_add
             (
                 type_button_arr_var[button_state_var,2],
                 96,local.ytmp,str_scale_var,0.75,0.125,fa_left,fa_top,
-                -4,4,str_bg_select_color_var,c_white,2,0,0.75
+                -4,4,str_bg_select_color_var,c_white,2,0,0.75,fa_left
             );
 
             if type_button_arr_var[button_state_var,4] >= 0
@@ -2063,8 +2063,8 @@ object_event_add
 			
 			if button_state_var != 0
 			{
-                if save_mode_var == 1 || save_mode_var == 2
-                { local.diffstr = mode_arr_var[save_mode_var,0]; }
+                if save_type_var == 1 || save_type_var == 2
+                { local.diffstr = type_arr_var[save_type_var,0]; }
                 else { local.diffstr = diff_arr_var[save_diff_var,0]; }
 
                 if save_custom_var { local.customstr = on_str_var; }
@@ -2112,7 +2112,7 @@ object_event_add
             (
                 button_str_arr_var[state_var,button_state_var],
                 96,local.ytmp,str_scale_var,0.75,0.125,fa_left,fa_top,
-                -4,4,str_bg_select_color_var,c_white,2,0,0.75
+                -4,4,str_bg_select_color_var,c_white,2,0,0.75,fa_left
             );
 			break;
 		}
@@ -2209,7 +2209,7 @@ object_event_add
             (
                 button_str_arr_var[state_var,button_state_var],
                 96,local.ytmp,str_scale_var,0.75,0.125,fa_left,fa_top,
-                -4,4,str_bg_select_color_var,c_white,2,0,0.75
+                -4,4,str_bg_select_color_var,c_white,2,0,0.75,fa_left
             );
 
             local.str = 0;

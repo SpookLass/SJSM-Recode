@@ -326,7 +326,7 @@ object_event_add
     if global.fps_update_var > 0 { set_alarm_scr(0,global.fps_update_var); }
     update_fps_var = true;
     // Create Collisions
-    rm_to_coll_scr();
+    if global.draw_3d_var { rm_to_coll_scr(); }
     // Resolution
     if window_x_var != window_get_x() || window_y_var != window_get_y()
     || window_w_var != window_get_width() || window_h_var != window_get_height()

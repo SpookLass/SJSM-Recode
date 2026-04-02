@@ -140,7 +140,10 @@ object_event_add
         fmod_snd_free_scr(scare_snd_var);
     }
     if do_eff_var && gamemaker_version == 800
-    { shader_set_ps_scr(-1); }
+    {
+        with dh_eff_obj { if par_var == other.id { instance_destroy(); }}
+        shader_set_ps_scr(-1);
+    }
 ');
 // Room Start
 object_event_add
@@ -152,7 +155,10 @@ object_event_add
     if do_eff_var
     {
         if !instance_exists(dh_eff_obj)
-        { instance_create(0,0,dh_eff_obj); }
+        {
+            with instance_create(0,0,dh_eff_obj)
+            { par_var = other.id; }
+        }
         if gamemaker_version == 800
         { shader_set_ps_scr(orthographic_ps); }
         with fog_par_obj { if prio_var < other.fog_prio_var { instance_destroy(); }}

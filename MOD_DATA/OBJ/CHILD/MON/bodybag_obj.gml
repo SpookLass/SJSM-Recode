@@ -59,11 +59,28 @@ object_event_add
         bg_var = background_add(main_directory_const+"\BG\MON\bodybag_bg.png",false,false);
         eff_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\bodybag_eff_snd.wav");
         fmod_snd_set_group_scr(eff_snd_var,snd_group_mon_const);
-        mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\bodybag_mus_snd.mp3");
         wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\bodybag_wake_snd.wav");
+        switch global.old_theme_var
+        {
+            case 1:
+            {
+                mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\bodybag_mus_snd.mp3");
+                fmod_snd_set_loop_point_scr(mus_snd_var,16/112,32/112);
+                break;
+            }
+            case 2:
+            {
+                mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\body_rom_mus_snd.ogg");
+                break;
+            }
+            default:
+            {
+                mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\bodybag_mus_snd.mp3");
+                fmod_snd_set_loop_point_scr(mus_snd_var,16/112,110/112);
+                break;
+            }
+        }
         fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
-        if global.old_theme_var { fmod_snd_set_loop_point_scr(mus_snd_var,16/112,32/112); }
-        else { fmod_snd_set_loop_point_scr(mus_snd_var,16/112,110/112); }
     }
     tex_var = background_get_texture(bg_var);
     // Sounds
@@ -93,6 +110,7 @@ object_event_add
             do_acc_var = true;
             acc_var = 0.1;
             frick_var = 0.05;
+            delay_var = 90;
             atk_spawn_delay_var = 90;
             shake_var = 0.32;
             eff_fade_var = true;

@@ -15,11 +15,18 @@ object_event_add
     reflect_var = true;
     spr_id_var = 0;
     spooky_var = false;
+    tex_02_var = 0;
+    load_var = false;
 ');
 // Destroy Event
 object_event_add
 (argument0,ev_destroy,0,'
-    surface_free(surf_var);
+    if load_var
+    {
+        surface_free(surf_var);
+        load_var = false;
+    }
+    
 ');
 // Step Event
 object_event_add
@@ -35,6 +42,7 @@ object_event_add
 // Initialize
 object_event_add
 (argument0,ev_other,ev_user0,'
+    load_var = true;
     image_blend = global.player_color_var[player_id_var];
     if global.player_spr_var[player_id_var]
     {

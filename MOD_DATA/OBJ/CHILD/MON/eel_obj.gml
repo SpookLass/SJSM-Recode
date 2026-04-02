@@ -80,15 +80,20 @@ object_event_add
         hurt_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\eel_hurt_snd.wav",true);
         fmod_snd_set_minmax_dist_scr(hurt_snd_var[1],0,snd_dist_max_var);
         fmod_snd_set_group_scr(hurt_snd_var[1],snd_group_mon_const);
-        if global.old_theme_var
+        switch global.old_theme_var
         {
-            mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\bug_mus_snd.mp3");
-            fmod_snd_set_loop_point_scr(mus_snd_var,1/12,1);
-        }
-        else
-        {
-            mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\eel_mus_snd.ogg");
-            fmod_snd_set_loop_point_scr(mus_snd_var,24/88,1);
+            case 1:
+            {
+                mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\bug_mus_snd.mp3");
+                fmod_snd_set_loop_point_scr(mus_snd_var,1/12,1);
+                break;
+            }
+            default:
+            {
+                mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\eel_mus_snd.ogg");
+                fmod_snd_set_loop_point_scr(mus_snd_var,24/88,1);
+                break;
+            }
         }
         fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
     }

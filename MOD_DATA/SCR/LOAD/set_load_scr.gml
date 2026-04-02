@@ -1,5 +1,5 @@
 // Draw
-draw_load_scr("Loading settings...");
+draw_load_scr("Loading player settings...");
 // Load
 ini_open("settings.ini");
 for (local.i=0; local.i<global.set_len_var; local.i+=1;)
@@ -122,4 +122,4 @@ fmod_set_group_vol_scr(snd_group_voice_const,global.voice_vol_var/100);
 if global.doppler_var { fmod_set_doppler_fps_scr(fps); }
 else { fmod_set_doppler_fps_scr(0); }
 // Draw (hope this works)
-draw_load_scr("Loaded settings!");
+draw_load_scr("Loaded player settings!");

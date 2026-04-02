@@ -71,7 +71,11 @@ object_event_add
         snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_03_snd.wav",true);
         snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_04_snd.wav",true);
         wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_wake_snd.wav",global.wake_3d_var);
-        mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_mus_snd.mp3");
+        switch global.old_theme_var
+        {
+            case 2: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\ringu_rom_mus_snd.ogg"); break; }
+            default: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_mus_snd.mp3"); break; }
+        }
         fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
         hurt_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_laugh_snd.wav",true);
         fmod_snd_set_minmax_dist_scr(hurt_snd_var[1],0,snd_dist_max_var);

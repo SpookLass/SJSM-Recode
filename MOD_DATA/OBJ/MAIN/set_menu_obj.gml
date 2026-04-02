@@ -749,7 +749,7 @@ object_event_add
     (
         name_arr_var[state_var,set_var],
         96,local.ytmp,str_scale_var,0.75,0.125,fa_left,fa_top,
-        -4,4,str_bg_select_color_var,c_white,2,0,0.75
+        -4,4,str_bg_select_color_var,c_white,2,0,0.75,fa_left
     );
     draw_set_halign(fa_right);
     local.margin = 832;

@@ -48,7 +48,7 @@ object_event_add
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,'
-    if visible && do_mult_var // && instance_number(mon_par_obj) < 2
+    if visible && do_mult_var && instance_number(mon_par_obj) < 2
     {
         with (player_obj)
         {

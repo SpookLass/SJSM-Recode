@@ -30,6 +30,30 @@ object_event_add
     coll_var[0] = global.mon_coll[0];
     coll_var[1] = global.mon_coll[1];
     coll_var[2] = global.mon_coll[2];
+    // Music
+    with instance_create(0,0,mus_par_obj)
+    {
+        par_var = other.id;
+        prio_var = mb_mus_prio_const;
+        snd_var = taker_mus_snd;
+    }
+    with mus_control_obj { event_user(0); }
+');
+// Destroy Event
+object_event_add
+(argument0,ev_destroy,0,'
+    event_user(0);
+');
+// Room End Event
+object_event_add
+(argument0,ev_other,ev_room_end,'
+    event_user(0);
+');
+// Unload
+object_event_add
+(argument0,ev_other,ev_user0,'
+    with mus_par_obj { if par_var == other.id { instance_destroy(); }}
+    with mus_control_obj { event_user(0); }
 ');
 // Alarm
 object_event_add
@@ -46,6 +70,9 @@ object_event_add
 ');
 object_event_add
 (argument0,ev_alarm,2,'
+    global.menu_player_var = 0;
+    global.dead_mon_var = taker_obj;
+    if global.permadeath_var { delete_save_scr(global.save_name_var); }
     rm_goto_menu_scr(taker_dead_rm,true);
 ');
 // Step Event
