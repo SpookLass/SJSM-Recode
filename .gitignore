@@ -25,4 +25,4 @@ screenshot*.png
 !MODS/EXAMPLE_MOD/
 !MODS/EXAMPLE_MOD/**
 !RECODE_EDITOR.exe
-!RECODE_MOD.exe
+!MOD_LOADER.exe
