@@ -23,5 +23,6 @@ screenshot*.png
 !control_preset_snes.ini
 # New mod support!
 !MODS/EXAMPLE_MOD/
+!MODS/EXAMPLE_MOD/**
 !RECODE_EDITOR.exe
 !RECODE_MOD.exe
