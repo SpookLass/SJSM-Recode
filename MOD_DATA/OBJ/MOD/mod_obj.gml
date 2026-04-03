@@ -113,7 +113,7 @@ object_event_add
     draw_rectangle(local.center+local.margin,local.margin,view_wview[view_current]-local.margin,view_hview[view_current]-local.margin,false);
     draw_set_color(c_white); draw_set_alpha(1);
     // Text
-    local.count = floor((view_hview[view_current]-(local.margin*2))/192);
+    local.count = floor((view_hview[view_current]-(local.margin*2))/(192*local.viewscale));
     local.mod_scroll = median(local.count,ds_list_size(global.mod_list)-1-local.count,mod_var);
     local.mod_load_scroll = median(local.count,ds_list_size(global.mod_load_list)-1-local.count,mod_load_var);
     for (local.i=0; local.i<(local.count*2)+1; local.i+=1;)

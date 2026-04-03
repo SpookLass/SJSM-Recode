@@ -192,7 +192,7 @@ object_event_add
             state_eff_min_var = 6;
             state_eff_max_var = 6;
             state_miniboss_var = true;
-            acc_var = 0.12; // 0.16
+            acc_var = 0.1; // 0.16
             frick_var = acc_var;
             do_hurt_var = 1;
             check_all_var = true;
@@ -200,7 +200,7 @@ object_event_add
             atk_range_var = global.mon_coll[2];
             // Autobrake
             autobrake_var = true;
-            autobrake_spd_var = 1;
+            autobrake_spd_var = 0.8;
             autobrake_dist_var = -1;
             autobrake_dir_var = 60;
             break;
