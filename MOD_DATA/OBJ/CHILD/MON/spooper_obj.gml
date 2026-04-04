@@ -30,6 +30,7 @@ object_event_add
     z_off_var = 3;
     dupe_var = dupe_never_const;
     dead_rm_var = spooper_dead_rm;
+    hide_var = true;
     // Sounds
     do_snd_var = false;
     loop_snd_dist_min_var = 0;
@@ -632,4 +633,5 @@ object_event_add
     global.light_wall_obj_spr = light_wall_spr_var;
     global.light_floor_obj_spr = light_floor_spr_var;
     with mus_control_obj { event_user(0); }
+    hide_var = false;
 ');

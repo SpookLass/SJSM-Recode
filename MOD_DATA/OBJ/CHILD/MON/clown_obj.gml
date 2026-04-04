@@ -106,7 +106,7 @@ object_event_add
         {
             seen_yaw_var = 60;
             seen_pitch_var = 60;
-            mus_prio_var = theme_mus_prio_const;
+            mus_prio_var = mon_mus_prio_const;
             break;
         }
         case 2: // HD

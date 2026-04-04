@@ -7,6 +7,7 @@ MODS/**
 EDITOR/
 # I don't want screenshots or saves
 screenshot*.png
+SCREENSHOTS/**
 *.ini
 *.log
 *.gb1
@@ -15,6 +16,7 @@ screenshot*.png
 *.exe
 *.gmk
 # Except these
+!SCREENSHOTS/screenshot0.png
 !en_us.ini
 !control_preset_pc.ini
 !control_preset_xbox.ini

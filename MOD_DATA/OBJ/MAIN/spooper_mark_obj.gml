@@ -13,6 +13,7 @@ object_event_add
 (argument0,ev_create,0,'
     event_inherited();
     solid_var = false;
+    flesh_var = false;
     // For grid (I dont really know how wide it is)
     w_var = 8;
     l_var = w_var;

@@ -1131,31 +1131,6 @@ mon_desc_arr[global.mon_len_var,6] = mon_arr[global.mon_len_var,2]+"_"+mon_type_
 mon_desc_arr[global.mon_len_var,7] = true;
 local.flesh = global.mon_len_var;
 global.mon_len_var += 1;
-    // Taker
-mon_arr[global.mon_len_var,0] = "taker"; // Variable
-mon_arr[global.mon_len_var,1] = "taker"; // Name
-mon_arr[global.mon_len_var,2] = "taker"; // Description
-mon_arr[global.mon_len_var,3] = "taker"; // CAT-DOS
-mon_arr[global.mon_len_var,4] = true; // Translate
-mon_arr[global.mon_len_var,5] = false; // Chases
-mon_arr[global.mon_len_var,6] = true; // Has CAT-DOS
-mon_arr[global.mon_len_var,7] = 1; // Group
-mon_arr[global.mon_len_var,8] = 1; // Extra behaviors
-mon_arr[global.mon_len_var,9] = taker_obj; // Object
-mon_arr[global.mon_len_var,10] = noone; // Locale
-// Types
-mon_type_arr[global.mon_len_var,0] = "dh";
-mon_type_arr[global.mon_len_var,1] = true; // Translate
-// Descriptions
-mon_desc_arr[global.mon_len_var,0] = mon_arr[global.mon_len_var,2]+"_"+type_arr[0,1];
-mon_desc_arr[global.mon_len_var,1] = true;
-mon_desc_arr[global.mon_len_var,2] = mon_arr[global.mon_len_var,2]+"_"+type_arr[1,1];
-mon_desc_arr[global.mon_len_var,3] = true;
-mon_desc_arr[global.mon_len_var,4] = mon_arr[global.mon_len_var,2]+"_"+type_arr[2,1];
-mon_desc_arr[global.mon_len_var,5] = true;
-mon_desc_arr[global.mon_len_var,6] = mon_arr[global.mon_len_var,2]+"_"+mon_type_arr[global.mon_len_var,0];
-mon_desc_arr[global.mon_len_var,7] = true;
-global.mon_len_var += 1;
     // Deer Lord
 mon_arr[global.mon_len_var,0] = "dl"; // Variable
 mon_arr[global.mon_len_var,1] = "dl"; // Name
@@ -1189,6 +1164,31 @@ mon_desc_arr[global.mon_len_var,9] = true;
 mon_desc_arr[global.mon_len_var,10] = mon_arr[global.mon_len_var,2]+"_"+mon_type_arr[global.mon_len_var,4];
 mon_desc_arr[global.mon_len_var,11] = true;
 local.dl = global.mon_len_var;
+global.mon_len_var += 1;
+    // Taker
+mon_arr[global.mon_len_var,0] = "taker"; // Variable
+mon_arr[global.mon_len_var,1] = "taker"; // Name
+mon_arr[global.mon_len_var,2] = "taker"; // Description
+mon_arr[global.mon_len_var,3] = "taker"; // CAT-DOS
+mon_arr[global.mon_len_var,4] = true; // Translate
+mon_arr[global.mon_len_var,5] = false; // Chases
+mon_arr[global.mon_len_var,6] = true; // Has CAT-DOS
+mon_arr[global.mon_len_var,7] = 1; // Group
+mon_arr[global.mon_len_var,8] = 1; // Extra behaviors
+mon_arr[global.mon_len_var,9] = taker_obj; // Object
+mon_arr[global.mon_len_var,10] = noone; // Locale
+// Types
+mon_type_arr[global.mon_len_var,0] = "dh";
+mon_type_arr[global.mon_len_var,1] = true; // Translate
+// Descriptions
+mon_desc_arr[global.mon_len_var,0] = mon_arr[global.mon_len_var,2]+"_"+type_arr[0,1];
+mon_desc_arr[global.mon_len_var,1] = true;
+mon_desc_arr[global.mon_len_var,2] = mon_arr[global.mon_len_var,2]+"_"+type_arr[1,1];
+mon_desc_arr[global.mon_len_var,3] = true;
+mon_desc_arr[global.mon_len_var,4] = mon_arr[global.mon_len_var,2]+"_"+type_arr[2,1];
+mon_desc_arr[global.mon_len_var,5] = true;
+mon_desc_arr[global.mon_len_var,6] = mon_arr[global.mon_len_var,2]+"_"+mon_type_arr[global.mon_len_var,0];
+mon_desc_arr[global.mon_len_var,7] = true;
 global.mon_len_var += 1;
     // Eel
 mon_arr[global.mon_len_var,0] = "eel"; // Variable

@@ -89,13 +89,15 @@ p3dc_end_mdl_scr();
 // Axe
 globalvar axe_coll;
 global.axe_coll[1] = 18; // 12
-global.axe_coll[2] = 64; // 48
+global.axe_coll[2] = 48; // 48
 global.axe_coll[3] = 18; // 12
 local.radius_z = global.axe_coll[1]/2;
 local.radius_x = global.axe_coll[2]/2;
 local.radius_y = global.axe_coll[3]/2;
 global.axe_coll[0] = p3dc_begin_mdl_scr();
-p3dc_add_cylinder_scr(-local.radius_x,-local.radius_y,-local.radius_z,local.radius_x,local.radius_y,local.radius_z,true,8);
+p3dc_add_cylinder_scr(-local.radius_x,-local.radius_y,-local.radius_z,-local.radius_x+global.axe_coll[1],local.radius_y,local.radius_z,true,8);
+p3dc_add_cylinder_scr(local.radius_x-global.axe_coll[1],-local.radius_y,-local.radius_z,local.radius_x,local.radius_y,local.radius_z,true,8);
+p3dc_add_block_scr(-local.radius_x+global.axe_coll[1],-local.radius_y,-local.radius_z,local.radius_x-global.axe_coll[1],local.radius_y,local.radius_z)
 p3dc_end_mdl_scr();
 // Fake wall
 globalvar fake_wall_coll;

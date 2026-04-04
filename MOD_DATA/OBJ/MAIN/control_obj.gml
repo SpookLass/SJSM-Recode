@@ -258,6 +258,22 @@ object_event_add
         fmod_update_take_over_done_scr();
         display_mouse_set(display_get_width()/2,display_get_height()/2);
     }
+    // Screenshot
+    if global.input_press_arr[screenshot_input_const,0] == 1
+    {
+        fmod_update_take_over_when_lock_scr();
+        local.screenshot = 0;
+        while file_exists(working_directory+"\SCREENSHOTS\screenshot"+string(local.screenshot)+".png") { local.screenshot += 1; }
+        screen_save(working_directory+"\SCREENSHOTS\screenshot"+string(local.screenshot)+".png");
+        global.last_time_var = current_time;
+        fmod_update_take_over_done_scr();
+    }
+    // Fullscreen
+    if global.input_press_arr[fullscreen_input_const,0] == 1
+    {
+        global.fullscreen_var = !global.fullscreen_var;
+        window_set_fullscreen(global.fullscreen_var);
+    }
 ');
 // Step End Event
 object_event_add(argument0,ev_step,ev_step_end,'
@@ -350,4 +366,9 @@ object_event_add
     fmod_free_scr();
     fmod_unload_scr();
     sf_free_scr();
+');
+// Close
+object_event_add(argument0,ev_other,ev_close_button,'
+    if !global.permadeath_var || !instance_exists(mon_par_obj) || global.debug_var
+    { game_end(); }
 ');

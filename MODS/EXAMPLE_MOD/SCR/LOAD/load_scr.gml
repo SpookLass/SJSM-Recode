@@ -24,11 +24,13 @@ mon_desc_arr[global.mon_len_var,2] = "No notable version differences.";
 mon_desc_arr[global.mon_len_var,3] = false;
 mon_desc_arr[global.mon_len_var,4] = "No notable version differences.";
 mon_desc_arr[global.mon_len_var,5] = false;
+local.gurgle = global.mon_len_var;
+global.mon_len_var += 1;
     // Example List
 mon_list_arr[global.mon_list_len_var,0] = noone;
 mon_list_arr[global.mon_list_len_var,1] = ds_list_create();
 ds_list_clear(mon_list_arr[global.mon_list_len_var,1]);
-ds_list_add(mon_list_arr[global.mon_list_len_var,1],global.mon_len_var);
+ds_list_add(mon_list_arr[global.mon_list_len_var,1],local.gurgle);
     // Example List Config
 // Name
 custom_arr[global.custom_len_var,0] = "ex_list"; // Variable name
@@ -54,6 +56,6 @@ custom_arr_set_scr(0,global.custom_len_var,-1,1,1); // OG Endless (None)
 custom_arr_set_scr(0,global.custom_len_var,-1,1,2); // HD Endless (None)
 // Plus one to everything
 global.mon_group_len_var += 1;
-global.mon_len_var += 1;
+
 global.mon_list_len_var += 1;
 global.custom_len_var += 1;

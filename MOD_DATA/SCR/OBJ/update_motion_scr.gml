@@ -37,9 +37,9 @@ if (local.xspd != 0 || local.yspd != 0 || local.zspd != 0 || grav_var > 0) && do
         {
             if box_coll_scr
             (
-                other.x+local.xspd,
-                other.y+local.yspd,
-                other.z+local.zspd-other.grav_var,
+                other.x+(local.xspd*0.5),
+                other.y+(local.yspd*0.5),
+                other.z+(local.zspd*0.5)-other.grav_var,
                 other.coll_var[2]+4+abs(local.xspd),
                 other.coll_var[2]+4+abs(local.yspd),
                 other.coll_var[1]+4+abs(local.zspd)+other.grav_var,

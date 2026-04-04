@@ -9,7 +9,7 @@ d3d_set_culling(false);
 d3d_set_hidden(false);
 draw_set_font(main_font);
 splash_set_close_button(false);
-global.version_var = "Project Recode - Mod Loader: v3.29.26";
+global.version_var = "Project Recode - Mod Loader: v26.4.3";
 global.game_var = false;
 global.game_spd_var = 1;
 global.draw_3d_var = false;
@@ -31,7 +31,7 @@ global.mark_len_var = -1;
 global.js_mark_len_var = -1;
 global.rm_count_var = 0;
 global.rm_count_override_var = noone;
-global.input_len_var = 24;
+global.input_len_var = 26;
 global.debug_var = false;
 global.reflect_var = false;
 global.reflect_pos_var = 0;
@@ -48,6 +48,7 @@ global.debug_unlock_var = false; // Change to false on release!!!
 global.draw_time_var = 0;
 global.fps_curr_var = 0;
 global.boss_var = noone;
+global.permadeath_var = false;
 for (local.i=0; local.i<8; local.i+=1;)
 {
     input_menu_hold_arr[0,local.i] = 0;
@@ -100,7 +101,10 @@ file_to_snd_scr(main_directory_const+"\SND\MAIN\deny_snd.wav","deny_snd",false,s
 file_to_snd_scr(main_directory_const+"\SND\MAIN\select_snd.wav","select_snd",false,snd_group_sfx_const,false);
 file_to_snd_scr(main_directory_const+"\SND\MAIN\result_mus_snd.ogg","result_mus_snd",false,snd_group_sfx_const,false);
 file_to_obj_scr(main_directory_const+"\OBJ\par_obj.gml","par_obj",false);
+file_to_obj_scr(main_directory_const+"\OBJ\par_3d_obj.gml","par_3d_obj",false);
+file_to_obj_scr(main_directory_const+"\OBJ\enemy_par_obj.gml","enemy_par_obj",false);
 file_to_obj_scr(main_directory_const+"\OBJ\PAR\fog_par_obj.gml","fog_par_obj",false);
+file_to_obj_scr(main_directory_const+"\OBJ\PAR\mon_par_obj.gml","mon_par_obj",false);
 file_to_obj_scr(main_directory_const+"\OBJ\MAIN\control_obj.gml","control_obj",false);
 file_to_obj_scr(main_directory_const+"\OBJ\MAIN\pause_menu_obj.gml","pause_menu_obj",false);
 file_to_obj_scr(main_directory_const+"\OBJ\MOD\mod_obj.gml","mod_obj",false);

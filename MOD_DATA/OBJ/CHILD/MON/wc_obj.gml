@@ -43,6 +43,7 @@ object_event_add
     dead_var = false;
     temp_var = false;
     dead_rm_var = wc_dead_rm;
+    static_alpha_var = 0.25;
     // Attack
     atk_type_var = 3; // Stop moving while delay
     atk_anim_var = 2;
@@ -148,6 +149,7 @@ object_event_add
             spd_base_var = 1.1;
             spr_spd_var = 0.55;
             hp_var = 10;
+            static_alpha_var = 0.125;
             break;
         }
         case 2: // HD
@@ -252,6 +254,7 @@ object_event_add
             par_var = other.id;
             bg_var = other.static_bg_var;
             visible = !local.rise && !other.do_wander_var;
+            image_alpha = other.static_alpha_var;
         }
     }
 ');

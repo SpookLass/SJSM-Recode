@@ -1717,6 +1717,50 @@ set_default_arr[global.set_len_var,5] = cam_right_button_const; // Player 6
 set_default_arr[global.set_len_var,6] = cam_right_button_const; // Player 7
 set_default_arr[global.set_len_var,7] = cam_right_button_const; // Player 8
 global.set_len_var += 1;
+// Fullscreen
+set_arr[global.set_len_var,0] = "fullscreen"; // Variable name
+set_arr[global.set_len_var,1] = "fullscreen_input"; // Name
+set_arr[global.set_len_var,2] = "fullscreen_input"; // Description
+set_arr[global.set_len_var,3] = true; // Translate name and descripion
+set_arr[global.set_len_var,4] = 7; // Type (Input)
+set_arr[global.set_len_var,5] = 0; // Min
+set_arr[global.set_len_var,6] = 0; // Max
+set_arr[global.set_len_var,7] = true; // Wrap
+set_arr[global.set_len_var,8] = 8; // Category (Input)
+set_arr[global.set_len_var,9] = true; // Player Specific
+set_arr[global.set_len_var,10] = fullscreen_input_const; // ID (Input Only)
+    // Default
+set_default_arr[global.set_len_var,0] = fullscreen_key_const; // Player 1
+set_default_arr[global.set_len_var,1] = fullscreen_button_const; // Player 2
+set_default_arr[global.set_len_var,2] = fullscreen_button_const; // Player 3
+set_default_arr[global.set_len_var,3] = fullscreen_button_const; // Player 4
+set_default_arr[global.set_len_var,4] = fullscreen_button_const; // Player 5
+set_default_arr[global.set_len_var,5] = fullscreen_button_const; // Player 6
+set_default_arr[global.set_len_var,6] = fullscreen_button_const; // Player 7
+set_default_arr[global.set_len_var,7] = fullscreen_button_const; // Player 8
+global.set_len_var += 1;
+// Screenshot
+set_arr[global.set_len_var,0] = "screenshot"; // Variable name
+set_arr[global.set_len_var,1] = "screenshot_input"; // Name
+set_arr[global.set_len_var,2] = "screenshot_input"; // Description
+set_arr[global.set_len_var,3] = true; // Translate name and descripion
+set_arr[global.set_len_var,4] = 7; // Type (Input)
+set_arr[global.set_len_var,5] = 0; // Min
+set_arr[global.set_len_var,6] = 0; // Max
+set_arr[global.set_len_var,7] = true; // Wrap
+set_arr[global.set_len_var,8] = 8; // Category (Input)
+set_arr[global.set_len_var,9] = true; // Player Specific
+set_arr[global.set_len_var,10] = screenshot_input_const; // ID (Input Only)
+    // Default
+set_default_arr[global.set_len_var,0] = screenshot_key_const; // Player 1
+set_default_arr[global.set_len_var,1] = screenshot_button_const; // Player 2
+set_default_arr[global.set_len_var,2] = screenshot_button_const; // Player 3
+set_default_arr[global.set_len_var,3] = screenshot_button_const; // Player 4
+set_default_arr[global.set_len_var,4] = screenshot_button_const; // Player 5
+set_default_arr[global.set_len_var,5] = screenshot_button_const; // Player 6
+set_default_arr[global.set_len_var,6] = screenshot_button_const; // Player 7
+set_default_arr[global.set_len_var,7] = screenshot_button_const; // Player 8
+global.set_len_var += 1;
 /*
 --------
 Controls

@@ -95,6 +95,7 @@ object_event_add
     shadow_scale_var = 16;
     shadow_num_var = 1;
     shadow_den_var = 2;
+    shadow_alpha_var = 0.2;
     // Behavior
     if global.tiri_type_var == -1 { local.type = irandom(3); }
     else { local.type = global.tiri_type_var; }
@@ -111,8 +112,7 @@ object_event_add
             shadow_hp_var = 1;
             do_coward_var = 2;
             shadow_scale_var = 24;
-            shadow_num_var = 3;
-            shadow_den_var = 5;
+            shadow_alpha_var = 0.4;
             atk_range_var = global.mon_coll[2];
             // Pride Month or Trans Day of Visibility
             if ((current_month == 6 || global.pride_var > 0) && !irandom(7)) || (current_month == 3 && current_month == 31)
@@ -203,6 +203,7 @@ object_event_add
                 h_var = other.shadow_scale_var;
                 tex_var = store_tex_var;
                 hp_var = other.shadow_hp_var;
+                image_alpha = other.shadow_alpha_var;
                 image_blend = other.eff_color_var;
             }
             global.mark_arr[local.i,3] = true;

@@ -215,6 +215,7 @@ object_event_add
         seen_yaw_var = seen_yaw_01_var;
         seen_pitch_var = seen_pitch_01_var;
         do_anim_var = true;
+        hide_var = true;
     }
     else
     {
@@ -307,6 +308,7 @@ object_event_add
     if hang_var
     {
         hang_var = false;
+        hide_var = false;
         visible = true;
         seen_yaw_var = seen_yaw_02_var;
         seen_pitch_var = seen_pitch_02_var;
@@ -458,6 +460,7 @@ object_event_add
             if is_seen_var == 1 && target_dist_var <= 200 // Look target is so weird
             {
                 hang_var = false;
+                hide_var = false;
                 visible = true;
                 seen_yaw_var = seen_yaw_02_var;
                 seen_pitch_var = seen_pitch_02_var;

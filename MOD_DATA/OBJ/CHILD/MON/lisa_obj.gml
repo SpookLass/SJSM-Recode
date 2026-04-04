@@ -190,6 +190,10 @@ object_event_add
             amb_start_var = 5;
             loop_start_var = 19; // Gotta be 1 early because pain
             if !local.set { loop_fake_var = true; }
+            // Axe!
+            do_hurt_var = true;
+            hurt_snd_var = 3;
+            violence_var = 3;
             break;
         }
         case 2: // HD
@@ -445,6 +449,12 @@ object_event_add
         }
     }
     if attack_alpha_var { image_alpha = 1; }
+');
+// Hurt Event
+object_event_add
+(argument0,ev_other,ev_user4,'
+    event_inherited();
+    image_alpha = 1;
 ');
 // Draw Event
 object_event_add

@@ -289,6 +289,8 @@ object_event_add
         hurt_var = false;
         turn_var = false;
         fov_var = global.fov_var;
+        bob_mult_var = global.move_bob_var/100; // 12/7
+        breath_mult_var = global.idle_bob_var/100;
         if global.dynamic_fov_var <= 0
         { current_fov_var = fov_var; }
         // Healing

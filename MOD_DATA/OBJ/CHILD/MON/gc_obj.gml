@@ -181,6 +181,8 @@ object_event_add
             blood_spr_var = blood_kh_spr;
             atk_range_var = global.mon_coll[2];
             // mus_prio_var = mb_mus_prio_const; // Miniboss?
+            stun_var = true;
+            hurt_alarm_var = 30;
             break;
         }
         case 6: // KH Recode
@@ -681,26 +683,39 @@ object_event_add
     if !enter_var
     {
         event_inherited();
-        if stun_var == 2
+        switch stun_var
         {
-            x = global.spawn_arr[0,0];
-            y = global.spawn_arr[0,1];
-            z = global.spawn_arr[0,2];
-            set_motion_scr(0,true);
-            if !global.reduce_flash_var
+            case 1:
             {
-                with instance_create(0,0,flash_eff_obj)
+                seen_var = false;
+                set_alarm_scr(9,hurt_alarm_var);
+                if do_hurt_var == 3 && hurt_type_var != 1
+                { fmod_snd_play_scr(choose(axe_01_snd,axe_02_snd,axe_03_snd)); }
+                visible = true;
+                break;
+            }
+            case 2:
+            {
+                x = global.spawn_arr[0,0];
+                y = global.spawn_arr[0,1];
+                z = global.spawn_arr[0,2];
+                set_motion_scr(0,true);
+                if !global.reduce_flash_var
                 {
-                    image_blend = c_red;
+                    with instance_create(0,0,flash_eff_obj)
+                    {
+                        image_blend = c_red;
+                        cam_id_var = other.hurt_target_var.cam_id_var;
+                        set_alarm_scr(0,18);
+                    }
+                }
+                with instance_create(0,0,fade_eff_obj)
+                {
+                    image_blend = other.die_color_var;
                     cam_id_var = other.hurt_target_var.cam_id_var;
                     set_alarm_scr(0,18);
                 }
-            }
-            with instance_create(0,0,fade_eff_obj)
-            {
-                image_blend = other.die_color_var;
-                cam_id_var = other.hurt_target_var.cam_id_var;
-                set_alarm_scr(0,18);
+                break;
             }
         }
     }

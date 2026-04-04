@@ -80,13 +80,14 @@ object_event_add
             ds_list_delete(global.mod_list,mod_var);
         }
     }
-    if global.input_press_arr[back_input_const,0]
-    {
-        ini_open("mods.ini");
-        ini_write_string("MODS","mods",ds_list_write(global.mod_list));
-        ini_close();
-        game_end();
-    }
+    if global.input_press_arr[back_input_const,0] { game_end(); }
+');
+// Game End
+object_event_add
+(argument0,ev_other,ev_game_end,'
+    ini_open("mods.ini");
+    ini_write_string("MODS","mods",ds_list_write(global.mod_list));
+    ini_close();
 ');
 // Create Event
 object_event_add
