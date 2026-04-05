@@ -93,17 +93,42 @@ object_event_add
         load_var = true;
         if global.mode_var == 0
         {
-            if global.rm_count_var < 600 { local.tex = irandom(6); local.snd = global.js_snd_arr[irandom(7)]; }
-            else { local.tex = irandom(global.js_story_len_var-1); local.snd = global.js_snd_arr[irandom(global.js_snd_story_len_var-1)]; }
+            if global.rm_count_var < 600 { local.arr_len = 7; local.snd = global.js_snd_arr[irandom(7)]; }
+            else { local.arr_len = global.js_story_len_var; local.snd = global.js_snd_arr[irandom(global.js_snd_story_len_var-1)]; }
         }
-        else { local.tex = irandom(global.js_len_var-1); local.snd = global.js_snd_arr[irandom(global.js_snd_len_var-1)]; }
-        bg_01_var = background_add(global.js_arr[local.tex,0],false,false);
-        bg_02_var = background_add(global.js_arr[local.tex,1],false,false);
-        snd_var = fmod_snd_add_scr(local.snd,snd_3d_var);
+        else { local.arr_len = global.js_len_var; local.snd = global.js_snd_arr[irandom(global.js_snd_len_var-1)]; }
+            // Loop Through
+        for (local.i=0; local.i<local.arr_len; local.i+=1;)
+        { local.arr[local.i,0] = global.js_arr[local.i,0]; local.arr[local.i,1] = global.js_arr[local.i,1]; }
+            // Holidays
+        if current_month == 10 || global.halloween_var
+        {
+            local.arr[local.arr_len,0] = vanilla_directory_const+"\TEX\SCARE_05.png";
+            local.arr[local.arr_len,1] = vanilla_directory_const+"\TEX\SCARE_05B.png";
+            local.arr[local.arr_len+1,0] = vanilla_directory_const+"\EM\TEX\JS_13.png";
+            local.arr[local.arr_len+1,1] = vanilla_directory_const+"\EM\TEX\JS_13B.png";
+            local.arr_len += 2;
+        }
+        if easter_scr(current_day,current_month,current_year) || global.easter_var
+        {
+            local.arr[local.arr_len,0] = main_directory_const+"\BG\MON\js_basket_01_bg.png";
+            local.arr[local.arr_len,1] = main_directory_const+"\BG\MON\js_basket_02_bg.png";
+            local.arr[local.arr_len+1,0] = main_directory_const+"\BG\MON\js_egg_01_bg.png";
+            local.arr[local.arr_len+1,1] = main_directory_const+"\BG\MON\js_egg_02_bg.png";
+            local.arr[local.arr_len+2,0] = main_directory_const+"\BG\MON\js_weed_egg_01_bg.png";
+            local.arr[local.arr_len+2,1] = main_directory_const+"\BG\MON\js_weed_egg_02_bg.png";
+            local.arr_len += 3;
+        }
+            // Backgrounds
+        local.tex = irandom(local.arr_len-1);
+        bg_01_var = background_add(local.arr[local.tex,0],false,false);
+        bg_02_var = background_add(local.arr[local.tex,1],false,false);
         store_tex_var = background_get_texture(bg_01_var);
         tex_var = store_tex_var;
         store_tex_02_var = background_get_texture(bg_02_var);
         tex_02_var = store_tex_02_var;
+            // Sounds
+        snd_var = fmod_snd_add_scr(local.snd,snd_3d_var);
         if snd_dist_max_var > 0
         { fmod_snd_set_minmax_dist_scr(snd_var,0,snd_dist_max_var); }
         // Trigger

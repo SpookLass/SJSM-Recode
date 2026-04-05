@@ -58,6 +58,7 @@ This demo only includes Endless Mode at the moment, but will get Story Mode supp
 - StupidFizz: Eel death screen (background)
 - Everlasting Maya: Icons
 - WASAB1: Team Recode Logo
+- PekoSnipe: Holiday Cutouts
 - Spook Lass: Various art edits
 
 ### Models:

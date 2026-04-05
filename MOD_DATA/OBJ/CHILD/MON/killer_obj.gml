@@ -124,6 +124,28 @@ object_event_add
     dead_rm_var = killer_dead_rm;
     scary_var = false;
     dmg_stun_var = 0;
+    // Stamina
+    do_sprint_var = false;
+    sprint_var = false;
+    do_stam_var = false;
+    stam_max_var = 100;
+    stam_rate_var = 1/3;
+    stam_drain_var = 1.25;
+    stam_spawn_min_var = 0;
+    stam_spawn_max_var = 75;
+    stam_per_var = false;
+    stam_var = 0;
+    sprint_mult_var = 5;
+    sprint_acc_var = 8/135;  // 0.0r592
+    acc_base_var = 4/225; // 0.01r7
+    hurt_stam_var = 0;
+    // Sprint animation
+    spr_spd_base_var = 1/6;
+    sprint_spr_spd_var = 5/6; // Don"t look at me, stealing this from Gone Rogue
+    h_base_var = 22;
+    sprint_h_var = 25;
+    z_off_base_var = 0;
+    sprint_z_off_var = -1;
     // Theme
     mus_prio_var = mon_mus_prio_const;
     // Sprite stuff
@@ -319,27 +341,6 @@ object_event_add
     w_01_var = spr_arr_var[0,1];
     w_02_var = spr_arr_var[0,2];
     w_var = w_01_var+w_02_var;
-    // Stamina
-    do_sprint_var = false;
-    sprint_var = false;
-    do_stam_var = false;
-    stam_max_var = 100;
-    stam_rate_var = 1/3;
-    stam_drain_var = 1.25;
-    stam_spawn_min_var = 0;
-    stam_spawn_max_var = 75;
-    stam_per_var = false;
-    stam_var = 0;
-    sprint_mult_var = 5;
-    sprint_acc_var = 8/135;  // 0.0r592
-    acc_base_var = 4/225; // 0.01r7
-    // Sprint animation
-    spr_spd_base_var = 1/6;
-    sprint_spr_spd_var = 5/6; // Don"t look at me, stealing this from Gone Rogue
-    h_base_var = 22;
-    sprint_h_var = 25;
-    z_off_base_var = 0;
-    sprint_z_off_var = -1;
     // Behavior
     if global.killer_type_var == -1 { local.type = irandom(7); }
     else { local.type = global.killer_type_var; }
@@ -370,6 +371,7 @@ object_event_add
             dmg_alarm_var = 60;
             atk_range_var = global.mon_coll[2];
             breath_snd_num_var = 0;
+            hurt_stam_var = 20;
             // Parry
             do_hurt_var = true;
             hurt_snd_var = 3;
@@ -699,6 +701,8 @@ object_event_add
             cam_id_var = other.hurt_target_var.cam_id_var;
             set_alarm_scr(0,8);
         }
+        if hurt_stam_var && do_stam_var
+        { stam_var = max(stam_var-hurt_stam_var,0); }
     }
 ');
 // Sound update

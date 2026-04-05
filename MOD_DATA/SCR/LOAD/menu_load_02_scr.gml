@@ -1841,5 +1841,24 @@ set_label_arr[global.set_len_var,3] = true; // Translate
     // Default
 set_default_arr[global.set_len_var,0] = false; // Default
 global.set_len_var += 1;
+// Easter
+set_arr[global.set_len_var,0] = "easter"; // Variable name
+set_arr[global.set_len_var,1] = "easter"; // Name
+set_arr[global.set_len_var,2] = "easter"; // Description
+set_arr[global.set_len_var,3] = true; // Translate name and descripion
+set_arr[global.set_len_var,4] = 0; // Type (Enum)
+set_arr[global.set_len_var,5] = false; // Min
+set_arr[global.set_len_var,6] = true; // Max
+set_arr[global.set_len_var,7] = true; // Wrap
+set_arr[global.set_len_var,8] = 10; // Category (fun)
+set_arr[global.set_len_var,9] = false; // Player Specific
+    // Label
+set_label_arr[global.set_len_var,0] = "off"; // Value 1
+set_label_arr[global.set_len_var,1] = true; // Translate
+set_label_arr[global.set_len_var,2] = "on"; // Value 2
+set_label_arr[global.set_len_var,3] = true; // Translate
+    // Default
+set_default_arr[global.set_len_var,0] = false; // Default
+global.set_len_var += 1;
 // Draw (hope this works)
 draw_load_scr("Loaded settings!");
