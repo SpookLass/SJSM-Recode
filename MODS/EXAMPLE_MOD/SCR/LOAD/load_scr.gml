@@ -56,6 +56,5 @@ custom_arr_set_scr(0,global.custom_len_var,-1,1,1); // OG Endless (None)
 custom_arr_set_scr(0,global.custom_len_var,-1,1,2); // HD Endless (None)
 // Plus one to everything
 global.mon_group_len_var += 1;
-
 global.mon_list_len_var += 1;
 global.custom_len_var += 1;

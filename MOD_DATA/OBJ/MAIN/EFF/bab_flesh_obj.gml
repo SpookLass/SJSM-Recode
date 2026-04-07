@@ -11,6 +11,7 @@ object_event_add
 (argument0,ev_create,0,'
     event_inherited();
     on_var = false;
+    ready_var = false;
     // Alarms
     alarm_len_var = 2;
     alarm_ini_scr();
@@ -60,8 +61,15 @@ object_event_add
 // Room Start
 object_event_add
 (argument0,ev_other,ev_room_start,'
-    if !per_var { on_var = false; }
-    else if on_var
+    if !per_var { on_var = false; ready_var = false; }
+    else if on_var { event_user(0); }
+    if alarm_arr[0,0] <= 0
+    { set_alarm_scr(0,irandom_range(alarm_min_var,alarm_max_var)); }
+');
+// Alarm 0 Event
+object_event_add
+(argument0,ev_other,ev_user0,'
+    if on_var
     {
         spr_id_var = irandom(sprite_get_number(spr_var)-1);
         set_alarm_scr(1,irandom_range(rand_alarm_min_var,rand_alarm_max_var));
@@ -74,43 +82,33 @@ object_event_add
             { tex_var = other.tex_var; }
         }
     }
-    if alarm_arr[0,0] <= 0
-    { set_alarm_scr(0,irandom_range(alarm_min_var,alarm_max_var)); }
+    else
+    {
+        set_alarm_scr(1,-1);
+        path_speed = 0;
+        with floor_par_obj { tex_var = store_tex_var; }
+        with ceil_par_obj { tex_var = store_tex_var; }
+        with wall_par_obj { tex_var = store_tex_var; }
+        with prop_par_obj
+        {
+            if flesh_var && (other.door_var || flesh_var == 1)
+            { tex_var = store_tex_var; }
+        }
+    }
 ');
 // Alarm 0 Event
 object_event_add
 (argument0,ev_alarm,0,'
-    if frac_chance_scr(1,2)
+    if par_var.possess_var && !on_var { ready_var = true; }
+    else
     {
-        on_var = !on_var;
-        if on_var
+        if frac_chance_scr(1,2)
         {
-            spr_id_var = irandom(sprite_get_number(spr_var)-1);
-            set_alarm_scr(1,irandom_range(rand_alarm_min_var,rand_alarm_max_var));
-            with floor_par_obj { tex_var = other.tex_var; }
-            with ceil_par_obj { tex_var = other.tex_var; }
-            with wall_par_obj { tex_var = other.tex_var; }
-            with prop_par_obj
-            {
-                if flesh_var && (other.door_var || flesh_var == 1)
-                { tex_var = other.tex_var; }
-            }
+            on_var = !on_var;
+            event_user(0);
         }
-        else
-        {
-            set_alarm_scr(1,-1);
-            path_speed = 0;
-            with floor_par_obj { tex_var = store_tex_var; }
-            with ceil_par_obj { tex_var = store_tex_var; }
-            with wall_par_obj { tex_var = store_tex_var; }
-            with prop_par_obj
-            {
-                if flesh_var && (other.door_var || flesh_var == 1)
-                { tex_var = store_tex_var; }
-            }
-        }
+        set_alarm_scr(0,irandom_range(alarm_min_var,alarm_max_var));
     }
-    set_alarm_scr(0,irandom_range(alarm_min_var,alarm_max_var));
 ');
 // Alarm 1 Event
 object_event_add
@@ -139,5 +137,15 @@ object_event_add
         d3d_set_hidden(true);
         d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var);
         surface_reset_target();
+    }
+    else if par_var.possess_var && ready_var
+    {
+        if global.input_press_arr[interact_input_const,par_var.player_id_var] == 1
+        {
+            on_var = !on_var;
+            ready_var = false;
+            event_user(0);
+            set_alarm_scr(0,irandom_range(alarm_min_var,alarm_max_var));
+        }
     }
 ');

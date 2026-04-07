@@ -109,15 +109,19 @@ object_event_add
             local.arr[local.arr_len+1,1] = vanilla_directory_const+"\EM\TEX\JS_13B.png";
             local.arr_len += 2;
         }
+        if current_month == 12 || global.christmas_var
+        {
+            local.arr[local.arr_len,0] = main_directory_const+"\BG\MON\js_present_01_bg.png";
+            local.arr[local.arr_len,1] = main_directory_const+"\BG\MON\js_present_02_bg.png";
+            local.arr_len += 1;
+        }
         if easter_scr(current_day,current_month,current_year) || global.easter_var
         {
             local.arr[local.arr_len,0] = main_directory_const+"\BG\MON\js_basket_01_bg.png";
             local.arr[local.arr_len,1] = main_directory_const+"\BG\MON\js_basket_02_bg.png";
             local.arr[local.arr_len+1,0] = main_directory_const+"\BG\MON\js_egg_01_bg.png";
             local.arr[local.arr_len+1,1] = main_directory_const+"\BG\MON\js_egg_02_bg.png";
-            local.arr[local.arr_len+2,0] = main_directory_const+"\BG\MON\js_weed_egg_01_bg.png";
-            local.arr[local.arr_len+2,1] = main_directory_const+"\BG\MON\js_weed_egg_02_bg.png";
-            local.arr_len += 3;
+            local.arr_len += 2;
         }
             // Backgrounds
         local.tex = irandom(local.arr_len-1);

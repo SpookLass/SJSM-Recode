@@ -8,6 +8,7 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 /*
     Type enum
+        -7: Reboot Controllers
         -6: Save Preset
         -5: Load Preset
         -4: Player ID
@@ -84,6 +85,10 @@ object_event_add
     name_arr_var[9,local.setid] = ini_read_string("SET","save_preset","SET_save_preset");
     desc_arr_var[9,local.setid] = ini_read_string("SET_DESC","save_preset","SET_DESC_save_preset");
     id_arr_var[9,local.setid] = -5;
+    state_arr_var[9,0] += 1; local.setid += 1;
+    name_arr_var[9,local.setid] = ini_read_string("SET","joy_find","SET_joy_find");
+    desc_arr_var[9,local.setid] = ini_read_string("SET_DESC","joy_find","SET_DESC_joy_find");
+    id_arr_var[9,local.setid] = -7;
     state_arr_var[9,0] += 1; local.setid += 1;
 
     for (local.i=0; local.i<global.set_len_var; local.i+=1;)
@@ -383,6 +388,11 @@ object_event_add
                         global.last_time_var = current_time;
                         fmod_update_take_over_done_scr();
                         global.input_press_arr[confirm_input_const,0] = 0;
+                        break;
+                    }
+                    case -7: // Reboot Controllers
+                    {
+                        joy_find_scr();
                         break;
                     }
                 }

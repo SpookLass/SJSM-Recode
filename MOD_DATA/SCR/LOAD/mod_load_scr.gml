@@ -9,7 +9,7 @@ d3d_set_culling(false);
 d3d_set_hidden(false);
 draw_set_font(main_font);
 splash_set_close_button(false);
-global.version_var = "Project Recode - Mod Loader: v26.4.3";
+global.version_var = "Project Recode - Mod Loader: v26.4.6";
 global.game_var = false;
 global.game_spd_var = 1;
 global.draw_3d_var = false;

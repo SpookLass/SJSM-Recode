@@ -70,6 +70,7 @@ object_event_add
     spr_spd_var = spr_spd_base_var;
     // Door vanish
     door_hide_var = false;
+    false_ready_var = false;
     hide_reset_var = false;
     hide_alarm_min_var = 160;
     hide_alarm_max_var = 320;
@@ -247,7 +248,11 @@ object_event_add
             }
         }
     }
-    else { door_hide_var = false; }
+    else
+    {
+        door_hide_var = false;
+        hide_ready_var = false;
+    }
     if meat_var
     {
         for (local.i=0; local.i<global.mark_len_var; local.i+=1;)
@@ -302,6 +307,24 @@ object_event_add
             anim_type_var = 0;
         }
     }
+    if possess_var && hide_ready_var && !door_hide_var
+    {
+        if global.input_press_arr[interact_input_const,par_var.player_id_var] == 1
+        {
+            hide_ready_var = false;
+            door_hide_var = !door_hide_var;
+            with door_obj { visible = !other.door_hide_var; }
+            if hide_trig_var
+            {
+                with door_trig_obj 
+                {
+                    if do_txt_var >= 0
+                    { do_txt_var = !other.door_hide_var; }
+                }
+            }
+            set_alarm_scr(8,irandom_range(hide_alarm_min_var,hide_alarm_max_var));
+        }
+    }
     event_inherited();
     spd_mult_var = 1;
 ');
@@ -339,20 +362,24 @@ object_event_add
 // Door!
 object_event_add
 (argument0,ev_alarm,8,'
-    if frac_chance_scr(hide_num_var,hide_den_var) || (door_hide_var && hide_reset_var)
+    if possess_var && !door_hide_var { hide_ready_var = true; }
+    else
     {
-        door_hide_var = !door_hide_var;
-        with door_obj { visible = !other.door_hide_var; }
-        if hide_trig_var
+        if frac_chance_scr(hide_num_var,hide_den_var) || (door_hide_var && hide_reset_var)
         {
-            with door_trig_obj 
+            door_hide_var = !door_hide_var;
+            with door_obj { visible = !other.door_hide_var; }
+            if hide_trig_var
             {
-                if do_txt_var >= 0
-                { do_txt_var = !other.door_hide_var; }
+                with door_trig_obj 
+                {
+                    if do_txt_var >= 0
+                    { do_txt_var = !other.door_hide_var; }
+                }
             }
         }
+        set_alarm_scr(8,irandom_range(hide_alarm_min_var,hide_alarm_max_var));
     }
-    set_alarm_scr(8,irandom_range(hide_alarm_min_var,hide_alarm_max_var));
 ');
 // Animation
 object_event_add

@@ -21,7 +21,7 @@ if room_exists(argument0) && argument0 != 0
     {
         case 2:
         {
-            if true
+            if global.splitscreen_var
             {
                 room_set_view(argument0,0,true,0,0,local.res_w,local.res_h/2,0,0,local.res_w,local.res_h/2,32,32,-1,-1,noone);
                 room_set_view(argument0,1,true,0,local.res_h/2,local.res_w,local.res_h/2,0,local.res_h/2,local.res_w,local.res_h/2,32,32,-1,-1,noone);

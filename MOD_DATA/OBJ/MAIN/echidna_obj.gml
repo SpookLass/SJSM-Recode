@@ -676,7 +676,7 @@ object_event_add
             eye_yaw_var = mod_scr(eye_yaw_var+input_yaw_scr(player_id_var),360);
             eye_pitch_var = median(-89.9,89.9,eye_pitch_var+input_pitch_scr(player_id_var));
         }
-        if target_dist_var <= local.spd && !possess_var
+        if target_dist_var <= local.spd && !possess_var && do_acc_var != 1
         {
             x = target_x_var;
             y = target_y_var;
@@ -696,12 +696,13 @@ object_event_add
                 local.input_dir_y = input_y_scr(player_id_var);
                 if local.input_dir_x == 0 && local.input_dir_y == 0
                 { local.spd = 0; }
-                local.yaw = radtodeg(arctan2(-local.input_dir_y,local.input_dir_x))+eye_yaw_var;
+                local.input_dir = radtodeg(arctan2(-local.input_dir_y,local.input_dir_x));
+                local.yaw = local.input_dir+eye_yaw_var;
                 active_var = abs(local.input_dir_x) || abs(local.input_dir_y);
                 if !do_coll_var || grav_var <= 0
                 {
                     local.input_dir_z = input_z_scr(player_id_var);
-                    local.pitch = radtodeg(arctan2(local.input_dir_z,sqrt(sqr(local.input_dir_x)+sqr(local.input_dir_y))))+(eye_pitch_var*lengthdir_x(1,local.input_dir_z));
+                    local.pitch = radtodeg(arctan2(local.input_dir_z,sqrt(sqr(local.input_dir_x)+sqr(local.input_dir_y))))+(eye_pitch_var*lengthdir_x(1,local.input_dir));
                     if abs(local.input_dir_z) { active_var = true; }
                 }
             }
@@ -1232,9 +1233,12 @@ object_event_add
 // Attempt Attack
 object_event_add
 (argument0,ev_other,ev_user12,'
-    if atk_type_var > 0
+    if atk_type_var <= 0 { event_user(2); }
+    else if alarm_arr[7,0] <= 0
     {
-        if alarm_arr[7,0] <= 0 && instance_exists(target_var) && target_dist_var < atk_dist_var
+        if possess_var { local.bool = (global.input_press_arr[attack_input_const,player_id_var] == 1); }
+        else { local.bool = (instance_exists(target_var) && target_dist_var < atk_dist_var); }
+        if local.bool
         {
             set_alarm_scr(7,atk_delay_var);
             set_alarm_scr(1,atk_delay_var);
@@ -1277,7 +1281,6 @@ object_event_add
             set_motion_3d_scr(0,true);
         }
     }
-    else { event_user(2); }
 ');
 // Wander Event
 object_event_add

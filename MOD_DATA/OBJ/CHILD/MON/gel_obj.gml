@@ -212,6 +212,7 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_room_start,'
     event_inherited();
+    if do_abuse_var { abuse_var = max(0,abuse_var-1); }
     if do_slime_spawn_var && enter_var
     {
         slime_spawn_var = 2;

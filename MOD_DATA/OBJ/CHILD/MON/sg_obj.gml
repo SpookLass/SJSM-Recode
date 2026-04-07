@@ -274,13 +274,20 @@ object_event_add
         { other.wander_var = false; break; }}
     }
     event_inherited();
-    if on_var && !enter_var && charge_var && move_var && target_dist_var <= charge_dist_var && instance_exists(target_var)
+    if on_var && !enter_var && charge_var && move_var
     {
-        move_var = false;
-        anim_var = false;
-        charge_yaw_var = point_direction(x,y,target_x_var,target_y_var);
-        set_alarm_scr(8,charge_alarm_01_var);
-        set_motion_3d_scr(0,true,charge_yaw_var,true);
+        if possess_var { local.bool = (global.input_press_arr[interact_input_const,player_id_var] == 1); }
+        else { local.bool = target_dist_var <= charge_dist_var && instance_exists(target_var); }
+        if local.bool
+        {
+            if possess_var { charge_yaw_var = eye_yaw_var; }
+            else { charge_yaw_var = point_direction(x,y,target_x_var,target_y_var); }
+            move_var = false;
+            anim_var = false;
+            set_alarm_scr(8,charge_alarm_01_var);
+            set_motion_3d_scr(0,true,charge_yaw_var,true);
+        }
+        
     }
 ');
 // Start Charging

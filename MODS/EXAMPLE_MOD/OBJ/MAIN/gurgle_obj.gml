@@ -173,16 +173,37 @@ object_event_add
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,'
-    if on_var && charge_var == false 
-    && instance_exists(target_var) && target_dist_var < charge_dist_var
+    // Charge!
+    if on_var && charge_var == false
     {
-        sight_type_var = 1; // Only center
-        event_user(8);
-        if target_visible_var
+        local.bool = false;
+        if possess_var
+        {
+            local.bool = (global.input_press_arr[interact_input_const,player_id_var] == 1);
+            if local.bool
+            {
+                local.yaw = eye_yaw_var;
+                local.pitch = eye_pitch_var;
+            }
+        }
+        else
+        {
+            local.bool = instance_exists(target_var) && target_dist_var < charge_dist_var;
+            if local.bool
+            {
+                sight_type_var = 1; // Only center
+                event_user(8);
+                if !target_visible_var { local.bool = false; }
+                else
+                {
+                    local.yaw = point_direction(x,y,target_x_var,target_y_var);
+                    local.pitch = point_direction_3d_scr(x,y,z,target_x_var,target_y_var,target_z_var);
+                }
+            }
+        }
+        if local.bool
         {
             // Charge!
-            local.yaw = point_direction(x,y,target_x_var,target_y_var);
-            local.pitch = point_direction_3d_scr(x,y,z,target_x_var,target_y_var,target_z_var);
             set_motion_3d_scr(charge_spd_var,true,local.yaw,true,local.pitch,true);
             spr_id_var = 0;
             tex_var = sprite_get_texture(spr_var,sprite_get_number(spr_var)-1);
