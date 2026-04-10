@@ -209,7 +209,7 @@ object_event_add
                 alarm_var = other.eff_alarm_var;
                 set_alarm_scr(0,alarm_var);
                 // Sound
-                snd_var = other.cam_snd_var;
+                inst_var = other.cam_snd_var;
                 // Room Start
                 event_perform(ev_other,ev_room_start);
             }
@@ -223,7 +223,7 @@ object_event_add
             alarm_arr[0,2] = other.eff_per_var;
             alarm_var = other.eff_alarm_var;
             set_alarm_scr(0,alarm_var);
-            snd_var = other.cam_snd_var;
+            inst_var = other.cam_snd_var;
         } 
     }
     state_var = 0;
@@ -262,7 +262,7 @@ object_event_add
 (argument0,ev_other,ev_user4,'
     if !enter_var
     {
-        snd_var = fmod_snd_3d_play_scr(snd_arr[4,0]);
+        inst_var = fmod_snd_3d_play_scr(snd_arr[4,0]);
         event_inherited();
     }
 ');

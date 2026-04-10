@@ -44,7 +44,7 @@ object_event_add
 // Alarm 0 Event
 object_event_add
 (argument0,ev_alarm,0,'
-    if do_snd_var { fmod_inst_stop_scr(snd_var); }
+    if do_snd_var { fmod_inst_stop_scr(inst_var); }
     instance_destroy();
 ');
 // Alarm 1 Event

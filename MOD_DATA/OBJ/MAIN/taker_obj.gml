@@ -10,6 +10,7 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,0,'
     do_possess_var = false;
+    do_snd_var = false;
     reflect_var = true;
     event_inherited();
     // Render

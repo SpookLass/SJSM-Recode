@@ -116,6 +116,7 @@ object_event_add
             eff_fade_var = true;
             strobe_var = false;
             atk_range_var = global.mon_coll[2];
+            // dmg_var = 30; // 20
             // Autobrake
             autobrake_var = true;
             autobrake_spd_var = 1;
@@ -197,7 +198,7 @@ object_event_add
         spr_id_var = irandom(sprite_get_number(spr_var)-1);
         spr_spd_var = 0.5;
         do_snd_var = true;
-        snd_var = fmod_snd_play_scr(other.eff_snd_var);
+        inst_var = fmod_snd_play_scr(other.eff_snd_var);
         rand_rate_var = 2;
         rand_chance_var = 2;
         fade_var = other.eff_fade_var;
@@ -260,7 +261,7 @@ object_event_add
             spr_id_var = irandom(sprite_get_number(spr_var)-1);
             spr_spd_var = 0.5;
             do_snd_var = true;
-            snd_var = fmod_snd_play_scr(other.eff_snd_var);
+            inst_var = fmod_snd_play_scr(other.eff_snd_var);
             rand_rate_var = 2;
             rand_chance_var = 2;
             fade_var = other.eff_fade_var;

@@ -16,6 +16,8 @@ object_event_add
     char_delay_var = 30;
     str_alarm_min_var = 240;
     str_alarm_max_var = 460;
+    alpha_min_var = 0.3;
+    alpha_max_var = 1;
     ini_open(global.lang_var);
     str_wake_var = ini_read_string("MON","brain_wake","MON_brain_wake");
     str_len_var = 9;
@@ -30,7 +32,12 @@ object_event_add
     str_var = str_wake_var;
     alarm_len_var = 2;
     alarm_ini_scr();
-    set_alarm_scr(0,anim_alarm_var);
+    if !global.reduce_flash_var
+    {
+        set_alarm_scr(0,anim_alarm_var);
+        image_alpha = random_range(alpha_min_var,alpha_max_var);
+    }
+    else { image_alpha = (alpha_min_var+alpha_max_var)*0.5; }
     set_alarm_scr(1,char_alarm_var);
     char_var = 1;
     str_draw_var = string_copy(str_var, 0, char_var);
@@ -61,8 +68,11 @@ object_event_add
 // Anim
 object_event_add
 (argument0,ev_alarm,0,'
-    image_alpha = random_range(0.3,1);
-    set_alarm_scr(0,anim_alarm_var);
+    if visible && !global.reduce_flash_var
+    {
+        image_alpha = random_range(alpha_min_var,alpha_max_var);
+        set_alarm_scr(0,anim_alarm_var);
+    }
 ');
 // String
 object_event_add
@@ -75,6 +85,11 @@ object_event_add
         char_var = 1;
         str_draw_var = string_copy(str_var, 0, char_var);
         visible = true;
+        if !global.reduce_flash_var
+        {
+            image_alpha = random_range(alpha_min_var,alpha_max_var);
+            set_alarm_scr(0,anim_alarm_var);
+        }
     }
     else
     {
@@ -92,6 +107,7 @@ object_event_add
             char_var = string_length(str_var);
             str_draw_var = string_copy(str_var, 0, char_var);
             visible = false;
+            if !global.reduce_flash_var { set_alarm_scr(0,-1); }
         }
     }
 ');

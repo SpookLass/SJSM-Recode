@@ -397,9 +397,9 @@ object_event_add
     hurt_var = false;
     hurt_dist_var = 0;
     // Play sound
-    if fmod_inst_is_play_scr(snd_var) && fmod_inst_is_3d_scr(snd_var)
-    { fmod_inst_stop_scr(snd_var); }
-    snd_var = fmod_snd_3d_play_scr(dead_snd_var[0]);
+    if fmod_inst_is_play_scr(inst_var) && fmod_inst_is_3d_scr(inst_var)
+    { fmod_inst_stop_scr(inst_var); }
+    inst_var = fmod_snd_3d_play_scr(dead_snd_var[0]);
     sub_var[0] = dead_snd_var[1];
     sub_var[1] = dead_snd_var[2];
     // Play animation

@@ -16,17 +16,17 @@ object_event_add
     dist_var = 16;
     light_delay_min_var = 60;
     light_delay_max_var = 240;
-    snd_var = fmod_snd_loop_scr(rain_snd);
+    inst_var = fmod_snd_loop_scr(rain_snd);
 ');
 // Destroy Event
 object_event_add
 (argument0,ev_destroy,0,'
     event_inherited();
-    fmod_inst_stop_scr(snd_var);
+    fmod_inst_stop_scr(inst_var);
 ');
 // Room End
 object_event_add
 (argument0,ev_other,ev_room_end,'
-    fmod_inst_stop_scr(snd_var);
+    fmod_inst_stop_scr(inst_var);
     event_inherited();
 ');

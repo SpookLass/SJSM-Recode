@@ -48,6 +48,7 @@ global.debug_unlock_var = false; // Change to false on release!!!
 global.draw_time_var = 0;
 global.fps_curr_var = 0;
 global.boss_var = noone;
+global.permadeath_var = false;
 for (local.i=0; local.i<8; local.i+=1;)
 {
     input_menu_hold_arr[0,local.i] = 0;

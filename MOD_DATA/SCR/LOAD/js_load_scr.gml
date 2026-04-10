@@ -10,6 +10,7 @@ while file_exists(vanilla_directory_const+"\TEX\SCARE_"+local.index_str+'.png')
 {
     global.js_arr[global.js_len_var,0] = vanilla_directory_const+"\TEX\SCARE_"+local.index_str+".png";
     global.js_arr[global.js_len_var,1] = vanilla_directory_const+"\TEX\SCARE_"+local.index_str+"B.png";
+    global.js_arr[global.js_len_var,2] = "";
     if argument0 { show_message("Added jumpscare "+local.index_str+" at index "+string(global.js_len_var)); }
     global.js_len_var += 1;
     // Draw
@@ -22,6 +23,7 @@ while file_exists(vanilla_directory_const+"\TEX\SCARE_"+local.index_str+'.png')
 }
 global.js_arr[global.js_len_var,0] = vanilla_directory_const+"\TEX\SCARE_01S.png";
 global.js_arr[global.js_len_var,1] = vanilla_directory_const+"\TEX\SCARE_01B.png";
+global.js_arr[global.js_len_var,2] = "";
 if argument0 { show_message("Added jumpscare 01S at index "+string(global.js_len_var)); }
 global.js_len_var += 1;
 
@@ -34,6 +36,7 @@ while file_exists(vanilla_directory_const+"\EM\TEX\JS_"+local.index_str+'.png')
 {
     global.js_arr[global.js_len_var,0] = vanilla_directory_const+"\EM\TEX\JS_"+local.index_str+".png";
     global.js_arr[global.js_len_var,1] = vanilla_directory_const+"\EM\TEX\JS_"+local.index_str+"B.png";
+    global.js_arr[global.js_len_var,2] = "";
     if argument0 { show_message("Added EM jumpscare "+local.index_str+" at index "+string(global.js_len_var)); }
     global.js_len_var += 1;
     // Draw
@@ -67,5 +70,21 @@ global.js_snd_arr[16] = main_directory_const+'\SND\MON\stab_em_05_snd.wav';
 global.js_snd_arr[17] = main_directory_const+'\SND\MON\stab_em_06_snd.wav';
 global.js_snd_arr[18] = main_directory_const+'\SND\MON\stab_em_07_snd.wav';
 global.js_snd_arr[19] = main_directory_const+'\SND\MON\stab_em_08_snd.wav';
+
+if file_exists(working_directory+"\Karamari_Hospital\KH.exe")
+{
+    // Pepper
+    global.js_arr[global.js_len_var,0] = main_directory_const+"\BG\KH\js_pepper_01_bg.png";
+    global.js_arr[global.js_len_var,1] = main_directory_const+"\BG\KH\js_pepper_02_bg.png";
+    global.js_arr[global.js_len_var,2] = "";
+    if argument0 { show_message("Added Pepper jumpscare at index "+string(global.js_len_var)); }
+    global.js_len_var += 1;
+    // Can
+    global.js_arr[global.js_len_var,0] = main_directory_const+"\BG\KH\js_can_01_bg.png";
+    global.js_arr[global.js_len_var,1] = main_directory_const+"\BG\KH\js_can_02_bg.png";
+    global.js_arr[global.js_len_var,2] = main_directory_const+'\SND\KH\js_oho_snd.wav';
+    if argument0 { show_message("Added Can jumpscare at index "+string(global.js_len_var)); }
+    global.js_len_var += 1;
+}
 // Draw
 draw_load_scr("Loaded jumpscares!");

@@ -123,26 +123,33 @@ object_event_add
             local.sub_w = sub_offset_var/0.5;
             local.sub_shadow_dist = 2*local.viewscale;
             // Loop through monsters
-            with echidna_obj
+            with enemy_par_obj
             {
                 if id != local.index && do_snd_var
                 {
                     local.dist = point_distance_3d_scr(x,y,z,global.cam_x_var[view_current],global.cam_y_var[view_current],global.cam_z_var[view_current]);
                     local.bool = false;
-                    if local.dist < snd_dist_max_var && fmod_inst_is_play_scr(snd_var)
+                    if (local.dist < snd_dist_max_var || snd_dist_max_var <= 0)
+                    && fmod_inst_is_play_scr(inst_var)
                     && (sub_var[1] || global.sub_var > 1) 
                     {
                         local.bool = true;
                         local.str = sub_var[0];
-                        draw_set_alpha(1-((local.dist-snd_dist_min_var)/(snd_dist_max_var-snd_dist_min_var)));
+                        if snd_dist_max_var > 0
+                        { draw_set_alpha(1-((local.dist-snd_dist_min_var)/(snd_dist_max_var-snd_dist_min_var))); }
+                        else { draw_set_alpha(1); }
                     }
                     else if loop_snd_var[0]
                     {
-                        if local.dist < loop_snd_dist_max_var && fmod_inst_is_play_scr(loop_inst_var) && (loop_snd_var[3] || global.sub_var > 1)
+                        if (local.dist < loop_snd_dist_max_var || loop_snd_dist_max_var <= 0)
+                        && fmod_inst_is_play_scr(loop_inst_var)
+                        && (loop_snd_var[3] || global.sub_var > 1)
                         {
                             local.bool = true;
                             local.str = loop_snd_var[2];
-                            draw_set_alpha(1-((local.dist-loop_snd_dist_min_var)/(loop_snd_dist_max_var-loop_snd_dist_min_var)));
+                            if loop_snd_dist_max_var > 0
+                            { draw_set_alpha(1-((local.dist-loop_snd_dist_min_var)/(loop_snd_dist_max_var-loop_snd_dist_min_var))); }
+                            else { draw_set_alpha(1); }
                         }
                     }
                     if local.bool

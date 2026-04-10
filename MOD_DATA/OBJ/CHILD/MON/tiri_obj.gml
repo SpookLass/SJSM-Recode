@@ -188,25 +188,28 @@ object_event_add
     coward_var = false;
     event_inherited();
     // Shadow animals
-    for (local.i=0; local.i<global.mark_len_var; local.i+=1;)
+    if instance_exists(axe_obj)
     {
-        if !global.mark_arr[local.i,3] && frac_chance_scr(shadow_num_var,shadow_den_var)
+        for (local.i=0; local.i<global.mark_len_var; local.i+=1;)
         {
-            local.spr_id = irandom(floor(sprite_get_number(shadow_spr_var)/3)-1)*3;
-            with instance_create(global.mark_arr[local.i,0],global.mark_arr[local.i,1],tiri_shadow_obj)
+            if !global.mark_arr[local.i,3] && frac_chance_scr(shadow_num_var,shadow_den_var)
             {
-                par_var = other.id;
-                store_tex_var = sprite_get_texture(other.shadow_spr_var,local.spr_id);
-                store_tex_02_var = sprite_get_texture(other.shadow_spr_var,local.spr_id+1);
-                store_tex_03_var = sprite_get_texture(other.shadow_spr_var,local.spr_id+2);
-                w_var = other.shadow_scale_var;
-                h_var = other.shadow_scale_var;
-                tex_var = store_tex_var;
-                hp_var = other.shadow_hp_var;
-                image_alpha = other.shadow_alpha_var;
-                image_blend = other.eff_color_var;
+                local.spr_id = irandom(floor(sprite_get_number(shadow_spr_var)/3)-1)*3;
+                with instance_create(global.mark_arr[local.i,0],global.mark_arr[local.i,1],tiri_shadow_obj)
+                {
+                    par_var = other.id;
+                    store_tex_var = sprite_get_texture(other.shadow_spr_var,local.spr_id);
+                    store_tex_02_var = sprite_get_texture(other.shadow_spr_var,local.spr_id+1);
+                    store_tex_03_var = sprite_get_texture(other.shadow_spr_var,local.spr_id+2);
+                    w_var = other.shadow_scale_var;
+                    h_var = other.shadow_scale_var;
+                    tex_var = store_tex_var;
+                    hp_var = other.shadow_hp_var;
+                    image_alpha = other.shadow_alpha_var;
+                    image_blend = other.eff_color_var;
+                }
+                global.mark_arr[local.i,3] = true;
             }
-            global.mark_arr[local.i,3] = true;
         }
     }
     // Effects

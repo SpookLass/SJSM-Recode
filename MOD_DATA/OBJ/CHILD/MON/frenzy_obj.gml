@@ -201,7 +201,7 @@ object_event_add
         woke_var = true;
         image_alpha = 1;
         move_var = true;
-        snd_var = fmod_snd_3d_play_scr(charge_snd_var[0]);
+        inst_var = fmod_snd_3d_play_scr(charge_snd_var[0]);
         sub_var[0] = charge_snd_var[1];
         sub_var[1] = charge_snd_var[2];
     }

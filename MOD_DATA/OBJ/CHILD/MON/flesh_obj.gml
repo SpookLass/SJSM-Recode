@@ -22,6 +22,7 @@ object_event_add
     alarm_len_var = 1;
     alarm_ini_scr();
     do_possess_var = false;
+    do_snd_var = false;
     smart_var = false;
     arrow_var = false;
     angle_var = 0;

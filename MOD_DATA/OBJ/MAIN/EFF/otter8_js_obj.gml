@@ -16,16 +16,16 @@ object_event_add
         if id != other.id
         {
             other.spr_var = spr_var;
-            other.js_snd_var = js_snd_var;
+            other.snd_var = snd_var;
             local.loaded = true;
         }
     }
     if !local.loaded
     {
         spr_var = sprite_add(main_directory_const+"\SPR\MON\otter8_js_spr.png",12,false,false,0,0);
-        js_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\otter8_js_snd.wav",false);
+        snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\otter8_js_snd.wav",false);
     }
-    snd_var = 0;
+    inst_var = noone;
     alarm_len_var = 2;
     alarm_ini_scr();
     chance_alarm_var = 60;
@@ -42,7 +42,7 @@ object_event_add
     if !local.bool
     {
         sprite_delete(spr_var);
-        fmod_snd_free_scr(js_snd_var);
+        fmod_snd_free_scr(snd_var);
     }
 ');
 // Step Event
@@ -59,7 +59,7 @@ object_event_add
     if frac_chance_scr(chance_num_var*global.player_len_var,chance_den_var)
     {
         visible = true
-        snd_var = fmod_snd_play_scr(js_snd_var);
+        inst_var = fmod_snd_play_scr(snd_var);
         spr_id_var = 0;
         set_alarm_scr(1,anim_alarm_var);
         cam_id_var = irandom(global.player_len_var-1);
@@ -69,7 +69,7 @@ object_event_add
 // Stop Alarm
 object_event_add
 (argument0,ev_alarm,1,'
-    fmod_inst_stop_scr(snd_var);
+    fmod_inst_stop_scr(inst_var);
     visible = false
     spr_id_var = 0;
     set_alarm_scr(0,chance_alarm_var);

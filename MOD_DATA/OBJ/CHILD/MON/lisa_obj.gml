@@ -278,10 +278,10 @@ object_event_add
             hide_var = false;
             if fmod_snd_is_3d_scr(wake_snd_var[1])
             {
-                snd_var = fmod_snd_3d_play_scr(wake_snd_var[1]);
-                if global.pitch_bend_var { fmod_inst_set_pitch_scr(snd_var,random_range(0.95,1.05)); }
+                inst_var = fmod_snd_3d_play_scr(wake_snd_var[1]);
+                if global.pitch_bend_var { fmod_inst_set_pitch_scr(inst_var,random_range(0.95,1.05)); }
             }
-            else { snd_var = fmod_snd_play_scr(wake_snd_var[1]); }
+            else { inst_var = fmod_snd_play_scr(wake_snd_var[1]); }
             sub_var[0] = wake_snd_var[2];
             sub_var[1] = wake_snd_var[3];
             mus_snd_var = chase_mus_snd_var;

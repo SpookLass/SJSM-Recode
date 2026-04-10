@@ -160,7 +160,7 @@ object_event_add
         local.bool = true;
         with object_index { if fmod_inst_is_play_scr(drum_inst_var) { local.bool = false; break; }}
         if local.bool { drum_inst_var = fmod_snd_loop_scr(drum_snd_var); }
-        if fmod_inst_is_play_scr(drum_inst_var) { fmod_inst_set_pos_scr(drum_inst_var,fmod_inst_get_pos_scr(mus_control_obj.snd_var)); }
+        if fmod_inst_is_play_scr(drum_inst_var) { fmod_inst_set_pos_scr(drum_inst_var,fmod_inst_get_pos_scr(mus_control_obj.inst_var)); }
     }
     else { fmod_inst_stop_scr(drum_inst_var); }
 ');
@@ -216,8 +216,8 @@ object_event_add
             set_alarm_scr(4,charge_alarm_var);
             set_alarm_scr(8,charge_alarm_var);
             // Sound
-            fmod_inst_stop_scr(snd_var);
-            snd_var = fmod_snd_3d_play_scr(charge_snd_var[0]);
+            fmod_inst_stop_scr(inst_var);
+            inst_var = fmod_snd_3d_play_scr(charge_snd_var[0]);
             sub_var[0] = charge_snd_var[1];
             sub_var[1] = charge_snd_var[2];
             set_alarm_scr(6,irandom_range(snd_alarm_min_var,snd_alarm_max_var))
@@ -226,10 +226,10 @@ object_event_add
     // Music
     if fmod_inst_is_play_scr(drum_inst_var)
     {
-        if fmod_inst_is_play_scr(snd_var) != fmod_inst_get_mute_scr(drum_inst_var)
-        { fmod_inst_set_mute_scr(drum_inst_var,fmod_inst_is_play_scr(snd_var)); }
-        if fmod_inst_get_pause_scr(mus_control_obj.snd_var) != fmod_inst_get_pause_scr(drum_inst_var)
-        { fmod_inst_set_pause_scr(drum_inst_var,fmod_inst_get_pause_scr(mus_control_obj.snd_var)); }
+        if fmod_inst_is_play_scr(inst_var) != fmod_inst_get_mute_scr(drum_inst_var)
+        { fmod_inst_set_mute_scr(drum_inst_var,fmod_inst_is_play_scr(inst_var)); }
+        if fmod_inst_get_pause_scr(mus_control_obj.inst_var) != fmod_inst_get_pause_scr(drum_inst_var)
+        { fmod_inst_set_pause_scr(drum_inst_var,fmod_inst_get_pause_scr(mus_control_obj.inst_var)); }
     }
     event_inherited();
 ');

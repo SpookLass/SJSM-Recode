@@ -538,7 +538,7 @@ object_event_add
             dmg_var = other.puke_dmg_var;
             bg_var = other.puke_bg_var;
             fetus_tex_var = other.fetus_tex_var;
-            snd_var = other.puke_snd_var;
+            inst_var = other.puke_snd_var;
             alarm_02_var = other.puke_alarm_02_var;
             alarm_03_var = other.puke_alarm_03_var;
             unheal_var = other.unheal_var;
@@ -585,7 +585,7 @@ object_event_add
                     dmg_var = local.spooper.puke_dmg_var;
                     bg_var = local.spooper.puke_bg_var;
                     fetus_tex_var = local.spooper.fetus_tex_var;
-                    snd_var = local.spooper.puke_snd_var;
+                    inst_var = local.spooper.puke_snd_var;
                     alarm_02_var = local.spooper.puke_alarm_02_var;
                     alarm_03_var = local.spooper.puke_alarm_03_var;
                     slow_var = local.spooper.puke_slow_var;

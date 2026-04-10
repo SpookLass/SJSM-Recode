@@ -658,7 +658,7 @@ object_event_add
 (argument0,ev_other,ev_user3,'
     event_inherited();
     local.index = irandom(dmg_snd_len_var-1);
-    snd_var = fmod_snd_play_scr(dmg_snd_arr[local.index,0]);
+    inst_var = fmod_snd_play_scr(dmg_snd_arr[local.index,0]);
     sub_var[0] = dmg_snd_arr[local.index,1]
     sub_var[1] = dmg_snd_arr[local.index,2]
     if dmg_stun_alarm_var > 0

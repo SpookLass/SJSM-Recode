@@ -35,7 +35,7 @@ if room_exists(argument0) && argument0 != 0
             with mus_control_obj
             {
                 on_var = false;
-                fmod_inst_stop_scr(snd_var);
+                fmod_inst_stop_scr(inst_var);
             }
             break;
         }

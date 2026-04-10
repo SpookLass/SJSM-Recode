@@ -16,7 +16,7 @@ object_event_add
     action_set_cursor(-1,global.mouse_free_var);
     fmod_group_set_pause_scr(snd_group_mon_const,true);
     fmod_group_set_pause_scr(snd_group_voice_const,true);
-    with mus_control_obj { fmod_inst_set_pause_scr(snd_var,true); }
+    with mus_control_obj { fmod_inst_set_pause_scr(inst_var,true); }
     global.pause_var = true;
     fmod_snd_play_scr(deny_snd);
     time_var = 0;
@@ -168,7 +168,7 @@ object_event_add
     if global.pause_theme_var { fmod_inst_stop_scr(mus_snd_var); }
     fmod_group_set_pause_scr(snd_group_mon_const,false);
     fmod_group_set_pause_scr(snd_group_voice_const,false);
-    with mus_control_obj { fmod_inst_set_pause_scr(snd_var,false); }
+    with mus_control_obj { fmod_inst_set_pause_scr(inst_var,false); }
     global.pause_var = false;
 ');
 // Alarm 0 Event

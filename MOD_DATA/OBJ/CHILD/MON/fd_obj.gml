@@ -70,7 +70,7 @@ object_event_add
     spr_spd_var = spr_spd_base_var;
     // Door vanish
     door_hide_var = false;
-    false_ready_var = false;
+    hide_ready_var = false;
     hide_reset_var = false;
     hide_alarm_min_var = 160;
     hide_alarm_max_var = 320;

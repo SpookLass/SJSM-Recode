@@ -603,10 +603,10 @@ object_event_add
                         frick_var = sprint_acc_var;
                     }
                     // Somebody scream!
-                    if fmod_inst_is_play_scr(snd_var) && fmod_inst_is_3d_scr(snd_var)
-                    { fmod_inst_stop_scr(snd_var); }
+                    if fmod_inst_is_play_scr(inst_var) && fmod_inst_is_3d_scr(inst_var)
+                    { fmod_inst_stop_scr(inst_var); }
                     local.index = irandom(charge_snd_len_var-1);
-                    snd_var = fmod_snd_3d_play_scr(charge_snd_arr[local.index,0]);
+                    inst_var = fmod_snd_3d_play_scr(charge_snd_arr[local.index,0]);
                     sub_var[0] = charge_snd_arr[local.index,1];
                     sub_var[1] = charge_snd_arr[local.index,2];
                 }
@@ -657,8 +657,8 @@ object_event_add
 (argument0,ev_alarm,6,'
     if do_snd_var && frac_chance_scr(snd_num_var,snd_den_var)//&& (!scary_var || !sprint_var)
     {
-        if fmod_inst_is_play_scr(snd_var) && fmod_inst_is_3d_scr(snd_var)
-        { fmod_inst_stop_scr(snd_var); }
+        if fmod_inst_is_play_scr(inst_var) && fmod_inst_is_3d_scr(inst_var)
+        { fmod_inst_stop_scr(inst_var); }
         if breath_snd_len_var > 0 && (frac_chance_scr(breath_snd_num_var,breath_snd_den_var) || sprint_var)
         {
             local.index = irandom(breath_snd_len_var-1);
@@ -673,7 +673,7 @@ object_event_add
             sub_var[0] = snd_arr[local.index,1];
             sub_var[1] = snd_arr[local.index,2];
         }
-        snd_var = fmod_snd_3d_play_scr(local.snd);
+        inst_var = fmod_snd_3d_play_scr(local.snd);
     }
     set_alarm_scr(6,irandom_range(snd_alarm_min_var,snd_alarm_max_var));
 ');

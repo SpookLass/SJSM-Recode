@@ -275,7 +275,7 @@ object_event_add
         tex_var = sprite_get_texture(spr_var,0);
         if mus_prio_var <= amb_mus_prio_const && alarm_arr[11,0] <= 0
         {
-            if fmod_inst_is_play_scr(snd_var) { set_alarm_scr(11,fmod_inst_get_len_scr(snd_var)*(1-fmod_inst_get_pos_scr(snd_var))*milli_frame_rate_const); }
+            if fmod_inst_is_play_scr(inst_var) { set_alarm_scr(11,fmod_inst_get_len_scr(inst_var)*(1-fmod_inst_get_pos_scr(inst_var))*milli_frame_rate_const); }
             else { event_perform(ev_alarm,11); }
         }
         x = global.spawn_arr[0,0];
@@ -314,10 +314,10 @@ object_event_add
         seen_pitch_var = seen_pitch_02_var;
         if fmod_snd_is_3d_scr(wake_snd_var[1])
         {
-            snd_var = fmod_snd_3d_play_scr(wake_snd_var[1]);
-            if global.pitch_bend_var { fmod_inst_set_pitch_scr(snd_var,random_range(0.95,1.05)); }
+            inst_var = fmod_snd_3d_play_scr(wake_snd_var[1]);
+            if global.pitch_bend_var { fmod_inst_set_pitch_scr(inst_var,random_range(0.95,1.05)); }
         }
-        else { snd_var = fmod_snd_play_scr(wake_snd_var[1]); }
+        else { inst_var = fmod_snd_play_scr(wake_snd_var[1]); }
         sub_var[0] = wake_snd_var[2];
         sub_var[1] = wake_snd_var[3];
         do_anim_var = false;
@@ -396,10 +396,10 @@ object_event_add
     {
         if fmod_snd_is_3d_scr(wake_snd_var[1])
         {
-            snd_var = fmod_snd_3d_play_scr(wake_snd_var[1]);
-            if global.pitch_bend_var { fmod_inst_set_pitch_scr(snd_var,random_range(0.95,1.05)); }
+            inst_var = fmod_snd_3d_play_scr(wake_snd_var[1]);
+            if global.pitch_bend_var { fmod_inst_set_pitch_scr(inst_var,random_range(0.95,1.05)); }
         }
-        else { snd_var = fmod_snd_play_scr(wake_snd_var[1]); }
+        else { inst_var = fmod_snd_play_scr(wake_snd_var[1]); }
         sub_var[0] = wake_snd_var[2];
         sub_var[1] = wake_snd_var[3];
         rage_var = true;
@@ -466,15 +466,15 @@ object_event_add
                 seen_pitch_var = seen_pitch_02_var;
                 if fmod_snd_is_3d_scr(wake_snd_var[1])
                 {
-                    snd_var = fmod_snd_3d_play_scr(wake_snd_var[1]);
-                    if global.pitch_bend_var { fmod_inst_set_pitch_scr(snd_var,random_range(0.95,1.05)); }
+                    inst_var = fmod_snd_3d_play_scr(wake_snd_var[1]);
+                    if global.pitch_bend_var { fmod_inst_set_pitch_scr(inst_var,random_range(0.95,1.05)); }
                 }
-                else { snd_var = fmod_snd_play_scr(wake_snd_var[1]); }
+                else { inst_var = fmod_snd_play_scr(wake_snd_var[1]); }
                 sub_var[0] = wake_snd_var[2];
                 sub_var[1] = wake_snd_var[3];
                 do_anim_var = false;
                 anim_var = false;
-                set_alarm_scr(11,fmod_inst_get_len_scr(snd_var)*milli_frame_rate_const/global.game_spd_var);
+                set_alarm_scr(11,fmod_inst_get_len_scr(inst_var)*milli_frame_rate_const/global.game_spd_var);
                 event_perform(ev_other,ev_room_start);
             }
         }

@@ -9,10 +9,15 @@ object_set_visible(argument0,false);
 // Create event
 object_event_add
 (argument0,ev_create,0,'
-    if !variable_local_exists("chance_num_var")
+    if global.js_override_var
+    {
+        chance_num_var = global.js_override_num_var;
+        chance_den_var = global.js_override_den_var;
+    }
+    else if !variable_local_exists("chance_num_var")
     {
         chance_num_var = 1;
-        chance_den_var = 5;
+        chance_den_var = global.js_chance_var;
     }
     if frac_chance_scr(chance_num_var,chance_den_var)
     {

@@ -544,10 +544,10 @@ object_event_add
     // Sound (I think? HDs code here sucks)
     if hd_snd_var
     {
-        if fmod_inst_is_play_scr(snd_var) && fmod_inst_is_3d_scr(snd_var)
-        { fmod_inst_stop_scr(snd_var); }
+        if fmod_inst_is_play_scr(inst_var) && fmod_inst_is_3d_scr(inst_var)
+        { fmod_inst_stop_scr(inst_var); }
         local.snd = irandom(snd_len_var-1);
-        snd_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0]);
+        inst_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0]);
         sub_var[0] = snd_arr[local.snd,1];
         sub_var[1] = snd_arr[local.snd,2];
     }
@@ -581,8 +581,8 @@ object_event_add
 // Teleport
 object_event_add
 (argument0,ev_other,ev_user15,'
-    fmod_inst_stop_scr(snd_var);
-    snd_var = fmod_snd_3d_play_scr(laugh_snd_var[0]);
+    fmod_inst_stop_scr(inst_var);
+    inst_var = fmod_snd_3d_play_scr(laugh_snd_var[0]);
     sub_var[0] = laugh_snd_var[1];
     sub_var[1] = laugh_snd_var[2];
     if instance_exists(target_var)
@@ -657,10 +657,10 @@ object_event_add
             // Sound
             if hd_snd_var
             {
-                if fmod_inst_is_play_scr(snd_var) && fmod_inst_is_3d_scr(snd_var)
-                { fmod_inst_stop_scr(snd_var); }
+                if fmod_inst_is_play_scr(inst_var) && fmod_inst_is_3d_scr(inst_var)
+                { fmod_inst_stop_scr(inst_var); }
                 local.snd = irandom(snd_len_var-1);
-                snd_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0]);
+                inst_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0]);
                 sub_var[0] = snd_arr[local.snd,1];
                 sub_var[1] = snd_arr[local.snd,2];
             }

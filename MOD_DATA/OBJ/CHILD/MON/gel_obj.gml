@@ -297,9 +297,9 @@ object_event_add
         // Stupid wake sound
         if slime_snd_var[0]
         {
-            if fmod_inst_is_play_scr(snd_var) && fmod_inst_is_3d_scr(snd_var)
-            { fmod_inst_stop_scr(snd_var); }
-            snd_var = fmod_snd_3d_play_scr(slime_snd_var[1]);
+            if fmod_inst_is_play_scr(inst_var) && fmod_inst_is_3d_scr(inst_var)
+            { fmod_inst_stop_scr(inst_var); }
+            inst_var = fmod_snd_3d_play_scr(slime_snd_var[1]);
             sub_var[0] = slime_snd_var[2];
             sub_var[1] = slime_snd_var[3];
             set_alarm_scr(6,irandom_range(snd_delay_min_var,snd_delay_max_var));
@@ -436,10 +436,10 @@ object_event_add
         }
         else
         {
-            if fmod_inst_is_play_scr(snd_var) && fmod_inst_is_3d_scr(snd_var)
-            { fmod_inst_stop_scr(snd_var); }
+            if fmod_inst_is_play_scr(inst_var) && fmod_inst_is_3d_scr(inst_var)
+            { fmod_inst_stop_scr(inst_var); }
             local.snd = irandom(snd_len_var-1);
-            snd_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0]);
+            inst_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0]);
             sub_var[0] = snd_arr[local.snd,1];
             sub_var[1] = snd_arr[local.snd,2];
             set_alarm_scr(6,irandom_range(snd_delay_min_var,snd_delay_min_var));
@@ -459,9 +459,9 @@ object_event_add
         // Stupid wake sound
         if slime_snd_var[0]
         {
-            if fmod_inst_is_play_scr(snd_var) && fmod_inst_is_3d_scr(snd_var)
-            { fmod_inst_stop_scr(snd_var); }
-            snd_var = fmod_snd_3d_play_scr(slime_snd_var[1]);
+            if fmod_inst_is_play_scr(inst_var) && fmod_inst_is_3d_scr(inst_var)
+            { fmod_inst_stop_scr(inst_var); }
+            inst_var = fmod_snd_3d_play_scr(slime_snd_var[1]);
             sub_var[0] = slime_snd_var[2];
             sub_var[1] = slime_snd_var[3];
             set_alarm_scr(6,irandom_range(snd_delay_min_var,snd_delay_max_var));

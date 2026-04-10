@@ -188,7 +188,7 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user15,'
     local.index = irandom(leave_snd_len_var-1);
-    snd_var = fmod_snd_play_scr(leave_snd_arr[local.index,0]);
+    inst_var = fmod_snd_play_scr(leave_snd_arr[local.index,0]);
     sub_var[0] = leave_snd_arr[local.index,1];
     sub_var[1] = leave_snd_arr[local.index,2];
 ')
