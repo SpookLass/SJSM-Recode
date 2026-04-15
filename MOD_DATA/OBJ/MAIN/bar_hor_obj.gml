@@ -7,8 +7,12 @@ object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Prop collisions
+globalvar bar_hor_coll;
+global.bar_hor_coll[1] = 32;
+global.bar_hor_coll[2] = 32;
+global.bar_hor_coll[3] = 2;
 p3dc_set_trimask_scr(mask_metal_const);
-global.bar_hor_coll[0] = prop_to_coll_scr(0,bar_mdl_path);
+global.bar_hor_coll[0] = prop_to_coll_scr(2,bar_mdl_path,global.bar_hor_coll[2],global.bar_hor_coll[3],global.bar_hor_coll[1],true,0,0);
 p3dc_set_trimask_scr(mask_basic_const);
 // Create event
 object_event_add
@@ -20,11 +24,11 @@ object_event_add
     mdl_path_var = bar_mdl_path;
     // For grid
     w_var = 32;
-    l_var = 4;
+    l_var = 2;
     h_var = 32;
     // Collisions
     coll_var[0] = global.bar_hor_coll[0];
-    coll_var[1] = h_var;
-    coll_var[2] = w_var;
-    coll_var[3] = l_var;
+    coll_var[1] = global.bar_hor_coll[1];
+    coll_var[2] = global.bar_hor_coll[2];
+    coll_var[3] = global.bar_hor_coll[3];
 ');

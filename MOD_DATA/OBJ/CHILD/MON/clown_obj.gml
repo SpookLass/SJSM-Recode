@@ -36,6 +36,7 @@ object_event_add
     eye_h_var = 23.4;
     z_off_var = -0.3;
     blood_spr_var = blood_kh_spr;
+    dead_rm_var = clown_dead_load_rm;
     // Special
     do_atk_var = false;
     do_seen_var = true;

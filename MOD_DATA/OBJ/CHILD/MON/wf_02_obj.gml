@@ -86,7 +86,7 @@ object_event_add
     if !local.loaded
     {
         boss_icon_var = execute_file(main_directory_const+"\SPR\MON\wf_icon_spr.gml",main_directory_const+"\SPR\MON\wf_icon_spr.png");
-        spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS28_01_spr.png",8,false,false,0,0);
+        spr_var = wf_spr;
         bg_var = background_add(vanilla_directory_const+"\TEX\sprites\MS28_02_spr.png",false,false);
         tex_spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS28_08_spr.png",3,false,false,0,0);
         door_bg_var = background_add(vanilla_directory_const+"\TEX\sprites\MS28_04_spr.png",false,false);
@@ -196,7 +196,6 @@ object_event_add
     if !local.bool
     {
         sprite_delete(boss_icon_var);
-        sprite_delete(spr_var);
         background_delete(bg_var);
         sprite_delete(tex_spr_var);
         sprite_delete(light_wall_spr_var);

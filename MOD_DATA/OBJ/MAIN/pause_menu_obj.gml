@@ -31,9 +31,31 @@ object_event_add
     scale_alarm_var = 30;
     scale_var = random_range(scale_min_var,scale_max_var);
     // Spooky
+    if global.dead_mon_var == wf_obj || global.dead_mon_var == wf_02_obj
+    {
+        spook_spr_var = wf_spr;
+        spook_scale_min_var = 300; // 400
+        spook_scale_max_var = 500;
+        spook_num_var = 1;
+        spook_den_var = 1;
+    }
+    else if global.halloween_var || current_month == 10
+    {
+        spook_spr_var = spooky_halloween_spr;
+        spook_scale_min_var = 1215; // 1620
+        spook_scale_max_var = 2025;
+        spook_num_var = 1;
+        spook_den_var = 2;
+    }
+    else
+    {
+        spook_spr_var = spooky_spr;
+        spook_scale_min_var = 1140; // 1520
+        spook_scale_max_var = 1900;
+        spook_num_var = 1;
+        spook_den_var = 2;
+    }
     spook_alpha_var = 0;
-    spook_scale_min_var = 1140;
-    spook_scale_max_var = 1900;
     spook_scale_base_var = random_range(spook_scale_min_var,spook_scale_max_var);
     spook_scale_var = spook_scale_base_var;
     spook_alpha_max_var = 0.08;
@@ -186,7 +208,7 @@ object_event_add
 // Alarm 2 Event
 object_event_add
 (argument0,ev_alarm,2,'
-    if !irandom(1)
+    if frac_chance_scr(spook_num_var,spook_den_var)
     {
         spook_x_var = random(1280)-640;
         spook_y_var = random(1280)-640;
@@ -236,7 +258,7 @@ object_event_add
     {
         draw_spr_stretch_ext_scr
         (
-            spooky_spr,0,spook_x_var,spook_y_var,
+            spook_spr_var,0,spook_x_var,spook_y_var,
             spook_scale_var,0,fa_center,fa_middle,
             0,c_white,spook_alpha_var
         )

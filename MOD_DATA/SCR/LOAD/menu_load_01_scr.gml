@@ -1374,9 +1374,10 @@ mon_arr[global.mon_len_var,8] = 3; // Extra behaviors
 mon_arr[global.mon_len_var,9] = bodybag_obj; // Object
 mon_arr[global.mon_len_var,10] = noone; // Locale
 // Types
-mon_type_arr[global.mon_len_var,0] = "old";
+
+mon_type_arr[global.mon_len_var,0] = "kh";
 mon_type_arr[global.mon_len_var,1] = true; // Translate
-mon_type_arr[global.mon_len_var,2] = "kh";
+mon_type_arr[global.mon_len_var,2] = "old";
 mon_type_arr[global.mon_len_var,3] = true; // Translate
 mon_type_arr[global.mon_len_var,4] = "alt";
 mon_type_arr[global.mon_len_var,5] = true; // Translate

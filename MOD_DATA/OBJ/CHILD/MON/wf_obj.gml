@@ -133,7 +133,7 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
-        spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS28_01_spr.png",8,false,false,0,0);
+        spr_var = wf_spr;
         bg_var = background_add(vanilla_directory_const+"\TEX\sprites\MS28_02_spr.png",false,false);
         tex_spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS28_03_spr.png",3,false,false,0,0);
         door_bg_var = background_add(vanilla_directory_const+"\TEX\sprites\MS28_04_spr.png",false,false);
@@ -355,7 +355,6 @@ object_event_add
     with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
     if !local.bool
     {
-        sprite_delete(spr_var);
         background_delete(bg_var);
         sprite_delete(tex_spr_var);
         sprite_delete(light_wall_spr_var);

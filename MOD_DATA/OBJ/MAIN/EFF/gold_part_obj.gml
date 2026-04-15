@@ -25,11 +25,14 @@ object_event_add
     alarm_ini_scr();
     set_alarm_scr(0,part_delay_var);
     image_blend = make_color_rgb(224,208,142);
+    // Sound
+    on_var = false;
+    inst_var = noone;
 ');
 // Alarm 0
 object_event_add
 (argument0,ev_alarm,0,'
-    if par_var.on_var
+    if on_var
     {
         local.part = part_add_scr
         (
@@ -58,6 +61,14 @@ object_event_add
 // Step
 object_event_add
 (argument0,ev_step,ev_step_normal,'
+    // Sound
+    if par_var.on_var != on_var
+    {
+        on_var = par_var.on_var;
+        if on_var { inst_var = fmod_snd_3d_loop_scr(gold_lamp_snd,x,y,z); }
+        else { fmod_inst_stop_scr(inst_var); }
+    }
+    // Particles
     local.len = min(part_len_var,global.max_part_var/instance_number(part_par_obj));
     for (local.i=0; local.i<local.len; local.i+=1;)
     {
@@ -75,6 +86,21 @@ object_event_add
         }
     }
     event_inherited();
+');
+// Destroy event
+object_event_add
+(argument0,ev_destroy,0,'
+    event_user(0);
+');
+// End Room Event
+object_event_add
+(argument0,ev_other,ev_room_end,'
+    event_user(0);
+');
+// Event User 0
+object_event_add
+(argument0,ev_other,ev_user0,'
+    fmod_inst_stop_scr(inst_var);
 ');
 // Draw Event
 object_event_add

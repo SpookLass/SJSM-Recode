@@ -18,6 +18,7 @@ object_event_add
     snd_dist_min_var = 0;
     snd_dist_max_var = 600;
     wake_snd_var[0] = true;
+    hurt_snd_var = 4;
     // Translations
     ini_open(global.lang_var);
     name_var = translate_mon_str_scr("otto",global.name_var);
@@ -25,6 +26,7 @@ object_event_add
     for (local.i=0; local.i<snd_len_var; local.i+=1)
     { snd_arr[local.i,1] = local.sub; snd_arr[local.i,2] = false; }
     wake_snd_var[2] = local.sub; wake_snd_var[3] = false;
+    hurt_snd_var[2] = ini_read_string("SUB","radio","SUB_radio"); hurt_snd_var[3] = false;
     ini_close();
     // Variables
     type_var = 1;
@@ -59,6 +61,7 @@ object_event_add
             for (local.i=0; local.i<snd_len_var; local.i+=1;)
             { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
             other.mus_snd_var = mus_snd_var;
+            other.hurt_snd_var[1] = hurt_snd_var[1];
             local.loaded = true;
             break;
         }
@@ -84,6 +87,8 @@ object_event_add
             }
         }
         fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
+        hurt_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\KH\radio_button_snd.wav",false);
+        fmod_snd_set_group_scr(hurt_snd_var[1],snd_group_mon_const);
     }
     eye_tex_var = sprite_get_texture(eye_spr_var,0);
     // Behavior
@@ -98,6 +103,8 @@ object_event_add
             mus_prio_var = mon_mus_prio_const;
             eye_var = true;
             atk_range_var = global.mon_coll[2];
+            // Hurt
+            do_hurt_var = true;
             break;
         }
         case 3: // Old HD
@@ -186,6 +193,17 @@ object_event_add
         set_alarm_scr(1,atk_stun_var);
         set_alarm_scr(2,atk_stun_var);
         set_alarm_scr(4,atk_stun_var);
+    }
+');
+// Hurt Event
+object_event_add
+(argument0,ev_other,ev_user4,'
+    event_inherited();
+    if !enter_var
+    {
+        if mus_prio_var < mon_mus_prio_const { mus_prio_var = mon_mus_prio_const; }
+        else { mus_prio_var = -1; }
+        with mus_control_obj { event_user(0); }
     }
 ');
 // Draw Event

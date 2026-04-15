@@ -209,7 +209,7 @@ object_event_add
                 alarm_var = other.eff_alarm_var;
                 set_alarm_scr(0,alarm_var);
                 // Sound
-                inst_var = other.cam_snd_var;
+                snd_var = other.cam_snd_var;
                 // Room Start
                 event_perform(ev_other,ev_room_start);
             }

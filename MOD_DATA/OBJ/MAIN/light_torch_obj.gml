@@ -5,7 +5,7 @@ object_set_parent(argument0,light_par_obj);
 object_set_persistent(argument0,false);
 object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
-object_set_visible(argument0,true);
+object_set_visible(argument0,false);
 // Create event
 object_event_add
 (argument0,ev_create,0,'
@@ -17,13 +17,38 @@ object_event_add
     spr_id_var = 0;
     spr_spd_var = 0.25;
     par_var = noone;
+    inst_var = noone;
 ');
 // Step event
 object_event_add
 (argument0,ev_step,ev_step_normal,'
     spr_id_var = (spr_id_var+(spr_spd_var*global.delta_time_var)) mod sprite_get_number(spr_var);
-    if instance_exists(par_var) { visible = par_var.on_var; }
-')
+    if instance_exists(par_var)
+    {
+        if visible != par_var.on_var
+        {
+            visible = par_var.on_var;
+            if visible { inst_var = fmod_snd_3d_loop_scr(torch_snd,x,y,z); }
+            else { fmod_inst_stop_scr(inst_var); }
+        }
+        
+    }
+');
+// Destroy event
+object_event_add
+(argument0,ev_destroy,0,'
+    event_user(0);
+');
+// End Room Event
+object_event_add
+(argument0,ev_other,ev_room_end,'
+    event_user(0);
+');
+// Event User 0
+object_event_add
+(argument0,ev_other,ev_user0,'
+    fmod_inst_stop_scr(inst_var);
+');
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,'

@@ -154,7 +154,7 @@ object_event_add
     }
     // Music
     local.bool = false;
-    with mus_control_obj { if curr_snd_var == other.mus_snd_var { local.bool = true; break; }}
+    with mus_control_obj { if snd_var == other.mus_snd_var { local.bool = true; break; }}
     if local.bool
     {
         local.bool = true;

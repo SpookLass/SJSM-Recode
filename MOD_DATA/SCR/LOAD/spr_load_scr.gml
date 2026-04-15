@@ -23,7 +23,9 @@ sprite_set_offset(ghost_spr,sprite_get_width(ghost_spr)/2,sprite_get_height(ghos
 file_to_spr_scr(vanilla_directory_const+"\TEX\sprites\spooky_spr.png","spooky_spr",9,false,false,0,0,argument0);
 sprite_set_offset(spooky_spr,sprite_get_width(spooky_spr)/2,108);
 file_to_spr_scr(vanilla_directory_const+"\TEX\sprites\spooky2_spr.png","spooky_sad_spr",9,false,false,0,0,argument0);
-file_to_spr_scr(vanilla_directory_const+"\TEX\sprites\spooky3_spr.png","spooky_halloween_spr",9,false,false,0,0,argument0);
+file_to_spr_scr(vanilla_directory_const+"\TEX\sprites\spooky3_spr.png","spooky_halloween_spr",9,false,false,127,108,argument0);
+file_to_spr_scr(vanilla_directory_const+"\TEX\sprites\MS28_01_spr.png","wf_spr",8,false,false,0,0,argument0);
+sprite_set_offset(wf_spr,sprite_get_width(wf_spr)/2,23);
 // Replaceable
 file_to_spr_scr(vanilla_directory_const+"\TEX\WALL_01L0.png","light_wall_spr",2,false,false,0,0,argument0);
 file_to_spr_scr(vanilla_directory_const+"\TEX\FLOOR_01L0.png","light_floor_spr",2,false,false,0,0,argument0);

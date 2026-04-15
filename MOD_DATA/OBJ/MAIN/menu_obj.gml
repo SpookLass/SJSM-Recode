@@ -403,8 +403,29 @@ object_event_add
     light_den_var = 3;
     light_double_num_var = 1;
     light_double_den_var = 4;
-    spook_num_var = 1;
-    spook_den_var = 6;
+    // Spooky
+    wf_var = (global.dead_mon_var == wf_obj || global.dead_mon_var == wf_02_obj);
+    if wf_var
+    {
+        spook_spr_var = wf_spr;
+        spook_scale_var = 400;
+        spook_num_var = 1;
+        spook_den_var = 1;
+    }
+    else if global.halloween_var || current_month == 10
+    {
+        spook_spr_var = spooky_halloween_spr;
+        spook_scale_var = 1620;
+        spook_num_var = 1;
+        spook_den_var = 6;
+    }
+    else
+    {
+        spook_spr_var = spooky_spr;
+        spook_scale_var = 1520;
+        spook_num_var = 1;
+        spook_den_var = 6;
+    }
     spook_alpha_max_var = 0.2;
     spook_alarm_var = 25;
     spook_alpha_var = 0;
@@ -1612,7 +1633,7 @@ object_event_add
     }
 
     // Effects
-    draw_spr_stretch_ext_scr(spooky_spr,0,0,0,1520,0,fa_center,fa_middle,0,c_white,spook_alpha_var);
+    draw_spr_stretch_ext_scr(spook_spr_var,0,0,0,spook_scale_var,0,fa_center,fa_middle,0,c_white,spook_alpha_var);
     if flash_var { draw_rectangle(0,0,view_wview[view_current],view_hview[view_current],false); }
 
     switch state_var
