@@ -141,6 +141,7 @@ object_event_add
             local.otter8 = local.arr_len;
             local.arr_len += 1;
         }
+        else { local.otter8 = -1; }
             // Backgrounds
         local.tex = irandom(local.arr_len-1);
         bg_01_var = background_add(local.arr[local.tex,0],false,false);
