@@ -92,8 +92,8 @@ object_event_add
     button_arr[1] = ini_read_string("MENU","setting","MENU_setting");
     if no_escape_var
     {
-        button_arr[2] = ini_read_string("MENU","no_escape","MENU_no_escape");
-        button_arr[3] = ini_read_string("MENU","no_escape","MENU_no_escape");
+        button_arr[2] = ini_read_string("MENU","no_escape_01","MENU_no_escape_01");
+        button_arr[3] = ini_read_string("MENU","no_escape_02","MENU_no_escape_02");
     }
     else
     {
@@ -149,7 +149,8 @@ object_event_add
                 }
                 case 1: // Settings
                 {
-                    instance_create(0,0,set_menu_obj);
+                    with instance_create(0,0,set_menu_obj)
+                    { player_id_var = other.player_id_var; }
                     fmod_snd_play_scr(confirm_snd);
                     state_var = 1;
                     break;

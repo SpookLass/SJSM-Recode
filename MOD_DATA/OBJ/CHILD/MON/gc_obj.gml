@@ -183,6 +183,8 @@ object_event_add
             // mus_prio_var = mb_mus_prio_const; // Miniboss?
             stun_var = true;
             hurt_alarm_var = 30;
+            // Delay
+            delay_var = 30;
             break;
         }
         case 6: // KH Recode

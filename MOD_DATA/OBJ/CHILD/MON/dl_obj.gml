@@ -125,7 +125,7 @@ object_event_add
             type_var = 2;
             dmg_alarm_var = 120;
             do_warp_var = true;
-            delay_var = 60;
+            delay_var = 30; // 60
             atk_range_var = global.mon_coll[2];
             // Effect
             eff_min_var = 15;

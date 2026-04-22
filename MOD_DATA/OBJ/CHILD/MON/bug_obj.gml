@@ -151,8 +151,8 @@ object_event_add
             stun_var = false;
             do_hurt_var = 1;
             door_var = true;
-            delay_min_var = 60;
-            delay_max_var = 180;
+            delay_min_var = 60; // 60
+            delay_max_var = 60; // 180
             hole_alarm_min_var = 30;
             hole_alarm_max_var = 30;
             hole_spawn_den_var = 1;

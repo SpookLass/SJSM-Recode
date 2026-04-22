@@ -19,6 +19,7 @@ object_event_add
     inst_var = noone;
     silent_var = false;
     hit_var = false;
+    otter8_var = false;
     if global.js_override_var
     {
         chance_num_var = global.js_override_num_var;
@@ -132,6 +133,14 @@ object_event_add
             local.arr[local.arr_len+1,2] = "";
             local.arr_len += 2;
         }
+        if global.save_name_var == "1987"
+        {
+            local.arr[local.arr_len,0] = main_directory_const+"\BG\MON\js_otter8_01_bg.png";
+            local.arr[local.arr_len,1] = main_directory_const+"\BG\MON\js_otter8_02_bg.png";
+            local.arr[local.arr_len,2] = "";
+            local.otter8 = local.arr_len;
+            local.arr_len += 1;
+        }
             // Backgrounds
         local.tex = irandom(local.arr_len-1);
         bg_01_var = background_add(local.arr[local.tex,0],false,false);
@@ -146,6 +155,12 @@ object_event_add
         else { snd_var = fmod_snd_add_scr(local.snd,snd_3d_var); }
         if snd_dist_max_var > 0
         { fmod_snd_set_minmax_dist_scr(snd_var,0,snd_dist_max_var); }
+        // Otter8
+        if local.tex == local.otter8
+        {
+            otter8_var = true;
+            silent_var = true;
+        }
         // Trigger
         if !variable_local_exists("trig_var")
         {
@@ -273,7 +288,20 @@ object_event_add
                 y = other.y+lengthdir_y(other.w_var/2,other.direction-90);
             }
         }
-        
+    }
+    // Otter8
+    if otter8_var
+    {
+        with otter8_js_obj
+        {
+            visible = true
+            fmod_inst_stop_scr(inst_var);
+            inst_var = fmod_snd_play_scr(snd_var);
+            spr_id_var = 0;
+            cam_id_var = other.player_var.cam_id_var;
+            set_alarm_scr(0,-1);
+            set_alarm_scr(1,anim_alarm_var);
+        }
     }
 ');
 // Step Event

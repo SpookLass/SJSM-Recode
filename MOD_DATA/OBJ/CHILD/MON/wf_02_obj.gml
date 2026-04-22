@@ -129,6 +129,7 @@ object_event_add
         case 0: // Recode
         {
             atk_range_var = global.mon_coll[2];
+            delay_var = 30;
             // Smaller Resolution
             res_w_var = 640;
             res_h_var = 480;

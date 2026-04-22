@@ -114,6 +114,7 @@ object_event_add
             shadow_scale_var = 24;
             shadow_alpha_var = 0.4;
             atk_range_var = global.mon_coll[2];
+            delay_var = 60;
             // Pride Month or Trans Day of Visibility
             if ((current_month == 6 || global.pride_var > 0) && !irandom(7)) || (current_month == 3 && current_month == 31)
             {

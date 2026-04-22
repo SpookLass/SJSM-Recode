@@ -40,7 +40,7 @@ object_event_add
     seen_dist_var = 8;
     seen_yaw_var = 30;
     seen_fade_var = false;
-    seen_fade_rate_var = 0.02;
+    seen_fade_rate_var = 0.03;
     hp_max_var = 6;
     hp_var = hp_max_var;
     door_type_var = 1;

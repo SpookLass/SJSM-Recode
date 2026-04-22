@@ -141,7 +141,7 @@ object_event_add
         {
             spd_base_var = 0.6;
             spr_spd_var = 1/3;
-            delay_var = 128;
+            delay_var = 30; // 128
             flesh_door_var = false;
             w_01_var = 7.7; // 7
             w_02_var = 2.8; // 3.5

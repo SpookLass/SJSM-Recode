@@ -110,8 +110,8 @@ object_event_add
             do_acc_var = true;
             acc_var = 0.1;
             frick_var = 0.05;
-            delay_var = 90;
-            atk_spawn_delay_var = 90;
+            delay_var = 60; // 90
+            atk_spawn_delay_var = 60;
             shake_var = 0.32;
             eff_fade_var = true;
             strobe_var = false;

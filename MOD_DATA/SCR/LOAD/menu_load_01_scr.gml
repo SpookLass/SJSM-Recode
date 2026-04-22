@@ -1114,12 +1114,14 @@ mon_arr[global.mon_len_var,4] = true; // Translate
 mon_arr[global.mon_len_var,5] = true; // Chases
 mon_arr[global.mon_len_var,6] = true; // Has CAT-DOS
 mon_arr[global.mon_len_var,7] = 1; // Group
-mon_arr[global.mon_len_var,8] = 1; // Extra behaviors
+mon_arr[global.mon_len_var,8] = 2; // Extra behaviors
 mon_arr[global.mon_len_var,9] = flesh_obj; // Object
 mon_arr[global.mon_len_var,10] = noone; // Locale
 // Types
 mon_type_arr[global.mon_len_var,0] = "alt";
 mon_type_arr[global.mon_len_var,1] = true; // Translate
+mon_type_arr[global.mon_len_var,2] = "remodeled";
+mon_type_arr[global.mon_len_var,3] = true; // Translate
 // Descriptions
 mon_desc_arr[global.mon_len_var,0] = mon_arr[global.mon_len_var,2]+"_"+type_arr[0,1];
 mon_desc_arr[global.mon_len_var,1] = true;
@@ -1129,6 +1131,8 @@ mon_desc_arr[global.mon_len_var,4] = mon_arr[global.mon_len_var,2]+"_"+type_arr[
 mon_desc_arr[global.mon_len_var,5] = true;
 mon_desc_arr[global.mon_len_var,6] = mon_arr[global.mon_len_var,2]+"_"+mon_type_arr[global.mon_len_var,0];
 mon_desc_arr[global.mon_len_var,7] = true;
+mon_desc_arr[global.mon_len_var,8] = mon_arr[global.mon_len_var,2]+"_"+mon_type_arr[global.mon_len_var,2];
+mon_desc_arr[global.mon_len_var,9] = true;
 local.flesh = global.mon_len_var;
 global.mon_len_var += 1;
     // Deer Lord

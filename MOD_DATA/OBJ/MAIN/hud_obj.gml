@@ -88,24 +88,25 @@ object_event_add
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,'
-    if view_current == par_var.cam_id_var && !global.hide_hud_var && par_var.on_var
+    if view_current == par_var.cam_id_var && !global.hide_hud_var && global.hud_scale_var > 0 && par_var.on_var
     {
         d3d_set_fog(false,c_black,0,0);
         d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
         d3d_set_hidden(false);
         local.viewscale = min(view_wview[view_current]/1280,view_hview[view_current]/720);
+        local.hudscale = global.hud_scale_var*0.01;
         // TPS
         if global.tps_hud_var
         {
             local.str = tps_str_var+": "+string(fps)+" | "+fps_str_var+": "+string(global.fps_curr_var);
-            draw_str_shadow_scr(local.str,1,1,0.25,0.25,scale_min_var,fa_left,fa_top,-1,1,make_color_rgb(30,0,50),c_yellow,1,0);
+            draw_str_shadow_scr(local.str,1,1,local.hudscale*0.25,local.hudscale*0.25,scale_min_var,fa_left,fa_top,-local.hudscale,local.hudscale,make_color_rgb(30,0,50),c_yellow,1,0);
         }
         // Time
         if global.time_hud_var
         {
             local.str = dhms_str_scr(global.game_time_var,1000);
             draw_set_halign(fa_right);
-            draw_str_shadow_scr(local.str,1,1,0.25,0.25,scale_min_var,fa_right,fa_top,-1,1,make_color_rgb(30,0,50),c_yellow,1,0);
+            draw_str_shadow_scr(local.str,1,1,local.hudscale*0.25,local.hudscale*0.25,scale_min_var,fa_right,fa_top,-local.hudscale,local.hudscale,make_color_rgb(30,0,50),c_yellow,1,0);
             draw_set_halign(fa_left);
         }
         // Monster Sub
@@ -119,9 +120,9 @@ object_event_add
             local.sub_y = view_hview[view_current]-(120*local.viewscale);
             local.sub_xdist = (view_wview[view_current]-(sub_offset_var*local.viewscale))/2;
             local.sub_ydist = 128*local.viewscale;
-            local.sub_scale = 0.5*local.viewscale;
-            local.sub_w = sub_offset_var/0.5;
-            local.sub_shadow_dist = 2*local.viewscale;
+            local.sub_scale = local.hudscale*0.5*local.viewscale;
+            local.sub_w = sub_offset_var/(local.hudscale*0.5);
+            local.sub_shadow_dist = 2*local.viewscale*local.hudscale;
             // Loop through monsters
             with enemy_par_obj
             {
@@ -173,8 +174,8 @@ object_event_add
             else { local.per = median(0,1,1-(2*par_var.alarm_arr[3,0]/par_var.alarm_arr[3,1])); }
             draw_set_alpha(local.per);
             // Calculate Scale
-            local.xscale = max(scale_min_var,taker_xscale_var*local.viewscale);
-            local.yscale = max(scale_min_var,taker_yscale_var*local.viewscale);
+            local.xscale = max(scale_min_var,taker_xscale_var*local.viewscale*local.hudscale);
+            local.yscale = max(scale_min_var,taker_yscale_var*local.viewscale*local.hudscale);
             // Set color and font
             draw_set_color(make_color_rgb(159,0,0)); draw_set_font(taker_font);
             // Calculate width for tiling
@@ -215,27 +216,27 @@ object_event_add
             // Health and Stamina bars
             if global.bar_hud_var != bar_hud_old_const
             {
-                draw_bg_stretch_scr(bar_bg,91,57,308,0);
+                draw_bg_stretch_scr(bar_bg,37+(54*local.hudscale),34+(23*local.hudscale),308*local.hudscale,0);
                 // Stamina
                 if !par_var.do_sprint_var { local.stam_bg = bar_stam_fake_bg; }
                 else if !par_var.do_stam_var { local.stam_bg = bar_stam_inf_bg; }
                 else { local.stam_bg = bar_stam_bg; }
                 local.width = background_get_width(bar_stam_bg)*par_var.stam_var/par_var.stam_max_var;
-                draw_background_part_ext(local.stam_bg,background_get_width(bar_stam_bg)-local.width,0,local.width,20,99*local.viewscale,96*local.viewscale,local.viewscale,local.viewscale,c_white,1);
+                draw_background_part_ext(local.stam_bg,background_get_width(bar_stam_bg)-local.width,0,local.width,20,(37+(62*local.hudscale))*local.viewscale,(34+(62*local.hudscale))*local.viewscale,local.viewscale*local.hudscale,local.viewscale*local.hudscale,c_white,1);
                 // Health
                 if par_var.hp_max_var > 0
                 {
                     local.width = background_get_width(bar_hp_bg)*median(0,1,hp_var/par_var.hp_max_var);
-                    draw_background_part_ext(bar_hp_bg,background_get_width(bar_hp_bg)-local.width,0,local.width,27,99*local.viewscale,62*local.viewscale,local.viewscale,local.viewscale,c_white,1);
+                    draw_background_part_ext(bar_hp_bg,background_get_width(bar_hp_bg)-local.width,0,local.width,27,(37+(62*local.hudscale))*local.viewscale,(34+(28*local.hudscale))*local.viewscale,local.viewscale*local.hudscale,local.viewscale*local.hudscale,c_white,1);
                     // Extra Health
                     if par_var.hp_var > par_var.hp_max_var
                     {
                         local.width = background_get_width(bar_hp_ex_bg)*median(0,1,(par_var.hp_var/par_var.hp_max_var)-1);
-                        draw_background_part_ext(bar_hp_ex_bg,background_get_width(bar_hp_ex_bg)-local.width,0,local.width,27,99*local.viewscale,62*local.viewscale,local.viewscale,local.viewscale,c_white,1);
+                        draw_background_part_ext(bar_hp_ex_bg,background_get_width(bar_hp_ex_bg)-local.width,0,local.width,27,(37+(62*local.hudscale))*local.viewscale,(34+(28*local.hudscale))*local.viewscale,local.viewscale*local.hudscale,local.viewscale*local.hudscale,c_white,1);
                     }
                 }
                 // Icon
-                draw_bg_stretch_scr(bar_icon_bg,37,34,69,0);
+                draw_bg_stretch_scr(bar_icon_bg,37,34,69*local.hudscale,0);
             }
             // Health counter
             switch (global.bar_hud_var)
@@ -247,8 +248,8 @@ object_event_add
                     local.stam_str = stam_str_var+": "+string(round(par_var.stam_var))+" / "+string(par_var.stam_max_var);
                     // I really gotta make text alignment separate from view alignment
                     draw_set_valign(fa_middle);
-                    draw_str_outline_scr(local.hp_str,107,77,0.25,0.25,scale_min_var,fa_left,fa_top,1,1,make_color_rgb(100,0,0),c_white,1,4); // 68
-                    draw_str_outline_scr(local.stam_str,107,107,0.25,0.25,scale_min_var,fa_left,fa_top,1,1,make_color_rgb(0,100,0),c_white,1,4); // 98
+                    draw_str_outline_scr(local.hp_str,37+(70*local.hudscale),34+(43*local.hudscale),0.25*local.hudscale,0.25*local.hudscale,scale_min_var,fa_left,fa_top,local.hudscale,local.hudscale,make_color_rgb(100,0,0),c_white,1,4); // 68
+                    draw_str_outline_scr(local.stam_str,37+(70*local.hudscale),34+(73*local.hudscale),0.25*local.hudscale,0.25*local.hudscale,scale_min_var,fa_left,fa_top,local.hudscale,local.hudscale,make_color_rgb(0,100,0),c_white,1,4); // 98
                     draw_set_valign(fa_top);
                     break;
                 }
@@ -256,8 +257,8 @@ object_event_add
                 {
                     local.hp_str = health_str_var+": "+string(round(par_var.hp_var));
                     local.stam_str = stamina_str_var+": "+string(round(par_var.stam_var));
-                    draw_str_shadow_scr(local.hp_str,54,54,0.75,0.75,scale_min_var,fa_left,fa_top,-2,2,make_color_rgb(30,0,50),c_yellow,1,0);
-                    draw_str_shadow_scr(local.stam_str,54,108,0.75,0.75,scale_min_var,fa_left,fa_top,-2,2,make_color_rgb(30,0,50),c_yellow,1,0);
+                    draw_str_shadow_scr(local.hp_str,54,54,0.75*local.hudscale,0.75*local.hudscale,scale_min_var,fa_left,fa_top,-2*local.hudscale,2*local.hudscale,make_color_rgb(30,0,50),c_yellow,1,0);
+                    draw_str_shadow_scr(local.stam_str,54,54+(54*local.hudscale),0.75*local.hudscale,0.75*local.hudscale,scale_min_var,fa_left,fa_top,-2*local.hudscale,2*local.hudscale,make_color_rgb(30,0,50),c_yellow,1,0);
                     break;
                 }
             }
@@ -274,9 +275,9 @@ object_event_add
                             local.str = name_var;
                             if global.mon_hud_var == 2 { local.str += ": "+string(dur_var); }
                             draw_set_valign(fa_bottom);
-                            draw_str_shadow_scr(local.str,54,local.offset,0.5,0.5,other.scale_min_var,fa_left,fa_bottom,-2,2,make_color_rgb(30,0,50),c_yellow,1,0);
+                            draw_str_shadow_scr(local.str,54,local.offset,0.5*local.hudscale,0.5*local.hudscale,other.scale_min_var,fa_left,fa_bottom,-2*local.hudscale,2*local.hudscale,make_color_rgb(30,0,50),c_yellow,1,0);
                             draw_set_valign(fa_top);
-                            local.offset -= 36;
+                            local.offset -= 36*local.hudscale;
                         }
                     }
                 }
@@ -286,7 +287,7 @@ object_event_add
             {
                 local.str = spd_str_var+": "+string(global.game_spd_var);
                 draw_set_halign(fa_right); draw_set_valign(fa_bottom);
-                draw_str_shadow_scr(local.str,-54,-54,0.5,0.5,scale_min_var,fa_right,fa_bottom,-2,2,make_color_rgb(100,0,0),c_white,1,0);
+                draw_str_shadow_scr(local.str,-54,-54,0.5*local.hudscale,0.5*local.hudscale,scale_min_var,fa_right,fa_bottom,-2*local.hudscale,2*local.hudscale,make_color_rgb(100,0,0),c_white,1,0);
                 draw_set_halign(fa_left); draw_set_valign(fa_top);
             }
             // Room Count
@@ -297,8 +298,8 @@ object_event_add
                 { local.str += string(global.rm_count_override_var); }
                 else { local.str += string(global.rm_count_var); }
                 draw_set_halign(fa_right); 
-                draw_str_shadow_scr(local.str,-54,54,0.75,0.75,scale_min_var,fa_right,fa_top,-2,2,make_color_rgb(30,0,50),c_yellow,1,0);
-                if global.rm_hud_var { draw_str_shadow_scr(global.rm_name_var,-54,108,0.5,0.5,scale_min_var,fa_right,fa_top,-2,2,make_color_rgb(30,0,50),c_yellow,1,0); }
+                draw_str_shadow_scr(local.str,-54,54,0.75*local.hudscale,0.75*local.hudscale,scale_min_var,fa_right,fa_top,-2*local.hudscale,2*local.hudscale,make_color_rgb(30,0,50),c_yellow,1,0);
+                if global.rm_hud_var { draw_str_shadow_scr(global.rm_name_var,-54,54+(54*local.hudscale),0.5*local.hudscale,0.5*local.hudscale,scale_min_var,fa_right,fa_top,-2*local.hudscale,2*local.hudscale,make_color_rgb(30,0,50),c_yellow,1,0); }
                 draw_set_halign(fa_left);
             }
             // Boss Bar (canned for now)
@@ -312,14 +313,14 @@ object_event_add
                     local.color = boss_color_var;
                     local.icon = boss_icon_var;
                 }
-                draw_spr_stretch_scr(bar_boss_spr,0,-91,57,308,0,fa_right,fa_top);
+                draw_spr_stretch_scr(bar_boss_spr,0,-47-(54*local.hudscale),34+(23*local.hudscale),308,0,fa_right,fa_top);
                 // Bar
                 local.width = background_get_width(bar_hp_bg)*local.per;
-                local.xtmp = view_wview[view_current]-((local.width+99)*local.viewscale);
-                draw_background_part_ext(bar_boss_hp_bg,0,0,local.width,27,local.xtmp,62*local.viewscale,local.viewscale,local.viewscale,local.color,1);
+                local.xtmp = view_wview[view_current]-((37+((local.width+62)*local.hudscale))*local.viewscale);
+                draw_background_part_ext(bar_boss_hp_bg,0,0,local.width,27,local.xtmp,(34+(28*local.hudscale))*local.viewscale,local.viewscale*local.hudscale,local.viewscale*local.hudscale,local.color,1);
                 // Icon
-                draw_spr_stretch_scr(bar_boss_icon_spr,0,-37,34,69,0,fa_right,fa_top);
-                if local.icon != noone { draw_spr_stretch_scr(local.icon,0,-37,34,69,0,fa_right,fa_top); }
+                draw_spr_stretch_scr(bar_boss_icon_spr,0,-37,34,69*local.hudscale,0,fa_right,fa_top);
+                if local.icon != noone { draw_spr_stretch_scr(local.icon,0,-37,34,69*local.hudscale,0,fa_right,fa_top); }
             }
             // Debug text
             if global.debug_var && !global.hide_debug_var
@@ -354,7 +355,7 @@ Spawning
     Count: "+string(global.count_var)+"
     Fail: "+string(global.mon_fail_var)+"
     Chance: 1/"+string(global.mon_chance_var+(global.mon_chance_mult_var*instance_number(mon_par_obj)-global.mon_fail_var))
-                draw_str_shadow_scr(local.str,1,128,0.25,0.25,scale_min_var,fa_left,fa_top,-1,1,make_color_rgb(100,0,0),c_white,1,0);
+                draw_str_shadow_scr(local.str,1,128,0.25*local.hudscale,0.25*local.hudscale,scale_min_var,fa_left,fa_top,-local.hudscale,local.hudscale,make_color_rgb(100,0,0),c_white,1,0);
             }
         }
         else if par_var.possess_var
@@ -428,18 +429,18 @@ Spawning
                     draw_set_color(c_white);
                     draw_set_blend_mode(bm_normal);
                     // Other
-                    draw_bg_stretch_scr(bar_bg,91,57,308,0);
+                    draw_bg_stretch_scr(bar_bg,91,57,308*local.hudscale,0);
                     // Stamina
                     if !par_var.mon_var.do_sprint_var { local.stam_bg = bar_stam_fake_bg; }
                     else if !par_var.mon_var.do_stam_var { local.stam_bg = bar_stam_inf_bg; }
                     else { local.stam_bg = bar_stam_bg; }
                     local.width = background_get_width(bar_stam_bg)*par_var.mon_var.stam_var/par_var.mon_var.stam_max_var;
-                    draw_background_part_ext(local.stam_bg,background_get_width(bar_stam_bg)-local.width,0,local.width,20,99*local.viewscale,96*local.viewscale,local.viewscale,local.viewscale,c_white,1);
+                    draw_background_part_ext(local.stam_bg,background_get_width(bar_stam_bg)-local.width,0,local.width,20,99*local.viewscale,96*local.viewscale,local.viewscale*local.hudscale,local.viewscale*local.hudscale,c_white,1);
                     // Health
                     local.width = background_get_width(bar_hp_bg)*median(0,1,par_var.mon_var.dur_var/par_var.mon_var.dur_start_var);
-                    draw_background_part_ext(bar_hp_bg,background_get_width(bar_hp_bg)-local.width,0,local.width,27,99*local.viewscale,62*local.viewscale,local.viewscale,local.viewscale,c_white,1);
+                    draw_background_part_ext(bar_hp_bg,background_get_width(bar_hp_bg)-local.width,0,local.width,27,99*local.viewscale,62*local.viewscale,local.viewscale*local.hudscale,local.viewscale*local.hudscale,c_white,1);
                     // Icon
-                    draw_bg_stretch_scr(bar_icon_bg,37,34,69,0);
+                    draw_bg_stretch_scr(bar_icon_bg,37,34,69*local.hudscale,0);
                     break;
                 }
             }

@@ -58,7 +58,7 @@ object_event_add
 (argument0,ev_alarm,0,'
     if frac_chance_scr(chance_num_var*global.player_len_var,chance_den_var)
     {
-        visible = true
+        visible = true;
         inst_var = fmod_snd_play_scr(snd_var);
         spr_id_var = 0;
         set_alarm_scr(1,anim_alarm_var);

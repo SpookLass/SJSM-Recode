@@ -959,6 +959,20 @@ set_label_arr[global.set_len_var,5] = true; // Translate
     // Default
 set_default_arr[global.set_len_var,0] = sub_const; // Default
 global.set_len_var += 1;
+// HUD Scale
+set_arr[global.set_len_var,0] = "hud_scale"; // Variable name
+set_arr[global.set_len_var,1] = "hud_scale"; // Name
+set_arr[global.set_len_var,2] = "hud_scale"; // Description
+set_arr[global.set_len_var,3] = true; // Translate name and descripion
+set_arr[global.set_len_var,4] = 4; // Type (Min Clamped)
+set_arr[global.set_len_var,5] = 0; // Min
+set_arr[global.set_len_var,6] = 0; // Max
+set_arr[global.set_len_var,7] = false; // Wrap
+set_arr[global.set_len_var,8] = 6; // Category (Accessibility)
+set_arr[global.set_len_var,9] = false; // Player Specific
+    // Default
+set_default_arr[global.set_len_var,0] = hud_scale_const; // Default
+global.set_len_var += 1;
 /*
 --------------
 Controls (Sub)

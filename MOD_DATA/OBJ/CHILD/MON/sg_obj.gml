@@ -139,6 +139,7 @@ object_event_add
             dmg_var = 30;
             atk_range_var = global.mon_coll[2];
             fog_end_var = 128;
+            delay_var = 30;
             break;
         }
         case 2: // HD

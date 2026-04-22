@@ -1502,7 +1502,7 @@ object_event_add
 (argument0,ev_alarm,2,'
     if frac_chance_scr(light_num_var,light_den_var)
     { set_alarm_scr(3,irandom_range(light_delay_min_var,light_delay_max_var)); }
-    if frac_chance_scr(light_double_num_var,light_double_den_var)
+    else if frac_chance_scr(light_double_num_var,light_double_den_var)
     { set_alarm_scr(5,irandom_range(light_delay_min_var,light_delay_max_var)); }
     set_alarm_scr(2,irandom_range(light_alarm_min_var,light_alarm_max_var))
 ');

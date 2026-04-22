@@ -151,6 +151,7 @@ object_event_add
     {
         case 0:
         {
+            delay_var = 30;
             hide_reset_var = true;
             seen_pitch_var = 5.856;
             flame_var = true;
@@ -309,7 +310,7 @@ object_event_add
     }
     if possess_var && hide_ready_var && !door_hide_var
     {
-        if global.input_press_arr[interact_input_const,par_var.player_id_var] == 1
+        if global.input_press_arr[interact_input_const,player_id_var] == 1
         {
             hide_ready_var = false;
             door_hide_var = !door_hide_var;

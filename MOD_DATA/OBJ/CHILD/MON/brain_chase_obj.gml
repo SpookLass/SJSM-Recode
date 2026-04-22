@@ -77,6 +77,7 @@ object_event_add
                 eff_var = true;
                 eff_mult_var = true;
                 dmg_var = 60;
+                delay_var = 30;
                 // Silhouette
                 sil_var = true;
                 sil_type_var = 1; // Pure color

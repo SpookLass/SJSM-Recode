@@ -127,8 +127,8 @@ object_event_add
             slime_anim_var = 2;
             slime_spd_mult_var = 0.5;
             atk_range_var = global.mon_coll[2];
-            // Move slower dangit
-            slime_spawn_spd_mult_var = 0.5; // 0.5r3 for full accuracy
+            // (Dont) Move slower dangit
+            slime_spawn_spd_mult_var = 1; // 0.5r3 for full accuracy
             delay_var = 0;
             // More Slime
             slime_num_var = 2;

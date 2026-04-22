@@ -121,8 +121,8 @@ object_event_add
         case 0: // Recode
         {
             exit_alarm_min_var = 30;
-            trig_dist_var = 48;
             exit_alarm_max_var = exit_alarm_min_var;
+            trig_dist_var = 48;
             trig_type_var = 2;
             exit_spawn_var = true;
             dark_color_var = make_color_rgb(97,97,106);
@@ -130,6 +130,8 @@ object_event_add
             derand_var = true;
             blood_spr_var = blood_kh_spr;
             atk_range_var = global.mon_coll[2];
+            exit_delay_var = 90;
+            delay_var = 30;
             break;
         }
         case 2: // HD

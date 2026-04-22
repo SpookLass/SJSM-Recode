@@ -191,6 +191,7 @@ object_event_add
             tp_spawn_var = 1;
             tp_type_var = 1; // Check sight
             mus_start_var = start_var;
+            delay_var = 60;
             // start_var = -1;
             // zone_start_var = -1;
             // Draw

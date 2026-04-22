@@ -137,6 +137,7 @@ object_event_add
             state_seen_spd_var[1] = 1.1;
             state_chance_num_var = 2;
             state_chance_den_var = 3;
+            delay_var = 30;
             // Silhouette
             sil_var = true;
             sil_type_var = 1; // Pure color

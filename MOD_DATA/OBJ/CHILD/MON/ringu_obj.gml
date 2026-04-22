@@ -95,6 +95,7 @@ object_event_add
             atk_range_var = global.mon_coll[2];
             hurt_snd_num_var = 1;
             hurt_snd_den_var = 1;
+            delay_var = 30;
             // Silhouette
             sil_var = true;
             sil_type_var = 1; // Pure color

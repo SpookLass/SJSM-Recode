@@ -174,7 +174,7 @@ object_event_add
         case 0: // Mod
         {
             delay_calc_var = false;
-            delay_var = 60;
+            delay_var = 60; // 60 
             state_spd_var[0] = 0.8;
             state_chance_var[0] = 1;
             state_spr_spd_var[0] = 1/6;

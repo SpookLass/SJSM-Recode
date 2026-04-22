@@ -150,6 +150,7 @@ object_event_add
             spr_spd_var = 0.55;
             hp_var = 10;
             static_alpha_var = 0.125;
+            delay_var = 112;
             break;
         }
         case 2: // HD

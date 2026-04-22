@@ -362,9 +362,12 @@ object_event_add
             stam_spawn_max_var = 100;
             do_acc_var = true;
             atk_range_var = global.mon_coll[2];
+            local.set = true;
         }
         case 0: // Recode
         {
+            if !local.set { stam_spawn_max_var = 50; }
+            delay_var = 0;
             do_sprint_var = true;
             do_stam_var = true;
             dmg_var = 30;

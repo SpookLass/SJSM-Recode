@@ -110,7 +110,7 @@ object_event_add
     arrow_base_tex_var = background_get_texture(arrow_base_bg_var);
     door_tex_var = background_get_texture(door_bg_var);
     // Behavior
-    if global.flesh_type_var == -1 { local.type = irandom(3); }
+    if global.flesh_type_var == -1 { local.type = irandom(4); }
     else { local.type = global.flesh_type_var; }
     switch local.type
     {
@@ -129,6 +129,13 @@ object_event_add
             delay_var = 0;
             spd_base_var = 44/225; // 0.19r5
             angle_var = 15;
+            break;
+        }
+        case 4:
+        {
+            if global.mode_var != 0
+            { spd_base_var *= 2; }
+            angle_var = 14;
             break;
         }
     }
