@@ -248,9 +248,9 @@ object_event_add
         local.xtmp = local.flr.x;//+random_range(-local.flr.w_var/2,local.flr.w_var/2);
         local.ytmp = local.flr.y;//+random_range(-local.flr.h_var/2,local.flr.h_var/2);
         local.ztmp = local.flr.z;
-        local.bestdist = -1;
         if spawn_dist_var > 0
         {
+            local.bestdist = -1;
             with player_obj
             {
                 if on_var && !dead_var && !in_door_var

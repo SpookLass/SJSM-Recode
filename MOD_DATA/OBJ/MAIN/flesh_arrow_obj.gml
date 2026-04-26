@@ -11,6 +11,7 @@ object_event_add
 (argument0,ev_create,0,'
     on_var = false;
     visible = false;
+    inst_var = noone;
     // Variables
     snap_var = 1; // Snap to floor
     event_inherited();
@@ -19,6 +20,7 @@ object_event_add
     w_var = 44;
     l_var = 18;
     dist_var = 4;
+    color_var = 3;
     // Base
     tex_w_02_var = 1;
     tex_h_02_var = 1;
@@ -33,6 +35,12 @@ object_event_add
     bob_rate_var=1800;
     // Special
     turn_rate_var = 0;
+');
+// Create event
+object_event_add
+(argument0,ev_other,ev_room_end,'
+    event_inherited();
+    if on_var { fmod_inst_stop_scr(inst_var); }
 ');
 // Step Event
 object_event_add

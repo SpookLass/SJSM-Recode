@@ -24,7 +24,7 @@ object_event_add
     for (local.i=0; local.i<snd_len_var; local.i+=1)
     { snd_arr[local.i,1] = local.sub; snd_arr[local.i,2] = false }
     atk_start_snd_var[2] = local.sub; atk_start_snd_var[3] = false;
-    hurt_snd_var[2] = local.sub; hurt_snd_var[3] = false;
+    hurt_snd_var[2] = string_replace(ini_read_string("SUB","doll_hurt","SUB_doll_hurt"),"@n",name_var); hurt_snd_var[3] = false;
     dead_snd_var[1] = local.sub; dead_snd_var[2] = false;
     ini_close();
     // Main
@@ -367,16 +367,7 @@ object_event_add
             set_alarm_scr(5,dead_alarm_var);
             anim_type_var = 1; // End on last
             spr_id_var = 0;
-            if dead_var == 2
-            {
-                with instance_create(x,y,doll_blood_obj)
-                {
-                    par_var = other.id;
-                    store_tex_var = background_get_texture(other.doll_blood_bg_var);
-                    tex_var = store_tex_var;
-                }
-            }
-            else { dead_var += 1; }
+            tex_var = sprite_get_texture(spr_var,floor(spr_id_var));
         }
         else { tone_var = c_red; }
     }
@@ -384,41 +375,60 @@ object_event_add
 // Die event
 object_event_add
 (argument0,ev_other,ev_user11,'
-    // Disable behavior
-    visible_var = true;
-    dead_var = true;
-    move_var = false;
-    atk_var = false;
-    reset_alarm_scr();
-    dur_var = 1;
-    // Hit em while hes down
-    do_hurt_var = true;
-    hurt_snd_var = 2;
-    hurt_die_var = false;
-    hurt_var = false;
-    hurt_dist_var = 0;
-    // Play sound
-    if fmod_inst_is_play_scr(inst_var) && fmod_inst_is_3d_scr(inst_var)
-    { fmod_inst_stop_scr(inst_var); }
-    inst_var = fmod_snd_3d_play_scr(dead_snd_var[0]);
-    sub_var[0] = dead_snd_var[1];
-    sub_var[1] = dead_snd_var[2];
-    // Play animation
-    spr_var = dead_spr_var;
-    anim_type_var = 1; // End on last
-    spr_id_var = 0;
-    set_alarm_scr(5,dead_alarm_var);
-    z_off_var = -0.6;
-    h_var = 15.3;
-    // Turn off static
-    local.dead = true;
-    with wc_obj { if !dead_var { local.dead = false; }}
-    if local.dead { with wc_eff_obj { visible = false; }}
+    if dead_var
+    {
+        do_hurt_var = true;
+        hurt_hp_var = 0;
+        hurt_die_var = false;
+        dead_var = 2;
+        with instance_create(x,y,doll_blood_obj)
+        {
+            par_var = other.id;
+            store_tex_var = background_get_texture(other.doll_blood_bg_var);
+            tex_var = store_tex_var;
+        }
+        if fmod_inst_is_play_scr(inst_var) && fmod_inst_is_3d_scr(inst_var)
+        { fmod_inst_stop_scr(inst_var); }
+        fmod_snd_play_scr(claw_snd);
+    }
+    else
+    {
+        // Disable behavior
+        visible_var = true;
+        dead_var = true;
+        move_var = false;
+        atk_var = false;
+        reset_alarm_scr();
+        dur_var = 1;
+        // Hit em while hes down
+        hp_var = 3;
+        hurt_snd_var = 2;
+        hurt_var = false;
+        hurt_dist_var = 0;
+        // Play sound
+        if fmod_inst_is_play_scr(inst_var) && fmod_inst_is_3d_scr(inst_var)
+        { fmod_inst_stop_scr(inst_var); }
+        inst_var = fmod_snd_3d_play_scr(dead_snd_var[0]);
+        sub_var[0] = dead_snd_var[1];
+        sub_var[1] = dead_snd_var[2];
+        // Play animation
+        spr_var = dead_spr_var;
+        spr_id_var = 0;
+        tex_var = sprite_get_texture(spr_var,floor(spr_id_var));
+        anim_type_var = 1; // End on last
+        set_alarm_scr(5,dead_alarm_var);
+        z_off_var = -0.6;
+        h_var = 15.3;
+        // Turn off static
+        local.dead = true;
+        with wc_obj { if !dead_var { local.dead = false; }}
+        if local.dead { with wc_eff_obj { visible = false; }}
+    }
 ');
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,'
-    if (on_var || visible_var) && (!possess_var || cam_id_var != view_current || global.reflect_var)
+    if (on_var || visible_var) && !global.reflect_var
     {
         draw_set_alpha(image_alpha);
         // Transform

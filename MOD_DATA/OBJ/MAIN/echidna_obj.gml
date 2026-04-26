@@ -1,7 +1,9 @@
 // Builtin Variables
 object_set_depth(argument0,-3);
 object_set_mask(argument0,noone);
-object_set_parent(argument0,mon_par_obj);
+if argument2 == true // Kidna
+{ object_set_parent(argument0,enemy_par_obj); }
+else { object_set_parent(argument0,mon_par_obj); }
 object_set_persistent(argument0,true);
 object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
@@ -131,11 +133,13 @@ object_event_add
 (argument0,ev_create,2,'
     // Inherit
     event_inherited();
+    // Kidna
+    kidna_var = '+string(argument2 == true)+'
     // Main
     if !variable_local_exists("type_var") { type_var = 0; }
     if !variable_local_exists("visible_var") { visible_var = false; }
     // Behavior
-    if !variable_local_exists("do_enter_var") { do_enter_var = (type_var > 0); }
+    if !variable_local_exists("do_enter_var") { do_enter_var = (type_var > 0 && !kidna_var); }
     if !variable_local_exists("do_door_var") { do_door_var = (type_var == 1 && do_enter_var); }
     // Sound Stuff
     if !variable_local_exists("do_snd_var") { do_snd_var = true; }
@@ -204,7 +208,7 @@ object_event_add
     {
         if !variable_local_exists("violence_var") { violence_var = 0; }
         if !variable_local_exists("hurt_alarm_var") { hurt_alarm_var = 0; }
-        if !variable_local_exists("hurt_dur_var") { hurt_dur_var = 0; }
+        if !kidna_var && !variable_local_exists("hurt_dur_var") { hurt_dur_var = 0; }
         if !variable_local_exists("hurt_dist_var") { hurt_dist_var = 0; }
         if !variable_local_exists("hurt_snd_var") { hurt_snd_var = 0; }
         if !variable_local_exists("hurt_snd_num_var") { hurt_snd_num_var = 1; }
@@ -356,7 +360,7 @@ object_event_add
 object_event_add
 (argument0,ev_create,3,'
     // Play wake (or random sound if it doesnt exist)
-    if do_snd_var
+    if do_snd_var && !kidna_var
     {
         if wake_snd_var[0] == 1
         {
@@ -415,8 +419,9 @@ object_event_add
     seen_var = do_seen_var;
     hurt_var = false;
     enter_var = do_enter_var;
-    do_coll_var = false;
     active_var = true;
+    if enter_var { do_coll_var = false; }
+    else if type_var > 0 { do_coll_var = true; }
     // Reset Position
     yaw_var = global.spawn_arr[0,3];
     x = global.spawn_arr[0,0]-lengthdir_x(32,yaw_var);
@@ -568,7 +573,7 @@ object_event_add
 // Sound alarm
 object_event_add
 (argument0,ev_alarm,6,'
-    if do_snd_var
+    if do_snd_var && on_var
     {
         if snd_len_var > 0 && frac_chance_scr(snd_num_var,snd_den_var)
         {
@@ -971,11 +976,14 @@ object_event_add
         // Reduce duration if very vulnerable
         if do_hurt_var == 2 || (do_hurt_var == 3 && hurt_type_var == 1)
         {
-            if dur_var > 0 && hurt_dur_var > 0
+            if !kidna_var
             {
-                dur_var -= hurt_dur_var;
-                if hurt_die_var == 1 && dur_var <= 0 { event_user(11); exit; }
-                else { dur_var = max(1,dur_var); }
+                if dur_var > 0 && hurt_dur_var > 0
+                {
+                    dur_var -= hurt_dur_var;
+                    if hurt_die_var == 1 && dur_var <= 0 { event_user(11); exit; }
+                    else { dur_var = max(1,dur_var); }
+                }
             }
             if hp_var > 0 && hurt_hp_var > 0
             {
@@ -1184,7 +1192,7 @@ object_event_add
     local.xtmp = x;
     local.ytmp = y;
     local.collided = false;
-    with echidna_obj
+    with '+string(argument0)+'
     {
         if id != other.id && (type_var > 0) == (other.type_var > 0) && (do_coll_var || type_var <= 0) && mon_coll_var
         {

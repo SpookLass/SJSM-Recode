@@ -14,17 +14,14 @@ object_event_add
     // Default settings
 object_event_add
 (argument0,ev_create,2,'
+    event_inherited();
     // Variables
     if !variable_local_exists("dur_var") { dur_var = -1; }
-    if !variable_local_exists("hp_var") { hp_var = -1; }
     if !variable_local_exists("boss_var") { boss_var = false; }
     if !variable_local_exists("intro_var") { intro_var = false; }
     if !variable_local_exists("dupe_var") { dupe_var = 0; }
-    if !variable_local_exists("name_var") { name_var = "Unknown"; }
     if !variable_local_exists("hide_var") { hide_var = false; }
-    if !variable_local_exists("dead_rm_var") { dead_rm_var = dead_rm; }
     if boss_var { global.boss_var = object_index; }
-    hp_max_var = hp_var;
     dur_start_var = dur_var;
     // Theme
     if !variable_local_exists("mus_prio_var") || (global.rand_theme_var && frac_chance_scr(1,2)) { mus_prio_var = -1; }
@@ -34,20 +31,6 @@ object_event_add
         with mus_control_obj { event_user(0); }
     }
 ');
-// Create End Event
-    // Startup
-object_event_add
-(argument0,ev_create,3,'
-    event_perform(ev_other,ev_room_start);
-');
-// Create Event
-object_event_add
-(argument0,ev_create,0,'
-    event_inherited();
-    event_perform(ev_create,1);
-    event_perform(ev_create,2);
-    event_perform(ev_create,3);
-')
 // Room End Event
 object_event_add
 (argument0,ev_other,ev_room_end,'
@@ -60,8 +43,6 @@ object_event_add
             exit;
         }
     }
-    if color_var
-    { image_blend = c_white; }
     hurt_var = false;
     event_inherited();
 ');

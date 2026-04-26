@@ -13,7 +13,7 @@ object_event_add
     ini_open(global.lang_var);
     name_var = translate_mon_str_scr("hk",global.name_var);
 	loop_snd_var[2] = string_replace(ini_read_string("SUB","hk","SUB_hk"),"@n",name_var); loop_snd_var[3] = false;
-	hurt_snd_var[2] = string_replace(ini_read_string("SUB","hk_hurt","SUB_hk_hurt"),"@n",name_var); hurt_snd_var[3] = false;
+	hurt_snd_var[2] = string_replace(ini_read_string("SUB","doll_hurt","SUB_doll_hurt"),"@n",name_var); hurt_snd_var[3] = false;
 	snd_arr[0,1] = string_replace(ini_read_string("SUB","hk_breath","SUB_hk_breath"),"@n",name_var); snd_arr[0,2] = false;
     ini_close();
 	// Variable

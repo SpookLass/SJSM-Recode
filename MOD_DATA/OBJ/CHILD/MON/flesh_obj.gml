@@ -79,6 +79,9 @@ object_event_add
         wall_spr_var = sprite_add(vanilla_directory_const+"\TEX\mobile\MB5_EX_01_spr.png",5,false,false,0,0);
         arrow_bg_var = background_add(main_directory_const+"\BG\MON\flesh_arrow_bg.png",false,false);
         arrow_base_bg_var = background_add(main_directory_const+"\BG\MON\flesh_arrow_base_bg.png",false,false);
+        // Arrow Sound
+        arrow_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\flesh_arrow_snd.wav",true);
+        fmod_snd_set_minmax_dist_scr(arrow_snd_var,16,128);
         // Overlay
         overlay_bg_var = background_add(main_directory_const+"\BG\MON\flesh_overlay_bg.png",false,false);
         // Music
@@ -120,6 +123,7 @@ object_event_add
             angle_var = 5;
             smart_var = true;
             dmg_var = 0.5;
+            color_prio_var = 1;
             // No Gold, Only Arrow
             arrow_var = true;
             break;
@@ -323,23 +327,6 @@ Difference: "+string(local.newdelay)+"
         par_var = other.id;
         instance_change(flesh_wall_obj,true);
     }
-    // Arrow
-    if arrow_var
-    {
-        with flesh_arrow_obj
-        {
-            par_var = other.id;
-            store_tex_var = other.arrow_tex_var;
-            tex_var = store_tex_var;
-            store_tex_02_var = other.arrow_base_tex_var;
-            tex_02_var = store_tex_02_var;
-            on_var = true;
-            visible = true;
-            event_user(0);
-        }
-        with torch_obj
-        { instance_destroy(); }
-    }
     // Effect
     if !instance_exists(flesh_eff_obj)
     {
@@ -367,12 +354,50 @@ Difference: "+string(local.newdelay)+"
             event_user(0);
         }
     }
+    // Arrow
+    local.arrow = (arrow_var && instance_exists(flesh_arrow_obj));
+    if local.arrow
+    {
+        with flesh_arrow_obj
+        {
+            par_var = other.id;
+            store_tex_var = other.arrow_tex_var;
+            tex_var = store_tex_var;
+            store_tex_02_var = other.arrow_base_tex_var;
+            tex_02_var = store_tex_02_var;
+            on_var = true;
+            visible = true;
+            inst_var = fmod_snd_3d_loop_scr(other.arrow_snd_var,x,y,z);
+            event_user(0);
+        }
+        with torch_obj
+        { instance_destroy(); }
+    }
     // Color
     if color_prio_var > 0
     {
         with color_par_obj { if prio_var < other.color_prio_var { instance_destroy(); }}
         if !instance_exists(color_par_obj)
-        { with instance_create(0,0,bright_color_obj) { prio_var = other.color_prio_var; }}
+        {
+            if local.arrow
+            {
+                with instance_create(0,0,flesh_color_obj)
+                {
+                    par_var = other.id;
+                    prio_var = other.color_prio_var;
+                    event_user(0);
+                }
+            }
+            else
+            {
+                with instance_create(0,0,bright_color_obj)
+                {
+                    par_var = other.id;
+                    prio_var = other.color_prio_var;
+                    event_user(0);
+                }
+            }
+        }
     }
     // Skybox
     fog_immune_var = instance_exists(skybox_par_obj);

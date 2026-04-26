@@ -414,7 +414,7 @@ object_event_add
                         anim_var = false;
                         if unseen_atk_var
                         { atk_var = false; }
-                        set_motion_scr(0,true);
+                        set_motion_3d_scr(0,true);
                         set_alarm_scr(6,-1);
                         if do_ascend_var
                         {
@@ -497,7 +497,7 @@ object_event_add
         anim_var = false;
         atk_var = false;
         set_alarm_scr(6,-1);
-        set_motion_scr(0,true);
+        set_motion_3d_scr(0,true);
         state_var = false;
         if do_ascend_var
         {

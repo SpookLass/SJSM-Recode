@@ -9,7 +9,7 @@ room_set_code
     global.rm_name_var = ini_read_string("ROOM","flesh","ROOM_flesh")+" 9";
     ini_close();
     // Spawn
-    global.spawn_len_var = 2;
+    global.spawn_len_var = 3;
     global.spawn_arr[0,0] = 464;
     global.spawn_arr[0,1] = 352;
     global.spawn_arr[0,2] = 0;
@@ -18,11 +18,17 @@ room_set_code
     global.spawn_arr[1,1] = 352;
     global.spawn_arr[1,2] = 0;
     global.spawn_arr[1,3] = 180;
+    global.spawn_arr[2,0] = 656; // New
+    global.spawn_arr[2,1] = 416;
+    global.spawn_arr[2,2] = 0;
+    global.spawn_arr[2,3] = 0;
+    // Doors
+    local.lock = lock_scr();
+    local.gold = gold_scr(local.lock); // Not sure how to handle this without hardcoding
+    spawn_create_scr(true,local.lock);
     // 3D Draw
     d3d_start();
     global.draw_3d_var = true;
-    // Doors
-    spawn_create_scr(true,false);
 ');
 // Room settings
 room_set_width(argument0,1280);
@@ -56,6 +62,7 @@ room_instance_add(argument0,624,352,floor_obj);
 room_instance_add(argument0,592,352,floor_obj);
 room_instance_add(argument0,560,352,floor_obj);
 room_instance_add(argument0,528,352,floor_obj);
+room_instance_add(argument0,656,416,floor_obj); // New
 // Ceilings
 room_instance_add(argument0,464,352,ceil_obj);
 room_instance_add(argument0,496,352,ceil_obj);
@@ -75,6 +82,7 @@ room_instance_add(argument0,624,352,ceil_obj);
 room_instance_add(argument0,592,352,ceil_obj);
 room_instance_add(argument0,560,352,ceil_obj);
 room_instance_add(argument0,528,352,ceil_obj);
+room_instance_add(argument0,656,416,ceil_obj); // New
 // Walls (Horizontal)
 room_instance_add(argument0,464,368,wall_hor_obj);
 room_instance_add(argument0,464,336,wall_hor_obj);
@@ -101,6 +109,8 @@ room_instance_add(argument0,688,336,wall_hor_obj);
 room_instance_add(argument0,720,304,wall_hor_obj);
 room_instance_add(argument0,688,432,wall_hor_obj);
 room_instance_add(argument0,688,400,wall_hor_obj);
+room_instance_add(argument0,656,400,wall_hor_obj); // New
+room_instance_add(argument0,656,432,wall_hor_obj);
 // Walls (Vertical)
 room_instance_add(argument0,448,352,wall_vert_obj);
 room_instance_add(argument0,864,352,wall_vert_obj);
@@ -108,14 +118,15 @@ room_instance_add(argument0,736,384,wall_vert_obj);
 room_instance_add(argument0,736,416,wall_vert_obj);
 room_instance_add(argument0,704,384,wall_vert_obj);
 room_instance_add(argument0,640,320,wall_vert_obj);
+room_instance_add(argument0,640,416,wall_vert_obj); // New
 // Walls Mon (Horizontal)
 room_instance_add(argument0,528,336,wall_mon_hor_obj);
 room_instance_add(argument0,624,368,wall_mon_hor_obj);
 room_instance_add(argument0,720,432,wall_mon_hor_obj);
 // Walls Mon (Vertical)
 room_instance_add(argument0,672,352,wall_mon_vert_obj);
-room_instance_add(argument0,672,416,wall_mon_vert_obj);
 room_instance_add(argument0,704,352,wall_mon_vert_obj);
 room_instance_add(argument0,736,320,wall_mon_vert_obj);
+// room_instance_add(argument0,672,416,wall_mon_vert_obj);
 // Props
 room_instance_add(argument0,720,352,flesh_arrow_obj);

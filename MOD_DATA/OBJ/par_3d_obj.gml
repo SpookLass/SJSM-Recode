@@ -40,3 +40,10 @@ object_event_add
     // Inherit
     event_inherited();
 ');
+// Room End Event
+object_event_add
+(argument0,ev_other,ev_room_end,'
+    event_inherited();
+    if color_var && persistent
+    { image_blend = c_white; }
+');

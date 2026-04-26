@@ -6,14 +6,21 @@ object_set_persistent(argument0,false);
 object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
-// Create Event
+// Create Start
+    // Loading specimen specific settings
 object_event_add
-(argument0,ev_create,0,'
-    if !variable_local_exists("color_var") { color_var = 2; }
-    if !variable_local_exists("reflect_var") { reflect_var = true; }
-    event_inherited();
+(argument0,ev_create,1,'');
+// Create Normal Event
+    // Default settings
+object_event_add
+(argument0,ev_create,2,'
+    // Variables
     if !variable_local_exists("do_hurt_var") { do_hurt_var = false; }
     if !variable_local_exists("do_possess_var") { do_possess_var = true; }
+    if !variable_local_exists("hp_var") { hp_var = -1; }
+    if !variable_local_exists("name_var") { name_var = "Unknown"; }
+    if !variable_local_exists("dead_rm_var") { dead_rm_var = dead_rm; }
+    hp_max_var = hp_var;
     hurt_var = false;
     on_var = false;
     possess_var = false;
@@ -34,6 +41,22 @@ object_event_add
     sub_var[1] = false;
     inst_var = noone;
     loop_inst_var = noone;
+');
+// Create End Event
+    // Startup
+object_event_add
+(argument0,ev_create,3,'
+    event_perform(ev_other,ev_room_start);
+');
+// Create Event
+object_event_add
+(argument0,ev_create,0,'
+    if !variable_local_exists("color_var") { color_var = 2; }
+    if !variable_local_exists("reflect_var") { reflect_var = true; }
+    event_inherited();
+    event_perform(ev_create,1);
+    event_perform(ev_create,2);
+    event_perform(ev_create,3);
 ');
 // Event Step End
 object_event_add

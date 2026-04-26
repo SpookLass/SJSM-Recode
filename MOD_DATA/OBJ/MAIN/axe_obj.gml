@@ -186,9 +186,9 @@ object_event_add
 ');
 // Room Start
 object_event_add
-(argument0,ev_other,ev_room_start,'
+(argument0,ev_other,ev_room_end,'
     event_inherited();
-    if !color_var || !instance_exists(color_par_obj) || global.color_var == 1
+    if color_var
     { image_blend = c_white; }
 ');
 // Draw Event

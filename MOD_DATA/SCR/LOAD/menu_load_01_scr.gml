@@ -1542,15 +1542,15 @@ local.bekka = global.mon_len_var;
 global.mon_len_var += 1;
     // Husks
 mon_arr[global.mon_len_var,0] = "husk"; // Variable
-mon_arr[global.mon_len_var,1] = "husk"; // Name
-mon_arr[global.mon_len_var,2] = "husk"; // Description
-mon_arr[global.mon_len_var,3] = "husk"; // CAT-DOS
+mon_arr[global.mon_len_var,1] = "husk_swarm"; // Name
+mon_arr[global.mon_len_var,2] = "husk_swarm"; // Description
+mon_arr[global.mon_len_var,3] = "husk_swarm"; // CAT-DOS
 mon_arr[global.mon_len_var,4] = true; // Translate
 mon_arr[global.mon_len_var,5] = true; // Chases
 mon_arr[global.mon_len_var,6] = true; // Has CAT-DOS
 mon_arr[global.mon_len_var,7] = 3; // Group
 mon_arr[global.mon_len_var,8] = 0; // Extra behaviors
-mon_arr[global.mon_len_var,9] = noone; // Object
+mon_arr[global.mon_len_var,9] = husk_swarm_obj; // Object
 mon_arr[global.mon_len_var,10] = noone; // Locale
 // Descriptions
 mon_desc_arr[global.mon_len_var,0] = mon_arr[global.mon_len_var,2]+"_"+type_arr[0,1];
