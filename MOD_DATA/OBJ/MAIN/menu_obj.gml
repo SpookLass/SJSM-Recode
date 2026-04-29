@@ -292,90 +292,63 @@ object_event_add
     button_str_arr_var[9,11] = back_str_var;
     // Custom
         // Ditto (Customize)
+    custom_state_var = 0;
     state_str_arr_var[4] = ini_read_string("MENU","customize","MENU_customize");
+    local.backdesc = ini_read_string("DESC","back","DESC_back");
+    for (local.i=0; local.i<global.set_state_len_var; local.i+=1;)
+    {
+        custom_name_arr_var[local.i,0] = back_str_var;
+        custom_desc_arr_var[local.i,0] = local.backdesc;
+        custom_button_arr_var[local.i,0] = -1;
+        custom_state_arr_var[local.i,0] = 1;
+    }
     for (local.i=0; local.i<global.custom_len_var; local.i+=1;)
     {
+        local.stateid = custom_arr[local.i,8];
+        local.setid = custom_state_arr_var[local.stateid,0];
+        custom_state_arr_var[local.stateid,0] += 1;
+        
+        custom_button_arr_var[local.stateid,local.setid] = local.i; // Button ID
         // Strings
         if custom_arr[local.i,3] // Translate
         {
-            custom_button_arr_var[local.i,1] = ini_read_string("MENU",custom_arr[local.i,1],"MENU_"+custom_arr[local.i,1]); // Name
-            custom_button_arr_var[local.i,2] = ini_read_string("DESC",custom_arr[local.i,2],"DESC_"+custom_arr[local.i,2]); // Description
+            // Name
+            if custom_arr[local.i,4] == custom_type_const { custom_name_arr_var[local.stateid,local.setid] = string_upper(translate_mon_str_scr(custom_arr[local.i,1])); }
+            else { custom_name_arr_var[local.stateid,local.setid] = ini_read_string("MENU",custom_arr[local.i,1],"MENU_"+custom_arr[local.i,1]); }
+            custom_desc_arr_var[local.stateid,local.setid] = ini_read_string("DESC",custom_arr[local.i,2],"DESC_"+custom_arr[local.i,2]); // Description
         }
         else
         {
-            custom_button_arr_var[local.i,1] = custom_arr[local.i,1];
-            custom_button_arr_var[local.i,2] = custom_arr[local.i,2];
+            if custom_arr[local.i,4] == custom_type_const { custom_name_arr_var[local.stateid,local.setid] = string_upper(custom_arr[local.i,1]); }
+            else { custom_name_arr_var[local.stateid,local.setid] = custom_arr[local.i,1]; }
+            custom_desc_arr_var[local.stateid,local.setid] = custom_arr[local.i,2];
         }
         // Default
-        if custom_arr[local.i,4] == 3 // Max clamped
-        { custom_button_arr_var[local.i,0] = custom_clamp_arr[local.i,1]+1; } // Above Max
-        else { custom_button_arr_var[local.i,0] = custom_clamp_arr[local.i,0]-1; } // Below Min
+        if custom_arr[local.i,4] != custom_state_const
+        {
+            if custom_arr[local.i,4] == custom_max_clamp_num_const // Max clamped
+            { custom_value_arr_var[local.i] = custom_arr[local.i,6]+1; } // Above Max
+            else { custom_value_arr_var[local.i] = custom_arr[local.i,5]-1; } // Below Min
+        }
         // Labels
-        if custom_arr[local.i,4] == 0 ||  custom_arr[local.i,4] == 6 // Enum or Monster List
+        if custom_arr[local.i,4] == custom_enum_const || custom_arr[local.i,4] == custom_type_const // Enum
         {
-            for (local.j=custom_clamp_arr[local.i,0]; local.j<=custom_clamp_arr[local.i,1]; local.j+=1;)
+            for (local.j=0; local.j<=custom_arr[local.i,6]-custom_arr[local.i,5]; local.j+=1;)
             {
+                // Labels
                 if custom_label_arr[local.i,(local.j*2)+1] // Translate
-                { custom_button_label_arr_var[local.i,local.j] = ini_read_string("LABEL",custom_label_arr[local.i,local.j*2],"LABEL_"+custom_label_arr[local.i,local.j*2]); }
-                else { custom_button_label_arr_var[local.i,local.j] = custom_label_arr[local.i,local.j*2]; }
+                { custom_label_arr_var[local.i,local.j] = ini_read_string("LABEL",custom_label_arr[local.i,local.j*2],"LABEL_"+custom_label_arr[local.i,local.j*2]); }
+                else { custom_label_arr_var[local.i,local.j] = custom_label_arr[local.i,local.j*2]; }
+                // Descriptions
+                if custom_arr[local.i,9]
+                {
+                    if custom_desc_arr[local.i,(local.j*2)+1] // Translate
+                    { custom_label_desc_arr_var[local.i,local.j] = ini_read_string("DESC",custom_desc_arr[local.i,local.j*2],"DESC_"+custom_desc_arr[local.i,local.j*2]); }
+                    else { custom_label_desc_arr_var[local.i,local.j] = custom_desc_arr[local.i,local.j*2]; }
+                }
             }
         }
-        custom_button_arr_var[local.i,3] = local.i; // Button ID
     }
-    custom_button_len_var = global.custom_len_var;
-    custom_button_arr_var[custom_button_len_var,0] = noone;
-    custom_button_arr_var[custom_button_len_var,1] = ini_read_string("MENU","type","MENU_type");
-    custom_button_arr_var[custom_button_len_var,2] = ini_read_string("DESC","type","DESC_type");
-    custom_button_arr_var[custom_button_len_var,3] = -2; // Not custom
-    custom_button_len_var += 1;
-    custom_button_arr_var[custom_button_len_var,0] = noone;
-    custom_button_arr_var[custom_button_len_var,1] = back_str_var;
-    custom_button_arr_var[custom_button_len_var,2] = ini_read_string("DESC","back","DESC_back");
-    custom_button_arr_var[custom_button_len_var,3] = -1; // Not custom
-    custom_button_len_var += 1;
-    // Behavior
-        // Defaults
-    state_str_arr_var[5] = ini_read_string("MENU","type","MENU_type");
-    for (local.i=0; local.i<global.mon_len_var; local.i+=1)
-    {
-        type_button_arr_var[local.i,0] = -1;
-        type_button_arr_var[local.i,1] = global.type_len_var+mon_arr[local.i,8]; // Max value
-        if mon_arr[local.i,4] // Translate
-        {
-            type_button_arr_var[local.i,2] = string_upper(translate_mon_str_scr(mon_arr[local.i,1],global.name_var));
-            type_button_arr_var[local.i,3] = ini_read_string("DESC",mon_arr[local.i,2],"DESC_"+mon_arr[local.i,2]);
-        }
-        else
-        {
-            type_button_arr_var[local.i,2] = mon_arr[local.i,1];
-            type_button_arr_var[local.i,3] = mon_arr[local.i,2];
-        }
-        // Custom types
-        if mon_arr[local.i,8] > 0
-        {
-            for (local.j=0; local.j<mon_arr[local.i,8]; local.j+=1;)
-            {
-                if mon_type_arr[local.i,(local.j*2)+1] // Translate
-                { type_button_label_arr_var[local.i,local.j] = ini_read_string("LABEL",mon_type_arr[local.i,local.j*2],"LABEL_"+mon_type_arr[local.i,local.j*2]); }
-                else { type_button_label_arr_var[local.i,local.j] = mon_type_arr[local.i,local.j*2]; }
-            }
-        }
-        // Descriptions
-        for (local.j=0; local.j<global.type_len_var+mon_arr[local.i,8]; local.j+=1;)
-        {
-            if mon_desc_arr[local.i,(local.j*2)+1] // Translate
-            { type_button_desc_arr_var[local.i,local.j] = ini_read_string("DESC",mon_desc_arr[local.i,local.j*2],"DESC_"+mon_desc_arr[local.i,local.j*2]); }
-            else { type_button_desc_arr_var[local.i,local.j] = mon_desc_arr[local.i,local.j*2]; }
-        }
-        type_button_arr_var[local.i,4] = local.i; // Monster ID
-    }
-    type_button_len_var = global.mon_len_var;
-    type_button_arr_var[type_button_len_var,0] = noone;
-    type_button_arr_var[type_button_len_var,1] = noone;
-    type_button_arr_var[type_button_len_var,2] = ini_read_string("MENU","back","MENU_back");
-    type_button_arr_var[type_button_len_var,3] = ini_read_string("DESC","back","DESC_back");
-    type_button_arr_var[type_button_len_var,4] = -1; // Not monster
-    type_button_len_var += 1;
     // Name Entry
     state_str_arr_var[12] = ini_read_string("MENU","name_entry","MENU_name_entry");
     // States
@@ -589,22 +562,17 @@ object_event_add
                         save_mode_var=1;
 						save_custom_var = false;
 						save_room = hall_01_rm;
+                        save_type_var=0;
 						
-                        for (local.i=0; local.i<custom_button_len_var; local.i+=1)
+                        for (local.i=0; local.i<global.custom_len_var; local.i+=1)
                         {
-                            local.customid = custom_button_arr_var[local.i,3];
-                            if local.customid >= 0
+                            if custom_arr[local.i,4] != custom_state_const
                             {
-                                if custom_arr[local.customid,4] == 3 // Max clamped
-                                { custom_button_arr_var[local.customid,0] = custom_clamp_arr[local.customid,1]+1; } // Above Max
-                                else { custom_button_arr_var[local.customid,0] = custom_clamp_arr[local.customid,0]-1; } // Below Min
+                                if custom_arr[local.i,4] == custom_max_clamp_num_const // Max clamped
+                                { custom_value_arr_var[local.i] = custom_arr[local.i,6]+1; } // Above Max
+                                else { custom_value_arr_var[local.i] = custom_arr[local.i,5]-1; } // Below Min
                             }
                         }
-						
-						save_type_var=0;
-						for (local.i=0; local.i<type_button_len_var-1; local.i+=1;)
-                        { type_button_arr_var[local.i,0] = -1; }
-						
 						break;
 					}
                     // Load Game
@@ -800,7 +768,7 @@ object_event_add
             local.input = input_menu_hold_y_scr(0);
             if local.input != 0
             {
-                button_state_var = mod_scr(button_state_var-local.input,custom_button_len_var);
+                button_state_var = mod_scr(button_state_var-local.input,custom_state_arr_var[custom_state_var,0]);
                 fmod_snd_play_scr(select_snd_var);
             }
             // Lerp
@@ -810,12 +778,12 @@ object_event_add
                 local.state = scroll_focal_var
             }
             else { local.state = button_state_var; }
-            local.target_scroll = -96*median(0,custom_button_len_var-5,local.state-2);
+            local.target_scroll = -96*median(0,custom_state_arr_var[custom_state_var,0]-5,local.state-2);
             local.scroll_diff = abs(local.target_scroll-scroll_var);
             local.scroll_rate = max(scroll_min_var,local.scroll_diff*scroll_rate_var)*global.true_delta_time_var;
             scroll_var += min(local.scroll_diff,local.scroll_rate)*sign(local.target_scroll-scroll_var);
             // Custom ID
-            local.customid = custom_button_arr_var[button_state_var,3];
+            local.customid = custom_button_arr_var[custom_state_var,button_state_var];
             // Confirm
             if global.input_press_arr[confirm_input_const,0]
             {
@@ -825,63 +793,69 @@ object_event_add
                     fmod_update_take_over_when_lock_scr();
                     switch custom_arr[local.customid,4] // Type
                     {
-                        case 0: case 6: // Enums
+                        case custom_enum_const: case custom_type_const: // Enums
                         {
-                            custom_button_arr_var[button_state_var,0] += 1;
-                            if custom_clamp_arr[local.customid,2] // Wrap
+                            custom_value_arr_var[local.customid] += 1;
+                            if custom_arr[local.customid,7] // Wrap
                             {
-                                custom_button_arr_var[button_state_var,0] = mod_scr
+                                custom_value_arr_var[local.customid,0] = mod_scr
                                 (
-                                    custom_button_arr_var[button_state_var,0]+1-custom_clamp_arr[local.customid,0],
-                                    custom_clamp_arr[local.customid,1]+2-custom_clamp_arr[local.customid,0]
-                                )-1+custom_clamp_arr[local.customid,0];
+                                    custom_value_arr_var[local.customid]+1-custom_arr[local.customid,5],
+                                    custom_arr[local.customid,6]+2-custom_arr[local.customid,5]
+                                )-1+custom_arr[local.customid,5];
                             }
                             else
                             {
-                                custom_button_arr_var[button_state_var,0] = median
+                                custom_value_arr_var[local.customid] = median
                                 (
-                                    custom_button_arr_var[button_state_var,0],
-                                    custom_clamp_arr[local.customid,0]-1,
-                                    custom_clamp_arr[local.customid,1]
+                                    custom_value_arr_var[local.customid],
+                                    custom_arr[local.customid,5]-1,
+                                    custom_arr[local.customid,6]
                                 );
                             }
                             break;
                         }
-                        case 1: // Number
+                        case custom_num_const: // Number
                         {
-                            custom_button_arr_var[button_state_var,0] = get_integer(custom_button_arr_var[button_state_var,1],custom_button_arr_var[button_state_var,0]);
+                            custom_value_arr_var[local.customid] = get_integer(custom_name_arr_var[custom_state_var,button_state_var],custom_value_arr_var[local.customid]);
                             break;
                         }
-                        case 2: // Clamped number
+                        case custom_clamp_num_const: // Clamped number
                         {
-                            custom_button_arr_var[button_state_var,0] = median
+                            custom_value_arr_var[local.customid] = median
                             (
-                                get_integer(custom_button_arr_var[button_state_var,1],custom_button_arr_var[button_state_var,0]),
-                                custom_clamp_arr[local.customid,0]-1,
-                                custom_clamp_arr[local.customid,1]
+                                get_integer(custom_name_arr_var[custom_state_var,button_state_var],custom_value_arr_var[local.customid]),
+                                custom_arr[local.customid,5]-1,
+                                custom_arr[local.customid,6]
                             );
                         }
-                        case 3: // Max clamped number
+                        case custom_max_clamp_num_const: // Max clamped number
                         {
-                            custom_button_arr_var[button_state_var,0] = min
+                            custom_value_arr_var[local.customid] = min
                             (
-                                get_integer(custom_button_arr_var[button_state_var,1],custom_button_arr_var[button_state_var,0]),
-                                custom_clamp_arr[local.customid,1]+1
-                            );
-                            break;
-                        }
-                        case 4: // Min clamped number
-                        {
-                            custom_button_arr_var[button_state_var,0] = max
-                            (
-                                get_integer(custom_button_arr_var[button_state_var,1],custom_button_arr_var[button_state_var,0]),
-                                custom_clamp_arr[local.customid,0]-1
+                                get_integer(custom_name_arr_var[custom_state_var,button_state_var],custom_value_arr_var[local.customid]),
+                                custom_arr[local.customid,6]+1
                             );
                             break;
                         }
-                        case 5: // String
+                        case custom_min_clamp_num_const: // Min clamped number
                         {
-                            custom_button_arr_var[button_state_var,0] = get_string(custom_button_arr_var[button_state_var,1],string(custom_button_arr_var[button_state_var,0]));
+                            custom_value_arr_var[local.customid] = max
+                            (
+                                get_integer(custom_name_arr_var[custom_state_var,button_state_var],custom_value_arr_var[local.customid]),
+                                custom_arr[local.customid,5]-1
+                            );
+                            break;
+                        }
+                        case custom_str_const: // String
+                        {
+                            custom_value_arr_var[local.customid] = get_string(custom_name_arr_var[custom_state_var,button_state_var],string(custom_value_arr_var[local.customid]));
+                            break;
+                        }
+                        case custom_state_const:
+                        {
+                            custom_state_var = custom_arr[local.customid,0];
+                            event_user(0);
                             break;
                         }
                         default: { local.snd = false; break; }
@@ -894,15 +868,11 @@ object_event_add
                 {
                     switch local.customid
                     {
-                        case -2: // Behavior
+                        default: // Back
                         {
-                            state_var = 5;
-                            event_user(0);
-                            break;
-                        }
-                        case -1: // Back
-                        {
-                            state_var = 3;
+                            if custom_state_arr[custom_state_var,2] >= 0
+                            { custom_state_var = custom_state_arr[custom_state_var,2]; }
+                            else { state_var = 3; }
                             event_user(0);
                             break;
                         }
@@ -913,7 +883,9 @@ object_event_add
             // Back
             if input_press_arr[back_input_const,0]
             {
-                state_var = 3;
+                if custom_state_arr[custom_state_var,2] >= 0
+                { custom_state_var = custom_state_arr[custom_state_var,2]; }
+                else { state_var = 3; }
                 event_user(0);
                 fmod_snd_play_scr(deny_snd);
             }
@@ -922,102 +894,48 @@ object_event_add
             if local.input != 0 && local.customid >= 0
             {
                 local.snd = true;
-                local.customid = custom_button_arr_var[button_state_var,3];
                 switch custom_arr[local.customid,4] // Type
                 {
-                    case 0: case 6: case 2: // Enums and clamped numbers
+                    case custom_enum_const: case custom_type_const: case custom_clamp_num_const: // Enums and clamped numbers
                     {
-                        custom_button_arr_var[button_state_var,0] += local.input;
-                        if custom_clamp_arr[local.customid,2] // Wrap
+                        custom_value_arr_var[local.customid] += local.input;
+                        if custom_arr[local.customid,7] // Wrap
                         {
-                            custom_button_arr_var[button_state_var,0] = mod_scr
+                            custom_value_arr_var[local.customid] = mod_scr
                             (
-                                custom_button_arr_var[button_state_var,0]+1-custom_clamp_arr[local.customid,0],
-                                custom_clamp_arr[local.customid,1]+2-custom_clamp_arr[local.customid,0]
-                            )-1+custom_clamp_arr[local.customid,0];
+                                custom_value_arr_var[local.customid]+1-custom_arr[local.customid,5],
+                                custom_arr[local.customid,6]+2-custom_arr[local.customid,5]
+                            )-1+custom_arr[local.customid,5];
                         }
                         else
                         {
-                            custom_button_arr_var[button_state_var,0] = median
+                            custom_value_arr_var[local.customid] = median
                             (
-                                custom_button_arr_var[button_state_var,0],
-                                custom_clamp_arr[local.customid,0]-1,
-                                custom_clamp_arr[local.customid,1]
+                                custom_value_arr_var[local.customid],
+                                custom_arr[local.customid,5]-1,
+                                custom_arr[local.customid,6]
                             );
                         }
                         break;
                     }
-                    case 1: // Number
+                    case custom_num_const: // Number
                     {
-                        custom_button_arr_var[button_state_var,0] += local.input;
+                        custom_value_arr_var[local.customid] += local.input;
                         break;
                     }
-                    case 3: // Max clamped number
+                    case custom_max_clamp_num_const: // Max clamped number
                     {
-                        custom_button_arr_var[button_state_var,0] = min(custom_clamp_arr[local.customid,1]+1,custom_button_arr_var[button_state_var,0]+local.input);
+                        custom_value_arr_var[local.customid] = min(custom_arr[local.customid,6]+1,custom_value_arr_var[local.customid]+local.input);
                         break;
                     }
-                    case 4: // Min clamped number
+                    case custom_min_clamp_num_const: // Min clamped number
                     {
-                        custom_button_arr_var[button_state_var,0] = max(custom_clamp_arr[local.customid,0]-1,custom_button_arr_var[button_state_var,0]+local.input);
+                        custom_value_arr_var[local.customid] = max(custom_arr[local.customid,5]-1,custom_value_arr_var[local.customid]+local.input);
                         break;
                     }
                     default: { local.snd = false; break; }
                 }
                 if local.snd { fmod_snd_play_scr(select_snd_var); }
-            }
-            break;
-        }
-        case 5: // Behavior
-        {
-            // Effects! (I dont know how this works, but I trust Birds judgement)
-            subbgscroll_var += (1*global.true_delta_time_var);
-			
-			if subbgalpha_var < 1
-			subbgalpha_var += (0.04*global.true_delta_time_var);
-            // Text Stretch
-            time_var = (time_var+global.true_delta_time_var) mod 80;
-            str_scale_var = 0.8+(cos(2*time_var*pi/80)*0.2);
-            // Scroll
-            local.input = input_menu_hold_y_scr(0);
-            if local.input != 0
-            {
-                button_state_var = mod_scr(button_state_var-local.input,type_button_len_var);
-                fmod_snd_play_scr(select_snd_var);
-            }
-            // Lerp
-            if do_scroll_focal_var
-            {
-                scroll_focal_var = median(button_state_var-2,button_state_var+2,scroll_focal_var);
-                local.state = scroll_focal_var
-            }
-            else { local.state = button_state_var; }
-            local.target_scroll = -96*median(0,type_button_len_var-5,local.state-2);
-            local.scroll_diff = abs(local.target_scroll-scroll_var);
-            local.scroll_rate = max(scroll_min_var,local.scroll_diff*scroll_rate_var)*global.true_delta_time_var;
-            scroll_var += min(local.scroll_diff,local.scroll_rate)*sign(local.target_scroll-scroll_var);
-            // Type ID
-            local.typeid = type_button_arr_var[button_state_var,4];
-            // Confirm
-            if global.input_press_arr[confirm_input_const,0] && local.typeid < 0
-            {
-                state_var = 3;
-                event_user(0);
-                fmod_snd_play_scr(confirm_snd_var);
-            }
-            // Back
-            if global.input_press_arr[back_input_const,0]
-            {
-                state_var = 3;
-                event_user(0);
-                fmod_snd_play_scr(deny_snd);
-            }
-            local.input = input_menu_hold_x_scr(0);
-            // Left and right
-            if local.input != 0 && local.typeid >= 0
-            {
-                type_button_arr_var[button_state_var,0] = mod_scr(type_button_arr_var[button_state_var,0]+2+local.input,type_button_arr_var[button_state_var,1]+2)-2;
-                fmod_snd_play_scr(select_snd_var);
             }
             break;
         }
@@ -1370,68 +1288,52 @@ object_event_add
                 else { global.diff_var = save_diff_var; }
 
                 // Custom stuff
-                for (local.i=0; local.i<custom_button_len_var; local.i+=1;)
+                for (local.i=0; local.i<global.custom_len_var; local.i+=1)
                 {
-                    local.customid = custom_button_arr_var[local.i,3];
-                    if local.customid >= 0
+                    if custom_arr[local.i,4] != custom_state_const
                     {
                         local.custom = false;
                         if global.custom_var
                         {
-                            switch custom_arr[local.customid,4]
+                            switch custom_arr[local.i,4]
                             {
-                                case 3: // Max clamped
-                                { local.custom = (custom_button_arr_var[local.i,0] <= custom_clamp_arr[local.customid,1]); break; }
-                                case 5: // String
+                                case custom_max_clamp_num_const: // Max clamped
+                                { local.custom = (custom_value_arr_var[local.i] <= custom_arr[local.i,6]); break; }
+                                case custom_str_const: // String
                                 {
-                                    if !is_string(custom_button_arr_var[local.i,0]) { local.custom = false; break; }
-                                    local.custom = (custom_button_arr_var[local.i,0] != "-1"); break;
+                                    if !is_string(custom_value_arr_var[local.i]) { local.custom = false; break; }
+                                    local.custom = (custom_value_arr_var[local.i] != "-1"); break;
                                 }
                                 default: // Normal
-                                { local.custom = (custom_button_arr_var[local.i,0] >= custom_clamp_arr[local.customid,0]); break; }
+                                { local.custom = (custom_value_arr_var[local.i] >= custom_arr[local.i,5]); break; }
                             }
                         }
-                        // Monster List
-                        if custom_arr[local.customid,4] == 6
+                        // Type
+                        if custom_arr[local.i,4] == custom_type_const
                         {
                             // I hope this works, what a complex mess
-                            if local.custom { local.list = mon_list_arr[custom_arr[local.customid,5],custom_button_arr_var[local.i,0]]; }
-                            else { local.list = mon_list_arr[custom_arr[local.customid,5],custom_arr_get_scr(local.customid,global.diff_var,global.mode_var,global.main_type_var)]; }
-                            if local.list != noone
+                            // Use value from button
+                            if local.custom { local.value = custom_value_arr_var[local.i]; }
+                            // Get default value from 4D array
+                            else { local.value = custom_arr_get_scr(local.i,global.diff_var,global.mode_var,global.main_type_var); }
+                            // Disabled
+                            if local.value != -2
                             {
-                                for (local.j=0; local.j<ds_list_size(local.list); local.j+=1;)
-                                {
-                                    local.monid = ds_list_find_value(local.list,local.j);
-                                    // If monster exists and chases
-                                    if object_exists(mon_arr[local.monid,9]) && mon_arr[local.monid,5]
-                                    { ds_list_add(global.mon_list,mon_arr[local.monid,9]); }
-                                }
+                                local.monid = custom_arr[local.i,10];
+                                if object_exists(mon_arr[local.monid,4]) && mon_arr[local.monid,2]
+                                { ds_list_add(global.mon_list,mon_arr[local.monid,4]); }
                             }
+                            // Enabled
+                            else { local.value = global.main_type_var; }
+                            execute_string("global."+custom_arr[local.i,0]+"_type_var = "+string(local.value));
                         }
                         // Use value from button
-                        else if local.custom { execute_string("global."+custom_arr[local.customid,0]+"_var = "+string(custom_button_arr_var[local.i,0])); }
+                        else if local.custom { execute_string("global."+custom_arr[local.i,0]+"_var = "+string(custom_value_arr_var[local.i])); }
                         // Get default value from 4D array
-                        else { execute_string("global."+custom_arr[local.customid,0]+"_var = "+string(custom_arr_get_scr(local.customid,global.diff_var,global.mode_var,global.main_type_var))); }
+                        else { execute_string("global."+custom_arr[local.i,0]+"_var = "+string(custom_arr_get_scr(local.i,global.diff_var,global.mode_var,global.main_type_var))); }
                     }
                 }
 
-				// Behavior stuff
-                for (local.i=0; local.i<type_button_len_var-1; local.i+=1;)
-                {
-                    local.monid = type_button_arr_var[local.i,4]
-                    if local.monid >= 0
-                    {
-                        if type_button_arr_var[local.i,0] == -1 || !global.custom_var
-                        {
-                            if global.diff_var == 5 { local.type = -1; } // Still hardcoded, sorry
-                            else { local.type = global.main_type_var; }
-                            execute_string("global."+mon_arr[local.monid,0]+"_type_var = "+string(local.type));
-                        }
-                        else if type_button_arr_var[local.i,0] < 0 { execute_string("global."+mon_arr[local.monid,0]+"_type_var = -1;"); }
-                        else { execute_string("global."+mon_arr[local.monid,0]+"_type_var = "+string(type_button_arr_var[local.i,0])); }
-                    }
-                    
-                }
 				// Save Info
 				global.rm_count_var = 0;
 				global.note_var = 0;
@@ -1852,61 +1754,64 @@ object_event_add
             );
             draw_set_halign(fa_left);
 			
-            for (local.i=0; local.i<custom_button_len_var; local.i+=1)
+            for (local.i=0; local.i<custom_state_arr_var[custom_state_var,0]; local.i+=1)
             {
                 if local.i != button_state_var
                 {
                     draw_str_shadow_scr
                     (
-                        custom_button_arr_var[local.i,1],
+                        custom_name_arr_var[custom_state_var,local.i],
                         96,144+(96*local.i)+scroll_var,0.75,0.75,0.125,fa_left,fa_top,
                         -4,4,str_bg_color_var,c_yellow,2,0
                     );
-                    
-                    if custom_button_arr_var[local.i,3] >= 0
+                    local.customid = custom_button_arr_var[custom_state_var,local.i];
+                    if local.customid >= 0
                     {
-                        local.str = 0;
-                        switch custom_arr[custom_button_arr_var[local.i,3],4] // Custom type
+                        if custom_arr[local.customid,4] != custom_state_const
                         {
-                            // Enum & Monster List: Get current value label
-                            case 0: case 6:
+                            local.str = 0;
+                            switch custom_arr[local.customid,4] // Custom type
                             {
-                                if custom_button_arr_var[local.i,0] < custom_clamp_arr[custom_button_arr_var[local.i,3],0]
-                                { local.str = def_str_var; break; }
-                                local.str = custom_button_label_arr_var[local.i,custom_button_arr_var[local.i,0]]; break;
+                                // Enum & Monster List: Get current value label
+                                case 0: case 6:
+                                {
+                                    if custom_value_arr_var[local.customid] < custom_arr[local.customid,5]
+                                    { local.str = def_str_var; break; }
+                                    local.str = custom_label_arr_var[local.customid,custom_value_arr_var[local.customid]-custom_arr[local.customid,5]]; break;
+                                }
+                                // If max capped, display default if above max
+                                case 3:
+                                {
+                                    if custom_value_arr_var[local.customid] > custom_arr[local.customid,6]
+                                    { local.str = def_str_var; break; }
+                                    local.str = string(custom_value_arr_var[local.customid]); break;
+                                }
+                                // If string, check for -1 as a string or number
+                                case 5:
+                                {
+                                    if !is_string(custom_value_arr_var[local.customid]) { local.str = def_str_var; break; }
+                                    if custom_value_arr_var[local.customid] == "-1" { local.str = def_str_var; break; }
+                                    local.str = custom_value_arr_var[local.customid];  break;
+                                }
+                                // Otherwise, act as normal
+                                default:
+                                {
+                                    if custom_value_arr_var[local.customid] < custom_arr[local.customid,5]
+                                    { local.str = def_str_var; break; }
+                                    local.str = string(custom_value_arr_var[local.customid]); break;
+                                }
                             }
-                            // If max capped, display default if above max
-                            case 3:
+                            if is_string(local.str)
                             {
-                                if custom_button_arr_var[local.i,0] > custom_clamp_arr[custom_button_arr_var[local.i,3],0]
-                                { local.str = def_str_var; break; }
-                                local.str = string(custom_button_arr_var[local.i,0]); break;
+                                draw_set_halign(fa_center);
+                                draw_str_shadow_scr
+                                (
+                                    local.str,
+                                    0,144+(96*local.i)+scroll_var,0.75,0.75,0.125,fa_center,fa_top,
+                                    -4,4,str_bg_color_var,c_yellow,2,0
+                                );
+                                draw_set_halign(fa_left);
                             }
-                            // If string, check for -1 as a string or number
-                            case 5:
-                            {
-                                if !is_string(custom_button_arr_var[local.i,0]) { local.str = def_str_var; break; }
-                                if custom_button_arr_var[local.i,0] == "-1" { local.str = def_str_var; break; }
-                                local.str = custom_button_arr_var[local.i,0];  break;
-                            }
-                            // Otherwise, act as normal
-                            default:
-                            {
-                                if custom_button_arr_var[local.i,0] < custom_clamp_arr[custom_button_arr_var[local.i,3],0]
-                                { local.str = def_str_var; break; }
-                                local.str = string(custom_button_arr_var[local.i,0]); break;
-                            }
-                        }
-                        if is_string(local.str)
-                        {
-                            draw_set_halign(fa_center);
-                            draw_str_shadow_scr
-                            (
-                                local.str,
-                                0,144+(96*local.i)+scroll_var,0.75,0.75,0.125,fa_center,fa_top,
-                                -4,4,str_bg_color_var,c_yellow,2,0
-                            );
-                            draw_set_halign(fa_left);
                         }
                     }
                 }
@@ -1916,157 +1821,76 @@ object_event_add
             draw_spr_stretch_scr(select_spr,0,96,local.ytmp,132,0,fa_left,fa_top);
             draw_str_select_scr
             (
-                custom_button_arr_var[button_state_var,1],
+                custom_name_arr_var[custom_state_var,button_state_var],
                 96,local.ytmp,str_scale_var,0.75,0.125,fa_left,fa_top,
                 -4,4,str_bg_select_color_var,c_white,2,0,0.75,fa_left
             );
-            draw_set_halign(fa_right);
-            local.margin = 832;
-            draw_str_ext_shadow_scr
-            (
-                custom_button_arr_var[button_state_var,2],
-                -20,144,0.4,0.4,0.125,fa_right,fa_top,-1,local.margin,
-                -4,4,str_bg_color_var,c_yellow,2,0
-            );
-            draw_set_halign(fa_left);
 
-            if custom_button_arr_var[button_state_var,3] >= 0
+            local.desc = custom_desc_arr_var[custom_state_var,button_state_var];
+            local.customid = custom_button_arr_var[custom_state_var,button_state_var];
+            if local.customid >= 0
             {
-                local.str = 0;
-                switch custom_arr[custom_button_arr_var[button_state_var,3],4] // Custom type
+                if custom_arr[local.customid,4] != custom_state_const
                 {
-                    // Enum & Monster List: Get current value label
-                    case 0: case 6:
+                    local.str = 0;
+                    switch custom_arr[local.customid,4] // Custom type
                     {
-                        if custom_button_arr_var[button_state_var,0] < custom_clamp_arr[custom_button_arr_var[button_state_var,3],0]
-                        { local.str = def_str_var; break; }
-                        local.str = custom_button_label_arr_var[button_state_var,custom_button_arr_var[button_state_var,0]]; break;
-                    }
-                    // If max capped, display default if above max
-                    case 3:
-                    {
-                        if custom_button_arr_var[button_state_var,0] > custom_clamp_arr[custom_button_arr_var[button_state_var,3],0]
-                        { local.str = def_str_var; break; }
-                        local.str = string(custom_button_arr_var[button_state_var,0]); break;
-                    }
-                    // If string, check for -1 as a string or number
-                    case 5:
-                    {
-                        if !is_string(custom_button_arr_var[button_state_var,0]) { local.str = def_str_var; break; }
-                        if custom_button_arr_var[button_state_var,0] == "-1" { local.str = def_str_var; break; }
-                        local.str = custom_button_arr_var[button_state_var,0];  break;
-                    }
-                    // Otherwise, act as normal
-                    default:
-                    {
-                        if custom_button_arr_var[button_state_var,0] < custom_clamp_arr[custom_button_arr_var[button_state_var,3],0]
-                        { local.str = def_str_var; break; }
-                        local.str = string(custom_button_arr_var[button_state_var,0]); break;
-                    }
-                }
-                if is_string(local.str)
-                {
-                    draw_set_halign(fa_center);
-                    draw_str_shadow_scr
-                    (
-                        local.str,
-                        0,144+(96*button_state_var)+scroll_var,0.75,0.75,0.125,fa_center,fa_top,
-                        -4,4,str_bg_select_color_var,c_white,2,0
-                    );
-                    draw_set_halign(fa_left);
-                }
-            }
-            break;
-        }
-        case 5: // Behavior
-        {
-            draw_bg_tiled_stretch_ext_scr(sub_bg_arr[sub_bg_var],0,subbgscroll_var*-1,512,0,2,0,make_color_rgb(70,0,90),subbgalpha_var);
-			
-            draw_set_halign(fa_right);
-			draw_str_shadow_scr
-            (
-                state_str_arr_var[state_var],
-                -20,20,0.95,0.95,0.125,fa_right,fa_top,
-                -4,4,str_bg_color_var,c_yellow,2,0
-            );
-            draw_set_halign(fa_left);
-    
-            for (local.i=0; local.i<type_button_len_var; local.i+=1)
-            {
-                if local.i != button_state_var
-                {
-                    draw_str_shadow_scr
-                    (
-                        type_button_arr_var[local.i,2],
-                        96,144+(96*local.i)+scroll_var,0.75,0.75,0.125,fa_left,fa_top,
-                        -4,4,str_bg_color_var,c_yellow,2,0
-                    );
-                    
-                    if type_button_arr_var[local.i,4] >= 0
-                    {
-                        switch type_button_arr_var[local.i,0]
+                        // Enum & Monster List: Get current value label
+                        case 0: case 6:
                         {
-                            case -2: { local.str = rand_str_var; break; }
-                            case -1: { local.str = def_str_var; break; }
-                            default:
-                            {
-                                if type_button_arr_var[local.i,0] < global.type_len_var
-                                { local.str = type_arr_var[type_button_arr_var[local.i,0],0]; }
-                                else { local.str = type_button_label_arr_var[local.i,type_button_arr_var[local.i,0]-global.type_len_var]; }
-                            }
+                            // Default
+                            if custom_value_arr_var[local.customid] < custom_arr[local.customid,5]
+                            { local.str = def_str_var; break; }
+                            // Description
+                            if custom_arr[local.customid,9]
+                            { local.desc += "##"+custom_label_desc_arr_var[local.customid,custom_value_arr_var[local.customid]-custom_arr[local.customid,5]]; }
+                            // Label
+                            local.str = custom_label_arr_var[local.customid,custom_value_arr_var[local.customid]-custom_arr[local.customid,5]]; break;
                         }
+                        // If max capped, display default if above max
+                        case 3:
+                        {
+                            if custom_value_arr_var[local.customid] > custom_arr[local.customid,6]
+                            { local.str = def_str_var; break; }
+                            local.str = string(custom_value_arr_var[local.customid]); break;
+                        }
+                        // If string, check for -1 as a string or number
+                        case 5:
+                        {
+                            if !is_string(custom_value_arr_var[local.customid]) { local.str = def_str_var; break; }
+                            if custom_value_arr_var[local.customid] == "-1" { local.str = def_str_var; break; }
+                            local.str = custom_value_arr_var[local.customid];  break;
+                        }
+                        // Otherwise, act as normal
+                        default:
+                        {
+                            if custom_value_arr_var[local.customid] < custom_arr[local.customid,5]
+                            { local.str = def_str_var; break; }
+                            local.str = string(custom_value_arr_var[local.customid]); break;
+                        }
+                    }
+                    if is_string(local.str)
+                    {
                         draw_set_halign(fa_center);
                         draw_str_shadow_scr
                         (
                             local.str,
-                            0,144+(96*local.i)+scroll_var,0.75,0.75,0.125,fa_center,fa_top,
-                            -4,4,str_bg_color_var,c_yellow,2,0
+                            0,144+(96*button_state_var)+scroll_var,0.75,0.75,0.125,fa_center,fa_top,
+                            -4,4,str_bg_select_color_var,c_white,2,0
                         );
                         draw_set_halign(fa_left);
                     }
                 }
             }
-            local.ytmp = 144+(96*button_state_var)+scroll_var;
-            draw_spr_stretch_scr(select_spr,0,96,local.ytmp,132,0,fa_left,fa_top);
-            draw_str_select_scr
+            draw_set_halign(fa_right);
+            local.margin = 832;
+            draw_str_ext_shadow_scr
             (
-                type_button_arr_var[button_state_var,2],
-                96,local.ytmp,str_scale_var,0.75,0.125,fa_left,fa_top,
-                -4,4,str_bg_select_color_var,c_white,2,0,0.75,fa_left
+                local.desc,
+                -20,144,0.4,0.4,0.125,fa_right,fa_top,-1,local.margin,
+                -4,4,str_bg_color_var,c_yellow,2,0
             );
-
-            if type_button_arr_var[button_state_var,4] >= 0
-            {
-                local.desc = type_button_arr_var[button_state_var,3];
-                switch type_button_arr_var[button_state_var,0]
-                {
-                    case -2: { local.str = rand_str_var; break; }
-                    case -1: { local.str = def_str_var; break; }
-                    default:
-                    {
-                        local.desc += "##"+type_button_desc_arr_var[button_state_var,type_button_arr_var[button_state_var,0]];
-                        if type_button_arr_var[button_state_var,0] < global.type_len_var
-                        { local.str = type_arr_var[type_button_arr_var[button_state_var,0],0]; }
-                        else { local.str = type_button_label_arr_var[button_state_var,type_button_arr_var[button_state_var,0]-global.type_len_var]; }
-                    }
-                }
-                draw_set_halign(fa_right);
-                local.margin = 832;
-                draw_str_ext_shadow_scr
-                (
-                    local.desc,
-                    -20,144,0.4,0.4,0.125,fa_right,fa_top,-1,local.margin,
-                    -4,4,str_bg_color_var,c_yellow,2,0
-                );
-                draw_set_halign(fa_center);
-                draw_str_shadow_scr
-                (
-                    local.str,
-                    0,144+(96*button_state_var)+scroll_var,0.75,0.75,0.125,fa_center,fa_top,
-                    -4,4,str_bg_select_color_var,c_white,2,0
-                );
-                draw_set_halign(fa_left);
-            }
+            draw_set_halign(fa_left);
             break;
         }
 		case 6: // Save Loads

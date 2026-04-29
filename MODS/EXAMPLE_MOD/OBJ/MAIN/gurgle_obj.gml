@@ -45,41 +45,7 @@ object_event_add
     h_var = 23;
     eye_h_var = 11;
     mus_prio_var = theme_mus_prio_const;
-    // Assets
-        // Search for existing assets to save memory
-    local.loaded = false;
-    with object_index
-    {
-        if id != other.id && object_index == other.object_index
-        {
-            other.spr_var = spr_var;
-            for (local.i=0; local.i<snd_len_var; local.i+=1;)
-            { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
-            other.wake_snd_var[1] = wake_snd_var[1];
-            other.mus_snd_var = mus_snd_var;
-            other.drum_snd_var = drum_snd_var;
-            local.loaded = true;
-            break;
-        }
-    }
-        // If no existing assets were found, load them
-    if !local.loaded
-    {
-        spr_var = sprite_add(global.example_directory_var+"\SPR\MON\gurgle_spr.png",5,false,false,0,0);
-        snd_arr[0,0] = fmod_snd_add_scr(global.example_directory_var+"\SND\MON\gurgle_01_snd.wav",true);
-        snd_arr[1,0] = fmod_snd_add_scr(global.example_directory_var+"\SND\MON\gurgle_02_snd.wav",true);
-        snd_arr[2,0] = fmod_snd_add_scr(global.example_directory_var+"\SND\MON\gurgle_03_snd.wav",true);
-        snd_arr[3,0] = fmod_snd_add_scr(global.example_directory_var+"\SND\MON\gurgle_04_snd.wav",true);
-        wake_snd_var[1] = fmod_snd_add_scr(global.example_directory_var+"\SND\MON\gurgle_wake_snd.wav");
-        charge_snd_var[0] = fmod_snd_add_scr(global.example_directory_var+"\SND\MON\gurgle_charge_snd.wav",true);
-        fmod_snd_set_group_scr(charge_snd_var[0],snd_group_mon_const);
-        fmod_snd_set_minmax_dist_scr(charge_snd_var[0],snd_dist_min_var,snd_dist_max_var);
-        // Music
-        mus_snd_var = fmod_snd_add_scr(global.example_directory_var+"\SND\MON\gurgle_mus_snd.ogg");
-        drum_snd_var = fmod_snd_add_scr(global.example_directory_var+"\SND\MON\gurgle_drum_snd.ogg");
-        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
-        fmod_snd_set_group_scr(drum_snd_var,snd_group_mon_const); // Workaround
-    }
+    dead_rm_var = gurgle_dead_01_rm;
     // Music
     drum_inst_var = noone;
     // Alarms
@@ -109,12 +75,62 @@ object_event_add
     else { local.type = global.gurgle_type_var; }
     switch local.type
     {
-        case 0:
+        case 0: // Recode
         {
             dmg_var = 40;
             atk_range_var = global.mon_coll[2];
             break;
         }
+        case 2: //HD GURGLE REAL?
+        {
+            dur_var = irandom_range(10,15);
+            dmg_alarm_var = 180;
+            delay_min_var = 90;
+            delay_max_var = 180;
+            do_enter_var = true;
+            atk_range_var = 32;
+            // Sound
+            snd_alarm_min_var = 90;
+            snd_alarm_max_var = 240;
+            snd_den_var = 1;
+            snd_dist_max_var = 500;
+            break;
+        }
+    }
+    // Assets
+        // Search for existing assets to save memory
+    local.loaded = false;
+    with object_index
+    {
+        if id != other.id && object_index == other.object_index
+        {
+            other.spr_var = spr_var;
+            for (local.i=0; local.i<snd_len_var; local.i+=1;)
+            { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
+            other.wake_snd_var[1] = wake_snd_var[1];
+            other.mus_snd_var = mus_snd_var;
+            other.drum_snd_var = drum_snd_var;
+            local.loaded = true;
+            break;
+        }
+    }
+        // If no existing assets were found, load them
+    if !local.loaded
+    {
+        spr_var = sprite_add(example_directory_const+"\SPR\MON\gurgle_spr.png",5,false,false,0,0);
+        snd_arr[0,0] = fmod_snd_add_scr(example_directory_const+"\SND\MON\gurgle_01_snd.wav",true);
+        snd_arr[1,0] = fmod_snd_add_scr(example_directory_const+"\SND\MON\gurgle_02_snd.wav",true);
+        snd_arr[2,0] = fmod_snd_add_scr(example_directory_const+"\SND\MON\gurgle_03_snd.wav",true);
+        snd_arr[3,0] = fmod_snd_add_scr(example_directory_const+"\SND\MON\gurgle_04_snd.wav",true);
+        wake_snd_var[1] = fmod_snd_add_scr(example_directory_const+"\SND\MON\gurgle_wake_snd.wav");
+        charge_snd_var[0] = fmod_snd_add_scr(example_directory_const+"\SND\MON\gurgle_charge_snd.wav",true);
+        fmod_snd_set_group_scr(charge_snd_var[0],snd_group_mon_const);
+        fmod_snd_set_minmax_dist_scr(charge_snd_var[0],snd_dist_min_var,snd_dist_max_var);
+        // Music
+        mus_snd_var = fmod_snd_add_scr(example_directory_const+"\SND\MON\gurgle_mus_snd.ogg");
+        drum_snd_var = fmod_snd_add_scr(example_directory_const+"\SND\MON\gurgle_drum_snd.ogg");
+        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
+        fmod_snd_set_group_scr(drum_snd_var,snd_group_mon_const); // Workaround
     }
 ');
 // Destroy Event

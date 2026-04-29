@@ -25,8 +25,7 @@ ini_write_real("MAIN","mode",global.mode_var);
 ini_write_real("MAIN","type",global.main_type_var);
 ini_write_real("MAIN","diff",global.diff_var);
 ini_write_real("MAIN","custom",global.custom_var);
-if ds_list_size(global.mod_list)>0 { ini_write_string("MAIN","mod",1); }
-else { ini_write_string("MAIN","mod",0); }
+ini_write_real("MAIN","mod",ds_list_size(global.mod_list)>0);
     // Lists
 ini_write_list_scr("MAIN","rm_list",global.rm_list_var);
 ini_write_list_scr("MAIN","mon_curr_list",global.mon_curr_list);
@@ -35,17 +34,16 @@ ini_write_list_scr("MAIN","mod_list",global.mod_list);
 // Settings
 for (local.i=0; local.i<global.custom_len_var; local.i+=1)
 {
-    if custom_arr[local.i,4] != 6 // Not Monster List
+    if custom_arr[local.i,4] != custom_state_const // Not Monster List
     {
-        if custom_arr[local.i,4] == 5 // String
-        { ini_write_string("SETTING",custom_arr[local.i,0],variable_global_get(custom_arr[local.i,0]+"_var")); }
-        // Number
-        else { ini_write_real("SETTING",custom_arr[local.i,0],variable_global_get(custom_arr[local.i,0]+"_var")); }
+        switch custom_arr[local.i,4]
+        {
+            case custom_str_const: { ini_write_string("SETTING",custom_arr[local.i,0],variable_global_get(custom_arr[local.i,0]+"_var")); break; }
+            case custom_type_const: { ini_write_real("BEHAVIOR",custom_arr[local.i,0]+"_type",variable_global_get(custom_arr[local.i,0]+"_type_var")); break; }
+            default: { ini_write_real("SETTING",custom_arr[local.i,0],variable_global_get(custom_arr[local.i,0]+"_var")); break; }
+        }
     }
 }
-// Behavior stuff
-for (local.i=0; local.i<global.mon_len_var; local.i+=1;)
-{ ini_write_real("BEHAVIOR",mon_arr[local.i,0]+"_type",variable_global_get(mon_arr[local.i,0]+"_type_var")); }
 // Players
 for (local.i=0; local.i<global.player_len_var; local.i+=1;)
 {

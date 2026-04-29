@@ -1,6 +1,16 @@
 /*
 Argument 0: Print
 */
+/*
+globalvar start_rm_arr;
+start_rm_arr[0] = manor_rm;
+start_rm_arr[1] = outside_rm;
+global.rm_0_250_var = mid_01_rm;
+global.rm_0_500_var = mid_02_rm;
+global.rm_0_510_var = fake_gel_load_rm;
+global.rm_0_750_var = mid_03_rm;
+global.rm_0_1000_var = end_load_rm;
+*/
 // Draw
 draw_load_scr("Loading endless zones...");
 global.zone_len_var = 10;

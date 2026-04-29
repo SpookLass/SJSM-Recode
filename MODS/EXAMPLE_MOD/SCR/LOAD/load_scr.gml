@@ -1,60 +1,45 @@
 /*
 Argument 0: Mod Directory
 */
-global.example_directory_var = argument0;
-    // Example Group
-mon_group_arr[global.mon_group_len_var,0] = "Example" // Name
-mon_group_arr[global.mon_group_len_var,1] = false; // Translate
-    // Gurgle
-mon_arr[global.mon_len_var,0] = "gurgle"; // Variable
-mon_arr[global.mon_len_var,1] = "GURGLE"; // Name
-mon_arr[global.mon_len_var,2] = "So retro!"; // Description
-mon_arr[global.mon_len_var,3] = "It's a Gurgle! Don't think about it too hard."; // CAT-DOS
-mon_arr[global.mon_len_var,4] = false; // Translate
-mon_arr[global.mon_len_var,5] = true; // Chases
-mon_arr[global.mon_len_var,6] = true; // Has CAT-DOS
-mon_arr[global.mon_len_var,7] = global.mon_group_len_var; // Group
-mon_arr[global.mon_len_var,8] = 0; // Extra behaviors
-mon_arr[global.mon_len_var,9] = gurgle_obj; // Object
-mon_arr[global.mon_len_var,10] = noone; // Locale
-// Descriptions
-mon_desc_arr[global.mon_len_var,0] = "No notable version differences.";
-mon_desc_arr[global.mon_len_var,1] = false;
-mon_desc_arr[global.mon_len_var,2] = "No notable version differences.";
-mon_desc_arr[global.mon_len_var,3] = false;
-mon_desc_arr[global.mon_len_var,4] = "No notable version differences.";
-mon_desc_arr[global.mon_len_var,5] = false;
-local.gurgle = global.mon_len_var;
-global.mon_len_var += 1;
-    // Example List
-mon_list_arr[global.mon_list_len_var,0] = noone;
-mon_list_arr[global.mon_list_len_var,1] = ds_list_create();
-ds_list_clear(mon_list_arr[global.mon_list_len_var,1]);
-ds_list_add(mon_list_arr[global.mon_list_len_var,1],local.gurgle);
-    // Example List Config
-// Name
-custom_arr[global.custom_len_var,0] = "ex_list"; // Variable name
-custom_arr[global.custom_len_var,1] = "EXAMPLE"; // Name
-custom_arr[global.custom_len_var,2] = "Monsters from the example mod. This only includes Gurgle."; // Description
-custom_arr[global.custom_len_var,3] = false; // Translate name and descripion
-custom_arr[global.custom_len_var,4] = 6; // Type (Monster list)
-custom_arr[global.custom_len_var,5] = global.mon_list_len_var; // Special (Array index)
-// Label
-custom_label_arr[global.custom_len_var,0] = "none"; // Value 1
-custom_label_arr[global.custom_len_var,1] = true; // Translate
-custom_label_arr[global.custom_len_var,2] = "all"; // Value 2
-custom_label_arr[global.custom_len_var,3] = true; // Translate
-// Clamp
-custom_clamp_arr[global.custom_len_var,0] = 0; // Min
-custom_clamp_arr[global.custom_len_var,1] = 1; // Max
-custom_clamp_arr[global.custom_len_var,2] = true; // Wrap
-// Defaults
-custom_arr_add_len_scr(0,1);
-custom_arr_set_scr(1,global.custom_len_var,-1,-1,-1); // Default (All)
-custom_arr_set_scr(0,global.custom_len_var,-1,0,-1); // Story (None)
-custom_arr_set_scr(0,global.custom_len_var,-1,1,1); // OG Endless (None)
-custom_arr_set_scr(0,global.custom_len_var,-1,1,2); // HD Endless (None)
-// Plus one to everything
-global.mon_group_len_var += 1;
-global.mon_list_len_var += 1;
-global.custom_len_var += 1;
+globalvar example_directory_const;
+example_directory_const = argument0;
+// Funny
+    if frac_chance_scr(1,6)
+    {
+        switch (irandom(5))
+        {
+            case 0: { local.desc = "Shoutouts to YoshiCraft64!"; break; }
+            case 1: { local.desc = "So retro!"; break; }
+            case 2: { local.desc = "It's a Gurgle! Don't think about it too hard."; break; }
+            case 3: { local.desc = "Hear it hurgling!"; break; }
+            case 4: { local.desc = "Thumbs up!"; break; }
+            case 5: { local.desc = "Members have access to more Gurgle and can earn more Acheesements!"; break; }
+        }
+    }
+    else { local.desc = "The creature from a bygone era."; }
+// Monster Group
+    local.exgroup = global.mon_group_len_var;
+    mon_group_arr[local.exgroup,0] = "EXAMPLE";
+    mon_group_arr[local.exgroup,1] = true;
+    global.mon_group_len_var += 1;
+// Category
+    local.type = 4; // You kinda just gotta know, sorry.
+    local.exstate = custom_add_state_scr("EXAMPLE",false,local.type);
+    // Setting
+        /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Has Descriptions*/
+        custom_add_scr(local.exstate,"EXAMPLE","Example monsters for the example mod",false,custom_state_const,-1,-1,false,local.type,false);
+        custom_arr_add_len_scr(0,1);
+// Gurgle
+    local.gurgle = type_add_scr("Gurgle",false,true,local.exgroup,gurgle_obj,noone,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
+    local.gurgle_set = type_add_set_scr(local.gurgle,"gurgle",local.desc,local.exstate,true); /*ID, Variable Name, Description, Category, Can Disable*/
+    // Types
+        type_add_type_scr(local.gurgle,local.gurgle_set,"RECODE","Deals less damage and has a smaller hitbox.",false); /*Type ID, Setting ID, Label, Description, Translate*/
+        type_add_type_scr(local.gurgle,local.gurgle_set,"ORIGINAL","Deals more damage and has a bigger hitbox.",false);
+        type_add_type_scr(local.gurgle,local.gurgle_set,"RENOVATION","Inherits all the oddities of your average Renovation enemy.",false);
+    // Defaults
+        custom_arr_add_len_scr(0,1);
+        custom_arr_set_scr(0,local.gurgle_set,-1,-1,-1); // Default (Recode)
+        custom_arr_set_scr(-2,local.gurgle_set,-1,0,-1); // Story Mode (Off)
+        custom_arr_set_scr(1,local.gurgle_set,-1,-1,1); // OG
+        custom_arr_set_scr(2,local.gurgle_set,-1,-1,2); // HD
+        custom_arr_set_scr(-1,local.gurgle_set,5,-1,-1); // :) (Random)

@@ -28,18 +28,16 @@ ini_read_list_scr("MAIN","mon_list",global.mon_list);
 // Settings
 for (local.i=0; local.i<global.custom_len_var; local.i+=1)
 {
-    if custom_arr[local.i,4] != 6 // Not Monster List
+    if custom_arr[local.i,4] != custom_state_const // Not Monster List
     {
-        if custom_arr[local.i,4] == 5 // String
-        { local.value = ini_read_string("SETTING",custom_arr[local.i,0],custom_arr_get_scr(local.i,global.diff_var,global.mode_var,global.main_type_var)); }
-        // Number
-        { local.value = ini_read_real("SETTING",custom_arr[local.i,0],custom_arr_get_scr(local.i,global.diff_var,global.mode_var,global.main_type_var)); }
-        execute_string("global."+custom_arr[local.i,0]+"_var = argument0",local.value);
+        switch custom_arr[local.i,4]
+        {
+            case custom_str_const: { execute_string("global."+custom_arr[local.i,0]+"_var = argument0",ini_read_string("SETTING",custom_arr[local.i,0],custom_arr_get_scr(local.i,global.diff_var,global.mode_var,global.main_type_var))); break; }
+            case custom_type_const: { execute_string("global."+custom_arr[local.i,0]+"_type_var = argument0",ini_read_real("BEHAVIOR",custom_arr[local.i,0]+"_type",custom_arr_get_scr(local.i,global.diff_var,global.mode_var,global.main_type_var))); break; }
+            default: { execute_string("global."+custom_arr[local.i,0]+"_var = argument0",ini_read_real("SETTING",custom_arr[local.i,0],custom_arr_get_scr(local.i,global.diff_var,global.mode_var,global.main_type_var))); break; }
+        }
     }
 }
-// Behavior stuff
-for (local.i=0; local.i<global.mon_len_var; local.i+=1;)
-{ execute_string("global."+mon_arr[local.i,0]+"_type_var = argument0",ini_read_real("BEHAVIOR",mon_arr[local.i,0]+"_type",global.main_type_var)); }
 // Players
 for (local.i=0; local.i<global.player_len_var; local.i+=1;)
 {

@@ -79,7 +79,7 @@ object_event_add
             hurt_down_var = false;
             // Sounds
             snd_dist_min_var = 32/3;
-            snd_dist_max_var = 500/pixel_meter_rate_const; // This doesn't seem right
+            snd_dist_max_var = 500/pixel_meter_rate_const; // This doesnt seem right
             snd_alarm_min_var = 60;
             snd_alarm_max_var = 72;
             // Blob
