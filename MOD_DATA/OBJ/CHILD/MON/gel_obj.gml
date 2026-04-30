@@ -396,8 +396,6 @@ object_event_add
                     if abuse_var > abuse_max_var
                     {
                         // Slime Spawning
-                        event_user(6);
-                        local.bestdist = target_dist_var;
                         local.slime_len = 0;
                         with slime_obj
                         {

@@ -50,16 +50,16 @@ for (local.i=0; local.i<local.width; local.i+=1;)
     }
 }
 // Walls
+local.ytmp = 32+(local.height*32);
 for (local.i=0; local.i<30; local.i+=1;)
 {
     local.xtmp = 48+(local.i*32);
-    local.ytmp = 32+(local.height*32);
     room_instance_add(argument0,local.xtmp,32,wall_big_hor_obj);
     room_instance_add(argument0,local.xtmp,local.ytmp,wall_big_hor_obj);
 }
+local.xtmp = 32+(local.width*32);
 for (local.i=0; local.i<30; local.i+=1;)
 {
-    local.xtmp = 32+(local.width*32);
     local.ytmp = 48+(local.i*32);
     room_instance_add(argument0,32,local.ytmp,wall_big_vert_obj);
     room_instance_add(argument0,local.xtmp,local.ytmp,wall_big_vert_obj);

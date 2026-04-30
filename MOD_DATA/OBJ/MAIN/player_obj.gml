@@ -240,10 +240,10 @@ object_event_add
         eye_yaw_var = 0;
         if global.spawn_len_var
         {
-            x = global.spawn_arr[0,0];
-            y = global.spawn_arr[0,1];
-            z = global.spawn_arr[0,2];
-            eye_yaw_var = global.spawn_arr[0,3];
+            x = global.spawn_arr[global.spawn_var,0];
+            y = global.spawn_arr[global.spawn_var,1];
+            z = global.spawn_arr[global.spawn_var,2];
+            eye_yaw_var = global.spawn_arr[global.spawn_var,3];
         }
         if global.player_len_var > 1
         {

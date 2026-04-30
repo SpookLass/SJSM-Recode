@@ -20,7 +20,7 @@ example_directory_const = argument0;
 // Monster Group
     local.exgroup = global.mon_group_len_var;
     mon_group_arr[local.exgroup,0] = "EXAMPLE";
-    mon_group_arr[local.exgroup,1] = true;
+    mon_group_arr[local.exgroup,1] = false;
     global.mon_group_len_var += 1;
 // Category
     local.type = 4; // You kinda just gotta know, sorry.

@@ -295,7 +295,7 @@ object_event_add
     custom_state_var = 0;
     state_str_arr_var[4] = ini_read_string("MENU","customize","MENU_customize");
     local.backdesc = ini_read_string("DESC","back","DESC_back");
-    for (local.i=0; local.i<global.set_state_len_var; local.i+=1;)
+    for (local.i=0; local.i<global.custom_state_len_var; local.i+=1;)
     {
         custom_name_arr_var[local.i,0] = back_str_var;
         custom_desc_arr_var[local.i,0] = local.backdesc;

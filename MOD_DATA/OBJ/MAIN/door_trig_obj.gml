@@ -45,6 +45,7 @@ object_event_add
     zone_var = -1;
     ele_var = false;
     if !variable_local_exists("lock_var") { lock_var = false; }
+    if !variable_local_exists("safe_var") { safe_var = !instance_exists(mon_par_obj); }
     player_var = 0;
     // Alarm
     alarm_len_var = 1;
@@ -82,7 +83,7 @@ object_event_add
             }
         }
         // Rare Rooms
-        if !instance_exists(mon_par_obj) && !local.set
+        if safe_var && !local.set
         {
             // Dev
             if global.save_name_var == "1235" && frac_chance_scr(1,235) { rm_var = dev_rm; local.set = true; }

@@ -27,6 +27,7 @@ globalvar spawn_arr;
 globalvar obj_name_arr;
 global.spawn_len_var = -1;
 global.spawn_len_extra_var = -1;
+global.spawn_var = 0;
 global.mark_len_var = -1;
 global.js_mark_len_var = -1;
 global.rm_count_var = 0;
