@@ -80,7 +80,7 @@ object_event_add
         hurt_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\eel_hurt_snd.wav",true);
         fmod_snd_set_minmax_dist_scr(hurt_snd_var[1],0,snd_dist_max_var);
         fmod_snd_set_group_scr(hurt_snd_var[1],snd_group_mon_const);
-        switch global.old_theme_var
+        switch theme_scr(global.eel_theme_var,global.theme_var,1,0,1,0)
         {
             case 1:
             {

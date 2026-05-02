@@ -330,9 +330,9 @@ object_event_add
         }
         hide_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_hide_mus_snd.mp3");
         fmod_snd_set_group_scr(hide_mus_snd_var,snd_group_mus_const);
-        switch global.old_theme_var
+        switch theme_scr(global.killer_theme_var,global.theme_var,1,0,0,1)
         {
-            case 2: { main_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\killer_rom_mus_snd.ogg"); break; }
+            case 1: { main_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\killer_rom_mus_snd.ogg"); break; }
             default: { main_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_mus_snd.mp3"); break; }
         }
         fmod_snd_set_group_scr(main_mus_snd_var,snd_group_mus_const);

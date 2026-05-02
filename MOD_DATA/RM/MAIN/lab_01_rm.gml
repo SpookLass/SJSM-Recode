@@ -32,24 +32,29 @@ room_set_code
     global.draw_3d_var = true;
     // Doors
     spawn_create_scr(true,false);
+    global.spawn_len_var = 4;
     // Exit
-    with instance_create(400,136,spawn_door_trig_obj) { global.spawn_arr[0,4] = id; lock_var = true; }
-    with instance_create(400,128,lab_door_obj) { global.spawn_arr[0,5] = id; direction = 270; }
+    with instance_create(400,136,spawn_door_trig_obj) { global.spawn_arr[1,4] = id; lock_var = true; }
+    with instance_create(400,128,lab_door_obj) { global.spawn_arr[1,5] = id; direction = 270; }
     with instance_create(400,344,spawn_door_trig_obj)
     {
-        global.spawn_arr[1,4] = id;
+        global.spawn_arr[2,4] = id;
         rm_var = test_spawn_rm;
+        snd_len_var = 1;
+        snd_arr[0] = door_m_02_snd;
     }
-    with instance_create(400,352,lab_door_obj) { global.spawn_arr[1,5] = id; direction = 90; }
+    with instance_create(400,352,lab_door_obj) { global.spawn_arr[2,5] = id; direction = 90; }
     with instance_create(536,240,spawn_door_trig_obj)
     {
-        global.spawn_arr[2,4] = id; 
+        global.spawn_arr[3,4] = id; 
         lock_var = true;
         ini_open(global.lang_var);
         txt_lock_var = ini_read_string("UI","keycard_hint","UI_keycard_hint");
         ini_close();
+        snd_len_var = 1;
+        snd_arr[0] = door_m_02_snd;
     }
-    with instance_create(544,240,lab_door_obj) { global.spawn_arr[2,5] = id; direction = 180; }
+    with instance_create(544,240,lab_door_obj) { global.spawn_arr[3,5] = id; direction = 180; }
     
 ');
 // Room settings

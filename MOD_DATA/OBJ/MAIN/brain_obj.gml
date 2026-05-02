@@ -99,5 +99,11 @@ object_event_add
     fmod_update_take_over_done_scr();
     if global.reset_spd_var > 0 && global.game_spd_var > 1
     { global.game_spd_var = 1; fmod_group_set_pitch_scr(0,global.game_spd_var); }
+    if instance_exists(load_par_obj)
+    {
+        if ds_list_find_index(global.mon_list,gel_obj) < 0
+        { ds_list_add(global.mon_list,gel_obj); }
+        with spawn_leave_door_trig_obj { lock_var = false; }
+    }
     instance_destroy();
 ')

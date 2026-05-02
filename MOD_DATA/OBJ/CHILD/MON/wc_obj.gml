@@ -126,7 +126,7 @@ object_event_add
         atk_start_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\DH\wc_atk_snd.wav",true);
         hurt_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\DH\doll_hurt_snd.wav",true);
         dead_snd_var[0]  = fmod_snd_add_scr(main_directory_const+"\SND\DH\wc_dead_snd.wav",true);
-        switch global.old_theme_var
+        switch theme_scr(global.wc_theme_var,global.theme_var,2,0,1,2)
         {
             case 2: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\wc_rom_mus_snd.ogg"); break; }
             case 1: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DH\wc_static_snd.wav"); break; }

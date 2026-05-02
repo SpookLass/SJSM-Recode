@@ -96,7 +96,7 @@ object_event_add
         local.stateid = set_arr[local.i,8];
         local.setid = state_arr_var[local.stateid,0];
         state_arr_var[local.stateid,0] += 1;
-        
+        id_arr_var[local.stateid,local.setid] = local.i; // Button ID
         // Strings
         if set_arr[local.i,3] // Translate
         {
@@ -108,36 +108,48 @@ object_event_add
             name_arr_var[local.stateid,local.setid] = set_arr[local.i,1];
             desc_arr_var[local.stateid,local.setid] = set_arr[local.i,2];
         }
-        id_arr_var[local.stateid,local.setid] = local.i; // Button ID
+        // Monster
+        if set_arr[local.i,4] == set_mon_enum_const
+        {
+            local.name = translate_mon_str_scr(set_arr[local.i,11]);
+            name_arr_var[local.stateid,local.setid] = string_replace_all(name_arr_var[local.stateid,local.setid],"@n",string_upper(local.name));
+            desc_arr_var[local.stateid,local.setid] = string_replace_all(desc_arr_var[local.stateid,local.setid],"@n",local.name);
+        }
         // Default
-        if set_arr[local.i,4] != 8
+        if set_arr[local.i,4] != set_state_const
         {
             if set_arr[local.i,9] // Player Specific
             {
                 for (local.j=0; local.j<8; local.j+=1;)
                 {
-                    if set_arr[local.i,4] == 7 { value_arr_var[local.i,local.j] = global.input_key_arr[set_arr[local.i,10],local.j]; } // Input
+                    if set_arr[local.i,4] == set_input_const { value_arr_var[local.i,local.j] = global.input_key_arr[set_arr[local.i,11],local.j]; } // Input
                     else { execute_string("value_arr_var[argument0,argument1] = global."+set_arr[local.i,0]+"_var[argument1]",local.i,local.j); }
                 }
             }
             else
             {
-                if set_arr[local.i,4] == 7 { value_arr_var[local.i,local.j] = global.input_key_arr[set_arr[local.i,10],local.j]; } // Input
+                if set_arr[local.i,4] == set_input_const { value_arr_var[local.i,local.j] = global.input_key_arr[set_arr[local.i,11],local.j]; } // Input
                 else { execute_string("value_arr_var[argument0,0] = global."+set_arr[local.i,0]+"_var",local.i); }
             }
         }
         // Labels
-        if set_arr[local.i,4] == 0 ||  set_arr[local.i,4] == 6 // Enum or Pointer
+        if set_arr[local.i,4] == set_enum_const ||  set_arr[local.i,4] == set_pointer_const || set_arr[local.i,4] == set_mon_enum_const // Enum or Pointer
         {
-            for (local.j=set_arr[local.i,5]; local.j<=set_arr[local.i,6]; local.j+=1;)
+            for (local.j=0; local.j<=set_arr[local.i,6]-set_arr[local.i,5]; local.j+=1;)
             {
                 if set_label_arr[local.i,(local.j*2)+1] // Translate
                 { label_arr_var[local.i,local.j] = ini_read_string("SET_LABEL",set_label_arr[local.i,local.j*2],"SET_LABEL_"+set_label_arr[local.i,local.j*2]); }
                 else { label_arr_var[local.i,local.j] = set_label_arr[local.i,local.j*2]; }
+                // Descriptions
+                if set_arr[local.i,10]
+                {
+                    if set_desc_arr[local.i,(local.j*2)+1] // Translate
+                    { label_desc_arr_var[local.i,local.j] = ini_read_string("SET_DESC",set_desc_arr[local.i,local.j*2],"SET_DESC_"+set_desc_arr[local.i,local.j*2]); }
+                    else { label_desc_arr_var[local.i,local.j] = set_desc_arr[local.i,local.j*2]; }
+                }
             }
         }
     }
-    
 ');
 // Step Event
 object_event_add
@@ -171,7 +183,7 @@ object_event_add
     // Control Listen
     if control_listen_var
     {
-        if set_arr[local.setid,4] == 7 // Input
+        if set_arr[local.setid,4] == set_input_const // Input
         {
             if keyboard_check_pressed(vk_anykey)
             {
@@ -220,7 +232,7 @@ object_event_add
                 fmod_update_take_over_when_lock_scr();
                 switch set_arr[local.setid,4] // Type
                 {
-                    case 0: case 6: // Enum / Pointer
+                    case set_enum_const: case set_pointer_cont: case set_mon_enum_const: // Enum / Pointer
                     {
                         value_arr_var[local.setid,local.playerid] += 1;
                         if set_arr[local.setid,7] // Wrap
@@ -242,12 +254,12 @@ object_event_add
                         }
                         break;
                     }
-                    case 1: // Number
+                    case set_num_const: // Number
                     {
                         value_arr_var[local.setid,local.playerid] = get_integer(name_arr_var[state_var,set_var],value_arr_var[local.setid,local.playerid]);
                         break;
                     }
-                    case 2: // Clamped number
+                    case set_clamp_num_const: // Clamped number
                     {
                         value_arr_var[local.setid,local.playerid] = median
                         (
@@ -257,7 +269,7 @@ object_event_add
                         );
                         break;
                     }
-                    case 3: // Max clamped number
+                    case set_max_clamp_num_const: // Max clamped number
                     {
                         value_arr_var[local.setid,local.playerid] = min
                         (
@@ -266,7 +278,7 @@ object_event_add
                         );
                         break;
                     }
-                    case 4: // Min clamped number
+                    case set_min_clamp_num_const: // Min clamped number
                     {
                         value_arr_var[local.setid,local.playerid] = max
                         (
@@ -275,21 +287,21 @@ object_event_add
                         );
                         break;
                     }
-                    case 5: // String
+                    case set_str_const: // String
                     {
                         value_arr_var[local.setid,local.playerid] = get_string(name_arr_var[state_var,set_var],string(value_arr_var[local.setid,local.playerid]));
                         break;
                     }
-                    case 7: // Input
+                    case set_input_const: // Input
                     {
                         local.set = false
                         control_listen_var = true;
                         break;
                     }
-                    case 8: // Category
+                    case set_state_const: // Category
                     {
                         local.set = false
-                        state_var = set_arr[local.setid,10];
+                        state_var = set_arr[local.setid,0];
                         event_user(2);
                         break;
                     }
@@ -405,7 +417,7 @@ object_event_add
             local.back = true;
             if local.setid >= 0
             {
-                if set_arr[local.setid,4] == 7
+                if set_arr[local.setid,4] == set_input_const
                 {
                     value_arr_var[local.setid,local.playerid] = 0;
                     local.back = false;
@@ -462,7 +474,8 @@ object_event_add
                 local.set = true;
                 switch set_arr[local.setid,4] // Type
                 {
-                    case 0: case 6: case 2: // Enums and clamped numbers
+                    // Enums and clamped numbers
+                    case set_enum_const: case set_pointer_const: case set_clamp_num_const: case set_mon_enum_const:
                     {
                         value_arr_var[local.setid,local.playerid] += local.input;
                         if set_arr[local.setid,7] // Wrap
@@ -484,17 +497,17 @@ object_event_add
                         }
                         break;
                     }
-                    case 1: // Number
+                    case set_num_const: // Number
                     {
                         value_arr_var[local.setid,local.playerid] += local.input;
                         break;
                     }
-                    case 3: // Max clamped number
+                    case set_max_clamp_num_const: // Max clamped number
                     {
                         value_arr_var[local.setid,local.playerid] = min(set_arr[local.setid,6],value_arr_var[local.setid,local.playerid]+local.input);
                         break;
                     }
-                    case 4: // Min clamped number
+                    case set_min_clamp_num_const: // Min clamped number
                     {
                         value_arr_var[local.setid,local.playerid] = max(set_arr[local.setid,5],value_arr_var[local.setid,local.playerid]+local.input);
                         break;
@@ -531,7 +544,7 @@ object_event_add
     ini_open("settings.ini");
     for (local.i=0; local.i<global.set_len_var; local.i+=1;)
     {
-        if set_arr[local.i,4] != 8 // Not category
+        if set_arr[local.i,4] != set_state_const // Not category
         {
             if set_arr[local.i,9] // Player Specific
             {
@@ -539,21 +552,21 @@ object_event_add
                 {
                     switch set_arr[local.i,4]
                     {
-                        case 5: // String
+                        case set_str_const: // String
                         {
                             execute_string("global."+set_arr[local.i,0]+"_var[argument0] = argument1;",local.j,value_arr_var[local.i,local.j]);
                             ini_write_string("PLAYER",set_arr[local.i,0]+"_"+string(local.j),value_arr_var[local.i,local.j]);
                             break;
                         }
-                        case 6: // Pointer
+                        case set_pointer_const: // Pointer
                         {
                             execute_string("global."+set_arr[local.i,0]+"_var[argument0] = argument1;",local.j,set_pointer_arr[value_arr_var[local.i,local.j]]);
                             ini_write_real("PLAYER",set_arr[local.i,0]+"_"+string(local.j),value_arr_var[local.i,local.j]);
                             break;
                         }
-                        case 7: // Input
+                        case set_input_const: // Input
                         {
-                            global.input_key_arr[set_arr[local.i,10],local.j] = value_arr_var[local.i,local.j];
+                            global.input_key_arr[set_arr[local.i,11],local.j] = value_arr_var[local.i,local.j];
                             ini_write_real("PLAYER",set_arr[local.i,0]+"_"+string(local.j),value_arr_var[local.i,local.j]);
                             break;
                         }
@@ -570,21 +583,21 @@ object_event_add
             {
                 switch set_arr[local.i,4]
                 {
-                    case 5: // String
+                    case set_str_const: // String
                     {
                         execute_string("global."+set_arr[local.i,0]+"_var = argument0;",value_arr_var[local.i,0]);
                         ini_write_string("MAIN",set_arr[local.i,0],value_arr_var[local.i,0]);
                         break;
                     }
-                    case 6: // Pointer
+                    case set_pointer_const: // Pointer
                     {
                         execute_string("global."+set_arr[local.i,0]+"_var = argument0;",set_pointer_arr[value_arr_var[local.i,0]]);
                         ini_write_real("MAIN",set_arr[local.i,0],value_arr_var[local.i,0]);
                         break;
                     }
-                    case 7: // Input
+                    case set_input_const: // Input
                     {
-                        global.input_key_arr[set_arr[local.i,10],0] = value_arr_var[local.i,0];
+                        global.input_key_arr[set_arr[local.i,11],0] = value_arr_var[local.i,0];
                         ini_write_real("MAIN",set_arr[local.i,0],value_arr_var[local.i,0]);
                         break;
                     }
@@ -631,7 +644,7 @@ object_event_add
 (argument0,ev_other,ev_user1,'
     for (local.i=0; local.i<global.set_len_var; local.i+=1;)
     {
-        if set_arr[local.i,4] != 8
+        if set_arr[local.i,4] != set_state_const
         {
             if set_arr[local.i,9]
             {
@@ -659,9 +672,9 @@ object_event_add
         ini_open("control_preset_"+preset_var+".ini");
         for (local.i=0; local.i<global.set_len_var; local.i+=1;)
         {
-            if !set_arr[local.i,9] || set_arr[local.i,4] == 8 { continue; } // If not player specific or category, skip.
+            if !set_arr[local.i,9] || set_arr[local.i,4] == set_state_const { continue; } // If not player specific or category, skip.
             if !ini_key_exists("PLAYER",set_arr[local.i,0]) { continue; } // If key doesnt exist, skip.
-            if set_arr[local.i,4] == 5 { value_arr_var[local.i,player_id_var] = ini_read_string("PLAYER",set_arr[local.i,0],""); }
+            if set_arr[local.i,4] == set_str_const { value_arr_var[local.i,player_id_var] = ini_read_string("PLAYER",set_arr[local.i,0],""); }
             else { value_arr_var[local.i,player_id_var] = ini_read_real("PLAYER",set_arr[local.i,0],0); }
         }
         ini_close();
@@ -701,7 +714,7 @@ object_event_add
             local.setid = id_arr_var[state_var,local.i];
             if local.setid >= 0
             {
-                if set_arr[local.setid,4] != 8
+                if set_arr[local.setid,4] != set_state_const
                 {
                     
                     if set_arr[local.setid,9] { local.playerid = player_id_var; }
@@ -709,9 +722,10 @@ object_event_add
                     switch set_arr[local.setid,4]
                     {
                         // Enum & Pointer
-                        case 0: case 6: { local.str = label_arr_var[local.setid,value_arr_var[local.setid,local.playerid]]; break; }
+                        case set_enum_const: case set_pointer_const: case set_mon_enum_const:
+                        { local.str = label_arr_var[local.setid,value_arr_var[local.setid,local.playerid]-set_arr[local.setid,5]]; break; }
                         // Input
-                        case 7: { local.str = key_to_str_scr(value_arr_var[local.setid,local.playerid]); break; }
+                        case set_input_const: { local.str = key_to_str_scr(value_arr_var[local.setid,local.playerid]); break; }
                         // Everything else
                         default: { local.str = string(value_arr_var[local.setid,local.playerid]); }
                     }
@@ -761,30 +775,29 @@ object_event_add
         96,local.ytmp,str_scale_var,0.75,0.125,fa_left,fa_top,
         -4,4,str_bg_select_color_var,c_white,2,0,0.75,fa_left
     );
-    draw_set_halign(fa_right);
-    local.margin = 832;
-    draw_str_ext_shadow_scr
-    (
-        desc_arr_var[state_var,set_var],
-        -20,144,0.4,0.4,0.125,fa_right,fa_top,-1,local.margin,
-        -4,4,str_bg_color_var,c_yellow,2,0
-    );
-    draw_set_halign(fa_left);
 
     local.str = 0;
+    local.desc = desc_arr_var[state_var,set_var];
     local.setid = id_arr_var[state_var,set_var];
     if local.setid >= 0
     {
-        if set_arr[local.setid,4] != 8
+        if set_arr[local.setid,4] != set_state_const
         {
             if set_arr[local.setid,9] { local.playerid = player_id_var; }
             else { local.playerid = 0; }
             switch set_arr[local.setid,4]
             {
                 // Enum & Pointer
-                case 0: case 6: { local.str = label_arr_var[local.setid,value_arr_var[local.setid,local.playerid]]; break; }
+                case set_enum_const: case set_pointer_const: case set_mon_enum_const:
+                {
+                    local.str = label_arr_var[local.setid,value_arr_var[local.setid,local.playerid]-set_arr[local.setid,5]];
+                    // Description
+                    if set_arr[local.setid,10]
+                    { local.desc += "##"+label_desc_arr_var[local.setid,value_arr_var[local.setid,local.playerid]-set_arr[local.setid,5]]; }
+                    break;
+                }
                 // Input
-                case 7: { local.str = key_to_str_scr(value_arr_var[local.setid,local.playerid]); break; }
+                case set_input_const: { local.str = key_to_str_scr(value_arr_var[local.setid,local.playerid]); break; }
                 // Everything else
                 default: { local.str = string(value_arr_var[local.setid,local.playerid]); }
             }
@@ -824,4 +837,14 @@ object_event_add
         );
         draw_set_halign(fa_left);
     }
+
+    draw_set_halign(fa_right);
+    local.margin = 832;
+    draw_str_ext_shadow_scr
+    (
+        local.desc,
+        -20,144,0.4,0.4,0.125,fa_right,fa_top,-1,local.margin,
+        -4,4,str_bg_color_var,c_yellow,2,0
+    );
+    draw_set_halign(fa_left);
 ');

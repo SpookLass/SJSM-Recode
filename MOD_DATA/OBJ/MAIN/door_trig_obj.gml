@@ -40,10 +40,10 @@ object_event_add
     snd_arr[3] = door_04_snd;
     // Function
     interact_target_var = noone;
-    rm_count_var = 1;
     delay_var = 20;
     zone_var = -1;
     ele_var = false;
+    if !variable_local_exists("rm_count_var") { rm_count_var = 1; }
     if !variable_local_exists("lock_var") { lock_var = false; }
     if !variable_local_exists("safe_var") { safe_var = !instance_exists(mon_par_obj); }
     player_var = 0;

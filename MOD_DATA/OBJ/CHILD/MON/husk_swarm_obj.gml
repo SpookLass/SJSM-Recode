@@ -139,7 +139,12 @@ object_event_add
         fmod_snd_set_minmax_dist_scr(hurt_snd_var,snd_dist_min_var,snd_dist_max_var);
         fmod_snd_set_group_scr(hurt_snd_var,snd_group_mon_const);
         // Music
-        mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\husk_mus_snd.mp3");
+        switch theme_scr(global.husk_theme_var,global.theme_var,1,0,1,0)
+        {
+            case 1: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DH\east_mus_snd.mp3"); break; }
+            default: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\husk_mus_snd.mp3"); break; }
+        }
+        
         fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
         fmod_snd_set_minmax_dist_scr(hurt_snd_var,snd_dist_min_var,snd_dist_max_var);
     }

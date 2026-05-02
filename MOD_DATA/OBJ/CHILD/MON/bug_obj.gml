@@ -116,9 +116,9 @@ object_event_add
         snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\bug_03_snd.wav",true);
         snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\bug_04_snd.wav",true);
         loop_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\bug_loop_snd.wav",true);
-        switch global.old_theme_var
+        switch theme_scr(global.bug_theme_var,global.theme_var,1,0,0,1)
         {
-            case 2:
+            case 1:
             {
                 mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\bug_rom_mus_snd.ogg");
                 break;

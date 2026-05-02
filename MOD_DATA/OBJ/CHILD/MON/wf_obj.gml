@@ -162,9 +162,9 @@ object_event_add
         glitch_snd_arr[3] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_04_snd.wav");
         for (local.i=0; local.i<glitch_snd_len_var; local.i+=1;)
         { fmod_snd_set_group_scr(glitch_snd_arr[local.i],snd_group_mon_const); }
-        switch global.old_theme_var
+        switch theme_scr(global.wf_theme_var,global.theme_var,1,0,0,1)
         {
-            case 2: { mus_imscared_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\wf_rom_mus_snd.ogg"); break; }
+            case 1: { mus_imscared_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\wf_rom_mus_snd.ogg"); break; }
             default: { mus_imscared_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\wf_mus_snd.ogg"); break; }
         }
         fmod_snd_set_group_scr(mus_imscared_snd_var,snd_group_mus_const);

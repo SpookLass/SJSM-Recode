@@ -2,7 +2,7 @@
 object_set_depth(argument0,-99);
 object_set_mask(argument0,noone);
 object_set_parent(argument0,par_obj);
-object_set_persistent(argument0,true);
+object_set_persistent(argument0,false);
 object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
@@ -18,18 +18,11 @@ object_event_add
     str_alarm_max_var = 460;
     alpha_min_var = 0.3;
     alpha_max_var = 1;
+    str_len_var = 1;
     ini_open(global.lang_var);
-    str_wake_var = ini_read_string("MON","brain_wake","MON_brain_wake");
-    str_len_var = 9;
-    for (local.i=0; local.i<str_len_var; local.i+=1;)
-    {
-        local.num = string(local.i+1);
-        if string_length(local.num) < 2 { local.num = "0"+local.num; }
-        local.str = "brain_"+local.num;
-        str_arr_var[0,local.i] = ini_read_string("MON",local.str,"MON_"+local.str);
-    }
+    str_arr_var[0] = ini_read_string("HINT","brain_hint","HINT_brain_hint");
     ini_close();
-    str_var = str_wake_var;
+    str_var = str_arr_var[0];
     alarm_len_var = 2;
     alarm_ini_scr();
     if !global.reduce_flash_var
@@ -40,10 +33,11 @@ object_event_add
     else { image_alpha = (alpha_min_var+alpha_max_var)*0.5; }
     set_alarm_scr(1,char_alarm_var);
     char_var = 1;
-    str_draw_var = string_copy(str_var, 0, char_var);
+    str_draw_var = string_copy(str_var,0,char_var);
     str_color_var = c_white;
     image_blend = c_black;
     scale_min_var = 0.25;
+    do_mult_var = false;
 ');
 // Room Start
 object_event_add
@@ -79,7 +73,7 @@ object_event_add
 (argument0,ev_alarm,1,'
     if !visible
     {
-        str_var = str_arr_var[0,irandom(str_len_var-1)];
+        str_var = str_arr_var[irandom(str_len_var-1)];
         set_alarm_scr(0,anim_alarm_var);
         set_alarm_scr(1,char_alarm_var);
         char_var = 1;
@@ -100,7 +94,7 @@ object_event_add
             if char_var >= string_length(str_var) { set_alarm_scr(1,char_delay_var); }
             else { set_alarm_scr(1,char_alarm_var); }
         }
-        else
+        else if persistent
         {
             set_alarm_scr(0,-1);
             set_alarm_scr(1,irandom_range(str_alarm_min_var,str_alarm_max_var));
@@ -109,6 +103,7 @@ object_event_add
             visible = false;
             if !global.reduce_flash_var { set_alarm_scr(0,-1); }
         }
+        else { instance_destroy(); }
     }
 ');
 // Draw Event

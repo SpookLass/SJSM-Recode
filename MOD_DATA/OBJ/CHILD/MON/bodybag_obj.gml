@@ -60,7 +60,7 @@ object_event_add
         eff_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\bodybag_eff_snd.wav");
         fmod_snd_set_group_scr(eff_snd_var,snd_group_mon_const);
         wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\bodybag_wake_snd.wav");
-        switch global.old_theme_var
+        switch theme_scr(global.body_theme_var,global.theme_var,2,0,1,2)
         {
             case 1:
             {

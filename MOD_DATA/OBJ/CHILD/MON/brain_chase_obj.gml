@@ -14,6 +14,15 @@ object_event_add
     local.sub = string_replace(ini_read_string("SUB","brain","SUB_brain"),"@n",name_var);
     loop_snd_var[2] = local.sub; loop_snd_var[3] = false;
     wake_snd_var[2] = local.sub; wake_snd_var[3] = false;
+    str_wake_var = ini_read_string("MON","brain_wake","MON_brain_wake");
+    str_len_var = 9;
+    for (local.i=0; local.i<str_len_var; local.i+=1;)
+    {
+        local.num = string(local.i+1);
+        if string_length(local.num) < 2 { local.num = "0"+local.num; }
+        local.str = "brain_"+local.num;
+        str_arr_var[local.i] = ini_read_string("MON",local.str,"MON_"+local.str);
+    }
     ini_close();
     type_var = 0;
     spd_base_var = 0.8;
@@ -119,6 +128,12 @@ object_event_add
             par_var = other.id;
             do_mult_var = other.eff_mult_var;
             target_spd_mult_var = other.target_spd_mult_var;
+            for (local.i=0; local.i<other.str_len_var; local.i+=1;)
+            { str_arr_var[local.i] = other.str_arr_var[local.i]; }
+            str_var = other.str_wake_var;
+            str_draw_var = string_copy(str_var,0,char_var);
+            persistent = true;
+            cam_id_var = -1;
         }
     }
 ');

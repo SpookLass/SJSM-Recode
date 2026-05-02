@@ -85,9 +85,9 @@ object_event_add
         // Overlay
         overlay_bg_var = background_add(main_directory_const+"\BG\MON\flesh_overlay_bg.png",false,false);
         // Music
-        switch global.old_theme_var
+        switch theme_scr(global.flesh_theme_var,global.theme_var,1,0,0,1)
         {
-            case 2: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\flesh_rom_mus_snd.ogg"); break; }
+            case 1: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\flesh_rom_mus_snd.ogg"); break; }
             default:
             {
                 mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\flesh_mus_snd.mp3");

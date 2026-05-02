@@ -117,9 +117,9 @@ object_event_add
         snd_main_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\bab_01_snd.wav",true);
         snd_main_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\bab_02_snd.wav",true);
         snd_main_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\bab_03_snd.wav",true);
-        switch global.old_theme_var
+        switch theme_scr(global.bab_theme_var,global.theme_var,1,0,0,1)
         {
-            case 2: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\bab_rom_mus_snd.ogg"); break; }
+            case 1: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\bab_rom_mus_snd.ogg"); break; }
             default: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\bab_mus_snd.mp3"); break; }
         }
         fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);

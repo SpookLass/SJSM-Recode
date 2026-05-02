@@ -80,9 +80,19 @@ object_event_add
         spr_var = sprite_add(dh_directory_const+"\TEX\sprites\frenzy2_spr.png",8,false,false,0,0); // working_directory+"\MODS\PLUS\SPR\MON\gangnam_frenzy_spr.gif"
         bg_var = background_add(dh_directory_const+"\TEX\sprites\frenzy_spr.png",false,false);
         charge_snd_var[0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\frenzy_atk_short_snd.wav",true);
-        mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\frenzy_mus_snd.ogg");
+        
         hurt_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\DH\frenzy_hurt_snd.wav",true);
         scare_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\scare_short_snd.wav");
+        switch theme_scr(global.frenzy_theme_var,global.theme_var,1,0,1,0)
+        {
+            case 1: // Old (mid)
+            {
+                mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DH\frenzy_dead_snd.mp3");
+                fmod_snd_set_loop_point_scr(mus_snd_var,1/3,1);
+                break;
+            }
+            default: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\frenzy_mus_snd.ogg"); break; }
+        }
         fmod_snd_set_group_scr(charge_snd_var[0],snd_group_mon_const);
         fmod_snd_set_group_scr(hurt_snd_var[1],snd_group_mon_const);
         fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);

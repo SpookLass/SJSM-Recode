@@ -49,9 +49,9 @@ object_event_add
     {
         spr_var = sprite_add(main_directory_const+"\SPR\MON\patient_spr.png",3,false,false,0,0); // vanilla_directory_const+"\3D\npc_6_tex.png"
         wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\patient_wake_snd.wav",global.wake_3d_var);
-        switch global.old_theme_var
+        switch theme_scr(global.patient_theme_var,global.theme_var,1,0,0,1)
         {
-            case 2: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\patient_rom_mus_snd.ogg"); break; }
+            case 1: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\patient_rom_mus_snd.ogg"); break; }
             default: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\patient_mus_snd.mp3"); break; }
         }
         fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);

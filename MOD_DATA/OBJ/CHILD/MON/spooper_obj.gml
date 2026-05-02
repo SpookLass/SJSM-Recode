@@ -132,9 +132,9 @@ object_event_add
         puke_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\spooper_puke_snd.wav");
         choke_01_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\spooper_choke_01_snd.wav");
         choke_02_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\spooper_choke_02_snd.wav");
-        switch global.old_theme_var
+        switch theme_scr(global.spooper_theme_var,global.theme_var,1,0,0,1)
         {
-            case 2: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\spooper_rom_mus_snd.ogg"); break; }
+            case 1: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\spooper_rom_mus_snd.ogg"); break; }
             default: { mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\SPOOPER_AMB.mp3"); break; }
         }
         fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);

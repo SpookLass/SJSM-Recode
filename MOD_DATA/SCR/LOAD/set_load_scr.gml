@@ -12,7 +12,7 @@ for (local.i=0; local.i<global.set_len_var; local.i+=1;)
             {
                 switch set_arr[local.i,4]
                 {
-                    case 5: // String
+                    case set_str_const: // String
                     {
                         execute_string
                         (
@@ -21,7 +21,7 @@ for (local.i=0; local.i<global.set_len_var; local.i+=1;)
                         );
                         break;
                     }
-                    case 6: // Pointer
+                    case set_pointer_const: // Pointer
                     {
                         execute_string
                         (
@@ -30,10 +30,10 @@ for (local.i=0; local.i<global.set_len_var; local.i+=1;)
                         );
                         break;
                     }
-                    case 7: // Input
+                    case set_input_const: // Input
                     {
-                        // show_message(string(set_arr[local.i,10]));
-                        global.input_key_arr[set_arr[local.i,10],local.j] = ini_read_real("PLAYER",set_arr[local.i,0]+"_"+string(local.j),set_default_arr[local.i,local.j]);
+                        // show_message(string(set_arr[local.i,11]));
+                        global.input_key_arr[set_arr[local.i,11],local.j] = ini_read_real("PLAYER",set_arr[local.i,0]+"_"+string(local.j),set_default_arr[local.i,local.j]);
                         break;
                     }
                     default: // Other
@@ -52,7 +52,7 @@ for (local.i=0; local.i<global.set_len_var; local.i+=1;)
         {
             switch set_arr[local.i,4]
             {
-                case 5: // String
+                case set_str_const: // String
                 {
                     execute_string
                     (
@@ -61,7 +61,7 @@ for (local.i=0; local.i<global.set_len_var; local.i+=1;)
                     );
                     break;
                 }
-                case 6: // Pointer
+                case set_pointer_const: // Pointer
                 {
                     execute_string
                     (
@@ -70,9 +70,9 @@ for (local.i=0; local.i<global.set_len_var; local.i+=1;)
                     );
                     break;
                 }
-                case 7: // Input
+                case set_input_const: // Input
                 {
-                    global.input_key_arr[set_arr[local.i,10],0] = ini_read_real("MAIN",set_arr[local.i,0],set_default_arr[local.i,0]);
+                    global.input_key_arr[set_arr[local.i,11],0] = ini_read_real("MAIN",set_arr[local.i,0],set_default_arr[local.i,0]);
                     break;
                 }
                 default: // Other

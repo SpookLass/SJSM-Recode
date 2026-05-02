@@ -10,6 +10,7 @@ object_set_visible(argument0,false);
 object_event_add
 (argument0,ev_create,0,'
     rm_var = noone;
+    rm_count_var = 0;
     spawn_var = 0;
     event_inherited();
 ');

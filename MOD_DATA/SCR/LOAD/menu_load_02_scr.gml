@@ -14,6 +14,7 @@ Type
         Like an enum, but it points to another value
     7 - Input
     8 - Category
+    9 - Monster Enum
 Category
     0 - Main
     1 - Gameplay
@@ -28,1889 +29,667 @@ Category
 -----------------
 */
 draw_load_scr("Loading settings...");
-globalvar set_arr;
-globalvar set_label_arr;
-globalvar set_default_arr;
-globalvar set_pointer_arr;
-globalvar set_state_arr;
-global.set_len_var = 0;
-global.set_state_len_var = 0;
-/*
-----------
-Categories
-----------
-*/
+// Variables
+    globalvar set_arr;
+    globalvar set_label_arr;
+    globalvar set_desc_arr;
+    globalvar set_default_arr;
+    globalvar set_pointer_arr;
+    globalvar set_state_arr;
+    global.set_len_var = 0;
+    global.set_state_len_var = 0;
+// States
+    local.main = set_add_state_scr("settings",true,-1);
+    local.gameplay = set_add_state_scr("gameplay",true,-1);
+    local.visual = set_add_state_scr("visual",true,-1);
+    local.audio = set_add_state_scr("audio",true,-1);
+    local.hud = set_add_state_scr("hud",true,-1);
+    local.performance = set_add_state_scr("performance",true,-1);
+    local.access = set_add_state_scr("access",true,-1);
+    local.control = set_add_state_scr("control",true,-1);
+    local.input = set_add_state_scr("input",true,local.control);
+    local.control_sub = set_add_state_scr("control",true,local.control);
+    local.fun = set_add_state_scr("fun",true,-1);
+    local.theme_toggle = set_add_state_scr("theme_toggle",true,local.audio);
 // Main
-set_state_arr[global.set_state_len_var,0] = "settings"; // Name
-set_state_arr[global.set_state_len_var,1] = true; // Translate
-set_state_arr[global.set_state_len_var,2] = -1; // Previous State (None)
-global.set_state_len_var += 1;
+    // Gameplay
+        /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+        local.set = set_add_scr(local.gameplay,"gameplay","gameplay",true,set_state_const,0,0,false,local.main,false,false);
+        set_add_default_scr(local.set,0);
+    // Visual
+        /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+        local.set = set_add_scr(local.visual,"visual","visual",true,set_state_const,0,0,false,local.main,false,false);
+        set_add_default_scr(local.set,0);
+    // Audio
+        /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+        local.set = set_add_scr(local.audio,"audio","audio",true,set_state_const,0,0,false,local.main,false,false);
+        set_add_default_scr(local.set,0);
+    // Performance
+        /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+        local.set = set_add_scr(local.performance,"performance","performance",true,set_state_const,0,0,false,local.main,false,false);
+        set_add_default_scr(local.set,0);
+    // HUD
+        /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+        local.set = set_add_scr(local.hud,"hud","hud",true,set_state_const,0,0,false,local.main,false,false);
+        set_add_default_scr(local.set,0);
+    // Accessibility
+        /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+        local.set = set_add_scr(local.access,"access","access",true,set_state_const,0,0,false,local.main,false,false);
+        set_add_default_scr(local.set,0);
+    // Control
+        /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+        local.set = set_add_scr(local.control,"control","control",true,set_state_const,0,0,false,local.main,false,false);
+        set_add_default_scr(local.set,0);
+    // Fun
+        /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+        local.set = set_add_scr(local.fun,"fun","fun",true,set_state_const,0,0,false,local.main,false,false);
+        set_add_default_scr(local.set,0);
 // Gameplay
-set_state_arr[global.set_state_len_var,0] = "gameplay"; // Name
-set_state_arr[global.set_state_len_var,1] = true; // Translate
-set_state_arr[global.set_state_len_var,2] = 0; // Previous State (Main)
-global.set_state_len_var += 1;
+    // Reset Speed
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("reset_spd","reset_spd","reset_spd",true,set_enum_const,0,2,true,local.gameplay,false,true);
+        // Labels
+            set_add_label_scr(local.set,0,"off",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            set_add_label_scr(local.set,1,"mon",true,"");
+            set_add_label_scr(local.set,2,"locale",true,"");
+        // Defaults
+            set_add_default_scr(local.set,reset_spd_const);
 // Visuals
-set_state_arr[global.set_state_len_var,0] = "visual"; // Name
-set_state_arr[global.set_state_len_var,1] = true; // Translate
-set_state_arr[global.set_state_len_var,2] = 0; // Previous State (Main)
-global.set_state_len_var += 1;
+    // FOV
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("fov","fov","fov",true,set_clamp_num_const,1,179,true,local.visual,false,false);
+        // Defaults
+            set_add_default_scr(local.set,fov_const);
+    // Dynamic FOV
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("dynamic_fov","dynamic_fov","dynamic_fov",true,set_clamp_num_const,0,100,true,local.visual,false,false);
+        // Defaults
+            set_add_default_scr(local.set,dynamic_fov_const);
+    // Anti Alias
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("anti_alias","anti_alias","anti_alias",true,set_enum_const,false,true,true,local.visual,false,false);
+        // Labels
+            set_add_label_scr(local.set,false,"off",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            set_add_label_scr(local.set,true,"on",true,"");
+        // Defaults
+            set_add_default_scr(local.set,anti_alias_const);
+    // Vertical Sync
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("vsync","vsync","vsync",true,set_enum_const,false,true,true,local.visual,false,false);
+        // Labels
+            set_add_label_scr(local.set,false,"off",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            set_add_label_scr(local.set,true,"on",true,"");
+        // Defaults
+            set_add_default_scr(local.set,vsync_const);
+    // Fullscreen
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("fullscreen","fullscreen","fullscreen",true,set_enum_const,false,true,true,local.visual,false,false);
+        // Labels
+            set_add_label_scr(local.set,false,"off",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            set_add_label_scr(local.set,true,"on",true,"");
+        // Defaults
+            set_add_default_scr(local.set,fullscreen_const);
+    // Splitscreen
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("splitscreen","splitscreen","splitscreen",true,set_enum_const,false,true,true,local.visual,false,false);
+        // Labels
+            set_add_label_scr(local.set,false,"hor",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            set_add_label_scr(local.set,true,"vert",true,"");
+        // Defaults
+            set_add_default_scr(local.set,splitscreen_const);
+    // Color
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("color","color","color",true,set_enum_const,0,2,true,local.visual,false,true);
+        // Labels
+            set_add_label_scr(local.set,0,"all",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            set_add_label_scr(local.set,1,"rm",true,"");
+            set_add_label_scr(local.set,2,"screen",true,"");
+        // Defaults
+            set_add_default_scr(local.set,color_const);
+    // Move Bob
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("move_bob","move_bob","move_bob",true,set_min_clamp_num_const,0,0,false,local.visual,false,false);
+        // Defaults
+            set_add_default_scr(local.set,move_bob_const);
+    // Idle Bob
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("idle_bob","idle_bob","idle_bob",true,set_min_clamp_num_const,0,0,false,local.visual,false,false);
+        // Defaults
+            set_add_default_scr(local.set,idle_bob_const);
+    // Shake Type
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("shake_type","shake_type","shake_type",true,set_enum_const,0,2,true,local.visual,false,true);
+        // Labels
+            set_add_label_scr(local.set,0,"off",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            set_add_label_scr(local.set,1,"old",true,"");
+            set_add_label_scr(local.set,2,"modern",true,"");
+        // Defaults
+            set_add_default_scr(local.set,shake_type_const);
+    // Resolution Width
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("res_w","res_w","res_w",true,set_min_clamp_num_const,1,0,false,local.visual,false,false);
+        // Defaults
+            set_add_default_scr(local.set,res_w_const);
+    // Resolution Height
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("res_h","res_h","res_h",true,set_min_clamp_num_const,1,0,false,local.visual,false,false);
+        // Defaults
+            set_add_default_scr(local.set,res_h_const);
 // Audio
-set_state_arr[global.set_state_len_var,0] = "audio"; // Name
-set_state_arr[global.set_state_len_var,1] = true; // Translate
-set_state_arr[global.set_state_len_var,2] = 0; // Previous State (Main)
-global.set_state_len_var += 1;
+    // Master Volume
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("vol","vol","vol",true,set_clamp_num_const,0,100,true,local.audio,false,false);
+        // Defaults
+            set_add_default_scr(local.set,vol_const);
+    // Music Volume
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("mus_vol","mus_vol","mus_vol",true,set_clamp_num_const,0,100,true,local.audio,false,false);
+        // Defaults
+            set_add_default_scr(local.set,mus_vol_const);
+    // Enemy Volume
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("mon_vol","mon_vol","mon_vol",true,set_clamp_num_const,0,100,true,local.audio,false,false);
+        // Defaults
+            set_add_default_scr(local.set,mon_vol_const);
+    // SFX Volume
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("sfx_vol","sfx_vol","sfx_vol",true,set_clamp_num_const,0,100,true,local.audio,false,false);
+        // Defaults
+            set_add_default_scr(local.set,sfx_vol_const);
+    // Voice Volume
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("voice_vol","voice_vol","voice_vol",true,set_clamp_num_const,0,100,true,local.audio,false,false);
+        // Defaults
+            set_add_default_scr(local.set,voice_vol_const);
+    // Killer Voice
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_sp_scr("killer_voice","killer_voice","killer_voice",true,set_mon_enum_const,0,3,true,local.audio,false,true,"killer");
+        // Labels
+            set_add_label_scr(local.set,0,"og",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            set_add_label_scr(local.set,1,"hd",true,"");
+            set_add_label_scr(local.set,2,"mod",true,"");
+            set_add_label_scr(local.set,3,"ryan",true,"");
+        // Defaults
+            set_add_default_scr(local.set,killer_voice_const);
+    // Random Theme
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("rand_theme","rand_theme","rand_theme",true,set_enum_const,false,true,true,local.audio,false,false);
+        // Labels
+            set_add_label_scr(local.set,false,"off",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            set_add_label_scr(local.set,true,"on",true,"");
+        // Defaults
+            set_add_default_scr(local.set,rand_theme_const);
+    // Attenuate Wake Sounds
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("wake_3d","wake_3d","wake_3d",true,set_enum_const,false,true,true,local.audio,false,false);
+        // Labels
+            set_add_label_scr(local.set,false,"off",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            set_add_label_scr(local.set,true,"on",true,"");
+        // Defaults
+            set_add_default_scr(local.set,wake_3d_const);
+    // Pitch bending
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("pitch_bend","pitch_bend","pitch_bend",true,set_enum_const,false,true,true,local.audio,false,false);
+        // Labels
+            set_add_label_scr(local.set,false,"off",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            set_add_label_scr(local.set,true,"on",true,"");
+        // Defaults
+            set_add_default_scr(local.set,pitch_bend_const);
+    // Doppler
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("doppler","doppler","doppler",true,set_enum_const,false,true,true,local.audio,false,false);
+        // Labels
+            set_add_label_scr(local.set,false,"off",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            set_add_label_scr(local.set,true,"on",true,"");
+        // Defaults
+            set_add_default_scr(local.set,doppler_const);
+    // Pause Theme
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("pause_theme","pause_theme","pause_theme",true,set_enum_const,false,true,true,local.audio,false,false);
+        // Labels
+            set_add_label_scr(local.set,false,"off",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            set_add_label_scr(local.set,true,"on",true,"");
+        // Defaults
+            set_add_default_scr(local.set,pause_theme_const);
+    // Themes
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("theme","theme","theme",true,set_enum_const,-1,2,true,local.audio,false,true);
+        // Labels
+            set_add_label_scr(local.set,-1,"rand",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            set_add_label_scr(local.set,0,"main",true,"");
+            set_add_label_scr(local.set,1,"old",true,"");
+            set_add_label_scr(local.set,2,"rom",true,"");
+        // Defaults
+            set_add_default_scr(local.set,theme_const);
+    // Theme Toggle
+        /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+        local.set = set_add_scr(local.theme_toggle,"theme_toggle","theme_toggle",true,set_state_const,0,0,false,local.audio,false,false);
+        set_add_default_scr(local.set,0);
 // Performance
-set_state_arr[global.set_state_len_var,0] = "performance"; // Name
-set_state_arr[global.set_state_len_var,1] = true; // Translate
-set_state_arr[global.set_state_len_var,2] = 0; // Previous State (Main)
-global.set_state_len_var += 1;
+    // FPS
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("fps","fps","fps",true,set_min_clamp_num_const,1,0,false,local.performance,false,false);
+        // Defaults
+            set_add_default_scr(local.set,fps_const);
+    // TPS
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("tps","tps","tps",true,set_min_clamp_num_const,1,0,false,local.performance,false,false);
+        // Defaults
+            set_add_default_scr(local.set,tps_const);
+    // Maximum particle count
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("max_part","max_part","max_part",true,set_min_clamp_num_const,0,0,false,local.performance,false,false);
+        // Defaults
+            set_add_default_scr(local.set,max_part_const);
+    // Collision Precision
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("coll_prec","coll_prec","coll_prec",true,set_enum_const,false,true,true,local.performance,false,false);
+        // Labels
+            set_add_label_scr(local.set,false,"off",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            set_add_label_scr(local.set,true,"on",true,"");
+        // Defaults
+            set_add_default_scr(local.set,coll_prec_const);
+    // Memory Saving
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("mem_save","mem_save","mem_save",true,set_enum_const,false,true,true,local.performance,false,false);
+        // Labels
+            set_add_label_scr(local.set,false,"off",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            set_add_label_scr(local.set,true,"on",true,"");
+        // Defaults
+            set_add_default_scr(local.set,coll_prec_const);
 // HUD
-set_state_arr[global.set_state_len_var,0] = "hud"; // Name
-set_state_arr[global.set_state_len_var,1] = true; // Translate
-set_state_arr[global.set_state_len_var,2] = 0; // Previous State (Main)
-global.set_state_len_var += 1;
+    // Language
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("lang","lang","lang",true,set_str_const,0,0,false,local.hud,false,false);
+        // Defaults
+            set_add_default_scr(local.set,"en_us.ini");
+    // Names
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("name","name","name",true,set_enum_const,0,4,true,local.hud,false,true);
+        // Labels
+            set_add_label_scr(local.set,name_og_const,"og",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            set_add_label_scr(local.set,name_hd_const,"hd",true,"");
+            set_add_label_scr(local.set,name_fanon_const,"fanon",true,"");
+            set_add_label_scr(local.set,name_num_og_const,"og_num",true,"");
+            set_add_label_scr(local.set,name_num_hd_const,"hd_num",true,"");
+        // Defaults
+            set_add_default_scr(local.set,name_hd_const);
+    // Monster HUD
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("mon_hud","mon_hud","mon_hud",true,set_enum_const,0,2,true,local.hud,false,true);
+        // Labels
+            set_add_label_scr(local.set,0,"off",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            set_add_label_scr(local.set,1,"on",true,"");
+            set_add_label_scr(local.set,2,"dur",true,"");
+        // Defaults
+            set_add_default_scr(local.set,mon_hud_const);
+    // Room HUD
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("rm_hud","rm_hud","rm_hud",true,set_enum_const,false,true,true,local.hud,false,false);
+        // Labels
+            set_add_label_scr(local.set,false,"off",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            set_add_label_scr(local.set,true,"on",true,"");
+        // Defaults
+            set_add_default_scr(local.set,rm_hud_const);
+    // TPS & FPS HUD
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("tps_hud","tps_hud","tps_hud",true,set_enum_const,false,true,true,local.hud,false,false);
+        // Labels
+            set_add_label_scr(local.set,false,"off",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            set_add_label_scr(local.set,true,"on",true,"");
+        // Defaults
+            set_add_default_scr(local.set,tps_hud_const);
+    // Time HUD
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("time_hud","time_hud","time_hud",true,set_enum_const,false,true,true,local.hud,false,false);
+        // Labels
+            set_add_label_scr(local.set,false,"off",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            set_add_label_scr(local.set,true,"on",true,"");
+        // Defaults
+            set_add_default_scr(local.set,time_hud_const);
+    // Bar HUD
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("bar_hud","bar_hud","bar_hud",true,set_enum_const,0,2,true,local.hud,false,true);
+        // Labels
+            set_add_label_scr(local.set,0,"off",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            set_add_label_scr(local.set,1,"on",true,"");
+            set_add_label_scr(local.set,2,"old",true,"");
+        // Defaults
+            set_add_default_scr(local.set,bar_hud_const);
+    // FPS Update Rate
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("fps_update","fps_update","fps_update",true,set_min_clamp_num_const,1,0,false,local.hud,false,false);
+        // Defaults
+            set_add_default_scr(local.set,fps_update_const);
 // Accessibility
-set_state_arr[global.set_state_len_var,0] = "accessibility"; // Name
-set_state_arr[global.set_state_len_var,1] = true; // Translate
-set_state_arr[global.set_state_len_var,2] = 0; // Previous State (Main)
-global.set_state_len_var += 1;
+    // Reduce Flashing
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("reduce_flash","reduce_flash","reduce_flash",true,set_enum_const,false,true,true,local.access,false,false);
+        // Labels
+            set_add_label_scr(local.set,false,"off",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            set_add_label_scr(local.set,true,"on",true,"");
+        // Defaults
+            set_add_default_scr(local.set,reduce_flash_const);
+    // Subtitles
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("sub","sub","sub",true,set_enum_const,0,2,true,local.access,false,true);
+        // Labels
+            set_add_label_scr(local.set,0,"off",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            set_add_label_scr(local.set,1,"voice",true,"");
+            set_add_label_scr(local.set,2,"all",true,"");
+        // Defaults
+            set_add_default_scr(local.set,bar_hud_const);
+    // HUD Scale
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("hud_scale","hud_scale","hud_scale",true,set_min_clamp_num_const,0,0,false,local.access,false,false);
+        // Defaults
+            set_add_default_scr(local.set,hud_scale_const);
 // Controls (Sub)
-set_state_arr[global.set_state_len_var,0] = "control"; // Name
-set_state_arr[global.set_state_len_var,1] = true; // Translate
-set_state_arr[global.set_state_len_var,2] = 9; // Previous State (Main)
-global.set_state_len_var += 1;
-// Input
-set_state_arr[global.set_state_len_var,0] = "input"; // Name
-set_state_arr[global.set_state_len_var,1] = true; // Translate
-set_state_arr[global.set_state_len_var,2] = 9; // Previous State (Main)
-global.set_state_len_var += 1;
-// Controls
-set_state_arr[global.set_state_len_var,0] = "control"; // Name
-set_state_arr[global.set_state_len_var,1] = true; // Translate
-set_state_arr[global.set_state_len_var,2] = 0; // Previous State (Main)
-global.set_state_len_var += 1;
-// Fun!
-set_state_arr[global.set_state_len_var,0] = "fun"; // Name
-set_state_arr[global.set_state_len_var,1] = true; // Translate
-set_state_arr[global.set_state_len_var,2] = 0; // Previous State (Main)
-global.set_state_len_var += 1;
-/*
-----
-Main
-----
-*/
-// Gameplay Category
-set_arr[global.set_len_var,0] = "gameplay"; // Variable name
-set_arr[global.set_len_var,1] = "gameplay"; // Name
-set_arr[global.set_len_var,2] = "gameplay"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 8; // Type (Category)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 0; // Max
-set_arr[global.set_len_var,7] = false; // Wrap
-set_arr[global.set_len_var,8] = 0; // Category (Main)
-set_arr[global.set_len_var,9] = false; // Player Specific
-set_arr[global.set_len_var,10] = 1; // ID (category)
-    // Default
-set_default_arr[global.set_len_var,0] = 0; // Default
-global.set_len_var += 1;
-// Visual Category
-set_arr[global.set_len_var,0] = "visual"; // Variable name
-set_arr[global.set_len_var,1] = "visual"; // Name
-set_arr[global.set_len_var,2] = "visual"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 8; // Type (Category)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 0; // Max
-set_arr[global.set_len_var,7] = false; // Wrap
-set_arr[global.set_len_var,8] = 0; // Category (Main)
-set_arr[global.set_len_var,9] = false; // Player Specific
-set_arr[global.set_len_var,10] = 2; // ID (category)
-    // Default
-set_default_arr[global.set_len_var,0] = 0; // Default
-global.set_len_var += 1;
-// Audio Category
-set_arr[global.set_len_var,0] = "audio"; // Variable name
-set_arr[global.set_len_var,1] = "audio"; // Name
-set_arr[global.set_len_var,2] = "audio"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 8; // Type (Category)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 0; // Max
-set_arr[global.set_len_var,7] = false; // Wrap
-set_arr[global.set_len_var,8] = 0; // Category (Main)
-set_arr[global.set_len_var,9] = false; // Player Specific
-set_arr[global.set_len_var,10] = 3; // ID (category)
-    // Default
-set_default_arr[global.set_len_var,0] = 0; // Default
-global.set_len_var += 1;
-// Performance Category
-set_arr[global.set_len_var,0] = "performance"; // Variable name
-set_arr[global.set_len_var,1] = "performance"; // Name
-set_arr[global.set_len_var,2] = "performance"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 8; // Type (Category)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 0; // Max
-set_arr[global.set_len_var,7] = false; // Wrap
-set_arr[global.set_len_var,8] = 0; // Category (Main)
-set_arr[global.set_len_var,9] = false; // Player Specific
-set_arr[global.set_len_var,10] = 4; // ID (category)
-    // Default
-set_default_arr[global.set_len_var,0] = 0; // Default
-global.set_len_var += 1;
-// HUD Category
-set_arr[global.set_len_var,0] = "hud"; // Variable name
-set_arr[global.set_len_var,1] = "hud"; // Name
-set_arr[global.set_len_var,2] = "hud"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 8; // Type (Category)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 0; // Max
-set_arr[global.set_len_var,7] = false; // Wrap
-set_arr[global.set_len_var,8] = 0; // Category (Main)
-set_arr[global.set_len_var,9] = false; // Player Specific
-set_arr[global.set_len_var,10] = 5; // ID (category)
-    // Default
-set_default_arr[global.set_len_var,0] = 0; // Default
-global.set_len_var += 1;
-// Accessibility Category
-set_arr[global.set_len_var,0] = "access"; // Variable name
-set_arr[global.set_len_var,1] = "access"; // Name
-set_arr[global.set_len_var,2] = "access"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 8; // Type (Category)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 0; // Max
-set_arr[global.set_len_var,7] = false; // Wrap
-set_arr[global.set_len_var,8] = 0; // Category (Main)
-set_arr[global.set_len_var,9] = false; // Player Specific
-set_arr[global.set_len_var,10] = 6; // ID (category)
-    // Default
-set_default_arr[global.set_len_var,0] = 0; // Default
-global.set_len_var += 1;
-// Control Category
-set_arr[global.set_len_var,0] = "control"; // Variable name
-set_arr[global.set_len_var,1] = "control"; // Name
-set_arr[global.set_len_var,2] = "control"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 8; // Type (Category)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 0; // Max
-set_arr[global.set_len_var,7] = false; // Wrap
-set_arr[global.set_len_var,8] = 0; // Category (Main)
-set_arr[global.set_len_var,9] = false; // Player Specific
-set_arr[global.set_len_var,10] = 9; // ID (category)
-    // Default
-set_default_arr[global.set_len_var,0] = 0; // Default
-global.set_len_var += 1;
-// Fun Category
-set_arr[global.set_len_var,0] = "fun"; // Variable name
-set_arr[global.set_len_var,1] = "fun"; // Name
-set_arr[global.set_len_var,2] = "fun"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 8; // Type (Category)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 0; // Max
-set_arr[global.set_len_var,7] = false; // Wrap
-set_arr[global.set_len_var,8] = 0; // Category (Main)
-set_arr[global.set_len_var,9] = false; // Player Specific
-set_arr[global.set_len_var,10] = 10; // ID (category)
-    // Default
-set_default_arr[global.set_len_var,0] = 0; // Default
-global.set_len_var += 1;
-/*
---------
-Gameplay
---------
-*/
-// Reset Speed
-set_arr[global.set_len_var,0] = "reset_spd"; // Variable name
-set_arr[global.set_len_var,1] = "reset_spd"; // Name
-set_arr[global.set_len_var,2] = "reset_spd"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 0; // Type (Enum)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 2; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 1; // Category (Gameplay)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Label
-set_label_arr[global.set_len_var,0] = "off"; // Value 1
-set_label_arr[global.set_len_var,1] = true; // Translate
-set_label_arr[global.set_len_var,2] = "mon"; // Value 2
-set_label_arr[global.set_len_var,3] = true; // Translate
-set_label_arr[global.set_len_var,4] = "locale"; // Value 3
-set_label_arr[global.set_len_var,5] = true; // Translate
-    // Default
-set_default_arr[global.set_len_var,0] = reset_spd_const; // Default
-global.set_len_var += 1;
-/*
--------
-Visuals
--------
-*/
-// FOV
-set_arr[global.set_len_var,0] = "fov"; // Variable name
-set_arr[global.set_len_var,1] = "fov"; // Name
-set_arr[global.set_len_var,2] = "fov"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 2; // Type (Clamped)
-set_arr[global.set_len_var,5] = 1; // Min
-set_arr[global.set_len_var,6] = 179; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 2; // Category (Visuals)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Default
-set_default_arr[global.set_len_var,0] = fov_const; // Default
-global.set_len_var += 1;
-// Dynamic FOV
-set_arr[global.set_len_var,0] = "dynamic_fov"; // Variable name
-set_arr[global.set_len_var,1] = "dynamic_fov"; // Name
-set_arr[global.set_len_var,2] = "dynamic_fov"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 2; // Type (Clamped)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 100; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 2; // Category (Visuals)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Label
-set_label_arr[global.set_len_var,0] = "off"; // Value 1
-set_label_arr[global.set_len_var,1] = true; // Translate
-set_label_arr[global.set_len_var,2] = "on"; // Value 2
-set_label_arr[global.set_len_var,3] = true; // Translate
-    // Default
-set_default_arr[global.set_len_var,0] = dynamic_fov_const; // Default
-global.set_len_var += 1;
-// Anti Aliasing
-set_arr[global.set_len_var,0] = "anti_alias"; // Variable name
-set_arr[global.set_len_var,1] = "anti_alias"; // Name
-set_arr[global.set_len_var,2] = "anti_alias"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 0; // Type (Enum)
-set_arr[global.set_len_var,5] = false; // Min
-set_arr[global.set_len_var,6] = true; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 2; // Category (Visuals)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Label
-set_label_arr[global.set_len_var,0] = "off"; // Value 1
-set_label_arr[global.set_len_var,1] = true; // Translate
-set_label_arr[global.set_len_var,2] = "on"; // Value 2
-set_label_arr[global.set_len_var,3] = true; // Translate
-    // Default
-set_default_arr[global.set_len_var,0] = anti_alias_const; // Default
-global.set_len_var += 1;
-// Vertical Sync
-set_arr[global.set_len_var,0] = "vsync"; // Variable name
-set_arr[global.set_len_var,1] = "vsync"; // Name
-set_arr[global.set_len_var,2] = "vsync"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 0; // Type (Enum)
-set_arr[global.set_len_var,5] = false; // Min
-set_arr[global.set_len_var,6] = true; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 2; // Category (Visuals)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Label
-set_label_arr[global.set_len_var,0] = "off"; // Value 1
-set_label_arr[global.set_len_var,1] = true; // Translate
-set_label_arr[global.set_len_var,2] = "on"; // Value 2
-set_label_arr[global.set_len_var,3] = true; // Translate
-    // Default
-set_default_arr[global.set_len_var,0] = vsync_const; // Default
-global.set_len_var += 1;
-// Fullscreen
-set_arr[global.set_len_var,0] = "fullscreen"; // Variable name
-set_arr[global.set_len_var,1] = "fullscreen"; // Name
-set_arr[global.set_len_var,2] = "fullscreen"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 0; // Type (Enum)
-set_arr[global.set_len_var,5] = false; // Min
-set_arr[global.set_len_var,6] = true; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 2; // Category (Visuals)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Label
-set_label_arr[global.set_len_var,0] = "off"; // Value 1
-set_label_arr[global.set_len_var,1] = true; // Translate
-set_label_arr[global.set_len_var,2] = "on"; // Value 2
-set_label_arr[global.set_len_var,3] = true; // Translate
-    // Default
-set_default_arr[global.set_len_var,0] = fullscreen_const; // Default
-global.set_len_var += 1;
-// Splitscreen
-set_arr[global.set_len_var,0] = "splitscreen"; // Variable name
-set_arr[global.set_len_var,1] = "splitscreen"; // Name
-set_arr[global.set_len_var,2] = "splitscreen"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 0; // Type (Enum)
-set_arr[global.set_len_var,5] = false; // Min
-set_arr[global.set_len_var,6] = true; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 2; // Category (Visuals)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Label
-set_label_arr[global.set_len_var,0] = "hor"; // Value 1
-set_label_arr[global.set_len_var,1] = true; // Translate
-set_label_arr[global.set_len_var,2] = "vert"; // Value 2
-set_label_arr[global.set_len_var,3] = true; // Translate
-    // Default
-set_default_arr[global.set_len_var,0] = splitscreen_const; // Default
-global.set_len_var += 1;
-// Color
-set_arr[global.set_len_var,0] = "color"; // Variable name
-set_arr[global.set_len_var,1] = "color"; // Name
-set_arr[global.set_len_var,2] = "color"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 0; // Type (Enum)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 2; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 2; // Category (Visuals)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Label
-set_label_arr[global.set_len_var,0] = "all"; // Value 1
-set_label_arr[global.set_len_var,1] = true; // Translate
-set_label_arr[global.set_len_var,2] = "rm"; // Value 2
-set_label_arr[global.set_len_var,3] = true; // Translate
-set_label_arr[global.set_len_var,4] = "screen"; // Value 3
-set_label_arr[global.set_len_var,5] = true; // Translate
-    // Default
-set_default_arr[global.set_len_var,0] = color_const; // Default
-global.set_len_var += 1;
-// Move Bob
-set_arr[global.set_len_var,0] = "move_bob"; // Variable name
-set_arr[global.set_len_var,1] = "move_bob"; // Name
-set_arr[global.set_len_var,2] = "move_bob"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 4; // Type (Min Clamped)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = -1; // Max
-set_arr[global.set_len_var,7] = false; // Wrap
-set_arr[global.set_len_var,8] = 2; // Category (Visuals)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Default
-set_default_arr[global.set_len_var,0] = move_bob_const; // Default
-global.set_len_var += 1;
-// Idle Bob
-set_arr[global.set_len_var,0] = "idle_bob"; // Variable name
-set_arr[global.set_len_var,1] = "idle_bob"; // Name
-set_arr[global.set_len_var,2] = "idle_bob"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 4; // Type (Min Clamped)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = -1; // Max
-set_arr[global.set_len_var,7] = false; // Wrap
-set_arr[global.set_len_var,8] = 2; // Category (Visuals)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Default
-set_default_arr[global.set_len_var,0] = idle_bob_const; // Default
-global.set_len_var += 1;
-// Shake Type
-set_arr[global.set_len_var,0] = "shake_type"; // Variable name
-set_arr[global.set_len_var,1] = "shake_type"; // Name
-set_arr[global.set_len_var,2] = "shake_type"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 0; // Type (Enum)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 2; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 2; // Category (Visuals)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Label
-set_label_arr[global.set_len_var,0] = "off"; // Value 1
-set_label_arr[global.set_len_var,1] = true; // Translate
-set_label_arr[global.set_len_var,2] = "old"; // Value 2
-set_label_arr[global.set_len_var,3] = true; // Translate
-set_label_arr[global.set_len_var,4] = "modern"; // Value 3
-set_label_arr[global.set_len_var,5] = true; // Translate
-    // Default
-set_default_arr[global.set_len_var,0] = shake_type_const; // Default
-global.set_len_var += 1;
-// Resolution Width
-set_arr[global.set_len_var,0] = "res_w"; // Variable name
-set_arr[global.set_len_var,1] = "res_w"; // Name
-set_arr[global.set_len_var,2] = "res_w"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 4; // Type (Min Clamped)
-set_arr[global.set_len_var,5] = 1; // Min
-set_arr[global.set_len_var,6] = -1; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 2; // Category (Visuals)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Default
-set_default_arr[global.set_len_var,0] = res_w_const; // Default
-global.set_len_var += 1;
-// Resolution Height
-set_arr[global.set_len_var,0] = "res_h"; // Variable name
-set_arr[global.set_len_var,1] = "res_h"; // Name
-set_arr[global.set_len_var,2] = "res_h"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 4; // Type (Min Clamped)
-set_arr[global.set_len_var,5] = 1; // Min
-set_arr[global.set_len_var,6] = -1; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 2; // Category (Visuals)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Default
-set_default_arr[global.set_len_var,0] = res_h_const; // Default
-global.set_len_var += 1;
-/*
------
-Audio
------
-*/
-// Master Volume
-set_arr[global.set_len_var,0] = "vol"; // Variable name
-set_arr[global.set_len_var,1] = "vol"; // Name
-set_arr[global.set_len_var,2] = "vol"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 2; // Type (Clamped)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 100; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 3; // Category (Audio)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Default
-set_default_arr[global.set_len_var,0] = vol_const; // Default
-global.set_len_var += 1;
-// Music Volume
-set_arr[global.set_len_var,0] = "mus_vol"; // Variable name
-set_arr[global.set_len_var,1] = "mus_vol"; // Name
-set_arr[global.set_len_var,2] = "mus_vol"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 2; // Type (Clamped)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 100; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 3; // Category (Audio)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Default
-set_default_arr[global.set_len_var,0] = mus_vol_const; // Default
-global.set_len_var += 1;
-// Enemy Volume
-set_arr[global.set_len_var,0] = "mon_vol"; // Variable name
-set_arr[global.set_len_var,1] = "mon_vol"; // Name
-set_arr[global.set_len_var,2] = "mon_vol"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 2; // Type (Clamped)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 100; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 3; // Category (Audio)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Default
-set_default_arr[global.set_len_var,0] = mon_vol_const; // Default
-global.set_len_var += 1;
-// SFX Volume
-set_arr[global.set_len_var,0] = "sfx_vol"; // Variable name
-set_arr[global.set_len_var,1] = "sfx_vol"; // Name
-set_arr[global.set_len_var,2] = "sfx_vol"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 2; // Type (Clamped)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 100; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 3; // Category (Audio)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Default
-set_default_arr[global.set_len_var,0] = sfx_vol_const; // Default
-global.set_len_var += 1;
-// Voice Volume
-set_arr[global.set_len_var,0] = "voice_vol"; // Variable name
-set_arr[global.set_len_var,1] = "voice_vol"; // Name
-set_arr[global.set_len_var,2] = "voice_vol"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 2; // Type (Clamped)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 100; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 3; // Category (Audio)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Default
-set_default_arr[global.set_len_var,0] = voice_vol_const; // Default
-global.set_len_var += 1;
-// Killer Voice
-set_arr[global.set_len_var,0] = "killer_voice"; // Variable name
-set_arr[global.set_len_var,1] = "killer_voice"; // Name
-set_arr[global.set_len_var,2] = "killer_voice"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 0; // Type (Enum)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 3; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 3; // Category (Audio)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Label
-set_label_arr[global.set_len_var,0] = "og"; // Value 1
-set_label_arr[global.set_len_var,1] = true; // Translate
-set_label_arr[global.set_len_var,2] = "hd"; // Value 2
-set_label_arr[global.set_len_var,3] = true; // Translate
-set_label_arr[global.set_len_var,4] = "mod"; // Value 3
-set_label_arr[global.set_len_var,5] = true; // Translate
-set_label_arr[global.set_len_var,6] = "ryan"; // Value 4
-set_label_arr[global.set_len_var,7] = true; // Translate
-    // Default
-set_default_arr[global.set_len_var,0] = killer_voice_const; // Default
-global.set_len_var += 1;
-// Random theme
-set_arr[global.set_len_var,0] = "rand_theme"; // Variable name
-set_arr[global.set_len_var,1] = "rand_theme"; // Name
-set_arr[global.set_len_var,2] = "rand_theme"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 0; // Type (Enum)
-set_arr[global.set_len_var,5] = false; // Min
-set_arr[global.set_len_var,6] = true; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 3; // Category (Audio)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Label
-set_label_arr[global.set_len_var,0] = "off"; // Value 1
-set_label_arr[global.set_len_var,1] = true; // Translate
-set_label_arr[global.set_len_var,2] = "on"; // Value 2
-set_label_arr[global.set_len_var,3] = true; // Translate
-    // Default
-set_default_arr[global.set_len_var,0] = rand_theme_const; // Default
-global.set_len_var += 1;
-// Attenuate Wake Sounds
-set_arr[global.set_len_var,0] = "wake_3d"; // Variable name
-set_arr[global.set_len_var,1] = "wake_3d"; // Name
-set_arr[global.set_len_var,2] = "wake_3d"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 0; // Type (Enum)
-set_arr[global.set_len_var,5] = false; // Min
-set_arr[global.set_len_var,6] = true; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 3; // Category (Audio)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Label
-set_label_arr[global.set_len_var,0] = "off"; // Value 1
-set_label_arr[global.set_len_var,1] = true; // Translate
-set_label_arr[global.set_len_var,2] = "on"; // Value 2
-set_label_arr[global.set_len_var,3] = true; // Translate
-    // Default
-set_default_arr[global.set_len_var,0] = wake_3d_const; // Default
-global.set_len_var += 1;
-// Pitch bending
-set_arr[global.set_len_var,0] = "pitch_bend"; // Variable name
-set_arr[global.set_len_var,1] = "pitch_bend"; // Name
-set_arr[global.set_len_var,2] = "pitch_bend"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 0; // Type (Enum)
-set_arr[global.set_len_var,5] = false; // Min
-set_arr[global.set_len_var,6] = true; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 3; // Category (Audio)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Label
-set_label_arr[global.set_len_var,0] = "off"; // Value 1
-set_label_arr[global.set_len_var,1] = true; // Translate
-set_label_arr[global.set_len_var,2] = "on"; // Value 2
-set_label_arr[global.set_len_var,3] = true; // Translate
-    // Default
-set_default_arr[global.set_len_var,0] = pitch_bend_const; // Default
-global.set_len_var += 1;
-// Doppler
-set_arr[global.set_len_var,0] = "doppler"; // Variable name
-set_arr[global.set_len_var,1] = "doppler"; // Name
-set_arr[global.set_len_var,2] = "doppler"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 0; // Type (Enum)
-set_arr[global.set_len_var,5] = false; // Min
-set_arr[global.set_len_var,6] = true; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 3; // Category (Audio)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Label
-set_label_arr[global.set_len_var,0] = "off"; // Value 1
-set_label_arr[global.set_len_var,1] = true; // Translate
-set_label_arr[global.set_len_var,2] = "on"; // Value 2
-set_label_arr[global.set_len_var,3] = true; // Translate
-    // Default
-set_default_arr[global.set_len_var,0] = doppler_const; // Default
-global.set_len_var += 1;
-// Pause Theme
-set_arr[global.set_len_var,0] = "pause_theme"; // Variable name
-set_arr[global.set_len_var,1] = "pause_theme"; // Name
-set_arr[global.set_len_var,2] = "pause_theme"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 0; // Type (Enum)
-set_arr[global.set_len_var,5] = false; // Min
-set_arr[global.set_len_var,6] = true; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 3; // Category (Audio)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Label
-set_label_arr[global.set_len_var,0] = "off"; // Value 1
-set_label_arr[global.set_len_var,1] = true; // Translate
-set_label_arr[global.set_len_var,2] = "on"; // Value 2
-set_label_arr[global.set_len_var,3] = true; // Translate
-    // Default
-set_default_arr[global.set_len_var,0] = pause_theme_const; // Default
-global.set_len_var += 1;
-// Themes
-set_arr[global.set_len_var,0] = "old_theme"; // Variable name
-set_arr[global.set_len_var,1] = "theme"; // Name
-set_arr[global.set_len_var,2] = "theme"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 0; // Type (Enum)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 2; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 3; // Category (Audio)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Label
-set_label_arr[global.set_len_var,0] = "mod"; // Value 1
-set_label_arr[global.set_len_var,1] = true; // Translate
-set_label_arr[global.set_len_var,2] = "old"; // Value 2
-set_label_arr[global.set_len_var,3] = true; // Translate
-set_label_arr[global.set_len_var,4] = "romm"; // Value 2
-set_label_arr[global.set_len_var,5] = true; // Translate
-    // Default
-set_default_arr[global.set_len_var,0] = old_theme_const; // Default
-global.set_len_var += 1;
-/*
------------
-Performance
------------
-*/
-// FPS
-set_arr[global.set_len_var,0] = "fps"; // Variable name
-set_arr[global.set_len_var,1] = "fps"; // Name
-set_arr[global.set_len_var,2] = "fps"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 4; // Type (Min Clamped)
-set_arr[global.set_len_var,5] = 1; // Min
-set_arr[global.set_len_var,6] = -1; // Max
-set_arr[global.set_len_var,7] = false; // Wrap
-set_arr[global.set_len_var,8] = 4; // Category (Performance)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Default
-set_default_arr[global.set_len_var,0] = fps_const; // Default
-global.set_len_var += 1;
-// TPS
-set_arr[global.set_len_var,0] = "tps"; // Variable name
-set_arr[global.set_len_var,1] = "tps"; // Name
-set_arr[global.set_len_var,2] = "tps"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 4; // Type (Min Clamped)
-set_arr[global.set_len_var,5] = 1; // Min
-set_arr[global.set_len_var,6] = -1; // Max
-set_arr[global.set_len_var,7] = false; // Wrap
-set_arr[global.set_len_var,8] = 4; // Category (Performance)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Default
-set_default_arr[global.set_len_var,0] = tps_const; // Default
-global.set_len_var += 1;
-// Maximum particle count
-set_arr[global.set_len_var,0] = "max_part"; // Variable name
-set_arr[global.set_len_var,1] = "max_part"; // Name
-set_arr[global.set_len_var,2] = "max_part"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 4; // Type (Min Clamped)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = -1; // Max
-set_arr[global.set_len_var,7] = false; // Wrap
-set_arr[global.set_len_var,8] = 4; // Category (Performance)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Default
-set_default_arr[global.set_len_var,0] = max_part_const; // Default
-global.set_len_var += 1;
-// Collision Precision
-set_arr[global.set_len_var,0] = "coll_prec"; // Variable name
-set_arr[global.set_len_var,1] = "coll_prec"; // Name
-set_arr[global.set_len_var,2] = "coll_prec"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 0; // Type (Enum)
-set_arr[global.set_len_var,5] = false; // Min
-set_arr[global.set_len_var,6] = true; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 4; // Category (Performance)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Label
-set_label_arr[global.set_len_var,0] = "off"; // Value 1
-set_label_arr[global.set_len_var,1] = true; // Translate
-set_label_arr[global.set_len_var,2] = "on"; // Value 2
-set_label_arr[global.set_len_var,3] = true; // Translate
-    // Default
-set_default_arr[global.set_len_var,0] = coll_prec_const; // Default
-global.set_len_var += 1;
-// Memory Saving
-set_arr[global.set_len_var,0] = "mem_save"; // Variable name
-set_arr[global.set_len_var,1] = "mem_save"; // Name
-set_arr[global.set_len_var,2] = "mem_save"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 0; // Type (Enum)
-set_arr[global.set_len_var,5] = false; // Min
-set_arr[global.set_len_var,6] = true; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 4; // Category (Performance)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Label
-set_label_arr[global.set_len_var,0] = "off"; // Value 1
-set_label_arr[global.set_len_var,1] = true; // Translate
-set_label_arr[global.set_len_var,2] = "on"; // Value 2
-set_label_arr[global.set_len_var,3] = true; // Translate
-    // Default
-set_default_arr[global.set_len_var,0] = mem_save_const; // Default
-global.set_len_var += 1;
-/*
----
-HUD
----
-*/
-// Language
-set_arr[global.set_len_var,0] = "lang"; // Variable name
-set_arr[global.set_len_var,1] = "lang"; // Name
-set_arr[global.set_len_var,2] = "lang"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 5; // Type (String)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 0; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 5; // Category (HUD)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Default
-set_default_arr[global.set_len_var,0] = "en_us.ini"; // Default
-global.set_len_var += 1;
-// Names
-set_arr[global.set_len_var,0] = "name"; // Variable name
-set_arr[global.set_len_var,1] = "name"; // Name
-set_arr[global.set_len_var,2] = "name"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 0; // Type (Enum)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 4; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 5; // Category (HUD)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Label
-set_label_arr[global.set_len_var,0] = "og"; // Value 1
-set_label_arr[global.set_len_var,1] = true; // Translate
-set_label_arr[global.set_len_var,2] = "hd"; // Value 2
-set_label_arr[global.set_len_var,3] = true; // Translate
-set_label_arr[global.set_len_var,4] = "fanon"; // Value 3
-set_label_arr[global.set_len_var,5] = true; // Translate
-set_label_arr[global.set_len_var,6] = "og_num"; // Value 4
-set_label_arr[global.set_len_var,7] = true; // Translate
-set_label_arr[global.set_len_var,8] = "hd_num"; // Value 5
-set_label_arr[global.set_len_var,9] = true; // Translate
-    // Default
-set_default_arr[global.set_len_var,0] = name_hd_const; // Default
-global.set_len_var += 1;
-// Monster Hud
-set_arr[global.set_len_var,0] = "mon_hud"; // Variable name
-set_arr[global.set_len_var,1] = "mon_hud"; // Name
-set_arr[global.set_len_var,2] = "mon_hud"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 0; // Type (Enum)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 2; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 5; // Category (HUD)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Label
-set_label_arr[global.set_len_var,0] = "off"; // Value 1
-set_label_arr[global.set_len_var,1] = true; // Translate
-set_label_arr[global.set_len_var,2] = "on"; // Value 2
-set_label_arr[global.set_len_var,3] = true; // Translate
-set_label_arr[global.set_len_var,4] = "dur"; // Value 2
-set_label_arr[global.set_len_var,5] = true; // Translate
-    // Default
-set_default_arr[global.set_len_var,0] = mon_hud_const; // Default
-global.set_len_var += 1;
-// Room Hud
-set_arr[global.set_len_var,0] = "rm_hud"; // Variable name
-set_arr[global.set_len_var,1] = "rm_hud"; // Name
-set_arr[global.set_len_var,2] = "rm_hud"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 0; // Type (Enum)
-set_arr[global.set_len_var,5] = false; // Min
-set_arr[global.set_len_var,6] = true; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 5; // Category (HUD)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Label
-set_label_arr[global.set_len_var,0] = "off"; // Value 1
-set_label_arr[global.set_len_var,1] = true; // Translate
-set_label_arr[global.set_len_var,2] = "on"; // Value 2
-set_label_arr[global.set_len_var,3] = true; // Translate
-    // Default
-set_default_arr[global.set_len_var,0] = rm_hud_const; // Default
-global.set_len_var += 1;
-// TPS & FPS hud
-set_arr[global.set_len_var,0] = "tps_hud"; // Variable name
-set_arr[global.set_len_var,1] = "tps_hud"; // Name
-set_arr[global.set_len_var,2] = "tps_hud"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 0; // Type (Enum)
-set_arr[global.set_len_var,5] = false; // Min
-set_arr[global.set_len_var,6] = true; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 5; // Category (HUD)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Label
-set_label_arr[global.set_len_var,0] = "off"; // Value 1
-set_label_arr[global.set_len_var,1] = true; // Translate
-set_label_arr[global.set_len_var,2] = "on"; // Value 2
-set_label_arr[global.set_len_var,3] = true; // Translate
-    // Default
-set_default_arr[global.set_len_var,0] = tps_hud_const; // Default
-global.set_len_var += 1;
-// Time hud
-set_arr[global.set_len_var,0] = "time_hud"; // Variable name
-set_arr[global.set_len_var,1] = "time_hud"; // Name
-set_arr[global.set_len_var,2] = "time_hud"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 0; // Type (Enum)
-set_arr[global.set_len_var,5] = false; // Min
-set_arr[global.set_len_var,6] = true; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 5; // Category (HUD)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Label
-set_label_arr[global.set_len_var,0] = "off"; // Value 1
-set_label_arr[global.set_len_var,1] = true; // Translate
-set_label_arr[global.set_len_var,2] = "on"; // Value 2
-set_label_arr[global.set_len_var,3] = true; // Translate
-    // Default
-set_default_arr[global.set_len_var,0] = time_hud_const; // Default
-global.set_len_var += 1;
-// Bar Hud
-set_arr[global.set_len_var,0] = "bar_hud"; // Variable name
-set_arr[global.set_len_var,1] = "bar_hud"; // Name
-set_arr[global.set_len_var,2] = "bar_hud"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 0; // Type (Enum)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 2; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 5; // Category (HUD)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Label
-set_label_arr[global.set_len_var,0] = "off"; // Value 1
-set_label_arr[global.set_len_var,1] = true; // Translate
-set_label_arr[global.set_len_var,2] = "on"; // Value 2
-set_label_arr[global.set_len_var,3] = true; // Translate
-set_label_arr[global.set_len_var,4] = "old"; // Value 2
-set_label_arr[global.set_len_var,5] = true; // Translate
-    // Default
-set_default_arr[global.set_len_var,0] = bar_hud_const; // Default
-global.set_len_var += 1;
-// FPS Update Rate
-set_arr[global.set_len_var,0] = "fps_update"; // Variable name
-set_arr[global.set_len_var,1] = "fps_update"; // Name
-set_arr[global.set_len_var,2] = "fps_update"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 4; // Type (Min Clamped)
-set_arr[global.set_len_var,5] = 1; // Min
-set_arr[global.set_len_var,6] = -1; // Max
-set_arr[global.set_len_var,7] = false; // Wrap
-set_arr[global.set_len_var,8] = 5; // Category (HUD)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Default
-set_default_arr[global.set_len_var,0] = fps_update_const; // Default
-global.set_len_var += 1;
-/*
--------------
-Accessibility
--------------
-*/
-// Reduce Flashing
-set_arr[global.set_len_var,0] = "reduce_flash"; // Variable name
-set_arr[global.set_len_var,1] = "reduce_flash"; // Name
-set_arr[global.set_len_var,2] = "reduce_flash"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 0; // Type (Enum)
-set_arr[global.set_len_var,5] = false; // Min
-set_arr[global.set_len_var,6] = true; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 6; // Category (Accessibility)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Label
-set_label_arr[global.set_len_var,0] = "off"; // Value 1
-set_label_arr[global.set_len_var,1] = true; // Translate
-set_label_arr[global.set_len_var,2] = "on"; // Value 2
-set_label_arr[global.set_len_var,3] = true; // Translate
-    // Default
-set_default_arr[global.set_len_var,0] = reduce_flash_const; // Default
-global.set_len_var += 1;
-// Subtitles
-set_arr[global.set_len_var,0] = "sub"; // Variable name
-set_arr[global.set_len_var,1] = "sub"; // Name
-set_arr[global.set_len_var,2] = "sub"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 0; // Type (Enum)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 2; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 6; // Category (Accessibility)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Label
-set_label_arr[global.set_len_var,0] = "off"; // Value 1
-set_label_arr[global.set_len_var,1] = true; // Translate
-set_label_arr[global.set_len_var,2] = "voice"; // Value 2
-set_label_arr[global.set_len_var,3] = true; // Translate
-set_label_arr[global.set_len_var,4] = "all"; // Value 3
-set_label_arr[global.set_len_var,5] = true; // Translate
-    // Default
-set_default_arr[global.set_len_var,0] = sub_const; // Default
-global.set_len_var += 1;
-// HUD Scale
-set_arr[global.set_len_var,0] = "hud_scale"; // Variable name
-set_arr[global.set_len_var,1] = "hud_scale"; // Name
-set_arr[global.set_len_var,2] = "hud_scale"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 4; // Type (Min Clamped)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 0; // Max
-set_arr[global.set_len_var,7] = false; // Wrap
-set_arr[global.set_len_var,8] = 6; // Category (Accessibility)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Default
-set_default_arr[global.set_len_var,0] = hud_scale_const; // Default
-global.set_len_var += 1;
-/*
---------------
-Controls (Sub)
---------------
-*/
-// Crouch Toggle
-set_arr[global.set_len_var,0] = "crouch_toggle"; // Variable name
-set_arr[global.set_len_var,1] = "crouch_toggle"; // Name
-set_arr[global.set_len_var,2] = "crouch_toggle"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 0; // Type (Enum)
-set_arr[global.set_len_var,5] = false; // Min
-set_arr[global.set_len_var,6] = true; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 7; // Category (Control)
-set_arr[global.set_len_var,9] = true; // Player Specific
-    // Label
-set_label_arr[global.set_len_var,0] = "off"; // Value 1
-set_label_arr[global.set_len_var,1] = true; // Translate
-set_label_arr[global.set_len_var,2] = "on"; // Value 2
-set_label_arr[global.set_len_var,3] = true; // Translate
-    // Default
-set_default_arr[global.set_len_var,0] = crouch_toggle_const; // Player 1
-set_default_arr[global.set_len_var,1] = crouch_toggle_const; // Player 2
-set_default_arr[global.set_len_var,2] = crouch_toggle_const; // Player 3
-set_default_arr[global.set_len_var,3] = crouch_toggle_const; // Player 4
-set_default_arr[global.set_len_var,4] = crouch_toggle_const; // Player 5
-set_default_arr[global.set_len_var,5] = crouch_toggle_const; // Player 6
-set_default_arr[global.set_len_var,6] = crouch_toggle_const; // Player 7
-set_default_arr[global.set_len_var,7] = crouch_toggle_const; // Player 8
-global.set_len_var += 1;
-// Joystick ID
-set_arr[global.set_len_var,0] = "joy_id"; // Variable name
-set_arr[global.set_len_var,1] = "joy_id"; // Name
-set_arr[global.set_len_var,2] = "joy_id"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 2; // Type (Clamped)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 7; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 7; // Category (Control)
-set_arr[global.set_len_var,9] = true; // Player Specific
-    // Default
-set_default_arr[global.set_len_var,0] = 0; // Player 1
-set_default_arr[global.set_len_var,1] = 0; // Player 2
-set_default_arr[global.set_len_var,2] = 1; // Player 3
-set_default_arr[global.set_len_var,3] = 2; // Player 4
-set_default_arr[global.set_len_var,4] = 3; // Player 5
-set_default_arr[global.set_len_var,5] = 4; // Player 6
-set_default_arr[global.set_len_var,6] = 5; // Player 7
-set_default_arr[global.set_len_var,7] = 6; // Player 8
-global.set_len_var += 1;
-// Sensitivity
-set_arr[global.set_len_var,0] = "sens"; // Variable name
-set_arr[global.set_len_var,1] = "sens"; // Name
-set_arr[global.set_len_var,2] = "sens"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 4; // Type (Min Clamped)
-set_arr[global.set_len_var,5] = 1; // Min
-set_arr[global.set_len_var,6] = -1; // Max
-set_arr[global.set_len_var,7] = false; // Wrap
-set_arr[global.set_len_var,8] = 7; // Category (Control)
-set_arr[global.set_len_var,9] = true; // Player Specific
-    // Default
-set_default_arr[global.set_len_var,0] = sens_const; // Player 1
-set_default_arr[global.set_len_var,1] = sens_const; // Player 2
-set_default_arr[global.set_len_var,2] = sens_const; // Player 3
-set_default_arr[global.set_len_var,3] = sens_const; // Player 4
-set_default_arr[global.set_len_var,4] = sens_const; // Player 5
-set_default_arr[global.set_len_var,5] = sens_const; // Player 6
-set_default_arr[global.set_len_var,6] = sens_const; // Player 7
-set_default_arr[global.set_len_var,7] = sens_const; // Player 8
-global.set_len_var += 1;
-// Joystick Sensitivity
-set_arr[global.set_len_var,0] = "joy_sens"; // Variable name
-set_arr[global.set_len_var,1] = "joy_sens"; // Name
-set_arr[global.set_len_var,2] = "joy_sens"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 2; // Type (Clamped)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 100; // Max
-set_arr[global.set_len_var,7] = false; // Wrap
-set_arr[global.set_len_var,8] = 7; // Category (Control)
-set_arr[global.set_len_var,9] = true; // Player Specific
-    // Default
-set_default_arr[global.set_len_var,0] = joy_sens_const; // Player 1
-set_default_arr[global.set_len_var,1] = joy_sens_const; // Player 2
-set_default_arr[global.set_len_var,2] = joy_sens_const; // Player 3
-set_default_arr[global.set_len_var,3] = joy_sens_const; // Player 4
-set_default_arr[global.set_len_var,4] = joy_sens_const; // Player 5
-set_default_arr[global.set_len_var,5] = joy_sens_const; // Player 6
-set_default_arr[global.set_len_var,6] = joy_sens_const; // Player 7
-set_default_arr[global.set_len_var,7] = joy_sens_const; // Player 8
-global.set_len_var += 1;
-// Invert Yaw
-set_arr[global.set_len_var,0] = "invert_yaw"; // Variable name
-set_arr[global.set_len_var,1] = "invert_yaw"; // Name
-set_arr[global.set_len_var,2] = "invert_yaw"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 0; // Type (Enum)
-set_arr[global.set_len_var,5] = false; // Min
-set_arr[global.set_len_var,6] = true; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 7; // Category (Control)
-set_arr[global.set_len_var,9] = true; // Player Specific
-    // Label
-set_label_arr[global.set_len_var,0] = "off"; // Value 1
-set_label_arr[global.set_len_var,1] = true; // Translate
-set_label_arr[global.set_len_var,2] = "on"; // Value 2
-set_label_arr[global.set_len_var,3] = true; // Translate
-    // Default
-set_default_arr[global.set_len_var,0] = invert_yaw_const; // Player 1
-set_default_arr[global.set_len_var,1] = invert_yaw_const; // Player 2
-set_default_arr[global.set_len_var,2] = invert_yaw_const; // Player 3
-set_default_arr[global.set_len_var,3] = invert_yaw_const; // Player 4
-set_default_arr[global.set_len_var,4] = invert_yaw_const; // Player 5
-set_default_arr[global.set_len_var,5] = invert_yaw_const; // Player 6
-set_default_arr[global.set_len_var,6] = invert_yaw_const; // Player 7
-set_default_arr[global.set_len_var,7] = invert_yaw_const; // Player 8
-global.set_len_var += 1;
-// Invert Pitch
-set_arr[global.set_len_var,0] = "invert_pitch"; // Variable name
-set_arr[global.set_len_var,1] = "invert_pitch"; // Name
-set_arr[global.set_len_var,2] = "invert_pitch"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 0; // Type (Enum)
-set_arr[global.set_len_var,5] = false; // Min
-set_arr[global.set_len_var,6] = true; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 7; // Category (Control)
-set_arr[global.set_len_var,9] = true; // Player Specific
-    // Label
-set_label_arr[global.set_len_var,0] = "off"; // Value 1
-set_label_arr[global.set_len_var,1] = true; // Translate
-set_label_arr[global.set_len_var,2] = "on"; // Value 2
-set_label_arr[global.set_len_var,3] = true; // Translate
-    // Default
-set_default_arr[global.set_len_var,0] = invert_pitch_const; // Player 1
-set_default_arr[global.set_len_var,1] = invert_pitch_const; // Player 2
-set_default_arr[global.set_len_var,2] = invert_pitch_const; // Player 3
-set_default_arr[global.set_len_var,3] = invert_pitch_const; // Player 4
-set_default_arr[global.set_len_var,4] = invert_pitch_const; // Player 5
-set_default_arr[global.set_len_var,5] = invert_pitch_const; // Player 6
-set_default_arr[global.set_len_var,6] = invert_pitch_const; // Player 7
-set_default_arr[global.set_len_var,7] = invert_pitch_const; // Player 8
-global.set_len_var += 1;
-// Camera Controls
-set_arr[global.set_len_var,0] = "input_cam"; // Variable name
-set_arr[global.set_len_var,1] = "input_cam"; // Name
-set_arr[global.set_len_var,2] = "input_cam"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 0; // Type (Enum)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 5; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 7; // Category (Control)
-set_arr[global.set_len_var,9] = true; // Player Specific
-    // Label
-set_label_arr[global.set_len_var,0] = "mouse"; // Value 1
-set_label_arr[global.set_len_var,1] = true; // Translate
-set_label_arr[global.set_len_var,2] = "rjoy"; // Value 2
-set_label_arr[global.set_len_var,3] = true; // Translate
-set_label_arr[global.set_len_var,4] = "rjoys"; // Value 3
-set_label_arr[global.set_len_var,5] = true; // Translate
-set_label_arr[global.set_len_var,6] = "ljoy"; // Value 4
-set_label_arr[global.set_len_var,7] = true; // Translate
-set_label_arr[global.set_len_var,8] = "button"; // Value 5
-set_label_arr[global.set_len_var,9] = true; // Translate
-set_label_arr[global.set_len_var,10] = "dpad"; // Value 6
-set_label_arr[global.set_len_var,11] = true; // Translate
-    // Default
-set_default_arr[global.set_len_var,0] = cam_const; // Player 1
-set_default_arr[global.set_len_var,1] = cam_joy_r_const; // Player 2
-set_default_arr[global.set_len_var,2] = cam_joy_r_const; // Player 3
-set_default_arr[global.set_len_var,3] = cam_joy_r_const; // Player 4
-set_default_arr[global.set_len_var,4] = cam_joy_r_const; // Player 5
-set_default_arr[global.set_len_var,5] = cam_joy_r_const; // Player 6
-set_default_arr[global.set_len_var,6] = cam_joy_r_const; // Player 7
-set_default_arr[global.set_len_var,7] = cam_joy_r_const; // Player 8
-global.set_len_var += 1;
-// Movement Controls
-set_arr[global.set_len_var,0] = "input_move"; // Variable name
-set_arr[global.set_len_var,1] = "input_move"; // Name
-set_arr[global.set_len_var,2] = "input_move"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 0; // Type (Enum)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 4; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 7; // Category (Control)
-set_arr[global.set_len_var,9] = true; // Player Specific
-    // Label
-set_label_arr[global.set_len_var,0] = "button"; // Value 1
-set_label_arr[global.set_len_var,1] = true; // Translate
-set_label_arr[global.set_len_var,2] = "ljoy"; // Value 2
-set_label_arr[global.set_len_var,3] = true; // Translate
-set_label_arr[global.set_len_var,4] = "dpad"; // Value 3
-set_label_arr[global.set_len_var,5] = true; // Translate
-set_label_arr[global.set_len_var,6] = "rjoy"; // Value 4
-set_label_arr[global.set_len_var,7] = true; // Translate
-set_label_arr[global.set_len_var,8] = "rjoys"; // Value 5
-set_label_arr[global.set_len_var,9] = true; // Translate
-    // Default
-set_default_arr[global.set_len_var,0] = move_const; // Player 1
-set_default_arr[global.set_len_var,1] = move_joy_l_const; // Player 2
-set_default_arr[global.set_len_var,2] = move_joy_l_const; // Player 3
-set_default_arr[global.set_len_var,3] = move_joy_l_const; // Player 4
-set_default_arr[global.set_len_var,4] = move_joy_l_const; // Player 5
-set_default_arr[global.set_len_var,5] = move_joy_l_const; // Player 6
-set_default_arr[global.set_len_var,6] = move_joy_l_const; // Player 7
-set_default_arr[global.set_len_var,7] = move_joy_l_const; // Player 8
-global.set_len_var += 1;
-// Menu Controls
-set_arr[global.set_len_var,0] = "input_menu"; // Variable name
-set_arr[global.set_len_var,1] = "input_menu"; // Name
-set_arr[global.set_len_var,2] = "input_menu"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 0; // Type (Enum)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 4; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 7; // Category (Control)
-set_arr[global.set_len_var,9] = true; // Player Specific
-    // Label
-set_label_arr[global.set_len_var,0] = "pc"; // Value 1
-set_label_arr[global.set_len_var,1] = true; // Translate
-set_label_arr[global.set_len_var,2] = "dpad"; // Value 2
-set_label_arr[global.set_len_var,3] = true; // Translate
-set_label_arr[global.set_len_var,4] = "ljoy"; // Value 3
-set_label_arr[global.set_len_var,5] = true; // Translate
-set_label_arr[global.set_len_var,6] = "rjoy"; // Value 4
-set_label_arr[global.set_len_var,7] = true; // Translate
-set_label_arr[global.set_len_var,8] = "rjoys"; // Value 5
-set_label_arr[global.set_len_var,9] = true; // Translate
-    // Default
-set_default_arr[global.set_len_var,0] = menu_const; // Player 1
-set_default_arr[global.set_len_var,1] = menu_dpad_const; // Player 2
-set_default_arr[global.set_len_var,2] = menu_dpad_const; // Player 3
-set_default_arr[global.set_len_var,3] = menu_dpad_const; // Player 4
-set_default_arr[global.set_len_var,4] = menu_dpad_const; // Player 5
-set_default_arr[global.set_len_var,5] = menu_dpad_const; // Player 6
-set_default_arr[global.set_len_var,6] = menu_dpad_const; // Player 7
-set_default_arr[global.set_len_var,7] = menu_dpad_const; // Player 8
-global.set_len_var += 1;
-/*
-------
-Inputs
-------
-*/
-// Menu Up
-set_arr[global.set_len_var,0] = "up"; // Variable name
-set_arr[global.set_len_var,1] = "up_input"; // Name
-set_arr[global.set_len_var,2] = "up_input"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 7; // Type (Input)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 0; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 8; // Category (Input)
-set_arr[global.set_len_var,9] = true; // Player Specific
-set_arr[global.set_len_var,10] = up_input_const; // ID (Input Only)
-    // Default
-set_default_arr[global.set_len_var,0] = up_key_const; // Player 1
-set_default_arr[global.set_len_var,1] = up_button_const; // Player 2
-set_default_arr[global.set_len_var,2] = up_button_const; // Player 3
-set_default_arr[global.set_len_var,3] = up_button_const; // Player 4
-set_default_arr[global.set_len_var,4] = up_button_const; // Player 5
-set_default_arr[global.set_len_var,5] = up_button_const; // Player 6
-set_default_arr[global.set_len_var,6] = up_button_const; // Player 7
-set_default_arr[global.set_len_var,7] = up_button_const; // Player 8
-global.set_len_var += 1;
-// Menu Down
-set_arr[global.set_len_var,0] = "down"; // Variable name
-set_arr[global.set_len_var,1] = "down_input"; // Name
-set_arr[global.set_len_var,2] = "down_input"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 7; // Type (Input)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 0; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 8; // Category (Input)
-set_arr[global.set_len_var,9] = true; // Player Specific
-set_arr[global.set_len_var,10] = down_input_const; // ID (Input Only)
-    // Default
-set_default_arr[global.set_len_var,0] = down_key_const; // Player 1
-set_default_arr[global.set_len_var,1] = down_button_const; // Player 2
-set_default_arr[global.set_len_var,2] = down_button_const; // Player 3
-set_default_arr[global.set_len_var,3] = down_button_const; // Player 4
-set_default_arr[global.set_len_var,4] = down_button_const; // Player 5
-set_default_arr[global.set_len_var,5] = down_button_const; // Player 6
-set_default_arr[global.set_len_var,6] = down_button_const; // Player 7
-set_default_arr[global.set_len_var,7] = down_button_const; // Player 8
-global.set_len_var += 1;
-// Menu Left
-set_arr[global.set_len_var,0] = "left"; // Variable name
-set_arr[global.set_len_var,1] = "left_input"; // Name
-set_arr[global.set_len_var,2] = "left_input"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 7; // Type (Input)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 0; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 8; // Category (Input)
-set_arr[global.set_len_var,9] = true; // Player Specific
-set_arr[global.set_len_var,10] = left_input_const; // ID (Input Only)
-    // Default
-set_default_arr[global.set_len_var,0] = left_key_const; // Player 1
-set_default_arr[global.set_len_var,1] = left_button_const; // Player 2
-set_default_arr[global.set_len_var,2] = left_button_const; // Player 3
-set_default_arr[global.set_len_var,3] = left_button_const; // Player 4
-set_default_arr[global.set_len_var,4] = left_button_const; // Player 5
-set_default_arr[global.set_len_var,5] = left_button_const; // Player 6
-set_default_arr[global.set_len_var,6] = left_button_const; // Player 7
-set_default_arr[global.set_len_var,7] = left_button_const; // Player 8
-global.set_len_var += 1;
-// Menu Right
-set_arr[global.set_len_var,0] = "right"; // Variable name
-set_arr[global.set_len_var,1] = "right_input"; // Name
-set_arr[global.set_len_var,2] = "right_input"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 7; // Type (Input)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 0; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 8; // Category (Input)
-set_arr[global.set_len_var,9] = true; // Player Specific
-set_arr[global.set_len_var,10] = right_input_const; // ID (Input Only)
-    // Default
-set_default_arr[global.set_len_var,0] = right_key_const; // Player 1
-set_default_arr[global.set_len_var,1] = right_button_const; // Player 2
-set_default_arr[global.set_len_var,2] = right_button_const; // Player 3
-set_default_arr[global.set_len_var,3] = right_button_const; // Player 4
-set_default_arr[global.set_len_var,4] = right_button_const; // Player 5
-set_default_arr[global.set_len_var,5] = right_button_const; // Player 6
-set_default_arr[global.set_len_var,6] = right_button_const; // Player 7
-set_default_arr[global.set_len_var,7] = right_button_const; // Player 8
-global.set_len_var += 1;
-// Confirm
-set_arr[global.set_len_var,0] = "confirm"; // Variable name
-set_arr[global.set_len_var,1] = "confirm_input"; // Name
-set_arr[global.set_len_var,2] = "confirm_input"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 7; // Type (Input)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 0; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 8; // Category (Input)
-set_arr[global.set_len_var,9] = true; // Player Specific
-set_arr[global.set_len_var,10] = confirm_input_const; // ID (Input Only)
-    // Default
-set_default_arr[global.set_len_var,0] = confirm_key_const; // Player 1
-set_default_arr[global.set_len_var,1] = confirm_button_const; // Player 2
-set_default_arr[global.set_len_var,2] = confirm_button_const; // Player 3
-set_default_arr[global.set_len_var,3] = confirm_button_const; // Player 4
-set_default_arr[global.set_len_var,4] = confirm_button_const; // Player 5
-set_default_arr[global.set_len_var,5] = confirm_button_const; // Player 6
-set_default_arr[global.set_len_var,6] = confirm_button_const; // Player 7
-set_default_arr[global.set_len_var,7] = confirm_button_const; // Player 8
-global.set_len_var += 1;
-// Back
-set_arr[global.set_len_var,0] = "back"; // Variable name
-set_arr[global.set_len_var,1] = "back_input"; // Name
-set_arr[global.set_len_var,2] = "back_input"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 7; // Type (Input)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 0; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 8; // Category (Input)
-set_arr[global.set_len_var,9] = true; // Player Specific
-set_arr[global.set_len_var,10] = back_input_const; // ID (Input Only)
-    // Default
-set_default_arr[global.set_len_var,0] = back_key_const; // Player 1
-set_default_arr[global.set_len_var,1] = back_button_const; // Player 2
-set_default_arr[global.set_len_var,2] = back_button_const; // Player 3
-set_default_arr[global.set_len_var,3] = back_button_const; // Player 4
-set_default_arr[global.set_len_var,4] = back_button_const; // Player 5
-set_default_arr[global.set_len_var,5] = back_button_const; // Player 6
-set_default_arr[global.set_len_var,6] = back_button_const; // Player 7
-set_default_arr[global.set_len_var,7] = back_button_const; // Player 8
-global.set_len_var += 1;
-// Forward
-set_arr[global.set_len_var,0] = "forward"; // Variable name
-set_arr[global.set_len_var,1] = "forward_input"; // Name
-set_arr[global.set_len_var,2] = "forward_input"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 7; // Type (Input)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 0; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 8; // Category (Input)
-set_arr[global.set_len_var,9] = true; // Player Specific
-set_arr[global.set_len_var,10] = forward_input_const; // ID (Input Only)
-    // Default
-set_default_arr[global.set_len_var,0] = forward_key_const; // Player 1
-set_default_arr[global.set_len_var,1] = forward_button_const; // Player 2
-set_default_arr[global.set_len_var,2] = forward_button_const; // Player 3
-set_default_arr[global.set_len_var,3] = forward_button_const; // Player 4
-set_default_arr[global.set_len_var,4] = forward_button_const; // Player 5
-set_default_arr[global.set_len_var,5] = forward_button_const; // Player 6
-set_default_arr[global.set_len_var,6] = forward_button_const; // Player 7
-set_default_arr[global.set_len_var,7] = forward_button_const; // Player 8
-global.set_len_var += 1;
-// Backward
-set_arr[global.set_len_var,0] = "backward"; // Variable name
-set_arr[global.set_len_var,1] = "backward_input"; // Name
-set_arr[global.set_len_var,2] = "backward_input"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 7; // Type (Input)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 0; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 8; // Category (Input)
-set_arr[global.set_len_var,9] = true; // Player Specific
-set_arr[global.set_len_var,10] = backward_input_const; // ID (Input Only)
-    // Default
-set_default_arr[global.set_len_var,0] = backward_key_const; // Player 1
-set_default_arr[global.set_len_var,1] = backward_button_const; // Player 2
-set_default_arr[global.set_len_var,2] = backward_button_const; // Player 3
-set_default_arr[global.set_len_var,3] = backward_button_const; // Player 4
-set_default_arr[global.set_len_var,4] = backward_button_const; // Player 5
-set_default_arr[global.set_len_var,5] = backward_button_const; // Player 6
-set_default_arr[global.set_len_var,6] = backward_button_const; // Player 7
-set_default_arr[global.set_len_var,7] = backward_button_const; // Player 8
-global.set_len_var += 1;
-// Strafe Left
-set_arr[global.set_len_var,0] = "strafe_left"; // Variable name
-set_arr[global.set_len_var,1] = "strafe_left_input"; // Name
-set_arr[global.set_len_var,2] = "strafe_left_input"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 7; // Type (Input)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 0; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 8; // Category (Input)
-set_arr[global.set_len_var,9] = true; // Player Specific
-set_arr[global.set_len_var,10] = strafe_left_input_const; // ID (Input Only)
-    // Default
-set_default_arr[global.set_len_var,0] = strafe_left_key_const; // Player 1
-set_default_arr[global.set_len_var,1] = strafe_left_button_const; // Player 2
-set_default_arr[global.set_len_var,2] = strafe_left_button_const; // Player 3
-set_default_arr[global.set_len_var,3] = strafe_left_button_const; // Player 4
-set_default_arr[global.set_len_var,4] = strafe_left_button_const; // Player 5
-set_default_arr[global.set_len_var,5] = strafe_left_button_const; // Player 6
-set_default_arr[global.set_len_var,6] = strafe_left_button_const; // Player 7
-set_default_arr[global.set_len_var,7] = strafe_left_button_const; // Player 8
-global.set_len_var += 1;
-// Strafe Right
-set_arr[global.set_len_var,0] = "strafe_right"; // Variable name
-set_arr[global.set_len_var,1] = "strafe_right_input"; // Name
-set_arr[global.set_len_var,2] = "strafe_right_input"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 7; // Type (Input)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 0; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 8; // Category (Input)
-set_arr[global.set_len_var,9] = true; // Player Specific
-set_arr[global.set_len_var,10] = strafe_right_input_const; // ID (Input Only)
-    // Default
-set_default_arr[global.set_len_var,0] = strafe_right_key_const; // Player 1
-set_default_arr[global.set_len_var,1] = strafe_right_button_const; // Player 2
-set_default_arr[global.set_len_var,2] = strafe_right_button_const; // Player 3
-set_default_arr[global.set_len_var,3] = strafe_right_button_const; // Player 4
-set_default_arr[global.set_len_var,4] = strafe_right_button_const; // Player 5
-set_default_arr[global.set_len_var,5] = strafe_right_button_const; // Player 6
-set_default_arr[global.set_len_var,6] = strafe_right_button_const; // Player 7
-set_default_arr[global.set_len_var,7] = strafe_right_button_const; // Player 8
-global.set_len_var += 1;
-// Interact
-set_arr[global.set_len_var,0] = "interact"; // Variable name
-set_arr[global.set_len_var,1] = "interact_input"; // Name
-set_arr[global.set_len_var,2] = "interact_input"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 7; // Type (Input)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 0; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 8; // Category (Input)
-set_arr[global.set_len_var,9] = true; // Player Specific
-set_arr[global.set_len_var,10] = interact_input_const; // ID (Input Only)
-    // Default
-set_default_arr[global.set_len_var,0] = interact_key_const; // Player 1
-set_default_arr[global.set_len_var,1] = interact_button_const; // Player 2
-set_default_arr[global.set_len_var,2] = interact_button_const; // Player 3
-set_default_arr[global.set_len_var,3] = interact_button_const; // Player 4
-set_default_arr[global.set_len_var,4] = interact_button_const; // Player 5
-set_default_arr[global.set_len_var,5] = interact_button_const; // Player 6
-set_default_arr[global.set_len_var,6] = interact_button_const; // Player 7
-set_default_arr[global.set_len_var,7] = interact_button_const; // Player 8
-global.set_len_var += 1;
-// Sprint
-set_arr[global.set_len_var,0] = "sprint"; // Variable name
-set_arr[global.set_len_var,1] = "sprint_input"; // Name
-set_arr[global.set_len_var,2] = "sprint_input"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 7; // Type (Input)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 0; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 8; // Category (Input)
-set_arr[global.set_len_var,9] = true; // Player Specific
-set_arr[global.set_len_var,10] = sprint_input_const; // ID (Input Only)
-    // Default
-set_default_arr[global.set_len_var,0] = sprint_key_const; // Player 1
-set_default_arr[global.set_len_var,1] = sprint_button_const; // Player 2
-set_default_arr[global.set_len_var,2] = sprint_button_const; // Player 3
-set_default_arr[global.set_len_var,3] = sprint_button_const; // Player 4
-set_default_arr[global.set_len_var,4] = sprint_button_const; // Player 5
-set_default_arr[global.set_len_var,5] = sprint_button_const; // Player 6
-set_default_arr[global.set_len_var,6] = sprint_button_const; // Player 7
-set_default_arr[global.set_len_var,7] = sprint_button_const; // Player 8
-global.set_len_var += 1;
-// Jump
-set_arr[global.set_len_var,0] = "jump"; // Variable name
-set_arr[global.set_len_var,1] = "jump_input"; // Name
-set_arr[global.set_len_var,2] = "jump_input"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 7; // Type (Input)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 0; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 8; // Category (Input)
-set_arr[global.set_len_var,9] = true; // Player Specific
-set_arr[global.set_len_var,10] = jump_input_const; // ID (Input Only)
-    // Default
-set_default_arr[global.set_len_var,0] = jump_key_const; // Player 1
-set_default_arr[global.set_len_var,1] = jump_button_const; // Player 2
-set_default_arr[global.set_len_var,2] = jump_button_const; // Player 3
-set_default_arr[global.set_len_var,3] = jump_button_const; // Player 4
-set_default_arr[global.set_len_var,4] = jump_button_const; // Player 5
-set_default_arr[global.set_len_var,5] = jump_button_const; // Player 6
-set_default_arr[global.set_len_var,6] = jump_button_const; // Player 7
-set_default_arr[global.set_len_var,7] = jump_button_const; // Player 8
-global.set_len_var += 1;
-// Crouch
-set_arr[global.set_len_var,0] = "crouch"; // Variable name
-set_arr[global.set_len_var,1] = "crouch_input"; // Name
-set_arr[global.set_len_var,2] = "crouch_input"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 7; // Type (Input)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 0; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 8; // Category (Input)
-set_arr[global.set_len_var,9] = true; // Player Specific
-set_arr[global.set_len_var,10] = crouch_input_const; // ID (Input Only)
-    // Default
-set_default_arr[global.set_len_var,0] = crouch_key_const; // Player 1
-set_default_arr[global.set_len_var,1] = crouch_button_const; // Player 2
-set_default_arr[global.set_len_var,2] = crouch_button_const; // Player 3
-set_default_arr[global.set_len_var,3] = crouch_button_const; // Player 4
-set_default_arr[global.set_len_var,4] = crouch_button_const; // Player 5
-set_default_arr[global.set_len_var,5] = crouch_button_const; // Player 6
-set_default_arr[global.set_len_var,6] = crouch_button_const; // Player 7
-set_default_arr[global.set_len_var,7] = crouch_button_const; // Player 8
-global.set_len_var += 1;
-// Attack
-set_arr[global.set_len_var,0] = "attack"; // Variable name
-set_arr[global.set_len_var,1] = "attack_input"; // Name
-set_arr[global.set_len_var,2] = "attack_input"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 7; // Type (Input)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 0; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 8; // Category (Input)
-set_arr[global.set_len_var,9] = true; // Player Specific
-set_arr[global.set_len_var,10] = attack_input_const; // ID (Input Only)
-    // Default
-set_default_arr[global.set_len_var,0] = attack_key_const; // Player 1
-set_default_arr[global.set_len_var,1] = attack_button_const; // Player 2
-set_default_arr[global.set_len_var,2] = attack_button_const; // Player 3
-set_default_arr[global.set_len_var,3] = attack_button_const; // Player 4
-set_default_arr[global.set_len_var,4] = attack_button_const; // Player 5
-set_default_arr[global.set_len_var,5] = attack_button_const; // Player 6
-set_default_arr[global.set_len_var,6] = attack_button_const; // Player 7
-set_default_arr[global.set_len_var,7] = attack_button_const; // Player 8
-global.set_len_var += 1;
-// Pause
-set_arr[global.set_len_var,0] = "pause"; // Variable name
-set_arr[global.set_len_var,1] = "pause_input"; // Name
-set_arr[global.set_len_var,2] = "pause_input"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 7; // Type (Input)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 0; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 8; // Category (Input)
-set_arr[global.set_len_var,9] = true; // Player Specific
-set_arr[global.set_len_var,10] = pause_input_const; // ID (Input Only)
-    // Default
-set_default_arr[global.set_len_var,0] = pause_key_const; // Player 1
-set_default_arr[global.set_len_var,1] = pause_button_const; // Player 2
-set_default_arr[global.set_len_var,2] = pause_button_const; // Player 3
-set_default_arr[global.set_len_var,3] = pause_button_const; // Player 4
-set_default_arr[global.set_len_var,4] = pause_button_const; // Player 5
-set_default_arr[global.set_len_var,5] = pause_button_const; // Player 6
-set_default_arr[global.set_len_var,6] = pause_button_const; // Player 7
-set_default_arr[global.set_len_var,7] = pause_button_const; // Player 8
-global.set_len_var += 1;
-// Debug
-set_arr[global.set_len_var,0] = "debug"; // Variable name
-set_arr[global.set_len_var,1] = "debug_input"; // Name
-set_arr[global.set_len_var,2] = "debug_input"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 7; // Type (Input)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 0; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 8; // Category (Input)
-set_arr[global.set_len_var,9] = true; // Player Specific
-set_arr[global.set_len_var,10] = debug_input_const; // ID (Input Only)
-    // Default
-set_default_arr[global.set_len_var,0] = debug_key_const; // Player 1
-set_default_arr[global.set_len_var,1] = debug_button_const; // Player 2
-set_default_arr[global.set_len_var,2] = debug_button_const; // Player 3
-set_default_arr[global.set_len_var,3] = debug_button_const; // Player 4
-set_default_arr[global.set_len_var,4] = debug_button_const; // Player 5
-set_default_arr[global.set_len_var,5] = debug_button_const; // Player 6
-set_default_arr[global.set_len_var,6] = debug_button_const; // Player 7
-set_default_arr[global.set_len_var,7] = debug_button_const; // Player 8
-global.set_len_var += 1;
-// Turnaround
-set_arr[global.set_len_var,0] = "turnaround"; // Variable name
-set_arr[global.set_len_var,1] = "turnaround_input"; // Name
-set_arr[global.set_len_var,2] = "turnaround_input"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 7; // Type (Input)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 0; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 8; // Category (Input)
-set_arr[global.set_len_var,9] = true; // Player Specific
-set_arr[global.set_len_var,10] = turnaround_input_const; // ID (Input Only)
-    // Default
-set_default_arr[global.set_len_var,0] = turnaround_key_const; // Player 1
-set_default_arr[global.set_len_var,1] = turnaround_button_const; // Player 2
-set_default_arr[global.set_len_var,2] = turnaround_button_const; // Player 3
-set_default_arr[global.set_len_var,3] = turnaround_button_const; // Player 4
-set_default_arr[global.set_len_var,4] = turnaround_button_const; // Player 5
-set_default_arr[global.set_len_var,5] = turnaround_button_const; // Player 6
-set_default_arr[global.set_len_var,6] = turnaround_button_const; // Player 7
-set_default_arr[global.set_len_var,7] = turnaround_button_const; // Player 8
-global.set_len_var += 1;
-// Fast Forward
-set_arr[global.set_len_var,0] = "ff"; // Variable name
-set_arr[global.set_len_var,1] = "ff_input"; // Name
-set_arr[global.set_len_var,2] = "ff_input"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 7; // Type (Input)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 0; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 8; // Category (Input)
-set_arr[global.set_len_var,9] = true; // Player Specific
-set_arr[global.set_len_var,10] = ff_input_const; // ID (Input Only)
-    // Default
-set_default_arr[global.set_len_var,0] = ff_key_const; // Player 1
-set_default_arr[global.set_len_var,1] = ff_button_const; // Player 2
-set_default_arr[global.set_len_var,2] = ff_button_const; // Player 3
-set_default_arr[global.set_len_var,3] = ff_button_const; // Player 4
-set_default_arr[global.set_len_var,4] = ff_button_const; // Player 5
-set_default_arr[global.set_len_var,5] = ff_button_const; // Player 6
-set_default_arr[global.set_len_var,6] = ff_button_const; // Player 7
-set_default_arr[global.set_len_var,7] = ff_button_const; // Player 8
-global.set_len_var += 1;
-// Slow
-set_arr[global.set_len_var,0] = "slow"; // Variable name
-set_arr[global.set_len_var,1] = "slow_input"; // Name
-set_arr[global.set_len_var,2] = "slow_input"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 7; // Type (Input)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 0; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 8; // Category (Input)
-set_arr[global.set_len_var,9] = true; // Player Specific
-set_arr[global.set_len_var,10] = slow_input_const; // ID (Input Only)
-    // Default
-set_default_arr[global.set_len_var,0] = slow_key_const; // Player 1
-set_default_arr[global.set_len_var,1] = slow_button_const; // Player 2
-set_default_arr[global.set_len_var,2] = slow_button_const; // Player 3
-set_default_arr[global.set_len_var,3] = slow_button_const; // Player 4
-set_default_arr[global.set_len_var,4] = slow_button_const; // Player 5
-set_default_arr[global.set_len_var,5] = slow_button_const; // Player 6
-set_default_arr[global.set_len_var,6] = slow_button_const; // Player 7
-set_default_arr[global.set_len_var,7] = slow_button_const; // Player 8
-global.set_len_var += 1;
-// Camera Up
-set_arr[global.set_len_var,0] = "cam_up"; // Variable name
-set_arr[global.set_len_var,1] = "cam_up_input"; // Name
-set_arr[global.set_len_var,2] = "cam_up_input"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 7; // Type (Input)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 0; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 8; // Category (Input)
-set_arr[global.set_len_var,9] = true; // Player Specific
-set_arr[global.set_len_var,10] = cam_up_input_const; // ID (Input Only)
-    // Default
-set_default_arr[global.set_len_var,0] = cam_up_key_const; // Player 1
-set_default_arr[global.set_len_var,1] = cam_up_button_const; // Player 2
-set_default_arr[global.set_len_var,2] = cam_up_button_const; // Player 3
-set_default_arr[global.set_len_var,3] = cam_up_button_const; // Player 4
-set_default_arr[global.set_len_var,4] = cam_up_button_const; // Player 5
-set_default_arr[global.set_len_var,5] = cam_up_button_const; // Player 6
-set_default_arr[global.set_len_var,6] = cam_up_button_const; // Player 7
-set_default_arr[global.set_len_var,7] = cam_up_button_const; // Player 8
-global.set_len_var += 1;
-// Camera Down
-set_arr[global.set_len_var,0] = "cam_down"; // Variable name
-set_arr[global.set_len_var,1] = "cam_down_input"; // Name
-set_arr[global.set_len_var,2] = "cam_down_input"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 7; // Type (Input)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 0; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 8; // Category (Input)
-set_arr[global.set_len_var,9] = true; // Player Specific
-set_arr[global.set_len_var,10] = cam_down_input_const; // ID (Input Only)
-    // Default
-set_default_arr[global.set_len_var,0] = cam_down_key_const; // Player 1
-set_default_arr[global.set_len_var,1] = cam_down_button_const; // Player 2
-set_default_arr[global.set_len_var,2] = cam_down_button_const; // Player 3
-set_default_arr[global.set_len_var,3] = cam_down_button_const; // Player 4
-set_default_arr[global.set_len_var,4] = cam_down_button_const; // Player 5
-set_default_arr[global.set_len_var,5] = cam_down_button_const; // Player 6
-set_default_arr[global.set_len_var,6] = cam_down_button_const; // Player 7
-set_default_arr[global.set_len_var,7] = cam_down_button_const; // Player 8
-global.set_len_var += 1;
-// Camera Left
-set_arr[global.set_len_var,0] = "cam_left"; // Variable name
-set_arr[global.set_len_var,1] = "cam_left_input"; // Name
-set_arr[global.set_len_var,2] = "cam_left_input"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 7; // Type (Input)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 0; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 8; // Category (Input)
-set_arr[global.set_len_var,9] = true; // Player Specific
-set_arr[global.set_len_var,10] = cam_left_input_const; // ID (Input Only)
-    // Default
-set_default_arr[global.set_len_var,0] = cam_left_key_const; // Player 1
-set_default_arr[global.set_len_var,1] = cam_left_button_const; // Player 2
-set_default_arr[global.set_len_var,2] = cam_left_button_const; // Player 3
-set_default_arr[global.set_len_var,3] = cam_left_button_const; // Player 4
-set_default_arr[global.set_len_var,4] = cam_left_button_const; // Player 5
-set_default_arr[global.set_len_var,5] = cam_left_button_const; // Player 6
-set_default_arr[global.set_len_var,6] = cam_left_button_const; // Player 7
-set_default_arr[global.set_len_var,7] = cam_left_button_const; // Player 8
-global.set_len_var += 1;
-// Camera Right
-set_arr[global.set_len_var,0] = "cam_right"; // Variable name
-set_arr[global.set_len_var,1] = "cam_right_input"; // Name
-set_arr[global.set_len_var,2] = "cam_right_input"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 7; // Type (Input)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 0; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 8; // Category (Input)
-set_arr[global.set_len_var,9] = true; // Player Specific
-set_arr[global.set_len_var,10] = cam_right_input_const; // ID (Input Only)
-    // Default
-set_default_arr[global.set_len_var,0] = cam_right_key_const; // Player 1
-set_default_arr[global.set_len_var,1] = cam_right_button_const; // Player 2
-set_default_arr[global.set_len_var,2] = cam_right_button_const; // Player 3
-set_default_arr[global.set_len_var,3] = cam_right_button_const; // Player 4
-set_default_arr[global.set_len_var,4] = cam_right_button_const; // Player 5
-set_default_arr[global.set_len_var,5] = cam_right_button_const; // Player 6
-set_default_arr[global.set_len_var,6] = cam_right_button_const; // Player 7
-set_default_arr[global.set_len_var,7] = cam_right_button_const; // Player 8
-global.set_len_var += 1;
-// Fullscreen
-set_arr[global.set_len_var,0] = "fullscreen"; // Variable name
-set_arr[global.set_len_var,1] = "fullscreen_input"; // Name
-set_arr[global.set_len_var,2] = "fullscreen_input"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 7; // Type (Input)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 0; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 8; // Category (Input)
-set_arr[global.set_len_var,9] = true; // Player Specific
-set_arr[global.set_len_var,10] = fullscreen_input_const; // ID (Input Only)
-    // Default
-set_default_arr[global.set_len_var,0] = fullscreen_key_const; // Player 1
-set_default_arr[global.set_len_var,1] = fullscreen_button_const; // Player 2
-set_default_arr[global.set_len_var,2] = fullscreen_button_const; // Player 3
-set_default_arr[global.set_len_var,3] = fullscreen_button_const; // Player 4
-set_default_arr[global.set_len_var,4] = fullscreen_button_const; // Player 5
-set_default_arr[global.set_len_var,5] = fullscreen_button_const; // Player 6
-set_default_arr[global.set_len_var,6] = fullscreen_button_const; // Player 7
-set_default_arr[global.set_len_var,7] = fullscreen_button_const; // Player 8
-global.set_len_var += 1;
-// Screenshot
-set_arr[global.set_len_var,0] = "screenshot"; // Variable name
-set_arr[global.set_len_var,1] = "screenshot_input"; // Name
-set_arr[global.set_len_var,2] = "screenshot_input"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 7; // Type (Input)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 0; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 8; // Category (Input)
-set_arr[global.set_len_var,9] = true; // Player Specific
-set_arr[global.set_len_var,10] = screenshot_input_const; // ID (Input Only)
-    // Default
-set_default_arr[global.set_len_var,0] = screenshot_key_const; // Player 1
-set_default_arr[global.set_len_var,1] = screenshot_button_const; // Player 2
-set_default_arr[global.set_len_var,2] = screenshot_button_const; // Player 3
-set_default_arr[global.set_len_var,3] = screenshot_button_const; // Player 4
-set_default_arr[global.set_len_var,4] = screenshot_button_const; // Player 5
-set_default_arr[global.set_len_var,5] = screenshot_button_const; // Player 6
-set_default_arr[global.set_len_var,6] = screenshot_button_const; // Player 7
-set_default_arr[global.set_len_var,7] = screenshot_button_const; // Player 8
-global.set_len_var += 1;
-/*
---------
-Controls
---------
-*/
-// Control Category
-set_arr[global.set_len_var,0] = "control"; // Variable name
-set_arr[global.set_len_var,1] = "control"; // Name
-set_arr[global.set_len_var,2] = "control"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 8; // Type (Category)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 0; // Max
-set_arr[global.set_len_var,7] = false; // Wrap
-set_arr[global.set_len_var,8] = 9; // Category (Controls)
-set_arr[global.set_len_var,9] = false; // Player Specific
-set_arr[global.set_len_var,10] = 7; // ID (category)
-    // Default
-set_default_arr[global.set_len_var,0] = 0; // Default
-global.set_len_var += 1;
-// Input Category
-set_arr[global.set_len_var,0] = "input"; // Variable name
-set_arr[global.set_len_var,1] = "input"; // Name
-set_arr[global.set_len_var,2] = "input"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 8; // Type (Category)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 0; // Max
-set_arr[global.set_len_var,7] = false; // Wrap
-set_arr[global.set_len_var,8] = 9; // Category (Controls)
-set_arr[global.set_len_var,9] = false; // Player Specific
-set_arr[global.set_len_var,10] = 8; // ID (category)
-    // Default
-set_default_arr[global.set_len_var,0] = 0; // Default
-global.set_len_var += 1;
-/*
-----
-Fun!
-----
-*/
-// Pride
-set_arr[global.set_len_var,0] = "pride"; // Variable name
-set_arr[global.set_len_var,1] = "pride"; // Name
-set_arr[global.set_len_var,2] = "pride"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 0; // Type (Enum)
-set_arr[global.set_len_var,5] = 0; // Min
-set_arr[global.set_len_var,6] = 2; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 10; // Category (fun)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Label
-set_label_arr[global.set_len_var,0] = "off"; // Value 1
-set_label_arr[global.set_len_var,1] = true; // Translate
-set_label_arr[global.set_len_var,2] = "on"; // Value 2
-set_label_arr[global.set_len_var,3] = true; // Translate
-set_label_arr[global.set_len_var,4] = "trans"; // Value 3
-set_label_arr[global.set_len_var,5] = true; // Translate
-    // Default
-set_default_arr[global.set_len_var,0] = false; // Default
-global.set_len_var += 1;
-// Halloween
-set_arr[global.set_len_var,0] = "halloween"; // Variable name
-set_arr[global.set_len_var,1] = "halloween"; // Name
-set_arr[global.set_len_var,2] = "halloween"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 0; // Type (Enum)
-set_arr[global.set_len_var,5] = false; // Min
-set_arr[global.set_len_var,6] = true; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 10; // Category (fun)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Label
-set_label_arr[global.set_len_var,0] = "off"; // Value 1
-set_label_arr[global.set_len_var,1] = true; // Translate
-set_label_arr[global.set_len_var,2] = "on"; // Value 2
-set_label_arr[global.set_len_var,3] = true; // Translate
-    // Default
-set_default_arr[global.set_len_var,0] = false; // Default
-global.set_len_var += 1;
-// Christmas
-set_arr[global.set_len_var,0] = "christmas"; // Variable name
-set_arr[global.set_len_var,1] = "christmas"; // Name
-set_arr[global.set_len_var,2] = "christmas"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 0; // Type (Enum)
-set_arr[global.set_len_var,5] = false; // Min
-set_arr[global.set_len_var,6] = true; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 10; // Category (fun)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Label
-set_label_arr[global.set_len_var,0] = "off"; // Value 1
-set_label_arr[global.set_len_var,1] = true; // Translate
-set_label_arr[global.set_len_var,2] = "on"; // Value 2
-set_label_arr[global.set_len_var,3] = true; // Translate
-    // Default
-set_default_arr[global.set_len_var,0] = false; // Default
-global.set_len_var += 1;
-// Easter
-set_arr[global.set_len_var,0] = "easter"; // Variable name
-set_arr[global.set_len_var,1] = "easter"; // Name
-set_arr[global.set_len_var,2] = "easter"; // Description
-set_arr[global.set_len_var,3] = true; // Translate name and descripion
-set_arr[global.set_len_var,4] = 0; // Type (Enum)
-set_arr[global.set_len_var,5] = false; // Min
-set_arr[global.set_len_var,6] = true; // Max
-set_arr[global.set_len_var,7] = true; // Wrap
-set_arr[global.set_len_var,8] = 10; // Category (fun)
-set_arr[global.set_len_var,9] = false; // Player Specific
-    // Label
-set_label_arr[global.set_len_var,0] = "off"; // Value 1
-set_label_arr[global.set_len_var,1] = true; // Translate
-set_label_arr[global.set_len_var,2] = "on"; // Value 2
-set_label_arr[global.set_len_var,3] = true; // Translate
-    // Default
-set_default_arr[global.set_len_var,0] = false; // Default
-global.set_len_var += 1;
+    // Reduce Flashing
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("crouch_toggle","crouch_toggle","crouch_toggle",true,set_enum_const,false,true,true,local.control_sub,true,false);
+        // Labels
+            set_add_label_scr(local.set,false,"off",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            set_add_label_scr(local.set,true,"on",true,"");
+        // Defaults
+            set_add_default_scr(local.set,crouch_toggle_const,true);
+    // Joystick ID
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("joy_id","joy_id","joy_id",true,set_clamp_num_const,0,7,true,local.control_sub,true,false);
+        // Defaults
+            set_add_default_scr(local.set,0,false,0,1,2,3,4,5,6);
+    // Sensitivity
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("sens","sens","sens",true,set_min_clamp_num_const,1,0,true,local.control_sub,true,false);
+        // Defaults
+            set_add_default_scr(local.set,sens_const,true);
+    // Invert Yaw
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("invert_yaw","invert_yaw","invert_yaw",true,set_enum_const,false,true,true,local.control_sub,true,false);
+        // Labels
+            set_add_label_scr(local.set,false,"off",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            set_add_label_scr(local.set,true,"on",true,"");
+        // Defaults
+            set_add_default_scr(local.set,invert_yaw_const,true);
+    // Invert Pitch
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("invert_pitch","invert_pitch","invert_pitch",true,set_enum_const,false,true,true,local.control_sub,true,false);
+        // Labels
+            set_add_label_scr(local.set,false,"off",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            set_add_label_scr(local.set,true,"on",true,"");
+        // Defaults
+            set_add_default_scr(local.set,invert_pitch_const,true);
+    // Camera Controls
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("input_cam","input_cam","input_cam",true,set_enum_const,0,5,true,local.control_sub,true,true);
+        // Labels
+            set_add_label_scr(local.set,cam_mouse_const,"mouse",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            set_add_label_scr(local.set,cam_joy_r_const,"rjoy",true,"");
+            set_add_label_scr(local.set,cam_joy_rs_const,"rjoys",true,"");
+            set_add_label_scr(local.set,cam_joy_l_const,"ljoy",true,"");
+            set_add_label_scr(local.set,cam_button_const,"button",true,"");
+            set_add_label_scr(local.set,cam_dpad_const,"dpad",true,"");
+        // Defaults
+            set_add_default_scr(local.set,cam_const,2,cam_joy_r_const);
+    // Movement Controls
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("input_move","input_move","input_move",true,set_enum_const,0,4,true,local.control_sub,true,true);
+        // Labels
+            set_add_label_scr(local.set,move_button_const,"button",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            set_add_label_scr(local.set,move_joy_l_const,"ljoy",true,"");
+            set_add_label_scr(local.set,move_dpad_const,"dpad",true,"");
+            set_add_label_scr(local.set,move_joy_r_const,"rjoy",true,"");
+            set_add_label_scr(local.set,move_joy_rs_const,"rjoys",true,"");
+        // Defaults
+            set_add_default_scr(local.set,move_const,2,move_joy_l_const);
+    // Menu Controls
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("input_menu","input_menu","input_menu",true,set_enum_const,0,4,true,local.control_sub,true,true);
+        // Labels
+            set_add_label_scr(local.set,menu_pc_const,"pc",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            set_add_label_scr(local.set,menu_dpad_const,"dpad",true,"");
+            set_add_label_scr(local.set,menu_joy_l_const,"ljoy",true,"");
+            set_add_label_scr(local.set,menu_joy_r_const,"rjoy",true,"");
+            set_add_label_scr(local.set,menu_joy_rs_const,"rjoys",true,"");
+        // Defaults
+            set_add_default_scr(local.set,menu_const,2,menu_dpad_const);
+// Inputs
+    set_add_input_scr("up",local.input);
+    set_add_input_scr("down",local.input);
+    set_add_input_scr("left",local.input);
+    set_add_input_scr("right",local.input);
+    set_add_input_scr("confirm",local.input);
+    set_add_input_scr("back",local.input);
+    set_add_input_scr("forward",local.input);
+    set_add_input_scr("backward",local.input);
+    set_add_input_scr("strafe_left",local.input);
+    set_add_input_scr("strafe_right",local.input);
+    set_add_input_scr("interact",local.input);
+    set_add_input_scr("sprint",local.input);
+    set_add_input_scr("jump",local.input);
+    set_add_input_scr("crouch",local.input);
+    set_add_input_scr("attack",local.input);
+    set_add_input_scr("pause",local.input);
+    set_add_input_scr("debug",local.input);
+    set_add_input_scr("turnaround",local.input);
+    set_add_input_scr("ff",local.input);
+    set_add_input_scr("slow",local.input);
+    set_add_input_scr("cam_up",local.input);
+    set_add_input_scr("cam_down",local.input);
+    set_add_input_scr("cam_left",local.input);
+    set_add_input_scr("cam_right",local.input);
+    set_add_input_scr("fullscreen",local.input);
+    set_add_input_scr("screenshot",local.input);
+// Control
+    // Control
+        /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+        local.set = set_add_scr(local.control_sub,"control","control",true,set_state_const,0,0,false,local.control,false,false);
+        set_add_default_scr(local.set,0);
+    // Input
+        /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+        local.set = set_add_scr(local.input,"input","input",true,set_state_const,0,0,false,local.control,false,false);
+        set_add_default_scr(local.set,0);
+// Fun
+    // Pride
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("pride","pride","pride",true,set_enum_const,0,2,true,local.fun,false,true);
+        // Labels
+            set_add_label_scr(local.set,0,"off",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            set_add_label_scr(local.set,1,"on",true,"");
+            set_add_label_scr(local.set,2,"trans",true,"");
+        // Defaults
+            set_add_default_scr(local.set,false);
+    // Halloween
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("halloween","halloween","halloween",true,set_enum_const,false,true,true,local.fun,false,false);
+        // Labels
+            set_add_label_scr(local.set,false,"off",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            set_add_label_scr(local.set,true,"on",true,"");
+        // Defaults
+            set_add_default_scr(local.set,false);
+    // Christmas
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("christmas","christmas","christmas",true,set_enum_const,false,true,true,local.fun,false,false);
+        // Labels
+            set_add_label_scr(local.set,false,"off",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            set_add_label_scr(local.set,true,"on",true,"");
+        // Defaults
+            set_add_default_scr(local.set,false);
+    // Easter
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("easter","easter","easter",true,set_enum_const,false,true,true,local.fun,false,false);
+        // Labels
+            set_add_label_scr(local.set,false,"off",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            set_add_label_scr(local.set,true,"on",true,"");
+        // Defaults
+            set_add_default_scr(local.set,false);
+// Theme Toggle
+    // Gel
+        local.set = set_add_theme_scr("gel",true,1,local.theme_toggle);
+        set_add_label_scr(local.set,0,"main",true,"gel_theme_main");
+        set_add_label_scr(local.set,1,"rom",true,"gel_theme_rom");
+    // Bug
+        local.set = set_add_theme_scr("bug",true,1,local.theme_toggle);
+        set_add_label_scr(local.set,0,"main",true,"bug_theme_main");
+        set_add_label_scr(local.set,1,"rom",true,"bug_theme_rom");
+    // Ringu
+        local.set = set_add_theme_scr("ringu",true,3,local.theme_toggle);
+        set_add_label_scr(local.set,0,"main",true,"ringu_theme_main");
+        set_add_label_scr(local.set,1,"old",true,"ringu_theme_old");
+        set_add_label_scr(local.set,2,"rom",true,"ringu_theme_rom");
+        set_add_label_scr(local.set,3,"alt",true,"ringu_theme_alt");
+    // Bab Theme
+        local.set = set_add_theme_scr("bab",true,1,local.theme_toggle);
+        set_add_label_scr(local.set,0,"main",true,"bab_theme_main");
+        set_add_label_scr(local.set,1,"rom",true,"bab_theme_rom");
+    // Puppet Theme
+        local.set = set_add_theme_scr("pup",true,1,local.theme_toggle);
+        set_add_label_scr(local.set,0,"main",true,"pup_theme_main");
+        set_add_label_scr(local.set,1,"rom",true,"pup_theme_rom");
+    // Flesh Theme
+        local.set = set_add_theme_scr("flesh",true,1,local.theme_toggle);
+        set_add_label_scr(local.set,0,"main",true,"flesh_theme_main");
+        set_add_label_scr(local.set,1,"rom",true,"flesh_theme_rom");
+    // Deer Lord Theme
+        local.set = set_add_theme_scr("dl",true,2,local.theme_toggle);
+        set_add_label_scr(local.set,0,"main",true,"dl_theme_main");
+        set_add_label_scr(local.set,1,"rom",true,"dl_theme_rom");
+        set_add_label_scr(local.set,2,"alt",true,"dl_theme_alt");
+    // Eel Theme
+        local.set = set_add_theme_scr("eel",true,2,local.theme_toggle);
+        set_add_label_scr(local.set,0,"main",true,"eel_theme_main");
+        set_add_label_scr(local.set,1,"old",true,"eel_theme_old");
+        set_add_label_scr(local.set,2,"rom",true,"eel_theme_rom");
+    // Parasite Theme
+        local.set = set_add_theme_scr("para",true,1,local.theme_toggle);
+        set_add_label_scr(local.set,0,"main",true,"para_theme_main");
+        set_add_label_scr(local.set,1,"rom",true,"para_theme_rom");
+    // Food Demon Theme
+        local.set = set_add_theme_scr("fd",true,1,local.theme_toggle);
+        set_add_label_scr(local.set,0,"main",true,"fd_theme_main");
+        set_add_label_scr(local.set,1,"rom",true,"fd_theme_rom");
+    // Killer Theme
+        local.set = set_add_theme_scr("killer",true,1,local.theme_toggle);
+        set_add_label_scr(local.set,0,"main",true,"killer_theme_main");
+        set_add_label_scr(local.set,1,"rom",true,"killer_theme_rom");
+    // Mermaid Theme
+        local.set = set_add_theme_scr("mur",true,1,local.theme_toggle);
+        set_add_label_scr(local.set,0,"main",true,"mur_theme_main");
+        set_add_label_scr(local.set,1,"rom",true,"mur_theme_rom");
+    // Bodybag Theme
+        local.set = set_add_theme_scr("body",true,1,local.theme_toggle);
+        set_add_label_scr(local.set,0,"main",true,"body_theme_main");
+        set_add_label_scr(local.set,1,"rom",true,"body_theme_rom");
+    // Stem Theme
+        local.set = set_add_theme_scr("stem",true,1,local.theme_toggle);
+        set_add_label_scr(local.set,0,"main",true,"stem_theme_main");
+        set_add_label_scr(local.set,1,"rom",true,"stem_theme_rom");
+    // Patient Theme
+        local.set = set_add_theme_scr("patient",true,1,local.theme_toggle);
+        set_add_label_scr(local.set,0,"main",true,"patient_theme_main");
+        set_add_label_scr(local.set,1,"rom",true,"patient_theme_rom");
+    // Ghost Cow Theme
+        local.set = set_add_theme_scr("gc",true,2,local.theme_toggle);
+        set_add_label_scr(local.set,0,"main",true,"gc_theme_main");
+        set_add_label_scr(local.set,1,"old",true,"gc_theme_old");
+        set_add_label_scr(local.set,2,"rom",true,"gc_theme_rom");
+    // Bekka Theme
+        local.set = set_add_theme_scr("bekka",true,1,local.theme_toggle);
+        set_add_label_scr(local.set,0,"main",true,"bekka_theme_main");
+        set_add_label_scr(local.set,1,"rom",true,"bekka_theme_rom");
+    // Husk Theme
+        local.set = set_add_theme_scr("husk",true,1,local.theme_toggle);
+        set_add_label_scr(local.set,0,"main",true,"husk_theme_main");
+        set_add_label_scr(local.set,1,"old",true,"husk_theme_old");
+    // Woormy Charles Theme
+        local.set = set_add_theme_scr("wc",true,2,local.theme_toggle);
+        set_add_label_scr(local.set,0,"main",true,"wc_theme_main");
+        set_add_label_scr(local.set,1,"old",true,"wc_theme_old");
+        set_add_label_scr(local.set,2,"rom",true,"wc_theme_rom");
+    // Hooked Doll Theme
+        local.set = set_add_theme_scr("hk",true,1,local.theme_toggle);
+        set_add_label_scr(local.set,0,"main",true,"hk_theme_main");
+        set_add_label_scr(local.set,1,"rom",true,"hk_theme_rom");
+    // Frenzy Theme
+        local.set = set_add_theme_scr("frenzy",true,1,local.theme_toggle);
+        set_add_label_scr(local.set,0,"main",true,"frenzy_theme_main");
+        set_add_label_scr(local.set,1,"old",true,"frenzy_theme_old");
+    // Real Ringu Theme
+        local.set = set_add_theme_scr("real_ringu",true,1,local.theme_toggle);
+        set_add_label_scr(local.set,0,"main",true,"real_ringu_theme_main");
+        set_add_label_scr(local.set,1,"rom",true,"real_ringu_theme_rom");
+    // Tirsiak Theme
+        local.set = set_add_theme_scr("tiri",true,1,local.theme_toggle);
+        set_add_label_scr(local.set,0,"main",true,"tiri_theme_main");
+        set_add_label_scr(local.set,1,"rom",true,"tiri_theme_rom");
+    // Lisa Theme
+        local.set = set_add_theme_scr("lisa",true,1,local.theme_toggle);
+        set_add_label_scr(local.set,0,"main",true,"lisa_theme_main");
+        set_add_label_scr(local.set,1,"rom",true,"lisa_theme_rom");
+    // Otto Theme
+        local.set = set_add_theme_scr("otto",true,1,local.theme_toggle);
+        set_add_label_scr(local.set,0,"main",true,"otto_theme_main");
+        set_add_label_scr(local.set,1,"rom",true,"otto_theme_rom");
+    // Spooper Theme
+        local.set = set_add_theme_scr("spooper",true,1,local.theme_toggle);
+        set_add_label_scr(local.set,0,"main",true,"spooper_theme_main");
+        set_add_label_scr(local.set,1,"rom",true,"spooper_theme_rom");
+    // White Face Theme
+        local.set = set_add_theme_scr("wf",true,1,local.theme_toggle);
+        set_add_label_scr(local.set,0,"main",true,"wf_theme_main");
+        set_add_label_scr(local.set,1,"rom",true,"wf_theme_rom");
 // Draw (hope this works)
 draw_load_scr("Loaded settings!");
