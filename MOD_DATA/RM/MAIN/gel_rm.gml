@@ -24,7 +24,7 @@ room_set_code
     // Exit
     with instance_create(320,152,spawn_leave_door_trig_obj)
     {
-        lock_var = true;
+        lock_var = (global.diff_var != 0);
         ini_open(global.lang_var);
         txt_lock_var = ini_read_string("UI","gel","UI_gel");
         ini_close();

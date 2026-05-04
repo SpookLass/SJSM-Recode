@@ -9,20 +9,29 @@ object_set_visible(argument0,true);
 // Create event
 object_event_add
 (argument0,ev_create,0,'
-    str_color_var = c_red;
     ini_open(global.lang_var);
-    if global.gel_type_var == -1 { local.type = irandom(2); }
-    else { local.type = global.gel_type_var; }
-    switch local.type
+    if global.diff_var == 0
     {
-        case 0: { str_var = ini_read_string("NOTE","gel","NOTE_gel"); break; }
-        case 2: { str_var = ini_read_string("NOTE","gel_hd","NOTE_gel_hd"); break; }
-        default: { str_var = ini_read_string("NOTE","gel_og","NOTE_gel_og"); break; }
+        str_color_var = c_blue;
+        str_var = ini_read_string("NOTE","gel_easy","NOTE_gel_easy");
+        spawn_var = true;
+    }
+    else
+    {
+        str_color_var = c_red;
+        if global.gel_type_var == -1 { local.type = irandom(2); }
+        else { local.type = global.gel_type_var; }
+        switch local.type
+        {
+            case 0: { str_var = ini_read_string("NOTE","gel","NOTE_gel"); break; }
+            case 2: { str_var = ini_read_string("NOTE","gel_hd","NOTE_gel_hd"); break; }
+            default: { str_var = ini_read_string("NOTE","gel_og","NOTE_gel_og"); break; }
+        }
+        spawn_var = false;
     }
     ini_close();
     event_inherited();
     z += 9.5;
-    spawn_var = false;
 ');
 // Put down note
 object_event_add

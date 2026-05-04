@@ -39,7 +39,7 @@ room_set_code
     with instance_create(400,344,spawn_door_trig_obj)
     {
         global.spawn_arr[2,4] = id;
-        rm_var = test_spawn_rm;
+        rm_var = lab_02_rm;
         snd_len_var = 1;
         snd_arr[0] = door_m_02_snd;
     }
@@ -47,7 +47,8 @@ room_set_code
     with instance_create(536,240,spawn_door_trig_obj)
     {
         global.spawn_arr[3,4] = id; 
-        lock_var = true;
+        rm_var = lab_03_rm;
+        lock_var = !load_par_obj.key_var;
         ini_open(global.lang_var);
         txt_lock_var = ini_read_string("UI","keycard_hint","UI_keycard_hint");
         ini_close();

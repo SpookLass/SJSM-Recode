@@ -8,11 +8,11 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create event
 object_event_add
-(argument0,ev_create,0,"
-    if !irandom(2) // && (global.rm_count_var >= 200 || global.em)
+(argument0,ev_create,0,'
+    if !irandom(2) && (global.rm_count_var >= 200 || global.mode_var != 0)
     {
         direction = random(360);
         event_inherited();
     }
     else { instance_destroy(); }
-");
+');

@@ -41,8 +41,22 @@ object_event_add
             d3d_transform_add_rotation_y(pitch_var);
             d3d_transform_add_rotation_z(yaw_var);
         }
-        else { d3d_transform_add_rotation_z(point_direction(x,y,global.cam_x_var[view_current],global.cam_y_var[view_current])); }
-        d3d_transform_add_translation(x+x_off_var,y+y_off_var,z+z_off_var+(h_var*0.5));
+        // Get position
+        local.xtmp = x+x_off_var;
+        local.ytmp = y+y_off_var;
+        local.ztmp = z+z_off_var+(h_var*0.5);
+        // Reflection handling (more complex for billboarded sprites)
+        if global.reflect_var
+        {
+            switch (global.reflect_axis_var)
+            {
+                case 0: { local.xtmp = global.reflect_pos_var-local.xtmp; d3d_transform_add_scaling(-1,1,1); break; }
+                case 1: { local.ytmp = global.reflect_pos_var-local.ytmp; d3d_transform_add_scaling(1,-1,1); break; }
+                case 2: { local.ztmp = global.reflect_pos_var-local.ztmp; d3d_transform_add_scaling(1,1,-1); break; }
+            }
+        }
+        if !rotate_var { d3d_transform_add_rotation_z(point_direction(local.xtmp,local.ytmp,global.cam_x_var[view_current],global.cam_y_var[view_current])); }
+        d3d_transform_add_translation(local.xtmp,local.ytmp,local.ztmp);
         d3d_draw_wall(0,(w_var*0.5)+wiggle_var,h_var*0.5,0,(-w_var*0.5)+wiggle_var,-h_var*0.5,tex_var,1,1);
         d3d_transform_set_identity();
         draw_set_color(c_white); draw_set_alpha(1);

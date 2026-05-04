@@ -17,6 +17,7 @@ object_event_add
     if !variable_local_exists("str_margin_y_var") { str_margin_y_var = 96; }
     if !variable_local_exists("str_scale_var") { str_scale_var = 0.4; }
     if !variable_local_exists("str_color_var") { str_color_var = c_black; }
+    if !variable_local_exists("font_var") { font_var = main_font; }
     if !variable_local_exists("str_var")
     {
         str_var = note_scr();
@@ -42,7 +43,7 @@ object_event_add
     type_var = 4; // Floor
     w_var = 3;
     l_var = 4;
-    z += 0.1;
+    dist_var = 0.1;
     flesh_var = false;
     // Trigger
     with instance_create(x,y,note_trig_obj)
@@ -82,9 +83,11 @@ object_event_add
     d3d_set_hidden(false);
     d3d_set_fog(false,c_black,0,0);
     draw_background_stretched(bg_var,0,0,surf_w_var,surf_h_var);
+    draw_set_font(font_var);
     draw_set_color(str_color_var);
     draw_text_ext_transformed(str_margin_x_var,str_margin_y_var,str_var,-1,(surf_w_var-(str_margin_x_var*2))/str_scale_var,str_scale_var,str_scale_var,0);
     draw_set_color(c_white);
+    draw_set_font(main_font);
     d3d_set_hidden(true);
     d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var);
     surface_reset_target();

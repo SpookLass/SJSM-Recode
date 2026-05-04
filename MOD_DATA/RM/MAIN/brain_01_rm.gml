@@ -38,16 +38,20 @@ room_set_code
         global.spawn_arr[1,4] = id;
         spawn_var = 0;
         rm_var = brain_03_rm;
-        // lock_var = true;
+        lock_var = !load_par_obj.door_var;
         ini_open(global.lang_var);
-        txt_lock_var = ini_read_string("UI","broke","UI_broke");
+        txt_lock_var = ini_read_string("UI","rust","UI_rust");
+        txt_var = ini_read_string("UI","hole","UI_hole");
         ini_close();
+        snd_len_var = 0;
     }
-    with instance_create(400,128,lab_door_obj) { global.spawn_arr[1,5] = id; direction = 270; }
+    with instance_create(400,128,brain_door_down_obj) { global.spawn_arr[1,5] = id; direction = 270; }
     with instance_create(400,344,spawn_door_trig_obj)
     {
         global.spawn_arr[2,4] = id;
-        rm_var = test_spawn_rm;
+        rm_var = brain_02_rm;
+        snd_len_var = 1;
+        snd_arr[0] = door_m_02_snd;
     }
     with instance_create(400,352,lab_door_obj) { global.spawn_arr[2,5] = id; direction = 90; }
     with instance_create(536,240,spawn_door_trig_obj)
@@ -57,6 +61,8 @@ room_set_code
         ini_open(global.lang_var);
         txt_lock_var = ini_read_string("UI","keycard_hint","UI_keycard_hint");
         ini_close();
+        snd_len_var = 1;
+        snd_arr[0] = door_m_02_snd;
     }
     with instance_create(544,240,lab_door_obj) { global.spawn_arr[3,5] = id; direction = 180; }
     // Lights
@@ -220,3 +226,4 @@ room_instance_add(argument0,544,240,spawn_wall_up_vert_obj);
 // room_instance_add(argument0,448,208,lab_light_flicker_obj);
 room_instance_add(argument0,464,208,table_metal_obj);
 room_instance_add(argument0,464,272,table_metal_obj);
+room_instance_add(argument0,464,272,brain_note_01_obj);

@@ -20,6 +20,7 @@ object_event_add
     coll_var[2] = w_var;
     on_var = true;
     color_var = 2;
+    reflect_var = true;
 ');
 // Step Event
 object_event_add
@@ -79,7 +80,18 @@ object_event_add
     d3d_transform_set_identity();
     d3d_transform_set_rotation_z(direction);
     d3d_transform_add_translation(x,y,z+z_off_var);
-    local.radius = w_var/2;
+    // Reflection handling
+    if global.reflect_var
+    {
+        switch (global.reflect_axis_var)
+        {
+            case 0: { d3d_transform_add_scaling(-1,1,1); d3d_transform_add_translation(global.reflect_pos_var,0,0); break; }
+            case 1: { d3d_transform_add_scaling(1,-1,1); d3d_transform_add_translation(0,global.reflect_pos_var,0); break; }
+            case 2: { d3d_transform_add_scaling(1,1,-1); d3d_transform_add_translation(0,0,global.reflect_pos_var); break; }
+        }
+    }
+    // Draw
+    local.radius = w_var*0.5;
     d3d_draw_floor(-local.radius,-local.radius,0,local.radius,local.radius,0,tex_var,1,1);
     d3d_transform_set_identity();
     draw_set_color(c_white); draw_set_alpha(1);

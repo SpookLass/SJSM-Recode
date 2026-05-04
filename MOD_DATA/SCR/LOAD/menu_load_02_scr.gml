@@ -40,16 +40,16 @@ draw_load_scr("Loading settings...");
     global.set_state_len_var = 0;
 // States
     local.main = set_add_state_scr("settings",true,-1);
-    local.gameplay = set_add_state_scr("gameplay",true,-1);
-    local.visual = set_add_state_scr("visual",true,-1);
-    local.audio = set_add_state_scr("audio",true,-1);
-    local.hud = set_add_state_scr("hud",true,-1);
-    local.performance = set_add_state_scr("performance",true,-1);
-    local.access = set_add_state_scr("access",true,-1);
-    local.control = set_add_state_scr("control",true,-1);
+    local.gameplay = set_add_state_scr("gameplay",true,local.main);
+    local.visual = set_add_state_scr("visual",true,local.main);
+    local.audio = set_add_state_scr("audio",true,local.main);
+    local.hud = set_add_state_scr("hud",true,local.main);
+    local.performance = set_add_state_scr("performance",true,local.main);
+    local.access = set_add_state_scr("access",true,local.main);
+    local.control = set_add_state_scr("control",true,local.main);
     local.input = set_add_state_scr("input",true,local.control);
     local.control_sub = set_add_state_scr("control",true,local.control);
-    local.fun = set_add_state_scr("fun",true,-1);
+    local.fun = set_add_state_scr("fun",true,local.main);
     local.theme_toggle = set_add_state_scr("theme_toggle",true,local.audio);
 // Main
     // Gameplay

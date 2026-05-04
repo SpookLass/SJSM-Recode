@@ -64,8 +64,8 @@ object_event_add
     // Draw
     draw_set_color(image_blend); draw_set_alpha(image_alpha);
     if global.fog_dark_var { d3d_set_fog(false,c_black,0,0); }
-    d3d_draw_wall(0.1,-w_var/2,h_var,0.1,w_var/2,0,local.tex,local.tex_w,local.tex_h);
-    d3d_draw_wall(-0.1,-w_var/2,h_var,-0.1,w_var/2,0,local.tex,local.tex_w,local.tex_h);
+    d3d_draw_wall(0.1,w_var/2,h_var,0.1,-w_var/2,0,local.tex,local.tex_w,local.tex_h);
+    d3d_draw_wall(-0.1,w_var/2,h_var,-0.1,-w_var/2,0,local.tex,local.tex_w,local.tex_h);
     // Reset
     d3d_transform_set_identity();
     draw_set_color(c_white); draw_set_alpha(1);

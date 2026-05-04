@@ -103,7 +103,7 @@ object_event_add
     {
         if ds_list_find_index(global.mon_list,gel_obj) < 0
         { ds_list_add(global.mon_list,gel_obj); }
-        with spawn_leave_door_trig_obj { lock_var = false; }
+        with door_trig_obj { lock_var = !lock_var; }
     }
     instance_destroy();
 ')

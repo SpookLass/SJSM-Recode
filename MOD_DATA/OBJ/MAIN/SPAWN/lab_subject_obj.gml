@@ -9,7 +9,7 @@ object_set_visible(argument0,true);
 // Create event
 object_event_add
 (argument0,ev_create,0,'
-    if instance_exists(load_par_obj)
+    if instance_exists(load_par_obj) && !variable_local_exists("store_tex_var")
     { store_tex_var = sprite_get_texture(load_par_obj.spr_arr_var[0,0],irandom(sprite_get_number(load_par_obj.spr_arr_var[0,0])-1)); }
     event_inherited();
     solid_var = false;
