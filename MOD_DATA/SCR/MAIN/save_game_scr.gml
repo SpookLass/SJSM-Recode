@@ -13,7 +13,7 @@ ini_open("save_"+string(global.save_name_var)+".ini");
     // Saved variables
 ini_write_real("MAIN","rm_count",global.rm_count_var);
 ini_write_real("MAIN","note",global.note_var);
-ini_write_real("MAIN","room",room);
+ini_write_string("MAIN","room",rm_name_arr[room]);
 ini_write_real("MAIN","tex",global.tex_var);
 ini_write_real("MAIN","count",global.count_var);
 ini_write_real("MAIN","mon_fail_var",global.mon_fail_var);

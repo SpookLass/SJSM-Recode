@@ -11,7 +11,7 @@ global.rm_count_var = ini_read_real("MAIN","rm_count",0);
 global.count_var = ini_read_real("MAIN","count",0);
 global.mon_fail_var = ini_read_real("MAIN","mon_fail_var",0);
 global.tex_var = ini_read_real("MAIN","tex",-1);
-local.rm = ini_read_real("MAIN","room",hall_01_rm);
+local.rm = ini_read_string("MAIN","room","ele_rm");
 global.note_var = ini_read_real("MAIN","note",0);
 global.zone_var = ini_read_real("MAIN","zone",global.zone_arr[0]);
 global.zone_num_var = ini_read_real("MAIN","zone_num",-1);
@@ -79,4 +79,9 @@ for (local.i=0; local.i<ds_list_size(global.mon_curr_list); local.i+=1;)
 tex_scr(global.tex_var);
 if argument0 == "1987" { instance_create(0,0,otter8_js_obj); }
 
-rm_goto_scr(local.rm);
+execute_string
+("
+    if variable_global_exists("+local.rm+")
+    { rm_goto_scr("+local.rm+"); }
+    else { rm_goto_scr(ele_rm); }
+");

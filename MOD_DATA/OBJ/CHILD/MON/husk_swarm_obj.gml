@@ -142,7 +142,7 @@ object_event_add
         switch theme_scr(global.husk_theme_var,global.theme_var,1,0,1,0)
         {
             case 1: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DH\east_mus_snd.mp3"); break; }
-            default: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\husk_mus_snd.mp3"); break; }
+            default: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\husk_mus_snd.ogg"); break; }
         }
         
         fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);

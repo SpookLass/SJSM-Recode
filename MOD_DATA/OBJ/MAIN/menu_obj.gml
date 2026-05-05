@@ -302,6 +302,14 @@ object_event_add
         custom_button_arr_var[local.i,0] = -1;
         custom_state_arr_var[local.i,0] = 1;
     }
+    local.setid = custom_state_arr_var[0,0]
+    custom_name_arr_var[0,local.setid] = ini_read_string("MENU","load_preset","MENU_load_preset");
+    custom_desc_arr_var[0,local.setid] = ini_read_string("DESC","load_preset","DESC_load_preset");
+    custom_button_arr_var[0,local.setid] = -2;
+    custom_name_arr_var[0,local.setid+1] = ini_read_string("MENU","save_preset","MENU_save_preset");
+    custom_desc_arr_var[0,local.setid+1] = ini_read_string("DESC","save_preset","DESC_save_preset");
+    custom_button_arr_var[0,local.setid+1] = -3;
+    custom_state_arr_var[0,0] += 2;
     for (local.i=0; local.i<global.custom_len_var; local.i+=1;)
     {
         local.stateid = custom_arr[local.i,8];
@@ -433,9 +441,16 @@ object_event_add
 	save_type_var=0;
     // Save List
 	ds_list_clear(global.save_list);
-	ini_open("saves.ini");		
+	ds_list_clear(global.preset_list);
+	ini_open("saves.ini");
 	ds_list_read(global.save_list,ini_read_string("SAVES","SAVES","2F01000000000000"));
+	ds_list_read(global.preset_list,ini_read_string("SAVES","presets","2F01000000000000"));
 	ini_close();
+    // Preset
+    preset_var = 0;
+    preset_len_var = ds_list_size(global.preset_list);
+    for (local.i=0; local.i<preset_len_var; local.i+=1;)
+    { preset_arr_var[local.i] = ds_list_find_value(global.preset_list,local.i); }
     // Scale
     scale_min_var = 0.125;
     // Alarms
@@ -868,6 +883,55 @@ object_event_add
                 {
                     switch local.customid
                     {
+                        case -3: // Save Preset
+                        {
+                            local.preset = get_string(custom_name_arr_var[custom_state_var,button_state_var],"");
+                            if ds_list_find_index(global.preset_list,local.preset) == -1
+                            {
+                                ds_list_add(global.preset_list,local.preset);
+                                ini_open("saves.ini");
+                                ini_write_string("SAVES","presets",ds_list_write(global.preset_list));
+                                ini_close();
+                                preset_arr_var[preset_len_var] = local.preset;
+                                preset_len_var += 1;
+                            }
+                            ini_open("preset_"+local.preset+".ini");
+                            for (local.i=0; local.i<global.custom_len_var; local.i+=1)
+                            {
+                                if custom_arr[local.i,4] != custom_state_const // Not Monster List
+                                {
+                                    switch custom_arr[local.i,4]
+                                    {
+                                        case custom_str_const: { ini_write_string("SETTING",custom_arr[local.i,0],custom_value_arr_var[local.i]); break; }
+                                        case custom_type_const: { ini_write_real("BEHAVIOR",custom_arr[local.i,0]+"_type",custom_value_arr_var[local.i]); break; }
+                                        default: { ini_write_real("SETTING",custom_arr[local.i,0],custom_value_arr_var[local.i]); break; }
+                                    }
+                                }
+                            }
+                            ini_close();
+                            break;
+                        }
+                        case -2: // Load Preset
+                        {
+                            if preset_len_var > 0
+                            {
+                                ini_open("preset_"+preset_arr_var[preset_var]+".ini");
+                                for (local.i=0; local.i<global.custom_len_var; local.i+=1)
+                                {
+                                    if custom_arr[local.i,4] != custom_state_const // Not Monster List
+                                    {
+                                        switch custom_arr[local.i,4]
+                                        {
+                                            case custom_str_const: { custom_value_arr_var[local.i] = ini_read_string("SETTING",custom_arr[local.i,0],custom_value_arr_var[local.i]); break; }
+                                            case custom_type_const: { custom_value_arr_var[local.i] = ini_read_real("BEHAVIOR",custom_arr[local.i,0]+"_type",custom_value_arr_var[local.i]); break; }
+                                            default: { custom_value_arr_var[local.i] = ini_read_real("SETTING",custom_arr[local.i,0],custom_value_arr_var[local.i]); break; }
+                                        }
+                                    }
+                                }
+                                ini_close();
+                            }
+                            break; 
+                        }
                         default: // Back
                         {
                             if custom_state_arr[custom_state_var,2] >= 0
@@ -883,57 +947,95 @@ object_event_add
             // Back
             if input_press_arr[back_input_const,0]
             {
-                if custom_state_arr[custom_state_var,2] >= 0
-                { custom_state_var = custom_state_arr[custom_state_var,2]; }
-                else { state_var = 3; }
-                event_user(0);
-                fmod_snd_play_scr(deny_snd);
+                switch local.customid
+                {
+                    case -2:
+                    {
+                        if preset_len_var > 0
+                        {
+                            file_delete("preset_"+ds_list_find_value(global.preset_list,preset_var)+".ini");
+                            ds_list_delete(global.preset_list,preset_var);
+                            ini_open("saves.ini");
+                            ini_write_string("SAVES","presets",ds_list_write(global.preset_list));
+                            ini_close();
+                            preset_len_var = ds_list_size(global.preset_list);
+                            for (local.i=0; local.i<preset_len_var; local.i+=1;)
+                            { preset_arr_var[local.i] = ds_list_find_value(global.preset_list,local.i); }
+                            preset_var = min(preset_var,preset_len_var-1);
+                        }
+                        break;
+                    }
+                    default:
+                    {
+                        if custom_state_arr[custom_state_var,2] >= 0
+                        { custom_state_var = custom_state_arr[custom_state_var,2]; }
+                        else { state_var = 3; }
+                        event_user(0);
+                        fmod_snd_play_scr(deny_snd);
+                        break;
+                    }
+                }
             }
             // Left and Right
             local.input = input_menu_hold_x_scr(0);
-            if local.input != 0 && local.customid >= 0
+            if local.input != 0
             {
                 local.snd = true;
-                switch custom_arr[local.customid,4] // Type
+                if local.customid >= 0
                 {
-                    case custom_enum_const: case custom_type_const: case custom_clamp_num_const: // Enums and clamped numbers
+                    switch custom_arr[local.customid,4] // Type
                     {
-                        custom_value_arr_var[local.customid] += local.input;
-                        if custom_arr[local.customid,7] // Wrap
+                        case custom_enum_const: case custom_type_const: case custom_clamp_num_const: // Enums and clamped numbers
                         {
-                            custom_value_arr_var[local.customid] = mod_scr
-                            (
-                                custom_value_arr_var[local.customid]+1-custom_arr[local.customid,5],
-                                custom_arr[local.customid,6]+2-custom_arr[local.customid,5]
-                            )-1+custom_arr[local.customid,5];
+                            custom_value_arr_var[local.customid] += local.input;
+                            if custom_arr[local.customid,7] // Wrap
+                            {
+                                custom_value_arr_var[local.customid] = mod_scr
+                                (
+                                    custom_value_arr_var[local.customid]+1-custom_arr[local.customid,5],
+                                    custom_arr[local.customid,6]+2-custom_arr[local.customid,5]
+                                )-1+custom_arr[local.customid,5];
+                            }
+                            else
+                            {
+                                custom_value_arr_var[local.customid] = median
+                                (
+                                    custom_value_arr_var[local.customid],
+                                    custom_arr[local.customid,5]-1,
+                                    custom_arr[local.customid,6]
+                                );
+                            }
+                            break;
                         }
-                        else
+                        case custom_num_const: // Number
                         {
-                            custom_value_arr_var[local.customid] = median
-                            (
-                                custom_value_arr_var[local.customid],
-                                custom_arr[local.customid,5]-1,
-                                custom_arr[local.customid,6]
-                            );
+                            custom_value_arr_var[local.customid] += local.input;
+                            break;
                         }
-                        break;
+                        case custom_max_clamp_num_const: // Max clamped number
+                        {
+                            custom_value_arr_var[local.customid] = min(custom_arr[local.customid,6]+1,custom_value_arr_var[local.customid]+local.input);
+                            break;
+                        }
+                        case custom_min_clamp_num_const: // Min clamped number
+                        {
+                            custom_value_arr_var[local.customid] = max(custom_arr[local.customid,5]-1,custom_value_arr_var[local.customid]+local.input);
+                            break;
+                        }
+                        default: { local.snd = false; break; }
                     }
-                    case custom_num_const: // Number
+                }
+                else
+                {
+                    switch local.customid
                     {
-                        custom_value_arr_var[local.customid] += local.input;
-                        break;
+                        case -2: // Load Preset
+                        {
+                            if preset_len_var > 0
+                            { preset_var = mod_scr(preset_var+local.input,preset_len_var); }
+                            break;
+                        }
                     }
-                    case custom_max_clamp_num_const: // Max clamped number
-                    {
-                        custom_value_arr_var[local.customid] = min(custom_arr[local.customid,6]+1,custom_value_arr_var[local.customid]+local.input);
-                        break;
-                    }
-                    case custom_min_clamp_num_const: // Min clamped number
-                    {
-                        custom_value_arr_var[local.customid] = max(custom_arr[local.customid,5]-1,custom_value_arr_var[local.customid]+local.input);
-                        break;
-                    }
-                    default: { local.snd = false; break; }
                 }
                 if local.snd { fmod_snd_play_scr(select_snd_var); }
             }
@@ -1828,11 +1930,11 @@ object_event_add
 
             local.desc = custom_desc_arr_var[custom_state_var,button_state_var];
             local.customid = custom_button_arr_var[custom_state_var,button_state_var];
+            local.str = 0;
             if local.customid >= 0
             {
                 if custom_arr[local.customid,4] != custom_state_const
                 {
-                    local.str = 0;
                     switch custom_arr[local.customid,4] // Custom type
                     {
                         // Enum & Monster List: Get current value label
@@ -1869,19 +1971,32 @@ object_event_add
                             local.str = string(custom_value_arr_var[local.customid]); break;
                         }
                     }
-                    if is_string(local.str)
+                }
+            }
+            else
+            {
+                switch local.customid
+                {
+                    case -2:
                     {
-                        draw_set_halign(fa_center);
-                        draw_str_shadow_scr
-                        (
-                            local.str,
-                            0,144+(96*button_state_var)+scroll_var,0.75,0.75,0.125,fa_center,fa_top,
-                            -4,4,str_bg_select_color_var,c_white,2,0
-                        );
-                        draw_set_halign(fa_left);
+                        if preset_len_var > 0
+                        { local.str = string_upper(preset_arr_var[preset_var]); }
+                        break;
                     }
                 }
             }
+            if is_string(local.str)
+            {
+                draw_set_halign(fa_center);
+                draw_str_shadow_scr
+                (
+                    local.str,
+                    0,144+(96*button_state_var)+scroll_var,0.75,0.75,0.125,fa_center,fa_top,
+                    -4,4,str_bg_select_color_var,c_white,2,0
+                );
+                draw_set_halign(fa_left);
+            }
+
             draw_set_halign(fa_right);
             local.margin = 832;
             draw_str_ext_shadow_scr
