@@ -155,14 +155,14 @@ This demo only includes Endless Mode at the moment, but will get Story Mode supp
 - Adam 'Adexo' Malinowski: Promotional / Achievements
 - Caeleigh 'Alerane' Boara: Promotional / Achievements
 - Michelle 'Souzou Inc.' Sladek: Promotional / Achievements
-- Mowtendoo: Promotional / Achievements
+- Phillip 'Mowtendoo' Fortunat: Promotional / Achievements
 - Dreamsbell: Promotional / Achievements
 
 ### Models:
 
 - Akuma Kira
 - Norbert 'SeriousNorbo' Pujan: HD Renovation Story and Endless Mode monsters
-- Phillip Fortunat: HD Renovation
+- Phillip 'Mowtendoo' Fortunat: HD Renovation
 - Travis 'StealthyMoose' Rupp-Greene: HD Renovation
 - Ash Dickens: HD Renovation
 - Nathan Ayres: HD Renovation

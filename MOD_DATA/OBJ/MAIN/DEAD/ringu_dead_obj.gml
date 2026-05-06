@@ -20,11 +20,12 @@ object_event_add
     // Sprite
     spr_id_var = 0;
     // Text
-    x = 300;
+    // x = 300;
+    x = 0;
     y = 200;
     image_xscale = 0.5;
     image_yscale = 0.5;
-    halign_var = fa_left;
+    halign_var = fa_center;
     valign_var = fa_top;
     scale_min_var = 0.125;
     // Sound
@@ -120,9 +121,9 @@ object_event_add
     d3d_set_hidden(false);
     if state_var 
     {
-        draw_set_alpha(image_alpha); draw_set_color(image_blend);
+        draw_set_halign(halign_var); draw_set_valign(valign_var); draw_set_alpha(image_alpha); draw_set_color(image_blend);
         draw_str_scr(str_var,x,y,image_xscale,image_yscale,scale_min_var,halign_var,valign_var,image_angle);
-        draw_set_alpha(1); draw_set_color(c_white);
+        draw_set_halign(fa_left); draw_set_valign(fa_top); draw_set_alpha(1); draw_set_color(c_white);
     }
     else { draw_spr_fit_scr(spr_var,spr_id_var,0,0); }
     d3d_set_hidden(true);

@@ -447,6 +447,12 @@ draw_load_scr("Loading settings...");
             local.set = set_add_scr("sens","sens","sens",true,set_min_clamp_num_const,1,0,true,local.control_sub,true,false);
         // Defaults
             set_add_default_scr(local.set,sens_const,true);
+    // Joystick Sensitivity
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("joy_sens","joy_sens","joy_sens",true,set_clamp_num_const,0,100,true,local.control_sub,true,false);
+        // Defaults
+            set_add_default_scr(local.set,joy_sens_const,true);
     // Invert Yaw
         // Main
             /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
