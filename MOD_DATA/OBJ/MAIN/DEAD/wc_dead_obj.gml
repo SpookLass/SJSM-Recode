@@ -48,7 +48,7 @@ object_event_add
     alarm_ini_scr();
     set_alarm_scr(0,340); // 330 / 375 originally
     if !global.reduce_flash_var { set_alarm_scr(1,1); }
-    // Static Fade
+    // Fade
     with instance_create(0,0,fade_eff_obj)
     {
         cam_id_var = -1;

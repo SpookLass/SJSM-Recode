@@ -632,7 +632,8 @@ draw_load_scr("Loading settings...");
     // Bodybag Theme
         local.set = set_add_theme_scr("body",true,1,local.theme_toggle);
         set_add_label_scr(local.set,0,"main",true,"body_theme_main");
-        set_add_label_scr(local.set,1,"rom",true,"body_theme_rom");
+        set_add_label_scr(local.set,1,"old",true,"body_theme_old");
+        set_add_label_scr(local.set,2,"rom",true,"body_theme_rom");
     // Stem Theme
         local.set = set_add_theme_scr("stem",true,1,local.theme_toggle);
         set_add_label_scr(local.set,0,"main",true,"stem_theme_main");

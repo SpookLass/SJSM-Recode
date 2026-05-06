@@ -44,7 +44,7 @@ object_event_add
     dead_var = false;
     spawn_attempt_var = 30;
     spawn_dist_var = 24;
-    // dead_rm_var = ringu_dead_rm;
+    dead_rm_var = husk_dead_rm;
     // Attack
     atk_type_var = 3; // Stop moving while delay
     atk_dist_var = 8.5;

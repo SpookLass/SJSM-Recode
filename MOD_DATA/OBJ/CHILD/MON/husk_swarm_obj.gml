@@ -37,6 +37,7 @@ object_event_add
     hurt_dist_var = 5;
     heal_var = false;
     hurt_down_var = true;
+    dead_rm_var = husk_dead_rm;
     // Blob
     do_blob_var = false;
     troll_var = false;
@@ -168,6 +169,7 @@ object_event_add
                 hurt_dist_base_var = other.hurt_dist_var;
                 heal_var = other.heal_var;
                 hurt_down_var = other.hurt_down_var;
+                dead_rm_var = other.dead_rm_var;
                 // Random
                 hp_var = irandom_range(other.hp_min_var,other.hp_max_var);
                 hp_max_var = hp_var;
@@ -250,6 +252,7 @@ object_event_add
                     hurt_dist_base_var = other.hurt_dist_var;
                     heal_var = other.heal_var;
                     hurt_down_var = other.hurt_down_var;
+                    dead_rm_var = other.dead_rm_var;
                     // Sound
                     snd_alarm_min_var = other.snd_alarm_min_var;
                     snd_alarm_max_var = other.snd_alarm_max_var;
