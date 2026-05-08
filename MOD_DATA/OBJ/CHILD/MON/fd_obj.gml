@@ -386,8 +386,12 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user1,'
     event_inherited();
-    flame_spr_id_var = (flame_spr_id_var+(flame_spr_spd_var*global.delta_time_var)) mod sprite_get_number(flame_spr_var);
-    flame_tex_var = sprite_get_texture(flame_spr_var,floor(flame_spr_id_var))
+    if flame_var
+    {
+        flame_spr_id_var = (flame_spr_id_var+(flame_spr_spd_var*global.delta_time_var)) mod sprite_get_number(flame_spr_var);
+        flame_tex_var = sprite_get_texture(flame_spr_var,floor(flame_spr_id_var));
+    }
+    
 ');
 // Hurt
 object_event_add

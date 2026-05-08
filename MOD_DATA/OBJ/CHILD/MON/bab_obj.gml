@@ -21,6 +21,8 @@ object_event_add
     snd_dist_max_var = 800;
     amb_snd_dist_min_var = 0;
     amb_snd_dist_max_var = 800;
+    amb_dist_min_var = 32/3; // 10.r6
+    amb_dist_max_var = 320/3; // 106.r6
     // Translations
     ini_open(global.lang_var);
     name_var = translate_mon_str_scr("bab",global.name_var);
@@ -52,7 +54,7 @@ object_event_add
     w_01_var = 7;
     w_02_var = 3.5;
     h_var = 20;
-    eye_h_var = 18
+    eye_h_var = 18;
     atk_range_var = 48;
     dead_rm_var = bab_dead_rm;
     // Special
@@ -158,8 +160,6 @@ object_event_add
             trail_per_var = false;
             // Ambient Sounds
             do_amb_var = true;
-            amb_dist_min_var = 32/3; // 10.r6
-            amb_dist_max_var = 320/3; // 106.r6
             amb_num_var = 1;
             amb_den_var = 3;
             amb_alarm_min_var = 400; // 399.6 for HD

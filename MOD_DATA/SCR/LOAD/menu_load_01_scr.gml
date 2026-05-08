@@ -515,7 +515,7 @@ draw_load_scr("Loading config...");
         }
     // Endless
         /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Has Descriptions*/
-        custom_add_scr(local.endless,"endless","endless",true,custom_state_const,-1,-1,false,local.type,false);
+        custom_add_scr(local.endless,"es","es",true,custom_state_const,-1,-1,false,local.type,false);
         custom_arr_add_len_scr(0,1);
     // Unknown
         /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Has Descriptions*/

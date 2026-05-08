@@ -813,7 +813,7 @@ object_event_add
                             custom_value_arr_var[local.customid] += 1;
                             if custom_arr[local.customid,7] // Wrap
                             {
-                                custom_value_arr_var[local.customid,0] = mod_scr
+                                custom_value_arr_var[local.customid] = mod_scr
                                 (
                                     custom_value_arr_var[local.customid]+1-custom_arr[local.customid,5],
                                     custom_arr[local.customid,6]+2-custom_arr[local.customid,5]

@@ -73,12 +73,6 @@ global.js_snd_arr[19] = main_directory_const+'\SND\MON\stab_em_08_snd.wav';
 
 if file_exists(working_directory+"\Karamari_Hospital\KH.exe")
 {
-    // Pepper
-    global.js_arr[global.js_len_var,0] = main_directory_const+"\BG\KH\js_pepper_01_bg.png";
-    global.js_arr[global.js_len_var,1] = main_directory_const+"\BG\KH\js_pepper_02_bg.png";
-    global.js_arr[global.js_len_var,2] = "";
-    if argument0 { show_message("Added Pepper jumpscare at index "+string(global.js_len_var)); }
-    global.js_len_var += 1;
     // Can
     global.js_arr[global.js_len_var,0] = main_directory_const+"\BG\KH\js_can_01_bg.png";
     global.js_arr[global.js_len_var,1] = main_directory_const+"\BG\KH\js_can_02_bg.png";

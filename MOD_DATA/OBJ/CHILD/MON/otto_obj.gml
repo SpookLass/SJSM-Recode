@@ -43,7 +43,7 @@ object_event_add
     eye_h_var = 21.8;
     spr_num_var = 4;
     anim_type_var = 4;
-    sil_dist_var = -0.1;
+    sil_dist_var = 0.1;
     eye_var = false;
     eye_color_var = c_white;
     atk_range_var = 48;
