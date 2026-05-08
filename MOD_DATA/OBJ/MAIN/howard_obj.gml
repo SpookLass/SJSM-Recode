@@ -10,7 +10,7 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,0,'
     // Translations
-    ini_open(global.lang_var+".ini");
+    ini_open("lang_"+global.lang_var+".ini");
     name_var = translate_mon_str_scr("howard",global.name_var);
     sub_var[0] = string_replace(ini_read_string("SUB","howard","SUB_howard"),"@n",name_var); sub_var[1] = false;
     ini_close();

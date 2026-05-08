@@ -19,7 +19,7 @@ object_event_add
     snd_dist_max_var = 600;
     hurt_snd_var = 4;
     // Translation
-    ini_open(global.lang_var+".ini");
+    ini_open("lang_"+global.lang_var+".ini");
     name_var = translate_mon_str_scr("sg",global.name_var);
     local.sub = string_replace(ini_read_string("SUB","sg","SUB_sg"),"@n",name_var);
     for (local.i=0; local.i<snd_len_var; local.i+=1)

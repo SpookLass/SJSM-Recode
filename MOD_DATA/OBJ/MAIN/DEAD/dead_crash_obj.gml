@@ -11,7 +11,7 @@ object_event_add
 (argument0,ev_create,0,'
     event_inherited();
     // Translation
-    ini_open(global.lang_var+".ini");
+    ini_open("lang_"+global.lang_var+".ini");
     str_var = ini_read_string("DEAD","crash","DEAD_crash");
     str_var = string_replace(str_var,"@1",string(obj_name_arr[global.dead_mon_var]));
     str_var = string_replace(str_var,"@2",string(irandom(999)));

@@ -4,9 +4,9 @@ Argument 0: Room Variable (same for all rooms)
 // Spawn spots// Name
 room_set_code
 (
-    argument0,"
-    ini_open(global.lang_var+".ini");
-	global.rm_name_var = ini_read_string('ROOM','hotel','ROOM_hotel')+' 13';
+    argument0,'
+    ini_open("lang_"+global.lang_var+".ini");
+	global.rm_name_var = ini_read_string("ROOM","hotel","ROOM_hotel")+" 13";
 	ini_close();
     // Spawn
     global.spawn_len_var = 4;
@@ -48,7 +48,7 @@ room_set_code
         if local.i != global.unlock_var
         { instance_create(global.spawn_arr[local.i,0],global.spawn_arr[local.i,1],bar_vert_obj); }
     }
-");
+');
 // Room settings
 room_set_width(argument0,1280);
 room_set_height(argument0,720);

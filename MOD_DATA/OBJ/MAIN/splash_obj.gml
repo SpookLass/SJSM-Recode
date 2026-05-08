@@ -20,7 +20,7 @@ object_event_add
     recode_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\acheese_snd.wav");
     fmod_spr_var = execute_file(main_directory_const+"\SPR\UI\fmod_spr.gml",main_directory_const+"\SPR\UI\fmod_spr.png");
     warn_bg_var = background_add(main_directory_const+"\BG\UI\warn_bg.png",false,false);
-    ini_open(global.lang_var+".ini");
+    ini_open("lang_"+global.lang_var+".ini");
     warn_str_01_var = ini_read_string("MENU","warn_01","MENU_warn_01");
     warn_str_02_var = ini_read_string("MENU","warn_02_hd","MENU_warn_02_hd");
     warn_str_03_var = ""; //ini_read_string("MENU","warn_03","MENU_warn_03");

@@ -4,9 +4,9 @@ Argument 0: Room Variable (same for all rooms)
 // Spawn spots// Name
 room_set_code
 (
-    argument0,"
-    ini_open(global.lang_var+".ini");
-	global.rm_name_var = ini_read_string('ROOM','jail','ROOM_jail')+' 7 '+ini_read_string('ROOM','old','ROOM_old');
+    argument0,'
+    ini_open("lang_"+global.lang_var+".ini");
+	global.rm_name_var = ini_read_string("ROOM","jail","ROOM_jail")+" 7 "+ini_read_string("ROOM","old","ROOM_old');
 	ini_close();
     // Spawn
     global.spawn_len_var = 2;

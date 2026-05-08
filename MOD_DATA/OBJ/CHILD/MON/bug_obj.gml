@@ -20,7 +20,7 @@ object_event_add
     loop_snd_dist_min_var = 0;
     loop_snd_dist_max_var = 600;
     // Translations
-    ini_open(global.lang_var+".ini");
+    ini_open("lang_"+global.lang_var+".ini");
     name_var = translate_mon_str_scr("bug",global.name_var);
     loop_snd_var[2] = string_replace(ini_read_string("SUB","bug_loop","SUB_bug_loop"),"@n",name_var); loop_snd_var[3] = false;
     local.sub = string_replace(ini_read_string("SUB","bug","SUB_bug"),"@n",name_var);

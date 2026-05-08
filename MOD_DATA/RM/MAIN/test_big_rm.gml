@@ -2,14 +2,14 @@
 Argument 0: Room Variable (same for all rooms)
 */
 // Stuff
-// Don't go above 38!!!
+// Don"t go above 38!!!
 local.width = 30; 
 local.height = 10;
 // Spawn spots// Name
 room_set_code
 (
     argument0,"
-    global.rm_name_var = 'Test Room Big'
+    global.rm_name_var = "Test Room Big"
     // Spawn
     global.spawn_len_var = 2;
     global.spawn_arr[0,0] = 48;

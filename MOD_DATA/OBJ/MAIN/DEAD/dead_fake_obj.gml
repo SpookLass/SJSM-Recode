@@ -17,7 +17,7 @@ object_event_add
     fake_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DEAD\wf_static_snd.wav");
     load_var = true;
     // Translation
-    ini_open(global.lang_var+".ini");
+    ini_open("lang_"+global.lang_var+".ini");
     str_var = ini_read_string("DEAD","fake","DEAD_fake");
     ini_close();
     // Fade in

@@ -19,7 +19,7 @@ object_event_add
     alpha_min_var = 0.3;
     alpha_max_var = 1;
     str_len_var = 1;
-    ini_open(global.lang_var+".ini");
+    ini_open("lang_"+global.lang_var+".ini");
     str_arr_var[0] = ini_read_string("HINT","brain_hint","HINT_brain_hint");
     ini_close();
     str_var = str_arr_var[0];

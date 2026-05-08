@@ -10,7 +10,7 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,0,'
     // Translate
-    ini_open(global.lang_var+".ini");
+    ini_open("lang_"+global.lang_var+".ini");
     str_var[0] = "";
     str_var[1] = string_replace_all(ini_read_string("DEAD","clown","DEAD_clown"),"@l","
 ");

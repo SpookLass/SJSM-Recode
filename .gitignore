@@ -17,7 +17,8 @@ SCREENSHOTS/**
 *.gmk
 # Except these
 !SCREENSHOTS/screenshot0.png
-!en_us.ini
+!lang_en_us.ini
+!lang_ita.ini
 !control_preset_pc.ini
 !control_preset_xbox.ini
 !control_preset_ps.ini

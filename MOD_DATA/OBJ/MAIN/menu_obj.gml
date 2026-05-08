@@ -185,7 +185,7 @@ object_event_add
     fmod_snd_set_group_scr(menu_mus_snd_var,snd_group_mus_const);
     fmod_snd_set_loop_point_scr(menu_mus_snd_var,5/70,69/70);
     // Text
-    ini_open(global.lang_var+".ini");
+    ini_open("lang_"+global.lang_var+".ini");
     skip_str_var = string_replace(ini_read_string("MENU","skip","MENU_skip"),"@k",key_to_str_scr(global.input_key_arr[confirm_input_const,0]));
     confirm_str_var = string_replace(ini_read_string("MENU","confirm","MENU_confirm"),"@k",key_to_str_scr(global.input_key_arr[confirm_input_const,0]));
     del_str_var = string_replace(ini_read_string("MENU","del","MENU_del"),"@k",key_to_str_scr(global.input_key_arr[back_input_const,0]));

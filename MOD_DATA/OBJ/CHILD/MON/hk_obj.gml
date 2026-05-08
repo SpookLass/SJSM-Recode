@@ -10,7 +10,7 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,1,'
-    ini_open(global.lang_var+".ini");
+    ini_open("lang_"+global.lang_var+".ini");
     name_var = translate_mon_str_scr("hk",global.name_var);
 	loop_snd_var[2] = string_replace(ini_read_string("SUB","hk","SUB_hk"),"@n",name_var); loop_snd_var[3] = false;
 	hurt_snd_var[2] = string_replace(ini_read_string("SUB","doll_hurt","SUB_doll_hurt"),"@n",name_var); hurt_snd_var[3] = false;

@@ -33,7 +33,7 @@ object_event_add
     drag_snd_alarm_var = 120;
     drag_snd_dist_var = 700;
     // Translations
-    ini_open(global.lang_var+".ini");
+    ini_open("lang_"+global.lang_var+".ini");
     name_var = translate_mon_str_scr("killer",global.name_var);
     switch global.killer_voice_var
     {

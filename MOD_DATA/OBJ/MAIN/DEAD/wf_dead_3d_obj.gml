@@ -10,7 +10,7 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,0,'
     // Translations
-    ini_open(global.lang_var+".ini");
+    ini_open("lang_"+global.lang_var+".ini");
     pass_wrong_var = ini_read_string("DEAD","wf_04","DEAD_wf_04");
     pass_var = ini_read_string("DEAD","wf_05","DEAD_wf_05");
     ini_close();

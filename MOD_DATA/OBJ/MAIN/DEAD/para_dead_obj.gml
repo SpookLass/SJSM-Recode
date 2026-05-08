@@ -10,7 +10,7 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,0,'
     // Translation
-    ini_open(global.lang_var+".ini");
+    ini_open("lang_"+global.lang_var+".ini");
     str_main_var =  string_replace_all(ini_read_string("DEAD","para","DEAD_para"),"@l","
 ");
     str_binary_var = ini_read_string("DEAD","para_binary","DEAD_para_binary");

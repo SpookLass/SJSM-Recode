@@ -41,7 +41,7 @@ object_event_add
     coll_var[2] = save_cross_coll[2];
     coll_var[3] = save_cross_coll[3];
     // Trigger
-    ini_open(global.lang_var+".ini");
+    ini_open("lang_"+global.lang_var+".ini");
     str_var = ini_read_string("UI","save","UI_save");
     str_look_var = ini_read_string("UI","save_look","UI_save_look");
     ini_close();

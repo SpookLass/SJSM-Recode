@@ -4,9 +4,9 @@ Argument 0: Room Variable (same for all rooms)
 // Spawn spots
 room_set_code
 (
-    argument0,"
+    argument0,'
     // Name
-    global.rm_name_var = 'Seek Hall Test'
+    global.rm_name_var = "Seek Hall Test"
     // Spawn
     global.spawn_len_var = 4;
     global.spawn_arr[0,0] = 48;
@@ -58,7 +58,7 @@ room_set_code
     // 3D Draw
     d3d_start();
     global.draw_3d_var = true;
-");
+');
 // Room settings
 room_set_width(argument0,1280);
 room_set_height(argument0,720);

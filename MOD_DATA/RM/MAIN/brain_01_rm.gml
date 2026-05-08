@@ -6,7 +6,7 @@ room_set_code
 (
     argument0,'
     // Name
-    ini_open(global.lang_var+".ini");
+    ini_open("lang_"+global.lang_var+".ini");
     global.rm_name_var = ini_read_string("ROOM","lab","ROOM_lab")+" 1?"
     ini_close();
     // Spawns
@@ -39,7 +39,7 @@ room_set_code
         spawn_var = 0;
         rm_var = brain_03_rm;
         lock_var = !load_par_obj.door_var;
-        ini_open(global.lang_var+".ini");
+        ini_open("lang_"+global.lang_var+".ini");
         txt_lock_var = ini_read_string("UI","rust","UI_rust");
         txt_var = ini_read_string("UI","hole","UI_hole");
         ini_close();
@@ -58,7 +58,7 @@ room_set_code
     {
         global.spawn_arr[3,4] = id; 
         lock_var = true;
-        ini_open(global.lang_var+".ini");
+        ini_open("lang_"+global.lang_var+".ini");
         txt_lock_var = ini_read_string("UI","keycard_hint","UI_keycard_hint");
         ini_close();
         snd_len_var = 1;

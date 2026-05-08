@@ -24,7 +24,7 @@ object_event_add
     dist_var = 0.1;
     flesh_var = false;
     // Trigger
-    ini_open(global.lang_var+".ini");
+    ini_open("lang_"+global.lang_var+".ini");
     str_var = ini_read_string("UI","keycard","UI_keycard");
     str_look_var = ini_read_string("UI","keycard_look","UI_keycard_look");
     ini_close();

@@ -86,7 +86,7 @@ object_event_add
     str_bg_select_color_var = make_color_rgb(138,0,0);
     str_scale_var = 0.8;
     // String
-    ini_open(global.lang_var+".ini");
+    ini_open("lang_"+global.lang_var+".ini");
     str_var = ini_read_string("MENU","pause","MENU_pause");
     button_arr[0] = ini_read_string("MENU","continue","MENU_continue");
     button_arr[1] = ini_read_string("MENU","setting","MENU_setting");

@@ -1,4 +1,4 @@
-ini_open(global.lang_var+".ini");
+ini_open("lang_"+global.lang_var+".ini");
 if global.note_override_var { return global.note_override_str_var; }
 else if global.mode_var == 0
 {

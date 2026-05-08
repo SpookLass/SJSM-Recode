@@ -9,7 +9,7 @@ object_set_visible(argument0,true);
 // Create event
 object_event_add
 (argument0,ev_create,0,'
-    ini_open(global.lang_var+".ini");
+    ini_open("lang_"+global.lang_var+".ini");
     if global.diff_var == 0
     {
         str_color_var = c_blue;

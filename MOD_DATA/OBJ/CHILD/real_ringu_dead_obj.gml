@@ -14,7 +14,7 @@ object_event_add
     else
     {
         // Translation
-        ini_open(global.lang_var+".ini");
+        ini_open("lang_"+global.lang_var+".ini");
         str_var = ini_read_string("DEAD","real_ringu","DEAD_real_ringu");
         ini_close();
         // State 0

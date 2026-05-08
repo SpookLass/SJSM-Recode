@@ -29,7 +29,7 @@ object_event_add
     set_alarm_scr(0,180);
     set_alarm_scr(2,30);
     // Translation
-    ini_open(global.lang_var+".ini");
+    ini_open("lang_"+global.lang_var+".ini");
     str_var = ini_read_string("UI","taker","UI_taker")+" ";
     ini_close();
     // Text

@@ -4,9 +4,9 @@ Argument 0: Room Variable (same for all rooms)
 // Spawn spots// Name
 room_set_code
 (
-    argument0,"
-    ini_open(global.lang_var+".ini");
-	global.rm_name_var = ini_read_string('ROOM','long','ROOM_long')+' 12';
+    argument0,'
+    ini_open(global.lang_var+".ini');
+	global.rm_name_var = ini_read_string("ROOM","long","ROOM_long")+" 12";
 	ini_close();
     // Spawn
     global.spawn_len_var = 2;
