@@ -15,7 +15,7 @@ state_var
 // Create Event
 object_event_add
 (argument0,ev_create,1,'
-    ini_open(global.lang_var);
+    ini_open(global.lang_var+".ini");
     name_var = translate_mon_str_scr("bekka",global.name_var);
     ini_close();
     // Variables

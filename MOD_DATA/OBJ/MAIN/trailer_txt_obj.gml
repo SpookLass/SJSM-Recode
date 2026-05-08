@@ -12,7 +12,7 @@ object_event_add
     state_len_var = 8;
     load_var = true;
     // Translations
-    ini_open(global.lang_var);
+    ini_open(global.lang_var+".ini");
     for (local.i=0; local.i<state_len_var; local.i+=1;)
     {
         str_arr_var[local.i] = string_replace_all(ini_read_string("TRAILER","trailer_"+string(local.i+1),"TRAILER_trailer_"+string(local.i+1)),"@l","

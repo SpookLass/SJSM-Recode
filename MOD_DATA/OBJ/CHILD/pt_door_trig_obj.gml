@@ -33,7 +33,7 @@ object_event_add
     }
     if prog_txt_var
     {
-        ini_open(global.lang_var);
+        ini_open(global.lang_var+".ini");
         prog_str_var = ini_read_string("UI","remain","UI_remain");
         ini_close();
         txt_lock_var = string(prog_var)+" "+prog_str_var;

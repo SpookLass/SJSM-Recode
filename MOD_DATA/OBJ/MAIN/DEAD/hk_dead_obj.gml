@@ -23,7 +23,7 @@ object_event_add
     path_spd_var = 8;
     fall_var = false;
     // String
-    ini_open(global.lang_var);
+    ini_open(global.lang_var+".ini");
     str_var = string_replace_all(ini_read_string("DEAD","hk","DEAD_hk"),"@l","
 ");
     ini_close();

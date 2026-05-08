@@ -10,7 +10,7 @@ object_event_add
 (argument0,ev_create,0,'
     event_inherited();
     prog_var = 0;
-    ini_open(global.lang_var);
+    ini_open(global.lang_var+".ini");
     str_01_var = ini_read_string("UI","harp_01","UI_harp_01");
     str_02_var = ini_read_string("UI","harp_02","UI_harp_02");
     ini_close();

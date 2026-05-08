@@ -24,7 +24,7 @@ object_event_add
     amb_dist_min_var = 32/3; // 10.r6
     amb_dist_max_var = 320/3; // 106.r6
     // Translations
-    ini_open(global.lang_var);
+    ini_open(global.lang_var+".ini");
     name_var = translate_mon_str_scr("bab",global.name_var);
     sub_main_var = string_replace(ini_read_string("SUB","bab","SUB_bab"),"@n",name_var);
     sub_amb_var = ini_read_string("SUB","bab_amb","SUB_bab_amb");

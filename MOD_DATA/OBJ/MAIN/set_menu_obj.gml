@@ -39,7 +39,7 @@ object_event_add
     str_bg_select_color_var = make_color_rgb(138,0,0);
     str_scale_var = 0.8;
 
-    ini_open(global.lang_var);
+    ini_open(global.lang_var+".ini");
     set_str_var = ini_read_string("SET","set","SET_set");
     pc_str_var = ini_read_string("SET_LABEL","pc","SET_LABEL_pc");
     xbox_str_var = ini_read_string("SET_LABEL","xbox","SET_LABEL_xbox");

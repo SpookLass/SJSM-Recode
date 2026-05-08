@@ -18,7 +18,7 @@ object_event_add
     glitch_snd_len_var = 4;
     dmg_snd_len_var = 2;
     // Translations
-    ini_open(global.lang_var);
+    ini_open(global.lang_var+".ini");
     name_var = translate_mon_str_scr("gc",global.name_var);
     local.sub_01 = string_replace(ini_read_string("SUB","gc","SUB_gc"),"@n",name_var);
     local.sub_02 = string_replace(ini_read_string("SUB","gc_glitch","SUB_gc_glitch"),"@n",name_var);

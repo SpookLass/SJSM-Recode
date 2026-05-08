@@ -9,7 +9,7 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,1,'
-    ini_open(global.lang_var);
+    ini_open(global.lang_var+".ini");
     name_var = translate_mon_str_scr("brain",global.name_var);
     local.sub = string_replace(ini_read_string("SUB","brain","SUB_brain"),"@n",name_var);
     loop_snd_var[2] = local.sub; loop_snd_var[3] = false;

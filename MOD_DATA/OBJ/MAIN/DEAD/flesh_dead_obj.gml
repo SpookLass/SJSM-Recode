@@ -10,7 +10,7 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,0,'
     // Translation
-    ini_open(global.lang_var);
+    ini_open(global.lang_var+".ini");
     str_var = ini_read_string("DEAD","flesh","DEAD_flesh");
     str_len_var = 9;
     str_arr_var[0] = ini_read_string("DEAD","flesh_01","DEAD_flesh_01");

@@ -18,7 +18,7 @@ object_event_add
     fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
     load_var = true;
     // Translation
-    ini_open(global.lang_var);
+    ini_open(global.lang_var+".ini");
     switch global.mode_var
     {
         case 0: { str_var = ini_read_string("DEAD","sm","DEAD_sm"); break; }

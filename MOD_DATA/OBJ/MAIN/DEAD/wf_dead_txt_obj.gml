@@ -11,7 +11,7 @@ object_event_add
 (argument0,ev_create,0,'
     // Translations
     str_len_var = 3;
-    ini_open(global.lang_var);
+    ini_open(global.lang_var+".ini");
     str_arr_var[0] = ini_read_string("DEAD","wf_01","DEAD_wf_01");
     str_arr_var[1] = ini_read_string("DEAD","wf_02","DEAD_wf_02");
     str_arr_var[2] = ini_read_string("DEAD","wf_03","DEAD_wf_03");

@@ -9,7 +9,7 @@ object_set_visible(argument0,true);
 // Create Begin Event
 object_event_add
 (argument0,ev_create,1,'
-    ini_open(global.lang_var);
+    ini_open(global.lang_var+".ini");
     name_var = translate_mon_str_scr("body",global.name_var);
     wake_snd_var[2] = string_replace(ini_read_string("SUB","body","SUB_body"),"@n",name_var); wake_snd_var[3] = false;
     ini_close();

@@ -13,7 +13,7 @@ object_event_add
     event_inherited();
     // 
     str_len_var = 4;
-    ini_open(global.lang_var);
+    ini_open(global.lang_var+".ini");
     str_arr_var[0] = ini_read_string("UI","brain_01","UI_brain_01");
     str_arr_var[1] = ini_read_string("UI","brain_02","UI_brain_02");
     str_arr_var[2] = ini_read_string("UI","brain_03","UI_brain_03");

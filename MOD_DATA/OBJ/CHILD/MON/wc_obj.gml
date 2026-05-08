@@ -18,7 +18,7 @@ object_event_add
     snd_dist_min_var = 0;
     snd_dist_max_var = 512;
     // Translations
-    ini_open(global.lang_var);
+    ini_open(global.lang_var+".ini");
     name_var = ini_read_string("NAME","wc","NAME_wc");
     local.sub = string_replace(ini_read_string("SUB","wc","SUB_wc"),"@n",name_var);
     for (local.i=0; local.i<snd_len_var; local.i+=1)

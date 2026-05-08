@@ -7,7 +7,7 @@ room_set_code
 (
     argument0,'
     // Name
-    ini_open(global.lang_var);
+    ini_open(global.lang_var+".ini");
     global.rm_name_var = ini_read_string("ROOM","sm","ROOM_sm")+" 21?"
     ini_close();
     // Spawns
@@ -25,7 +25,7 @@ room_set_code
     with instance_create(320,152,spawn_leave_door_trig_obj)
     {
         lock_var = (global.diff_var != 0);
-        ini_open(global.lang_var);
+        ini_open(global.lang_var+".ini");
         txt_lock_var = ini_read_string("UI","gel","UI_gel");
         ini_close();
     }

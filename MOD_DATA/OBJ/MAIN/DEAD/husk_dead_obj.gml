@@ -11,7 +11,7 @@ object_event_add
 (argument0,ev_create,0,'
     load_var = true;
     // String
-    ini_open(global.lang_var);
+    ini_open(global.lang_var+".ini");
     str_var = string_replace_all(ini_read_string("DEAD","husk","DEAD_husk"),"@l","
 ");
     ini_close();

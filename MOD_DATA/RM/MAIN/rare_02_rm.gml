@@ -7,7 +7,7 @@ room_set_code
 (
     argument0,'
     // Name
-    ini_open(global.lang_var);
+    ini_open(global.lang_var+".ini");
     global.rm_name_var = ini_read_string("ROOM","maze","ROOM_maze");
     ini_close();
     // Spawns

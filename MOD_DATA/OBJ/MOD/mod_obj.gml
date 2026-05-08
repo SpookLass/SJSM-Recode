@@ -11,7 +11,7 @@ object_event_add
 (argument0,ev_create,0,'
     event_inherited();
     // Translations
-    ini_open(global.lang_var);
+    ini_open(global.lang_var+".ini");
     mod_str_var = ini_read_string("MOD","mod","MOD_mod");
     mod_load_str_var = ini_read_string("MOD","mod_load","MOD_mod_load");
     ini_close();

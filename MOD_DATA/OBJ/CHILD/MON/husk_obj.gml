@@ -19,7 +19,7 @@ object_event_add
     snd_dist_max_var = 512;
     hurt_snd_var = 4;
     // Language
-    ini_open(global.lang_var);
+    ini_open(global.lang_var+".ini");
     name_var = translate_mon_str_scr("husk",global.name_var);
     local.sub = string_replace(ini_read_string("SUB","husk","SUB_husk"),"@n",name_var);
     for (local.i=0; local.i<snd_len_var; local.i+=1)

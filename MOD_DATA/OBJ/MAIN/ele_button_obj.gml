@@ -40,7 +40,7 @@ object_event_add
     coll_var[1] = global.ele_button_coll[1];
     coll_var[2] = global.ele_button_coll[2];
     // Trigger
-    ini_open(global.lang_var);
+    ini_open(global.lang_var+".ini");
     str_var = ini_read_string("UI","button_look","UI_button_look");
     ini_close();
     local.xtmp = x+lengthdir_x(global.trig_coll[2]/2,direction);

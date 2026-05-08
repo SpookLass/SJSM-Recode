@@ -333,7 +333,7 @@ draw_load_scr("Loading settings...");
             /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
             local.set = set_add_scr("lang","lang","lang",true,set_str_const,0,0,false,local.hud,false,false);
         // Defaults
-            set_add_default_scr(local.set,"en_us.ini");
+            set_add_default_scr(local.set,"en_us");
     // Names
         // Main
             /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/

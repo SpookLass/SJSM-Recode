@@ -10,7 +10,7 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,0,'
     if instance_exists(load_par_obj) && global.diff_var == 0 { bg_var = load_par_obj.bg_arr_var[11,0]; }
-    ini_open(global.lang_var);
+    ini_open(global.lang_var+".ini");
     if global.diff_var == 0 { str_var = ini_read_string("NOTE","brain_03_easy","NOTE_brain_03_easy"); }
     else { str_var = ini_read_string("NOTE","brain_03","NOTE_brain_03"); }
     ini_close();
