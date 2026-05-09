@@ -919,15 +919,15 @@ object_event_add
                 { fmod_inst_stop_scr(inst_var); }
                 inst_var = fmod_snd_3d_play_scr(atk_snd_var[1]);
                 if global.pitch_bend_var { fmod_inst_set_pitch_scr(inst_var,random_range(0.95,1.05)); }
+                sub_var[0] = atk_snd_var[2];
+                sub_var[1] = atk_snd_var[3];
+                if do_snd_var
+                {
+                    if snd_len_var > 0
+                    { set_alarm_scr(6,irandom_range(snd_delay_min_var,snd_delay_max_var)); }
+                }
             }
-            else { inst_var = fmod_snd_play_scr(atk_snd_var[1]); }
-            sub_var[0] = atk_snd_var[2];
-            sub_var[1] = atk_snd_var[3];
-            if do_snd_var
-            {
-                if snd_len_var > 0
-                { set_alarm_scr(6,irandom_range(snd_delay_min_var,snd_delay_max_var)); }
-            }
+            else { fmod_snd_play_scr(atk_snd_var[1]); }
             break;
         }
     }
@@ -1008,15 +1008,15 @@ object_event_add
                         { fmod_inst_stop_scr(inst_var); }
                         inst_var = fmod_snd_3d_play_scr(hurt_snd_var[1]);
                         if global.pitch_bend_var { fmod_inst_set_pitch_scr(inst_var,random_range(0.95,1.05)); }
+                        sub_var[0] = hurt_snd_var[2];
+                        sub_var[1] = hurt_snd_var[3];
+                        if do_snd_var
+                        {
+                            if snd_len_var > 0
+                            { set_alarm_scr(6,irandom_range(snd_delay_min_var,snd_delay_max_var)); }
+                        }
                     }
-                    else { inst_var = fmod_snd_play_scr(hurt_snd_var[1]); }
-                    sub_var[0] = hurt_snd_var[2];
-                    sub_var[1] = hurt_snd_var[3];
-                    if do_snd_var
-                    {
-                        if snd_len_var > 0
-                        { set_alarm_scr(6,irandom_range(snd_delay_min_var,snd_delay_max_var)); }
-                    }
+                    else { fmod_snd_play_scr(hurt_snd_var[1]); }
                     break;
                 }
             }

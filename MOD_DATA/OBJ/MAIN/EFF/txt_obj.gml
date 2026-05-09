@@ -12,7 +12,7 @@ object_event_add
     event_inherited();
     par_var = noone;
     //Defaults
-    ini_open(global.lang_var)
+    ini_open("lang_"+global.lang_var+".ini");
     str_var = ini_read_string("UI","interact","UI_interact");
     ini_close();
     min_scale_var = 0.125;

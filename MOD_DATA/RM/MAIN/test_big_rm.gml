@@ -8,16 +8,16 @@ local.height = 10;
 // Spawn spots// Name
 room_set_code
 (
-    argument0,"
+    argument0,'
     global.rm_name_var = "Test Room Big"
     // Spawn
     global.spawn_len_var = 2;
     global.spawn_arr[0,0] = 48;
-    global.spawn_arr[0,1] = "+string(16+(round(local.height/2)*32))+";
+    global.spawn_arr[0,1] = '+string(16+(round(local.height/2)*32))+';
     global.spawn_arr[0,2] = 0;
     global.spawn_arr[0,3] = 0;
-    global.spawn_arr[1,0] = "+string(16+(local.width*32))+";
-    global.spawn_arr[1,1] = "+string(16+(round(local.height/2)*32))+";
+    global.spawn_arr[1,0] = '+string(16+(local.width*32))+';
+    global.spawn_arr[1,1] = '+string(16+(round(local.height/2)*32))+';
     global.spawn_arr[1,2] = 0;
     global.spawn_arr[1,3] = 180;
     // 3D Draw
@@ -25,7 +25,7 @@ room_set_code
     global.draw_3d_var = true;
     // Doors
     spawn_create_scr(true,false);
-")
+');
 // Room settings
 room_set_width(argument0,1280);
 room_set_height(argument0,720);

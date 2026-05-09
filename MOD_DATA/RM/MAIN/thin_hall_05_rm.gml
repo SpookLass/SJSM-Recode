@@ -4,11 +4,10 @@ Argument 0: Room Variable (same for all rooms)
 // Spawn spots
 room_set_code
 (
-    argument0,
-    "
+    argument0,'
     // Name
     ini_open("lang_"+global.lang_var+".ini");
-	global.rm_name_var = ini_read_string('ROOM','thin','ROOM_thin')+' 5';
+	global.rm_name_var = ini_read_string("ROOM","thin","ROOM_thin")+" 5";
 	ini_close();
     global.spawn_len_var = 2;
     // Spawn 0 (entrance)
@@ -37,7 +36,7 @@ room_set_code
     global.draw_3d_var = true;
     // Doors
     spawn_create_scr(true,false);
-");
+');
 // Room settings
 room_set_width(argument0,1280);
 room_set_height(argument0,720);

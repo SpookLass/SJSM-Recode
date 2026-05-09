@@ -4,10 +4,9 @@ Argument 0: Room Variable (same for all rooms)
 // This doesn't really work as an actual room, but it's cute if you know what it is
 room_set_code
 (
-    argument0,
-    "
+    argument0,'
     // Name
-    global.rm_name_var = 'J+M Room'
+    global.rm_name_var = "J+M Room"
     // Spawn
     global.spawn_len_var = 3;
     global.spawn_arr[0,0] = 144;
@@ -28,7 +27,7 @@ room_set_code
     global.draw_3d_var = true;
     // Doors
     spawn_create_scr(true,false);
-");
+');
 // Room settings
 room_set_width(argument0,1280);
 room_set_height(argument0,720);

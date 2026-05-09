@@ -31,7 +31,7 @@ room_set_code
         spawn_var = 1;
         rm_var = brain_01_rm;
         snd_len_var = 0;
-        ini_open(global.lang_var)
+        ini_open("lang_"+global.lang_var+".ini");
         txt_var = ini_read_string("UI","hole","UI_hole");
         txt_lock_var = ini_read_string("UI","run","UI_run");
         ini_close();

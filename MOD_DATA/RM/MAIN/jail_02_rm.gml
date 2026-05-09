@@ -5,7 +5,7 @@ Argument 0: Room Variable (same for all rooms)
 room_set_code
 (
     argument0,'
-    ini_open(global.lang_var+".ini');
+    ini_open("lang_"+global.lang_var+".ini");
 	global.rm_name_var = ini_read_string("ROOM","jail","ROOM_jail")+" 2";
 	ini_close();
     // Spawn
@@ -35,7 +35,7 @@ room_set_code
     global.draw_3d_var = true;
     // Doors
     spawn_create_scr(true,false);
-")
+');
 // Room settings
 room_set_width(argument0,1280);
 room_set_height(argument0,720);

@@ -18,7 +18,7 @@ object_event_add
     coll_var[2] = global.trig_coll[2];
     // Text
     do_str_var = true;
-    ini_open(global.lang_var)
+    ini_open("lang_"+global.lang_var+".ini");
     str_var = ini_read_string("UI","look","UI_look");
     ini_close();
     min_scale_var = 0.125;
