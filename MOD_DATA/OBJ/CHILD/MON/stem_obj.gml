@@ -45,6 +45,7 @@ object_event_add
     eye_h_var = 18; // Temp
     dupe_var = dupe_canon_const;
     spr_spd_var = 1;
+    spawn_var = -1;
     if !irandom(3)
     {
         x_off_var = random_range(-3,3);
@@ -57,45 +58,6 @@ object_event_add
         y_off_var = 0;
         z_off_rand_var = 0;
     }
-    // Theme
-    mus_prio_var = mon_mus_prio_const;
-    // Assets
-        // Search for existing assets to save memory
-    local.loaded = false;
-    with object_index
-    {
-        if id != other.id && object_index == other.object_index
-        {
-            other.bg_var = bg_var;
-            other.mdl_01_var = mdl_01_var;
-            other.mdl_02_var = mdl_02_var;
-            for (local.i=0; local.i<snd_len_var; local.i+=1;)
-            { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
-            other.mus_snd_var = mus_snd_var;
-            local.loaded = true;
-            break;
-        }
-    }
-        // If no existing assets were found, load them
-    if !local.loaded
-    {
-        bg_var = background_add(vanilla_directory_const+"\3D\npc_5_tex.png",false,false);
-        mdl_01_var = d3d_model_create();
-        mdl_02_var = d3d_model_create();
-        d3d_model_load(mdl_01_var,main_directory_const+"\MDL\MON\stem_01_mdl.gmmod");
-        d3d_model_load(mdl_02_var,main_directory_const+"\MDL\MON\stem_02_mdl.gmmod");
-        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\stem_01_snd.wav",true);
-        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\stem_02_snd.wav",true);
-        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\stem_03_snd.wav",true);
-        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\stem_04_snd.wav",true);
-        snd_arr[4,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\stem_05_snd.wav",true);
-        switch theme_scr(global.stem_theme_var,global.theme_var,1,0,0,1)
-        {
-            case 1: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\stem_rom_mus_snd.ogg"); break; }
-            default: { mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\M5_AMB.mp3"); break; }
-        }
-        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
-    }
     // Collision
     coll_var[0] = global.mon_wide_coll[0];
     coll_var[1] = global.mon_wide_coll[1];
@@ -107,6 +69,8 @@ object_event_add
     slow_dist_var = 16; // OG only
     turn_rate_var = 5/3;
     turn_min_var = 10; // HD only
+    autobrake_dist_var = 4; // Recode only
+    autobrake_spd_var = 0;
     // Boost
     boost_var = false;
     spd_mult_min_var = 3;
@@ -121,15 +85,21 @@ object_event_add
     tp_dist_min_var = 32;
     tp_dist_max_var = 300;
     // Model
-    tex_var = background_get_texture(bg_var);
-    mdl_var = mdl_01_var;
     mdl_yaw_var = yaw_var;
     mdl_pitch_var = pitch_var;
+    mdl_num_var = 1;
+    mdl_den_var = 4;
     do_mdl_var = true;
     rand_alarm_var = 6;
     inv_chance_var = 3;
     // Thing
     hurt_eff_var = false;
+    // Theme
+    mus_prio_var = mon_mus_prio_const;
+    // sine
+    z_off_time_var=0;
+    z_off_mult_var=6;
+    z_off_rate_var=360;
     // Behavior
     if global.stem_type_var == -1 { local.type = irandom(6); }
     else { local.type = global.stem_type_var; }
@@ -147,6 +117,7 @@ object_event_add
             hurt_snd_var = 1;
             blood_spr_var = blood_kh_spr;
             atk_range_var = coll_var[2];
+            autobrake_var = true;
             break;
         }
         case 4: // Karamari HD
@@ -205,13 +176,49 @@ object_event_add
             break;
         }
     }
+    // Assets
+        // Search for existing assets to save memory
+    local.loaded = false;
+    with object_index
+    {
+        if id != other.id && object_index == other.object_index
+        {
+            other.bg_var = bg_var;
+            other.mdl_01_var = mdl_01_var;
+            other.mdl_02_var = mdl_02_var;
+            for (local.i=0; local.i<snd_len_var; local.i+=1;)
+            { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
+            other.mus_snd_var = mus_snd_var;
+            local.loaded = true;
+            break;
+        }
+    }
+        // If no existing assets were found, load them
+    if !local.loaded
+    {
+        bg_var = background_add(vanilla_directory_const+"\3D\npc_5_tex.png",false,false);
+        mdl_01_var = d3d_model_create();
+        mdl_02_var = d3d_model_create();
+        d3d_model_load(mdl_01_var,main_directory_const+"\MDL\MON\stem_01_mdl.gmmod");
+        d3d_model_load(mdl_02_var,main_directory_const+"\MDL\MON\stem_02_mdl.gmmod");
+        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\stem_01_snd.wav",true);
+        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\stem_02_snd.wav",true);
+        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\stem_03_snd.wav",true);
+        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\stem_04_snd.wav",true);
+        snd_arr[4,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\stem_05_snd.wav",true);
+        switch theme_scr(global.stem_theme_var,global.theme_var,1,0,0,1)
+        {
+            case 1: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\stem_rom_mus_snd.ogg"); break; }
+            default: { mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\M5_AMB.mp3"); break; }
+        }
+        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
+    }
+    // Model
+    tex_var = background_get_texture(bg_var);
+    mdl_var = mdl_01_var;
     // Alarms
     alarm_len_var = 9;
     alarm_ini_scr();
-    // sine
-    z_off_time_var=0;
-    z_off_mult_var=6;
-    z_off_rate_var=360;
 ');
 // Destroy Event
 object_event_add
@@ -250,7 +257,7 @@ object_event_add
 (argument0,ev_alarm,8,'
     if !irandom(inv_chance_var-1) && image_alpha != 0 { image_alpha = 0; }
     else { image_alpha = choose(1,random_range(0.5,1)); }
-    if !irandom(3) { mdl_var = mdl_02_var; }
+    if frac_chance_scr(mdl_num_var,mdl_den_var) { mdl_var = mdl_02_var; }
     else { mdl_var = mdl_01_var; }
     set_alarm_scr(8,rand_alarm_var);
 ');
@@ -392,9 +399,10 @@ object_event_add
 ');
 // Teleport
 object_event_add
-(argument0,ev_other,ev_user15,"
+(argument0,ev_other,ev_user15,'
     local.dir = random(360);
     local.dist = random_range(tp_dist_min_var,tp_dist_max_var);
     x = target_x_var+lengthdir_x(local.dist,local.dir);
     y = target_y_var+lengthdir_y(local.dist,local.dir);
-");
+    z = target_z_var;
+');

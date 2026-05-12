@@ -188,7 +188,7 @@ object_event_add
             delay_var = 30;
             break;
         }
-        case 6: // KH Recode
+        case 3: // KH Recode
         {
             type_var = 2;
             delay_var = 94;
@@ -219,7 +219,7 @@ object_event_add
             fov_var = -1;
             break;
         }
-        case 3: // KH
+        case 4: // KH
         {
             delay_var = 94; // (128/2.5) + (64/1.5)
             spd_base_var = 1.5;
@@ -243,9 +243,9 @@ object_event_add
             fov_var = -1;
             break;
         }
-        case 5: // Cow
+        case 6: // Cow
         { upside_var = true; }
-        case 4: // HD KH
+        case 5: // HD KH
         {
             spd_base_var = 152/225; // 0.67r5
             local.set = true;

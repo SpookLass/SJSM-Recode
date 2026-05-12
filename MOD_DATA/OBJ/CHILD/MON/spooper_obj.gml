@@ -51,6 +51,7 @@ object_event_add
     anim_spd_var = 1;
     reflect_var = -1;
     unheal_var = false;
+    dmg_unbalance_var = true;
     // Teleport
     tp_type_var = 1;
     tp_off_var = 300;
@@ -173,6 +174,7 @@ object_event_add
             do_snd_var = true;
             loop_snd_var[0] = true;
             unheal_var = true;
+            dmg_unbalance_var = false;
             // Silhouette
             sil_var = true;
             sil_type_var = 1; // Pure color
@@ -421,11 +423,12 @@ object_event_add
                 local.min = dmg_var*global.delta_time_var;
                 local.dokill = true;
             }
-            local.kill = 0;
+            if possess_var { local.kill = -1; }
+	        else { local.kill = 0; }
             with player_obj
             {
                 if !other.unheal_var { heal_mult_var = 0; }
-                if !dead_var && !hurt_var && !in_door_var && !invuln_var && on_var
+                if !dead_var && (!hurt_var || other.dmg_unbalance_var) && !in_door_var && !invuln_var && on_var
                 {
                     if hp_var > local.min
                     {
@@ -440,8 +443,6 @@ object_event_add
                         dead_var = true;
                         do_coll_var = false;
                         do_stam_var = false;
-                        if local.kill == 0
-                        { local.kill = true; local.player = id; }
                         // Possess thing
                         if other.possess_var
                         {
@@ -467,6 +468,8 @@ object_event_add
                                 set_alarm_scr(0,revive_alarm_var);
                             }
                         }
+                        else if local.kill == 0
+                        { local.kill = true; local.player = id; }
                     }
                 }
                 if !dead_var { local.kill = -1; }

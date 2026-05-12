@@ -107,7 +107,6 @@ object_event_add
         }
         if heal_var { hp_var = hp_max_var; }
     }
-    
     event_user(14);
 ');
 // Step Event

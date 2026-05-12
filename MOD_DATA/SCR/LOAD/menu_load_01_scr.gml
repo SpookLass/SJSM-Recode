@@ -613,6 +613,7 @@ draw_load_scr("Loading config...");
                 type_add_type_scr(local.pup,local.pup_set,"hd","",true);
                 type_add_type_scr(local.pup,local.pup_set,"old","",true);
                 type_add_type_scr(local.pup,local.pup_set,"dh","",true);
+                type_add_type_scr(local.pup,local.pup_set,"dh_og","",true);
                 type_add_type_scr(local.pup,local.pup_set,"dh_hd","",true);
             // Defaults
                 custom_arr_add_len_scr(0,1);
@@ -643,6 +644,9 @@ draw_load_scr("Loading config...");
                 type_add_type_scr(local.dl,local.dl_set,"og","",true);
                 type_add_type_scr(local.dl,local.dl_set,"hd","",true);
                 type_add_type_scr(local.dl,local.dl_set,"old","",true);
+                type_add_type_scr(local.dl,local.dl_set,"dh","",true);
+                type_add_type_scr(local.dl,local.dl_set,"dh_og","",true);
+                type_add_type_scr(local.dl,local.dl_set,"dh_hd","",true);
                 type_add_type_scr(local.dl,local.dl_set,"rogue","",true);
                 type_add_type_scr(local.dl,local.dl_set,"remodeled","",true);
             // Defaults
@@ -702,6 +706,7 @@ draw_load_scr("Loading config...");
                 type_add_type_scr(local.fd,local.fd_set,"og","",true);
                 type_add_type_scr(local.fd,local.fd_set,"hd","",true);
                 type_add_type_scr(local.fd,local.fd_set,"dh","",true);
+                type_add_type_scr(local.fd,local.fd_set,"dh_og","",true);
                 type_add_type_scr(local.fd,local.fd_set,"dh_hd","",true);
             // Defaults
                 custom_arr_add_len_scr(0,1);
@@ -750,7 +755,7 @@ draw_load_scr("Loading config...");
                     type_add_type_scr(local.sg,local.sg_set,"recode","",true); /*ID, Label, Description, Translate*/
                     type_add_type_scr(local.sg,local.sg_set,"og","",true);
                     type_add_type_scr(local.sg,local.sg_set,"hd","",true);
-                    type_add_type_scr(local.sg,local.sg_set,"kh","",true);
+                    type_add_type_scr(local.sg,local.sg_set,"kh_hd","",true);
                 // Defaults
                     custom_arr_add_len_scr(0,1);
                     custom_arr_set_scr(-2,local.sg_set,-1,-1,-1); // Default (Off)
@@ -764,7 +769,7 @@ draw_load_scr("Loading config...");
                     type_add_type_scr(local.body,local.body_set,"recode","",true); /*ID, Label, Description, Translate*/
                     type_add_type_scr(local.body,local.body_set,"og","",true);
                     type_add_type_scr(local.body,local.body_set,"hd","",true);
-                    type_add_type_scr(local.body,local.body_set,"kh","",true);
+                    type_add_type_scr(local.body,local.body_set,"kh_hd","",true);
                     type_add_type_scr(local.body,local.body_set,"old","",true);
                     type_add_type_scr(local.body,local.body_set,"alt","",true);
                 // Defaults
@@ -782,7 +787,7 @@ draw_load_scr("Loading config...");
                 type_add_type_scr(local.stem,local.stem_set,"recode","",true); /*ID, Label, Description, Translate*/
                 type_add_type_scr(local.stem,local.stem_set,"og","",true);
                 type_add_type_scr(local.stem,local.stem_set,"hd","",true);
-                type_add_type_scr(local.stem,local.stem_set,"kh","",true);
+                type_add_type_scr(local.stem,local.stem_set,"kh_og","",true);
                 type_add_type_scr(local.stem,local.stem_set,"kh_hd","",true);
                 type_add_type_scr(local.stem,local.stem_set,"old","",true);
                 type_add_type_scr(local.stem,local.stem_set,"alt","",true);
@@ -817,9 +822,9 @@ draw_load_scr("Loading config...");
                 type_add_type_scr(local.gc,local.gc_set,"og","",true);
                 type_add_type_scr(local.gc,local.gc_set,"hd","",true);
                 type_add_type_scr(local.gc,local.gc_set,"kh","",true);
+                type_add_type_scr(local.gc,local.gc_set,"kh_og","",true);
                 type_add_type_scr(local.gc,local.gc_set,"kh_hd","",true);
                 type_add_type_scr(local.gc,local.gc_set,"alt","",true);
-                type_add_type_scr(local.gc,local.gc_set,"kh_recode","",true);
             // Defaults
                 custom_arr_add_len_scr(0,1);
                 custom_arr_set_scr(0,local.gc_set,-1,-1,-1); // Default (Recode)

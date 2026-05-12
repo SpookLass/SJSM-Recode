@@ -137,11 +137,18 @@ object_event_add
     spr_var = spr_base_var;
     tex_var = sprite_get_texture(spr_var,irandom(sprite_get_number(spr_var)));
     // Behavior
-    if global.pup_type_var == -1 { local.type = irandom(5); }
+    if global.pup_type_var == -1 { local.type = irandom(6); }
     else { local.type = global.pup_type_var; }
     local.set = false;
     switch local.type
     {
+        case 4: // Hellgate
+        {
+            hurt_tp_den_var = 2;
+            ascend_alarm_var = 15;
+            descend_alarm_var = 15;
+            hurt_up_var = true;
+        }
         case 0: // Mod
         {
             spd_base_var = 4;
@@ -159,13 +166,16 @@ object_event_add
             // hurt_multi_var = true;
             tp_dist_min_var = 0;
             tp_dist_max_var = 16;
-            ascend_alarm_var = 60;
-            descend_alarm_var = 30;
-            descend_start_alarm_var = 30;
+            if !local.set
+            {
+                ascend_alarm_var = 60;
+                descend_alarm_var = 30;
+                descend_start_alarm_var = 30;
+            }
             atk_range_var = global.mon_coll[2];
             break;
         }
-        case 5: // HD Hellgate
+        case 6: // HD Hellgate
         {
             do_hurt_var = 1;
             start_alarm_var = -1;
@@ -206,7 +216,7 @@ object_event_add
             delay_var = 60;
             break;
         }
-        case 4: // Hellgate
+        case 5: // OG Hellgate
         {
             hurt_tp_den_var = 2;
             spd_base_var = 4;

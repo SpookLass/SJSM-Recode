@@ -186,7 +186,7 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_room_start,'
     if do_wander_var { wander_var = true; }
-    event_inherited();
+    spawn_var = 0;
     // Spawn
     for (local.i=0; local.i<spawn_attempt_var; local.i+=1;)
     {
@@ -213,18 +213,15 @@ object_event_add
             x = local.xtmp;
             y = local.ytmp;
             z = local.ztmp;
-            enter_var = false;
-            do_coll_var = true;
-            set_alarm_scr(0,-1);
-            if do_door_var
-            {
-                do_door_var = false;
-                event_perform(ev_alarm,0);
-                do_door_var = true;
-            }
-            else { event_perform(ev_alarm,0); }
+            spawn_var = -1;
             break;
         }
+    }
+    event_inherited();
+    if spawn_var == -1
+    {
+        set_alarm_scr(0,-1);
+        event_perform(ev_alarm,0);
     }
     // Effects
     with fog_par_obj { if prio_var < other.fog_prio_var { instance_destroy(); }}

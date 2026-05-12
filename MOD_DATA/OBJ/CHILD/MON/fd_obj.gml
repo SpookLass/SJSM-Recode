@@ -145,11 +145,13 @@ object_event_add
     }
     meat_tex_var = background_get_texture(meat_bg_var);
     // Behavior
-    if global.fd_type_var == -1 { local.type = irandom(4); }
+    if global.fd_type_var == -1 { local.type = irandom(5); }
     else { local.type = global.fd_type_var; }
     switch local.type
     {
-        case 0:
+        case 3: // Hellgate
+        { meat_var = true; }
+        case 0: // Recode
         {
             delay_var = 30;
             hide_reset_var = true;
@@ -169,7 +171,7 @@ object_event_add
             sil_dist_var = 0.1;
             break;
         }
-        case 4: // HD Hellgate
+        case 5: // HD Hellgate
         { meat_var = true; }
         case 2: // HD
         {
@@ -199,7 +201,7 @@ object_event_add
             snd_dist_max_var = 500;
             break;
         }
-        case 3: // Hellgate
+        case 4: // Hellgate
         { meat_var = true; break; }
     }
 ');

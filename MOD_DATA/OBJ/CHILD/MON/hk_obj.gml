@@ -102,6 +102,7 @@ object_event_add
 	base_h_var = 27;
 	shake_var = 0.36;
 	// Seen
+	dmg_seen_var = false;
 	do_seen_var = true;
 	seen_yaw_var = 40.5;
 	seen_dist_var = 96;
@@ -142,6 +143,8 @@ object_event_add
 		// Tries before giving up. In code it was 50, but it gives up past 30? Also, OG technically never gives up
 	tp_attempt_var = 30; 
 	// Near damage
+	dmg_unbalance_var = true;
+	dmg_min_var = 0;
 	dmg_dist_min_var = 0.2;
 	dmg_dist_max_var = 18;
 	dmg_rate_var = 0.7; // 7/180 to 3.5
@@ -161,6 +164,9 @@ object_event_add
 			door_var = true;
 			dur_var = irandom_range(10,20);
 			atk_range_var = global.mon_coll[2];
+			dmg_min_var = 10;
+			dmg_unbalance_var = false;
+			dmg_seen_var = true;
 			// Seen
 			seen_pitch_var = 40.5;
 			seen_dist_var = 128;
@@ -254,12 +260,67 @@ object_event_add
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,'
-	if instance_exists(target_var) && target_dist_var < dmg_dist_max_var && target_dist_var > dmg_dist_min_var
+	// Drain
+	local.dokill = (dmg_min_var > 0);
+	if possess_var { local.kill = -1; }
+	else { local.kill = 0; }
+	with player_obj
 	{
-		local.dmg = dmg_rate_var/target_dist_var;
-		target_var.hp_var -= local.dmg*global.delta_time_var;
-		target_var.heal_mult_var = 0;
+		if !dead_var && (!hurt_var || dmg_unbalance_var) && !in_door_var && !invuln_var && on_var
+		{
+			local.dist = point_distance_3d_scr(x,y,z,other.x,other.y,other.z);
+			if local.dist < other.dmg_dist_max_var
+			{
+				local.dmg = global.delta_time_var*other.dmg_rate_var/median(other.dmg_dist_min_var,other.dmg_dist_max_var,local.dist);
+				if local.dokill { local.min = local.dmg; }
+				else { local.min = other.dmg_min_var; }
+				if hp_var > local.min { hp_var -= local.dmg; }
+				else if local.dokill
+				{
+					hp_var = 0;
+					dead_var = true;
+					do_coll_var = false;
+					do_stam_var = false;
+					// Possess thing
+					if other.possess_var
+					{
+						local.dead = false;
+						local.player = id;
+						other.possess_var = false;
+						with global.player_arr[other.player_id_var]
+						{
+							// Revive
+							possess_var = false;
+							dead_var = false;
+							do_coll_var = true;
+							do_stam_var = true;
+							hp_var = hp_max_var;
+							// Become other player
+							x = local.player.x;
+							y = local.player.y;
+							z = local.player.z;
+							eye_yaw_var = local.player.eye_yaw_var;
+							eye_pitch_var = local.player.eye_pitch_var;
+							// Iframes
+							hurt_var = true;
+							set_alarm_scr(0,revive_alarm_var);
+						}
+					}
+					else if local.kill == 0
+					{ local.kill = true; local.player = id; }
+				}
+			}
+		}
+		if !dead_var { local.kill = -1; }
 	}
+	if local.kill && local.dokill && !global.debug_var && !possess_var
+	{
+		global.dead_mon_var = object_index;
+		global.menu_player_var = local.player.player_id_var;
+		if global.permadeath_var { delete_save_scr(global.save_name_var); }
+		rm_goto_menu_scr(dead_rm_var,true);
+	}
+	// Seen Stuff
 	if is_seen_var == 1
 	{
 		w_var = base_w_var + random_range(-shake_var,shake_var);
@@ -275,6 +336,7 @@ object_event_add
 		if spd_anim_var { spr_spd_var = lerp_scr(spr_spd_min_var,spr_spd_max_var,seen_per_var); }
 		anim_var = true;
 		static_alpha_var = lerp_scr(static_min_var,static_max_var,seen_per_var);
+		if alarm_arr[4,0] <= 0 { atk_var = true; }
 		// I still gotta add the teleport lol
 	}
 	else
@@ -289,6 +351,7 @@ object_event_add
 		spd_mult_var = 0;
 		anim_var = false;
 		static_alpha_var = 0;
+		atk_var = false;
 	}
 	event_inherited();
 	if do_look_snd_var

@@ -138,9 +138,11 @@ object_event_add
     // Main
     if !variable_local_exists("type_var") { type_var = 0; }
     if !variable_local_exists("visible_var") { visible_var = false; }
-    // Behavior
+    // Spawn
     if !variable_local_exists("do_enter_var") { do_enter_var = (type_var > 0 && !kidna_var); }
     if !variable_local_exists("do_door_var") { do_door_var = (type_var == 1 && do_enter_var); }
+    if !variable_local_exists("spawn_var") { spawn_var = 0; }
+    if !variable_local_exists("spawn_dist_var") { spawn_dist_var = 32; }
     // Sound Stuff
     if !variable_local_exists("do_snd_var") { do_snd_var = true; }
     if do_snd_var
@@ -312,12 +314,11 @@ object_event_add
     }
     // Misc Stuff
     tone_var = c_white;
-    target_spawn_var = 0;
     is_seen_var = -1;
     spr_id_var = 0;
     spr_prog_var = 1;
     wander_var = false;
-    enter_var = do_enter_var;
+    enter_var = (do_enter_var && spawn_var >= 0);
     active_var = true;
     // Speed
     spd_mult_var = 1;
@@ -418,18 +419,22 @@ object_event_add
     atk_var = do_atk_var;
     seen_var = do_seen_var;
     hurt_var = false;
-    enter_var = do_enter_var;
     active_var = true;
+    // Reset Position
+    if spawn_var >= 0
+    {
+        enter_var = do_enter_var;
+        yaw_var = global.spawn_arr[spawn_var,3];
+        x = global.spawn_arr[spawn_var,0]-lengthdir_x(spawn_dist_var,yaw_var);
+        y = global.spawn_arr[spawn_var,1]-lengthdir_y(spawn_dist_var,yaw_var);
+        z = global.spawn_arr[spawn_var,2];
+        set_motion_3d_scr(0,true,yaw_var,true,0,true);
+        eye_yaw_var = yaw_var;
+        eye_pitch_var = 0;
+    }
+    else { enter_var = false; }
     if enter_var { do_coll_var = false; }
     else if type_var > 0 { do_coll_var = true; }
-    // Reset Position
-    yaw_var = global.spawn_arr[0,3];
-    x = global.spawn_arr[0,0]-lengthdir_x(32,yaw_var);
-    y = global.spawn_arr[0,1]-lengthdir_y(32,yaw_var);
-    z = global.spawn_arr[0,2];
-    set_motion_3d_scr(0,true,yaw_var,true,0,true);
-    eye_yaw_var = yaw_var;
-    eye_pitch_var = 0;
     // Set target
     if do_wander_var { event_user(13); }
     event_user(6);
@@ -445,7 +450,8 @@ object_event_add
         on_var = false;
         set_alarm_scr(0,irandom_range(delay_min_var,delay_max_var));
     }
-    else { event_perform(ev_alarm,0); }
+    else if delay_min_var == 0
+    { event_perform(ev_alarm,0); }
 ');
 // Step Event
 object_event_add
@@ -507,11 +513,11 @@ object_event_add
         }
         if snd_len_var > 0 { set_alarm_scr(6,irandom_range(snd_delay_min_var,snd_delay_max_var)); }
     }
-    if do_door_var
+    if do_door_var && spawn_var >= 0
     {
-        if global.spawn_arr[0,5] != noone
+        if instance_exists(global.spawn_arr[spawn_var,5])
         {
-            with global.spawn_arr[0,5] // Entrance door
+            with global.spawn_arr[spawn_var,5] // Entrance door
             {
                 if !open_var
                 { event_user(0); }
@@ -519,7 +525,7 @@ object_event_add
         }
         
     }
-    if possess_var && !do_enter_var
+    if possess_var && !enter_var
     {
         with instance_create(0,0,fade_eff_obj)
         {
@@ -821,7 +827,7 @@ object_event_add
                 if hp_var > other.dmg_var
                 {
                     hp_var -= other.dmg_var;
-                    if other.dmg_alarm_var
+                    if other.dmg_alarm_var > 0
                     {
                         hurt_var = true;
                         set_alarm_scr(0,other.dmg_alarm_var);
@@ -1107,9 +1113,9 @@ object_event_add
     if enter_var
     {
         target_var = noone;
-        target_x_var = global.spawn_arr[target_spawn_var,0];
-        target_y_var = global.spawn_arr[target_spawn_var,1];
-        target_z_var = global.spawn_arr[target_spawn_var,2];
+        target_x_var = global.spawn_arr[spawn_var,0];
+        target_y_var = global.spawn_arr[spawn_var,1];
+        target_z_var = global.spawn_arr[spawn_var,2];
         target_dist_var = point_distance_3d_scr(x,y,z,target_x_var,target_y_var,target_z_var);
     }
     else if wander_var

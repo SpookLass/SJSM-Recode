@@ -213,13 +213,10 @@ object_event_add
 // Room Start Event
 object_event_add
 (argument0,ev_other,ev_room_start,'
-    do_hurt_var = false;
-    anim_type_var = 0;
-    spr_var = main_spr_var;
     spr_id_var = 0;
+    do_hurt_var = false;
     rise_var = false;
     if do_wander_var { wander_var = true; }
-    event_inherited();
     local.rise = do_rise_var && global.mark_len_var > 0;
     if local.rise
     {
@@ -229,15 +226,17 @@ object_event_add
         z = global.mark_arr[local.mark,2];
         spr_var = rise_spr_var;
         tex_var = sprite_get_texture(spr_var,spr_id_var);
-        on_var = true;
-        enter_var = false;
-        do_coll_var = true;
-        move_var = false;
+        spawn_var = -1;
+        event_inherited();
         set_alarm_scr(0,-1);
+        event_perform(ev_alarm,0);
+        move_var = false;
+        atk_var = false;
         if do_rise_var == 2
         {
             anim_type_var = 1;
             set_alarm_scr(1,rise_alarm_var);
+            set_alarm_scr(4,rise_alarm_var);
             set_alarm_scr(5,rise_alarm_var);
             set_alarm_scr(6,rise_alarm_var+irandom_range(snd_alarm_min_var,snd_alarm_max_var));
             if !do_wander_var { set_alarm_scr(8,rise_alarm_var); }
@@ -247,6 +246,15 @@ object_event_add
             anim_var = false;
             rise_var = true;
         }
+    }
+    else
+    {
+        anim_type_var = 0;
+        spr_var = main_spr_var;
+        tex_var = sprite_get_texture(spr_var,spr_id_var);
+        spr_id_var = 0;
+        spawn_var = 0;
+        event_inherited();
     }
     if !instance_exists(wc_eff_obj)
     {
@@ -282,6 +290,7 @@ object_event_add
                 spr_id_var = 0;
                 anim_type_var = 1;
                 set_alarm_scr(1,rise_alarm_var);
+                set_alarm_scr(4,rise_alarm_var);
                 set_alarm_scr(5,rise_alarm_var);
                 set_alarm_scr(6,rise_alarm_var+irandom_range(snd_alarm_min_var,snd_alarm_max_var));
                 if !wander_var { set_alarm_scr(8,rise_alarm_var); }

@@ -19,7 +19,7 @@ object_event_add
     spd_base_var = 1.3;
     spr_spd_var = 0.65;
     dur_var = irandom_range(10,20);
-    delay_var = -1;
+    delay_var = 0;
     dmg_var = 15;
     dmg_alarm_var = -1;
     w_var = 16.8;
@@ -29,6 +29,7 @@ object_event_add
     blood_spr_var = blood_kh_spr;
     dupe_var = dupe_canon_const;
     dead_rm_var = frenzy_dead_rm;
+    woke_var = false;
     // Sounds
     do_snd_var = true;
     snd_dist_min_var = -1;

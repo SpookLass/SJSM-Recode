@@ -40,10 +40,10 @@ object_event_add
     snd_delay_max_var = 240;
     snd_dist_min_var = 0;
     snd_dist_max_var = 600;
-    eff_snd_len_var = 4;
     // Theme
     mus_prio_var = theme_mus_prio_const;
     // Effect
+    eff_snd_len_var = 4;
     eff_min_var = 30;
     eff_max_var = 60;
     // Special
@@ -56,6 +56,19 @@ object_event_add
     warp_dist_var = 128;
     alarm_len_var = 9;
     alarm_ini_scr();
+    // Deer
+    deer_var = false;
+    deer_snd_len_var = 4;
+    deer_num_var = 1;
+    deer_den_var = 1; // 2?
+    deer_atk_range_var = 48;
+    deer_wake_sight_var = false;
+    deer_snd_dist_min_var = 0;
+    deer_snd_dist_max_var = 800;
+    deer_spd_var = 1;
+    deer_wake_dist_var = 36;
+    deer_acc_var = false;
+    deer_snd_alarm_min_var = 80;
     // Remodeled
     slender_var = false;
     slender_rate_var = 0.02;
@@ -67,6 +80,118 @@ object_event_add
     xray_var = false;
     xray_rate_var = 0.05;
     acc_var = 0.02;
+    // Behavior
+    if global.dl_type_var == -1 { local.type = irandom(5); }
+    else { local.type = global.dl_type_var; }
+    local.set = 0;
+    switch local.type
+    {
+        case 4: // Hellgate
+        {
+            irandom_range(20,30);
+            deer_var = true;
+        }
+        case 0: // Recode
+        {
+            type_var = 2;
+            dmg_alarm_var = 120;
+            do_warp_var = true;
+            delay_var = 30; // 60
+            atk_range_var = global.mon_coll[2];
+            deer_atk_range_var = global.mon_coll[2];
+            deer_wake_sight_var = true;
+            // Effect
+            eff_min_var = 15;
+            eff_max_var = 30;
+            // Axe
+            do_hurt_var = 1;
+            hurt_snd_var = 1;
+            hurt_alarm_var = 30;
+            stun_var = 1;
+            violence_var = 3;
+            break;
+        }
+        case 3: // Old HD
+        {
+            delay_min_var = 90;
+            delay_max_var = 180;
+            warp_dist_var = 160;
+            local.set = 1;
+        }
+        case 6: // Hellgate HD
+        {
+            if local.set != 1
+            {
+                local.set = 2;
+                deer_var = true;
+                irandom_range(20,27);
+            }
+        }
+        case 2: // HD
+        {
+            type_var = 2;
+            do_warp_var = true;
+            spd_base_var = 32/45; // 0.7r1
+            dmg_alarm_var = 180;
+            if local.set != 2 { dur_var = irandom_range(10,20); }
+            if local.set != 1
+            {
+                delay_min_var = 60;
+                delay_max_var = 120;
+            }
+            atk_range_var = 32;
+            // Cloak
+            close_dist_var = 96;
+            open_dist_var = 224/3; // 74.r6
+            // Sound
+            snd_alarm_min_var = 360;
+            snd_alarm_max_var = 720;
+            snd_delay_min_var = 60;
+            snd_delay_max_var = 180;
+            snd_den_var = 1;
+            snd_dist_max_var = 500;
+            // Deer
+            deer_den_var = 3;
+            deer_acc_var = true;
+            deer_atk_range_var = 32;
+            deer_wake_dist_var = 2.5/pixel_meter_rate_const;
+            deer_spd_var = 4/pf_ms_rate_const;
+            deer_snd_alarm_min_var = 78;
+            break;
+        }
+        case 5: // Hellgate OG
+        {
+            irandom_range(20,27);
+            deer_var = true;
+            break;
+        }
+        case 7: // Gone Rogue
+        {
+            // Rubberband
+            spd_min_var = 0.1;
+            rb_var = true;
+            // Silhouette
+            xray_var = true;
+            sil_var = true;
+            sil_type_var = 2; // Color
+            sil_color_var = c_red;
+            sil_alpha_var = 0;
+            sil_dist_var = 0.1;
+            break;
+        }
+        case 8: // Remodeled
+        {
+            spd_min_var = 0.1;
+            acc_var = 1/60; // 0.01r6
+            slender_var = true;
+            do_seen_var = true;
+            seen_yaw_var = 30;
+            seen_pitch_var = 0;
+            seen_dist_var = 0;
+            seen_type_var = 0;
+            break;
+        }
+    }
     // Assets
         // Search for existing assets to save memory
     local.loaded = false;
@@ -76,8 +201,15 @@ object_event_add
         {
             other.close_spr_var = close_spr_var;
             other.open_spr_var = open_spr_var;
+            other.deer_idle_spr_var = deer_idle_spr_var;
+            other.deer_spr_var = deer_spr_var;
+            other.deer_dead_spr_var = deer_dead_spr_var;
             for (local.i=0; local.i<snd_len_var; local.i+=1;)
             { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
+            other.deer_wake_snd_var = deer_wake_snd_var;
+            other.deer_dead_snd_var = deer_dead_snd_var;
+            for (local.i=0; local.i<deer_snd_len_var; local.i+=1;)
+            { other.deer_snd_arr_var[local.i] = deer_snd_arr_var[local.i]; }
             other.mus_snd_var = mus_snd_var;
             // Effect
             other.eff_spr_01_var = eff_spr_01_var;
@@ -97,6 +229,7 @@ object_event_add
         snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\dl_02_snd.wav",true);
         snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\dl_03_snd.wav",true);
         snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\dl_04_snd.wav",true);
+        // Theme
         switch theme_scr(global.dl_theme_var,global.theme_var,2,0,0,1)
         {
             case 1: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\dl_rom_mus_snd.ogg"); break; }
@@ -113,91 +246,27 @@ object_event_add
         eff_snd_arr[3] = fmod_snd_add_scr(main_directory_const+"\SND\MON\dl_eff_04_snd.wav");
         for (local.i=0; local.i<eff_snd_len_var; local.i+=1;)
         { fmod_snd_set_group_scr(eff_snd_arr[local.i],snd_group_mon_const); }
+        // Deer
+        deer_idle_spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\EX_04_spr.png",5,false,false,0,0);
+        deer_spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\EX_05_spr.png",7,false,false,0,0);
+        deer_dead_spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\EX_06_spr.png",6,false,false,0,0);
+        deer_wake_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\RM\woods_deer_wake_snd.wav",global.wake_3d_var);
+        deer_dead_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\RM\woods_deer_dead_snd.wav",true);
+        deer_snd_arr_var[0] = fmod_snd_add_scr(main_directory_const+"\SND\RM\woods_deer_01_snd.wav",true);
+        deer_snd_arr_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\RM\woods_deer_02_snd.wav",true);
+        deer_snd_arr_var[2] = fmod_snd_add_scr(main_directory_const+"\SND\RM\woods_deer_03_snd.wav",true);
+        deer_snd_arr_var[3] = fmod_snd_add_scr(main_directory_const+"\SND\RM\woods_deer_04_snd.wav",true);
+        fmod_snd_set_group_scr(deer_wake_snd_var,snd_group_mon_const);
+        fmod_snd_set_minmax_dist_scr(deer_wake_snd_var,deer_snd_dist_min_var,deer_snd_dist_max_var);
+        fmod_snd_set_group_scr(deer_dead_snd_var,snd_group_mon_const);
+        fmod_snd_set_minmax_dist_scr(deer_dead_snd_var,deer_snd_dist_min_var,deer_snd_dist_max_var);
+        for (local.i=0; local.i<deer_snd_len_var; local.i+=1;)
+        {
+            fmod_snd_set_group_scr(deer_snd_arr_var[local.i],snd_group_mon_const);
+            fmod_snd_set_minmax_dist_scr(deer_snd_arr_var[local.i],deer_snd_dist_min_var,deer_snd_dist_max_var);
+        }
     }
     spr_var = close_spr_var;
-    // Behavior
-    if global.dl_type_var == -1 { local.type = irandom(5); }
-    else { local.type = global.dl_type_var; }
-    local.set = false;
-    switch local.type
-    {
-        case 0: // Recode
-        {
-            type_var = 2;
-            dmg_alarm_var = 120;
-            do_warp_var = true;
-            delay_var = 30; // 60
-            atk_range_var = global.mon_coll[2];
-            // Effect
-            eff_min_var = 15;
-            eff_max_var = 30;
-            // Axe
-            do_hurt_var = 1;
-            hurt_snd_var = 1;
-            hurt_alarm_var = 30;
-            stun_var = 1;
-            violence_var = 3;
-            break;
-        }
-        case 3: // Old HD
-        {
-            delay_min_var = 90;
-            delay_max_var = 180;
-            warp_dist_var = 160;
-            local.set = true;
-        }
-        case 2: // HD
-        {
-            type_var = 2;
-            do_warp_var = true;
-            spd_base_var = 32/45; // 0.7r1
-            dur_var = irandom_range(10,20);
-            dmg_alarm_var = 180;
-            if !local.set
-            {
-                delay_min_var = 60;
-                delay_max_var = 120;
-            }
-            atk_range_var = 32;
-            // Cloak
-            close_dist_var = 96;
-            open_dist_var = 224/3; // 74.r6
-            // Sound
-            snd_alarm_min_var = 360;
-            snd_alarm_max_var = 720;
-            snd_delay_min_var = 60;
-            snd_delay_max_var = 180;
-            snd_den_var = 1;
-            snd_dist_max_var = 500;
-            break;
-        }
-        case 4: // Gone Rogue
-        {
-            // Rubberband
-            spd_min_var = 0.1;
-            rb_var = true;
-            // Silhouette
-            xray_var = true;
-            sil_var = true;
-            sil_type_var = 2; // Color
-            sil_color_var = c_red;
-            sil_alpha_var = 0;
-            sil_dist_var = 0.1;
-            break;
-        }
-        case 5: // Remodeled
-        {
-            spd_min_var = 0.1;
-            acc_var = 1/60; // 0.01r6
-            slender_var = true;
-            do_seen_var = true;
-            seen_yaw_var = 30;
-            seen_pitch_var = 0;
-            seen_dist_var = 0;
-            seen_type_var = 0;
-            break;
-        }
-    }
 ');
 // Destroy Event
 object_event_add
@@ -209,9 +278,16 @@ object_event_add
     {
         sprite_delete(open_spr_var);
         sprite_delete(close_spr_var);
+        sprite_delete(deer_idle_spr_var);
+        sprite_delete(deer_spr_var);
+        sprite_delete(deer_dead_spr_var);
         fmod_snd_free_scr(mus_snd_var);
         for (local.i=0; local.i<snd_len_var; local.i+=1;)
         { fmod_snd_free_scr(snd_arr[local.i,0]); }
+        fmod_snd_free_scr(deer_dead_snd_var);
+        fmod_snd_free_scr(deer_wake_snd_var);
+        for (local.i=0; local.i<deer_snd_len_var; local.i+=1;)
+        { fmod_snd_free_scr(deer_snd_arr_var[local.i]); }
         sprite_delete(eff_spr_01_var);
         sprite_delete(eff_spr_02_var);
         for (local.i=0; local.i<eff_snd_len_var; local.i+=1;)
@@ -237,6 +313,50 @@ object_event_add
     if slender_var { slender_alpha_var = 0; }
     if xray_var { sil_alpha_var = 0; }
     event_inherited();
+    // Deer
+    if deer_var
+    {
+        for (local.i=0; local.i<global.mark_len_var; local.i+=1;)
+        {
+            if !global.mark_arr[local.i,3] && frac_chance_scr(deer_num_var,deer_den_var)
+            {
+                with instance_create(global.mark_arr[local.i,0],global.mark_arr[local.i,1],deer_obj)
+                {
+                    par_var = other.id;
+                    atk_range_var = other.deer_atk_range_var;
+                    wake_sight_var = other.deer_wake_sight_var;
+                    spd_base_var = other.deer_spd_var;
+                    do_acc_var = other.deer_acc_var;
+                    autobrake_var = do_acc_var;
+                    wake_dist_var = other.deer_wake_dist_var;
+                    snd_alarm_min_var = other.deer_snd_alarm_min_var;
+                    snd_delay_min_var = snd_alarm_min_var;
+                    dead_rm_var = other.dead_rm_var;
+                    // Sprite
+                    spr_base_var = other.deer_spr_var;
+                    idle_spr_var = other.deer_idle_spr_var;
+                    dead_spr_var = other.deer_dead_spr_var;
+                    spr_var = idle_spr_var;
+                    tex_var = sprite_get_texture(spr_var,spr_id_var);
+                    // Sounds
+                    wake_snd_var[1] = other.deer_wake_snd_var;
+                    dead_snd_var[0] = other.deer_dead_snd_var;
+                    snd_len_var = other.deer_snd_len_var;
+                    for (local.i=0; local.i<snd_len_var; local.i+=1;)
+                    { snd_arr[local.i,0] = other.deer_snd_arr_var[local.i]; }
+                    // Effect
+                    eff_spr_01_var = other.eff_spr_01_var;
+                    eff_spr_02_var = other.eff_spr_02_var;
+                    eff_snd_len_var = other.eff_snd_len_var;
+                    eff_min_var = other.eff_min_var;
+                    eff_max_var = other.eff_max_var;
+                    for (local.i=0; local.i<eff_snd_len_var; local.i+=1;)
+                    { eff_snd_arr[local.i] = other.eff_snd_arr[local.i]; }
+                }
+                global.mark_arr[local.i,3] = true;
+            }
+        }
+    }
 ');
 // Step Event
 object_event_add

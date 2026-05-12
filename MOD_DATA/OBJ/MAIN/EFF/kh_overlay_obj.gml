@@ -18,6 +18,7 @@ object_event_add
     image_alpha = 0.025;
     image_xscale = 512;
     image_yscale = 512;
+    cam_id_var = -1;
     // Overlay
     overlay_var = false;
     overlay_bg_var = noone;
@@ -48,15 +49,15 @@ object_event_add
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,'
-    if view_wview[view_current] >= view_hview[view_current]
-    { local.scale = view_hview[view_current]/720; }
-    else { local.scale = view_wview[view_current]/1280; }
-    d3d_set_fog(false,c_black,0,0);
-    d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
-    d3d_set_hidden(false);
-    if overlay_var && background_exists(overlay_bg_var)
-    { draw_background_stretched_ext(overlay_bg_var,0,0,view_wview[view_current],view_hview[view_current],overlay_color_var,overlay_alpha_var); }
-    draw_set_blend_mode(bm_add);
-    draw_spr_tiled_scale_ext_scr(spr_var,floor(spr_id_var),x,y,image_xscale,image_yscale,2,image_angle,image_blend,image_alpha);
-    draw_set_blend_mode(bm_normal); d3d_set_hidden(true);
+    if view_current == cam_id_var || cam_id_var == -1
+    {
+        d3d_set_fog(false,c_black,0,0);
+        d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
+        d3d_set_hidden(false);
+        if overlay_var && background_exists(overlay_bg_var)
+        { draw_background_stretched_ext(overlay_bg_var,0,0,view_wview[view_current],view_hview[view_current],overlay_color_var,overlay_alpha_var); }
+        draw_set_blend_mode(bm_add);
+        draw_spr_tiled_scale_ext_scr(spr_var,floor(spr_id_var),x,y,image_xscale,image_yscale,2,image_angle,image_blend,image_alpha);
+        draw_set_blend_mode(bm_normal); d3d_set_hidden(true);
+    }
 ');

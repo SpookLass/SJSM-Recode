@@ -58,6 +58,7 @@ object_event_add
             other.light_floor_spr_var = light_floor_spr_var;
             other.door_bg_var = door_bg_var;
             other.overlay_bg_var = overlay_bg_var;
+            other.arrow_snd_var = arrow_snd_var;
             other.mus_snd_var = mus_snd_var;
             other.zone_list_var = zone_list_var;
             local.loaded = true;
