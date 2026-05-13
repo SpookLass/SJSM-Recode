@@ -30,16 +30,16 @@ example_directory_const = argument0;
         custom_add_scr(local.exstate,"EXAMPLE","Example monsters for the example mod",false,custom_state_const,-1,-1,false,local.type,false);
         custom_arr_add_len_scr(0,1);
 // Gurgle
-    local.gurgle = type_add_scr("Gurgle",false,true,local.exgroup,gurgle_obj,noone,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
-    local.gurgle_set = type_add_set_scr(local.gurgle,"gurgle",local.desc,local.exstate,true); /*ID, Variable Name, Description, Category, Can Disable*/
+    local.mon = type_add_scr("Gurgle",false,true,local.exgroup,gurgle_obj,noone,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
+    local.mon_set = type_add_set_scr(local.mon,"gurgle",local.desc,local.exstate,true); /*ID, Variable Name, Description, Category, Can Disable*/
     // Types
-        type_add_type_scr(local.gurgle,local.gurgle_set,"RECODE","Deals less damage and has a smaller hitbox.",false); /*Type ID, Setting ID, Label, Description, Translate*/
-        type_add_type_scr(local.gurgle,local.gurgle_set,"ORIGINAL","Deals more damage and has a bigger hitbox.",false);
-        type_add_type_scr(local.gurgle,local.gurgle_set,"RENOVATION","Inherits all the oddities of your average Renovation enemy.",false);
+        type_add_type_scr(local.mon,local.mon_set,"RECODE","Deals less damage and has a smaller hitbox.",false); /*Type ID, Setting ID, Label, Description, Translate*/
+        type_add_type_scr(local.mon,local.mon_set,"ORIGINAL","Deals more damage and has a bigger hitbox.",false);
+        type_add_type_scr(local.mon,local.mon_set,"RENOVATION","Inherits all the oddities of your average Renovation enemy.",false);
     // Defaults
         custom_arr_add_len_scr(0,1);
-        custom_arr_set_scr(0,local.gurgle_set,-1,-1,-1); // Default (Recode)
-        custom_arr_set_scr(-2,local.gurgle_set,-1,0,-1); // Story Mode (Off)
-        custom_arr_set_scr(1,local.gurgle_set,-1,-1,1); // OG
-        custom_arr_set_scr(2,local.gurgle_set,-1,-1,2); // HD
-        custom_arr_set_scr(-1,local.gurgle_set,5,-1,-1); // :) (Random)
+        custom_arr_set_scr(0,local.mon_set,-1,-1,-1); // Default (Recode)
+        custom_arr_set_scr(-2,local.mon_set,-1,0,-1); // Story Mode (Off)
+        custom_arr_set_scr(1,local.mon_set,-1,-1,1); // OG
+        custom_arr_set_scr(2,local.mon_set,-1,-1,2); // HD
+        custom_arr_set_scr(-1,local.mon_set,5,-1,-1); // :) (Random)

@@ -339,6 +339,8 @@ Movement
     On Floor: "+string(par_var.on_floor_var)+"
     Collided: "+string(par_var.did_coll_var)+"
     Slide: "+string(par_var.did_slide_var)+"
+Misc
+    Violence: "+string(par_var.violence_var)+"
 Looking
     Eye Yaw: "+string(par_var.eye_yaw_var)+"
     Eye Pitch: "+string(par_var.eye_pitch_var)+"

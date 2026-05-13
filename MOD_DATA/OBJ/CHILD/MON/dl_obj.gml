@@ -69,6 +69,7 @@ object_event_add
     deer_wake_dist_var = 36;
     deer_acc_var = false;
     deer_snd_alarm_min_var = 80;
+    deer_dist_var = 0;
     // Remodeled
     slender_var = false;
     slender_rate_var = 0.02;
@@ -100,6 +101,9 @@ object_event_add
             atk_range_var = global.mon_coll[2];
             deer_atk_range_var = global.mon_coll[2];
             deer_wake_sight_var = true;
+            deer_dist_var = 128;
+            deer_wake_dist_var = 64;
+            deer_den_var = 3;
             // Effect
             eff_min_var = 15;
             eff_max_var = 30;
@@ -320,40 +324,52 @@ object_event_add
         {
             if !global.mark_arr[local.i,3] && frac_chance_scr(deer_num_var,deer_den_var)
             {
-                with instance_create(global.mark_arr[local.i,0],global.mark_arr[local.i,1],deer_obj)
+                if deer_dist_var <= 0 { local.bool = true; }
+                else
                 {
-                    par_var = other.id;
-                    atk_range_var = other.deer_atk_range_var;
-                    wake_sight_var = other.deer_wake_sight_var;
-                    spd_base_var = other.deer_spd_var;
-                    do_acc_var = other.deer_acc_var;
-                    autobrake_var = do_acc_var;
-                    wake_dist_var = other.deer_wake_dist_var;
-                    snd_alarm_min_var = other.deer_snd_alarm_min_var;
-                    snd_delay_min_var = snd_alarm_min_var;
-                    dead_rm_var = other.dead_rm_var;
-                    // Sprite
-                    spr_base_var = other.deer_spr_var;
-                    idle_spr_var = other.deer_idle_spr_var;
-                    dead_spr_var = other.deer_dead_spr_var;
-                    spr_var = idle_spr_var;
-                    tex_var = sprite_get_texture(spr_var,spr_id_var);
-                    // Sounds
-                    wake_snd_var[1] = other.deer_wake_snd_var;
-                    dead_snd_var[0] = other.deer_dead_snd_var;
-                    snd_len_var = other.deer_snd_len_var;
-                    for (local.i=0; local.i<snd_len_var; local.i+=1;)
-                    { snd_arr[local.i,0] = other.deer_snd_arr_var[local.i]; }
-                    // Effect
-                    eff_spr_01_var = other.eff_spr_01_var;
-                    eff_spr_02_var = other.eff_spr_02_var;
-                    eff_snd_len_var = other.eff_snd_len_var;
-                    eff_min_var = other.eff_min_var;
-                    eff_max_var = other.eff_max_var;
-                    for (local.i=0; local.i<eff_snd_len_var; local.i+=1;)
-                    { eff_snd_arr[local.i] = other.eff_snd_arr[local.i]; }
+                    local.bool = (point_distance_3d_scr
+                    (
+                        global.mark_arr[local.i,0],global.mark_arr[local.i,1],global.mark_arr[local.i,2],
+                        global.spawn_arr[0,0],global.spawn_arr[0,1],global.spawn_arr[0,2]
+                    ) > deer_dist_var);
                 }
-                global.mark_arr[local.i,3] = true;
+                if local.bool
+                {
+                    with instance_create(global.mark_arr[local.i,0],global.mark_arr[local.i,1],deer_obj)
+                    {
+                        par_var = other.id;
+                        atk_range_var = other.deer_atk_range_var;
+                        wake_sight_var = other.deer_wake_sight_var;
+                        spd_base_var = other.deer_spd_var;
+                        do_acc_var = other.deer_acc_var;
+                        autobrake_var = do_acc_var;
+                        wake_dist_var = other.deer_wake_dist_var;
+                        snd_alarm_min_var = other.deer_snd_alarm_min_var;
+                        snd_delay_min_var = snd_alarm_min_var;
+                        dead_rm_var = other.dead_rm_var;
+                        // Sprite
+                        spr_base_var = other.deer_spr_var;
+                        idle_spr_var = other.deer_idle_spr_var;
+                        dead_spr_var = other.deer_dead_spr_var;
+                        spr_var = idle_spr_var;
+                        tex_var = sprite_get_texture(spr_var,spr_id_var);
+                        // Sounds
+                        wake_snd_var[1] = other.deer_wake_snd_var;
+                        dead_snd_var[0] = other.deer_dead_snd_var;
+                        snd_len_var = other.deer_snd_len_var;
+                        for (local.j=0; local.j<snd_len_var; local.j+=1;)
+                        { snd_arr[local.j,0] = other.deer_snd_arr_var[local.j]; }
+                        // Effect
+                        eff_spr_01_var = other.eff_spr_01_var;
+                        eff_spr_02_var = other.eff_spr_02_var;
+                        eff_snd_len_var = other.eff_snd_len_var;
+                        eff_min_var = other.eff_min_var;
+                        eff_max_var = other.eff_max_var;
+                        for (local.j=0; local.j<eff_snd_len_var; local.j+=1;)
+                        { eff_snd_arr[local.j] = other.eff_snd_arr[local.j]; }
+                    }
+                    global.mark_arr[local.i,3] = true;
+                }
             }
         }
     }

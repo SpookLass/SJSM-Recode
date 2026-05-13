@@ -70,7 +70,7 @@ object_event_add
         spr_id_var = irandom(sprite_get_number(spr_var)-1);
         spr_spd_var = 1;
         do_snd_var = true;
-        snd_var = fmod_snd_play_scr(load_par_obj.snd_arr_var[1,0]);
+        inst_var = fmod_snd_play_scr(load_par_obj.snd_arr_var[1,0]);
         rand_rate_var = 15;
         set_alarm_scr(0,irandom_range(30,60));
         // Set camera to player

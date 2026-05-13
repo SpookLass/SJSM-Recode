@@ -132,6 +132,7 @@ object_event_add
             delay_var = 30;
             bod_form_var = true;
             atk_range_var = global.mon_coll[2];
+            violence_var = 0;
             // New
             spd_base_var = 1.1; // 1.7
             stun_var = true;

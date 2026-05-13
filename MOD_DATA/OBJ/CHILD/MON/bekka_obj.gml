@@ -195,6 +195,7 @@ object_event_add
 // Room Start Event
 object_event_add
 (argument0,ev_other,ev_room_start,'
+    spawn_var = 0;
     event_inherited();
     visible = true;
     // Effects

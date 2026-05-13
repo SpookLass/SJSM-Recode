@@ -51,7 +51,7 @@ object_event_add
         spr_id_var = irandom(sprite_get_number(spr_var)-1);
         spr_spd_var = 1;
         do_snd_var = true;
-        snd_var = fmod_snd_play_scr(other.snd_02_var);
+        inst_var = fmod_snd_play_scr(other.snd_02_var);
         rand_rate_var = 15;
         set_alarm_scr(0,60);
         // Set camera to all
