@@ -266,7 +266,7 @@ object_event_add
 	else { local.kill = 0; }
 	with player_obj
 	{
-		if !dead_var && (!hurt_var || dmg_unbalance_var) && !in_door_var && !invuln_var && on_var
+		if !dead_var && (!hurt_var || other.dmg_unbalance_var) && !in_door_var && !invuln_var && on_var
 		{
 			local.dist = point_distance_3d_scr(x,y,z,other.x,other.y,other.z);
 			if local.dist < other.dmg_dist_max_var
