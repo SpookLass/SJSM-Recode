@@ -79,6 +79,7 @@ object_event_add
         {
             dmg_var = 40;
             atk_range_var = global.mon_coll[2];
+            snd_dist_max_var = 300;
             break;
         }
         case 2: //HD GURGLE REAL?

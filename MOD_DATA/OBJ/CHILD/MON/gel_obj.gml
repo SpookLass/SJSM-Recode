@@ -74,46 +74,6 @@ object_event_add
     abuse_var = 0;
     abuse_max_var = 3;
     do_abuse_var = false;
-    // Assets
-        // Search for existing assets to save memory
-    local.loaded = false;
-    with object_index
-    {
-        if id != other.id && object_index == other.object_index
-        {
-            other.spr_var = spr_var;
-            other.slime_bg_var = slime_bg_var;
-            other.overlay_bg_var = overlay_bg_var;
-            for (local.i=0; local.i<snd_len_var; local.i+=1;)
-            { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
-            other.wake_snd_var[1] = wake_snd_var[1];
-            other.slime_snd_var[1] = slime_snd_var[1];
-            other.mus_snd_var = mus_snd_var;
-            local.loaded = true;
-            break;
-        }
-    }
-        // If no existing assets were found, load them
-    if !local.loaded
-    {
-        spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS_01_spr.png",5,false,false,0,0);
-        slime_bg_var = background_add(main_directory_const+"\BG\MON\gel_slime_bg.png",false,false);
-        overlay_bg_var = background_add(vanilla_directory_const+"\TEX\sprites\MS_02_spr.png",false,false);
-        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_01_snd.wav",true);
-        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_02_snd.wav",true);
-        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_03_snd.wav",true);
-        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_04_snd.wav",true);
-        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_wake_snd.wav",global.wake_3d_var);
-        slime_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_wake_snd.wav",true);
-        fmod_snd_set_group_scr(slime_snd_var[1],snd_group_mon_const);
-        switch theme_scr(global.gel_theme_var,global.theme_var,1,0,0,1)
-        {
-            case 1: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\gel_rom_mus_snd.ogg"); break; }
-            default: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_mus_snd.mp3"); break; }
-        }
-        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
-    }
-    slime_tex_var = background_get_texture(slime_bg_var);
     // Behavior
     if global.gel_type_var == -1 { local.type = irandom(2); }
     else { local.type = global.gel_type_var; }
@@ -127,6 +87,7 @@ object_event_add
             slime_anim_var = 2;
             slime_spd_mult_var = 0.5;
             atk_range_var = global.mon_coll[2];
+            snd_dist_max_var = 300;
             // (Dont) Move slower dangit
             slime_spawn_spd_mult_var = 1; // 0.5r3 for full accuracy
             delay_var = 30;
@@ -182,10 +143,51 @@ object_event_add
             autobrake_var = true;
             autobrake_spd_var = 0;
             autobrake_dir_var = 60;
+            autobrake_dist_var = atk_dist_var;
             break;
         }
     }
-    fmod_snd_set_minmax_dist_scr(slime_snd_var[1],snd_dist_min_var,snd_dist_max_var);
+    // Assets
+        // Search for existing assets to save memory
+    local.loaded = false;
+    with object_index
+    {
+        if id != other.id && object_index == other.object_index
+        {
+            other.spr_var = spr_var;
+            other.slime_bg_var = slime_bg_var;
+            other.overlay_bg_var = overlay_bg_var;
+            for (local.i=0; local.i<snd_len_var; local.i+=1;)
+            { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
+            other.wake_snd_var[1] = wake_snd_var[1];
+            other.slime_snd_var[1] = slime_snd_var[1];
+            other.mus_snd_var = mus_snd_var;
+            local.loaded = true;
+            break;
+        }
+    }
+        // If no existing assets were found, load them
+    if !local.loaded
+    {
+        spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS_01_spr.png",5,false,false,0,0);
+        slime_bg_var = background_add(main_directory_const+"\BG\MON\gel_slime_bg.png",false,false);
+        overlay_bg_var = background_add(vanilla_directory_const+"\TEX\sprites\MS_02_spr.png",false,false);
+        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_01_snd.wav",true);
+        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_02_snd.wav",true);
+        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_03_snd.wav",true);
+        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_04_snd.wav",true);
+        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_wake_snd.wav",global.wake_3d_var);
+        slime_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_wake_snd.wav",true);
+        fmod_snd_set_minmax_dist_scr(slime_snd_var[1],snd_dist_min_var,snd_dist_max_var);
+        fmod_snd_set_group_scr(slime_snd_var[1],snd_group_mon_const);
+        switch theme_scr(global.gel_theme_var,global.theme_var,1,0,0,1)
+        {
+            case 1: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\gel_rom_mus_snd.ogg"); break; }
+            default: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_mus_snd.mp3"); break; }
+        }
+        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
+    }
+    slime_tex_var = background_get_texture(slime_bg_var);
     alarm_len_var = 9;
     alarm_ini_scr();
 ');
@@ -469,7 +471,7 @@ object_event_add
 // Draw
 object_event_add
 (argument0,ev_draw,0,'
-    if slime_spawn_var > 0
+    if slime_spawn_var > 0 && !global.reflect_var
     {
         draw_set_color(image_blend); draw_set_alpha(slime_alpha_var);
         d3d_transform_set_identity();

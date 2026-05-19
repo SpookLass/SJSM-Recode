@@ -20,12 +20,12 @@ object_event_add
     if !variable_local_exists("hp_var") { hp_var = -1; }
     if !variable_local_exists("name_var") { name_var = "Unknown"; }
     if !variable_local_exists("dead_rm_var") { dead_rm_var = dead_rm; }
+    if !variable_local_exists("cam_id_var") { cam_id_var = -1; }
     hp_max_var = hp_var;
     hurt_var = false;
     on_var = false;
     possess_var = false;
     player_id_var = 0;
-    cam_id_var = -1;
     active_var = false;
     // Sound Stuff
     if !variable_local_exists("do_snd_var") { do_snd_var = true; }

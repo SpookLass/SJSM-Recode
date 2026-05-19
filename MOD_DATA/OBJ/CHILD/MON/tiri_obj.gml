@@ -40,40 +40,6 @@ object_event_add
     snd_dist_max_var = 700;
     // Theme
     mus_prio_var = theme_mus_prio_const;
-    // Assets
-        // Search for existing assets to save memory
-    local.loaded = false;
-    with object_index
-    {
-        if id != other.id && object_index == other.object_index
-        {
-            other.spr_var = spr_var;
-            other.bg_overlay_var = bg_overlay_var;
-            other.shadow_spr_var = shadow_spr_var;
-            for (local.i=0; local.i<snd_len_var; local.i+=1;)
-            { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
-            other.mus_snd_var = mus_snd_var;
-            local.loaded = true;
-            break;
-        }
-    }
-        // If no existing assets were found, load them
-    if !local.loaded
-    {
-        spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS24_01_spr.png",8,false,false,0,0);
-        bg_overlay_var = background_add(vanilla_directory_const+"\TEX\sprites\fog2_spr.png",false,false);
-        shadow_spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS24_02_spr.png",9,false,false,0,0);
-        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\tiri_01_snd.wav",true);
-        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\tiri_02_snd.wav",true);
-        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\tiri_03_snd.wav",true);
-        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\tiri_04_snd.wav",true);
-        switch theme_scr(global.tiri_theme_var,global.theme_var,1,0,0,1)
-        {
-            case 1: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\tiri_rom_mus_snd.ogg"); break; }
-            default: { mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\TIRSIAK_AMB.mp3"); break; }
-        }
-        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
-    }
     // Coward
     do_coward_var = true;
     coward_var = false;
@@ -115,6 +81,7 @@ object_event_add
             shadow_alpha_var = 0.4;
             atk_range_var = global.mon_coll[2];
             delay_var = 60;
+            snd_dist_max_var = 400;
             // Pride Month or Trans Day of Visibility
             if ((current_month == 6 || global.pride_var > 0) && !irandom(7)) || (current_month == 3 && current_month == 31)
             {
@@ -161,6 +128,40 @@ object_event_add
             snd_dist_max_var = 500;
             break;
         }
+    }
+    // Assets
+        // Search for existing assets to save memory
+    local.loaded = false;
+    with object_index
+    {
+        if id != other.id && object_index == other.object_index
+        {
+            other.spr_var = spr_var;
+            other.bg_overlay_var = bg_overlay_var;
+            other.shadow_spr_var = shadow_spr_var;
+            for (local.i=0; local.i<snd_len_var; local.i+=1;)
+            { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
+            other.mus_snd_var = mus_snd_var;
+            local.loaded = true;
+            break;
+        }
+    }
+        // If no existing assets were found, load them
+    if !local.loaded
+    {
+        spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS24_01_spr.png",8,false,false,0,0);
+        bg_overlay_var = background_add(vanilla_directory_const+"\TEX\sprites\fog2_spr.png",false,false);
+        shadow_spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS24_02_spr.png",9,false,false,0,0);
+        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\tiri_01_snd.wav",true);
+        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\tiri_02_snd.wav",true);
+        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\tiri_03_snd.wav",true);
+        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\tiri_04_snd.wav",true);
+        switch theme_scr(global.tiri_theme_var,global.theme_var,1,0,0,1)
+        {
+            case 1: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\tiri_rom_mus_snd.ogg"); break; }
+            default: { mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\TIRSIAK_AMB.mp3"); break; }
+        }
+        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
     }
 ');
 // Destroy Event

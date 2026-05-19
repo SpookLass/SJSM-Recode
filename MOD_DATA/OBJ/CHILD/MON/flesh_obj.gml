@@ -356,47 +356,55 @@ Difference: "+string(local.newdelay)+"
         }
     }
     // Arrow
-    local.arrow = (arrow_var && instance_exists(flesh_arrow_obj));
-    if local.arrow
+    local.arrow = false;
+    if arrow_var
     {
-        with flesh_arrow_obj
+        if instance_exists(flesh_arrow_obj)
         {
-            par_var = other.id;
-            store_tex_var = other.arrow_tex_var;
-            tex_var = store_tex_var;
-            store_tex_02_var = other.arrow_base_tex_var;
-            tex_02_var = store_tex_02_var;
-            on_var = true;
-            visible = true;
-            inst_var = fmod_snd_3d_loop_scr(other.arrow_snd_var,x,y,z);
-            event_user(0);
+            with flesh_arrow_obj
+            {
+                par_var = other.id;
+                store_tex_var = other.arrow_tex_var;
+                tex_var = store_tex_var;
+                store_tex_02_var = other.arrow_base_tex_var;
+                tex_02_var = store_tex_02_var;
+                on_var = true;
+                visible = true;
+                inst_var = fmod_snd_3d_loop_scr(other.arrow_snd_var,x,y,z);
+                event_user(0);
+            }
+            with torch_obj
+            { instance_destroy(); }
+            with color_par_obj { instance_destroy(); }
+            with instance_create(0,0,flesh_color_obj)
+            {
+                par_var = other.id;
+                prio_var = 5;
+                event_user(0);
+            }
+            local.arrow = true;
         }
-        with torch_obj
-        { instance_destroy(); }
+    }
+    else if global.unlock_var >= 0
+    {
+        global.unlock_var = 1;
+        for (local.i=1; local.i<spawn_len_var; local.i+=1;)
+        {
+            if instance_exists(global.spawn_arr[local.i,4])
+            { global.spawn_arr[local.i,4].lock_var = (local.i != global.unlock_var); }
+        }
     }
     // Color
-    if color_prio_var > 0
+    if color_prio_var > 0 && !local.arrow
     {
-        with color_par_obj { if prio_var < other.color_prio_var { instance_destroy(); }}
+        with color_par_obj { if prio_var < other.color_prio_var  { instance_destroy(); }}
         if !instance_exists(color_par_obj)
         {
-            if local.arrow
+            with instance_create(0,0,bright_color_obj)
             {
-                with instance_create(0,0,flesh_color_obj)
-                {
-                    par_var = other.id;
-                    prio_var = other.color_prio_var;
-                    event_user(0);
-                }
-            }
-            else
-            {
-                with instance_create(0,0,bright_color_obj)
-                {
-                    par_var = other.id;
-                    prio_var = other.color_prio_var;
-                    event_user(0);
-                }
+                par_var = other.id;
+                prio_var = other.color_prio_var;
+                event_user(0);
             }
         }
     }

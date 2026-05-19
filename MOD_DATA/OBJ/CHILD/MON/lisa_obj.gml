@@ -87,6 +87,86 @@ object_event_add
     cyan_rand_max_var = 178.5;
     color_prio_var = 3;
     loop_fake_var = false;
+    // Behavior
+    if global.lisa_type_var == -1 { local.type = irandom(3); }
+    else { local.type = global.lisa_type_var; }
+    local.set = false;
+    switch local.type
+    {
+        case 3: // Alternate (Normal Loop)
+        { local.set = true; }
+        case 0: // Recode
+        {
+            dur_var = 35;
+            delay_var = 90;
+            dmg_alarm_var = 120;
+            type_var = 2;
+            vis_spd_var = 1;
+            seen_mult_var = 1;
+            seen_yaw_var = 60;
+            seen_pitch_var = 60;
+            player_spawn_var = true;
+            attack_tp_var = 2;
+            attack_alpha_var = true;
+            red_rand_var = true;
+            cyan_rand_min_var = 55;
+            cyan_rand_max_var = 155;
+            zone_end_var = 16;
+            js_chance_var = 2;
+            atk_range_var = global.mon_coll[2];
+            snd_dist_max_var = 300;
+            // Timing
+            start_var = 15;
+            js_start_var = 3;
+            js_end_var = 15;
+            red_start_var = 1;
+            red_end_var = 15;
+            vis_phase_end_var = 19;
+            amb_start_var = 5;
+            loop_start_var = 19; // Gotta be 1 early because pain
+            if !local.set { loop_fake_var = true; }
+            // Axe!
+            do_hurt_var = true;
+            hurt_snd_var = 3;
+            violence_var = 3;
+            break;
+        }
+        case 2: // HD
+        {
+            spd_base_var = 4/75; // 0.05r3
+            type_var = 2;
+            do_acc_var = false;
+            dmg_var = 15;
+            dmg_alarm_var = 120;
+            delay_min_var = 30;
+            delay_max_var = 60;
+            seen_mult_var = 1;
+            unseen_mult_var = 200/3; // 66.r6
+            vis_phase_var = false;
+            seen_alpha_rate_var = 1/300; // 0.00r3
+            player_spawn_var = true;
+            seen_yaw_var = 60;
+            attack_tp_var = false;
+            attack_alpha_var = 2;
+            snd_dist_max_var = 500;
+            vis_phase_end_var = -1;
+            atk_range_var = 32;
+            // Room stuffs
+            start_var = 16;
+            zone_end_var = 15;
+            js_start_var = 3;
+            js_end_var = 16;
+            loop_start_var = 19; // Gotta be 1 early because pain
+            red_start_var = 3;
+            red_end_var = -1;
+            red_rand_var = true;
+            amb_start_var = 7;
+            vis_phase_end_var = -1;
+            js_chance_var = 3;
+            note_rand_var = true;
+            break;
+        }
+    }
     // Assets
         // Search for existing assets to save memory
     local.loaded = false;
@@ -153,85 +233,6 @@ object_event_add
     tex_var = background_get_texture(bg_var);
     mus_snd_var = -1;
     head_mdl_var = head_mdl_arr[irandom(head_len_var-1)];
-    // Behavior
-    if global.lisa_type_var == -1 { local.type = irandom(3); }
-    else { local.type = global.lisa_type_var; }
-    local.set = false;
-    switch local.type
-    {
-        case 3: // Alternate (Normal Loop)
-        { local.set = true; }
-        case 0: // Recode
-        {
-            dur_var = 35;
-            delay_var = 90;
-            dmg_alarm_var = 120;
-            type_var = 2;
-            vis_spd_var = 1;
-            seen_mult_var = 1;
-            seen_yaw_var = 60;
-            seen_pitch_var = 60;
-            player_spawn_var = true;
-            attack_tp_var = 2;
-            attack_alpha_var = true;
-            red_rand_var = true;
-            cyan_rand_min_var = 55;
-            cyan_rand_max_var = 155;
-            zone_end_var = 16;
-            js_chance_var = 2;
-            atk_range_var = global.mon_coll[2];
-            // Timing
-            start_var = 15;
-            js_start_var = 3;
-            js_end_var = 15;
-            red_start_var = 1;
-            red_end_var = 15;
-            vis_phase_end_var = 19;
-            amb_start_var = 5;
-            loop_start_var = 19; // Gotta be 1 early because pain
-            if !local.set { loop_fake_var = true; }
-            // Axe!
-            do_hurt_var = true;
-            hurt_snd_var = 3;
-            violence_var = 3;
-            break;
-        }
-        case 2: // HD
-        {
-            spd_base_var = 4/75; // 0.05r3
-            type_var = 2;
-            do_acc_var = false;
-            dmg_var = 15;
-            dmg_alarm_var = 120;
-            delay_min_var = 30;
-            delay_max_var = 60;
-            seen_mult_var = 1;
-            unseen_mult_var = 200/3; // 66.r6
-            vis_phase_var = false;
-            seen_alpha_rate_var = 1/300; // 0.00r3
-            player_spawn_var = true;
-            seen_yaw_var = 60;
-            attack_tp_var = false;
-            attack_alpha_var = 2;
-            snd_dist_max_var = 500;
-            vis_phase_end_var = -1;
-            atk_range_var = 32;
-            // Room stuffs
-            start_var = 16;
-            zone_end_var = 15;
-            js_start_var = 3;
-            js_end_var = 16;
-            loop_start_var = 19; // Gotta be 1 early because pain
-            red_start_var = 3;
-            red_end_var = -1;
-            red_rand_var = true;
-            amb_start_var = 7;
-            vis_phase_end_var = -1;
-            js_chance_var = 3;
-            note_rand_var = true;
-            break;
-        }
-    }
     if zone_end_var > 0
     {
         global.zone_var = zone_list_var;

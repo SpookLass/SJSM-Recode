@@ -23,6 +23,7 @@ object_event_add
     set_var = false;
     state_var = 0;
     player_id_var = 0;
+    set_player_id_var = 0;
     preset_id_var = 0;
     has_set_var = 0;
     time_var = 0;
@@ -177,7 +178,7 @@ object_event_add
     if local.setid >= 0
     {
         if set_arr[local.setid,9] // Player Specific
-        { local.playerid = player_id_var; }
+        { local.playerid = set_player_id_var; }
     }
     else { control_listen_var = false; }
     // Control Listen
@@ -216,14 +217,14 @@ object_event_add
     else
     {
         // Scroll
-        local.input = input_menu_hold_y_scr(0);
+        local.input = input_menu_hold_y_scr(player_id_var);
         if local.input != 0
         {
             set_var = mod_scr(set_var-local.input,state_arr_var[state_var,0]);
             fmod_snd_play_scr(select_snd);
         }
         // Confirm
-        if global.input_press_arr[confirm_input_const,0]
+        if global.input_press_arr[confirm_input_const,player_id_var]
         {
             local.snd = true;
             if local.setid >= 0
@@ -309,7 +310,7 @@ object_event_add
                 }
                 global.last_time_var = current_time;
                 fmod_update_take_over_done_scr();
-                global.input_press_arr[confirm_input_const,0] = 0;
+                global.input_press_arr[confirm_input_const,player_id_var] = 0;
                 if local.set { has_set_var = true; }
             }
             else
@@ -321,7 +322,7 @@ object_event_add
                         if has_set_var
                         {
                             if show_message_ext(apply_question_str_var,yes_str_var,no_str_var,"") == 1 { event_user(0); }
-                            global.input_press_arr[confirm_input_const,0] = 0;
+                            global.input_press_arr[confirm_input_const,player_id_var] = 0;
                         }
                         break;
                     }
@@ -343,7 +344,7 @@ object_event_add
                                 if local.message == 1 { event_user(0); }
                                 global.last_time_var = current_time;
                                 fmod_update_take_over_done_scr();
-                                global.input_press_arr[confirm_input_const,0] = 0;
+                                global.input_press_arr[confirm_input_const,player_id_var] = 0;
                             }
                             if !local.dont
                             {
@@ -374,7 +375,7 @@ object_event_add
                         if show_message_ext(reset_question_str_var,yes_str_var,no_str_var,"") == 1 { event_user(1); }
                         global.last_time_var = current_time;
                         fmod_update_take_over_done_scr();
-                        global.input_press_arr[confirm_input_const,0] = 0;
+                        global.input_press_arr[confirm_input_const,player_id_var] = 0;
                         break;
                     }
                     case -5: // Load Preset
@@ -399,7 +400,7 @@ object_event_add
                         }
                         global.last_time_var = current_time;
                         fmod_update_take_over_done_scr();
-                        global.input_press_arr[confirm_input_const,0] = 0;
+                        global.input_press_arr[confirm_input_const,player_id_var] = 0;
                         break;
                     }
                     case -7: // Reboot Controllers
@@ -412,7 +413,7 @@ object_event_add
             if local.snd { fmod_snd_play_scr(confirm_snd); }
         }
         // Back
-        if input_press_arr[back_input_const,0]
+        if input_press_arr[back_input_const,player_id_var]
         {
             local.back = true;
             if local.setid >= 0
@@ -439,7 +440,7 @@ object_event_add
                         local.message = show_message_ext(back_question_str_var,yes_str_var,no_str_var,cancel_str_var);
                         if local.message == 0 || local.message == 3 { local.dont = true; }
                         if local.message == 1 { event_user(0); }
-                        global.input_press_arr[confirm_input_const,0] = 0;
+                        input_press_arr[back_input_const,player_id_var] = 0;
                     }
                     if !local.dont
                     {
@@ -465,7 +466,7 @@ object_event_add
                 }
             }
         }
-        local.input = input_menu_hold_x_scr(0);
+        local.input = input_menu_hold_x_scr(player_id_var);
         if local.input != 0
         {
             local.snd = true;
@@ -522,7 +523,7 @@ object_event_add
                 {
                     case -4: // Current Player
                     {
-                        player_id_var = mod_scr(player_id_var+local.input,8);
+                        set_player_id_var = mod_scr(set_player_id_var+local.input,8);
                         break;
                     }
                     case -5: // Load Preset
@@ -674,8 +675,8 @@ object_event_add
         {
             if !set_arr[local.i,9] || set_arr[local.i,4] == set_state_const { continue; } // If not player specific or category, skip.
             if !ini_key_exists("PLAYER",set_arr[local.i,0]) { continue; } // If key doesnt exist, skip.
-            if set_arr[local.i,4] == set_str_const { value_arr_var[local.i,player_id_var] = ini_read_string("PLAYER",set_arr[local.i,0],""); }
-            else { value_arr_var[local.i,player_id_var] = ini_read_real("PLAYER",set_arr[local.i,0],0); }
+            if set_arr[local.i,4] == set_str_const { value_arr_var[local.i,set_player_id_var] = ini_read_string("PLAYER",set_arr[local.i,0],""); }
+            else { value_arr_var[local.i,set_player_id_var] = ini_read_real("PLAYER",set_arr[local.i,0],0); }
         }
         ini_close();
         has_set_var = true;
@@ -717,7 +718,7 @@ object_event_add
                 if set_arr[local.setid,4] != set_state_const
                 {
                     
-                    if set_arr[local.setid,9] { local.playerid = player_id_var; }
+                    if set_arr[local.setid,9] { local.playerid = set_player_id_var; }
                     else { local.playerid = 0; }
                     switch set_arr[local.setid,4]
                     {
@@ -736,7 +737,7 @@ object_event_add
                 switch local.setid
                 {
                     // Player ID
-                    case -4: { local.str = string(player_id_var+1); break; }
+                    case -4: { local.str = string(set_player_id_var+1); break; }
                     // Load Preset (temp)
                     case -5:
                     {
@@ -783,7 +784,7 @@ object_event_add
     {
         if set_arr[local.setid,4] != set_state_const
         {
-            if set_arr[local.setid,9] { local.playerid = player_id_var; }
+            if set_arr[local.setid,9] { local.playerid = set_player_id_var; }
             else { local.playerid = 0; }
             switch set_arr[local.setid,4]
             {
@@ -808,7 +809,7 @@ object_event_add
         switch local.setid
         {
             // Player ID
-            case -4: { local.str = string(player_id_var+1); break; }
+            case -4: { local.str = string(set_player_id_var+1); break; }
             // Load Preset (temp)
             case -5:
             {

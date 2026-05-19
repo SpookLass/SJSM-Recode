@@ -34,7 +34,7 @@ object_event_add
     spr_spd_var = 1/6;
     spr_prog_var = 1;
     dur_var = 20;
-    delay_var = -64;
+    delay_var = 0; // -64
     dmg_var = 10;
     dmg_alarm_var = 30;
     atk_stun_var = 30;
@@ -48,6 +48,53 @@ object_event_add
     eye_color_var = c_white;
     atk_range_var = 48;
     dead_rm_var = otto_dead_rm;
+    // Behavior
+    if global.otto_type_var == -1 { local.type = irandom(3); }
+    else { local.type = global.otto_type_var; }
+    local.set = false;
+    switch local.type
+    {
+        case 0:
+        {
+            griddy_var = frac_chance_scr(1,1987);
+            mus_prio_var = mon_mus_prio_const;
+            eye_var = true;
+            atk_range_var = global.mon_coll[2];
+            snd_dist_max_var = 300;
+            // Hurt
+            do_hurt_var = true;
+            break;
+        }
+        case 3: // Old HD
+        {
+            dmg_var = 60;
+            delay_min_var = 90;
+            delay_max_var = 180;
+            local.set = true;
+        }
+        case 2: // HD
+        {
+            if !local.set
+            {
+                dmg_var = 15;
+                delay_min_var = 120;
+                delay_max_var = 240;
+            }
+            eye_var = true;
+            spr_spd_var = 1/15;
+            spd_base_var = 28/45; // 0.6r2
+            do_acc_var = true;
+            dmg_alarm_var = 180;
+            atk_stun_var = 0;
+            acc_var = 16/675; // 0.02r370
+            frick_var = acc_var;
+            atk_range_var = 4/pixel_meter_rate_const;
+            snd_den_var = 1;
+            snd_alarm_min_var = 90;
+            snd_alarm_max_var = 240;
+            break;
+        }
+    }
     // Assets
         // Search for existing assets to save memory
     local.loaded = false;
@@ -91,52 +138,6 @@ object_event_add
         fmod_snd_set_group_scr(hurt_snd_var[1],snd_group_mon_const);
     }
     eye_tex_var = sprite_get_texture(eye_spr_var,0);
-    // Behavior
-    if global.otto_type_var == -1 { local.type = irandom(3); }
-    else { local.type = global.otto_type_var; }
-    local.set = false;
-    switch local.type
-    {
-        case 0:
-        {
-            griddy_var = frac_chance_scr(1,1987);
-            mus_prio_var = mon_mus_prio_const;
-            eye_var = true;
-            atk_range_var = global.mon_coll[2];
-            // Hurt
-            do_hurt_var = true;
-            break;
-        }
-        case 3: // Old HD
-        {
-            dmg_var = 60;
-            delay_min_var = 90;
-            delay_max_var = 180;
-            local.set = true;
-        }
-        case 2: // HD
-        {
-            if !local.set
-            {
-                dmg_var = 15;
-                delay_min_var = 120;
-                delay_max_var = 240;
-            }
-            eye_var = true;
-            spr_spd_var = 1/15;
-            spd_base_var = 28/45; // 0.6r2
-            do_acc_var = true;
-            dmg_alarm_var = 180;
-            atk_stun_var = 0;
-            acc_var = 16/675; // 0.02r370
-            frick_var = acc_var;
-            atk_range_var = 4/pixel_meter_rate_const;
-            snd_den_var = 1;
-            snd_alarm_min_var = 90;
-            snd_alarm_max_var = 240;
-            break;
-        }
-    }
 ');
 // Room Start Event
 object_event_add

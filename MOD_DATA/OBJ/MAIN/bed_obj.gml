@@ -29,8 +29,18 @@ object_event_add
     // Color
     tone_var = choose(c_white,c_fuchsia,c_dkgray,c_teal,c_red);
     // Pillow
-    local.offset = (w_var/2)-3.5;
-    local.pillow = instance_create(x-lengthdir_x(local.offset,direction),y-lengthdir_y(local.offset,direction),pillow_obj);
-    local.pillow.z = z+h_var;
-    local.pillow.direction = direction;
+    pillow_var = instance_create(x,y,pillow_obj)
+    event_user(0);
+');
+// Readjust pillow
+object_event_add
+(argument0,ev_other,ev_user0,'
+    local.offset = (w_var*0.5)-3.5;
+    with pillow_var
+    {
+        direction = other.direction;
+        x = other.x-lengthdir_x(local.offset,direction)
+        y = other.y-lengthdir_y(local.offset,direction)
+        z = other.z+other.h_var;
+    }
 ');

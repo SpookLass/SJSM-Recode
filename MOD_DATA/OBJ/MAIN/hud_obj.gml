@@ -341,6 +341,7 @@ Movement
     Slide: "+string(par_var.did_slide_var)+"
 Misc
     Violence: "+string(par_var.violence_var)+"
+    Camera ID: "+string(par_var.cam_id_var)+"
 Looking
     Eye Yaw: "+string(par_var.eye_yaw_var)+"
     Eye Pitch: "+string(par_var.eye_pitch_var)+"

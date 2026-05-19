@@ -104,6 +104,8 @@ object_event_add
             deer_dist_var = 128;
             deer_wake_dist_var = 64;
             deer_den_var = 3;
+            snd_dist_max_var = 300; // Reduced
+            deer_snd_dist_max_var = 300;
             // Effect
             eff_min_var = 15;
             eff_max_var = 30;

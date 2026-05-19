@@ -31,7 +31,8 @@ object_event_add
     drag_snd_num_var = 1;
     drag_snd_den_var = 2;
     drag_snd_alarm_var = 120;
-    drag_snd_dist_var = 700;
+    drag_snd_dist_min_var = 0;
+    drag_snd_dist_max_var = 700;
     // Translations
     ini_open("lang_"+global.lang_var+".ini");
     name_var = translate_mon_str_scr("killer",global.name_var);
@@ -181,166 +182,6 @@ object_event_add
     spr_arr_var[14,2] = 11;
     spr_arr_var[15,1] = 11;
     spr_arr_var[15,2] = 11;
-    // Search for existing assets to save memory
-    local.loaded = false;
-    with object_index
-    {
-        if id != other.id && object_index == other.object_index
-        {
-            other.spr_arr_var[0,0] = spr_arr_var[0,0];
-            other.spr_arr_var[8,0] = spr_arr_var[8,0];
-            other.do_turn_var = do_turn_var;
-            if other.do_turn_var
-            {
-                other.spr_arr_var[1,0] = spr_arr_var[1,0];
-                other.spr_arr_var[2,0] = spr_arr_var[2,0];
-                other.spr_arr_var[3,0] = spr_arr_var[3,0];
-                other.spr_arr_var[4,0] = spr_arr_var[4,0];
-                other.spr_arr_var[5,0] = spr_arr_var[5,0];
-                other.spr_arr_var[6,0] = spr_arr_var[6,0];
-                other.spr_arr_var[7,0] = spr_arr_var[7,0];
-                other.spr_arr_var[9,0] = spr_arr_var[9,0];
-                other.spr_arr_var[10,0] = spr_arr_var[10,0];
-                other.spr_arr_var[11,0] = spr_arr_var[11,0];
-                other.spr_arr_var[12,0] = spr_arr_var[12,0];
-                other.spr_arr_var[13,0] = spr_arr_var[13,0];
-                other.spr_arr_var[14,0] = spr_arr_var[14,0];
-                other.spr_arr_var[15,0] = spr_arr_var[15,0];
-            }
-            for (local.i=0; local.i<snd_len_var; local.i+=1;)
-            { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
-            for (local.i=0; local.i<breath_snd_len_var; local.i+=1;)
-            { other.breath_snd_arr[local.i,0] = breath_snd_arr[local.i,0]; }
-            for (local.i=0; local.i<drag_snd_len_var; local.i+=1;)
-            { other.drag_snd_arr[local.i,0] = drag_snd_arr[local.i,0]; }
-            for (local.i=0; local.i<charge_snd_len_var; local.i+=1;)
-            { other.charge_snd_arr[local.i,0] = charge_snd_arr[local.i,0]; }
-            other.wake_snd_var[1] = wake_snd_var[1];
-            other.loop_snd_var[1] = loop_snd_var[1];
-            other.hide_mus_snd_var = hide_mus_snd_var;
-            other.main_mus_snd_var = main_mus_snd_var;
-            local.loaded = true;
-            break;
-        }
-    }
-    // If no existing assets were found, load them
-    if !local.loaded
-    {
-        spr_arr_var[0,0] = sprite_add(vanilla_directory_const+"\TEX\sprites\MS10_05_spr.png",15,false,false,0,0);
-        spr_arr_var[8,0] = sprite_add(main_directory_const+"\SPR\MON\killer_sprint_01_spr.png",15,false,false,0,0);
-        do_turn_var = !global.mem_save_var;
-        if do_turn_var
-        {
-            spr_arr_var[1,0] = sprite_add(vanilla_directory_const+"\TEX\sprites\MS10_06_spr.png",15,false,false,0,0);
-            spr_arr_var[2,0] = sprite_add(vanilla_directory_const+"\TEX\sprites\MS10_07_spr.png",15,false,false,0,0);
-            spr_arr_var[3,0] = sprite_add(vanilla_directory_const+"\TEX\sprites\MS10_08_spr.png",15,false,false,0,0);
-            spr_arr_var[4,0] = sprite_add(vanilla_directory_const+"\TEX\sprites\MS10_01_spr.png",15,false,false,0,0);
-            spr_arr_var[5,0] = sprite_add(vanilla_directory_const+"\TEX\sprites\MS10_02_spr.png",15,false,false,0,0);
-            spr_arr_var[6,0] = sprite_add(vanilla_directory_const+"\TEX\sprites\MS10_03_spr.png",15,false,false,0,0);
-            spr_arr_var[7,0] = sprite_add(vanilla_directory_const+"\TEX\sprites\MS10_04_spr.png",15,false,false,0,0);
-            spr_arr_var[9,0] = sprite_add(main_directory_const+"\SPR\MON\killer_sprint_02_spr.png",15,false,false,0,0);
-            spr_arr_var[10,0] = sprite_add(main_directory_const+"\SPR\MON\killer_sprint_03_spr.png",15,false,false,0,0);
-            spr_arr_var[11,0] = sprite_add(main_directory_const+"\SPR\MON\killer_sprint_04_spr.png",15,false,false,0,0);
-            spr_arr_var[12,0] = sprite_add(main_directory_const+"\SPR\MON\killer_sprint_05_spr.png",15,false,false,0,0);
-            spr_arr_var[13,0] = sprite_add(main_directory_const+"\SPR\MON\killer_sprint_06_spr.png",15,false,false,0,0);
-            spr_arr_var[14,0] = sprite_add(main_directory_const+"\SPR\MON\killer_sprint_07_spr.png",15,false,false,0,0);
-            spr_arr_var[15,0] = sprite_add(main_directory_const+"\SPR\MON\killer_sprint_08_spr.png",15,false,false,0,0);
-        }
-        switch global.killer_voice_var
-        {
-            case 0: // Vernon Shaw
-            {
-                snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_01_snd.wav",true);
-                snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_02_snd.wav",true);
-                snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_03_snd.wav",true);
-                breath_snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_breath_01_snd.wav",true);
-                breath_snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_breath_02_snd.wav",true);
-                wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\stab_11_snd.wav",global.wake_3d_var);
-                charge_snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\stab_11_snd.wav",true);
-                break;
-            }
-            case 1: // DirectorFlik
-            {
-                snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_hd_01_snd.wav",true);
-                snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_hd_02_snd.wav",true);
-                snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_hd_03_snd.wav",true);
-                snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_hd_04_snd.wav",true);
-                snd_arr[4,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_hd_05_snd.wav",true);
-                snd_arr[5,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_hd_06_snd.wav",true);
-                snd_arr[6,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_hd_07_snd.wav",true);
-                snd_arr[7,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_hd_08_snd.wav",true);
-                snd_arr[8,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_hd_09_snd.wav",true);
-                breath_snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_breath_hd_01_snd.wav",true);
-                breath_snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_breath_hd_02_snd.wav",true);
-                wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\stab_11_snd.wav",global.wake_3d_var);
-                charge_snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\stab_11_snd.wav",true);
-                break;
-            }
-            case 2: // Spook Lass
-            {
-                snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_lass_01_snd.wav",true);
-                snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_lass_02_snd.wav",true);
-                snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_lass_08_snd.wav",true);
-                snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_lass_09_snd.wav",true);
-                breath_snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_breath_lass_01_snd.wav",true);
-                breath_snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_breath_lass_02_snd.wav",true);
-                breath_snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_breath_lass_03_snd.wav",true);
-                wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\stab_11_snd.wav",global.wake_3d_var);
-                charge_snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\stab_11_snd.wav",true);
-                break;
-            }
-            case 3:
-            {
-                snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_ryan_01_snd.wav",true);
-                snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_ryan_02_snd.wav",true);
-                snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_ryan_03_snd.wav",true);
-                snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_ryan_04_snd.wav",true);
-                snd_arr[4,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_ryan_05_snd.wav",true);
-                snd_arr[5,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_ryan_06_snd.wav",true);
-                snd_arr[6,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_ryan_07_snd.wav",true);
-                snd_arr[7,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_ryan_08_snd.wav",true);
-                breath_snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_mumble_ryan_01_snd.wav",true);
-                breath_snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_mumble_ryan_02_snd.wav",true);
-                breath_snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_mumble_ryan_03_snd.wav",true);
-                wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_ryan_05_snd.wav",global.wake_3d_var);
-                charge_snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_charge_ryan_01_snd.wav",true);
-                charge_snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_charge_ryan_02_snd.wav",true);
-                charge_snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_charge_ryan_03_snd.wav",true);
-                break;
-            }
-        }
-        drag_snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_drag_01_snd.wav",true);
-        drag_snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_drag_02_snd.wav",true);
-        drag_snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_drag_03_snd.wav",true);
-        loop_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_loop_snd.wav",true);
-        for (local.i=0; local.i<breath_snd_len_var; local.i+=1;)
-        {
-            fmod_snd_set_minmax_dist_scr(breath_snd_arr[local.i,0],0,snd_dist_max_var);
-            fmod_snd_set_group_scr(breath_snd_arr[local.i,0],snd_group_mon_const);
-        }
-        for (local.i=0; local.i<drag_snd_len_var; local.i+=1;)
-        {
-            fmod_snd_set_minmax_dist_scr(drag_snd_arr[local.i,0],0,drag_snd_dist_var);
-            fmod_snd_set_group_scr(drag_snd_arr[local.i,0],snd_group_mon_const);
-        }
-        for (local.i=0; local.i<charge_snd_len_var; local.i+=1;)
-        {
-            fmod_snd_set_minmax_dist_scr(charge_snd_arr[local.i,0],0,snd_dist_max_var);
-            fmod_snd_set_group_scr(charge_snd_arr[local.i,0],snd_group_mon_const);
-        }
-        hide_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_hide_mus_snd.mp3");
-        fmod_snd_set_group_scr(hide_mus_snd_var,snd_group_mus_const);
-        switch theme_scr(global.killer_theme_var,global.theme_var,1,0,0,1)
-        {
-            case 1: { main_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\killer_rom_mus_snd.ogg"); break; }
-            default: { main_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_mus_snd.mp3"); break; }
-        }
-        fmod_snd_set_group_scr(main_mus_snd_var,snd_group_mus_const);
-    }
-    spr_var = spr_arr_var[0,0];
-    w_01_var = spr_arr_var[0,1];
-    w_02_var = spr_arr_var[0,2];
-    w_var = w_01_var+w_02_var;
     // Behavior
     if global.killer_type_var == -1 { local.type = irandom(7); }
     else { local.type = global.killer_type_var; }
@@ -375,6 +216,8 @@ object_event_add
             atk_range_var = global.mon_coll[2];
             breath_snd_num_var = 0;
             hurt_stam_var = 20;
+            snd_dist_max_var = 300;
+            drag_snd_dist_max_var = 400;
             // Parry
             do_hurt_var = true;
             hurt_snd_var = 3;
@@ -474,6 +317,167 @@ object_event_add
     spr_spd_var = spr_spd_base_var;
     z_off_var = z_off_base_var;
     h_var = h_base_var;
+    // Assets
+        // Search for existing assets to save memory
+    local.loaded = false;
+    with object_index
+    {
+        if id != other.id && object_index == other.object_index
+        {
+            other.spr_arr_var[0,0] = spr_arr_var[0,0];
+            other.spr_arr_var[8,0] = spr_arr_var[8,0];
+            other.do_turn_var = do_turn_var;
+            if other.do_turn_var
+            {
+                other.spr_arr_var[1,0] = spr_arr_var[1,0];
+                other.spr_arr_var[2,0] = spr_arr_var[2,0];
+                other.spr_arr_var[3,0] = spr_arr_var[3,0];
+                other.spr_arr_var[4,0] = spr_arr_var[4,0];
+                other.spr_arr_var[5,0] = spr_arr_var[5,0];
+                other.spr_arr_var[6,0] = spr_arr_var[6,0];
+                other.spr_arr_var[7,0] = spr_arr_var[7,0];
+                other.spr_arr_var[9,0] = spr_arr_var[9,0];
+                other.spr_arr_var[10,0] = spr_arr_var[10,0];
+                other.spr_arr_var[11,0] = spr_arr_var[11,0];
+                other.spr_arr_var[12,0] = spr_arr_var[12,0];
+                other.spr_arr_var[13,0] = spr_arr_var[13,0];
+                other.spr_arr_var[14,0] = spr_arr_var[14,0];
+                other.spr_arr_var[15,0] = spr_arr_var[15,0];
+            }
+            for (local.i=0; local.i<snd_len_var; local.i+=1;)
+            { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
+            for (local.i=0; local.i<breath_snd_len_var; local.i+=1;)
+            { other.breath_snd_arr[local.i,0] = breath_snd_arr[local.i,0]; }
+            for (local.i=0; local.i<drag_snd_len_var; local.i+=1;)
+            { other.drag_snd_arr[local.i,0] = drag_snd_arr[local.i,0]; }
+            for (local.i=0; local.i<charge_snd_len_var; local.i+=1;)
+            { other.charge_snd_arr[local.i,0] = charge_snd_arr[local.i,0]; }
+            other.wake_snd_var[1] = wake_snd_var[1];
+            other.loop_snd_var[1] = loop_snd_var[1];
+            other.hide_mus_snd_var = hide_mus_snd_var;
+            other.main_mus_snd_var = main_mus_snd_var;
+            local.loaded = true;
+            break;
+        }
+    }
+        // If no existing assets were found, load them
+    if !local.loaded
+    {
+        spr_arr_var[0,0] = sprite_add(vanilla_directory_const+"\TEX\sprites\MS10_05_spr.png",15,false,false,0,0);
+        spr_arr_var[8,0] = sprite_add(main_directory_const+"\SPR\MON\killer_sprint_01_spr.png",15,false,false,0,0);
+        do_turn_var = !global.mem_save_var;
+        if do_turn_var
+        {
+            spr_arr_var[1,0] = sprite_add(vanilla_directory_const+"\TEX\sprites\MS10_06_spr.png",15,false,false,0,0);
+            spr_arr_var[2,0] = sprite_add(vanilla_directory_const+"\TEX\sprites\MS10_07_spr.png",15,false,false,0,0);
+            spr_arr_var[3,0] = sprite_add(vanilla_directory_const+"\TEX\sprites\MS10_08_spr.png",15,false,false,0,0);
+            spr_arr_var[4,0] = sprite_add(vanilla_directory_const+"\TEX\sprites\MS10_01_spr.png",15,false,false,0,0);
+            spr_arr_var[5,0] = sprite_add(vanilla_directory_const+"\TEX\sprites\MS10_02_spr.png",15,false,false,0,0);
+            spr_arr_var[6,0] = sprite_add(vanilla_directory_const+"\TEX\sprites\MS10_03_spr.png",15,false,false,0,0);
+            spr_arr_var[7,0] = sprite_add(vanilla_directory_const+"\TEX\sprites\MS10_04_spr.png",15,false,false,0,0);
+            spr_arr_var[9,0] = sprite_add(main_directory_const+"\SPR\MON\killer_sprint_02_spr.png",15,false,false,0,0);
+            spr_arr_var[10,0] = sprite_add(main_directory_const+"\SPR\MON\killer_sprint_03_spr.png",15,false,false,0,0);
+            spr_arr_var[11,0] = sprite_add(main_directory_const+"\SPR\MON\killer_sprint_04_spr.png",15,false,false,0,0);
+            spr_arr_var[12,0] = sprite_add(main_directory_const+"\SPR\MON\killer_sprint_05_spr.png",15,false,false,0,0);
+            spr_arr_var[13,0] = sprite_add(main_directory_const+"\SPR\MON\killer_sprint_06_spr.png",15,false,false,0,0);
+            spr_arr_var[14,0] = sprite_add(main_directory_const+"\SPR\MON\killer_sprint_07_spr.png",15,false,false,0,0);
+            spr_arr_var[15,0] = sprite_add(main_directory_const+"\SPR\MON\killer_sprint_08_spr.png",15,false,false,0,0);
+        }
+        switch global.killer_voice_var
+        {
+            case 0: // Vernon Shaw
+            {
+                snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_01_snd.wav",true);
+                snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_02_snd.wav",true);
+                snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_03_snd.wav",true);
+                breath_snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_breath_01_snd.wav",true);
+                breath_snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_breath_02_snd.wav",true);
+                wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\stab_11_snd.wav",global.wake_3d_var);
+                charge_snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\stab_11_snd.wav",true);
+                break;
+            }
+            case 1: // DirectorFlik
+            {
+                snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_hd_01_snd.wav",true);
+                snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_hd_02_snd.wav",true);
+                snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_hd_03_snd.wav",true);
+                snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_hd_04_snd.wav",true);
+                snd_arr[4,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_hd_05_snd.wav",true);
+                snd_arr[5,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_hd_06_snd.wav",true);
+                snd_arr[6,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_hd_07_snd.wav",true);
+                snd_arr[7,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_hd_08_snd.wav",true);
+                snd_arr[8,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_hd_09_snd.wav",true);
+                breath_snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_breath_hd_01_snd.wav",true);
+                breath_snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_breath_hd_02_snd.wav",true);
+                wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\stab_11_snd.wav",global.wake_3d_var);
+                charge_snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\stab_11_snd.wav",true);
+                break;
+            }
+            case 2: // Spook Lass
+            {
+                snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_lass_01_snd.wav",true);
+                snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_lass_02_snd.wav",true);
+                snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_lass_08_snd.wav",true);
+                snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_lass_09_snd.wav",true);
+                breath_snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_breath_lass_01_snd.wav",true);
+                breath_snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_breath_lass_02_snd.wav",true);
+                breath_snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_breath_lass_03_snd.wav",true);
+                wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\stab_11_snd.wav",global.wake_3d_var);
+                charge_snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\stab_11_snd.wav",true);
+                break;
+            }
+            case 3:
+            {
+                snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_ryan_01_snd.wav",true);
+                snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_ryan_02_snd.wav",true);
+                snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_ryan_03_snd.wav",true);
+                snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_ryan_04_snd.wav",true);
+                snd_arr[4,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_ryan_05_snd.wav",true);
+                snd_arr[5,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_ryan_06_snd.wav",true);
+                snd_arr[6,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_ryan_07_snd.wav",true);
+                snd_arr[7,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_ryan_08_snd.wav",true);
+                breath_snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_mumble_ryan_01_snd.wav",true);
+                breath_snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_mumble_ryan_02_snd.wav",true);
+                breath_snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_mumble_ryan_03_snd.wav",true);
+                wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_ryan_05_snd.wav",global.wake_3d_var);
+                charge_snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_charge_ryan_01_snd.wav",true);
+                charge_snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_charge_ryan_02_snd.wav",true);
+                charge_snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_charge_ryan_03_snd.wav",true);
+                break;
+            }
+        }
+        drag_snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_drag_01_snd.wav",true);
+        drag_snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_drag_02_snd.wav",true);
+        drag_snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_drag_03_snd.wav",true);
+        loop_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_loop_snd.wav",true);
+        for (local.i=0; local.i<breath_snd_len_var; local.i+=1;)
+        {
+            fmod_snd_set_minmax_dist_scr(breath_snd_arr[local.i,0],snd_dist_min_var,snd_dist_max_var);
+            fmod_snd_set_group_scr(breath_snd_arr[local.i,0],snd_group_mon_const);
+        }
+        for (local.i=0; local.i<drag_snd_len_var; local.i+=1;)
+        {
+            fmod_snd_set_minmax_dist_scr(drag_snd_arr[local.i,0],drag_snd_dist_min_var,drag_snd_dist_max_var);
+            fmod_snd_set_group_scr(drag_snd_arr[local.i,0],snd_group_mon_const);
+        }
+        for (local.i=0; local.i<charge_snd_len_var; local.i+=1;)
+        {
+            fmod_snd_set_minmax_dist_scr(charge_snd_arr[local.i,0],snd_dist_min_var,snd_dist_max_var);
+            fmod_snd_set_group_scr(charge_snd_arr[local.i,0],snd_group_mon_const);
+        }
+        hide_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_hide_mus_snd.mp3");
+        fmod_snd_set_group_scr(hide_mus_snd_var,snd_group_mus_const);
+        switch theme_scr(global.killer_theme_var,global.theme_var,1,0,0,1)
+        {
+            case 1: { main_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\killer_rom_mus_snd.ogg"); break; }
+            default: { main_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\killer_mus_snd.mp3"); break; }
+        }
+        fmod_snd_set_group_scr(main_mus_snd_var,snd_group_mus_const);
+    }
+    spr_var = spr_arr_var[0,0];
+    w_01_var = spr_arr_var[0,1];
+    w_02_var = spr_arr_var[0,2];
+    w_var = w_01_var+w_02_var;
     if !irandom(1) { mus_snd_var = hide_mus_snd_var; }
     else { mus_snd_var = main_mus_snd_var; }
     // Alarms

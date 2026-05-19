@@ -56,6 +56,65 @@ object_event_add
     color_prio_var = 1;
     fog_prio_var = 1;
     reflect_var= -1;
+    // Behavior
+    if global.wf_type_var == -1 { local.type = irandom(7); }
+    else { local.type = global.wf_type_var; }
+    local.set = false;
+    switch local.type
+    {
+        case 7: // Imscared Recode
+        case 6: // Mayas Idea
+        case 0: // Recode
+        {
+            atk_range_var = global.mon_coll[2];
+            delay_var = 30;
+            loop_snd_dist_max_var = 300;
+            // Smaller Resolution
+            res_w_var = 640;
+            res_h_var = 480;
+            break;
+        }
+        case 4: // Old HD
+        {
+            dmg_var = 60;
+            dmg_alarm_var = 180;
+            local.set = true;
+        }
+        case 2: // HD
+        {
+            if !local.set
+            {
+                dmg_var = 30;
+                dmg_alarm_var = 60;
+            }
+            delay_min_var = 90;
+            delay_max_var = 180;
+            dur_var = 14;
+            boss_var = false;
+            // Movement
+            type_var = 2;
+            spd_base_var = 4/pf_ms_rate_const;
+            do_acc_var = true;
+            acc_var = 16/675; // 0.02r370
+            frick_var = acc_var;
+            // Uhh
+            atk_range_var = 4/pixel_meter_rate_const;
+            spr_spd_var = 1/6; // 0.1r6 I think
+            // Effects
+            res_var = false;
+            do_fog_var = false;
+            door_trig_var = false;
+            // Estimates
+            w_var = 8;
+            h_var = 11;
+            z_off_base_var = 12;
+            // Autobrake (close enough)
+            autobrake_var = true;
+            autobrake_spd_var = 0;
+            autobrake_dir_var = 60;
+            break;
+        }
+    }
     // Assets
         // Search for existing assets to save memory
     local.loaded = false;
@@ -118,64 +177,6 @@ object_event_add
     }
     tex_02_var = background_get_texture(bg_var);
     web_tex_var = background_get_texture(web_bg_var);
-    // Behavior
-    if global.wf_type_var == -1 { local.type = irandom(7); }
-    else { local.type = global.wf_type_var; }
-    local.set = false;
-    switch local.type
-    {
-        case 7: // Imscared Recode
-        case 6: // Mayas Idea
-        case 0: // Recode
-        {
-            atk_range_var = global.mon_coll[2];
-            delay_var = 30;
-            // Smaller Resolution
-            res_w_var = 640;
-            res_h_var = 480;
-            break;
-        }
-        case 4: // Old HD
-        {
-            dmg_var = 60;
-            dmg_alarm_var = 180;
-            local.set = true;
-        }
-        case 2: // HD
-        {
-            if !local.set
-            {
-                dmg_var = 30;
-                dmg_alarm_var = 60;
-            }
-            delay_min_var = 90;
-            delay_max_var = 180;
-            dur_var = 14;
-            boss_var = false;
-            // Movement
-            type_var = 2;
-            spd_base_var = 4/pf_ms_rate_const;
-            do_acc_var = true;
-            acc_var = 16/675; // 0.02r370
-            frick_var = acc_var;
-            // Uhh
-            atk_range_var = 4/pixel_meter_rate_const;
-            spr_spd_var = 1/6; // 0.1r6 I think
-            // Effects
-            res_var = false;
-            do_fog_var = false;
-            door_trig_var = false;
-            // Estimates
-            w_var = 8;
-            h_var = 11;
-            z_off_base_var = 12;
-            // Autobrake (close enough)
-            autobrake_var = true;
-            autobrake_spd_var = 0;
-            autobrake_dir_var = 60;
-            break;
-        }
-    }
     if zone_var
     {
         global.zone_var = zone_list_var;

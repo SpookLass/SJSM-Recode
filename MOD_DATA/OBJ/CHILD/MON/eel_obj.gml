@@ -49,6 +49,80 @@ object_event_add
     violence_var = 3;
     // Theme
     mus_prio_var = mon_mus_prio_const;
+    // Body
+    bod_len_var = 6;
+    bod_taper_var = 3;
+    bod_dist_var = 12;
+    bod_scale_var = 0.875;
+    bod_form_var = false;
+    bod_spr_spd_var = 1/6; // 0.1r6
+    bod_w_var[0] = 16;
+    bod_h_var[0] = 12;
+    bod_z_off_var[0] = 4;
+    bod_w_var[1] = 16;
+    bod_h_var[1] = 12;
+    bod_z_off_var[1] = 4;
+    bod_w_var[2] = 16;
+    bod_h_var[2] = 12;
+    bod_z_off_var[2] = 4;
+    bod_w_var[3] = 14;
+    bod_h_var[3] = 12;
+    bod_z_off_var[3] = 3;
+    bod_w_var[4] = 12;
+    bod_h_var[4] = 12;
+    bod_z_off_var[4] = 2;
+    bod_w_var[5] = 10;
+    bod_h_var[5] = 10;
+    bod_z_off_var[5] = 2;
+    // Behavior
+    if global.eel_type_var == -1 { local.type = irandom(3); }
+    else { local.type = global.eel_type_var; }
+    switch local.type
+    {
+        case 0: // Recode
+        {
+            delay_var = 60;
+            bod_form_var = true;
+            atk_range_var = global.mon_coll[2];
+            violence_var = 0;
+            snd_dist_max_var = 300;
+            // New
+            spd_base_var = 1.1; // 1.7
+            stun_var = true;
+            hurt_alarm_var = 60; // 60
+            break;
+        }
+        case 2: // HD (Pretend)
+        {
+            dur_var = irandom_range(10,15);
+            atk_range_var = 32;
+            // Alarms
+            delay_min_var = 90;
+            delay_max_var = 180;
+            dmg_alarm_var = 180;
+            // Sound
+            snd_alarm_min_var = 90;
+            snd_alarm_max_var = 240;
+            snd_den_var = 1;
+            snd_dist_max_var = 500;
+            // Acceleration (HD Moment)
+            spd_var = 16/45; // 0.3r5
+            do_acc_var = true;
+            acc_var = 8/225; // 0.03r5
+            frick_var = acc_var;
+            // Autobrake (close enough)
+            autobrake_var = true;
+            autobrake_spd_var = 0;
+            autobrake_dir_var = 60;
+            break;
+        }
+        case 3: // Remodeled
+        {
+            delay_var = 112;
+            spd_base_var = 2;
+            break;
+        }
+    }
     // Assets
         // Search for existing assets to save memory
     local.loaded = false;
@@ -98,78 +172,6 @@ object_event_add
         fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
     }
     // Body
-    bod_len_var = 6;
-    bod_taper_var = 3;
-    bod_dist_var = 12;
-    bod_scale_var = 0.875;
-    bod_form_var = false;
-    bod_spr_spd_var = 1/6; // 0.1r6
-    bod_w_var[0] = 16;
-    bod_h_var[0] = 12;
-    bod_z_off_var[0] = 4;
-    bod_w_var[1] = 16;
-    bod_h_var[1] = 12;
-    bod_z_off_var[1] = 4;
-    bod_w_var[2] = 16;
-    bod_h_var[2] = 12;
-    bod_z_off_var[2] = 4;
-    bod_w_var[3] = 14;
-    bod_h_var[3] = 12;
-    bod_z_off_var[3] = 3;
-    bod_w_var[4] = 12;
-    bod_h_var[4] = 12;
-    bod_z_off_var[4] = 2;
-    bod_w_var[5] = 10;
-    bod_h_var[5] = 10;
-    bod_z_off_var[5] = 2;
-    // Behavior
-    if global.eel_type_var == -1 { local.type = irandom(3); }
-    else { local.type = global.eel_type_var; }
-    switch local.type
-    {
-        case 0: // Recode
-        {
-            delay_var = 30;
-            bod_form_var = true;
-            atk_range_var = global.mon_coll[2];
-            violence_var = 0;
-            // New
-            spd_base_var = 1.1; // 1.7
-            stun_var = true;
-            hurt_alarm_var = 60; // 60
-            break;
-        }
-        case 2: // HD (Pretend)
-        {
-            dur_var = irandom_range(10,15);
-            atk_range_var = 32;
-            // Alarms
-            delay_min_var = 90;
-            delay_max_var = 180;
-            dmg_alarm_var = 180;
-            // Sound
-            snd_alarm_min_var = 90;
-            snd_alarm_max_var = 240;
-            snd_den_var = 1;
-            snd_dist_max_var = 500;
-            // Acceleration (HD Moment)
-            spd_var = 16/45; // 0.3r5
-            do_acc_var = true;
-            acc_var = 8/225; // 0.03r5
-            frick_var = acc_var;
-            // Autobrake (close enough)
-            autobrake_var = true;
-            autobrake_spd_var = 0;
-            autobrake_dir_var = 60;
-            break;
-        }
-        case 3: // Remodeled
-        {
-            delay_var = 112;
-            spd_base_var = 2;
-            break;
-        }
-    }
     if bod_form_var
     {
         for (local.i=0; local.i<bod_len_var; local.i+=1;)

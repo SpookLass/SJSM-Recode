@@ -118,6 +118,7 @@ object_event_add
             blood_spr_var = blood_kh_spr;
             atk_range_var = coll_var[2];
             autobrake_var = true;
+            snd_dist_max_var = 300;
             break;
         }
         case 4: // Karamari HD

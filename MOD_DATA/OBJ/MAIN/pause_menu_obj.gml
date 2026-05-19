@@ -158,13 +158,30 @@ object_event_add
                 case 2: // Exit to Menu
                 {
                     if no_escape_var { fmod_snd_play_scr(deny_snd);}
-                    else { rm_goto_menu_scr(menu_rm,true); }
+                    else
+                    {
+                        fmod_update_take_over_when_lock_scr();
+                        global.input_arr[confirm_input_const,player_id_var] = false;
+                        if show_question(button_arr[button_state_var]+"?")
+                        { rm_goto_menu_scr(menu_rm,true); }
+                        global.last_time_var = current_time;
+                        fmod_update_take_over_done_scr();
+                        global.input_press_arr[confirm_input_const,player_id_var] = 0;
+                    }
                     break;
                 }
                 case 3: // Quit
                 {
                     if no_escape_var { fmod_snd_play_scr(deny_snd);}
-                    else { game_end(); }
+                    else
+                    {
+                        fmod_update_take_over_when_lock_scr();
+                        if show_question(button_arr[button_state_var]+"?")
+                        { game_end(); }
+                        global.last_time_var = current_time;
+                        fmod_update_take_over_done_scr();
+                        global.input_press_arr[confirm_input_const,player_id_var] = 0;
+                    }
                     break;
                 }
             }

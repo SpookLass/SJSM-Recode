@@ -79,6 +79,7 @@ object_event_add
         case 0: // Recode
         {
             atk_range_var = global.mon_coll[2];
+            snd_dist_max_var = 300;
             break;
         }
         case 6: // Hellgate HD

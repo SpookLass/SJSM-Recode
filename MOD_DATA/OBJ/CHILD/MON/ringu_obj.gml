@@ -45,6 +45,52 @@ object_event_add
     hurt_snd_den_var = 2;
     // Theme
     mus_prio_var = theme_mus_prio_const;
+    // Laugh
+    do_hurt_var = true;
+    violence_var = 3;
+    // Behavior
+    if global.ringu_type_var == -1 { local.type = irandom(3); }
+    else { local.type = global.ringu_type_var; }
+    switch local.type
+    {
+        case 0:
+        {
+            dmg_var = 30;
+            atk_range_var = global.mon_coll[2];
+            hurt_snd_num_var = 1;
+            hurt_snd_den_var = 1;
+            delay_var = 30;
+            snd_dist_max_var = 300;
+            // Silhouette
+            sil_var = true;
+            sil_type_var = 1; // Pure color
+            sil_color_var = c_black;
+            sil_alpha_var = 0.2;
+            sil_dist_var = 0.1;
+            break;
+        }
+        case 3: // Old HD
+        {
+            spd_base_var = 44/45; // 0.9r7
+        }
+        case 2: // HD
+        {
+            dur_var = irandom_range(10,15);
+            dmg_alarm_var = 180;
+            delay_min_var = 90;
+            delay_max_var = 180;
+            do_enter_var = true;
+            atk_range_var = 32;
+            hurt_snd_num_var = 1;
+            hurt_snd_den_var = 1;
+            // Sound
+            snd_alarm_min_var = 90;
+            snd_alarm_max_var = 240;
+            snd_den_var = 1;
+            snd_dist_max_var = 500;
+            break;
+        }
+    }
     // Assets
         // Search for existing assets to save memory
     local.loaded = false;
@@ -82,51 +128,6 @@ object_event_add
         hurt_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_laugh_snd.wav",true);
         fmod_snd_set_minmax_dist_scr(hurt_snd_var[1],0,snd_dist_max_var);
         fmod_snd_set_group_scr(hurt_snd_var[1],snd_group_mon_const);
-    }
-    // Laugh
-    do_hurt_var = true;
-    violence_var = 3;
-    // Behavior
-    if global.ringu_type_var == -1 { local.type = irandom(3); }
-    else { local.type = global.ringu_type_var; }
-    switch local.type
-    {
-        case 0:
-        {
-            dmg_var = 30;
-            atk_range_var = global.mon_coll[2];
-            hurt_snd_num_var = 1;
-            hurt_snd_den_var = 1;
-            delay_var = 30;
-            // Silhouette
-            sil_var = true;
-            sil_type_var = 1; // Pure color
-            sil_color_var = c_black;
-            sil_alpha_var = 0.2;
-            sil_dist_var = 0.1;
-            break;
-        }
-        case 3: // Old HD
-        {
-            spd_base_var = 44/45; // 0.9r7
-        }
-        case 2: // HD
-        {
-            dur_var = irandom_range(10,15);
-            dmg_alarm_var = 180;
-            delay_min_var = 90;
-            delay_max_var = 180;
-            do_enter_var = true;
-            atk_range_var = 32;
-            hurt_snd_num_var = 1;
-            hurt_snd_den_var = 1;
-            // Sound
-            snd_alarm_min_var = 90;
-            snd_alarm_max_var = 240;
-            snd_den_var = 1;
-            snd_dist_max_var = 500;
-            break;
-        }
     }
 ');
 // Destroy Event

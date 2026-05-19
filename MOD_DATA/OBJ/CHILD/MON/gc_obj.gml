@@ -47,69 +47,6 @@ object_event_add
     coll_var[2] = global.mon_wide_coll[2];
     // Theme
     mus_prio_var = theme_mus_prio_const;
-    // Assets
-        // Search for existing assets to save memory
-    local.loaded = false;
-    with object_index
-    {
-        if id != other.id && object_index == other.object_index
-        {
-            other.bg_var = bg_var;
-            other.mdl_var = mdl_var;
-            other.wall_bg_var = wall_bg_var;
-            other.floor_bg_var = floor_bg_var;
-            other.light_wall_spr_var = light_wall_spr_var;
-            other.light_floor_spr_var = light_floor_spr_var;
-            other.eff_bg_var = eff_bg_var;
-            other.fog_bg_var = fog_bg_var;
-            for (local.i=0; local.i<snd_len_var; local.i+=1;)
-            { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
-            for (local.i=0; local.i<glitch_snd_len_var; local.i+=1;)
-            { other.glitch_snd_arr[local.i] = glitch_snd_arr[local.i]; }
-            for (local.i=0; local.i<dmg_snd_len_var; local.i+=1;)
-            { other.dmg_snd_arr[local.i,0] = dmg_snd_arr[local.i,0]; }
-            other.scare_snd_var = scare_snd_var;
-            other.mus_snd_var = mus_snd_var;
-            local.loaded = true;
-            break;
-        }
-    }
-        // If no existing assets were found, load them
-    if !local.loaded
-    {
-        bg_var = background_add(vanilla_directory_const+"\3D\npc_7_tex.png",false,false);
-        mdl_var = d3d_model_create();
-        d3d_model_load(mdl_var,main_directory_const+"\MDL\MON\gc_mdl.gmmod");
-        wall_bg_var = background_add(vanilla_directory_const+"\TEX\HOS_21.png",false,false);
-        floor_bg_var = background_add(vanilla_directory_const+"\TEX\HOS_14.png",false,false);
-        light_wall_spr_var = sprite_add(main_directory_const+"\SPR\MON\gc_light_wall_spr.png",2,false,false,0,0);
-        light_floor_spr_var = sprite_add(main_directory_const+"\SPR\MON\gc_light_floor_spr.png",2,false,false,0,0);
-        eff_bg_var = background_add(vanilla_directory_const+"\TEX\sprites\EX_13_spr.png",false,false);
-        fog_bg_var = background_add(vanilla_directory_const+"\TEX\sprites\fog_spr.png",false,false);
-        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_01_snd.wav",true);
-        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_02_snd.wav",true);
-        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_03_snd.wav",true);
-        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_04_snd.wav",true);
-        glitch_snd_arr[0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_01_snd.wav");
-        glitch_snd_arr[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_02_snd.wav");
-        glitch_snd_arr[2] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_03_snd.wav");
-        glitch_snd_arr[3] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_04_snd.wav");
-        scare_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\KH\scare_01_snd.wav");
-        for (local.i=0; local.i<glitch_snd_len_var; local.i+=1;)
-        { fmod_snd_set_group_scr(glitch_snd_arr[local.i],snd_group_mon_const); }
-        dmg_snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\cow_01_snd.wav");
-        dmg_snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\cow_02_snd.wav");
-        for (local.i=0; local.i<dmg_snd_len_var; local.i+=1;)
-        { fmod_snd_set_group_scr(dmg_snd_arr[local.i,0],snd_group_mon_const); }
-        switch theme_scr(global.gc_theme_var,global.theme_var,2,0,1,2)
-        {
-            case 2: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\gc_rom_mus_snd.ogg"); break; }
-            case 1: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\KH\gc_mus_snd.mp3"); break; }
-            default: { mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\M7_AMB.mp3"); break; }
-        }
-        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
-    }
-    tex_var = background_get_texture(bg_var);
     // Movement
     do_acc_var = true;
     acc_var = 0.05;
@@ -181,6 +118,7 @@ object_event_add
             eff_alpha_var = 0.33; // New Nerf
             blood_spr_var = blood_kh_spr;
             atk_range_var = global.mon_coll[2];
+            snd_dist_max_var = 300;
             // mus_prio_var = mb_mus_prio_const; // Miniboss?
             stun_var = true;
             hurt_alarm_var = 30;
@@ -310,6 +248,69 @@ object_event_add
     event_inherited();
     if upside_var { z_off_var = 24.5; } // 21.3
     do_snd_var = false;
+    // Assets
+        // Search for existing assets to save memory
+    local.loaded = false;
+    with object_index
+    {
+        if id != other.id && object_index == other.object_index
+        {
+            other.bg_var = bg_var;
+            other.mdl_var = mdl_var;
+            other.wall_bg_var = wall_bg_var;
+            other.floor_bg_var = floor_bg_var;
+            other.light_wall_spr_var = light_wall_spr_var;
+            other.light_floor_spr_var = light_floor_spr_var;
+            other.eff_bg_var = eff_bg_var;
+            other.fog_bg_var = fog_bg_var;
+            for (local.i=0; local.i<snd_len_var; local.i+=1;)
+            { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
+            for (local.i=0; local.i<glitch_snd_len_var; local.i+=1;)
+            { other.glitch_snd_arr[local.i] = glitch_snd_arr[local.i]; }
+            for (local.i=0; local.i<dmg_snd_len_var; local.i+=1;)
+            { other.dmg_snd_arr[local.i,0] = dmg_snd_arr[local.i,0]; }
+            other.scare_snd_var = scare_snd_var;
+            other.mus_snd_var = mus_snd_var;
+            local.loaded = true;
+            break;
+        }
+    }
+        // If no existing assets were found, load them
+    if !local.loaded
+    {
+        bg_var = background_add(vanilla_directory_const+"\3D\npc_7_tex.png",false,false);
+        mdl_var = d3d_model_create();
+        d3d_model_load(mdl_var,main_directory_const+"\MDL\MON\gc_mdl.gmmod");
+        wall_bg_var = background_add(vanilla_directory_const+"\TEX\HOS_21.png",false,false);
+        floor_bg_var = background_add(vanilla_directory_const+"\TEX\HOS_14.png",false,false);
+        light_wall_spr_var = sprite_add(main_directory_const+"\SPR\MON\gc_light_wall_spr.png",2,false,false,0,0);
+        light_floor_spr_var = sprite_add(main_directory_const+"\SPR\MON\gc_light_floor_spr.png",2,false,false,0,0);
+        eff_bg_var = background_add(vanilla_directory_const+"\TEX\sprites\EX_13_spr.png",false,false);
+        fog_bg_var = background_add(vanilla_directory_const+"\TEX\sprites\fog_spr.png",false,false);
+        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_01_snd.wav",true);
+        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_02_snd.wav",true);
+        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_03_snd.wav",true);
+        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_04_snd.wav",true);
+        glitch_snd_arr[0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_01_snd.wav");
+        glitch_snd_arr[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_02_snd.wav");
+        glitch_snd_arr[2] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_03_snd.wav");
+        glitch_snd_arr[3] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_04_snd.wav");
+        scare_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\KH\scare_01_snd.wav");
+        for (local.i=0; local.i<glitch_snd_len_var; local.i+=1;)
+        { fmod_snd_set_group_scr(glitch_snd_arr[local.i],snd_group_mon_const); }
+        dmg_snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\cow_01_snd.wav");
+        dmg_snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\cow_02_snd.wav");
+        for (local.i=0; local.i<dmg_snd_len_var; local.i+=1;)
+        { fmod_snd_set_group_scr(dmg_snd_arr[local.i,0],snd_group_mon_const); }
+        switch theme_scr(global.gc_theme_var,global.theme_var,2,0,1,2)
+        {
+            case 2: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\gc_rom_mus_snd.ogg"); break; }
+            case 1: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\KH\gc_mus_snd.mp3"); break; }
+            default: { mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\M7_AMB.mp3"); break; }
+        }
+        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
+    }
+    tex_var = background_get_texture(bg_var);
 ');
 // Destroy Event
 object_event_add

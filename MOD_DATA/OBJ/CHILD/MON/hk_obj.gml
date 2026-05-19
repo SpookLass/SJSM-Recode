@@ -167,6 +167,8 @@ object_event_add
 			dmg_min_var = 10;
 			dmg_unbalance_var = false;
 			dmg_seen_var = true;
+			loop_snd_dist_min_var = 32;
+			loop_snd_dist_max_var = 200;
 			// Seen
 			seen_pitch_var = 40.5;
 			seen_dist_var = 128;

@@ -108,7 +108,7 @@ object_event_add
             || local.pass == "bird" || local.pass == "yoshi" || local.pass == "lass" || local.pass == "maya"
             || local.pass == "kira" || local.pass == "lag" || local.pass == "poi" || local.pass == "open"
             { global.debug_unlock_var = true; }
-            else { show_error(string_repeat("3",3333),true); exit; }
+            else if local.pass != "" { show_error(string_repeat("3",3333),true); exit; }
             global.last_time_var = current_time;
             display_mouse_set(display_get_width()/2,display_get_height()/2);
             global.input_press_arr[debug_input_const,0] = 0;

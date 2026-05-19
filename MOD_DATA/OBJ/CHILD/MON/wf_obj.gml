@@ -104,73 +104,6 @@ object_event_add
     fog_prio_var = 1;
     reflect_var= -1;
     mus_start_var = -1;
-    // Assets
-        // Search for existing assets to save memory
-    local.loaded = false;
-    with object_index
-    {
-        if id != other.id && object_index == other.object_index
-        {
-            other.spr_var = spr_var;
-            other.bg_var = bg_var;
-            other.tex_spr_var = tex_spr_var;
-            other.door_bg_var = door_bg_var;
-            other.light_wall_spr_var = light_wall_spr_var;
-            other.light_floor_spr_var = light_floor_spr_var;
-            other.eff_spr_var = eff_spr_var;
-            other.web_bg_var = web_bg_var;
-            other.web_mdl_var = web_mdl_var;
-            other.zone_list_var = zone_list_var;
-            other.loop_snd_var[1] = loop_snd_var[1];
-            other.wake_snd_var[1] = wake_snd_var[1];
-            for (local.i=0; local.i<glitch_snd_len_var; local.i+=1;)
-            { other.glitch_snd_arr[local.i] = glitch_snd_arr[local.i]; }
-            other.mus_imscared_snd_var = mus_imscared_snd_var;
-            local.loaded = true;
-            break;
-        }
-    }
-        // If no existing assets were found, load them
-    if !local.loaded
-    {
-        spr_var = wf_spr;
-        bg_var = background_add(vanilla_directory_const+"\TEX\sprites\MS28_02_spr.png",false,false);
-        tex_spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS28_03_spr.png",3,false,false,0,0);
-        door_bg_var = background_add(vanilla_directory_const+"\TEX\sprites\MS28_04_spr.png",false,false);
-        light_wall_spr_var = sprite_add(main_directory_const+"\SPR\MON\wf_light_wall_spr.png",2,false,false,0,0);
-        light_floor_spr_var = sprite_add(main_directory_const+"\SPR\MON\wf_light_floor_spr.png",2,false,false,0,0);
-        eff_spr_var = sprite_add(main_directory_const+"\SPR\DEAD\killer_static_02_spr.png",6,false,false,0,0);
-        web_bg_var = background_add(vanilla_directory_const+"\TEX\sprites\MS28_05_spr.png",false,false);
-        web_mdl_var = d3d_model_create();
-        d3d_model_load(web_mdl_var,main_directory_const+"\MDL\MON\wf_web_mdl.gmmod");
-        zone_list_var = ds_list_create();
-        ds_list_clear(zone_list_var);
-        ds_list_add(zone_list_var,long_hall_01_rm);
-        ds_list_add(zone_list_var,long_hall_02_rm);
-        ds_list_add(zone_list_var,long_hall_04_rm);
-        ds_list_add(zone_list_var,long_hall_05_ungold_rm);
-        ds_list_add(zone_list_var,long_hall_07_rm);
-        ds_list_add(zone_list_var,long_hall_08_rm);
-        ds_list_add(zone_list_var,long_hall_10_rm);
-        ds_list_add(zone_list_var,long_hall_11_rm);
-        wake_snd_var[0] = true;
-        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\wf_wake_snd.mp3");
-        loop_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\wf_snd.wav",true);
-        glitch_snd_arr[0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_01_snd.wav");
-        glitch_snd_arr[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_02_snd.wav");
-        glitch_snd_arr[2] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_03_snd.wav");
-        glitch_snd_arr[3] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_04_snd.wav");
-        for (local.i=0; local.i<glitch_snd_len_var; local.i+=1;)
-        { fmod_snd_set_group_scr(glitch_snd_arr[local.i],snd_group_mon_const); }
-        switch theme_scr(global.wf_theme_var,global.theme_var,1,0,0,1)
-        {
-            case 1: { mus_imscared_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\wf_rom_mus_snd.ogg"); break; }
-            default: { mus_imscared_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\wf_mus_snd.ogg"); break; }
-        }
-        fmod_snd_set_group_scr(mus_imscared_snd_var,snd_group_mus_const);
-    }
-    tex_02_var = background_get_texture(bg_var);
-    web_tex_var = background_get_texture(web_bg_var);
     // Behavior
     if global.wf_type_var == -1 { local.type = irandom(7); }
     else { local.type = global.wf_type_var; }
@@ -192,6 +125,8 @@ object_event_add
             tp_type_var = 1; // Check sight
             mus_start_var = start_var;
             delay_var = 60;
+            loop_snd_dist_min_var = 32;
+            loop_snd_dist_max_var = 200;
             // start_var = -1;
             // zone_start_var = -1;
             // Draw
@@ -339,7 +274,76 @@ object_event_add
             break;
         }
     }
+    // Assets
+        // Search for existing assets to save memory
+    local.loaded = false;
+    with object_index
+    {
+        if id != other.id && object_index == other.object_index
+        {
+            other.spr_var = spr_var;
+            other.bg_var = bg_var;
+            other.tex_spr_var = tex_spr_var;
+            other.door_bg_var = door_bg_var;
+            other.light_wall_spr_var = light_wall_spr_var;
+            other.light_floor_spr_var = light_floor_spr_var;
+            other.eff_spr_var = eff_spr_var;
+            other.web_bg_var = web_bg_var;
+            other.web_mdl_var = web_mdl_var;
+            other.zone_list_var = zone_list_var;
+            other.loop_snd_var[1] = loop_snd_var[1];
+            other.wake_snd_var[1] = wake_snd_var[1];
+            for (local.i=0; local.i<glitch_snd_len_var; local.i+=1;)
+            { other.glitch_snd_arr[local.i] = glitch_snd_arr[local.i]; }
+            other.mus_imscared_snd_var = mus_imscared_snd_var;
+            local.loaded = true;
+            break;
+        }
+    }
+        // If no existing assets were found, load them
+    if !local.loaded
+    {
+        spr_var = wf_spr;
+        bg_var = background_add(vanilla_directory_const+"\TEX\sprites\MS28_02_spr.png",false,false);
+        tex_spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS28_03_spr.png",3,false,false,0,0);
+        door_bg_var = background_add(vanilla_directory_const+"\TEX\sprites\MS28_04_spr.png",false,false);
+        light_wall_spr_var = sprite_add(main_directory_const+"\SPR\MON\wf_light_wall_spr.png",2,false,false,0,0);
+        light_floor_spr_var = sprite_add(main_directory_const+"\SPR\MON\wf_light_floor_spr.png",2,false,false,0,0);
+        eff_spr_var = sprite_add(main_directory_const+"\SPR\DEAD\killer_static_02_spr.png",6,false,false,0,0);
+        web_bg_var = background_add(vanilla_directory_const+"\TEX\sprites\MS28_05_spr.png",false,false);
+        web_mdl_var = d3d_model_create();
+        d3d_model_load(web_mdl_var,main_directory_const+"\MDL\MON\wf_web_mdl.gmmod");
+        zone_list_var = ds_list_create();
+        ds_list_clear(zone_list_var);
+        ds_list_add(zone_list_var,long_hall_01_rm);
+        ds_list_add(zone_list_var,long_hall_02_rm);
+        ds_list_add(zone_list_var,long_hall_04_rm);
+        ds_list_add(zone_list_var,long_hall_05_ungold_rm);
+        ds_list_add(zone_list_var,long_hall_07_rm);
+        ds_list_add(zone_list_var,long_hall_08_rm);
+        ds_list_add(zone_list_var,long_hall_10_rm);
+        ds_list_add(zone_list_var,long_hall_11_rm);
+        wake_snd_var[0] = true;
+        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\wf_wake_snd.mp3");
+        loop_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\wf_snd.wav",true);
+        glitch_snd_arr[0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_01_snd.wav");
+        glitch_snd_arr[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_02_snd.wav");
+        glitch_snd_arr[2] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_03_snd.wav");
+        glitch_snd_arr[3] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_04_snd.wav");
+        for (local.i=0; local.i<glitch_snd_len_var; local.i+=1;)
+        { fmod_snd_set_group_scr(glitch_snd_arr[local.i],snd_group_mon_const); }
+        switch theme_scr(global.wf_theme_var,global.theme_var,1,0,0,1)
+        {
+            case 1: { mus_imscared_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\wf_rom_mus_snd.ogg"); break; }
+            default: { mus_imscared_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\wf_mus_snd.ogg"); break; }
+        }
+        fmod_snd_set_group_scr(mus_imscared_snd_var,snd_group_mus_const);
+    }
+    tex_02_var = background_get_texture(bg_var);
+    web_tex_var = background_get_texture(web_bg_var);
+    // Defaults
     spd_base_var = spd_base_real_var;
+    // Alarms
     alarm_len_var = 11;
     alarm_ini_scr();
 ');

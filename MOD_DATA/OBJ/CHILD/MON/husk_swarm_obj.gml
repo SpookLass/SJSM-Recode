@@ -27,6 +27,7 @@ object_event_add
     snd_den_var = 8;
     // Husk
     spawn_dist_var = 24;
+    husk_dist_var = 0;
     revive_var = false;
     atk_dist_var = 8.5;
     atk_range_var = 20;
@@ -53,15 +54,18 @@ object_event_add
     {
         case 0:
         {
+            atk_dist_var = 8;
+            atk_range_var = 16;
             persist_var = true;
             spawn_dist_var = 96;
+            husk_dist_var = 32;
             revive_var = true;
             // Sounds
             snd_alarm_min_var = 60;
             snd_alarm_max_var = 120;
             snd_num_var = 5;
             snd_den_var = 8;
-            snd_dist_max_var = 512;
+            snd_dist_max_var = 300;
             break;
         }
         case 2: // HD
@@ -80,7 +84,7 @@ object_event_add
             hurt_down_var = false;
             // Sounds
             snd_dist_min_var = 32/3;
-            snd_dist_max_var = 500/pixel_meter_rate_const; // This doesnt seem right
+            snd_dist_max_var = 500; // This doesnt seem right
             snd_alarm_min_var = 60;
             snd_alarm_max_var = 72;
             // Blob
@@ -165,6 +169,7 @@ object_event_add
                 par_var = other.id;
                 // Variables
                 spawn_dist_var = other.spawn_dist_var;
+                husk_dist_var = other.husk_dist_var;
                 revive_var = other.revive_var;
                 hurt_dist_base_var = other.hurt_dist_var;
                 heal_var = other.heal_var;
@@ -248,6 +253,7 @@ object_event_add
                     z = global.mark_arr[local.i,2];
                     // Variables
                     spawn_dist_var = other.spawn_dist_var;
+                    husk_dist_var = other.husk_dist_var;
                     revive_var = other.revive_var;
                     hurt_dist_base_var = other.hurt_dist_var;
                     heal_var = other.heal_var;

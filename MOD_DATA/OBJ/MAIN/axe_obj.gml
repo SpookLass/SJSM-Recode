@@ -15,7 +15,7 @@ object_event_add
     stam_start_var = 0;
     stam_end_var = 20;
     check_stam_var = false;
-    good_var = true;
+    spam_var = 2;
     state_var = false;
     image_xscale = 960;
     image_yscale = 680;
@@ -37,6 +37,7 @@ object_event_add
     {
         case 0:
         {
+            spam_var = true;
             stam_start_var = 10;
             stam_end_var = 10;
             break;
@@ -44,7 +45,7 @@ object_event_add
         case 2:
         {
             check_stam_var = true;
-            good_var = false;
+            spam_var = false;
             spr_spd_raise_var = 30/69; // 13.8 frames
             spr_spd_swing_var = 1; // 6 frames
             break;
@@ -59,6 +60,17 @@ object_event_add
         spr_id_var += spr_spd_var*global.delta_time_var;
         switch state_var
         {
+            case 3:
+            {
+                if spr_id_var >= sprite_get_number(spr_var)
+                {
+                    spr_id_var = sprite_get_number(spr_var) - 1;
+                    spr_spd_var = 0;
+                    visible = false;
+                    state_var = 0;
+                }
+                if spam_var != 2 { break; }
+            }
             case 0:
             {
                 if global.input_press_arr[attack_input_const,par_var.player_id_var]
@@ -76,13 +88,13 @@ object_event_add
             }
             case 1:
             {
-                if spr_id_var >= sprite_get_number(spr_var) || (!global.input_arr[attack_input_const,par_var.player_id_var] && good_var)
+                if spr_id_var >= sprite_get_number(spr_var)
                 {
                     spr_id_var = sprite_get_number(spr_var) - 1;
                     spr_spd_var = 0;
                     state_var = 2;
                 }
-                else { break; }
+                if !spam_var { break; }
             }
             case 2:
             {
@@ -167,17 +179,6 @@ object_event_add
                         { local.collided = true; local.ding = true; }
                     }
                     if local.ding { fmod_snd_play_scr(choose(axe_01_snd,axe_02_snd,axe_03_snd)); }
-                }
-                break;
-            }
-            case 3:
-            {
-                if spr_id_var >= sprite_get_number(spr_var)
-                {
-                    spr_id_var = sprite_get_number(spr_var) - 1;
-                    spr_spd_var = 0;
-                    visible = false;
-                    state_var = 0;
                 }
                 break;
             }

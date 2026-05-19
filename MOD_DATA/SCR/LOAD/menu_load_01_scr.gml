@@ -634,6 +634,7 @@ draw_load_scr("Loading config...");
                 custom_arr_add_len_scr(0,1);
                 custom_arr_set_scr(0,local.flesh_set,-1,-1,-1); // Default (Recode)
                 custom_arr_set_scr(1,local.flesh_set,-1,-1,1); // OG
+                custom_arr_set_scr(-2,local.flesh_set,-1,1,1); // OG Endless
                 custom_arr_set_scr(2,local.flesh_set,-1,-1,2); // HD
                 custom_arr_set_scr(-1,local.flesh_set,5,-1,-1); // :) (Random)
         // Deer Lord

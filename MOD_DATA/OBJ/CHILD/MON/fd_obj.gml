@@ -98,6 +98,67 @@ object_event_add
     meat_var = false;
     meat_num_var = 1;
     meat_den_var = 3;
+    // Behavior
+    if global.fd_type_var == -1 { local.type = irandom(5); }
+    else { local.type = global.fd_type_var; }
+    switch local.type
+    {
+        case 3: // Hellgate
+        { meat_var = true; }
+        case 0: // Recode
+        {
+            delay_var = 30;
+            hide_reset_var = true;
+            seen_pitch_var = 5.856;
+            flame_var = true;
+            dmg_var = 30;
+            hurt_spd_var = 1;
+            hurt_alarm_var = 18;
+            hurt_tp_var = 2;
+            stun_var = true;
+            atk_range_var = global.mon_coll[2];
+            snd_dist_max_var = 300;
+            // Silhouette
+            sil_var = true;
+            sil_type_var = 1; // Pure color
+            sil_color_var = c_orange;
+            sil_alpha_var = 0.15;
+            sil_dist_var = 0.1;
+            break;
+        }
+        case 5: // HD Hellgate
+        { meat_var = true; }
+        case 2: // HD
+        {
+            dur_var = irandom_range(10,20);
+            hide_reset_var = true; // Not certain on this
+            flame_var = true;
+            spd_base_var = 8/9; // 0.r8
+            do_seen_var = false;
+            hide_trig_var = false;
+            hide_alarm_min_var = 156;
+            hide_alarm_max_var = 318;
+            delay_min_var = 90;
+            delay_max_var = 180;
+            do_enter_var = true;
+            dmg_alarm_var = 180;
+            violence_var = 2;
+            hurt_spd_var = 1;
+            hurt_alarm_var = 18;
+            hurt_tp_var = 2;
+            stun_var = true;
+            atk_range_var = 64/3; // 21.r3
+            tp_door_var = true;
+            // Sound
+            snd_alarm_min_var = 90;
+            snd_alarm_max_var = 240;
+            snd_den_var = 1;
+            snd_dist_max_var = 500;
+            break;
+        }
+        case 4: // Hellgate
+        { meat_var = true; break; }
+    }
     // Assets
         // Search for existing assets to save memory
     local.loaded = false;
@@ -143,67 +204,52 @@ object_event_add
         }
         fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
     }
-    meat_tex_var = background_get_texture(meat_bg_var);
-    // Behavior
-    if global.fd_type_var == -1 { local.type = irandom(5); }
-    else { local.type = global.fd_type_var; }
-    switch local.type
+    meat_tex_var = background_get_texture(meat_bg_var);// Assets
+        // Search for existing assets to save memory
+    local.loaded = false;
+    with object_index
     {
-        case 3: // Hellgate
-        { meat_var = true; }
-        case 0: // Recode
+        if id != other.id && object_index == other.object_index
         {
-            delay_var = 30;
-            hide_reset_var = true;
-            seen_pitch_var = 5.856;
-            flame_var = true;
-            dmg_var = 30;
-            hurt_spd_var = 1;
-            hurt_alarm_var = 18;
-            hurt_tp_var = 2;
-            stun_var = true;
-            atk_range_var = global.mon_coll[2];
-            // Silhouette
-            sil_var = true;
-            sil_type_var = 1; // Pure color
-            sil_color_var = c_orange;
-            sil_alpha_var = 0.15;
-            sil_dist_var = 0.1;
+            other.spr_var = spr_var;
+            other.meat_bg_var = meat_bg_var;
+            other.eff_spr_01_var = eff_spr_01_var;
+            other.eff_spr_02_var = eff_spr_02_var;
+            for (local.i=0; local.i<snd_len_var; local.i+=1;)
+            { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
+            other.wake_snd_var[1] = wake_snd_var[1];
+            other.hurt_snd_var[1] = hurt_snd_var[1];
+            other.mus_snd_var = mus_snd_var;
+            local.loaded = true;
             break;
         }
-        case 5: // HD Hellgate
-        { meat_var = true; }
-        case 2: // HD
-        {
-            dur_var = irandom_range(10,20);
-            hide_reset_var = true; // Not certain on this
-            flame_var = true;
-            spd_base_var = 8/9; // 0.r8
-            do_seen_var = false;
-            hide_trig_var = false;
-            hide_alarm_min_var = 156;
-            hide_alarm_max_var = 318;
-            delay_min_var = 90;
-            delay_max_var = 180;
-            do_enter_var = true;
-            dmg_alarm_var = 180;
-            violence_var = 2;
-            hurt_spd_var = 1;
-            hurt_alarm_var = 18;
-            hurt_tp_var = 2;
-            stun_var = true;
-            atk_range_var = 64/3; // 21.r3
-            tp_door_var = true;
-            // Sound
-            snd_alarm_min_var = 90;
-            snd_alarm_max_var = 240;
-            snd_den_var = 1;
-            snd_dist_max_var = 500;
-            break;
-        }
-        case 4: // Hellgate
-        { meat_var = true; break; }
     }
+        // If no existing assets were found, load them
+    if !local.loaded
+    {
+        spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS9_01_spr.png",12,false,false,0,0);
+        meat_bg_var = background_add(vanilla_directory_const+"\TEX\mobile\MB8_26_tex.png",false,false);
+        eff_spr_01_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS9_02_spr.png",3,0,0,0,0);
+        eff_spr_02_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS9_03_spr.png",19,0,0,0,0);
+        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\fd_01_snd.wav",true);
+        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\fd_02_snd.wav",true);
+        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\fd_03_snd.wav",true);
+        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\fd_04_snd.wav",true);
+        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\fd_wake_snd.wav",global.wake_3d_var);
+        hurt_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\fd_hurt_snd.wav",true);
+        switch theme_scr(global.fd_theme_var,global.theme_var,1,0,0,1)
+        {
+            case 1: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\fd_rom_mus_snd.ogg"); break; }
+            default:
+            {
+                mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\fd_mus_snd.mp3");
+                fmod_snd_set_loop_point_scr(mus_snd_var,0,0.972669769662);
+                break;
+            }
+        }
+        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
+    }
+    meat_tex_var = background_get_texture(meat_bg_var);
 ');
 // Destroy Event
 object_event_add

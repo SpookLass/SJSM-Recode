@@ -42,49 +42,6 @@ object_event_add
     hurt_snd_den_var = 2;
     // Theme
     mus_prio_var = theme_mus_prio_const;
-    // Assets
-        // Search for existing assets to save memory
-    local.loaded = false;
-    with object_index
-    {
-        if id != other.id && object_index == other.object_index
-        {
-            other.state_spr_var[0] = state_spr_var[0];
-            other.state_spr_var[1] = state_spr_var[1];
-            for (local.i=0; local.i<snd_len_var; local.i+=1;)
-            { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
-            other.wake_snd_var[1] = wake_snd_var[1];
-            other.mus_snd_var = mus_snd_var;
-            other.cam_snd_var = cam_snd_var;
-            local.loaded = true;
-            break;
-        }
-    }
-        // If no existing assets were found, load them
-    if !local.loaded
-    {
-        state_spr_var[0] = sprite_add(vanilla_directory_const+"\TEX\sprites\MS3_03_spr.png",6,false,false,0,0);
-        state_spr_var[1] = sprite_add(vanilla_directory_const+"\TEX\sprites\MS3_04_spr.png",6,false,false,0,0);
-        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_01_snd.wav",true);
-        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_02_snd.wav",true);
-        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_03_snd.wav",true);
-        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_04_snd.wav",true);
-        snd_arr[4,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_laugh_snd.wav",true);
-        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_real_wake_snd.wav",global.wake_3d_var);
-        cam_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_cam_snd.wav");
-        fmod_snd_set_group_scr(cam_snd_var,snd_group_mon_const);
-        switch theme_scr(global.real_ringu_theme_var,global.theme_var,1,0,0,1)
-        {
-            case 1: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\real_ringu_rom_mus_snd.ogg"); break; }
-            default:
-            {
-                mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_real_mus_snd.mp3");
-                fmod_snd_set_loop_point_scr(mus_snd_var,0.5,1);
-                break;
-            }
-        }
-        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
-    }
     // Laugh
     do_hurt_var = true;
     violence_var = 3;
@@ -138,6 +95,7 @@ object_event_add
             state_chance_num_var = 2;
             state_chance_den_var = 3;
             delay_var = 30;
+            snd_dist_max_var = 300;
             // Silhouette
             sil_var = true;
             sil_type_var = 1; // Pure color
@@ -180,6 +138,49 @@ object_event_add
             snd_dist_max_var = 500;
             break;
         }
+    }
+    // Assets
+        // Search for existing assets to save memory
+    local.loaded = false;
+    with object_index
+    {
+        if id != other.id && object_index == other.object_index
+        {
+            other.state_spr_var[0] = state_spr_var[0];
+            other.state_spr_var[1] = state_spr_var[1];
+            for (local.i=0; local.i<snd_len_var; local.i+=1;)
+            { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
+            other.wake_snd_var[1] = wake_snd_var[1];
+            other.mus_snd_var = mus_snd_var;
+            other.cam_snd_var = cam_snd_var;
+            local.loaded = true;
+            break;
+        }
+    }
+        // If no existing assets were found, load them
+    if !local.loaded
+    {
+        state_spr_var[0] = sprite_add(vanilla_directory_const+"\TEX\sprites\MS3_03_spr.png",6,false,false,0,0);
+        state_spr_var[1] = sprite_add(vanilla_directory_const+"\TEX\sprites\MS3_04_spr.png",6,false,false,0,0);
+        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_01_snd.wav",true);
+        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_02_snd.wav",true);
+        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_03_snd.wav",true);
+        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_04_snd.wav",true);
+        snd_arr[4,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_laugh_snd.wav",true);
+        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_real_wake_snd.wav",global.wake_3d_var);
+        cam_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_cam_snd.wav");
+        fmod_snd_set_group_scr(cam_snd_var,snd_group_mon_const);
+        switch theme_scr(global.real_ringu_theme_var,global.theme_var,1,0,0,1)
+        {
+            case 1: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\real_ringu_rom_mus_snd.ogg"); break; }
+            default:
+            {
+                mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_real_mus_snd.mp3");
+                fmod_snd_set_loop_point_scr(mus_snd_var,0.5,1);
+                break;
+            }
+        }
+        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
     }
     // Alarms
     alarm_len_var = 9;

@@ -76,6 +76,41 @@ object_event_add
     fog_prio_var = 2;
     // Theme
     mus_prio_var = mon_mus_prio_const;
+    // Behavior
+    if global.sg_type_var == -1 { local.type = irandom(3); }
+    else { local.type = global.sg_type_var; }
+    switch local.type
+    {
+        case 0:
+        {
+            // charge_alarm_01_var = 15;
+            spawn_dist_var = 96;
+            dmg_var = 30;
+            atk_range_var = global.mon_coll[2];
+            fog_end_var = 128;
+            delay_var = 30;
+            snd_dist_max_var = 300;
+            break;
+        }
+        case 2: // HD
+        {
+            stam_dmg_var = true;
+        }
+        case 3: // KH HD
+        {
+            // I hate this
+            charge_var = false;
+            do_atk_var = true;
+            do_wander_var = true;
+            wander_attempt_var = 30;
+            // Variables
+            atk_range_var = 416/15; // 27.7r3
+            dmg_alarm_var = 180;
+            dur_var = irandom_range(10,15); // Likely
+            snd_den_var = 1;
+            break;
+        }
+    }
     // Assets
         // Search for existing assets to save memory
     local.loaded = false;
@@ -127,40 +162,6 @@ object_event_add
     }
     tex_var = background_get_texture(bg_var);
     mdl_var = mdl_arr[0];
-    // Behavior
-    if global.sg_type_var == -1 { local.type = irandom(3); }
-    else { local.type = global.sg_type_var; }
-    switch local.type
-    {
-        case 0:
-        {
-            // charge_alarm_01_var = 15;
-            spawn_dist_var = 96;
-            dmg_var = 30;
-            atk_range_var = global.mon_coll[2];
-            fog_end_var = 128;
-            delay_var = 30;
-            break;
-        }
-        case 2: // HD
-        {
-            stam_dmg_var = true;
-        }
-        case 3: // KH HD
-        {
-            // I hate this
-            charge_var = false;
-            do_atk_var = true;
-            do_wander_var = true;
-            wander_attempt_var = 30;
-            // Variables
-            atk_range_var = 416/15; // 27.7r3
-            dmg_alarm_var = 180;
-            dur_var = irandom_range(10,15); // Likely
-            snd_den_var = 1;
-            break;
-        }
-    }
 ');
 // Destroy Event
 object_event_add
@@ -194,27 +195,30 @@ object_event_add
         local.xtmp = local.flr.x;//+random_range(-local.flr.w_var/2,local.flr.w_var/2);
         local.ytmp = local.flr.y;//+random_range(-local.flr.h_var/2,local.flr.h_var/2);
         local.ztmp = local.flr.z;
+        local.bool = true;
         if spawn_dist_var > 0
         {
-            local.bestdist = -1;
             with player_obj
             {
                 if on_var && !dead_var && !in_door_var
                 {
-                    local.dist = point_distance_3d_scr(local.xtmp,local.ytmp,local.ztmp,x,y,z);
-                    if local.dist < local.bestdist || local.bestdist == -1 { local.bestdist = local.dist; }
+                    if point_distance_3d_scr(local.xtmp,local.ytmp,local.ztmp,x,y,z) < other.spawn_dist_var
+                    { local.bool = false; break; }
                 }
             }
-            local.bool = local.bestdist >= spawn_dist_var;
+            if point_distance_3d_scr(local.xtmp,local.ytmp,local.ztmp,global.spawn_arr[0,0],global.spawn_arr[0,1],global.spawn_arr[0,2]) < other.spawn_dist_var
+            { local.bool = false; break; }
         }
-        else { local.bool = true; }
         if local.bool
         {
-            x = local.xtmp;
-            y = local.ytmp;
-            z = local.ztmp;
-            spawn_var = -1;
-            break;
+            if !check_coll_scr(0,0,0,0,local.xtmp,local.ytmp,local.ztmp)
+            {
+                x = local.xtmp;
+                y = local.ytmp;
+                z = local.ztmp;
+                spawn_var = -1;
+                break;
+            }
         }
     }
     event_inherited();

@@ -46,27 +46,7 @@ object_event_add
     wake_snd_var[0] = true;
     wake_snd_var[1] = brain_snd;
     loop_snd_dist_min_var = 0;
-    loop_snd_dist_max_var = 600;
-    // Assets
-        // Search for existing assets to save memory
-    local.loaded = false;
-    with object_index
-    {
-        if id != other.id && object_index == other.object_index
-        {
-            other.loop_snd_var[1] = loop_snd_var[1];
-            other.mus_snd_var = mus_snd_var;
-            local.loaded = true;
-            break;
-        }
-    }
-        // If no existing assets were found, load them
-    if !local.loaded
-    {
-        loop_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\brain_loop_snd.wav",true);
-        mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\brain_mus_snd.ogg");
-        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
-    }
+    loop_snd_dist_max_var = 200; // 600
     if global.brain_type_var == -1 { local.type = irandom(2); }
     else { local.type = global.brain_type_var;}
     switch local.type
@@ -96,6 +76,26 @@ object_event_add
             }
             break;
         }
+    }
+    // Assets
+        // Search for existing assets to save memory
+    local.loaded = false;
+    with object_index
+    {
+        if id != other.id && object_index == other.object_index
+        {
+            other.loop_snd_var[1] = loop_snd_var[1];
+            other.mus_snd_var = mus_snd_var;
+            local.loaded = true;
+            break;
+        }
+    }
+        // If no existing assets were found, load them
+    if !local.loaded
+    {
+        loop_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\brain_loop_snd.wav",true);
+        mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\brain_mus_snd.ogg");
+        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
     }
     // sine
     z_off_time_var=0;

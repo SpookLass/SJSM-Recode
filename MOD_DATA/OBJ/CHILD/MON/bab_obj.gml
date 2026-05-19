@@ -149,7 +149,8 @@ object_event_add
             w_02_var = 2.8; // 3.5
             atk_range_var = global.mon_coll[2];
             snd_len_var = 3;
-            snd_dist_max_var = 600;
+            snd_dist_max_var = 300;
+            amb_snd_dist_max_var = 400;
             for (local.i=0; local.i<3; local.i+=1;)
             {
                 snd_arr[0,local.i] = snd_main_arr[0,local.i];
@@ -236,20 +237,19 @@ object_event_add
             break;
         }
     }
-    // Sound settings
-    if snd_dist_max_var > 0
-    {
-        for (local.i=0; local.i<snd_main_len_var; local.i+=1;)
-        { fmod_snd_set_minmax_dist_scr(snd_main_arr[local.i,0],snd_dist_min_var,snd_dist_max_var); }
-    }
-    if amb_snd_dist_max_var > 0
-    {
-        for (local.i=0; local.i<snd_amb_len_var; local.i+=1;)
-        { fmod_snd_set_minmax_dist_scr(snd_amb_arr[local.i,0],amb_snd_dist_min_var,amb_snd_dist_max_var); }
-    }
     // Alarms
     alarm_len_var = 12;
     alarm_ini_scr();
+');
+// Create Event 2
+object_event_add
+(argument0,ev_create,2,'
+    event_inherited();
+    // Sound settings
+    for (local.i=0; local.i<snd_main_len_var; local.i+=1;)
+    { fmod_snd_set_minmax_dist_scr(snd_main_arr[local.i,0],snd_dist_min_var,snd_dist_max_var); }
+    for (local.i=0; local.i<snd_amb_len_var; local.i+=1;)
+    { fmod_snd_set_minmax_dist_scr(snd_amb_arr[local.i,0],amb_snd_dist_min_var,amb_snd_dist_max_var); }
 ');
 // Destroy Event
 object_event_add

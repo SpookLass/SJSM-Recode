@@ -79,6 +79,57 @@ object_event_add
     // Shadow
     shadow_z_var = 0.3;
     shadow_w_var = 10;
+    // Theme
+    mus_prio_var = theme_mus_prio_const;
+    // Behavior
+    if global.wc_type_var == -1 { local.type = irandom(3); }
+    else { local.type = global.wc_type_var; }
+    switch local.type
+    {
+        case 0: // Recode
+        {
+            dmg_var = 30;
+            dmg_alarm_var = 120;
+            spd_base_var = 1.1;
+            spr_spd_var = 0.55;
+            hp_var = 10;
+            static_alpha_var = 0.125;
+            delay_var = 112;
+            snd_dist_max_var = 300;
+            break;
+        }
+        case 2: // HD
+        {
+            do_wander_var = true;
+            dmg_var = 25;
+            hp_var = 10;
+            hurt_dist_var = 19.2;
+            wander_mult_var = 0.125;
+            spd_base_var = 16/9; // Aspect ratio speed lol, 1.r7
+            do_acc_var = true;
+            acc_var = 2/45; // 0.0r4
+            frick_var = acc_var;
+            do_rise_var = 2;
+            atk_range_var = 4/pixel_meter_rate_const;
+            // Autobrake (close enough)
+            autobrake_var = true;
+            autobrake_spd_var = 0;
+            autobrake_dir_var = 60;
+            break;
+        }
+        case 3: // Remodeled
+        {
+            do_rise_var = 2;
+            hp_var = 10;
+            dmg_var = 40;
+            spd_base_var = 2;
+            atk_delay_var = 30;
+            atk_end_delay_var = 27;
+            rise_alarm_var = 54;
+            spr_spd_var = 1/3; // 0.r3
+            break;
+        }
+    }
     // Assets
         // Search for existing assets to save memory
     local.loaded = false;
@@ -136,55 +187,6 @@ object_event_add
     }
     shadow_tex_var = background_get_texture(shadow_bg_var);
     spr_var = main_spr_var;
-    mus_prio_var = theme_mus_prio_const;
-    // Behavior
-    if global.wc_type_var == -1 { local.type = irandom(3); }
-    else { local.type = global.wc_type_var; }
-    switch local.type
-    {
-        case 0: // Recode
-        {
-            dmg_var = 30;
-            dmg_alarm_var = 120;
-            spd_base_var = 1.1;
-            spr_spd_var = 0.55;
-            hp_var = 10;
-            static_alpha_var = 0.125;
-            delay_var = 112;
-            break;
-        }
-        case 2: // HD
-        {
-            do_wander_var = true;
-            dmg_var = 25;
-            hp_var = 10;
-            hurt_dist_var = 19.2;
-            wander_mult_var = 0.125;
-            spd_base_var = 16/9; // Aspect ratio speed lol, 1.r7
-            do_acc_var = true;
-            acc_var = 2/45; // 0.0r4
-            frick_var = acc_var;
-            do_rise_var = 2;
-            atk_range_var = 4/pixel_meter_rate_const;
-            // Autobrake (close enough)
-            autobrake_var = true;
-            autobrake_spd_var = 0;
-            autobrake_dir_var = 60;
-            break;
-        }
-        case 3: // Remodeled
-        {
-            do_rise_var = 2;
-            hp_var = 10;
-            dmg_var = 40;
-            spd_base_var = 2;
-            atk_delay_var = 30;
-            atk_end_delay_var = 27;
-            rise_alarm_var = 54;
-            spr_spd_var = 1/3; // 0.r3
-            break;
-        }
-    }
 ');
 // Destroy Event
 object_event_add

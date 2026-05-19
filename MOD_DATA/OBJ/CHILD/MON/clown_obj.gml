@@ -54,6 +54,37 @@ object_event_add
     snd_dist_max_var = 768; // Kinda, maybe 512
     leave_snd_len_var = 2;
     mus_prio_var = amb_mus_prio_const;
+    // Behavior
+    if global.clown_type_var == -1 { local.type = irandom(3); }
+    else { local.type = global.clown_type_var; }
+    switch local.type
+    {
+        case 3: // Evil Clown
+        {
+            do_atk_var = true;
+            dmg_var = 30;
+            dmg_alarm_var = 120;
+            min_dist_var = 0;
+        }
+        case 0:
+        {
+            seen_yaw_var = 60;
+            seen_pitch_var = 60;
+            mus_prio_var = mon_mus_prio_const;
+            snd_dist_max_var = 300;
+            break;
+        }
+        case 2: // HD
+        {
+            seen_pitch_var = global.fov_var;
+            seen_yaw_var = convert_fov_scr(seen_pitch_var,global.res_w_var,global.res_h_var,1);
+            spd_base_var = 8/9; // 0.r8
+            do_acc_var = true;
+            acc_var = 16/675; // 0.02r370
+            frick_var = acc_var;
+            break;
+        }
+    }
     // Assets
         // Search for existing assets to save memory
     local.loaded = false;
@@ -90,37 +121,6 @@ object_event_add
         mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\clown_mus_snd.ogg");
         for (local.i=0; local.i<leave_snd_len_var; local.i+=1;)
         { fmod_snd_set_group_scr(leave_snd_arr[local.i,0],snd_group_mon_const); }
-    }
-    // Behavior
-    if global.clown_type_var == -1 { local.type = irandom(3); }
-    else { local.type = global.clown_type_var; }
-    switch local.type
-    {
-        case 3: // Evil Clown
-        {
-            do_atk_var = true;
-            dmg_var = 30;
-            dmg_alarm_var = 120;
-            min_dist_var = 0;
-        }
-        case 0:
-        {
-            seen_yaw_var = 60;
-            seen_pitch_var = 60;
-            mus_prio_var = mon_mus_prio_const;
-            break;
-        }
-        case 2: // HD
-        {
-            seen_pitch_var = global.fov_var;
-            seen_yaw_var = convert_fov_scr(seen_pitch_var,global.res_w_var,global.res_h_var,1);
-            spd_base_var = 8/9; // 0.r8
-            do_acc_var = true;
-            acc_var = 16/675; // 0.02r370
-            frick_var = acc_var;
-            break;
-        }
-        
     }
 ');
 // Destroy Event

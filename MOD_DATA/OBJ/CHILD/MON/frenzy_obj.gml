@@ -259,26 +259,30 @@ object_event_add
         local.xtmp = local.flr.x;//+random_range(-local.flr.w_var/2,local.flr.w_var/2);
         local.ytmp = local.flr.y;//+random_range(-local.flr.h_var/2,local.flr.h_var/2);
         local.ztmp = local.flr.z;
+        local.bool = true;
         if spawn_dist_var > 0
         {
-            local.bestdist = -1;
             with player_obj
             {
                 if on_var && !dead_var && !in_door_var
                 {
-                    local.dist = point_distance_3d_scr(local.xtmp,local.ytmp,local.ztmp,x,y,z);
-                    if local.dist < local.bestdist || local.bestdist == -1 { local.bestdist = local.dist; }
+                    if point_distance_3d_scr(local.xtmp,local.ytmp,local.ztmp,x,y,z) < other.spawn_dist_var
+                    { local.bool = false; break; }
                 }
             }
-            local.bool = local.bestdist >= spawn_dist_var;
+            if point_distance_3d_scr(local.xtmp,local.ytmp,local.ztmp,global.spawn_arr[0,0],global.spawn_arr[0,1],global.spawn_arr[0,2]) < other.spawn_dist_var
+            { local.bool = false; break; }
         }
-        else { local.bool = true; }
         if local.bool
         {
-            x = local.xtmp;
-            y = local.ytmp;
-            z = local.ztmp;
-            exit;
+            if !check_coll_scr(0,0,0,0,local.xtmp,local.ytmp,local.ztmp)
+            {
+                x = local.xtmp;
+                y = local.ytmp;
+                z = local.ztmp;
+                exit;
+            }
+            
         }
     }
     on_var = false;

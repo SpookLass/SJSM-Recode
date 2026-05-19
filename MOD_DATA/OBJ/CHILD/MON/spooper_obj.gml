@@ -93,6 +93,68 @@ object_event_add
     if global.spooper_type_var == -1 { local.type = irandom(2); }
     else { local.type = global.spooper_type_var; }
     local.set = false;
+    // Behavior
+    switch local.type
+    {
+        case 0: // Recode
+        {
+            seen_pitch_var = 30;
+            mark_seen_pitch_var = 30;
+            seen_dist_var = 96;
+            seen_fade_var = true;
+            dmg_min_var = 10;
+            door_type_var = 0;
+            shake_type_var = 0;
+            do_atk_var = true;
+            drain_start_var = -1;
+            goo_chance_var = 1;
+            mark_start_var = -1;
+            spd_base_var = 0.4;
+            tp_seen_var = true;
+            puke_slow_var = 0.5;
+            puke_alarm_02_var = 120;
+            puke_alarm_03_var = 72;
+            door_chance_var = 3;
+            do_snd_var = true;
+            loop_snd_var[0] = true;
+            unheal_var = true;
+            dmg_unbalance_var = false;
+            loop_snd_dist_min_var = 32;
+            loop_snd_dist_max_var = 200;
+            // Silhouette
+            sil_var = true;
+            sil_type_var = 1; // Pure color
+            sil_color_var = make_color_rgb(59,1,21);
+            sil_alpha_var = 0.2;
+            sil_dist_var = 0.1;
+            break;
+        }
+        case 3: // Old HD
+        {
+            dmg_var = 1/12;
+            local.set = true;
+        }
+        case 2: // HD
+        {
+            seen_yaw_var = 60;
+            seen_dist_var = 32/3;
+            if !local.set { dmg_var = 0.003;  } // 1/300
+            spd_base_var = 16/45;
+            door_type_var = 2;
+            tp_off_var = 320;
+            tp_dist_min_var = 0;
+            tp_dist_max_var = 640/3;
+            shake_var = 32/15;
+            shake_type_var = 0;
+            puke_slow_var = 0.3;
+            puke_turn_var = false;
+            puke_alarm_02_var = 120;
+            puke_alarm_03_var = 72;
+            drain_start_var = -1;
+            mus_prio_var = mb_mus_prio_const;
+            break;
+        }
+    }
     // Assets
         // Search for existing assets to save memory
     local.loaded = false;
@@ -149,66 +211,6 @@ object_event_add
         }
     }
     fetus_tex_var = background_get_texture(fetus_bg_var);
-    // Behavior
-    switch local.type
-    {
-        case 0: // Recode
-        {
-            seen_pitch_var = 30;
-            mark_seen_pitch_var = 30;
-            seen_dist_var = 64;
-            seen_fade_var = true;
-            dmg_min_var = 10;
-            door_type_var = 0;
-            shake_type_var = 0;
-            do_atk_var = true;
-            drain_start_var = -1;
-            goo_chance_var = 1;
-            mark_start_var = -1;
-            spd_base_var = 0.4;
-            tp_seen_var = true;
-            puke_slow_var = 0.5;
-            puke_alarm_02_var = 120;
-            puke_alarm_03_var = 72;
-            door_chance_var = 3;
-            do_snd_var = true;
-            loop_snd_var[0] = true;
-            unheal_var = true;
-            dmg_unbalance_var = false;
-            // Silhouette
-            sil_var = true;
-            sil_type_var = 1; // Pure color
-            sil_color_var = make_color_rgb(59,1,21);
-            sil_alpha_var = 0.2;
-            sil_dist_var = 0.1;
-            break;
-        }
-        case 3: // Old HD
-        {
-            dmg_var = 1/12;
-            local.set = true;
-        }
-        case 2: // HD
-        {
-            seen_yaw_var = 60;
-            seen_dist_var = 32/3;
-            if !local.set { dmg_var = 0.003;  } // 1/300
-            spd_base_var = 16/45;
-            door_type_var = 2;
-            tp_off_var = 320;
-            tp_dist_min_var = 0;
-            tp_dist_max_var = 640/3;
-            shake_var = 32/15;
-            shake_type_var = 0;
-            puke_slow_var = 0.3;
-            puke_turn_var = false;
-            puke_alarm_02_var = 120;
-            puke_alarm_03_var = 72;
-            drain_start_var = -1;
-            mus_prio_var = mb_mus_prio_const;
-            break;
-        }
-    }
 ');
 // Destroy Event
 object_event_add

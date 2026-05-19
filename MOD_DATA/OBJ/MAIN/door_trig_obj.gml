@@ -45,7 +45,7 @@ object_event_add
     ele_var = false;
     if !variable_local_exists("rm_count_var") { rm_count_var = 1; }
     if !variable_local_exists("lock_var") { lock_var = false; }
-    if !variable_local_exists("safe_var") { safe_var = !instance_exists(mon_par_obj); }
+    if !variable_local_exists("safe_var") { safe_var = true; }
     player_var = 0;
     // Alarm
     alarm_len_var = 1;
@@ -92,7 +92,7 @@ object_event_add
             }
         }
         // Rare Rooms
-        if safe_var && !local.set
+        if safe_var && !instance_exists(mon_par_obj) && !local.set
         {
             // Dev
             if global.save_name_var == "1235" && frac_chance_scr(1,235) { rm_var = dev_rm; local.set = true; }
