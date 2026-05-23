@@ -9,18 +9,19 @@ room_set_code
     ini_open("lang_"+global.lang_var+".ini");
 	global.rm_name_var = ini_read_string("ROOM","med_s","ROOM_med_s")+" 7 A";
 	ini_close();
-    global.spawn_len_var = 3;
     // Spawn 0 (entrance)
+    global.spawn_len_var = 2;
+    global.spawn_len_extra_var = 3;
     global.spawn_arr[0,0] = 112;
     global.spawn_arr[0,1] = 288;
     global.spawn_arr[0,2] = 0;
     global.spawn_arr[0,3] = 0;
     global.spawn_arr[1,0] = 208;
-    global.spawn_arr[1,1] = 288;
+    global.spawn_arr[1,1] = 384;
     global.spawn_arr[1,2] = 0;
     global.spawn_arr[1,3] = 180;
     global.spawn_arr[2,0] = 208;
-    global.spawn_arr[2,1] = 384;
+    global.spawn_arr[2,1] = 288;
     global.spawn_arr[2,2] = 0;
     global.spawn_arr[2,3] = 180;
     // 3D Draw

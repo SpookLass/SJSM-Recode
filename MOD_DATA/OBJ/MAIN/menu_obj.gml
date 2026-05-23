@@ -213,7 +213,16 @@ object_event_add
     no_str_var = ini_read_string("LABEL","no","LABEL_no");
     for (local.i=0; local.i<global.diff_len_var; local.i+=1;)
     {
-        if diff_arr[local.i,2] // Translate
+        if is_string(diff_arr[local.i,2]) // Custom Translate
+        {
+            ini_close();
+            ini_open("lang_"+global.lang_var+"_"+diff_arr[local.i,2]+".ini");
+            diff_arr_var[local.i,0] =  ini_read_string("LABEL",diff_arr[local.i,0],"LABEL_"+diff_arr[local.i,0]);
+            diff_arr_var[local.i,1] =  ini_read_string("DESC",diff_arr[local.i,1],"DESC_"+diff_arr[local.i,1]);
+            ini_close();
+            ini_open("lang_"+global.lang_var+".ini");
+        }
+        else if diff_arr[local.i,2] // Translate
         {
             diff_arr_var[local.i,0] =  ini_read_string("LABEL",diff_arr[local.i,0],"LABEL_"+diff_arr[local.i,0]);
             diff_arr_var[local.i,1] =  ini_read_string("DESC",diff_arr[local.i,1],"DESC_"+diff_arr[local.i,1]);
@@ -226,7 +235,16 @@ object_event_add
     }
     for (local.i=0; local.i<global.mode_len_var; local.i+=1;)
     {
-        if mode_arr[local.i,2] // Translate
+        if is_string(mode_arr[local.i,2]) // Custom Translate
+        {
+            ini_close();
+            ini_open("lang_"+global.lang_var+"_"+mode_arr[local.i,2]+".ini");
+            mode_arr_var[local.i,0] =  ini_read_string("LABEL",mode_arr[local.i,0],"LABEL_"+mode_arr[local.i,0]);
+            mode_arr_var[local.i,1] =  ini_read_string("DESC",mode_arr[local.i,1],"DESC_"+mode_arr[local.i,1]);
+            ini_close();
+            ini_open("lang_"+global.lang_var+".ini");
+        }
+        else if mode_arr[local.i,2] // Translate
         {
             mode_arr_var[local.i,0] =  ini_read_string("LABEL",mode_arr[local.i,0],"LABEL_"+mode_arr[local.i,0]);
             mode_arr_var[local.i,1] =  ini_read_string("DESC",mode_arr[local.i,1],"DESC_"+mode_arr[local.i,1]);
@@ -239,7 +257,16 @@ object_event_add
     }
     for (local.i=0; local.i<global.type_len_var; local.i+=1;)
     {
-        if type_arr[local.i,2] // Translate
+        if is_string(type_arr[local.i,2]) // Custom Translate
+        {
+            ini_close();
+            ini_open("lang_"+global.lang_var+"_"+type_arr[local.i,2]+".ini");
+            type_arr_var[local.i,0] =  ini_read_string("LABEL",type_arr[local.i,0],"LABEL_"+type_arr[local.i,0]);
+            type_arr_var[local.i,1] =  ini_read_string("DESC",type_arr[local.i,1],"DESC_"+type_arr[local.i,1]);
+            ini_close();
+            ini_open("lang_"+global.lang_var+".ini");
+        }
+        else if type_arr[local.i,2] // Translate
         {
             type_arr_var[local.i,0] =  ini_read_string("LABEL",type_arr[local.i,0],"LABEL_"+type_arr[local.i,0]);
             type_arr_var[local.i,1] =  ini_read_string("DESC",type_arr[local.i,1],"DESC_"+type_arr[local.i,1]);
@@ -318,7 +345,17 @@ object_event_add
         
         custom_button_arr_var[local.stateid,local.setid] = local.i; // Button ID
         // Strings
-        if custom_arr[local.i,3] // Translate
+        if is_string(custom_arr[local.i,3]) // Custom Translate
+        {
+            ini_close();
+            ini_open("lang_"+global.lang_var+"_"+custom_arr[local.i,3]+".ini");
+            if custom_arr[local.i,4] == custom_type_const { custom_name_arr_var[local.stateid,local.setid] = string_upper(translate_mon_str_scr(custom_arr[local.i,1])); }
+            else { custom_name_arr_var[local.stateid,local.setid] = ini_read_string("MENU",custom_arr[local.i,1],"MENU_"+custom_arr[local.i,1]); }
+            custom_desc_arr_var[local.stateid,local.setid] = ini_read_string("DESC",custom_arr[local.i,2],"DESC_"+custom_arr[local.i,2]); // Description
+            ini_close();
+            ini_open("lang_"+global.lang_var+".ini");
+        }
+        else if custom_arr[local.i,3] // Translate
         {
             // Name
             if custom_arr[local.i,4] == custom_type_const { custom_name_arr_var[local.stateid,local.setid] = string_upper(translate_mon_str_scr(custom_arr[local.i,1])); }
@@ -344,13 +381,29 @@ object_event_add
             for (local.j=0; local.j<=custom_arr[local.i,6]-custom_arr[local.i,5]; local.j+=1;)
             {
                 // Labels
-                if custom_label_arr[local.i,(local.j*2)+1] // Translate
+                if is_string(custom_label_arr[local.i,(local.j*2)+1]) // Custom Translate
+                {
+                    ini_close();
+                    ini_open("lang_"+global.lang_var+"_"+custom_label_arr[local.i,(local.j*2)+1]+".ini");
+                    custom_label_arr_var[local.i,local.j] = ini_read_string("LABEL",custom_label_arr[local.i,local.j*2],"LABEL_"+custom_label_arr[local.i,local.j*2]);
+                    ini_close();
+                    ini_open("lang_"+global.lang_var+".ini");
+                }
+                else if custom_label_arr[local.i,(local.j*2)+1] // Translate
                 { custom_label_arr_var[local.i,local.j] = ini_read_string("LABEL",custom_label_arr[local.i,local.j*2],"LABEL_"+custom_label_arr[local.i,local.j*2]); }
                 else { custom_label_arr_var[local.i,local.j] = custom_label_arr[local.i,local.j*2]; }
                 // Descriptions
                 if custom_arr[local.i,9]
                 {
-                    if custom_desc_arr[local.i,(local.j*2)+1] // Translate
+                    if is_string(custom_desc_arr[local.i,(local.j*2)+1]) // Custom Translate
+                    {
+                        ini_close();
+                        ini_open("lang_"+global.lang_var+"_"+custom_desc_arr[local.i,(local.j*2)+1]+".ini");
+                        custom_label_desc_arr_var[local.i,local.j] = ini_read_string("DESC",custom_desc_arr[local.i,local.j*2],"DESC_"+custom_desc_arr[local.i,local.j*2]);
+                        ini_close();
+                        ini_open("lang_"+global.lang_var+".ini");
+                    }
+                    else if custom_desc_arr[local.i,(local.j*2)+1] // Translate
                     { custom_label_desc_arr_var[local.i,local.j] = ini_read_string("DESC",custom_desc_arr[local.i,local.j*2],"DESC_"+custom_desc_arr[local.i,local.j*2]); }
                     else { custom_label_desc_arr_var[local.i,local.j] = custom_desc_arr[local.i,local.j*2]; }
                 }
@@ -359,6 +412,7 @@ object_event_add
     }
     // Name Entry
     state_str_arr_var[12] = ini_read_string("MENU","name_entry","MENU_name_entry");
+    ini_close();
     // States
     state_var = 0;
     // Draw Control

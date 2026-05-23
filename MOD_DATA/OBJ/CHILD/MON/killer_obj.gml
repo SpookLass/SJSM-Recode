@@ -190,6 +190,7 @@ object_event_add
     {
         case 7: // Player 9
         {
+            delay_var = 20;
             spd_base_var = 1;
             frick_var = 0.5;
             acc_var = 0.8;
@@ -207,8 +208,11 @@ object_event_add
         }
         case 0: // Recode
         {
-            if !local.set { stam_spawn_max_var = 50; }
-            delay_var = 0;
+            if !local.set
+            {
+                stam_spawn_max_var = 50;
+                delay_var = 0;
+            }
             do_sprint_var = true;
             do_stam_var = true;
             dmg_var = 30;

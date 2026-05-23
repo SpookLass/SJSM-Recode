@@ -288,7 +288,6 @@ object_event_add
 // Room End Event
 object_event_add
 (argument0,ev_other,ev_room_end,'
-    fmod_inst_stop_scr(loop_inst_var);
     if hole_var || !hole_dur_var { event_inherited(); }
     else { reset_alarm_scr(); }
 ');
@@ -451,7 +450,9 @@ object_event_add
     x = hole_x_var;
     y = hole_y_var;
     z = hole_z_var+32;
-    set_alarm_scr(0,irandom_range(hole_alarm_min_var,hole_alarm_max_var));
+    if hole_alarm_min_var > 0
+    { set_alarm_scr(0,irandom_range(hole_alarm_min_var,hole_alarm_max_var)); }
+    else { event_perform(ev_alarm,0); }
     with bug_bod_obj
     {
         if par_var == other.id

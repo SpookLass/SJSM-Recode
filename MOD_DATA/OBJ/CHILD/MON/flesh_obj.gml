@@ -6,6 +6,16 @@ object_set_persistent(argument0,true);
 object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
+// Collision
+globalvar flesh_coll;
+flesh_coll[1] = 640;
+flesh_coll[2] = 0;
+flesh_coll[3] = 1280;
+local.yradius = flesh_coll[3]/2;
+local.zradius = flesh_coll[1]/2;
+flesh_coll[0] = p3dc_begin_mdl_scr();
+p3dc_add_wall_scr(0,local.yradius,local.zradius,0,-local.yradius,-local.zradius);
+p3dc_end_mdl_scr();
 // Create Event
 object_event_add
 (argument0,ev_create,1,'
@@ -19,7 +29,7 @@ object_event_add
     dmg_var = 99999;
     path_prec_var = 32;
     dupe_var = dupe_never_const;
-    alarm_len_var = 1;
+    alarm_len_var = 2;
     alarm_ini_scr();
     do_possess_var = false;
     do_snd_var = false;
@@ -43,6 +53,15 @@ object_event_add
     { fog_consume_var[local.i] = false; }
     // Theme
     mus_prio_var = theme_mus_prio_const;
+    // Hurt
+    do_hurt_var =  false;
+    hurt_spd_mult_var = -0.5;
+    hurt_alarm_var = 60;
+    // Collisions
+    coll_var[0] = flesh_coll[0];
+    coll_var[1] = flesh_coll[1];
+    coll_var[2] = flesh_coll[2];
+    coll_var[3] = flesh_coll[3];
     // Assets
         // Search for existing assets to save memory
     local.loaded = false;
@@ -121,6 +140,7 @@ object_event_add
         case 3: { zone_var = false; }
         case 0:
         {
+            do_hurt_var = true;
             angle_var = 5;
             smart_var = true;
             dmg_var = 0.5;
@@ -455,7 +475,8 @@ object_event_add
     event_inherited();
     if on_var
     {
-        set_motion_3d_scr(spd_base_var,true);
+        if hurt_var { set_motion_3d_scr(spd_base_var*hurt_spd_mult_var,true); }
+        else { set_motion_3d_scr(spd_base_var,true); }
         // Damage
         local.kill = 0;
         local.dmg = dmg_var*global.delta_time_var;
@@ -500,6 +521,21 @@ object_event_add
 object_event_add
 (argument0,ev_alarm,0,'
     on_var = true;
+');
+// Hurt Alarm
+object_event_add
+(argument0,ev_alarm,1,'
+    hurt_var = false;
+');
+// Hurt Event
+object_event_add
+(argument0,ev_other,ev_user4,'
+    if hurt_alarm_var > 0
+    {
+        hurt_var = true;
+        set_alarm_scr(1,hurt_alarm_var);
+        fmod_snd_play_scr(choose(axe_hit_01_snd,axe_hit_02_snd));
+    }
 ');
 // Draw Event
 object_event_add

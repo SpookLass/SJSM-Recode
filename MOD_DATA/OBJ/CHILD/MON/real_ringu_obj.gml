@@ -225,7 +225,7 @@ object_event_add
             alarm_arr[0,2] = other.eff_per_var;
             alarm_var = other.eff_alarm_var;
             set_alarm_scr(0,alarm_var);
-            inst_var = other.cam_snd_var;
+            snd_var = other.cam_snd_var;
         } 
     }
     state_var = 0;

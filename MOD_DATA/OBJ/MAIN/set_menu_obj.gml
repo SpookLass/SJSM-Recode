@@ -99,7 +99,16 @@ object_event_add
         state_arr_var[local.stateid,0] += 1;
         id_arr_var[local.stateid,local.setid] = local.i; // Button ID
         // Strings
-        if set_arr[local.i,3] // Translate
+        if is_string(set_arr[local.i,3]) // Custom Translate
+        {
+            ini_close();
+            ini_open("lang_"+global.lang_var+"_"+set_arr[local.i,3]+".ini");
+            name_arr_var[local.stateid,local.setid] = ini_read_string("SET",set_arr[local.i,1],"SET_"+set_arr[local.i,1]); // Name
+            desc_arr_var[local.stateid,local.setid] = ini_read_string("SET_DESC",set_arr[local.i,2],"SET_DESC_"+set_arr[local.i,2]); // Description
+            ini_close();
+            ini_open("lang_"+global.lang_var+".ini");
+        }
+        else if set_arr[local.i,3] // Translate
         {
             name_arr_var[local.stateid,local.setid] = ini_read_string("SET",set_arr[local.i,1],"SET_"+set_arr[local.i,1]); // Name
             desc_arr_var[local.stateid,local.setid] = ini_read_string("SET_DESC",set_arr[local.i,2],"SET_DESC_"+set_arr[local.i,2]); // Description
@@ -138,19 +147,36 @@ object_event_add
         {
             for (local.j=0; local.j<=set_arr[local.i,6]-set_arr[local.i,5]; local.j+=1;)
             {
-                if set_label_arr[local.i,(local.j*2)+1] // Translate
+                if is_string(set_label_arr[local.i,(local.j*2)+1]) // Custom Translate
+                {
+                    ini_close();
+                    ini_open("lang_"+global.lang_var+"_"+set_label_arr[local.i,(local.j*2)+1]+".ini");
+                    label_arr_var[local.i,local.j] = ini_read_string("SET_LABEL",set_label_arr[local.i,local.j*2],"SET_LABEL_"+set_label_arr[local.i,local.j*2]);
+                    ini_close();
+                    ini_open("lang_"+global.lang_var+".ini");
+                }
+                else if set_label_arr[local.i,(local.j*2)+1] // Translate
                 { label_arr_var[local.i,local.j] = ini_read_string("SET_LABEL",set_label_arr[local.i,local.j*2],"SET_LABEL_"+set_label_arr[local.i,local.j*2]); }
                 else { label_arr_var[local.i,local.j] = set_label_arr[local.i,local.j*2]; }
                 // Descriptions
                 if set_arr[local.i,10]
                 {
-                    if set_desc_arr[local.i,(local.j*2)+1] // Translate
+                    if is_string(set_desc_arr[local.i,(local.j*2)+1]) // Custom Translate
+                    {
+                        ini_close();
+                        ini_open("lang_"+global.lang_var+"_"+set_desc_arr[local.i,(local.j*2)+1]+".ini");
+                        label_desc_arr_var[local.i,local.j] = ini_read_string("SET_DESC",set_desc_arr[local.i,local.j*2],"SET_DESC_"+set_desc_arr[local.i,local.j*2]);
+                        ini_close();
+                        ini_open("lang_"+global.lang_var+".ini");
+                    }
+                    else if set_desc_arr[local.i,(local.j*2)+1] // Translate
                     { label_desc_arr_var[local.i,local.j] = ini_read_string("SET_DESC",set_desc_arr[local.i,local.j*2],"SET_DESC_"+set_desc_arr[local.i,local.j*2]); }
                     else { label_desc_arr_var[local.i,local.j] = set_desc_arr[local.i,local.j*2]; }
                 }
             }
         }
     }
+    ini_close();
 ');
 // Step Event
 object_event_add

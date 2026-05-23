@@ -9,23 +9,24 @@ room_set_code
 	global.rm_name_var = ini_read_string("ROOM","sm_lab","ROOM_sm_lab")+" 4 B";
 	ini_close();
     // Spawn
-    global.spawn_len_var = 4;
+    global.spawn_len_var = 2;
+    global.spawn_len_extra_var = 4;
     global.spawn_arr[0,0] = 192;
     global.spawn_arr[0,1] = 352;
     global.spawn_arr[0,2] = 32;
     global.spawn_arr[0,3] = 0;
-    global.spawn_arr[1,0] = 256;
-    global.spawn_arr[1,1] = 272;
-    global.spawn_arr[1,2] = 0;
+    global.spawn_arr[1,0] = 352;
+    global.spawn_arr[1,1] = 352;
+    global.spawn_arr[1,2] = 32;
     global.spawn_arr[1,3] = 180;
-    global.spawn_arr[2,0] = 128;
+    global.spawn_arr[2,0] = 256;
     global.spawn_arr[2,1] = 272;
     global.spawn_arr[2,2] = 0;
-    global.spawn_arr[2,3] = 0;
-    global.spawn_arr[3,0] = 352;
-    global.spawn_arr[3,1] = 352;
-    global.spawn_arr[3,2] = 32;
-    global.spawn_arr[3,3] = 180;
+    global.spawn_arr[2,3] = 180;
+    global.spawn_arr[3,0] = 128;
+    global.spawn_arr[3,1] = 272;
+    global.spawn_arr[3,2] = 0;
+    global.spawn_arr[3,3] = 0;
     // 3D Draw
     d3d_start();
     global.draw_3d_var = true;

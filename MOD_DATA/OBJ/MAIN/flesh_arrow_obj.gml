@@ -12,6 +12,7 @@ object_event_add
     on_var = false;
     visible = false;
     inst_var = noone;
+    flesh_var = false;
     // Variables
     snap_var = 1; // Snap to floor
     event_inherited();

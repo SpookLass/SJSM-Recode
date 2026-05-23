@@ -16,7 +16,7 @@ room_set_code
     global.spawn_arr[0,2] = 0;
     global.spawn_arr[0,3] = 0;
     global.spawn_arr[1,0] = 704;
-    global.spawn_arr[1,1] = 304;
+    global.spawn_arr[1,1] = 112;
     global.spawn_arr[1,2] = 0;
     global.spawn_arr[1,3] = 180;
     global.spawn_arr[2,0] = 224;
@@ -24,7 +24,7 @@ room_set_code
     global.spawn_arr[2,2] = 0;
     global.spawn_arr[2,3] = 0;
     global.spawn_arr[3,0] = 704;
-    global.spawn_arr[3,1] = 112;
+    global.spawn_arr[3,1] = 304;
     global.spawn_arr[3,2] = 0;
     global.spawn_arr[3,3] = 180;
     global.spawn_arr[4,0] = 304;

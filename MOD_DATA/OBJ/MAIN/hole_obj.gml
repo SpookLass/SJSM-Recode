@@ -33,7 +33,7 @@ object_event_add
             if on_var && !invuln_var && !dead_var && !in_door_var
             {
                 if cyl_coll_scr(x,y,z,coll_var[2],coll_var[1],other.x,other.y,other.z,other.coll_var[2],other.coll_var[1])
-                { local.trigger = true; }
+                { local.trigger = true; break; }
             }
         }
         if local.trigger
