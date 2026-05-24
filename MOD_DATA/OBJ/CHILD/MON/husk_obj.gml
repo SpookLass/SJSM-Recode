@@ -308,8 +308,10 @@ object_event_add
     for (local.i=0; local.i<spawn_attempt_var; local.i+=1;)
     {
         local.flr = instance_find(floor_par_obj,irandom(instance_number(floor_par_obj)-1));
-        local.xtmp = local.flr.x;//+random_range(-local.flr.w_var/2,local.flr.w_var/2);
-        local.ytmp = local.flr.y;//+random_range(-local.flr.h_var/2,local.flr.h_var/2);
+        local.width = (local.flr.w_var-coll_var[1])*0.5;
+        local.height = (local.flr.h_var-coll_var[1])*0.5;
+        local.xtmp = local.flr.x+random_range(-local.width,local.width);
+        local.ytmp = local.flr.y+random_range(-local.height,local.height);
         local.ztmp = local.flr.z;
         local.bool = true;
         if spawn_dist_var > 0

@@ -159,6 +159,7 @@ object_event_add
             }
             trail_var = true;
             trail_per_var = false;
+            trail_dist_var = 2;
             // Ambient Sounds
             do_amb_var = true;
             amb_num_var = 1;

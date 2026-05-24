@@ -22,6 +22,23 @@ room_set_code
     global.spawn_arr[2,1] = 416;
     global.spawn_arr[2,2] = 0;
     global.spawn_arr[2,3] = 180;
+    // Mark
+    global.mark_len_var = 5;
+    global.mark_arr[0,0] = 576;
+    global.mark_arr[0,1] = 324;
+    global.mark_arr[0,2] = 0;
+    global.mark_arr[1,0] = 689;
+    global.mark_arr[1,1] = 284;
+    global.mark_arr[1,2] = 0;
+    global.mark_arr[2,0] = 753;
+    global.mark_arr[2,1] = 353;
+    global.mark_arr[2,2] = 0;
+    global.mark_arr[3,0] = 660;
+    global.mark_arr[3,1] = 449;
+    global.mark_arr[3,2] = 0;
+    global.mark_arr[4,0] = 714;
+    global.mark_arr[4,1] = 473;
+    global.mark_arr[4,2] = 0;
     // Doors
     local.lock = lock_scr();
     local.gold = gold_scr(local.lock); // Not sure how to handle this without hardcoding

@@ -426,7 +426,17 @@ draw_load_scr("Loading settings...");
         // Defaults
             set_add_default_scr(local.set,hud_scale_const);
 // Controls (Sub)
-    // Reduce Flashing
+    // Input Type
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("input_type","input_type","input_type",true,set_enum_const,0,2,true,local.control_sub,true,true);
+        // Labels
+            set_add_label_scr(local.set,0,"main",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            set_add_label_scr(local.set,1,"direct",true,"");
+            set_add_label_scr(local.set,2,"rm",true,"");
+        // Defaults
+            set_add_default_scr(local.set,0,true);
+    // Crouch Toggle
         // Main
             /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
             local.set = set_add_scr("crouch_toggle","crouch_toggle","crouch_toggle",true,set_enum_const,false,true,true,local.control_sub,true,false);

@@ -19,12 +19,12 @@ set_arr[global.set_len_var,10] = true; // Has Description Array
 set_arr[global.set_len_var,11] = argument0; // Special
 set_label_arr[global.set_len_var,0] = "rand"; // Value 1
 set_desc_arr[global.set_len_var,0] = "theme_rand"; // Value 1
-set_label_arr[global.set_len_var,1] = argument1; // Translate
-set_desc_arr[global.set_len_var,1] = argument1; // Translate
+set_label_arr[global.set_len_var,1] = true; // Translate
+set_desc_arr[global.set_len_var,1] = true; // Translate
 set_label_arr[global.set_len_var,2] = "def"; // Value 1
 set_desc_arr[global.set_len_var,2] = "theme_def"; // Value 1
-set_label_arr[global.set_len_var,3] = argument1; // Translate
-set_desc_arr[global.set_len_var,3] = argument1; // Translate
+set_label_arr[global.set_len_var,3] = true; // Translate
+set_desc_arr[global.set_len_var,3] = true; // Translate
 set_default_arr[global.set_len_var,0] = -1;
 global.set_len_var += 1;
 return global.set_len_var-1;

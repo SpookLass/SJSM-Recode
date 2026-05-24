@@ -35,8 +35,13 @@ object_event_add(argument0,ev_step,ev_step_begin,'
                 // Keyboard
                 if global.input_key_arr[local.i,local.j] >= 1 
                 {
-                    if keyboard_check_pressed(global.input_key_arr[local.i,local.j]) { global.input_arr[local.i,local.j] = true; }
-                    if keyboard_check_released(global.input_key_arr[local.i,local.j]) { global.input_arr[local.i,local.j] = false; }
+                    if global.input_type_var[local.j] == 1 // Direct
+                    { global.input_arr[local.i,local.j] = keyboard_check_direct(global.input_key_arr[local.i,local.j]); }
+                    else
+                    {
+                        if keyboard_check_pressed(global.input_key_arr[local.i,local.j]) { global.input_arr[local.i,local.j] = true; }
+                        if keyboard_check_released(global.input_key_arr[local.i,local.j]) { global.input_arr[local.i,local.j] = false; }
+                    }
                 }
                 // Mouse
                 else if global.input_key_arr[local.i,local.j] >= -5
@@ -112,8 +117,9 @@ object_event_add
             global.last_time_var = current_time;
             display_mouse_set(display_get_width()/2,display_get_height()/2);
             global.input_press_arr[debug_input_const,0] = 0;
+            global.input_arr[debug_input_const,0] = 0;
         }
-        global.debug_var = !global.debug_var;
+        if global.debug_unlock_var { global.debug_var = !global.debug_var; }
     }
     // Debug commands
     if global.debug_var && (keyboard_check_pressed(192) || (keyboard_lastkey >= 48 && keyboard_lastkey <= 57)) // Grave
@@ -349,8 +355,22 @@ object_event_add
     { window_set_rectangle(window_x_var,window_y_var,window_w_var,window_h_var); }
     // Window Color
     if !instance_exists(fog_par_obj) { window_set_color(make_color_rgb(30,0,50)); }
-    // Prevent freezing
+    // Prevent freezing?
     fmod_update_take_over_done_scr();
+    // Controls
+    for (local.j=0; local.j<8; local.j+=1;)
+    {
+        if global.input_type_var[local.j] == 2 // Room (reset)
+        {
+            for (local.i=0; local.i<global.input_len_var; local.i+=1)
+            {
+                
+                global.input_arr[local.i,local.j] = false;
+                global.input_prev_arr[local.i,local.j] = 0;
+                global.input_press_arr[local.i,local.j] = 0;
+            }
+        }
+    }
 ');
 // Update FPS
 object_event_add
