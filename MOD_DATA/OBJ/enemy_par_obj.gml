@@ -58,6 +58,16 @@ object_event_add
     event_perform(ev_create,2);
     event_perform(ev_create,3);
 ');
+// Room End Event
+object_event_add
+(argument0,ev_other,ev_room_end,'
+    event_inherited();
+    if do_snd_var
+    {
+        fmod_inst_stop_scr(loop_inst_var);
+        if fmod_inst_is_3d_scr(inst_var) || !persistent { fmod_inst_stop_scr(inst_var); }
+    }
+');
 // Event Step End
 object_event_add
 (argument0,ev_step,ev_step_end,'

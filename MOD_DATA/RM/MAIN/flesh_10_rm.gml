@@ -39,6 +39,7 @@ room_set_code
     global.mark_arr[4,0] = 714;
     global.mark_arr[4,1] = 473;
     global.mark_arr[4,2] = 0;
+    mark_create_scr();
     // Doors
     local.lock = lock_scr();
     local.gold = gold_scr(local.lock); // Not sure how to handle this without hardcoding

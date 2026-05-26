@@ -274,6 +274,7 @@ object_event_add
 (argument0,ev_other,ev_user14,'
     if blob_var
     {
+        set_motion_3d_scr(0,true);
         move_var = false;
         anim_var = false;
         atk_var = false;
@@ -364,7 +365,7 @@ object_event_add
                 d3d_transform_set_identity();
                 // Transforms
                 d3d_transform_add_scaling(blob_w_var,blob_w_var,blob_h_var);
-                d3d_transform_add_rotation_y(direction);
+                d3d_transform_add_rotation_z(direction);
                 d3d_transform_add_translation(x,y,z);
                 // Draw
                 d3d_model_draw(mdl_var,0,0,0,mdl_tex_var);

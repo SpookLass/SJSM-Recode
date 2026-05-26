@@ -438,12 +438,6 @@ object_event_add
     // Set target
     if do_wander_var { event_user(13); }
     event_user(6);
-    // Sound
-    if do_snd_var
-    {
-        if loop_snd_var[0] == 1
-        { fmod_inst_stop_scr(loop_inst_var); }
-    }
     // Delay
     if delay_min_var > 0
     {

@@ -39,6 +39,7 @@ object_event_add
     color_prio_var = 0;
     reflect_var = false;
     dead_rm_var = flesh_dead_rm;
+    unlock_var = 1;
     // Zone
     zone_var = true;
     zone_start_var = 0;
@@ -55,7 +56,7 @@ object_event_add
     mus_prio_var = theme_mus_prio_const;
     // Hurt
     do_hurt_var =  false;
-    hurt_spd_mult_var = -0.5;
+    hurt_spd_mult_var = 0.5; // -0.5
     hurt_alarm_var = 60;
     // Collisions
     coll_var[0] = flesh_coll[0];
@@ -145,6 +146,7 @@ object_event_add
             smart_var = true;
             dmg_var = 0.5;
             color_prio_var = 1;
+            unlock_var = 0;
             // No Gold, Only Arrow
             arrow_var = true;
             break;
@@ -154,6 +156,7 @@ object_event_add
             delay_var = 0;
             spd_base_var = 44/225; // 0.19r5
             angle_var = 15;
+            unlock_var = 2;
             break;
         }
         case 4:
@@ -405,10 +408,11 @@ Difference: "+string(local.newdelay)+"
             local.arrow = true;
         }
     }
-    else if global.unlock_var >= 0
+    else if unlock_var > 0 && global.unlock_var >= 0
     {
-        global.unlock_var = 1;
-        for (local.i=1; local.i<spawn_len_var; local.i+=1;)
+        if unlock_var == 2 { global.unlock_var = max(1,global.spawn_len_var-2); }
+        else { global.unlock_var = 1; }
+        for (local.i=1; local.i<global.spawn_len_var; local.i+=1;)
         {
             if instance_exists(global.spawn_arr[local.i,4])
             { global.spawn_arr[local.i,4].lock_var = (local.i != global.unlock_var); }
