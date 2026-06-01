@@ -382,7 +382,7 @@ object_event_add
                 slime_w_var = slime_w_base_var;
                 slime_angle_var = random(360);
                 // Snap to floor
-                z = local.dist-(coll_var[2]/2);
+                z += (coll_var[2]*0.5)-local.dist;
                 // Stun
                 move_var = false;
                 atk_var = false;

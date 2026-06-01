@@ -128,7 +128,8 @@ object_event_add
             par_var = other.id;
             do_mult_var = other.eff_mult_var;
             target_spd_mult_var = other.target_spd_mult_var;
-            for (local.i=0; local.i<other.str_len_var; local.i+=1;)
+            str_len_var = other.str_len_var;
+            for (local.i=0; local.i<str_len_var; local.i+=1;)
             { str_arr_var[local.i] = other.str_arr_var[local.i]; }
             str_var = other.str_wake_var;
             str_draw_var = string_copy(str_var,0,char_var);

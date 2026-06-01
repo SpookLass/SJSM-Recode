@@ -793,7 +793,7 @@ object_event_add
                         save_mode_var = mod_scr(save_mode_var+local.input,global.mode_len_var);
                         local.attempts = 0;
                         while mode_arr[save_mode_var,3] && !save_custom_var && local.attempts < global.mode_len_var
-                        { save_mode_var = mod_scr(save_mode_var+1,global.mode_len_var); local.attempts += 1; }
+                        { save_mode_var = mod_scr(save_mode_var+local.input,global.mode_len_var); local.attempts += 1; }
                         break;
                     }
                     case 2:
@@ -801,7 +801,7 @@ object_event_add
                         save_diff_var = mod_scr(save_diff_var+local.input,global.diff_len_var);
                         local.attempts = 0;
                         while diff_arr[save_diff_var,3] && !save_custom_var && local.attempts < global.diff_len_var
-                        { save_diff_var = mod_scr(save_diff_var+1,global.diff_len_var); local.attempts += 1; }
+                        { save_diff_var = mod_scr(save_diff_var+local.input,global.diff_len_var); local.attempts += 1; }
                         break;
                     }
                     case 3:
@@ -809,7 +809,7 @@ object_event_add
                         save_type_var = mod_scr(save_type_var+local.input,global.type_len_var);
                         local.attempts = 0;
                         while type_arr[save_type_var,3] && !save_custom_var && local.attempts < global.type_len_var
-                        { save_type_var = mod_scr(save_type_var+1,global.type_len_var); local.attempts += 1; }
+                        { save_type_var = mod_scr(save_type_var+local.input,global.type_len_var); local.attempts += 1; }
                         break;
                     }
                     case 4:

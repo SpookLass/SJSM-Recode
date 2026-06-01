@@ -26,12 +26,12 @@ object_event_add
     d3d_transform_add_rotation_z(direction);
     d3d_transform_add_translation(x,y,z);
     draw_set_color(image_blend); draw_set_alpha(image_alpha);
-    d3d_draw_wall(0,-w_var/2,h_var,0,0,h_var-local.h,local.tex,local.tex_w*0.5,local.tex_h);
-    d3d_draw_wall(0,0,h_var,0,w_var/2,h_var-local.h,tex_02_var,local.tex_w,local.tex_h);
+    d3d_draw_wall(0,0,h_var,0,-w_var/2,h_var-local.h,local.tex,local.tex_w*0.5,local.tex_h);
+    d3d_draw_wall(0,w_var/2,h_var,0,0,h_var-local.h,tex_02_var,local.tex_w,local.tex_h);
     if h_var > 32
     {
         local.tex_h = tex_h_var*(texture_get_width(local.tex)/texture_get_height(local.tex))*(h_var-32)/32;
-        d3d_draw_wall(0,-w_var/2,h_var-32,0,w_var/2,0,local.tex,local.tex_w,local.tex_h);
+        d3d_draw_wall(0,w_var/2,h_var-32,0,-w_var/2,0,local.tex,local.tex_w,local.tex_h);
     }
     d3d_transform_set_identity();
     draw_set_color(c_white); draw_set_alpha(1);

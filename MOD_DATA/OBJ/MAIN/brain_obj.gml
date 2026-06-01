@@ -105,5 +105,6 @@ object_event_add
         { ds_list_add(global.mon_list,gel_obj); }
         with door_trig_obj { lock_var = !lock_var; }
     }
+    else { with door_trig_obj { save_var = false; event_user(0); }}
     instance_destroy();
 ')

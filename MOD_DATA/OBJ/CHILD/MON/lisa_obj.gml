@@ -264,7 +264,7 @@ object_event_add
     if zone_end_var > 0
     { zone_from_num_scr(global.zone_num_var); }
     if loop_fake_var && loop_start_var > 0
-    { global.rm_count_override_var = noone; }
+    { global.rm_count_override_var = ""; }
 ');
 // Room Start
 object_event_add
@@ -315,8 +315,8 @@ object_event_add
     {
         if !loop_fake_var
         { with door_trig_obj { rm_count_var = 0; }}
-        else if global.rm_count_override_var == noone
-        { global.rm_count_override_var = global.rm_count_var; }
+        else if global.rm_count_override_var == ""
+        { global.rm_count_override_var = string(global.rm_count_var); }
     }
     
     if red_start_var > 0 && local.start >= red_start_var

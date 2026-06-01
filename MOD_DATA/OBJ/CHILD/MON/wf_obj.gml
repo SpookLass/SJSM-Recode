@@ -387,7 +387,7 @@ object_event_add
     with wf_eff_obj
     { if par_var == other.id { instance_destroy(); }}
     if loop_var == 2 && zone_start_var > 0
-    { global.rm_count_override_var = noone; }
+    { global.rm_count_override_var = ""; }
 ');
 // Room Start Event
 object_event_add
@@ -456,8 +456,8 @@ object_event_add
         {
             if loop_var != 2
             { with door_trig_obj { rm_count_var = 0; }}
-            else if global.rm_count_override_var == noone
-            { global.rm_count_override_var = global.rm_count_var; }
+            else if global.rm_count_override_var == ""
+            { global.rm_count_override_var = string(global.rm_count_var); }
         }
         global.rm_name_var = string_replace(global.rm_name_var,"Long","My");
     }

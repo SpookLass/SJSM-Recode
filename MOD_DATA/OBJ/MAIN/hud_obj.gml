@@ -294,7 +294,7 @@ object_event_add
             if !global.hide_rm_var
             {
                 local.str = rm_str_var+": ";
-                if global.rm_count_override_var != noone
+                if global.rm_count_override_var != ""
                 { local.str += string(global.rm_count_override_var); }
                 else { local.str += string(global.rm_count_var); }
                 draw_set_halign(fa_right); 

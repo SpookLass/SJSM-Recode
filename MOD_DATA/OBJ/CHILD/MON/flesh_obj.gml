@@ -141,7 +141,7 @@ object_event_add
         case 3: { zone_var = false; }
         case 0:
         {
-            do_hurt_var = true;
+            // do_hurt_var = true;
             angle_var = 5;
             smart_var = true;
             dmg_var = 0.5;
