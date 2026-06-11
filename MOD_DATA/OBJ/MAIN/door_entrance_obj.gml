@@ -23,7 +23,6 @@ object_event_add
     {
         mdl_var = door_broke_mdl;
         mdl_path_var = door_broke_mdl_path;
-        direction += 180;
         fmod_snd_3d_play_scr(break_snd,x,y,z);
         open_var = true;
         local.door = id;

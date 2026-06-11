@@ -136,9 +136,9 @@ object_event_add
     if state_var < 2 { draw_spr_stretch_ext_scr(spr_var,0,0,0,scale_var,0,fa_center,fa_middle,0,color_var,1); }
     else
     {
-        draw_set_alpha(image_alpha); draw_set_color(image_blend);
+        draw_set_alpha(image_alpha); draw_set_color(image_blend); draw_set_halign(halign_var); draw_set_valign(valign_var);
         draw_str_scr(str_var,x,y,image_xscale,image_yscale,scale_min_var,halign_var,valign_var,image_angle);
-        draw_set_alpha(1); draw_set_color(c_white);
+        draw_set_alpha(1); draw_set_color(c_white); draw_set_halign(fa_left); draw_set_valign(fa_top);
     }
     d3d_set_hidden(true);
 ');

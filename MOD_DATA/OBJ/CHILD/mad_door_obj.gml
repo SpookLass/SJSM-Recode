@@ -13,5 +13,5 @@ object_event_add
     type_var = 10; // Single Plane
     w_var = 14;
     h_var = 23;
-    dist_var = -0.1;
+    dist_var = 0.1;
 ');

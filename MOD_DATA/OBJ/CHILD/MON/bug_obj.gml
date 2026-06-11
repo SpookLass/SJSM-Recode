@@ -128,7 +128,8 @@ object_event_add
             hole_num_var = 2;
             hole_den_var = 3;
             hurt_alarm_var = 90;
-            dmg_alarm_var = 60;
+            dmg_alarm_var = 30;
+            atk_alarm_var = 60;
             spd_base_var = 64/45; // 1.4r2
             do_acc_var = true;
             acc_var = 16/675; // 0.02r370

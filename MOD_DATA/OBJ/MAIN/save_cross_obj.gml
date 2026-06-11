@@ -98,11 +98,7 @@ object_event_add
         if dead_var //&& !global.permadeath_var
         {
             // Revive
-            dead_var = false;
-            do_coll_var = true;
-            do_stam_var = true;
-            hp_var = hp_max_var;
-            possess_var = false;
+            revive_player_scr(id);
             // Respawn
             x = global.spawn_arr[0,0];
             y = global.spawn_arr[0,1];

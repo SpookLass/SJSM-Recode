@@ -5,11 +5,12 @@ Argument 2: Damage
 Argument 3: Damage Alarm
 Argument 4: Minimum Damage
 Argument 5: Check Collision
-Argument 6: Check Hurt
-Argument 7: Shake
-Argument 8: Possessed
-Argument 9: Possessing Player
-Argument 10: Damage Stamina
+Argument 6: Attack Range
+Argument 7: Check Hurt
+Argument 8: Shake
+Argument 9: Possessed
+Argument 10: Possessing Player
+Argument 11: Damage Stamina
     0: No
     1: Yes, no HP
     2: Yes, as well as HP
@@ -17,19 +18,20 @@ Argument 10: Damage Stamina
 local.dokill = (argument4 <= 0);
 local.dmg = argument2;
 if !argument0.dead_var && !argument0.in_door_var && !argument0.invuln_var && argument0.on_var
-&& (!argument0.hurt_var || !argument6) && (argument0.do_stam_var || !argument10)
+&& (!argument0.hurt_var || !argument7) && (argument0.do_stam_var || !argument11)
 {
-    local.bool = argument5;
+    local.bool = !argument5;
     if !local.bool
     {
         local.bool = cyl_coll_scr
         (
             argument0.x,argument0.y,argument0.z,argument0.coll_var[2],argument0.coll_var[1],
-            argument1.x,argument1.y,argument1.z,argument1.atk_range_var,argument1.coll_var[1]
+            argument1.x,argument1.y,argument1.z,argument6,argument1.coll_var[1]
         );
     }
     if local.bool
     {
+        argument0.hurt_target_var = argument1;
         // Alarm
         if argument3 > 0
         {
@@ -38,15 +40,15 @@ if !argument0.dead_var && !argument0.in_door_var && !argument0.invuln_var && arg
             { set_alarm_scr(0,argument3); }
         }
         // Effects
-        if argument7
+        if argument8
         {
+            // Will this work?
             with argument0
             { event_user(0); }
         }
         // Stamina
-        if argument10
+        if argument11
         {
-            if !argument0.do_stam_var { return false; }
             if argument0.stam_var > local.dmg
             {
                 local.stam = max(0,argument0.stam_var-local.dmg);
@@ -54,7 +56,7 @@ if !argument0.dead_var && !argument0.in_door_var && !argument0.invuln_var && arg
                 argument0.stam_var = local.stam;
             }
             // Success
-            if argument10 == 1 { return true; }
+            if argument11 == 1 { return true; }
         }
         // Clamp
         if argument4 <= 0 { local.mindmg = local.dmg; }
@@ -63,7 +65,11 @@ if !argument0.dead_var && !argument0.in_door_var && !argument0.invuln_var && arg
         if argument0.hp_var > local.mindmg
         { argument0.hp_var = max(argument4,argument0.hp_var-local.dmg); }
         // Kill
-        else if local.dokill { kill_player_scr(argument0,argument8,argument9); }
+        else if local.dokill
+        {
+            if argument9 { argument1.possess_var = false; }
+            kill_player_scr(argument0,argument9,argument10);
+        }
         // Success
         return true;
     }

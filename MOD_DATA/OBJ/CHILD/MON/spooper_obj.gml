@@ -415,74 +415,31 @@ object_event_add
         with spooper_obj { if id < other.id { local.drain = false; }}
         if local.drain
         {
-            if dmg_min_var > 0
-            {
-                local.min = dmg_min_var;
-                local.dokill = false;
-            }
-            else
-            {
-                local.min = dmg_var*global.delta_time_var;
-                local.dokill = true;
-            }
-            if possess_var { local.kill = -1; }
-	        else { local.kill = 0; }
+            local.success = false;
+            local.dead = (dmg_min_var <= 0)
             with player_obj
             {
                 if !other.unheal_var { heal_mult_var = 0; }
-                if !dead_var && (!hurt_var || other.dmg_unbalance_var) && !in_door_var && !invuln_var && on_var
+                local.dmg = other.dmg_var*global.delta_time_var;
+                if atk_player_scr
+                (
+                    id,other.id, // Player & Monster
+                    local.dmg,0,other.dmg_min_var, // Damage
+                    false,0, // Collisions
+                    !other.dmg_unbalance_var,false, // Effects
+                    other.possess_var,local.possesser, // Possess
+                    other.dmg_stam_var // Stamina?
+                )
                 {
-                    if hp_var > local.min
-                    {
-                        local.dmg = other.dmg_var*global.delta_time_var
-                        hp_var -= local.dmg;
-                        if hp_var < hp_max_var && other.unheal_var
-                        { unheal_var += local.dmg; }
-                    }
-                    else if local.dokill
-                    {
-                        hp_var = 0;
-                        dead_var = true;
-                        do_coll_var = false;
-                        do_stam_var = false;
-                        // Possess thing
-                        if other.possess_var
-                        {
-                            local.dead = false;
-                            local.player = id;
-                            other.possess_var = false;
-                            with global.player_arr[other.player_id_var]
-                            {
-                                // Revive
-                                possess_var = false;
-                                dead_var = false;
-                                do_coll_var = true;
-                                do_stam_var = true;
-                                hp_var = hp_max_var;
-                                // Become other player
-                                x = local.player.x;
-                                y = local.player.y;
-                                z = local.player.z;
-                                eye_yaw_var = local.player.eye_yaw_var;
-                                eye_pitch_var = local.player.eye_pitch_var;
-                                // Iframes
-                                hurt_var = true;
-                                set_alarm_scr(0,revive_alarm_var);
-                            }
-                        }
-                        else if local.kill == 0
-                        { local.kill = true; local.player = id; }
-                    }
+                    if hp_var < hp_max_var && other.unheal_var
+                    { unheal_var += local.dmg; }
+                    local.player = id;
+                    local.success = true;
                 }
-                if !dead_var { local.kill = -1; }
+                if !dead_var { local.dead = false; }
             }
-            if local.kill && local.dokill && !global.debug_var && !possess_var
-            {
-                global.dead_mon_var = object_index;
-                global.menu_player_var = local.player.player_id_var;
-                if global.permadeath_var { delete_save_scr(global.save_name_var); }
-                rm_goto_menu_scr(dead_rm_var,true);
-            }
+            if local.success && local.dead && !global.debug_var && !possess_var
+            { kill_scr(local.player,object_index,dead_rm_var,kill_var); }
         }
     }
 ');

@@ -91,6 +91,8 @@ object_event_add
             spd_base_var = 4/pf_ms_rate_const;
             autobrake_var = true;
             snd_alarm_min_var = 78;
+            dmg_alarm_var = 30;
+            atk_alarm_var = 120;
             break;
         }
     }

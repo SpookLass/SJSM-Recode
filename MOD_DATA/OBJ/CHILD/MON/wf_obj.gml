@@ -143,7 +143,7 @@ object_event_add
         case 4: // Old HD
         {
             dmg_var = 60;
-            dmg_alarm_var = 180;
+            atk_alarm_var = 180;
             local.set = true;
         }
         case 2: // HD
@@ -151,7 +151,7 @@ object_event_add
             if !local.set
             {
                 dmg_var = 30;
-                dmg_alarm_var = 60;
+                atk_alarm_var = 60;
             }
             delay_min_var = 90;
             delay_max_var = 180;
@@ -162,6 +162,7 @@ object_event_add
             door_trig_var = false;
             atk_range_var = 4/pixel_meter_rate_const;
             mus_prio_var = -1;
+            dmg_alarm_var = 30;
             // Teleport
             tp_dist_min_var = 320/3; // 106.r6
             tp_dist_max_var = 2560/3; // 853.r3

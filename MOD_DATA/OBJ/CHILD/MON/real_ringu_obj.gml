@@ -112,6 +112,8 @@ object_event_add
         }
         case 2: // HD
         {
+            dmg_alarm_var = 30;
+            atk_alarm_var = 120;
             dur_var = irandom_range(10,15);
             seen_yaw_var = 60;
             eff_fog_var = true;

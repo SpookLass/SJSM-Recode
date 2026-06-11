@@ -21,7 +21,7 @@ object_event_add
     dur_var = irandom_range(10,20);
     delay_var = 0;
     dmg_var = 15;
-    dmg_alarm_var = -1;
+    dmg_alarm_var = 0;
     w_var = 16.8;
     h_var = 25.2;
     eye_h_var = 22.6;
@@ -48,8 +48,9 @@ object_event_add
     respawn_alarm_var = 0;
     respawn_alone_var = false;
     // Spawning
+    spawn_var = -1;
     spawn_attempt_var = 30;
-    spawn_dist_var = 64;
+    spawn_player_dist_var = 64;
     alarm_len_var = 9;
     alarm_ini_scr();
     // Fog
@@ -107,7 +108,7 @@ object_event_add
         {
             do_eff_var = true;
             sight_dist_var = 128;
-            spawn_dist_var = 160;
+            spawn_player_dist_var = 160;
             respawn_alarm_var = 90;
             respawn_alone_var = true;
             dmg_var = 20;
@@ -120,6 +121,7 @@ object_event_add
         }
         case 2: // HD
         {
+            dmg_alarm_var = 30;
             fade_alarm_var = 120;
             spd_var = 16/9; // 1.r7
             atk_range_var = 64/3; // 21.r3
@@ -161,8 +163,6 @@ object_event_add
 (argument0,ev_other,ev_room_start,'
     event_inherited();
     tex_var = background_get_texture(bg_var);
-    enter_var = false;
-    do_coll_var = true;
     if do_eff_var
     {
         if !instance_exists(dh_eff_obj)
@@ -193,13 +193,6 @@ object_event_add
 (argument0,ev_alarm,0,'
     woke_var = false;
     move_var = false;
-    if do_door_var
-    {
-        do_door_var = false;
-        event_inherited();
-        do_door_var = true;
-    }
-    else { event_inherited(); }
     event_user(15);
     if impatience_alarm_var > 0
     { set_alarm_scr(8,impatience_alarm_var); }
@@ -212,7 +205,8 @@ object_event_add
         woke_var = true;
         image_alpha = 1;
         move_var = true;
-        inst_var = fmod_snd_3d_play_scr(charge_snd_var[0]);
+        inst_var = fmod_snd_3d_play_scr(charge_snd_var[0],x,y,z);
+        if global.pitch_bend_var { fmod_inst_set_pitch_scr(inst_var,random_range(0.95,1.05)); }
         sub_var[0] = charge_snd_var[1];
         sub_var[1] = charge_snd_var[2];
     }
@@ -260,17 +254,17 @@ object_event_add
         local.ytmp = local.flr.y;//+random_range(-local.flr.h_var/2,local.flr.h_var/2);
         local.ztmp = local.flr.z;
         local.bool = true;
-        if spawn_dist_var > 0
+        if spawn_player_dist_var > 0
         {
             with player_obj
             {
                 if on_var && !dead_var && !in_door_var
                 {
-                    if point_distance_3d_scr(local.xtmp,local.ytmp,local.ztmp,x,y,z) < other.spawn_dist_var
+                    if point_distance_3d_scr(local.xtmp,local.ytmp,local.ztmp,x,y,z) < other.spawn_player_dist_var
                     { local.bool = false; break; }
                 }
             }
-            if point_distance_3d_scr(local.xtmp,local.ytmp,local.ztmp,global.spawn_arr[0,0],global.spawn_arr[0,1],global.spawn_arr[0,2]) < other.spawn_dist_var
+            if point_distance_3d_scr(local.xtmp,local.ytmp,local.ztmp,global.spawn_arr[0,0],global.spawn_arr[0,1],global.spawn_arr[0,2]) < other.spawn_player_dist_var
             { local.bool = false; break; }
         }
         if local.bool

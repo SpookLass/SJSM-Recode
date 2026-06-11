@@ -36,11 +36,14 @@ object_event_add
         if !variable_local_exists("loop_snd_var") { loop_snd_var[0] = false; }
         if !variable_local_exists("loop_snd_dist_min_var") { loop_snd_dist_min_var = 0; }
         if !variable_local_exists("loop_snd_dist_max_var") { loop_snd_dist_max_var = 600; }
+        if !variable_local_exists("inst_var") { inst_var = noone; }
+        if !variable_local_exists("loop_inst_var") { loop_inst_var = noone; }
+        if !variable_local_exists("sub_var")
+        {
+            sub_var[0] = "";
+            sub_var[1] = false;
+        }
     }
-    sub_var[0] = "";
-    sub_var[1] = false;
-    inst_var = noone;
-    loop_inst_var = noone;
 ');
 // Create End Event
     // Startup

@@ -137,7 +137,8 @@ object_event_add
             type_var = 2;
             do_acc_var = false;
             dmg_var = 15;
-            dmg_alarm_var = 120;
+            dmg_alarm_var = 30;
+            atk_alarm_var = 120;
             delay_min_var = 30;
             delay_max_var = 60;
             seen_mult_var = 1;

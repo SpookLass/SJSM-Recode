@@ -203,7 +203,8 @@ object_event_add
             delay_min_var = 90;
             delay_max_var = 180;
             dmg_var = 20;
-            dmg_alarm_var = 120;
+            dmg_alarm_var = 30;
+            atk_alarm_var = 120;
             eff_old_var = false;
             fog_var = true;
             atk_snd_var = 2;

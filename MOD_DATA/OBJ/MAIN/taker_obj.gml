@@ -1,27 +1,24 @@
 // Builtin Variables
 object_set_depth(argument0,0);
 object_set_mask(argument0,noone);
-object_set_parent(argument0,enemy_par_obj);
+object_set_parent(argument0,kinda_obj);
 object_set_persistent(argument0,false);
 object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create Event
 object_event_add
-(argument0,ev_create,0,'
+(argument0,ev_create,1,'
     do_possess_var = false;
     do_snd_var = false;
     reflect_var = true;
-    event_inherited();
+    spawn_var = 0;
+    type_var = 0;
     // Render
     spr_var = taker_spr;
-    spr_id_var = 0;
     spr_spd_var = 1/6;
-    tex_var = sprite_get_texture(spr_var,floor(spr_id_var));
     w_var = 6;
     h_var = 12;
-    x_off_var = 0;
-    y_off_var = 0;
     z_off_var = 10;
     sil_var = false;
     // Damage
@@ -31,13 +28,6 @@ object_event_add
     // Movement
     spd_var = 0.8;
     delay_var = 600;
-    // Alarms
-    alarm_len_var = 1;
-    alarm_ini_scr();
-    // Collision
-    coll_var[0] = global.mon_coll[0];
-    coll_var[1] = global.mon_coll[1];
-    coll_var[2] = global.mon_coll[2];
     // Behavior
     switch global.taker_type_var
     {
@@ -72,14 +62,6 @@ object_event_add
             break;
         }
     }
-    // Start
-    on_var = false;
-    visible_var = false;
-    set_alarm_scr(0,delay_var);
-    yaw_var = global.spawn_arr[0,3];
-    x = global.spawn_arr[0,0]-lengthdir_x(32,yaw_var);
-    y = global.spawn_arr[0,1]-lengthdir_y(32,yaw_var);
-    z = global.spawn_arr[0,2];
     // Music
     with instance_create(0,0,mus_par_obj)
     {
@@ -92,189 +74,97 @@ object_event_add
 // Destroy Event
 object_event_add
 (argument0,ev_destroy,0,'
-    event_user(0);
+    event_inherited();
+    event_user(15);
 ');
 // Room End Event
 object_event_add
 (argument0,ev_other,ev_room_end,'
-    event_user(0);
+    event_user(15);
 ');
 // Unload
 object_event_add
-(argument0,ev_other,ev_user0,'
+(argument0,ev_other,ev_user15,'
     with mus_par_obj { if par_var == other.id { instance_destroy(); }}
     with mus_control_obj { event_user(0); }
 ');
-// Delay Alarm
+// Attack Event
 object_event_add
-(argument0,ev_alarm,0,'
-    on_var = true;
-');
-// Step Event
-object_event_add
-(argument0,ev_step,ev_step_normal,'
-    if target_possess_var { local.target = instance_exists(target_var) && target_var.possess_var && target_var.on_var; }
-    else { local.target = instance_exists(target_var) && !target_var.dead_var && target_var.on_var; }
-    if local.target
+(argument0,ev_other,ev_user2,'
+    if target_possess_var
     {
-        if on_var
+        with target_var
         {
-            // Move
-            local.yaw = point_direction(x,y,target_var.x,target_var.y);
-            local.pitch = point_direction_3d_scr(x,y,z,target_var.x,target_var.y,target_var.z);
-            set_motion_3d_scr(spd_var,true,local.yaw,true,local.pitch,true);
-            // Animate
-            spr_id_var = (spr_id_var+(spr_spd_var*global.delta_time_var)) mod sprite_get_number(spr_var);
-            tex_var = sprite_get_texture(spr_var,floor(spr_id_var));
-            // Attack
-            local.success = false;
-            with target_var
+            if on_var && possess_var
             {
-                if other.target_possess_var
+                if cyl_coll_scr(x,y,z,coll_var[2],coll_var[1],other.x,other.y,other.z,other.atk_range_var,other.coll_var[1])
                 {
-                    if on_var && possess_var
+                    local.mon = id;
+                    with global.player_arr[player_id_var] // Add possession ban
                     {
-                        if cyl_coll_scr(x,y,z,coll_var[2],coll_var[1],other.x,other.y,other.z,other.coll_var[2],other.coll_var[1])
-                        {
-                            local.mon = id;
-                            with global.player_arr[player_id_var] // Add possession ban
-                            {
-                                possess_var = false;
-                                x = local.mon.x;
-                                y = local.mon.y;
-                                z = local.mon.z;
-                                eye_yaw_var = local.mon.eye_yaw_var;
-                                eye_pitch_var = local.mon.eye_pitch_var;
-                                possess_delay_var = possess_delay_max_var;
-                            }
-                            possess_var = false;
-                        }
+                        possess_var = false;
+                        x = local.mon.x;
+                        y = local.mon.y;
+                        z = local.mon.z;
+                        eye_yaw_var = local.mon.eye_yaw_var;
+                        eye_pitch_var = local.mon.eye_pitch_var;
+                        possess_delay_var = possess_delay_max_var;
                     }
-                    
-                }
-                else
-                {
-                    if !dead_var && !hurt_var && !in_door_var && !invuln_var && on_var
-                    {
-                        if cyl_coll_scr(x,y,z,coll_var[2],coll_var[1],other.x,other.y,other.z,other.coll_var[2],other.coll_var[1])
-                        {
-                            if hp_var > other.dmg_var
-                            {
-                                hp_var -= other.dmg_var;
-                                if other.dmg_alarm_var
-                                {
-                                    hurt_var = true;
-                                    set_alarm_scr(0,other.dmg_alarm_var);
-                                }
-                                hurt_target_var = other.id;
-                                event_user(0);
-                            }
-                            else
-                            {
-                                hp_var = 0;
-                                dead_var = true;
-                                do_coll_var = false;
-                                do_stam_var = false;
-                            }
-                            local.success = true;
-                        }
-                    }
+                    possess_var = false;
                 }
             }
-            if local.success
-            {
-                if !target_possess_var
-                {
-                    local.dead = true;
-                    with player_obj { if !dead_var { local.dead = false; break; } }
-                    if local.dead && !global.debug_var
-                    {
-                        global.dead_mon_var = object_index;
-                        global.menu_player_var = target_var.player_id_var;
-                        if global.permadeath_var { delete_save_scr(global.save_name_var); }
-                        rm_goto_menu_scr(dead_rm_var,true);
-                    }
-                    else
-                    {
-                        fmod_snd_play_scr(claw_snd);
-                        with instance_create(0,0,blood_eff_obj)
-                        {
-                            spr_var = blood_spr;
-                            spr_id_var = irandom(sprite_get_number(spr_var)-1);
-                            // Set camera to player
-                            cam_id_var = other.target_var.cam_id_var;
-                        }
-                        if !global.reduce_flash_var
-                        {
-                            with instance_create(0,0,flash_eff_obj)
-                            {
-                                image_blend = c_red; 
-                                set_alarm_scr(0,6);
-                                cam_id_var = other.target_var.cam_id_var;
-                            }
-                        }
-                    }
-                }
-            }
-            event_inherited();
         }
     }
-    else { instance_destroy(); }
+    else
+    {
+        local.dead = (dmg_min_var <= 0);
+        local.success = false;
+        if possess_var { local.possesser = global.player_arr[player_id_var]; }
+        else { local.possesser = noone; }
+        with player_obj
+        {
+            if id == other.target_var
+            {
+                if atk_player_scr
+                (
+                    id,other.id, // Player & Monster
+                    other.dmg_var,other.dmg_alarm_var,other.dmg_min_var, // Damage
+                    true,other.atk_range_var, // Collisions
+                    !other.dmg_unbalance_var,other.dmg_eff_var, // Effects
+                    other.possess_var,local.possesser, // Possess
+                    other.dmg_stam_var // Stamina?
+                )
+                {
+                    other.atk_target_var = id;
+                    local.success = true;
+                }
+            }
+            if !dead_var { local.dead = false; }
+        }
+        if local.success
+        {
+            if local.dead && !global.debug_var && !possess_var
+            { kill_scr(atk_target_var,object_index,dead_rm_var,kill_var); }
+            else { event_user(3); }
+        }
+    }
+');
+
+// Target Event
+object_event_add
+(argument0,ev_other,ev_user6,'
+    if !instance_exists(target_var) { instance_destroy(); exit; }
+    if !target_var.on_var { instance_destroy(); exit; }
+    if target_possess_var { if !target_var.possess_var { instance_destroy(); exit; }}
+    else { if target_var.dead_var { instance_destroy(); exit; }}
+    target_x_var = target_var.x;
+    target_y_var = target_var.y;
+    target_z_var = target_var.z;
+    target_dist_var = point_distance_3d_scr(x,y,z,target_x_var,target_y_var,target_z_var);
 ');
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,'
-    if (on_var || visible_var) && (cam_id_var == view_current || cam_id_var < 0)
-    {
-        draw_set_color(image_blend); draw_set_alpha(image_alpha);
-        d3d_transform_set_identity();
-        // Get position
-        local.xtmp = x+x_off_var;
-        local.ytmp = y+y_off_var;
-        local.ztmp = z+z_off_var;
-        // Reflection handling (more complex for billboarded sprites)
-        if global.reflect_var
-        {
-            switch (global.reflect_axis_var)
-            {
-                case 0: { local.xtmp = global.reflect_pos_var-local.xtmp; d3d_transform_add_scaling(-1,1,1); break; }
-                case 1: { local.ytmp = global.reflect_pos_var-local.ytmp; d3d_transform_add_scaling(1,-1,1); break; }
-                case 2: { local.ztmp = global.reflect_pos_var-local.ztmp; d3d_transform_add_scaling(1,1,-1); break; }
-            }
-        }
-        d3d_transform_add_rotation_z(point_direction(local.xtmp,local.ytmp,global.cam_x_var[view_current],global.cam_y_var[view_current]));
-        d3d_transform_add_translation(local.xtmp,local.ytmp,local.ztmp);
-        // Draw silhoette
-        if sil_var
-        {
-            d3d_set_hidden(false); draw_set_alpha(image_alpha*sil_alpha_var);
-            switch sil_type_var
-            {
-                case 0:
-                {
-                    d3d_draw_wall(-sil_dist_var,w_var/2,h_var,-sil_dist_var,-w_var/2,0,tex_var,1,1);
-                    break;
-                }
-                case 1:
-                {
-                    d3d_set_fog(true,sil_color_var,0,0);
-                    d3d_draw_wall(-sil_dist_var,w_var/2,h_var,-sil_dist_var,-w_var/2,0,tex_var,1,1);
-                    d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var);
-                    break;
-                }
-                case 2:
-                {
-                    draw_set_color(color_mult_scr(image_blend,sil_color_var));
-                    d3d_draw_wall(-sil_dist_var,w_var/2,h_var,-sil_dist_var,-w_var/2,0,tex_var,1,1);
-                    draw_set_color(image_blend);
-                    break;
-                }
-            }
-            d3d_set_hidden(true); draw_set_alpha(image_alpha);
-        }
-        d3d_draw_wall(0,w_var/2,h_var,0,-w_var/2,0,tex_var,1,1);
-        // Reset
-        d3d_transform_set_identity();
-        draw_set_color(c_white); draw_set_alpha(1);
-    }
+    if cam_id_var == view_current || cam_id_var < 0
+    { event_inherited(); }
 ');

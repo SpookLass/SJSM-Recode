@@ -137,6 +137,8 @@ object_event_add
             acc_var = 16/675; // 0.02r370
             frick_var = acc_var;
             dmg_var = 45;
+            dmg_alarm_var = 30;
+            atk_alarm_var = 60;
             delay_min_var = 90;
             delay_max_var = 180;
             shake_var = 0.32;

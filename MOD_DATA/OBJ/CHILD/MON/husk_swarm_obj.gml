@@ -140,8 +140,7 @@ object_event_add
             fmod_snd_set_group_scr(snd_arr[local.i],snd_group_mon_const);
         }
         // Hurt Sound
-        hurt_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DH\doll_hurt_snd.wav",true);
-        fmod_snd_set_minmax_dist_scr(hurt_snd_var,snd_dist_min_var,snd_dist_max_var);
+        hurt_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DH\doll_hurt_snd.wav");
         fmod_snd_set_group_scr(hurt_snd_var,snd_group_mon_const);
         // Music
         switch theme_scr(global.husk_theme_var,global.theme_var,1,0,1,0)

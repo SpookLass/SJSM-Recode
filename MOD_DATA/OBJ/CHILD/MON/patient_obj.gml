@@ -127,13 +127,13 @@ object_event_add
     {
         case 0: // Recode
         {
+            dur_var = irandom_range(15,25);
             spd_base_var = 2;
             seen_pitch_01_var = 3.434;
             seen_pitch_02_var = 30;
             rand_alarm_min_var = 6;
             rand_alarm_max_var = 6;
             tp_alarm_var = -1;
-            
             seen_spd_mult_var = 1;
             seen_rage_var = 2;
             inv_move_var = 2;
@@ -175,6 +175,8 @@ object_event_add
             overlay_var = false;
             atk_snd_var = 2;
             atk_range_var = 32;
+            dmg_alarm_var = 30;
+            atk_alarm_var = 30;
             // HD Only
             seen_spd_mult_var = 1;
             seen_rage_var = true;

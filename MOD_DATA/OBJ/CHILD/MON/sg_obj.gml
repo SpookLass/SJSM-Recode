@@ -32,6 +32,10 @@ object_event_add
     spr_spd_var = 1/15;
     dmg_var = 40;
     dmg_alarm_var = 120;
+    dmg_eff_var = true;
+    dmg_stam_var = false;
+    dmg_unbalance_var = false;
+    dmg_min_var = 0;
     atk_range_var = 48;
     alarm_len_var = 10;
     alarm_ini_scr();
@@ -50,7 +54,7 @@ object_event_add
     anim_type_var = 4;
     // Spawning
     spawn_attempt_var = 30; 
-    spawn_dist_var = 24;
+    spawn_player_dist_var = 24;
     // Charge
     do_atk_var = false;
     charge_var = true;
@@ -62,8 +66,6 @@ object_event_add
     // Wander
     do_wander_var = false;
     chase_dist_var = 128/3;
-    // HD Weirdness
-    stam_dmg_var = false;
     // Effects
     fog_end_var = 96;
 	do_fog_var = true;
@@ -72,7 +74,7 @@ object_event_add
 	wall_alpha_var = 0.15;
 	wall_start_var = 24;
 	wall_end_var = 64;
-	fog_color_var = make_color_rgb(96,57,57);
+	fog_color_var = make_color_rgb(98,57,57);
     fog_prio_var = 2;
     // Theme
     mus_prio_var = mon_mus_prio_const;
@@ -84,7 +86,7 @@ object_event_add
         case 0:
         {
             // charge_alarm_01_var = 15;
-            spawn_dist_var = 96;
+            spawn_player_dist_var = 96;
             dmg_var = 30;
             atk_range_var = global.mon_coll[2];
             fog_end_var = 128;
@@ -93,9 +95,7 @@ object_event_add
             break;
         }
         case 2: // HD
-        {
-            stam_dmg_var = true;
-        }
+        { dmg_stam_var = 2; }
         case 3: // KH HD
         {
             // I hate this
@@ -105,7 +105,8 @@ object_event_add
             wander_attempt_var = 30;
             // Variables
             atk_range_var = 416/15; // 27.7r3
-            dmg_alarm_var = 180;
+            dmg_alarm_var = 30;
+            atk_alarm_var = 180;
             dur_var = irandom_range(10,15); // Likely
             snd_den_var = 1;
             break;
@@ -196,17 +197,17 @@ object_event_add
         local.ytmp = local.flr.y;//+random_range(-local.flr.h_var/2,local.flr.h_var/2);
         local.ztmp = local.flr.z;
         local.bool = true;
-        if spawn_dist_var > 0
+        if spawn_player_dist_var > 0
         {
             with player_obj
             {
                 if on_var && !dead_var && !in_door_var
                 {
-                    if point_distance_3d_scr(local.xtmp,local.ytmp,local.ztmp,x,y,z) < other.spawn_dist_var
+                    if point_distance_3d_scr(local.xtmp,local.ytmp,local.ztmp,x,y,z) < other.spawn_player_dist_var
                     { local.bool = false; break; }
                 }
             }
-            if point_distance_3d_scr(local.xtmp,local.ytmp,local.ztmp,global.spawn_arr[0,0],global.spawn_arr[0,1],global.spawn_arr[0,2]) < other.spawn_dist_var
+            if point_distance_3d_scr(local.xtmp,local.ytmp,local.ztmp,global.spawn_arr[0,0],global.spawn_arr[0,1],global.spawn_arr[0,2]) < other.spawn_player_dist_var
             { local.bool = false; break; }
         }
         if local.bool
@@ -228,35 +229,38 @@ object_event_add
         event_perform(ev_alarm,0);
     }
     // Effects
-    with fog_par_obj { if prio_var < other.fog_prio_var { instance_destroy(); }}
-	if !instance_exists(fog_par_obj)
-	{
-		with instance_create(0,0,fog_par_obj)
-		{
-			prio_var = other.fog_prio_var;
-			par_var = other.id;
-			fog_var = true;
-			fog_color_var = c_black;//other.fog_color_var;
-			fog_start_var = 0;
-			fog_end_var = other.fog_end_var;
-			fog_dark_var = true;
-			event_user(0);
-		}
-	}
-    if !instance_exists(kh_fog_obj)
-	{
-        with instance_create(0,0,kh_fog_obj)
-		{
-			prio_var = other.fog_prio_var;
-			par_var = other.id;
-			fog_type_var = other.fog_type_var
-			image_blend = other.fog_color_var;
-			image_alpha = other.wall_alpha_var;
-			wall_num_var = other.wall_num_var;
-			wall_start_var = other.wall_start_var;
-			wall_end_var = other.wall_end_var;
-			event_user(0);
-		}
+    if do_fog_var
+    {
+        with fog_par_obj { if prio_var < other.fog_prio_var { instance_destroy(); }}
+        if !instance_exists(fog_par_obj)
+        {
+            with instance_create(0,0,fog_par_obj)
+            {
+                prio_var = other.fog_prio_var;
+                par_var = other.id;
+                fog_var = true;
+                fog_color_var = c_black;//other.fog_color_var;
+                fog_start_var = 0;
+                fog_end_var = other.fog_end_var;
+                fog_dark_var = true;
+                event_user(0);
+            }
+        }
+        if !instance_exists(kh_fog_obj)
+        {
+            with instance_create(0,0,kh_fog_obj)
+            {
+                prio_var = other.fog_prio_var;
+                par_var = other.id;
+                fog_type_var = other.fog_type_var
+                image_blend = other.fog_color_var;
+                image_alpha = other.wall_alpha_var;
+                wall_num_var = other.wall_num_var;
+                wall_start_var = other.wall_start_var;
+                wall_end_var = other.wall_end_var;
+                event_user(0);
+            }
+        }
     }
 	if !instance_exists(kh_overlay_obj)
 	{
@@ -324,95 +328,6 @@ object_event_add
         mdl_var = mdl_arr[floor(spr_id_var)];
     }
     else { event_inherited(); }
-');
-// Attack Event
-object_event_add
-(argument0,ev_other,ev_user2,'
-    if !stam_dmg_var { event_inherited(); }
-    else
-    {
-        local.dead = true;
-        local.success = false;
-        with player_obj
-        {
-            if !dead_var && !hurt_var && !in_door_var && !invuln_var && on_var && do_stam_var
-            {
-                // p3dc_check_scr(coll_var[0],x,y,z,other.coll_var[0],other.x,other.y,other.z)
-                if cyl_coll_scr(x,y,z,coll_var[2],coll_var[1],other.x,other.y,other.z,other.atk_range_var,other.coll_var[1])
-                {
-                    if other.dmg_alarm_var
-                    {
-                        hurt_var = true;
-                        set_alarm_scr(0,other.dmg_alarm_var);
-                    }
-                    hurt_target_var = other.id;
-                    event_user(0);
-                    // Drain Stamina
-                    local.dmg = other.dmg_var;
-                    if stam_var > 0
-                    {
-                        local.dmg = local.dmg-stam_var;
-                        stam_var = max(0,stam_var-other.dmg_var);
-                    }
-                    // Proceed as normal
-                    if local.dmg > 0
-                    {
-                        if hp_var > local.dmg { hp_var -= local.dmg; }
-                        else
-                        {
-                            hp_var = 0;
-                            dead_var = true;
-                            do_coll_var = false;
-                            do_stam_var = false;
-                            // Revive
-                            if other.possess_var
-                            {
-                                local.dead = false;
-                                local.player = id;
-                                other.possess_var = false;
-                                with global.player_arr[other.player_id_var]
-                                {
-                                    // Revive
-                                    possess_var = false;
-                                    dead_var = false;
-                                    do_coll_var = true;
-                                    do_stam_var = true;
-                                    hp_var = hp_max_var;
-                                    // Become other player
-                                    x = local.player.x;
-                                    y = local.player.y;
-                                    z = local.player.z;
-                                    eye_yaw_var = local.player.eye_yaw_var;
-                                    eye_pitch_var = local.player.eye_pitch_var;
-                                    // Iframes
-                                    hurt_var = true;
-                                    set_alarm_scr(0,revive_alarm_var);
-                                }
-                            }
-                        }
-                    }
-                    other.atk_target_var = id;
-                    local.success = true;
-                }
-            }
-            if !dead_var { local.dead = false; }
-        }
-        if local.success
-        {
-            if local.dead && !global.debug_var && !possess_var
-            {
-                global.dead_mon_var = object_index;
-                global.menu_player_var = atk_target_var.player_id_var;
-                if kill_var
-                {
-                    if global.permadeath_var { delete_save_scr(global.save_name_var); }
-                    rm_goto_menu_scr(dead_rm_var,true);
-                }
-                else { rm_goto_menu_scr(dead_rm_var,2); }
-            }
-            else { event_user(3); }
-        }
-    }
 ');
 // Draw Event
 object_event_add

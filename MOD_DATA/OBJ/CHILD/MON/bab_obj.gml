@@ -176,7 +176,8 @@ object_event_add
         case 2: // HD
         {
             dur_var = irandom_range(10,15);
-            dmg_alarm_var = 180;
+            dmg_alarm_var = 30;
+            atk_alarm_var = 180;
             delay_min_var = 90;
             delay_max_var = 180;
             w_01_var = 7.7; // 7
@@ -204,7 +205,7 @@ object_event_add
             autobrake_dir_var = 60;
             break;
         }
-        case global.type_len_var: // Old
+        case 3: // Old
         {
             spr_var = old_spr_var;
             spr_spd_var = 1/6;

@@ -65,13 +65,14 @@ object_event_add
 		snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\DH\hk_breath_snd.wav",true);
 		loop_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\DH\hk_loop_02_snd.wav",true);
 		look_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DH\hk_loop_01_snd.wav",true);
+		fmod_snd_set_group_scr(look_snd_var,snd_group_mon_const);
 		switch theme_scr(global.hk_theme_var,global.theme_var,1,0,0,1)
         {
             case 1: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\hk_rom_mus_snd.ogg"); break; }
             default: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DH\hk_mus_snd.mp3"); break; }
         }
 		fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
-		hurt_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\DH\doll_hurt_snd.wav",true);
+		hurt_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\DH\doll_hurt_snd.wav");
 		
 		lamp_mdl_var = d3d_model_create();
         d3d_model_load(lamp_mdl_var,main_directory_const+"\MDL\MON\hk_lamp_mdl.gmmod");
@@ -143,8 +144,8 @@ object_event_add
 		// Tries before giving up. In code it was 50, but it gives up past 30? Also, OG technically never gives up
 	tp_attempt_var = 30; 
 	// Near damage
-	dmg_unbalance_var = true;
-	dmg_min_var = 0;
+	dmg_rate_unbalance_var = true;
+	dmg_rate_min_var = 0;
 	dmg_dist_min_var = 0.2;
 	dmg_dist_max_var = 18;
 	dmg_rate_var = 0.7; // 7/180 to 3.5
@@ -164,8 +165,8 @@ object_event_add
 			door_var = true;
 			dur_var = irandom_range(10,20);
 			atk_range_var = global.mon_coll[2];
-			dmg_min_var = 10;
-			dmg_unbalance_var = false;
+			dmg_rate_min_var = 10;
+			dmg_rate_unbalance_var = false;
 			dmg_seen_var = true;
 			loop_snd_dist_min_var = 32;
 			loop_snd_dist_max_var = 200;
@@ -185,6 +186,8 @@ object_event_add
 		}
 		case 2: // HD
         {
+			dmg_alarm_var = 30;
+            atk_alarm_var = 180; // Probably?
 			// Render
 			fog_end_var = 256/3;
 			image_blend = make_color_rgb(82,0,253); // 82 0 253 background, 255 92 92 hilight, 164 0 252 overlay
@@ -263,65 +266,38 @@ object_event_add
 object_event_add
 (argument0,ev_step,ev_step_normal,'
 	// Drain
-	local.dokill = (dmg_min_var > 0);
-	if possess_var { local.kill = -1; }
-	else { local.kill = 0; }
+	local.dead = (dmg_rate_min_var <= 0);
+    local.success = false;
+	if possess_var { local.possesser = global.player_arr[player_id_var]; }
+    else { local.possesser = noone; }
 	with player_obj
 	{
-		if !dead_var && (!hurt_var || other.dmg_unbalance_var) && !in_door_var && !invuln_var && on_var
+		if !dead_var && !in_door_var && !invuln_var && on_var
 		{
 			local.dist = point_distance_3d_scr(x,y,z,other.x,other.y,other.z);
 			if local.dist < other.dmg_dist_max_var
 			{
 				local.dmg = global.delta_time_var*other.dmg_rate_var/median(other.dmg_dist_min_var,other.dmg_dist_max_var,local.dist);
-				if local.dokill { local.min = local.dmg; }
-				else { local.min = other.dmg_min_var; }
-				if hp_var > local.min { hp_var -= local.dmg; }
-				else if local.dokill
+				if atk_player_scr
+				(
+					id,other.id, // Player & Monster
+					local.dmg,0,other.dmg_rate_min_var, // Damage
+					false,0, // Collisions
+					!other.dmg_rate_unbalance_var,false, // Effects
+					other.possess_var,local.possesser, // Possess
+					0 // Stamina?
+				)
 				{
-					hp_var = 0;
-					dead_var = true;
-					do_coll_var = false;
-					do_stam_var = false;
-					// Possess thing
-					if other.possess_var
-					{
-						local.dead = false;
-						local.player = id;
-						other.possess_var = false;
-						with global.player_arr[other.player_id_var]
-						{
-							// Revive
-							possess_var = false;
-							dead_var = false;
-							do_coll_var = true;
-							do_stam_var = true;
-							hp_var = hp_max_var;
-							// Become other player
-							x = local.player.x;
-							y = local.player.y;
-							z = local.player.z;
-							eye_yaw_var = local.player.eye_yaw_var;
-							eye_pitch_var = local.player.eye_pitch_var;
-							// Iframes
-							hurt_var = true;
-							set_alarm_scr(0,revive_alarm_var);
-						}
-					}
-					else if local.kill == 0
-					{ local.kill = true; local.player = id; }
+					heal_mult_var = 0;
+					local.success = true;
+					local.player = id;
 				}
 			}
 		}
-		if !dead_var { local.kill = -1; }
+        if !dead_var { local.dead = false; }
 	}
-	if local.kill && local.dokill && !global.debug_var && !possess_var
-	{
-		global.dead_mon_var = object_index;
-		global.menu_player_var = local.player.player_id_var;
-		if global.permadeath_var { delete_save_scr(global.save_name_var); }
-		rm_goto_menu_scr(dead_rm_var,true);
-	}
+	if local.success && local.dead && !global.debug_var && !possess_var
+	{ kill_scr(local.player,object_index,dead_rm_var,kill_var); }
 	// Seen Stuff
 	if is_seen_var == 1
 	{

@@ -62,7 +62,7 @@ Attack
     atk_range_var: How far the specimen can reach while attacking (diameter)
     atk_dist_var: How close the target should be before attempting to attack (If applicable)
     atk_delay_var: How long before the monster can start attacking
-    atk_end_delay_var: How long until the monster can try to attack again
+    atk_alarm_var: How long until the monster can try to attack again
 
 Movement
 
@@ -197,7 +197,14 @@ object_event_add
         if !variable_local_exists("blood_spr_var") { blood_spr_var = blood_spr; }
         if !variable_local_exists("atk_flash_var") { atk_flash_var = true; }
         if !variable_local_exists("atk_snd_var") { atk_snd_var = 0; }
+        if !variable_local_exists("atk_alarm_var") { atk_alarm_var = 0; }
         if !variable_local_exists("kill_var") { kill_var = true; }
+        if !variable_local_exists("dmg_var") { dmg_var = 30; }
+        if !variable_local_exists("dmg_alarm_var") { dmg_alarm_var = 0; }
+        if !variable_local_exists("dmg_min_var") { dmg_min_var = 0; }
+        if !variable_local_exists("dmg_unbalance_var") { dmg_unbalance_var = false; }
+        if !variable_local_exists("dmg_eff_var") { dmg_eff_var = true; }
+        if !variable_local_exists("dmg_stam_var") { dmg_stam_var = 0; }
         if atk_type_var > 0
         {
             if !variable_local_exists("atk_start_snd_var") { atk_start_snd_var = 0; }
@@ -592,26 +599,26 @@ object_event_add
 object_event_add
 (argument0,ev_alarm,7,'
     event_user(2);
-    if atk_type_var > 1
+    if atk_type_var > 1 && atk_alarm_var > 0
     {
         atk_var = false;
-        set_alarm_scr(4,atk_end_delay_var);
+        set_alarm_scr(4,atk_alarm_var);
         if atk_type_var == 3
         {
             move_var = false;
-            set_alarm_scr(1,atk_end_delay_var);
+            set_alarm_scr(1,atk_alarm_var);
         }
         if atk_anim_var == 2
         {
             spr_var = atk_end_spr_var;
             anim_type_var = 1; // End on last
             spr_id_var = 0;
-            set_alarm_scr(5,atk_end_delay_var);
+            set_alarm_scr(5,atk_alarm_var);
         }
         else if atk_type_var == 3
         {
             anim_var = false;
-            set_alarm_scr(2,atk_end_delay_var);
+            set_alarm_scr(2,atk_alarm_var);
         }
     }
 ');
@@ -809,77 +816,31 @@ object_event_add
 // Attack Event
 object_event_add
 (argument0,ev_other,ev_user2,'
-    local.dead = true;
+    local.dead = (dmg_min_var <= 0);
     local.success = false;
+    if possess_var { local.possesser = global.player_arr[player_id_var]; }
+    else { local.possesser = noone; }
     with player_obj
     {
-        if !dead_var && !hurt_var && !in_door_var && !invuln_var && on_var
+        if atk_player_scr
+        (
+            id,other.id, // Player & Monster
+            other.dmg_var,other.dmg_alarm_var,other.dmg_min_var, // Damage
+            true,other.atk_range_var, // Collisions
+            !other.dmg_unbalance_var,other.dmg_eff_var, // Effects
+            other.possess_var,local.possesser, // Possess
+            other.dmg_stam_var // Stamina?
+        )
         {
-            // p3dc_check_scr(coll_var[0],x,y,z,other.coll_var[0],other.x,other.y,other.z)
-            if cyl_coll_scr(x,y,z,coll_var[2],coll_var[1],other.x,other.y,other.z,other.atk_range_var,other.coll_var[1])
-            {
-                if hp_var > other.dmg_var
-                {
-                    hp_var -= other.dmg_var;
-                    if other.dmg_alarm_var > 0
-                    {
-                        hurt_var = true;
-                        set_alarm_scr(0,other.dmg_alarm_var);
-                    }
-                    hurt_target_var = other.id;
-                    event_user(0);
-                }
-                else
-                {
-                    hp_var = 0;
-                    dead_var = true;
-                    do_coll_var = false;
-                    do_stam_var = false;
-                    // Revive
-                    if other.possess_var
-                    {
-                        local.dead = false;
-                        local.player = id;
-                        other.possess_var = false;
-                        with global.player_arr[other.player_id_var]
-                        {
-                            // Revive
-                            possess_var = false;
-                            dead_var = false;
-                            do_coll_var = true;
-                            do_stam_var = true;
-                            hp_var = hp_max_var;
-                            // Become other player
-                            x = local.player.x;
-                            y = local.player.y;
-                            z = local.player.z;
-                            eye_yaw_var = local.player.eye_yaw_var;
-                            eye_pitch_var = local.player.eye_pitch_var;
-                            // Iframes
-                            hurt_var = true;
-                            set_alarm_scr(0,revive_alarm_var);
-                        }
-                    }
-                }
-                other.atk_target_var = id;
-                local.success = true;
-            }
+            other.atk_target_var = id;
+            local.success = true;
         }
         if !dead_var { local.dead = false; }
     }
     if local.success
     {
         if local.dead && !global.debug_var && !possess_var
-        {
-            global.dead_mon_var = object_index;
-            global.menu_player_var = atk_target_var.player_id_var;
-            if kill_var
-            {
-                if global.permadeath_var { delete_save_scr(global.save_name_var); }
-                rm_goto_menu_scr(dead_rm_var,true);
-            }
-            else { rm_goto_menu_scr(dead_rm_var,2); }
-        }
+        { kill_scr(atk_target_var,object_index,dead_rm_var,kill_var); }
         else { event_user(3); }
     }
 ');
@@ -887,22 +848,27 @@ object_event_add
 // Uses atk_target_var as an argument, usually the player.
 object_event_add
 (argument0,ev_other,ev_user3,'
+    if atk_alarm_var > 0
+    {
+        atk_var = false;
+        set_alarm_scr(4,atk_alarm_var);
+    }
     if atk_type_var == 1
     {
-        set_alarm_scr(7,dmg_alarm_var);
-        set_alarm_scr(1,dmg_alarm_var);
+        set_alarm_scr(7,atk_alarm_var);
+        set_alarm_scr(1,atk_alarm_var);
         move_var = false;
         if atk_anim_var > 0
         {
             spr_var = atk_spr_var;
             anim_type_var = 1; // End on last
             spr_id_var = 0;
-            set_alarm_scr(5,dmg_alarm_var);
+            set_alarm_scr(5,atk_alarm_var);
         }
         else
         {
             anim_var = false;
-            set_alarm_scr(2,dmg_alarm_var);
+            set_alarm_scr(2,atk_alarm_var);
         }
         set_motion_3d_scr(0,true);
     }

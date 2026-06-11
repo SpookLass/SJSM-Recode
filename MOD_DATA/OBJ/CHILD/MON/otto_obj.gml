@@ -84,7 +84,8 @@ object_event_add
             spr_spd_var = 1/15;
             spd_base_var = 28/45; // 0.6r2
             do_acc_var = true;
-            dmg_alarm_var = 180;
+            dmg_alarm_var = 30;
+            atk_alarm_var = 180;
             atk_stun_var = 0;
             acc_var = 16/675; // 0.02r370
             frick_var = acc_var;

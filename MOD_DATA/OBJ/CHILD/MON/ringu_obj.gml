@@ -76,7 +76,8 @@ object_event_add
         case 2: // HD
         {
             dur_var = irandom_range(10,15);
-            dmg_alarm_var = 180;
+            dmg_alarm_var = 30;
+            atk_alarm_var = 180;
             delay_min_var = 90;
             delay_max_var = 180;
             do_enter_var = true;

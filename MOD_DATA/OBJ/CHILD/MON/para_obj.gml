@@ -160,6 +160,7 @@ object_event_add
             dur_var = irandom_range(10,15);
             do_warn_var = true;
             atk_range_var = 128/3; // 42.r6
+            atk_alarm_var = 180;
             // Delay (uhh leech)
             delay_calc_var = false;
             delay_min_var = 90;
@@ -168,18 +169,18 @@ object_event_add
             state_delay_var = 72;
             state_rm_var = true;
             state_atk_var = false;
-            state_dmg_alarm_var[0] = 180;
+            state_dmg_alarm_var[0] = 30;
             state_spd_var[0] = 4/9; // 0.r4
             state_dmg_var[2] = 45;
             state_chance_var[0] = 1;
             state_acc_var[0] = true;
-            state_dmg_alarm_var[1] = 180;
+            state_dmg_alarm_var[1] = 30;
             state_spd_var[1] = 8/15;
             state_dmg_var[2] = 45;
             state_dist_var[1] = 64;
             state_chance_var[1] = 1;
             state_acc_var[1] = true;
-            state_dmg_alarm_var[2] = 180;
+            state_dmg_alarm_var[2] = 30;
             state_spd_var[2] = 16/9;
             state_dmg_var[2] = 45;
             state_dist_var[2] = 160;

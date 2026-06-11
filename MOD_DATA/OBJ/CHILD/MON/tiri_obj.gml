@@ -110,7 +110,8 @@ object_event_add
             do_fog_var = false;
             dur_var = irandom_range(8,15);
             dmg_var = 45;
-            dmg_alarm_var = 180;
+            dmg_alarm_var = 30;
+            atk_alarm_var = 180;
             delay_min_var = 90;
             delay_max_var = 180;
             do_enter_var = true;
@@ -269,13 +270,13 @@ object_event_add
 ');
 // Movement
 object_event_add
-(argument0,ev_other,ev_user0,"
+(argument0,ev_other,ev_user0,'
     if coward_var { spd_mult_var *= -1; }
     event_inherited();
-");
+');
 // Attack Success
 object_event_add
-(argument0,ev_other,ev_user3,"
+(argument0,ev_other,ev_user3,'
     event_inherited();
     if do_coward_var && coward_alarm_var > 0
     {
@@ -300,15 +301,15 @@ object_event_add
             }
         }
     }
-");
+');
 // Coward alarm
 object_event_add
-(argument0,ev_alarm,8,"
+(argument0,ev_alarm,8,'
     coward_var = false;
-");
+');
 // Draw
 object_event_add
-(argument0,ev_draw,0,"
+(argument0,ev_draw,0,'
     if do_fog_var && !global.fog_dark_var && global.fog_var
     {
         d3d_set_fog(global.fog_var,fog_color_02_var,global.fog_start_var,global.fog_end_var);
@@ -316,4 +317,4 @@ object_event_add
         d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var);
     }
     else { event_inherited(); }
-");
+');

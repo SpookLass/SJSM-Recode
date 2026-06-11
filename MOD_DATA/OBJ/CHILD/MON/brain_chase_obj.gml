@@ -30,7 +30,8 @@ object_event_add
     dur_var = 1;
     delay_var = 180;
     dmg_var = 99999;
-    dmg_alarm_var = 180;
+    dmg_alarm_var = 30;
+    atk_alarm_var = 180;
     w_var = 10;
     h_var = 10;
     eye_h_var = 10;
@@ -67,6 +68,8 @@ object_event_add
                 eff_mult_var = true;
                 dmg_var = 60;
                 delay_var = 30;
+                dmg_alarm_var = 180;
+                atk_alarm_var = 0;
                 // Silhouette
                 sil_var = true;
                 sil_type_var = 1; // Pure color

@@ -26,7 +26,6 @@ object_event_add
     spd_base_var = 0.5;
     dur_var = irandom_range(10,20);
     delay_var = 192;
-    dmg_var = 99999;
     path_prec_var = 32;
     dupe_var = dupe_never_const;
     alarm_len_var = 2;
@@ -40,6 +39,11 @@ object_event_add
     reflect_var = false;
     dead_rm_var = flesh_dead_rm;
     unlock_var = 1;
+    // Damage
+    dmg_var = 99999;
+    dmg_min_var = 0;
+    dmg_unbalance_var = false;
+    dmg_stam_var = 0;
     // Zone
     zone_var = true;
     zone_start_var = 0;
@@ -162,7 +166,10 @@ object_event_add
         case 4:
         {
             if global.mode_var != 0
-            { spd_base_var *= 2; }
+            {
+                spd_base_var *= 2;
+                delay_var *= 0.5;
+            }
             angle_var = 14;
             break;
         }
@@ -322,7 +329,7 @@ Difference: "+string(local.newdelay)+"
     global.light_floor_obj_spr = light_floor_spr_var;
     // Door
     local.par = id;
-    if dur_var > 1
+    if dur_var < 0 || dur_var > 1
     {
         with door_obj
         {
@@ -482,7 +489,8 @@ object_event_add
         if hurt_var { set_motion_3d_scr(spd_base_var*hurt_spd_mult_var,true); }
         else { set_motion_3d_scr(spd_base_var,true); }
         // Damage
-        local.kill = 0;
+        local.dead = (dmg_min_var > 0);
+        local.success = false;
         local.dmg = dmg_var*global.delta_time_var;
         with player_obj
         {
@@ -492,33 +500,26 @@ object_event_add
                 // p3dc_check_scr(coll_var[0],x,y,z,other.coll_var[0],other.x,other.y,other.z)
                 if abs(deg_diff_scr(other.yaw_var,point_direction(other.x,other.y,x,y))) > 90
                 {
-                    if hp_var > local.dmg
+                    if atk_player_scr
+                    (
+                        id,other.id, // Player & Monster
+                        other.dmg_var*global.delta_time_var,0,other.dmg_min_var, // Damage
+                        false,0, // Collisions
+                        !other.dmg_unbalance_var,false, // Effects
+                        other.possess_var,local.possesser, // Possess
+                        other.dmg_stam_var // Stamina?
+                    )
                     {
+                        local.success = true;
+                        other.atk_target_var = id;
                         other.fog_consume_var[cam_id_var] = true;
-                        hp_var -= local.dmg;
                     }
-                    else
-                    {
-                        hp_var = 0;
-                        dead_var = true;
-                        do_coll_var = false;
-                        do_stam_var = false;
-                        if local.kill == 0
-                        { local.kill = 1; }
-                    }
-                    other.atk_target_var = id;
-                    local.success = true;
                 }
             }
-            if !dead_var { local.kill = -1; }
+            if !dead_var { local.dead = false; }
         }
-        if local.kill && !global.debug_var
-        {
-            global.dead_mon_var = object_index;
-            global.menu_player_var = atk_target_var.player_id_var;
-            if global.permadeath_var { delete_save_scr(global.save_name_var); }
-            rm_goto_menu_scr(dead_rm_var,true);
-        }
+        if local.success && local.dead && !possess_var && !global.debug_var
+        { kill_scr(atk_target_var,object_index,dead_rm_var,kill_var); }
     }
 ');
 // Delay Alarm

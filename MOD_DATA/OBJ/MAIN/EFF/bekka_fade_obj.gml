@@ -38,85 +38,30 @@ object_event_add
     {
         local.dead = true;
         local.success = false;
+        if par_var.possess_var { local.possesser = global.player_arr[par_var.player_id_var]; }
+        else { local.possesser = noone; }
         with player_obj
         {
-            if !dead_var && !hurt_var && !in_door_var && !invuln_var && on_var
+            if atk_player_scr
+            (
+                id,other.par_var, // Player & Monster
+                other.dmg_var,other.dmg_alarm_var,0, // Damage
+                false,0, // Collisions
+                true,true, // Effects
+                other.par_var.possess_var,local.possesser, // Possess
+                0 // Stamina?
+            )
             {
-                if hp_var > other.dmg_var
-                {
-                    hp_var -= other.dmg_var;
-                    if other.dmg_alarm_var
-                    {
-                        hurt_var = true;
-                        set_alarm_scr(0,other.dmg_alarm_var);
-                    }
-                    hurt_target_var = other.mon_var;
-                    event_user(0);
-                    local.player = id;
-                    // HELP
-                    fmod_snd_play_scr(claw_snd);
-                    with instance_create(0,0,blood_eff_obj)
-                    {
-                        spr_var = blood_spr;
-                        spr_id_var = irandom(sprite_get_number(spr_var)-1);
-                        // Set camera to player
-                        cam_id_var = local.player.cam_id_var;
-                    }
-                    if !global.reduce_flash_var
-                    {
-                        with instance_create(0,0,flash_eff_obj)
-                        {
-                            image_blend = c_red; 
-                            set_alarm_scr(0,6);
-                            cam_id_var = local.player.cam_id_var;
-                        }
-                    }
-                }
-                else
-                {
-                    hp_var = 0;
-                    dead_var = true;
-                    do_coll_var = false;
-                    do_stam_var = false;
-                    local.player = id;
-                    // Revive
-                    if other.possess_var
-                    {
-                        local.dead = false;
-                        other.par_var.possess_var = false;
-                        with global.player_arr[other.par_var.player_id_var]
-                        {
-                            // Revive
-                            possess_var = false;
-                            dead_var = false;
-                            do_coll_var = true;
-                            do_stam_var = true;
-                            hp_var = hp_max_var;
-                            // Become other player
-                            x = local.player.x;
-                            y = local.player.y;
-                            z = local.player.z;
-                            eye_yaw_var = local.player.eye_yaw_var;
-                            eye_pitch_var = local.player.eye_pitch_var;
-                            // Iframes
-                            hurt_var = true;
-                            set_alarm_scr(0,revive_alarm_var);
-                        }
-                    }
-                }
+                other.atk_target_var = id;
                 local.success = true;
             }
             if !dead_var { local.dead = false; }
         }
         if local.success
         {
-            if local.dead
-            {
-                global.dead_mon_var = mon_var.object_index;
-                global.menu_player_var = local.player.player_id_var;
-                if global.permadeath_var { delete_save_scr(global.save_name_var); }
-                rm_goto_menu_scr(dead_rm_var,true);
-            }
+            if local.dead && !global.debug_var && !possess_var
+            { kill_scr(atk_target_var,par_var.object_index,dead_rm_var,kill_var); }
+            else { event_user(3); }
         }
     }
 ');

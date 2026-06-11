@@ -138,7 +138,8 @@ object_event_add
             type_var = 2;
             do_warp_var = true;
             spd_base_var = 32/45; // 0.7r1
-            dmg_alarm_var = 180;
+            dmg_alarm_var = 30;
+            atk_alarm_var = 180;
             if local.set != 2 { dur_var = irandom_range(10,20); }
             if local.set != 1
             {

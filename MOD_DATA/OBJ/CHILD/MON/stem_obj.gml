@@ -124,7 +124,8 @@ object_event_add
         case 4: // Karamari HD
         {
             dmg_var = 20;
-            dmg_alarm_var = 60;
+            dmg_alarm_var = 30;
+            atk_alarm_var = 60;
             do_acc_var = false;
             move_type_var = 2;
             spd_base_var = 16/45; // 0.3r5
@@ -150,7 +151,8 @@ object_event_add
             hurt_eff_var = true;
             hurt_tp_var = true;
             dmg_var = 20;
-            dmg_alarm_var = 60;
+            dmg_alarm_var = 30;
+            atk_alarm_var = 60;
             do_acc_var = false;
             move_type_var = 2;
             boost_var = true;

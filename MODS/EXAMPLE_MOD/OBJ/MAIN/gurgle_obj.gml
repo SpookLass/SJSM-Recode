@@ -41,6 +41,10 @@ object_event_add
     delay_var = 80;
     dmg_var = 45;
     dmg_alarm_var = 120;
+    dmg_eff_var = true;
+    dmg_stam_var = false;
+    dmg_unbalance_var = false;
+    dmg_min_var = 0;
     w_var = 16;
     h_var = 23;
     eye_h_var = 11;
@@ -82,10 +86,11 @@ object_event_add
             snd_dist_max_var = 300;
             break;
         }
-        case 2: //HD GURGLE REAL?
+        case 2: // HD GURGLE REAL?
         {
             dur_var = irandom_range(10,15);
-            dmg_alarm_var = 180;
+            dmg_alarm_var = 30;
+            atk_alarm_var = 180;
             delay_min_var = 90;
             delay_max_var = 180;
             do_enter_var = true;

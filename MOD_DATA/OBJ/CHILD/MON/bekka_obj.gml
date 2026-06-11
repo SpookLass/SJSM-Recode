@@ -140,7 +140,8 @@ object_event_add
             enter_spawn_var = false;
             exit_spawn_var = true;
             spd_base_var = 8/15; // 0.5r3
-            dmg_alarm_var = 180;
+            dmg_alarm_var = 30;
+            atk_alarm_var = 180;
             bekka_type_var = 2;
             overlay_color_var = c_white;
             overlay_alpha_var = 0.1;

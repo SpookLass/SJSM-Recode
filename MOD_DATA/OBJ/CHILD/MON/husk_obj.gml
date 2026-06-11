@@ -43,7 +43,7 @@ object_event_add
     eye_h_var = h_var*11/15; // x0.7r3
     dead_var = false;
     spawn_attempt_var = 30;
-    spawn_dist_var = 24;
+    spawn_player_dist_var = 24;
     husk_dist_var = 0;
     dead_rm_var = husk_dead_rm;
     // Attack
@@ -51,7 +51,7 @@ object_event_add
     atk_dist_var = 8.5;
     atk_range_var = 20;
     atk_delay_var = 12;
-    atk_end_delay_var = 30;
+    atk_alarm_var = 30;
     // Hurt
     hp_var = irandom_range(2,7);
     do_hurt_var = 2;
@@ -315,17 +315,17 @@ object_event_add
         local.ytmp = local.flr.y+random_range(-local.height,local.height);
         local.ztmp = local.flr.z;
         local.bool = true;
-        if spawn_dist_var > 0
+        if spawn_player_dist_var > 0
         {
             with player_obj
             {
                 if on_var && !dead_var && !in_door_var
                 {
-                    if point_distance_3d_scr(local.xtmp,local.ytmp,local.ztmp,x,y,z) < other.spawn_dist_var
+                    if point_distance_3d_scr(local.xtmp,local.ytmp,local.ztmp,x,y,z) < other.spawn_player_dist_var
                     { local.bool = false; break; }
                 }
             }
-            if point_distance_3d_scr(local.xtmp,local.ytmp,local.ztmp,global.spawn_arr[0,0],global.spawn_arr[0,1],global.spawn_arr[0,2]) < other.spawn_dist_var
+            if point_distance_3d_scr(local.xtmp,local.ytmp,local.ztmp,global.spawn_arr[0,0],global.spawn_arr[0,1],global.spawn_arr[0,2]) < other.spawn_player_dist_var
             { local.bool = false; break; }
         }
         if husk_dist_var > 0 && local.bool

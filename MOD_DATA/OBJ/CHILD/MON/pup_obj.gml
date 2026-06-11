@@ -151,7 +151,8 @@ object_event_add
             snd_alarm_min_var = -1;
             snd_alarm_max_var = -1;
             seen_yaw_var = 60;
-            dmg_alarm_var = 180;
+            dmg_alarm_var = 30;
+            atk_alarm_var = 180;
             atk_range_var = 32;
             tp_dist_min_var = 0;
             tp_dist_max_var = 32/3; // 10.r6

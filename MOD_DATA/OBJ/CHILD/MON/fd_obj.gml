@@ -141,7 +141,8 @@ object_event_add
             delay_min_var = 90;
             delay_max_var = 180;
             do_enter_var = true;
-            dmg_alarm_var = 180;
+            dmg_alarm_var = 30;
+            atk_alarm_var = 180;
             violence_var = 2;
             hurt_spd_var = 1;
             hurt_alarm_var = 18;

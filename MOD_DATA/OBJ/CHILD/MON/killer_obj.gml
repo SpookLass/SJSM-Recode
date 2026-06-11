@@ -242,7 +242,8 @@ object_event_add
             do_sprint_var = true;
             do_stam_var = true;
             dur_var = irandom_range(10,15);
-            dmg_alarm_var = 90;
+            dmg_alarm_var = 30;
+            atk_alarm_var = 90;
             delay_min_var = 90;
             delay_max_var = 180;
             do_acc_var = true;

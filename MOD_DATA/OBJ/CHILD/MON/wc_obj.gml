@@ -50,7 +50,7 @@ object_event_add
     atk_dist_var = 16;
     atk_range_var = 40;
     atk_delay_var = 25;
-    atk_end_delay_var = 36;
+    atk_alarm_var = 36;
     atk_start_snd_var = 2;
     // Hurt
     hp_var = 20;
@@ -124,7 +124,7 @@ object_event_add
             dmg_var = 40;
             spd_base_var = 2;
             atk_delay_var = 30;
-            atk_end_delay_var = 27;
+            atk_alarm_var = 27;
             rise_alarm_var = 54;
             spr_spd_var = 1/3; // 0.r3
             break;
@@ -175,7 +175,7 @@ object_event_add
         snd_arr[6,0] = fmod_snd_add_scr(main_directory_const+"\SND\DH\wc_07_snd.wav",true);
         snd_arr[7,0] = fmod_snd_add_scr(main_directory_const+"\SND\DH\wc_08_snd.wav",true);
         atk_start_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\DH\wc_atk_snd.wav",true);
-        hurt_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\DH\doll_hurt_snd.wav",true);
+        hurt_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\DH\doll_hurt_snd.wav");
         dead_snd_var[0]  = fmod_snd_add_scr(main_directory_const+"\SND\DH\wc_dead_snd.wav",true);
         switch theme_scr(global.wc_theme_var,global.theme_var,2,0,1,2)
         {

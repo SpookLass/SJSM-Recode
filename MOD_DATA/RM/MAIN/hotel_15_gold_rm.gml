@@ -46,6 +46,10 @@ room_set_code
     {
         instance_create(0,0,maze_dark_color_obj);
         instance_create(0,0,maze_dark_fog_obj);
+        // Warning
+        instance_create(192,240,torch_gold_north_obj);
+        instance_create(192,272,torch_gold_south_obj);
+        instance_create(336,256,torch_gold_east_obj);
         // Torch 1
         //local.torch = instance_create(256,304,torch_gold_south_obj);
         //local.torch.door_var = global.spawn_arr[1,4];
@@ -185,10 +189,6 @@ room_instance_add(argument0,336,256,wall_vert_obj);
 room_instance_add(argument0,336,288,wall_vert_obj);
 room_instance_add(argument0,240,288,wall_vert_obj);
 room_instance_add(argument0,240,224,wall_vert_obj);
-// Torches
-room_instance_add(argument0,192,240,torch_gold_north_obj);
-room_instance_add(argument0,192,272,torch_gold_south_obj);
-room_instance_add(argument0,336,256,torch_gold_east_obj);
 // Props
 room_instance_add(argument0,288,128,doorframe_01_hor_obj);
 room_instance_add(argument0,256,128,doorframe_01_hor_obj);

@@ -20,7 +20,7 @@ object_event_add
     dur_var = 11;
     delay_var = 64;
     dmg_var = 99999;
-    dmg_alarm_var = 90;
+    dmg_alarm_var = 0;
     w_var = 12;
     h_var = 16.5;
     eye_h_var = 20.5;
@@ -75,18 +75,8 @@ object_event_add
             break;
         }
         case 4: // Old HD
-        {
-            dmg_var = 60;
-            dmg_alarm_var = 180;
-            local.set = true;
-        }
         case 2: // HD
         {
-            if !local.set
-            {
-                dmg_var = 30;
-                dmg_alarm_var = 60;
-            }
             delay_min_var = 90;
             delay_max_var = 180;
             dur_var = 14;

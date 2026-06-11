@@ -107,7 +107,8 @@ object_event_add
         case 2: // HD
         {
             dur_var = irandom_range(10,15);
-            dmg_alarm_var = 180;
+            dmg_alarm_var = 30;
+            atk_alarm_var = 180;
             delay_min_var = 60;
             delay_max_var = 180;
             slime_spd_mult_var = 0.3;
@@ -123,7 +124,6 @@ object_event_add
             atk_type_var = 2;
             atk_delay_var = 30;
             atk_range_var = 32; // 16 radius
-            atk_end_delay_var = dmg_alarm_var;
             atk_dist_var = 15;
             // Sound
             snd_alarm_min_var = 90;

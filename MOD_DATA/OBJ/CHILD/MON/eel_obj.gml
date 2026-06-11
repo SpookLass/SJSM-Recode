@@ -99,7 +99,8 @@ object_event_add
             // Alarms
             delay_min_var = 90;
             delay_max_var = 180;
-            dmg_alarm_var = 180;
+            dmg_alarm_var = 30;
+            atk_alarm_var = 180;
             // Sound
             snd_alarm_min_var = 90;
             snd_alarm_max_var = 240;
