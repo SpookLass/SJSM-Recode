@@ -9,6 +9,8 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,0,'
+    event_inherited();
+    true_time_var = true;
     // Translation
     ini_open("lang_"+global.lang_var+".ini");
     str_main_var =  string_replace_all(ini_read_string("DEAD","para","DEAD_para"),"@l","
@@ -81,8 +83,8 @@ object_event_add
     if global.input_press_arr[confirm_input_const,global.menu_player_var] == 1
     || global.input_press_arr[back_input_const,global.menu_player_var] == 1
     { event_perform(ev_alarm,2); }
-    spr_id_01_var = mod_scr(spr_id_01_var+(spr_spd_01_var*global.delta_time_var),sprite_get_number(spr_01_var));
-    spr_id_02_var = mod_scr(spr_id_02_var+(spr_spd_02_var*global.delta_time_var),sprite_get_number(spr_02_var));
+    spr_id_01_var = mod_scr(spr_id_01_var+(spr_spd_01_var*global.true_delta_time_var),sprite_get_number(spr_01_var));
+    spr_id_02_var = mod_scr(spr_id_02_var+(spr_spd_02_var*global.true_delta_time_var),sprite_get_number(spr_02_var));
 ');
 // Alarm 0 Event
 object_event_add

@@ -45,6 +45,8 @@ Menu and button States
 // Create Event
 object_event_add
 (argument0,ev_create,0,'
+    event_inherited();
+    true_time_var = true;
 	
 	local.array_index = 0;
 	local.wall_index = 1;

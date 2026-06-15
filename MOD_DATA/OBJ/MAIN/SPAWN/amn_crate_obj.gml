@@ -11,19 +11,20 @@ globalvar amn_crate_coll;
 amn_crate_coll[1] = 12;
 amn_crate_coll[2] = 32;
 amn_crate_coll[3] = 32;
-amn_crate_coll[0] = prop_to_coll_scr(0,main_directory_const+"\MDL\RM\amn_crate_coll_mdl.gmmod",amn_crate_coll[2],amn_crate_coll[3],amn_crate_coll[1]);
+amn_crate_coll[0] = prop_to_coll_scr(2,main_directory_const+"\MDL\RM\amn_crate_coll_mdl.gmmod",12,12,12);
 // Create event
 object_event_add
 (argument0,ev_create,0,'
     store_tex_var = crate_bg_tex;
     event_inherited();
     solid_var = player_solid_const;
+    center_w_var = 12;
     w_var = 12;
     h_var = 12;
     l_var = 12;
     type_var = 2;
     // Collisions
-    coll_var[0] = amn_crate_coll[0];
+    coll_var[0] = -5;
     coll_var[1] = amn_crate_coll[1];
     coll_var[2] = amn_crate_coll[2];
     coll_var[3] = amn_crate_coll[3];

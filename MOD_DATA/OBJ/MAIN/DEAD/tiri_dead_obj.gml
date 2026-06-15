@@ -9,6 +9,8 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,0,'
+    event_inherited();
+    true_time_var = true;
     // Path
     path_var = path_add();
     path_set_kind(path_var,1); // Smooth
@@ -121,7 +123,7 @@ object_event_add
         else if hp_var <= 0
         {
             fall_var = true;
-            path_start(path_var,path_spd_var*global.delta_time_var,false,false);
+            path_start(path_var,path_spd_var*global.true_delta_time_var,false,false);
         }
     }
 ');
@@ -162,8 +164,8 @@ object_event_add
     }
     if global.input_press_arr[back_input_const,global.menu_player_var] == 1
     { event_perform(ev_alarm,1); }
-    if state_var > 0 { static_spr_id_var = mod_scr(static_spr_id_var+(static_spr_spd_var*global.delta_time_var),sprite_get_number(static_spr_var)); }
-    else if fall_var { path_speed = path_spd_var*global.delta_time_var; }
+    if state_var > 0 { static_spr_id_var = mod_scr(static_spr_id_var+(static_spr_spd_var*global.true_delta_time_var),sprite_get_number(static_spr_var)); }
+    else if fall_var { path_speed = path_spd_var*global.true_delta_time_var; }
     else
     {
         x = deg_normal_scr(x+input_yaw_scr(global.menu_player_var));

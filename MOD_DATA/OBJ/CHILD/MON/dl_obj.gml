@@ -437,7 +437,7 @@ object_event_add
                 event_user(15);
                 if temp_var == -1
                 {
-                    if !check_coll_scr(-1,0,0,0,x,y,z)
+                    if !check_coll_scr(-1,0,0,0,0,x,y,z)
                     {
                         warp_var = false;
                         do_coll_var = mon_solid_const;
@@ -497,7 +497,7 @@ object_event_add
         local.ztmp = target_z_var;
         if target_dist_var > local.dist
         {
-            if !check_coll_scr(-1,0,0,0,local.xtmp,local.ytmp,local.ztmp)
+            if !check_coll_scr(-1,0,0,0,0,local.xtmp,local.ytmp,local.ztmp)
             {
                 warp_x_var = local.xtmp;
                 warp_y_var = local.ytmp;

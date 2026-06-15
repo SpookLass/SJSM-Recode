@@ -19,7 +19,6 @@ object_event_add
     z_spd_var = 0;
     yaw_var = 0;
     pitch_var = 0;
-    
     zstart = z;
     do_coll_var = false;
     grav_var = 0;
@@ -29,12 +28,15 @@ object_event_add
     fall_var = true;
     fall_temp_var = false;
     on_floor_var = false;
+    step_h_var = 4;
+    slope_margin_var = 1.3;
 ');
 // End Step
 object_event_add
 (argument0,ev_step,ev_step_end,'
     // Update movement (put here to not interfere with vanilla xprevious and yprevious)
-    update_motion_scr(global.delta_time_var);
+    if true_time_var { update_motion_scr(global.true_delta_time_var); }
+    else { update_motion_scr(global.delta_time_var); }
     // Set depth
     depth = depth_base_var+(point_distance_3d_scr(x,y,z,global.cam_x_var[0],global.cam_y_var[0],global.cam_z_var[0])/10000);
     // Inherit

@@ -341,7 +341,7 @@ object_event_add
         }
         if local.bool
         {
-            if !check_coll_scr(0,0,0,0,local.xtmp,local.ytmp,local.ztmp)
+            if !check_coll_scr(0,0,0,0,0,local.xtmp,local.ytmp,local.ztmp)
             {
                 x = local.xtmp;
                 y = local.ytmp;

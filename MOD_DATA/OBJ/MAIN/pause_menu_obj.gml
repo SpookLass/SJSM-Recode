@@ -9,6 +9,7 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,0,'
+    event_inherited();
     delay_var = true;
     store_spd_var = global.game_spd_var;
     global.game_spd_var = 0;
@@ -21,6 +22,7 @@ object_event_add
     fmod_snd_play_scr(deny_snd);
     time_var = 0;
     state_var = 0;
+    true_time_var = true;
     // Static
     spr_var = static_01_spr;
     spr_id_var = 0;
@@ -101,11 +103,6 @@ object_event_add
         button_arr[3] = ini_read_string("MENU","exit","MENU_exit");
     }
     ini_close();
-');
-// Step Begin
-object_event_add
-(argument0,ev_step,ev_step_begin,'
-    update_alarm_scr(global.true_delta_time_var);
 ');
 // Step Normal
 object_event_add

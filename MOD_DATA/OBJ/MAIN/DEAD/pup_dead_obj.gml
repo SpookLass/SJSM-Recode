@@ -10,6 +10,7 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,0,'
     event_inherited();
+    true_time_var = true;
     // Translation
     ini_open("lang_"+global.lang_var+".ini");
     str_var = ini_read_string("DEAD","pup","DEAD_pup");
@@ -150,13 +151,13 @@ object_event_add
     }
     if global.input_press_arr[back_input_const,global.menu_player_var] == 1
     { rm_goto_menu_scr(dead_rm,true); }
-    bg_02_x_var = mod_scr(bg_02_x_var+(bg_02_xspd_var*global.delta_time_var),bg_02_xscale_var);
-    bg_02_y_var = mod_scr(bg_02_y_var+(bg_02_yspd_var*global.delta_time_var),bg_02_yscale_var);
+    bg_02_x_var = mod_scr(bg_02_x_var+(bg_02_xspd_var*global.true_delta_time_var),bg_02_xscale_var);
+    bg_02_y_var = mod_scr(bg_02_y_var+(bg_02_yspd_var*global.true_delta_time_var),bg_02_yscale_var);
     switch state_var
     {
         case 0:
         {
-            spr_id_var = mod_scr(spr_id_var+(spr_spd_var*global.delta_time_var),sprite_get_number(spr_var));
+            spr_id_var = mod_scr(spr_id_var+(spr_spd_var*global.true_delta_time_var),sprite_get_number(spr_var));
             break;
         }
         case 2:
@@ -164,19 +165,19 @@ object_event_add
             local.per = power(alarm_arr[0,0]/alarm_arr[0,1],2);
             bg_01_y_var = lerp_scr(-eye_face_scale_var*0.5,0,local.per);
             eye_y_var = lerp_scr(0,eye_face_scale_var,local.per);
-            eye_spr_id_var = mod_scr(eye_spr_id_var+(eye_spr_spd_var*global.delta_time_var),sprite_get_number(eye_spr_var));
+            eye_spr_id_var = mod_scr(eye_spr_id_var+(eye_spr_spd_var*global.true_delta_time_var),sprite_get_number(eye_spr_var));
             break;
         }
         case 3:
         {
             local.per = power(alarm_arr[0,0]/alarm_arr[0,1],2);
             hand_y_var = lerp_scr(0,-hand_scale_var,local.per);
-            eye_spr_id_var = mod_scr(eye_spr_id_var+(eye_spr_spd_var*global.delta_time_var),sprite_get_number(eye_spr_var));
+            eye_spr_id_var = mod_scr(eye_spr_id_var+(eye_spr_spd_var*global.true_delta_time_var),sprite_get_number(eye_spr_var));
             break;
         }
     }
     if state_var && fade_spr_id_var < sprite_get_number(fade_spr_var)
-    { fade_spr_id_var += fade_spr_spd_var*global.delta_time_var; }
+    { fade_spr_id_var += fade_spr_spd_var*global.true_delta_time_var; }
 ');
 // Draw Event
 object_event_add

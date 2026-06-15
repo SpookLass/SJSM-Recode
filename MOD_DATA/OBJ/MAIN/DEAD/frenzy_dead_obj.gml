@@ -9,6 +9,8 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,0,'
+    event_inherited();
+    true_time_var = true;
     // Translation
     ini_open("lang_"+global.lang_var+".ini");
     str_var =  string_replace_all(ini_read_string("DEAD","frenzy","DEAD_frenzy"),"@l","

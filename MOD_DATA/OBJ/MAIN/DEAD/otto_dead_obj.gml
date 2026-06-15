@@ -9,6 +9,8 @@ object_set_visible(argument0,false);
 // Create Event
 object_event_add
 (argument0,ev_create,0,'
+    event_inherited();
+    true_time_var = true;
     // String
     image_xscale = 0.4;
     image_yscale = 0.4;

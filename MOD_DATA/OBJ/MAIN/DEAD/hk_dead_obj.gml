@@ -9,6 +9,8 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,0,'
+    event_inherited();
+    true_time_var = true;
     load_var = true;
     // Path
     path_var = path_add();
@@ -155,7 +157,7 @@ object_event_add
         // Hooked Doll
         case 1:
         {
-            spr_id_01_var += spr_spd_01_var*global.delta_time_var;
+            spr_id_01_var += spr_spd_01_var*global.true_delta_time_var;
             if spr_id_01_var >= sprite_get_number(spr_01_var) { substate_var = 0; }
             break;
         }
@@ -170,7 +172,7 @@ object_event_add
             break;
         }
         // Fall
-        case 4: { path_speed = path_spd_var*global.delta_time_var; break; }
+        case 4: { path_speed = path_spd_var*global.true_delta_time_var; break; }
     }
 ');
 // Alarm 0
@@ -218,7 +220,7 @@ object_event_add
             // Fall
             case 4:
             {
-                path_start(path_var,path_spd_var*global.delta_time_var,false,false);
+                path_start(path_var,path_spd_var*global.true_delta_time_var,false,false);
                 break;
             }
             // Fade

@@ -997,7 +997,7 @@ object_event_add
             local.dir = point_direction(hurt_target_var.x,hurt_target_var.y,x,y);
             local.xtmp = x+lengthdir_x(hurt_dist_var,local.dir);
             local.ytmp = y+lengthdir_y(hurt_dist_var,local.dir);
-            if do_coll_var { local.bool = !check_coll_scr(0,0,0,0,local.xtmp,local.ytmp,z); }
+            if do_coll_var { local.bool = !check_coll_scr(0,0,0,0,0,local.xtmp,local.ytmp,z); }
             else { local.bool = true; }
             if local.bool
             {
@@ -1178,7 +1178,9 @@ object_event_add
     }
     if local.collided
     {
-        if !check_coll_scr(0,0,0,0,local.xtmp,local.ytmp,z)
+        local.bool = true;
+        if do_coll_var { local.bool = !check_coll_scr(0,0,0,0,0,local.xtmp,local.ytmp,z); }
+        if local.bool
         {
             x = local.xtmp;
             y = local.ytmp;
@@ -1256,7 +1258,7 @@ object_event_add
         local.ytmp = local.flr.y+random_range(-local.flr.h_var/2,local.flr.h_var/2);
         local.ztmp = local.flr.z;
         local.bool = true;
-        if do_coll_var { if check_coll_scr(0,0,0,0,local.xtmp,local.ytmp,local.ztmp) { local.bool = false; }}
+        if do_coll_var { if check_coll_scr(0,0,0,0,0,local.xtmp,local.ytmp,local.ztmp) { local.bool = false; }}
         if local.bool
         {
             wander_x_var = local.xtmp;

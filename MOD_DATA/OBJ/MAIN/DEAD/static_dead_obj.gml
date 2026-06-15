@@ -10,6 +10,7 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,0,'
     event_inherited();
+    true_time_var = true;
     spr_var = static_01_spr;
     spr_id_var = 0;
     spr_spd_var = 0.25;
@@ -30,7 +31,7 @@ object_event_add
 object_event_add
 (argument0,ev_step,ev_step_normal,'
     event_inherited();
-    spr_id_var = (spr_id_var+(spr_spd_var*global.delta_time_var)) mod sprite_get_number(spr_var);
+    spr_id_var = (spr_id_var+(spr_spd_var*global.true_delta_time_var)) mod sprite_get_number(spr_var);
 ');
 // Alarm 0 Event
 object_event_add

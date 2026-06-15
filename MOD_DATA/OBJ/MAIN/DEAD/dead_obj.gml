@@ -9,6 +9,8 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,0,'
+    event_inherited();
+    true_time_var = true;
     // Assets
     menu_bg_var = background_add(vanilla_directory_const+"\TEX\menu\menu4_tex.png",false,false);
     bg_var = background_add(main_directory_const+"\BG\DEAD\dead_bg.png",false,false);
@@ -74,7 +76,7 @@ object_event_add
         rm_goto_menu_scr(menu_rm);
     }
     if do_str_var && alarm_arr[1,0] > 0 { str_prog_var = 1-(alarm_arr[1,0]/alarm_arr[1,1]); }
-    if fade_spr_id_var < sprite_get_number(fade_spr_var) { fade_spr_id_var += fade_spr_spd_var*global.delta_time_var; }
+    if fade_spr_id_var < sprite_get_number(fade_spr_var) { fade_spr_id_var += fade_spr_spd_var*global.true_delta_time_var; }
     x = mod_scr(x+x_spd_var,image_xscale);
     y = mod_scr(y+y_spd_var,image_yscale);
 ');

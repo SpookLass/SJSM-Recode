@@ -249,7 +249,7 @@ object_event_add
         if !local.bool
         {
             local.bool = true;
-            for (local.i=0; local.i<global.spawn_len_var; local.i+=1;)
+            for (local.i=1; local.i<global.spawn_len_var; local.i+=1;)
             {
                 if point_distance_3d_scr(spawn_arr[local.i,0],spawn_arr[local.i,1],spawn_arr[local.i,2],spawn_arr[0,0],spawn_arr[0,1],spawn_arr[0,2]) < exit_player_dist_var
                 { local.bool = false; break; }

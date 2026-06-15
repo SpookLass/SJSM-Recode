@@ -9,6 +9,8 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,0,'
+    event_inherited();
+    true_time_var = true;
     load_var = true;
     // String
     ini_open("lang_"+global.lang_var+".ini");
@@ -174,13 +176,13 @@ object_event_add
     if state_var
     {
         // Alpha
-        alpha_time_var = mod_scr(alpha_time_var+(random_range(alpha_rate_min_var,alpha_rate_max_var)*global.delta_time_var),alpha_rate_var);
+        alpha_time_var = mod_scr(alpha_time_var+(random_range(alpha_rate_min_var,alpha_rate_max_var)*global.true_delta_time_var),alpha_rate_var);
         local.alpha = cos(2*alpha_time_var*pi/alpha_rate_var);
         if unsmooth_var { local.alpha = arccos(local.alpha)/pi; }
         else { local.alpha = (-local.alpha+1)*0.5; }
         image_alpha = local.alpha;
         // Sprite
-        spr_time_var = mod_scr(spr_time_var+global.delta_time_var,spr_rate_var);
+        spr_time_var = mod_scr(spr_time_var+global.true_delta_time_var,spr_rate_var);
         local.sprid = cos(2*spr_time_var*pi/spr_rate_var);
         if unsmooth_var { local.sprid = arccos(local.sprid)/pi; }
         else { local.sprid = (-local.sprid+1)*0.5; }

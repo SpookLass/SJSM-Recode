@@ -9,6 +9,8 @@ object_set_visible(argument0,false);
 // Create Event
 object_event_add
 (argument0,ev_create,0,'
+    event_inherited();
+    true_time_var = true;
     spr_var = noone;
     par_var = noone;
     snd_var = noone;

@@ -9,6 +9,8 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,0,'
+    event_inherited();
+    true_time_var = true;
     // Translation
     ini_open("lang_"+global.lang_var+".ini");
     str_var = string_replace_all(ini_read_string("DEAD","eel","DEAD_eel"),"@l","
@@ -71,7 +73,7 @@ object_event_add
     if global.input_press_arr[confirm_input_const,global.menu_player_var] == 1
     || global.input_press_arr[back_input_const,global.menu_player_var] == 1
     { event_perform(ev_alarm,2); }
-    spr_04_id_var = mod_scr(spr_04_id_var+(spr_spd_var*global.delta_time_var),sprite_get_number(spr_04_var));
+    spr_04_id_var = mod_scr(spr_04_id_var+(spr_spd_var*global.true_delta_time_var),sprite_get_number(spr_04_var));
     if alarm_arr[0,0] > 0
     { chomp_y_var = lerp_scr(prechomp_dist_var,360,alarm_arr[0,0]/alarm_arr[0,1]); }
     else if alarm_arr[1,0]

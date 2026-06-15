@@ -8,6 +8,7 @@ local.stop = false;
 local.xspd = x_spd_var*argument0;
 local.yspd = y_spd_var*argument0;
 local.zspd = z_spd_var*argument0;
+local.spd = spd_var*argument0;
 // If moving or gravity, check stuff to collide with
 if (local.xspd != 0 || local.yspd != 0 || local.zspd != 0 || grav_var > 0) && do_coll_var
 {
@@ -55,7 +56,13 @@ if (local.xspd != 0 || local.yspd != 0 || local.zspd != 0 || grav_var > 0) && do
                 local.coll_arr[local.coll_arr_len,1] = x;
                 local.coll_arr[local.coll_arr_len,2] = y;
                 local.coll_arr[local.coll_arr_len,3] = z;
-                local.coll_arr[local.coll_arr_len,4] = degtorad(direction)
+                local.coll_arr[local.coll_arr_len,4] = degtorad(direction);
+                // I don't know why they're  ordered like this, but it's too late now
+                local.coll_arr[local.coll_arr_len,5] = coll_var[2];
+                local.coll_arr[local.coll_arr_len,6] = coll_var[3];
+                local.coll_arr[local.coll_arr_len,7] = coll_var[1];
+                // Secret 8th thing
+                if coll_var[0] == -5 { local.coll_arr[local.coll_arr_len,8] = center_w_var; }
                 local.coll_arr_len += 1;
             }
         }
@@ -67,20 +74,40 @@ if do_coll_var && grav_var > 0
     local.zdist = 10000000;
     local.zdist_max = 0;
     local.radius = coll_var[2]*0.5;
+    local.slope = 0;
     floor_mask_var = mask_none_const;
     for (local.c=0; local.c<local.coll_arr_len; local.c+=1;)
     {
         for (local.i=0; local.i<5; local.i+=1;)
         {
-            local.xtmp = x;
-            local.ytmp = y;
+            // Is this a good idea? Should allow easier ramps at least
+            local.xtmp = x+(local.xspd*0.5);
+            local.ytmp = y+(local.yspd*0.5);
             if local.i != 0
             {
-                local.xtmp += lengthdir_x(local.radius,local.i*90);
-                local.ytmp += lengthdir_y(local.radius,local.i*90);
+                local.xtmp += lengthdir_x(local.radius+abs(local.xspd*0.5),local.i*90);
+                local.ytmp += lengthdir_y(local.radius+abs(local.yspd*0.5),local.i*90);
             }
+            // Check Split / Room collision
             if local.coll_arr[local.c,0] == -1
-            { local.zdist_new = p3dc_ray_still_scr(global.room_coll,local.xtmp,local.ytmp,z+coll_var[1],0,0,-1); } // p3dc_ray_split_scr
+            { local.zdist_new = p3dc_ray_still_scr(global.room_coll,local.xtmp,local.ytmp,z+step_h_var+local.spd,0,0,-1); } // p3dc_ray_split_scr
+            // THE CRATES OF DOOM
+            else if local.coll_arr[local.c,0] == -5
+            {
+                local.zdist_new = 10000000;
+                // Lotsa calculations
+                local.xdiff = abs(local.xtmp-local.coll_arr[local.c,1]);
+                local.ydiff = abs(local.ytmp-local.coll_arr[local.c,2]);
+                local.per = min
+                (
+                    anti_lerp_scr(local.coll_arr[local.c,5]*0.5,local.coll_arr[local.c,8]*0.5,local.xdiff),
+                    anti_lerp_scr(local.coll_arr[local.c,6]*0.5,local.coll_arr[local.c,8]*0.5,local.ydiff)
+                );
+                local.zcrate = local.coll_arr[local.c,3]+lerp_scr(0,local.coll_arr[local.c,7],local.per);
+                local.slope = local.coll_arr[local.c,7]*2/max(1,local.coll_arr[local.c,5]-local.coll_arr[local.c,8]-coll_var[2]);
+                if local.zcrate < z+step_h_var+local.spd+local.slope//+coll_var[1]
+                { local.zdist_new = z+step_h_var+local.spd-local.zcrate; } //+coll_var[1]
+            }
             // Don't check float walls
             else if local.coll_arr[local.c,0] != -2
             {
@@ -97,7 +124,7 @@ if do_coll_var && grav_var > 0
                         local.coll_arr[local.c,2],
                         local.coll_arr[local.c,3],
                         local.xtmp,local.ytmp,
-                        z+coll_var[1],
+                        z+step_h_var+local.spd,
                         0,0,-1,0,0,local.coll_arr[local.c,4]
                     );
                 }
@@ -111,23 +138,25 @@ if do_coll_var && grav_var > 0
                         local.coll_arr[local.c,2],
                         local.coll_arr[local.c,3],
                         local.xtmp,local.ytmp,
-                        z+coll_var[1],
+                        z+step_h_var+local.spd,
                         0,0,-1
                     );
                 }
             }
-            if local.zdist_new < local.zdist { floor_mask_var = p3dc_get_lastmask_scr(); }
-            local.zdist = min(local.zdist,local.zdist_new);
-            local.zdist_max = max(local.zdist_max,local.zdist_new)
+            if local.zdist_new < 10000000
+            {
+                if local.zdist_new < local.zdist { floor_mask_var = p3dc_get_lastmask_scr(); }
+                local.zdist = min(local.zdist,local.zdist_new);
+                local.zdist_max = max(local.zdist_max,local.zdist_new);
+            }
         }
     }
-    local.slope = (local.zdist_max-local.zdist)/coll_var[2];
-    local.zdist -= coll_var[1];
+    local.zdist -= step_h_var+local.spd;
     // Add gravity
     z_spd_var -= grav_var*argument0;
     local.zspd = z_spd_var*argument0;
     // If the floor distance is shorter than gravity or slope is less than 1.5, snap to floor
-    if -local.zdist >= local.zspd //|| local.slope < 1.5
+    if -local.zdist >= local.zspd-(local.slope*local.spd*slope_margin_var) && local.zspd <= 0 //&& -local.zdist <= step_h_var+local.slope+local.spd
     {
         z_spd_var = 0;
         local.zspd = -local.zdist;
@@ -162,6 +191,12 @@ if local.xspd != 0 || local.yspd != 0 || local.zspd != 0
         for (local.c=0; local.c<local.coll_arr_len; local.c+=1;)
         {
             local.ray_coll = false;
+            // THE CRATES OF DOOM
+            if local.coll_arr[local.c,0] == -5
+            {
+                if grav_var > 0 { continue; }
+                else { local.coll_arr[local.c,0] = amn_crate_coll[0]; }
+            }
             // Check Split / Room collision
             if local.coll_arr[local.c,0] == -1
             {

@@ -9,6 +9,8 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,0,'
+    event_inherited();
+    true_time_var = true;
     // Assets
     face_spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\FACE_02_spr.png",1,0,0,0,0);
     sprite_set_offset(face_spr_var,sprite_get_width(face_spr_var)/2,sprite_get_height(face_spr_var)/2);
@@ -109,8 +111,8 @@ object_event_add
     if global.input_press_arr[confirm_input_const,global.menu_player_var] == 1
     || global.input_press_arr[back_input_const,global.menu_player_var] == 1
     { event_perform(ev_alarm,1); }
-    eff_spr_id_var = mod_scr(eff_spr_id_var+(eff_spr_spd_var*global.delta_time_var),sprite_get_number(eff_spr_var));
-    static_spr_id_var = mod_scr(static_spr_id_var+(static_spr_spd_var*global.delta_time_var),sprite_get_number(static_spr_var));
+    eff_spr_id_var = mod_scr(eff_spr_id_var+(eff_spr_spd_var*global.true_delta_time_var),sprite_get_number(eff_spr_var));
+    static_spr_id_var = mod_scr(static_spr_id_var+(static_spr_spd_var*global.true_delta_time_var),sprite_get_number(static_spr_var));
 ');
 // Draw Event
 object_event_add

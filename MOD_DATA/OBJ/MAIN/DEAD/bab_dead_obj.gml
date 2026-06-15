@@ -9,6 +9,8 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,0,'
+    event_inherited();
+    true_time_var = true;
     // Translations
     ini_open("lang_"+global.lang_var+".ini");
     str_len_var = 5;
@@ -100,7 +102,7 @@ object_event_add
     }
     if global.input_press_arr[back_input_const,global.menu_player_var] == 1
     { event_perform(ev_alarm,3); }
-    static_spr_id_var = mod_scr(static_spr_id_var+(static_spr_spd_var*global.delta_time_var),sprite_get_number(static_spr_var));
+    static_spr_id_var = mod_scr(static_spr_id_var+(static_spr_spd_var*global.true_delta_time_var),sprite_get_number(static_spr_var));
 ');
 // Alarm 0 Event
 object_event_add

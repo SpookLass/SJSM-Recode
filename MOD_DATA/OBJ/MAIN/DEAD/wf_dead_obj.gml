@@ -10,6 +10,7 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,0,'
     event_inherited();
+    true_time_var = true;
     // Load
     spr_var = sprite_add(main_directory_const+"\SPR\DEAD\killer_static_02_spr.png",6,false,false,0,0);
     bg_var = background_add(vanilla_directory_const+"\TEX\sprites\MS28_07_spr.png",false,false);
@@ -55,7 +56,7 @@ object_event_add
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,'
-    spr_id_var = (spr_id_var+(spr_spd_var*global.delta_time_var)) mod sprite_get_number(spr_var);
+    spr_id_var = (spr_id_var+(spr_spd_var*global.true_delta_time_var)) mod sprite_get_number(spr_var);
     if global.input_press_arr[confirm_input_const,global.menu_player_var] == 1
     || global.input_press_arr[back_input_const,global.menu_player_var] == 1
     { event_perform(ev_alarm,1); }

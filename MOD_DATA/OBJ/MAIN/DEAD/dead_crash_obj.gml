@@ -10,6 +10,7 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,0,'
     event_inherited();
+    true_time_var = true;
     // Translation
     ini_open("lang_"+global.lang_var+".ini");
     str_var = ini_read_string("DEAD","crash","DEAD_crash");
