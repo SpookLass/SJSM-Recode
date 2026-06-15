@@ -10,7 +10,7 @@ object_event_add
 (argument0,ev_create,0,'
     load_var = false;
     if ((global.mode_var == 0 && global.rm_count_var > 100) 
-    || (global.mode_var != 0 && file_exists(working_directory+"\Karamari_Hospital\KH.exe")))
+    || (global.mode_var != 0 && global.kh_var))
     && frac_chance_scr(2,3)
     {
         if global.mode_var == 0
@@ -28,7 +28,7 @@ object_event_add
                 case 5: { local.path = vanilla_directory_const+"\TEX\sprites\POS_06_spr.png"; break; }
             }
         }
-        else
+        else if global.kh_var
         {
             switch irandom(1)
             {

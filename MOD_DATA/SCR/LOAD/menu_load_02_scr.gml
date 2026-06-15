@@ -486,12 +486,12 @@ draw_load_scr("Loading settings...");
             /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
             local.set = set_add_scr("input_cam","input_cam","input_cam",true,set_enum_const,0,5,true,local.control_sub,true,true);
         // Labels
-            set_add_label_scr(local.set,cam_mouse_const,"mouse",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
-            set_add_label_scr(local.set,cam_joy_r_const,"rjoy",true,"");
-            set_add_label_scr(local.set,cam_joy_rs_const,"rjoys",true,"");
-            set_add_label_scr(local.set,cam_joy_l_const,"ljoy",true,"");
+            set_add_label_scr(local.set,cam_mouse_const,"mouse",true,"mouse"); /*Setting ID, Label ID, Label, Translate, Description*/
+            set_add_label_scr(local.set,cam_joy_r_const,"rjoy",true,"rjoy");
+            set_add_label_scr(local.set,cam_joy_rs_const,"rjoys",true,"rjoys");
+            set_add_label_scr(local.set,cam_joy_l_const,"ljoy",true,"ljoy");
             set_add_label_scr(local.set,cam_button_const,"button",true,"");
-            set_add_label_scr(local.set,cam_dpad_const,"dpad",true,"");
+            set_add_label_scr(local.set,cam_dpad_const,"dpad",true,"dpad");
         // Defaults
             set_add_default_scr(local.set,cam_const,2,cam_joy_r_const);
     // Movement Controls
@@ -500,10 +500,10 @@ draw_load_scr("Loading settings...");
             local.set = set_add_scr("input_move","input_move","input_move",true,set_enum_const,0,4,true,local.control_sub,true,true);
         // Labels
             set_add_label_scr(local.set,move_button_const,"button",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
-            set_add_label_scr(local.set,move_joy_l_const,"ljoy",true,"");
-            set_add_label_scr(local.set,move_dpad_const,"dpad",true,"");
-            set_add_label_scr(local.set,move_joy_r_const,"rjoy",true,"");
-            set_add_label_scr(local.set,move_joy_rs_const,"rjoys",true,"");
+            set_add_label_scr(local.set,move_joy_l_const,"ljoy",true,"ljoy");
+            set_add_label_scr(local.set,move_dpad_const,"dpad",true,"dpad");
+            set_add_label_scr(local.set,move_joy_r_const,"rjoy",true,"rjoy");
+            set_add_label_scr(local.set,move_joy_rs_const,"rjoys",true,"rjoys");
         // Defaults
             set_add_default_scr(local.set,move_const,2,move_joy_l_const);
     // Menu Controls
@@ -512,10 +512,10 @@ draw_load_scr("Loading settings...");
             local.set = set_add_scr("input_menu","input_menu","input_menu",true,set_enum_const,0,4,true,local.control_sub,true,true);
         // Labels
             set_add_label_scr(local.set,menu_pc_const,"pc",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
-            set_add_label_scr(local.set,menu_dpad_const,"dpad",true,"");
-            set_add_label_scr(local.set,menu_joy_l_const,"ljoy",true,"");
-            set_add_label_scr(local.set,menu_joy_r_const,"rjoy",true,"");
-            set_add_label_scr(local.set,menu_joy_rs_const,"rjoys",true,"");
+            set_add_label_scr(local.set,menu_dpad_const,"dpad",true,"dpad");
+            set_add_label_scr(local.set,menu_joy_l_const,"ljoy",true,"ljoy");
+            set_add_label_scr(local.set,menu_joy_r_const,"rjoy",true,"rjoy");
+            set_add_label_scr(local.set,menu_joy_rs_const,"rjoys",true,"rjoys");
         // Defaults
             set_add_default_scr(local.set,menu_const,2,menu_dpad_const);
 // Inputs
@@ -625,10 +625,9 @@ draw_load_scr("Loading settings...");
         set_add_label_scr(local.set,1,"rom",true,"dl_theme_rom");
         set_add_label_scr(local.set,2,"alt",true,"dl_theme_alt");
     // Eel Theme
-        local.set = set_add_theme_scr("eel",true,2,local.theme_toggle);
+        local.set = set_add_theme_scr("eel",true,1,local.theme_toggle);
         set_add_label_scr(local.set,0,"main",true,"eel_theme_main");
         set_add_label_scr(local.set,1,"old",true,"eel_theme_old");
-        set_add_label_scr(local.set,2,"rom",true,"eel_theme_rom");
     // Parasite Theme
         local.set = set_add_theme_scr("para",true,1,local.theme_toggle);
         set_add_label_scr(local.set,0,"main",true,"para_theme_main");
@@ -645,11 +644,14 @@ draw_load_scr("Loading settings...");
         local.set = set_add_theme_scr("mur",true,1,local.theme_toggle);
         set_add_label_scr(local.set,0,"main",true,"mur_theme_main");
         set_add_label_scr(local.set,1,"rom",true,"mur_theme_rom");
-    // Bodybag Theme
-        local.set = set_add_theme_scr("body",true,1,local.theme_toggle);
-        set_add_label_scr(local.set,0,"main",true,"body_theme_main");
-        set_add_label_scr(local.set,1,"old",true,"body_theme_old");
-        set_add_label_scr(local.set,2,"rom",true,"body_theme_rom");
+    if global.kh_var
+        {
+            // Bodybag Theme
+                local.set = set_add_theme_scr("body",true,1,local.theme_toggle);
+                set_add_label_scr(local.set,0,"main",true,"body_theme_main");
+                set_add_label_scr(local.set,1,"old",true,"body_theme_old");
+                set_add_label_scr(local.set,2,"rom",true,"body_theme_rom");
+        }
     // Stem Theme
         local.set = set_add_theme_scr("stem",true,1,local.theme_toggle);
         set_add_label_scr(local.set,0,"main",true,"stem_theme_main");
@@ -667,23 +669,26 @@ draw_load_scr("Loading settings...");
         local.set = set_add_theme_scr("bekka",true,1,local.theme_toggle);
         set_add_label_scr(local.set,0,"main",true,"bekka_theme_main");
         set_add_label_scr(local.set,1,"rom",true,"bekka_theme_rom");
-    // Husk Theme
-        local.set = set_add_theme_scr("husk",true,1,local.theme_toggle);
-        set_add_label_scr(local.set,0,"main",true,"husk_theme_main");
-        set_add_label_scr(local.set,1,"old",true,"husk_theme_old");
-    // Woormy Charles Theme
-        local.set = set_add_theme_scr("wc",true,2,local.theme_toggle);
-        set_add_label_scr(local.set,0,"main",true,"wc_theme_main");
-        set_add_label_scr(local.set,1,"old",true,"wc_theme_old");
-        set_add_label_scr(local.set,2,"rom",true,"wc_theme_rom");
-    // Hooked Doll Theme
-        local.set = set_add_theme_scr("hk",true,1,local.theme_toggle);
-        set_add_label_scr(local.set,0,"main",true,"hk_theme_main");
-        set_add_label_scr(local.set,1,"rom",true,"hk_theme_rom");
-    // Frenzy Theme
-        local.set = set_add_theme_scr("frenzy",true,1,local.theme_toggle);
-        set_add_label_scr(local.set,0,"main",true,"frenzy_theme_main");
-        set_add_label_scr(local.set,1,"old",true,"frenzy_theme_old");
+    if global.dh_var
+        {
+            // Husk Theme
+                local.set = set_add_theme_scr("husk",true,1,local.theme_toggle);
+                set_add_label_scr(local.set,0,"main",true,"husk_theme_main");
+                set_add_label_scr(local.set,1,"old",true,"husk_theme_old");
+            // Woormy Charles Theme
+                local.set = set_add_theme_scr("wc",true,2,local.theme_toggle);
+                set_add_label_scr(local.set,0,"main",true,"wc_theme_main");
+                set_add_label_scr(local.set,1,"old",true,"wc_theme_old");
+                set_add_label_scr(local.set,2,"rom",true,"wc_theme_rom");
+            // Hooked Doll Theme
+                local.set = set_add_theme_scr("hk",true,1,local.theme_toggle);
+                set_add_label_scr(local.set,0,"main",true,"hk_theme_main");
+                set_add_label_scr(local.set,1,"rom",true,"hk_theme_rom");
+            // Frenzy Theme
+                local.set = set_add_theme_scr("frenzy",true,1,local.theme_toggle);
+                set_add_label_scr(local.set,0,"main",true,"frenzy_theme_main");
+                set_add_label_scr(local.set,1,"old",true,"frenzy_theme_old");
+        }
     // Real Ringu Theme
         local.set = set_add_theme_scr("real_ringu",true,1,local.theme_toggle);
         set_add_label_scr(local.set,0,"main",true,"real_ringu_theme_main");

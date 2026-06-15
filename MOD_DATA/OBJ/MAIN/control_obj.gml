@@ -220,11 +220,7 @@ object_event_add
             case 14: { with player_obj { do_coll_var = !do_coll_var; } break; }
             case 15:
             {
-                with player_obj
-                {
-                    if grav_var > 0 { grav_var = 0; }
-                    else { grav_var = grav_const; }
-                } 
+                with player_obj { grav_mult_per_var = !grav_mult_per_var; } 
                 break; 
             }
             case 16: { global.no_mon_var = !global.no_mon_var; break; }
@@ -235,7 +231,7 @@ object_event_add
                     if dead_var
                     {
                         dead_var = false;
-                        do_coll_var = true;
+                        do_coll_var = player_solid_const;
                         hp_var = hp_max_var;
                         possess_var = false;
                         do_stam_var = true;

@@ -1,7 +1,7 @@
 // Builtin Variables
 object_set_depth(argument0,0);
 object_set_mask(argument0,noone);
-object_set_parent(argument0,kinda_obj);
+object_set_parent(argument0,kidna_obj);
 object_set_persistent(argument0,false);
 object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
@@ -25,17 +25,21 @@ object_event_add
     dmg_var = 60;
     dmg_alarm_var = 120;
     dead_rm_var = taker_dead_rm;
+    atk_range_var = 48;
     // Movement
-    spd_var = 0.8;
+    spd_base_var = 0.8;
     delay_var = 600;
     // Behavior
-    switch global.taker_type_var
+    if global.taker_type_var == -1 { local.type = irandom(3); }
+    else { local.type = global.taker_type_var; }
+    switch local.type
     {
         case 0: // Recode
         {
             dmg_var = 999;
             delay_var = 60;
             dead_rm_var = taker_dead_3d_rm;
+            atk_range_var = global.mon_coll[2];
             sil_var = true;
             sil_type_var = 1; // Pure color
             sil_color_var = make_color_rgb(159,0,0);
@@ -53,12 +57,17 @@ object_event_add
         }
         case 3: // DH
         {
-            // Eventually sprite if we have it
+            if global.dh_var
+            {
+                spr_var = taker_dh_spr;
+                w_var = 10;
+                h_var = 18.5;
+                z_off_var = 0;
+                spr_spd_var = 0.5;
+            }
+            atk_range_var = 6;
             dmg_var = 999;
             spd_var = 2;
-            w_var = 10;
-            h_var = 18.5;
-            z_off_var = 0;
             break;
         }
     }
@@ -149,18 +158,20 @@ object_event_add
         }
     }
 ');
-
 // Target Event
 object_event_add
 (argument0,ev_other,ev_user6,'
-    if !instance_exists(target_var) { instance_destroy(); exit; }
-    if !target_var.on_var { instance_destroy(); exit; }
-    if target_possess_var { if !target_var.possess_var { instance_destroy(); exit; }}
-    else { if target_var.dead_var { instance_destroy(); exit; }}
-    target_x_var = target_var.x;
-    target_y_var = target_var.y;
-    target_z_var = target_var.z;
-    target_dist_var = point_distance_3d_scr(x,y,z,target_x_var,target_y_var,target_z_var);
+    if on_var
+    {
+        if !instance_exists(target_var) { instance_destroy(); exit; }
+        if !target_var.on_var { instance_destroy(); exit; }
+        if target_possess_var { if !target_var.possess_var { instance_destroy(); exit; }}
+        else { if target_var.dead_var { instance_destroy(); exit; }}
+        target_x_var = target_var.x;
+        target_y_var = target_var.y;
+        target_z_var = target_var.z;
+        target_dist_var = point_distance_3d_scr(x,y,z,target_x_var,target_y_var,target_z_var);
+    }
 ');
 // Draw Event
 object_event_add

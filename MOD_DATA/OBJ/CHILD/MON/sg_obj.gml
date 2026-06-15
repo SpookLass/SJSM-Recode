@@ -36,6 +36,7 @@ object_event_add
     dmg_stam_var = false;
     dmg_unbalance_var = false;
     dmg_min_var = 0;
+    atk_alarm_var = 0;
     atk_range_var = 48;
     alarm_len_var = 10;
     alarm_ini_scr();
@@ -207,7 +208,7 @@ object_event_add
                     { local.bool = false; break; }
                 }
             }
-            if point_distance_3d_scr(local.xtmp,local.ytmp,local.ztmp,global.spawn_arr[0,0],global.spawn_arr[0,1],global.spawn_arr[0,2]) < other.spawn_player_dist_var
+            if point_distance_3d_scr(local.xtmp,local.ytmp,local.ztmp,global.spawn_arr[0,0],global.spawn_arr[0,1],global.spawn_arr[0,2]) < spawn_player_dist_var
             { local.bool = false; break; }
         }
         if local.bool

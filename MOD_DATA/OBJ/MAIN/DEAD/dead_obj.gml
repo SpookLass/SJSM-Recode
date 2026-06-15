@@ -24,7 +24,7 @@ object_event_add
         case 0: { str_var = ini_read_string("DEAD","sm","DEAD_sm"); break; }
         default:
         {
-            if file_exists(working_directory+"\The_Doll_House\SDH.exe") && frac_chance_scr(1,8)
+            if global.dh_var && frac_chance_scr(1,8)
             {
                 local.str = string(irandom(11)+1);
                 if string_length(local.str) <= 1 { local.str = "0"+local.str; }

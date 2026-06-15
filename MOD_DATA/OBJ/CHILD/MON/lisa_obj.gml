@@ -298,7 +298,7 @@ object_event_add
             x = global.spawn_arr[0,0];
             y = global.spawn_arr[0,1];
             enter_var = false;
-            if type_var > 0 { do_coll_var = true; }
+            if type_var > 0 { do_coll_var = mon_solid_const; }
         }
     }
     else

@@ -33,11 +33,11 @@ for (local.i=0; local.i<8; local.i+=1;)
 { room_set_view(argument0,local.i,false,0,0,1280,720,0,0,1280,720,32,32,-1,-1,noone); }
 room_set_view(argument0,0,true,0,0,1280,720,0,0,1280,720,32,32,-1,-1,noone);
 // Effects
-room_instance_add(argument0,0,0,fog_01_obj);
+room_instance_add(argument0,0,0,fog_med_obj);
 room_instance_add(argument0,0,0,color_control_med_obj);
 room_instance_add(argument0,0,0,rand_mon_spawn_obj);
 room_instance_add(argument0,0,0,amb_control_obj);
-room_instance_add(argument0,0,0,water_obj);
+room_instance_add(argument0,0,0,med_water_obj);
 // Floors
 room_instance_add(argument0,416,336,floor_obj);
 room_instance_add(argument0,448,304,floor_obj);

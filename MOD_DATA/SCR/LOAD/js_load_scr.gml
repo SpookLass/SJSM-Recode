@@ -70,8 +70,7 @@ global.js_snd_arr[16] = main_directory_const+'\SND\MON\stab_em_05_snd.wav';
 global.js_snd_arr[17] = main_directory_const+'\SND\MON\stab_em_06_snd.wav';
 global.js_snd_arr[18] = main_directory_const+'\SND\MON\stab_em_07_snd.wav';
 global.js_snd_arr[19] = main_directory_const+'\SND\MON\stab_em_08_snd.wav';
-
-if file_exists(working_directory+"\Karamari_Hospital\KH.exe")
+if global.kh_var
 {
     // Can
     global.js_arr[global.js_len_var,0] = main_directory_const+"\BG\KH\js_can_01_bg.png";
@@ -79,6 +78,7 @@ if file_exists(working_directory+"\Karamari_Hospital\KH.exe")
     global.js_arr[global.js_len_var,2] = main_directory_const+'\SND\KH\js_oho_snd.wav';
     if argument0 { show_message("Added Can jumpscare at index "+string(global.js_len_var)); }
     global.js_len_var += 1;
+    // Pepper was killed for crimes
 }
 // Draw
 draw_load_scr("Loaded jumpscares!");

@@ -10,7 +10,7 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,0,'
     load_var = false;
-    if !file_exists(working_directory+"\The_Doll_House\SDH.exe") { event_inherited(); }
+    if !global.dh_var { event_inherited(); }
     else
     {
         // Translation

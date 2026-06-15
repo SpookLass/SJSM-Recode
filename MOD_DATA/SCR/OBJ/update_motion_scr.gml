@@ -19,7 +19,7 @@ if (local.xspd != 0 || local.yspd != 0 || local.zspd != 0 || grav_var > 0) && do
     local.coll_arr[0,4] = 0;
     local.coll_arr_len = 1;
     // Check float if it exists
-    if !fall_var && on_floor_var && global.room_float_coll != -1
+    if !fall_var && on_floor_var && grav_var > 0 && global.room_float_coll != -1
     {
         local.coll_arr[local.coll_arr_len,0] = -2;
         local.coll_arr[local.coll_arr_len,1] = 0;
@@ -33,7 +33,9 @@ if (local.xspd != 0 || local.yspd != 0 || local.zspd != 0 || grav_var > 0) && do
     with prop_par_obj
     {
         // Equivalent to split size
-        if solid_var
+        if solid_var == 1
+        || (solid_var == float_solid_const && other.grav_var > 0 && !other.fall_var && other.on_floor_var)
+        || other.do_coll_var == solid_var
         {
             if box_coll_scr
             (
@@ -64,7 +66,7 @@ if do_coll_var && grav_var > 0
     // Do a pseudo circle cast
     local.zdist = 10000000;
     local.zdist_max = 0;
-    local.radius = coll_var[2]/2;
+    local.radius = coll_var[2]*0.5;
     floor_mask_var = mask_none_const;
     for (local.c=0; local.c<local.coll_arr_len; local.c+=1;)
     {
@@ -119,12 +121,13 @@ if do_coll_var && grav_var > 0
             local.zdist_max = max(local.zdist_max,local.zdist_new)
         }
     }
+    local.slope = (local.zdist_max-local.zdist)/coll_var[2];
     local.zdist -= coll_var[1];
     // Add gravity
     z_spd_var -= grav_var*argument0;
     local.zspd = z_spd_var*argument0;
-    // If the floor distance is shorter than gravity, snap to floor
-    if -local.zdist >= local.zspd
+    // If the floor distance is shorter than gravity or slope is less than 1.5, snap to floor
+    if -local.zdist >= local.zspd //|| local.slope < 1.5
     {
         z_spd_var = 0;
         local.zspd = -local.zdist;

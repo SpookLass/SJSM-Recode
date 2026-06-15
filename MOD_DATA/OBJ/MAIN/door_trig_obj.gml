@@ -92,7 +92,7 @@ object_event_add
             }
         }
         // Rare Rooms
-        if safe_var && !instance_exists(mon_par_obj) && !local.set
+        if safe_var && !instance_exists(enemy_par_obj) && !local.set
         {
             // Dev
             if global.save_name_var == "1235" && frac_chance_scr(1,235) { rm_var = dev_rm; local.set = true; }

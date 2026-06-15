@@ -416,7 +416,9 @@ object_event_add
         if local.drain
         {
             local.success = false;
-            local.dead = (dmg_min_var <= 0)
+            local.dead = (dmg_min_var <= 0);
+            if possess_var { local.possesser = global.player_arr[player_id_var]; }
+            else { local.possesser = noone; }
             with player_obj
             {
                 if !other.unheal_var { heal_mult_var = 0; }

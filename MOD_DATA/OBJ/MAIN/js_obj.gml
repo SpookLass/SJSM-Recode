@@ -246,7 +246,7 @@ object_event_add
     switch freeze_var
     {
         case 1: { local.freeze = true; break; }
-        case 2: { local.freeze = !instance_exists(mon_par_obj); break; }
+        case 2: { local.freeze = !instance_exists(enemy_par_obj); break; }
         default: { local.freeze = false; break; }
     }
     if local.freeze

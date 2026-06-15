@@ -92,7 +92,7 @@ object_event_add
             local.wall = instance_create(x+lengthdir_x(16,direction),y+lengthdir_y(16,direction),wall_par_obj);
             local.wall.direction = direction;
             local.door = instance_create(x+lengthdir_x(16,direction),y+lengthdir_y(16,direction),door_obj);
-            local.door.direction = direction;
+            local.door.direction = direction+180;
             with instance_create(x+lengthdir_x(8,direction),y+lengthdir_y(8,direction),door_trig_obj)
             { event_perform(ev_other,ev_room_start); }
             instance_destroy();
@@ -121,7 +121,7 @@ object_event_add
                 local.wall = instance_create(x+lengthdir_x(16,direction),y+lengthdir_y(16,direction),wall_par_obj);
                 local.wall.direction = direction;
                 local.door = instance_create(x+lengthdir_x(16,direction),y+lengthdir_y(16,direction),door_obj);
-                local.door.direction = direction;
+                local.door.direction = direction+180;
                 with instance_create(x+lengthdir_x(8,direction),y+lengthdir_y(8,direction),door_trig_obj)
                 { event_perform(ev_other,ev_room_start); }
                 instance_destroy();

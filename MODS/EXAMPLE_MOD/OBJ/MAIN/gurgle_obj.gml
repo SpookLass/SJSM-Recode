@@ -45,6 +45,7 @@ object_event_add
     dmg_stam_var = false;
     dmg_unbalance_var = false;
     dmg_min_var = 0;
+    atk_alarm_var = 0;
     w_var = 16;
     h_var = 23;
     eye_h_var = 11;

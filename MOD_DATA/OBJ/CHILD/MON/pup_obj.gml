@@ -246,7 +246,7 @@ object_event_add
     z = global.spawn_arr[0,2];
     move_var = false;
     anim_var = false;
-    if type_var > 0 { do_coll_var = true; }
+    if type_var > 0 { do_coll_var = mon_solid_const; }
     if unseen_atk_var || temp_hd_var || hd_var
     { atk_var = false; }
     anim_type_var = 3;

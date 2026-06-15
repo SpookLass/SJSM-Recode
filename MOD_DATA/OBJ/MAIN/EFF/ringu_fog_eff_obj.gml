@@ -10,7 +10,6 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,0,'
     on_var = false;
-    spr_id_var = 0;
     // Fog
     fog_color_var = c_dkgray;
     fog_var = true;
@@ -24,7 +23,9 @@ object_event_add
     // Special
     alarm_var = 420;
     spr_var = static_01_spr;
-    spr_spd_var = 0.25;
+    spr_id_var = irandom(sprite_get_number(spr_var)-1);
+    if global.reduce_flash_var { spr_spd_var = 0; }
+    else { spr_spd_var = 0.25; }
     alarm_len_var = 1;
     alarm_ini_scr();
     set_alarm_scr(0,alarm_var);

@@ -65,15 +65,13 @@ object_event_add
                 }
             }
         }
-        if curr_prio_var > amb_mus_prio_const
+        if local.curr_id != 0
         {
             override_var = true;
             if local.mus != snd_var
             {
                 snd_var = local.mus;
                 fmod_inst_stop_scr(inst_var);
-                if snd_var != -1
-                { inst_var = fmod_snd_loop_scr(snd_var); }
             }
         }
         else
@@ -87,11 +85,11 @@ object_event_add
                 {
                     snd_var = local.mus;
                     fmod_inst_stop_scr(inst_var);
-                    if snd_var != -1
-                    { inst_var = fmod_snd_loop_scr(snd_var); }
                 }
                 dur_var = irandom_range(dur_min_var,dur_max_var);
             }
         }
+        if snd_var != -1 && !fmod_inst_is_play_scr(inst_var)
+        { inst_var = fmod_snd_loop_scr(snd_var); }
     }
 ');

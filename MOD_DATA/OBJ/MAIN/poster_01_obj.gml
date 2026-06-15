@@ -12,7 +12,7 @@ object_event_add
     if global.mode_var == 0 { local.path = vanilla_directory_const+"\TEX\sprites\POS_"+choose("07","08","09","10")+"_spr.png"; }
     else
     {
-        if file_exists(working_directory+"\Karamari_Hospital\KH.exe") { local.rand = irandom(18); }
+        if global.kh_var { local.rand = irandom(18); }
         else { local.rand = irandom(17); }
         switch local.rand
         {

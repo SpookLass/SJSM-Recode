@@ -14,7 +14,7 @@ object_event_add
     violence_var = 0;
     on_var = true;
     // Collision
-    do_coll_var = true;
+    do_coll_var = player_solid_const;
     coll_var[0] = global.player_coll[0];
     coll_var[1] = global.player_coll[1];
     coll_var[2] = global.player_coll[2];
@@ -92,7 +92,9 @@ object_event_add
     fall_var = global.fall_var; // Brutal!
     // Gravity
     grav_base_var = grav_const;
-    grav_var = grav_base_var;
+    grav_mult_var = 1;
+    grav_mult_per_var = 1;
+    grav_var = grav_base_var*grav_mult_var*grav_mult_per_var;
     on_floor_var = true;
     // Bob
     bob_rate_var = 3.75;
@@ -119,6 +121,9 @@ object_event_add
     flare_rate_02_var = 0.02;
     flare_dist_var = 120;
     do_flare_per_var = true;
+    // Water
+    water_var = false;
+    water_frick_mult_var = 0.25;
     // Door
     enter_delay_var = 20;
     // Shake
@@ -283,11 +288,13 @@ object_event_add
         jump_var = false;
         on_floor_var = true;
         jump_hold_var = false;
-        grav_var = grav_base_var;
+        grav_mult_var = 1;
+        grav_var = grav_base_var*grav_mult_var*grav_mult_per_var;
         fall_temp_var = false;
         in_door_var = false;
         hurt_var = false;
         turn_var = false;
+        water_var = false;
         fov_var = global.fov_var;
         bob_mult_var = global.move_bob_var/100; // 12/7
         breath_mult_var = global.idle_bob_var/100;
@@ -383,10 +390,9 @@ object_event_add
                 local.input_dir_y *= -1;
             }
             local.input_dir = radtodeg(arctan2(-local.input_dir_y,local.input_dir_x));
-            // Extra movement handling
+            // Jump and Crouch
             if do_coll_var && grav_var > 0
             {
-                local.input_dir_z = 0;
                 // Jump!
                 if can_jump_var && global.input_press_arr[jump_input_const,player_id_var] && on_floor_var && (stam_var > jump_stam_var || !do_stam_var)
                 {
@@ -405,7 +411,6 @@ object_event_add
                     {
                         jump_var = false;
                         jump_hold_var = false;
-                        grav_var = grav_base_var;
                     }
                     else
                     {
@@ -415,9 +420,7 @@ object_event_add
                             { jump_hold_var = false; }
                             else if do_stam_var { stam_var -= jump_stam_rate_var*global.delta_time_var; }
                         }
-                        if jump_hold_var || z_spd_var <= 0
-                        { grav_var = grav_base_var; }
-                        else { grav_var = grav_base_var*jump_grav_var; }
+                        if !jump_hold_var && z_spd_var > 0 { grav_mult_var *= jump_grav_var; }
                     }
                 }
                 // Crouch!
@@ -492,11 +495,17 @@ object_event_add
                     }
                 }
             }
-            else
+            else { jump_var = false; }
+            // Gravity!
+            grav_var = grav_base_var*grav_mult_var*grav_mult_per_var;
+            grav_mult_var = 1;
+            // Input Z
+            if !do_coll_var || grav_var <= 0
             {
                 local.input_dir_z = input_z_scr(player_id_var);
                 local.input_dir_pitch = radtodeg(arctan2(local.input_dir_z,sqrt(sqr(local.input_dir_x)+sqr(local.input_dir_y))));
             }
+            else { local.input_dir_z = 0; }
             // Is the player active?
             active_var = abs(local.input_dir_x) || abs(local.input_dir_y) || abs(local.input_dir_z)
             || global.input_arr[sprint_input_const,player_id_var] || global.input_arr[jump_input_const,player_id_var]
@@ -528,10 +537,18 @@ object_event_add
             // Calculate friction and acceleration
             local.acc = acc_var;
             local.frick = frick_var;
-            if !on_floor_var && do_coll_var && grav_var > 0
+            if !on_floor_var && do_coll_var
             {
-                local.acc *= air_frick_mult_var;
-                local.frick *= air_frick_mult_var;
+                if water_var
+                {
+                    local.acc *= water_frick_mult_var;
+                    local.frick *= water_frick_mult_var;
+                }
+                else if grav_var > 0
+                {
+                    local.acc *= air_frick_mult_var;
+                    local.frick *= air_frick_mult_var;
+                }
             }
             local.acc *= frick_mult_var;
             local.frick *= frick_mult_var;
@@ -543,49 +560,6 @@ object_event_add
                 if back_var { local.spd *= lerp_scr(1,back_spd_mult_var,abs(local.input_dir)/180); }
                 if do_acc_var { acc_3d_scr(global.delta_time_var,local.acc,local.frick,local.input_dir+eye_yaw_var,local.input_dir_pitch+(eye_pitch_var*lengthdir_x(1,local.input_dir)),local.spd); }
                 else { set_motion_3d_scr(local.spd,true,local.input_dir+eye_yaw_var,true,local.input_dir_pitch+(eye_pitch_var*lengthdir_x(1,local.input_dir)),true)}
-            }
-            else if z <= -128 // Maybe add deathplane later?
-            {
-                x = floor_x_var;
-                y = floor_y_var;
-                z = floor_z_var;
-                fall_temp_var = false;
-                set_motion_scr(0,false,eye_yaw_var,true);
-                event_user(0);
-                if hp_var > fall_dmg_var
-                {
-                    hp_var -= fall_dmg_var;
-                    if fall_dmg_alarm_var
-                    {
-                        hurt_var = true;
-                        set_alarm_scr(0,fall_dmg_alarm_var);
-                    }
-                    hurt_target_var = id;
-                    fmod_snd_play_scr(claw_snd);
-                    with instance_create(0,0,blood_eff_obj)
-                    { cam_id_var = other.cam_id_var; }
-                    event_user(0);
-                }
-                else
-                {
-                    hp_var = 0;
-                    dead_var = true;
-                    do_coll_var = false;
-                    do_stam_var = false;
-                    // Death screen
-                    if !global.debug_var
-                    {
-                        local.dead = true;
-                        if global.player_len_var > 1 { with player_obj { if !dead_var { local.dead = false; }}}
-                        if local.dead
-                        {
-                            global.dead_mon_var = noone;
-                            global.menu_player_var = player_id_var;
-                            if global.permadeath_var { delete_save_scr(global.save_name_var); }
-                            rm_goto_menu_scr(dead_rm,true);
-                        }
-                    }
-                }
             }
             else if normal_var
             {
@@ -652,10 +626,63 @@ object_event_add
     if on_var && !in_door_var && !possess_var
     {
         event_inherited();
+        // Respawn
+        if do_coll_var && !dead_var && z <= -128 // Maybe add deathplane later?
+        {
+            x = floor_x_var;
+            y = floor_y_var;
+            z = floor_z_var;
+            fall_temp_var = false;
+            set_motion_scr(0,true,eye_yaw_var,false);
+            event_user(0);
+            if hp_var > fall_dmg_var
+            {
+                hp_var -= fall_dmg_var;
+                if fall_dmg_alarm_var
+                {
+                    hurt_var = true;
+                    set_alarm_scr(0,fall_dmg_alarm_var);
+                }
+                hurt_target_var = id;
+                event_user(0);
+                fmod_snd_play_scr(claw_snd);
+                with instance_create(0,0,blood_eff_obj)
+                { cam_id_var = other.cam_id_var; }
+                if !global.reduce_flash_var
+                {
+                    with instance_create(0,0,flash_eff_obj)
+                    {
+                        image_blend = c_red; 
+                        set_alarm_scr(0,6);
+                        cam_id_var = other.cam_id_var;
+                    }
+                }
+            }
+            else
+            {
+                hp_var = 0;
+                dead_var = true;
+                do_coll_var = false;
+                do_stam_var = false;
+                // Death screen
+                if !global.debug_var
+                {
+                    local.dead = true;
+                    if global.player_len_var > 1 { with player_obj { if !dead_var { local.dead = false; }}}
+                    if local.dead
+                    {
+                        global.dead_mon_var = noone;
+                        global.menu_player_var = player_id_var;
+                        if global.permadeath_var { delete_save_scr(global.save_name_var); }
+                        rm_goto_menu_scr(dead_rm,true);
+                    }
+                }
+            }
+        }
         // Get real speed for bobbing and stamina (already delta-timed)
         local.real_spd = point_distance(xprevious,yprevious,x,y);
         local.stam_rate = 0;
-        if on_floor_var && do_coll_var && grav_var > 0
+        if do_coll_var && ((on_floor_var && grav_var > 0) || (water_var && grav_var == 0))
         {
             // Calculate stamina
             if do_stam_var
@@ -680,10 +707,14 @@ object_event_add
                 if local.bobprev > bob_time_var && ft_snd_var
                 {
                     // Play footsteps
-                    switch floor_mask_var
+                    if water_var { fmod_snd_play_scr(choose(ft_w_01_snd,ft_w_02_snd,ft_w_03_snd,ft_w_04_snd)); }
+                    else
                     {
-                        case mask_basic_const: { fmod_snd_play_scr(choose(ft_01_snd,ft_02_snd,ft_03_snd,ft_04_snd,ft_05_snd,ft_06_snd)); break; }
-                        case mask_metal_const: { fmod_snd_play_scr(choose(ft_m_01_snd,ft_m_02_snd,ft_m_03_snd,ft_m_04_snd)); break; }
+                        switch floor_mask_var
+                        {
+                            case mask_basic_const: { fmod_snd_play_scr(choose(ft_01_snd,ft_02_snd,ft_03_snd,ft_04_snd,ft_05_snd,ft_06_snd)); break; }
+                            case mask_metal_const: { fmod_snd_play_scr(choose(ft_m_01_snd,ft_m_02_snd,ft_m_03_snd,ft_m_04_snd)); break; }
+                        }
                     }
                 }
             }

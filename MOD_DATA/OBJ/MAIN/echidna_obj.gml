@@ -207,8 +207,9 @@ object_event_add
         if !variable_local_exists("dmg_stam_var") { dmg_stam_var = 0; }
         if atk_type_var > 0
         {
+            if !variable_local_exists("atk_delay_var") { atk_delay_var = 0; }
             if !variable_local_exists("atk_start_snd_var") { atk_start_snd_var = 0; }
-            if !variable_local_exists("atk_dist_var") { atk_dist_var = atk_range_var; }
+            if !variable_local_exists("atk_dist_var") { atk_dist_var = atk_range_var*0.5; }
             if !variable_local_exists("atk_anim_var") { atk_anim_var = 0; }
         }
     }
@@ -325,7 +326,7 @@ object_event_add
     spr_id_var = 0;
     spr_prog_var = 1;
     wander_var = false;
-    enter_var = (do_enter_var && spawn_var >= 0);
+    enter_var = (do_enter_var && spawn_var >= 0 && spawn_var < max(global.spawn_len_var,global.spawn_len_extra_var));
     active_var = true;
     // Speed
     spd_mult_var = 1;
@@ -401,8 +402,11 @@ object_event_add
         if path_exists(path_var)
         { path_delete(path_var); }
     }
-    fmod_inst_stop_scr(inst_var);
-    fmod_inst_stop_scr(loop_inst_var);
+    if do_snd_var
+    {
+        fmod_inst_stop_scr(inst_var);
+        fmod_inst_stop_scr(loop_inst_var);
+    }
     if possess_var
     {
         with global.player_arr[player_id_var]
@@ -428,7 +432,7 @@ object_event_add
     hurt_var = false;
     active_var = true;
     // Reset Position
-    if spawn_var >= 0
+    if spawn_var >= 0 && spawn_var < max(global.spawn_len_var,global.spawn_len_extra_var)
     {
         enter_var = do_enter_var;
         yaw_var = global.spawn_arr[spawn_var,3];
@@ -441,7 +445,7 @@ object_event_add
     }
     else { enter_var = false; }
     if enter_var { do_coll_var = false; }
-    else if type_var > 0 { do_coll_var = true; }
+    else if type_var > 0 { do_coll_var = mon_solid_const; }
     // Set target
     if do_wander_var { event_user(13); }
     event_user(6);
@@ -514,7 +518,7 @@ object_event_add
         }
         if snd_len_var > 0 { set_alarm_scr(6,irandom_range(snd_delay_min_var,snd_delay_max_var)); }
     }
-    if do_door_var && spawn_var >= 0
+    if do_door_var && spawn_var >= 0 && spawn_var < max(global.spawn_len_var,global.spawn_len_extra_var)
     {
         if instance_exists(global.spawn_arr[spawn_var,5])
         {
@@ -647,7 +651,7 @@ object_event_add
             y = target_y_var;
             z = target_z_var;
             enter_var = false;
-            if type_var > 0 { do_coll_var = true; }
+            if type_var > 0 { do_coll_var = mon_solid_const; }
             if possess_var
             {
                 with instance_create(0,0,fade_eff_obj)
@@ -1070,7 +1074,7 @@ object_event_add
 // Target Event
 object_event_add
 (argument0,ev_other,ev_user6,'
-    if enter_var
+    if enter_var && spawn_var >= 0 && spawn_var < max(global.spawn_len_var,global.spawn_len_extra_var)
     {
         target_var = noone;
         target_x_var = global.spawn_arr[spawn_var,0];
@@ -1210,15 +1214,15 @@ object_event_add
                         { fmod_inst_stop_scr(inst_var); }
                         inst_var = fmod_snd_3d_play_scr(atk_start_snd_var[1],x,y,z);
                         if global.pitch_bend_var { fmod_inst_set_pitch_scr(inst_var,random_range(0.95,1.05)); }
+                        sub_var[0] = atk_start_snd_var[2];
+                        sub_var[1] = atk_start_snd_var[3];
+                        if do_snd_var
+                        {
+                            if snd_len_var > 0
+                            { set_alarm_scr(6,irandom_range(snd_delay_min_var,snd_delay_max_var)); }
+                        }
                     }
-                    else { inst_var = fmod_snd_play_scr(atk_start_snd_var[1]); }
-                    sub_var[0] = atk_start_snd_var[2];
-                    sub_var[1] = atk_start_snd_var[3];
-                    if do_snd_var
-                    {
-                        if snd_len_var > 0
-                        { set_alarm_scr(6,irandom_range(snd_delay_min_var,snd_delay_max_var)); }
-                    }
+                    else { fmod_snd_play_scr(atk_start_snd_var[1]); }
                     break;
                 }
             }

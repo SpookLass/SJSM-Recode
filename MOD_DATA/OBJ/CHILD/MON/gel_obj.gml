@@ -288,7 +288,7 @@ object_event_add
         x = target_x_var;
         y = target_y_var;
         z = target_z_var;
-        if type_var > 0 { do_coll_var = true; }
+        if type_var > 0 { do_coll_var = mon_solid_const; }
         slime_spawn_var = 1;
         move_var = false;
         atk_var = false;

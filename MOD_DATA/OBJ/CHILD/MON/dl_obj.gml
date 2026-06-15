@@ -440,7 +440,7 @@ object_event_add
                     if !check_coll_scr(-1,0,0,0,x,y,z)
                     {
                         warp_var = false;
-                        do_coll_var = true;
+                        do_coll_var = mon_solid_const;
                         set_alarm_scr(8,-1);
                     }
                 }
@@ -512,7 +512,7 @@ object_event_add
 object_event_add
 (argument0,ev_alarm,8,'
     warp_var = false;
-    do_coll_var = true;
+    do_coll_var = mon_solid_const;
     x = warp_x_var;
     y = warp_y_var;
     z = warp_z_var;

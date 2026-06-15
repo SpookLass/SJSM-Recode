@@ -325,7 +325,7 @@ object_event_add
                     { local.bool = false; break; }
                 }
             }
-            if point_distance_3d_scr(local.xtmp,local.ytmp,local.ztmp,global.spawn_arr[0,0],global.spawn_arr[0,1],global.spawn_arr[0,2]) < other.spawn_player_dist_var
+            if point_distance_3d_scr(local.xtmp,local.ytmp,local.ztmp,global.spawn_arr[0,0],global.spawn_arr[0,1],global.spawn_arr[0,2]) < spawn_player_dist_var
             { local.bool = false; break; }
         }
         if husk_dist_var > 0 && local.bool

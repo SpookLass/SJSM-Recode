@@ -88,6 +88,7 @@ object_event_add
     exit_delay_var = 0;
     exit_spd_var = 1;
     exit_dist_var = 16;
+    exit_player_dist_var = 0;
     // Trigger
     trig_type_var = 0; // Box
     trig_dist_var = 64;
@@ -120,6 +121,7 @@ object_event_add
         }
         case 0: // Recode
         {
+            exit_player_dist_var = 128;
             exit_alarm_min_var = 30;
             exit_alarm_max_var = exit_alarm_min_var;
             trig_dist_var = 48;
@@ -243,31 +245,44 @@ object_event_add
     state_var = 0;
     if exit_spawn_var
     {
-        // Mayas idea
-        if derand_var { local.active = (dur_start_var-dur_var) mod exit_chance_var; }
-        else { local.active = frac_chance_scr(1,exit_chance_var); }
-        if local.active
+        local.bool = (exit_player_dist_var <= 0)
+        if !local.bool
         {
-            // Wait
-            state_var = 1;
-            event_perform(ev_alarm,0);
-            set_alarm_scr(0,-1);
-            move_var = false;
-            // Reset Position
-            if global.unlock_var > 0 { spawn_var = global.unlock_var; }
-            else { spawn_var = irandom_range(1,global.spawn_len_var-1); }
-            yaw_var = global.spawn_arr[spawn_var,3];
-            x = global.spawn_arr[spawn_var,0]-lengthdir_x(exit_dist_var,yaw_var);
-            y = global.spawn_arr[spawn_var,1]-lengthdir_y(exit_dist_var,yaw_var);
-            z = global.spawn_arr[spawn_var,2];
-            set_motion_3d_scr(0,true,yaw_var,true,0,true);
-            // Set target
-            event_user(6);
+            local.bool = true;
+            for (local.i=0; local.i<global.spawn_len_var; local.i+=1;)
+            {
+                if point_distance_3d_scr(spawn_arr[local.i,0],spawn_arr[local.i,1],spawn_arr[local.i,2],spawn_arr[0,0],spawn_arr[0,1],spawn_arr[0,2]) < exit_player_dist_var
+                { local.bool = false; break; }
+            }
         }
-        else if !enter_spawn_var
+        if local.bool
         {
-            on_var = false;
-            set_alarm_scr(0,-1);
+            // Mayas idea
+            if derand_var { local.active = (dur_start_var-dur_var) mod exit_chance_var; }
+            else { local.active = frac_chance_scr(1,exit_chance_var); }
+            if local.active
+            {
+                // Wait
+                state_var = 1;
+                event_perform(ev_alarm,0);
+                set_alarm_scr(0,-1);
+                move_var = false;
+                // Reset Position
+                if global.unlock_var > 0 { spawn_var = global.unlock_var; }
+                else { spawn_var = irandom_range(1,global.spawn_len_var-1); }
+                yaw_var = global.spawn_arr[spawn_var,3];
+                x = global.spawn_arr[spawn_var,0]-lengthdir_x(exit_dist_var,yaw_var);
+                y = global.spawn_arr[spawn_var,1]-lengthdir_y(exit_dist_var,yaw_var);
+                z = global.spawn_arr[spawn_var,2];
+                set_motion_3d_scr(0,true,yaw_var,true,0,true);
+                // Set target
+                event_user(6);
+            }
+            else if !enter_spawn_var
+            {
+                on_var = false;
+                set_alarm_scr(0,-1);
+            }
         }
     }
 ');

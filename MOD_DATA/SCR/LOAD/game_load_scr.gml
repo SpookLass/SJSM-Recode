@@ -9,7 +9,7 @@ d3d_set_culling(false);
 d3d_set_hidden(false);
 draw_set_font(main_font);
 splash_set_close_button(false);
-global.version_var = "Spooky's Jump Scare Mansion - Project Recode: v26.6.7";
+global.version_var = "Spooky's Jump Scare Mansion - Project Recode: v26.6.14";
 global.game_var = false;
 global.game_spd_var = 1;
 global.draw_3d_var = false;
@@ -51,8 +51,9 @@ global.debug_unlock_var = false; // Change to false on release!!!
 global.draw_time_var = 0;
 global.fps_curr_var = 0;
 global.boss_var = noone;
-global.permadeath_var = false;
 global.dead_mon_var = noone;
+global.dh_var = file_exists(working_directory+"\The_Doll_House\SDH.exe");
+global.kh_var = file_exists(working_directory+"\Karamari_Hospital\KH.exe");
 for (local.i=0; local.i<8; local.i+=1;)
 {
     input_menu_hold_arr[0,local.i] = 0;

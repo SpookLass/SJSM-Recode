@@ -109,6 +109,8 @@ object_event_add
         { boost_var = true; }
         case 0: // Mod
         {
+            dmg_var = 20;
+            dmg_alarm_var = 60;
             do_hurt_var = true;
             hurt_alarm_var = 30;
             hurt_tp_var = true;

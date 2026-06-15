@@ -191,16 +191,15 @@ object_event_add
 // Delay Alarm
 object_event_add
 (argument0,ev_alarm,0,'
+    event_inherited();
     woke_var = false;
     move_var = false;
     event_user(15);
-    if impatience_alarm_var > 0
-    { set_alarm_scr(8,impatience_alarm_var); }
 ');
 // Impatience Alarm
 object_event_add
 (argument0,ev_alarm,8,'
-    if !woke_var
+    if on_var && !woke_var
     {
         woke_var = true;
         image_alpha = 1;
@@ -264,7 +263,7 @@ object_event_add
                     { local.bool = false; break; }
                 }
             }
-            if point_distance_3d_scr(local.xtmp,local.ytmp,local.ztmp,global.spawn_arr[0,0],global.spawn_arr[0,1],global.spawn_arr[0,2]) < other.spawn_player_dist_var
+            if point_distance_3d_scr(local.xtmp,local.ytmp,local.ztmp,global.spawn_arr[0,0],global.spawn_arr[0,1],global.spawn_arr[0,2]) < spawn_player_dist_var
             { local.bool = false; break; }
         }
         if local.bool
@@ -274,6 +273,8 @@ object_event_add
                 x = local.xtmp;
                 y = local.ytmp;
                 z = local.ztmp;
+                if impatience_alarm_var > 0
+                { set_alarm_scr(8,impatience_alarm_var); }
                 exit;
             }
             
@@ -285,7 +286,7 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user3,'
     event_inherited();
-    set_motion_3d_scr(0,false);
+    set_motion_3d_scr(0,true);
     on_var = false;
     if respawn_alarm_var > 0 && (instance_number(mon_par_obj) <= 1 || !respawn_alone_var)
     { set_alarm_scr(0,respawn_alarm_var); }
@@ -302,7 +303,7 @@ object_event_add
     if !enter_var
     {
         event_inherited();
-        set_motion_3d_scr(0,false);
+        set_motion_3d_scr(0,true);
         on_var = false;
         fmod_snd_play_scr(scare_snd_var);
         with instance_create(0,0,fade_eff_obj)

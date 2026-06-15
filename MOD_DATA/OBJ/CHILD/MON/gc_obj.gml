@@ -529,7 +529,7 @@ object_event_add
                 x = target_x_var;
                 y = target_y_var;
                 z = target_z_var;
-                do_coll_var = true;
+                do_coll_var = mon_solid_const;
                 enter_var = false;
             }
             else

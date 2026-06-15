@@ -26,6 +26,9 @@ file_to_spr_scr(vanilla_directory_const+"\TEX\sprites\spooky2_spr.png","spooky_s
 file_to_spr_scr(vanilla_directory_const+"\TEX\sprites\spooky3_spr.png","spooky_halloween_spr",9,false,false,127,108,argument0);
 file_to_spr_scr(vanilla_directory_const+"\TEX\sprites\MS28_01_spr.png","wf_spr",8,false,false,0,0,argument0);
 sprite_set_offset(wf_spr,sprite_get_width(wf_spr)/2,23);
+// Taker!
+if global.dh_var
+{ file_to_spr_scr(dh_directory_const+"\TEX\sprites\TK_SPR.png","taker_dh_spr",20,false,false,0,0,argument0); }
 // Replaceable
 file_to_spr_scr(vanilla_directory_const+"\TEX\WALL_01L0.png","light_wall_spr",2,false,false,0,0,argument0);
 file_to_spr_scr(vanilla_directory_const+"\TEX\FLOOR_01L0.png","light_floor_spr",2,false,false,0,0,argument0);

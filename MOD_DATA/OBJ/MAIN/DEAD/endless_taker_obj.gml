@@ -30,6 +30,24 @@ object_event_add
     coll_var[0] = global.mon_coll[0];
     coll_var[1] = global.mon_coll[1];
     coll_var[2] = global.mon_coll[2];
+    // Behavior
+    if global.taker_type_var == -1 { local.type = irandom(3); }
+    else { local.type = global.taker_type_var; }
+    switch local.type
+    {
+        case 3:
+        {
+            if global.dh_var
+            {
+                spr_var = taker_dh_spr;
+                w_var = 10;
+                h_var = 18.5;
+                z_off_var = 0;
+                spr_spd_var = 0.5;
+            }
+            break;
+        }
+    }
     // Music
     with instance_create(0,0,mus_par_obj)
     {

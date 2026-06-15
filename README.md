@@ -78,7 +78,7 @@ This demo only includes Endless Mode at the moment, but will get Story Mode supp
 - Ryan J.: Ryan Specimen 12
 - Spook Lass: Recode Specimen 12, various audio edits
 
-## Translators
+### Translations:
 
 - Dondytrap: Italian translation
 - Lunnay: Brazilian Portugeuse translation

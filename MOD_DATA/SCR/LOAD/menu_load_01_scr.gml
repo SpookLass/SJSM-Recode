@@ -507,7 +507,7 @@ draw_load_scr("Loading config...");
         custom_add_scr(local.mon,"mon","mon",true,custom_state_const,-1,-1,false,local.type,false);
         custom_arr_add_len_scr(0,1);
     // Dollhouse
-        if file_exists(working_directory+"\The_Doll_House\SDH.exe")
+        if global.dh_var
         {
             /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Has Descriptions*/
             custom_add_scr(local.doll,"doll","doll",true,custom_state_const,-1,-1,false,local.type,false);
@@ -747,7 +747,7 @@ draw_load_scr("Loading config...");
                 custom_arr_set_scr(2,local.mur_set,-1,-1,2); // HD
                 custom_arr_set_scr(-1,local.mur_set,5,-1,-1); // :) (Random)
     // Karamari
-        if file_exists(working_directory+"\Karamari_Hospital\KH.exe")
+        if global.kh_var
         {
             // Security Guard
                 local.sg = type_add_scr("sg",true,true,2,sg_obj,noone,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
@@ -851,7 +851,7 @@ draw_load_scr("Loading config...");
                 custom_arr_set_scr(2,local.bekka_set,-1,-1,2); // HD
                 custom_arr_set_scr(-1,local.bekka_set,5,-1,-1); // :) (Random)
     // Dollhouse
-        if file_exists(working_directory+"\The_Doll_House\SDH.exe")
+        if global.dh_var
         {
             // Husk Swarm
                 local.husk = type_add_scr("husk_swarm",true,true,3,husk_swarm_obj,noone,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/

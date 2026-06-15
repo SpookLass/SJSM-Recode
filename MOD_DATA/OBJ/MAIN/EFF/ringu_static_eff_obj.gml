@@ -12,8 +12,9 @@ object_event_add
     event_inherited();
     // Static
     spr_var = static_01_spr;
-    spr_id_var = 0;
-    spr_spd_var = 0.25;
+    spr_id_var = irandom(sprite_get_number(spr_var)-1);
+    if global.reduce_flash_var { spr_spd_var = 0; }
+    else { spr_spd_var = 0.25; }
     y_spd_var = 0.5;
     alpha_02_var = 0.4;
     alpha_03_max_var = 0.2;

@@ -49,7 +49,7 @@ object_event_add
                 // Variables
                 on_var = true;
                 enter_var = false;
-                if type_var > 0 { do_coll_var = true; }
+                if type_var > 0 { do_coll_var = mon_solid_const; }
                 slime_spawn_var = 1;
                 move_var = false;
                 atk_var = false;
