@@ -230,48 +230,37 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
-        close_spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS7_01_spr.png",4,false,false,0,0);
-        open_spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS7_02_spr.png",4,false,false,0,0);
-        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\dl_01_snd.wav",true);
-        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\dl_02_snd.wav",true);
-        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\dl_03_snd.wav",true);
-        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\dl_04_snd.wav",true);
+        close_spr_var = spr_add_scr(dl_open_spr_path,4,false,false,0,0);
+        open_spr_var = spr_add_scr(dl_close_spr_path,4,false,false,0,0);
+        snd_arr[0,0] = snd_add_scr(dl_01_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[1,0] = snd_add_scr(dl_02_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[2,0] = snd_add_scr(dl_03_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[3,0] = snd_add_scr(dl_04_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
         // Theme
         switch theme_scr(global.dl_theme_var,global.theme_var,2,0,0,1)
         {
-            case 1: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\dl_rom_mus_snd.ogg"); break; }
-            case 2: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\dl_alt_mus_snd.mp3"); break; }
-            default: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\dl_mus_snd.mp3"); break; }
+            case 1: { mus_snd_var = snd_add_scr(dl_rom_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
+            case 2: { mus_snd_var = snd_add_scr(dl_alt_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
+            default: { mus_snd_var = snd_add_scr(dl_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
         }
         fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
         // Effect
-        eff_spr_01_var = execute_file(main_directory_const+"\SPR\MON\dl_eff_01_spr.gml",main_directory_const+"\SPR\MON\dl_eff_01_spr.png");
-        eff_spr_02_var = execute_file(main_directory_const+"\SPR\MON\dl_eff_02_spr.gml",main_directory_const+"\SPR\MON\dl_eff_02_spr.png");
-        eff_snd_arr[0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\dl_eff_01_snd.wav");
-        eff_snd_arr[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\dl_eff_02_snd.wav");
-        eff_snd_arr[2] = fmod_snd_add_scr(main_directory_const+"\SND\MON\dl_eff_03_snd.wav");
-        eff_snd_arr[3] = fmod_snd_add_scr(main_directory_const+"\SND\MON\dl_eff_04_snd.wav");
-        for (local.i=0; local.i<eff_snd_len_var; local.i+=1;)
-        { fmod_snd_set_group_scr(eff_snd_arr[local.i],snd_group_mon_const); }
+        eff_spr_01_var = spr_add_scr(dl_eff_01_spr_path,24,false,false,0,0);
+        eff_spr_02_var = spr_add_scr(dl_eff_02_spr_path,24,false,false,0,0);
+        eff_snd_arr[0] = snd_add_scr(dl_eff_01_snd_path,false,snd_group_mon_const,1,0,0);
+        eff_snd_arr[1] = snd_add_scr(dl_eff_02_snd_path,false,snd_group_mon_const,1,0,0);
+        eff_snd_arr[2] = snd_add_scr(dl_eff_03_snd_path,false,snd_group_mon_const,1,0,0);
+        eff_snd_arr[3] = snd_add_scr(dl_eff_04_snd_path,false,snd_group_mon_const,1,0,0);
         // Deer
-        deer_idle_spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\EX_04_spr.png",5,false,false,0,0);
-        deer_spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\EX_05_spr.png",7,false,false,0,0);
-        deer_dead_spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\EX_06_spr.png",6,false,false,0,0);
-        deer_wake_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\RM\woods_deer_wake_snd.wav",global.wake_3d_var);
-        deer_dead_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\RM\woods_deer_dead_snd.wav",true);
-        deer_snd_arr_var[0] = fmod_snd_add_scr(main_directory_const+"\SND\RM\woods_deer_01_snd.wav",true);
-        deer_snd_arr_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\RM\woods_deer_02_snd.wav",true);
-        deer_snd_arr_var[2] = fmod_snd_add_scr(main_directory_const+"\SND\RM\woods_deer_03_snd.wav",true);
-        deer_snd_arr_var[3] = fmod_snd_add_scr(main_directory_const+"\SND\RM\woods_deer_04_snd.wav",true);
-        fmod_snd_set_group_scr(deer_wake_snd_var,snd_group_mon_const);
-        fmod_snd_set_minmax_dist_scr(deer_wake_snd_var,deer_snd_dist_min_var,deer_snd_dist_max_var);
-        fmod_snd_set_group_scr(deer_dead_snd_var,snd_group_mon_const);
-        fmod_snd_set_minmax_dist_scr(deer_dead_snd_var,deer_snd_dist_min_var,deer_snd_dist_max_var);
-        for (local.i=0; local.i<deer_snd_len_var; local.i+=1;)
-        {
-            fmod_snd_set_group_scr(deer_snd_arr_var[local.i],snd_group_mon_const);
-            fmod_snd_set_minmax_dist_scr(deer_snd_arr_var[local.i],deer_snd_dist_min_var,deer_snd_dist_max_var);
-        }
+        deer_idle_spr_var = spr_add_scr(woods_deer_idle_spr_path,5,false,false,0,0);
+        deer_spr_var = spr_add_scr(woods_deer_spr_path,7,false,false,0,0);
+        deer_dead_spr_var = spr_add_scr(woods_deer_dead_spr_path,6,false,false,0,0);
+        deer_wake_snd_var = snd_add_scr(woods_deer_wake_snd_path,true,snd_group_mon_const,1,deer_snd_dist_min_var,deer_snd_dist_max_var);
+        deer_dead_snd_var = snd_add_scr(woods_deer_dead_snd_path,true,snd_group_mon_const,1,deer_snd_dist_min_var,deer_snd_dist_max_var);
+        deer_snd_arr_var[0] = snd_add_scr(woods_deer_01_snd_path,true,snd_group_mon_const,1,deer_snd_dist_min_var,deer_snd_dist_max_var);
+        deer_snd_arr_var[1] = snd_add_scr(woods_deer_02_snd_path,true,snd_group_mon_const,1,deer_snd_dist_min_var,deer_snd_dist_max_var);
+        deer_snd_arr_var[2] = snd_add_scr(woods_deer_03_snd_path,true,snd_group_mon_const,1,deer_snd_dist_min_var,deer_snd_dist_max_var);
+        deer_snd_arr_var[3] = snd_add_scr(woods_deer_04_snd_path,true,snd_group_mon_const,1,deer_snd_dist_min_var,deer_snd_dist_max_var);
     }
     spr_var = close_spr_var;
 ');

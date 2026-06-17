@@ -244,8 +244,8 @@ object_event_add
         state_spr_var[0] = sprite_add(vanilla_directory_const+"\TEX\sprites\MS8_01_spr.png",6,false,false,0,0);
         state_spr_var[1] = sprite_add(vanilla_directory_const+"\TEX\sprites\MS8_02_spr.png",6,false,false,0,0);
         state_spr_var[2] = sprite_add(vanilla_directory_const+"\TEX\sprites\MS8_03_spr.png",7,false,false,0,0);
-        spr_eff_var = execute_file(main_directory_const+"\SPR\MON\para_eff_spr.gml",main_directory_const+"\SPR\MON\para_eff_spr.png");
-        spr_overlay_var = execute_file(main_directory_const+"\SPR\MON\para_overlay_spr.gml",main_directory_const+"\SPR\MON\para_overlay_spr.png");
+        spr_eff_var = spr_add_scr(main_directory_const+"\SPR\MON\para_eff_spr",19,false,false,0,0);
+        spr_overlay_var = spr_add_scr(main_directory_const+"\SPR\MON\para_overlay_spr",3,false,false,0,0);
         snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\para_01_snd.wav",true);
         snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\para_02_snd.wav",true);
         snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\para_03_snd.wav",true);

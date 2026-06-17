@@ -105,22 +105,20 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
-        spr_var = sprite_add(dh_directory_const+"\TEX\sprites\CLWN_SPR1.png",6,false,false,0,0);
-        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\DH\clown_01_snd.wav",true);
-        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\DH\clown_02_snd.wav",true);
-        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\DH\clown_03_snd.wav",true);
-        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\DH\clown_04_snd.wav",true);
-        snd_arr[4,0] = fmod_snd_add_scr(main_directory_const+"\SND\DH\clown_05_snd.wav",true);
-        snd_arr[5,0] = fmod_snd_add_scr(main_directory_const+"\SND\DH\clown_06_snd.wav",true);
-        snd_arr[6,0] = fmod_snd_add_scr(main_directory_const+"\SND\DH\clown_07_snd.wav",true);
-        snd_arr[7,0] = fmod_snd_add_scr(main_directory_const+"\SND\DH\clown_08_snd.wav",true);
-        snd_arr[8,0] = fmod_snd_add_scr(main_directory_const+"\SND\DH\clown_09_snd.wav",true);
-        snd_arr[9,0] = fmod_snd_add_scr(main_directory_const+"\SND\DH\clown_10_snd.wav",true);
-        leave_snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\DH\clown_leave_01_snd.wav");
-        leave_snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\DH\clown_leave_02_snd.wav");
-        mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\clown_mus_snd.ogg");
-        for (local.i=0; local.i<leave_snd_len_var; local.i+=1;)
-        { fmod_snd_set_group_scr(leave_snd_arr[local.i,0],snd_group_mon_const); }
+        spr_var = spr_add_scr(clown_spr_path,6,false,false,0,0);
+        snd_arr[0,0] = snd_add_scr(clown_01_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[1,0] = snd_add_scr(clown_02_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[2,0] = snd_add_scr(clown_03_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[3,0] = snd_add_scr(clown_04_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[4,0] = snd_add_scr(clown_05_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[5,0] = snd_add_scr(clown_06_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[6,0] = snd_add_scr(clown_07_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[7,0] = snd_add_scr(clown_08_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[8,0] = snd_add_scr(clown_09_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[9,0] = snd_add_scr(clown_10_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        leave_snd_arr[0,0] = snd_add_scr(clown_leave_01_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        leave_snd_arr[1,0] = snd_add_scr(clown_leave_02_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        mus_snd_var = snd_add_scr(clown_mus_snd_path,false,snd_group_mus_const,1,0,0);
     }
 ');
 // Destroy Event

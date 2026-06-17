@@ -96,9 +96,8 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
-        loop_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\brain_loop_snd.wav",true);
-        mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\brain_mus_snd.ogg");
-        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
+        loop_snd_var[1] = snd_add_scr(brain_loop_snd_path,true,snd_group_mon_const,1,loop_snd_dist_min_var,loop_snd_dist_max_var);
+        mus_snd_var = snd_add_scr(brain_mus_snd_path,false,snd_group_mus_const,1,0,0);
     }
     // sine
     z_off_time_var=0;

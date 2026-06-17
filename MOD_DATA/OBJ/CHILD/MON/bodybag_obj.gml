@@ -28,63 +28,13 @@ object_event_add
     blood_spr_var = blood_kh_spr;
     atk_range_var = 48;
     dead_rm_var = body_dead_rm;
+    do_mdl_var = true;
     // Sound
+    snd_dist_min_var = 0;
+    snd_dist_max_var = 600;
+    snd_len_var = -1;
     wake_snd_var[0] = true;
     mus_prio_var = theme_mus_prio_const;
-    // Assets
-    // Search for existing assets to save memory
-    local.loaded = false;
-    with object_index
-    {
-        if id != other.id && object_index == other.object_index
-        {
-            other.mdl_var = mdl_var;
-            other.bg_var = bg_var;
-            other.spr_overlay_var = spr_overlay_var;
-            other.spr_eff_var = spr_eff_var;
-            other.eff_snd_var = eff_snd_var;
-            other.mus_snd_var = mus_snd_var;
-            other.wake_snd_var[1] = wake_snd_var[1];
-            local.loaded = true;
-            break;
-        }
-    }
-    // If no existing assets were found, load them
-    if !local.loaded
-    {
-        spr_overlay_var = sprite_add(kh_directory_const+"\TEX\sprites\HOS_ex6.png",4,false,false,0,0);
-        spr_eff_var = sprite_add(kh_directory_const+"\TEX\sprites\HOS_ex7.png",8,false,false,0,0);
-        mdl_var = d3d_model_create();
-        d3d_model_load(mdl_var,main_directory_const+"\MDL\MON\bodybag_mon_mdl.gmmod");
-        bg_var = background_add(main_directory_const+"\BG\MON\bodybag_bg.png",false,false);
-        eff_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\bodybag_eff_snd.wav");
-        fmod_snd_set_group_scr(eff_snd_var,snd_group_mon_const);
-        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\bodybag_wake_snd.wav");
-        switch theme_scr(global.body_theme_var,global.theme_var,2,0,1,2)
-        {
-            case 1:
-            {
-                mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\bodybag_mus_snd.mp3");
-                fmod_snd_set_loop_point_scr(mus_snd_var,16/112,32/112);
-                break;
-            }
-            case 2:
-            {
-                mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\body_rom_mus_snd.ogg");
-                break;
-            }
-            default:
-            {
-                mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\bodybag_mus_snd.mp3");
-                fmod_snd_set_loop_point_scr(mus_snd_var,16/112,110/112);
-                break;
-            }
-        }
-        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
-    }
-    tex_var = background_get_texture(bg_var);
-    // Sounds
-    snd_len_var = -1;
     // Special
     mdl_yaw_var = 0;
     mdl_pitch_var = 90;
@@ -97,6 +47,9 @@ object_event_add
     eff_fade_var = false;
     eff_delay_var = 60;
     strobe_var = true;
+    // Alarms
+    alarm_len_var = 9;
+    alarm_ini_scr();
     // Behavior
     if global.body_type_var == -1 { local.type = irandom(5); }
     else { local.type = global.body_type_var; }
@@ -116,6 +69,7 @@ object_event_add
             eff_fade_var = true;
             strobe_var = false;
             atk_range_var = global.mon_coll[2];
+            snd_dist_max_var = 300;
             // dmg_var = 30; // 20
             // Autobrake
             autobrake_var = true;
@@ -152,12 +106,59 @@ object_event_add
             break;
         }
     }
-    // Alarms
-    alarm_len_var = 9;
-    alarm_ini_scr();
-    // Bools
-    do_mdl_var = true;
-    do_snd_var = false;
+    // Assets
+    // Search for existing assets to save memory
+    local.loaded = false;
+    with object_index
+    {
+        if id != other.id && object_index == other.object_index
+        {
+            other.main_mdl_var = main_mdl_var;
+            other.zip_mdl_var = zip_mdl_var;
+            other.bg_var = bg_var;
+            other.spr_overlay_var = spr_overlay_var;
+            other.spr_eff_var = spr_eff_var;
+            other.eff_snd_var = eff_snd_var;
+            other.mus_snd_var = mus_snd_var;
+            other.wake_snd_var[1] = wake_snd_var[1];
+            local.loaded = true;
+            break;
+        }
+    }
+    // If no existing assets were found, load them
+    if !local.loaded
+    {
+        spr_overlay_var = spr_add_scr(body_overlay_spr_path,4,false,false,0,0);
+        spr_eff_var = spr_add_scr(body_eff_spr_path,8,false,false,0,0);
+        main_mdl_var = d3d_model_create();
+        d3d_model_load(mdl_var,main_directory_const+"\MDL\KH\bodybag_mon_mdl.gmmod"); // Ill worry about this later
+        zip_mdl_var = d3d_model_create();
+        d3d_model_load(mdl_var,main_directory_const+"\MDL\KH\bodybag_mdl.gmmod");
+        bg_var = bg_add_scr(body_bg_path,false,false);
+        eff_snd_var = snd_add_scr(body_eff_snd_path,false,snd_group_mon_const,1,0,0);
+        wake_snd_var[1] = snd_add_scr(body_wake_snd_path,global.wake_3d_var,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        switch theme_scr(global.body_theme_var,global.theme_var,2,0,1,2)
+        {
+            case 1:
+            {
+                mus_snd_var = snd_add_scr(body_mus_snd_path,false,snd_group_mus_const,1,0,0);
+                fmod_snd_set_loop_point_scr(mus_snd_var,16/112,32/112);
+                break;
+            }
+            case 2:
+            {
+                mus_snd_var = snd_add_scr(body_rom_mus_snd_path,false,snd_group_mus_const,1,0,0);
+                break;
+            }
+            default:
+            {
+                mus_snd_var = snd_add_scr(body_mus_snd_path,false,snd_group_mus_const,1,0,0);
+                fmod_snd_set_loop_point_scr(mus_snd_var,16/112,110/112);
+                break;
+            }
+        }
+    }
+    tex_var = background_get_texture(bg_var);
 ');
 // Create End Event
 object_event_add
@@ -175,7 +176,8 @@ object_event_add
     {
         fmod_snd_free_scr(mus_snd_var);
         background_delete(bg_var);
-        d3d_model_destroy(mdl_var);
+        d3d_model_destroy(main_mdl_var);
+        d3d_model_destroy(zip_mdl_var);
         sprite_delete(spr_eff_var);
         sprite_delete(spr_overlay_var);
         fmod_snd_free_scr(wake_snd_var[1]);

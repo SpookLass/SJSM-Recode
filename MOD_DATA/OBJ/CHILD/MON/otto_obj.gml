@@ -117,26 +117,24 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
-        spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS26_01_spr.png",3,false,false,0,0);
-        eye_spr_var = execute_file(main_directory_const+"\SPR\MON\otto_eye_spr.gml",main_directory_const+"\SPR\MON\otto_eye_spr.png");
-        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\otto_01_snd.wav",global.wake_3d_var);
-        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\otto_01_snd.wav",true);
-        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\otto_02_snd.wav",true);
-        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\otto_03_snd.wav",true);
-        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\otto_04_snd.wav",true);
+        spr_var = spr_add_scr(main_directory_const+"\SPR\MON\otto_spr",3,false,false,0,0);
+        eye_spr_var = execute_file(main_directory_const+"\SPR\MON\otto_eye_spr",3,false,false,0,0);
+        wake_snd_var[1] = snd_add_scr(main_directory_const+"\SND\MON\otto_01_snd",global.wake_3d_var,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[0,0] = snd_add_scr(main_directory_const+"\SND\MON\otto_01_snd",true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[1,0] = snd_add_scr(main_directory_const+"\SND\MON\otto_02_snd",true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[2,0] = snd_add_scr(main_directory_const+"\SND\MON\otto_03_snd",true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[3,0] = snd_add_scr(main_directory_const+"\SND\MON\otto_04_snd",true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
         switch theme_scr(global.otto_theme_var,global.theme_var,1,0,0,1)
         {
-            case 1: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\otto_rom_mus_snd.ogg"); break; }
+            case 1: { mus_snd_var = snd_add_scr(main_directory_const+"\SND\MON\ROMM\otto_rom_mus_snd",true,snd_group_mus_const,1,0,0); break; }
             default:
             {
-                mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\otto_mus_test_snd.wav");
+                mus_snd_var = snd_add_scr(main_directory_const+"\SND\MON\otto_mus_test_snd",true,snd_group_mus_const,1,0,0);
                 fmod_snd_set_loop_point_scr(mus_snd_var,0.0234541577825,0.977967306326);
                 break;
             }
         }
-        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
-        hurt_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\KH\radio_button_snd.wav",false);
-        fmod_snd_set_group_scr(hurt_snd_var[1],snd_group_mon_const);
+        hurt_snd_var[1] = snd_add_scr(main_directory_const+"\SND\KH\radio_button_snd",true,snd_group_mon_const,1,0,0);
     }
     eye_tex_var = sprite_get_texture(eye_spr_var,0);
 ');

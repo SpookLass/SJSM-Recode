@@ -22,7 +22,7 @@ object_event_add
     ini_close();
     // Assets
     load_var = true;
-    spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS4_04_spr.png",2,false,false,0,0);
+    spr_var = spr_add_scr(bab_dead_spr_path,2,false,false,0,0);
     snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\BAB_D.mp3",false);
     fmod_snd_set_group_scr(snd_var,snd_group_mus_const);
     snd_len_var = 6;

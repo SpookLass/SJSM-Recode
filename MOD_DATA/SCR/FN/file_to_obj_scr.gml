@@ -4,18 +4,19 @@ Argument 1: Variable name
 Argument 2: Print
 ONLY USE THIS WHEN THE GAME LOADS
 */
-if argument0 != "" && file_exists(argument0)
+// Add the object
+local.obj = object_add();
+execute_file(argument0,local.obj,argument1);
+// Assign if not initialized
+if !variable_global_exists(argument1)
 {
-    local.obj = object_add();
-    execute_file(argument0,local.obj,argument1);
-    if !variable_global_exists(argument1)
-    {
-        execute_string("globalvar "+argument1);
-        if argument2 { show_message("Initialized object at "+argument1); }
-    }
-    else if argument2 { show_message("Replaced object at "+argument1); }
-    variable_global_set(argument1,local.obj);
-    obj_name_arr[local.obj] = argument1;
-    
+    globalvar_scr(local.obj,argument1,false);
+    if argument2 { show_message("Initialized object "+argument0+" at variable "+argument1); }
 }
-else if argument2 { show_error("File "+argument1+" doesn't exist at path "+argument0,false); }
+// Replace if initialized
+else
+{
+    variable_global_set(argument1,local.obj);
+    if argument2 { show_message("Replaced variable "+argument1+" with object "+argument0); }
+}
+obj_name_arr[local.obj] = argument1;

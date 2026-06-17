@@ -20,7 +20,7 @@ object_event_add
         // State 0
         state_var = 0;
         spr_var = sprite_add(dh_directory_const+"\TEX\sprites\MS3_02_spr.png",12,false,false,0,0);
-        txt_spr_var = execute_file(main_directory_const+"\SPR\DEAD\real_ringu_dead_spr.gml",main_directory_const+"\SPR\DEAD\real_ringu_dead_spr.png");
+        txt_spr_var = spr_add_scr(main_directory_const+"\SPR\DEAD\real_ringu_dead_spr",1,false,false,242,34);
         bg_var = background_add(dh_directory_const+"\TEX\mobile\HAND_TEX.png",false,false);
         // Text
         x = 0;

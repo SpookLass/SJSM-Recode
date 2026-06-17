@@ -92,7 +92,7 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
-        bg_var = background_add(main_directory_const+"\BG\MON\flesh_bg.png",false,false);
+        bg_var = bg_add_scr(flesh_bg_path,false,false);
         // Textures
         wall_bg_var = background_add(vanilla_directory_const+"\TEX\mobile\MB5_01_tex.png",false,false);
         floor_bg_var = background_add(vanilla_directory_const+"\TEX\mobile\MB5_04_tex.png",false,false);
