@@ -10,16 +10,27 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,0,'
     store_tex_var = water_bg_tex;
+    color_var = true;
     event_inherited();
-    local.bestz = 0;
-    with floor_par_obj { if z < local.bestz { local.bestz = z; }}
-    z_base_var = local.bestz+10;
+    z_base_var = 10;
+    deep_per_var = 1;
+    grav_mult_var = 1;
+    // Calculate height
+    local.floorz = noone;
+    local.ceilz = noone;
+    with floor_par_obj { if (z < local.floorz || local.floorz == noone) && solid_var == 1 { local.floorz = z; }}
+    with ceil_par_obj { if (z < local.ceilz || local.ceilz == noone) && solid_var == 1 { local.ceilz = z; }}
+    if local.floorz != noone { z_base_var += local.floorz; }
+    if local.ceilz != noone { z_base_var = min(z_base_var,local.ceilz-22); }
     z = z_base_var;
+    z_mult_var = 0.2;
+    spd_base_var = 0.02;
 ');
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,'
     event_inherited();
-    path_speed = 0.02*global.delta_time_var;
-    z = z_base_var+(x*0.2); // I guess, jank as hell
+    path_speed = spd_base_var*global.delta_time_var;
+    if z_mult_var > 0
+    { z = z_base_var+(x*z_mult_var); } // I guess, jank as hell
 ');

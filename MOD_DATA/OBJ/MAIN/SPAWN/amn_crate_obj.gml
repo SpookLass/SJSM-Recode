@@ -23,9 +23,67 @@ object_event_add
     h_var = 12;
     l_var = 12;
     type_var = 2;
+    sink_rate_var = 0.01;
+    raise_rate_var = grav_const;
+    sink_var = false;
+    bob_var = true;
+    z_off_var = 0;
+    z_vel_var = 0;
     // Collisions
     coll_var[0] = -5;
     coll_var[1] = amn_crate_coll[1];
     coll_var[2] = amn_crate_coll[2];
     coll_var[3] = amn_crate_coll[3];
+');
+// Sinking!
+object_event_add
+(argument0,ev_step,ev_step_normal,'
+    event_inherited();
+    if instance_exists(water_obj) && sink_var
+    {
+        local.bool = false;
+        with player_obj
+        {
+            if do_coll_var && on_floor_var && !dead_var && on_var
+            {
+                if box_coll_scr
+                (
+                    x,y,z,coll_var[2],coll_var[2],coll_var[1],
+                    other.x,other.y,other.z,other.coll_var[2],other.coll_var[3],other.coll_var[1]+step_h_var
+                )
+                { local.bool = true; break; }
+            }
+        }
+        if bob_var
+        {
+            zstart = water_obj.z-10;
+            if z_off_var > 0 { z_vel_var -= raise_rate_var*global.delta_time_var; }
+            else if local.bool { z_vel_var = 0; z_off_var -= sink_rate_var*global.delta_time_var; }
+            else if z_off_var < 0
+            {
+                if z_vel_var < 0
+                {
+                    z_off_var = 0;
+                    z_vel_var = 0;
+                }
+                else { z_vel_var += raise_rate_var*global.delta_time_var; }
+            }
+            if z_vel_var != 0 { z_off_var += z_vel_var; }
+            z = zstart+z_off_var;
+        }
+        else
+        {
+            if z > zstart { z_spd_var -= raise_rate_var*global.delta_time_var; }
+            else if local.bool { z_spd_var = 0; z -= sink_rate_var*global.delta_time_var; }
+            else if z < zstart
+            {
+                if z_spd_var < 0
+                {
+                    z = zstart;
+                    z_spd_var = 0;
+                }
+                else { z_spd_var += raise_rate_var*global.delta_time_var; }
+            }
+        }
+    }
 ');

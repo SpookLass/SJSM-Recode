@@ -54,6 +54,7 @@ object_event_add
     {
         case 0:
         {
+            dur_var = irandom_range(30,40);
             atk_dist_var = 8;
             atk_range_var = 16;
             persist_var = true;

@@ -190,6 +190,8 @@ object_event_add
 (argument0,ev_other,ev_room_start,'
     if do_wander_var { wander_var = true; }
     spawn_var = 0;
+    if rand_spawn_scr(spawn_attempt_var,false,spawn_player_dist_var,spawn_player_dist_var,0)
+    { spawn_var = -1; }
     // Spawn
     for (local.i=0; local.i<spawn_attempt_var; local.i+=1;)
     {

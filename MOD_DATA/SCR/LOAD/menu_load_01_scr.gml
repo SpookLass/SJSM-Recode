@@ -734,7 +734,7 @@ draw_load_scr("Loading config...");
                 custom_arr_set_scr(2,local.killer_set,-1,-1,2); // HD
                 custom_arr_set_scr(-1,local.killer_set,5,-1,-1); // :) (Random)
         // Mermaid
-            local.mur = type_add_scr("mur",true,true,1,noone,noone,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
+            local.mur = type_add_scr("mur",true,true,1,mur_obj,noone,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
             local.mur_set = type_add_set_scr(local.mur,"mur","mur",local.spec,true); /*ID, Variable Name, Description, Category, Can Disable*/
             // Types
                 type_add_type_scr(local.mur,local.mur_set,"recode","",true); /*ID, Label, Description, Translate*/

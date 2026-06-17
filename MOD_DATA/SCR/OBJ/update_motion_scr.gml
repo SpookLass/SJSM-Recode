@@ -90,7 +90,7 @@ if do_coll_var && grav_var > 0
             }
             // Check Split / Room collision
             if local.coll_arr[local.c,0] == -1
-            { local.zdist_new = p3dc_ray_still_scr(global.room_coll,local.xtmp,local.ytmp,z+step_h_var+local.spd,0,0,-1); } // p3dc_ray_split_scr
+            { local.zdist_new = p3dc_ray_still_scr(global.room_coll,local.xtmp,local.ytmp,z+step_h_var,0,0,-1); } // p3dc_ray_split_scr,+local.spd
             // THE CRATES OF DOOM
             else if local.coll_arr[local.c,0] == -5
             {
@@ -105,8 +105,8 @@ if do_coll_var && grav_var > 0
                 );
                 local.zcrate = local.coll_arr[local.c,3]+lerp_scr(0,local.coll_arr[local.c,7],local.per);
                 local.slope = local.coll_arr[local.c,7]*2/max(1,local.coll_arr[local.c,5]-local.coll_arr[local.c,8]-coll_var[2]);
-                if local.zcrate < z+step_h_var+local.spd+local.slope//+coll_var[1]
-                { local.zdist_new = z+step_h_var+local.spd-local.zcrate; } //+coll_var[1]
+                if local.zcrate < z+step_h_var+local.slope//+coll_var[1]+local.spd
+                { local.zdist_new = z+step_h_var-local.zcrate; } //+coll_var[1]+local.spd
             }
             // Don't check float walls
             else if local.coll_arr[local.c,0] != -2
@@ -124,7 +124,7 @@ if do_coll_var && grav_var > 0
                         local.coll_arr[local.c,2],
                         local.coll_arr[local.c,3],
                         local.xtmp,local.ytmp,
-                        z+step_h_var+local.spd,
+                        z+step_h_var,//+local.spd
                         0,0,-1,0,0,local.coll_arr[local.c,4]
                     );
                 }
@@ -138,7 +138,7 @@ if do_coll_var && grav_var > 0
                         local.coll_arr[local.c,2],
                         local.coll_arr[local.c,3],
                         local.xtmp,local.ytmp,
-                        z+step_h_var+local.spd,
+                        z+step_h_var,//+local.spd
                         0,0,-1
                     );
                 }
@@ -151,7 +151,7 @@ if do_coll_var && grav_var > 0
             }
         }
     }
-    local.zdist -= step_h_var+local.spd;
+    local.zdist -= step_h_var;//+local.spd
     // Add gravity
     z_spd_var -= grav_var*argument0;
     local.zspd = z_spd_var*argument0;

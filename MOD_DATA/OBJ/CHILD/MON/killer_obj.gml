@@ -19,6 +19,8 @@ object_event_add
     snd_alarm_max_var = 240;
     snd_dist_min_var = 0;
     snd_dist_max_var = 600;
+    loop_snd_dist_min_var = 0;
+    loop_snd_dist_max_var = 400;
     // Charge sounds
     charge_snd_len_var = 1;
     // Breath sounds
@@ -309,8 +311,11 @@ object_event_add
             scary_var = true;
             sprint_mult_var = 24; // WOW!
             dmg_var = 30;
+            dmg_alarm_var = 60;
             atk_range_var = global.mon_coll[2];
             loop_snd_var[0] = true;
+            snd_dist_max_var = 300;
+            drag_snd_dist_max_var = 400;
             break;
         }
     }

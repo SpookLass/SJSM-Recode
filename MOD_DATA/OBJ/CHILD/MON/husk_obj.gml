@@ -89,7 +89,7 @@ object_event_add
     event_inherited();
     if persistent
     {
-        event_user(15);
+        on_var = rand_spawn_scr(spawn_attempt_var,true,spawn_player_dist_var,spawn_player_dist_var,husk_dist_var);
         if revive_var && dead_var == 1
         {
             // Enable behavior
@@ -298,57 +298,6 @@ object_event_add
         {
             if snd_len_var > 0
             { set_alarm_scr(6,irandom_range(snd_delay_min_var,snd_delay_max_var)); }
-        }
-    }
-');
-// Spawn Event
-object_event_add
-(argument0,ev_other,ev_user15,'
-    // Spawn
-    on_var = false;
-    for (local.i=0; local.i<spawn_attempt_var; local.i+=1;)
-    {
-        local.flr = instance_find(floor_par_obj,irandom(instance_number(floor_par_obj)-1));
-        local.width = (local.flr.w_var-coll_var[1])*0.5;
-        local.height = (local.flr.h_var-coll_var[1])*0.5;
-        local.xtmp = local.flr.x+random_range(-local.width,local.width);
-        local.ytmp = local.flr.y+random_range(-local.height,local.height);
-        local.ztmp = local.flr.z;
-        local.bool = true;
-        if spawn_player_dist_var > 0
-        {
-            with player_obj
-            {
-                if on_var && !dead_var && !in_door_var
-                {
-                    if point_distance_3d_scr(local.xtmp,local.ytmp,local.ztmp,x,y,z) < other.spawn_player_dist_var
-                    { local.bool = false; break; }
-                }
-            }
-            if point_distance_3d_scr(local.xtmp,local.ytmp,local.ztmp,global.spawn_arr[0,0],global.spawn_arr[0,1],global.spawn_arr[0,2]) < spawn_player_dist_var
-            { local.bool = false; break; }
-        }
-        if husk_dist_var > 0 && local.bool
-        {
-            with object_index
-            {
-                if id != other.id && object_index == other.object_index && on_var
-                {
-                    if point_distance_3d_scr(local.xtmp,local.ytmp,local.ztmp,x,y,z) < other.husk_dist_var
-                    { local.bool = false; break; }
-                }
-            }
-        }
-        if local.bool
-        {
-            if !check_coll_scr(0,0,0,0,0,local.xtmp,local.ytmp,local.ztmp)
-            {
-                x = local.xtmp;
-                y = local.ytmp;
-                z = local.ztmp;
-                on_var = true;
-                break;
-            }
         }
     }
 ');

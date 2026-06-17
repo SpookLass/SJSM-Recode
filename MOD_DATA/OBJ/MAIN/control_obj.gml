@@ -217,7 +217,15 @@ object_event_add
             case 10: { global.count_var = get_integer("Set Count", global.count_var); break; }
             case 12: { global.rm_count_var = get_integer("Set Room Count", global.rm_count_var); break; }
             case 13: { with player_obj { invuln_var = !invuln_var; } break; }
-            case 14: { with player_obj { do_coll_var = !do_coll_var; } break; }
+            case 14:
+            {
+                with player_obj
+                {
+                    if do_coll_var { do_coll_var = false; }
+                    else { do_coll_var = player_solid_const; }
+                }
+                break;
+            }
             case 15:
             {
                 with player_obj { grav_mult_per_var = !grav_mult_per_var; } 

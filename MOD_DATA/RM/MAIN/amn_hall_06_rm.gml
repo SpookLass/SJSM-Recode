@@ -191,7 +191,7 @@ room_instance_add(argument0,528,320,wall_vert_obj);
 room_instance_add(argument0,528,352,wall_vert_obj);
 room_instance_add(argument0,336,256,wall_vert_obj);
 room_instance_add(argument0,304,256,wall_vert_obj);
-// Siren
-//room_instance_add(argument0,320,256,siren_spawn_obj);
+// Mermaid
+room_instance_add(argument0,320,256,mur_spawn_obj);
 // Grates
 room_instance_add(argument0,320,272,wall_grate_hor_obj);

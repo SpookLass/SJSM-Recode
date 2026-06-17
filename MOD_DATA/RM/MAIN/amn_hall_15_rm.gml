@@ -90,6 +90,7 @@ room_instance_add(argument0,160,288,floor_obj);
 room_instance_add(argument0,192,288,floor_obj);
 room_instance_add(argument0,224,288,floor_obj);
 room_instance_add(argument0,288,320,floor_obj);
+room_instance_add(argument0,288,288,floor_obj); // New
 //Ceilings
 room_instance_add(argument0,224,352,ceil_obj);
 room_instance_add(argument0,256,352,ceil_obj);
@@ -113,11 +114,11 @@ room_instance_add(argument0,160,288,ceil_obj);
 room_instance_add(argument0,192,288,ceil_obj);
 room_instance_add(argument0,224,288,ceil_obj);
 room_instance_add(argument0,288,320,ceil_obj);
+room_instance_add(argument0,288,288,ceil_obj); // New
 // Walls (Horizontal)
 room_instance_add(argument0,224,304,wall_hor_obj);
 room_instance_add(argument0,224,336,wall_hor_obj);
 room_instance_add(argument0,256,336,wall_hor_obj);
-room_instance_add(argument0,288,304,wall_hor_obj);
 room_instance_add(argument0,320,336,wall_hor_obj);
 room_instance_add(argument0,320,368,wall_hor_obj);
 room_instance_add(argument0,288,368,wall_hor_obj);
@@ -140,6 +141,7 @@ room_instance_add(argument0,256,432,wall_hor_obj);
 room_instance_add(argument0,288,464,wall_hor_obj);
 room_instance_add(argument0,256,464,wall_hor_obj);
 room_instance_add(argument0,224,464,wall_hor_obj);
+room_instance_add(argument0,288,272,wall_hor_obj); // New
 // Walls (Vertical)
 room_instance_add(argument0,208,352,wall_vert_obj);
 room_instance_add(argument0,240,288,wall_vert_obj);
@@ -161,7 +163,9 @@ room_instance_add(argument0,144,320,wall_vert_obj);
 room_instance_add(argument0,144,352,wall_vert_obj);
 room_instance_add(argument0,144,384,wall_vert_obj);
 room_instance_add(argument0,144,416,wall_vert_obj);
-// Siren
-//room_instance_add(argument0,256,288,siren_spawn_obj);
+room_instance_add(argument0,272,288,wall_vert_obj); // New
+room_instance_add(argument0,304,288,wall_vert_obj);
+// Mermaid
+room_instance_add(argument0,288,288,mur_spawn_obj);
 // Grates
 room_instance_add(argument0,288,336,wall_grate_hor_obj);

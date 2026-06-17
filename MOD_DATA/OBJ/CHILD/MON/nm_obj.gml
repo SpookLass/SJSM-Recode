@@ -10,13 +10,16 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,1,'
     // Sounds
+    snd_len_var = 3;
+    snd_alarm_min_var = -1;
+    snd_alarm_max_var = -1;
     snd_dist_min_var = 0;
     snd_dist_max_var = 512;
     hurt_snd_var = 4;
-    wake_snd_var[0] = 2;
     // Language
     ini_open("lang_"+global.lang_var+".ini");
     name_var = translate_mon_str_scr("nm",global.name_var);
+    
     wake_snd_var[2] = string_replace(ini_read_string("SUB","nm","SUB_nm"),"@n",name_var); wake_snd_var[3] = false;
     hurt_snd_var[2] = string_replace(ini_read_string("SUB","doll_hurt","SUB_doll_hurt"),"@n",name_var); hurt_snd_var[3] = false;
     ini_close();

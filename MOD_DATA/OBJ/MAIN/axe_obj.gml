@@ -167,10 +167,13 @@ object_event_add
                                 event_user(4);
                             }
                         }
-                        else if solid_var && !local.collided
+                        else if solid_var == 1 && !local.collided
                         {
-                            if p3dc_check_rot_scr(coll_var[0],x,y,z,other.coll_var[0],local.xtmp+local.xvel,local.ytmp+local.yvel,local.ztmp+local.zvel,0,0,degtorad(direction),0,local.ydir,local.zdir)
-                            { local.collided = true; local.ding = true; }
+                            if coll_var[0] > 0 // Crate
+                            {
+                                if p3dc_check_rot_scr(coll_var[0],x,y,z,other.coll_var[0],local.xtmp+local.xvel,local.ytmp+local.yvel,local.ztmp+local.zvel,0,0,degtorad(direction),0,local.ydir,local.zdir)
+                                { local.collided = true; local.ding = true; }
+                            }
                         }
                     }
                     if !local.collided

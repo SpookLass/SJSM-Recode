@@ -85,7 +85,7 @@ object_event_add
     reflect_var= -1;
     fog_var = false;
     // Spawn
-    spawn_dist_var = 200;
+    spawn_dist_02_var = 200;
     // Funny
     upside_var = false;
     // Die
@@ -149,7 +149,7 @@ object_event_add
             eff_var = false;
             seen_flash_var = false;
             seen_spd_var = false;
-            spawn_dist_var = 0;
+            spawn_dist_02_var = 0;
             do_anim_var = false;
             dmg_stun_alarm_var = -1;
             do_seen_var = false;
@@ -173,7 +173,7 @@ object_event_add
             eff_var = false;
             seen_flash_var = false;
             seen_spd_var = false;
-            spawn_dist_var = 0;
+            spawn_dist_02_var = 0;
             do_anim_var = false;
             dmg_stun_alarm_var = -1;
             do_seen_var = false;
@@ -232,7 +232,7 @@ object_event_add
             autobrake_dir_var = 60;
             // No fun
             do_seen_var = false;
-            spawn_dist_var = 0;
+            spawn_dist_02_var = 0;
             do_anim_var = false;
             rand_alarm_min_var = -1;
             rand_alarm_max_var = -1;
@@ -358,9 +358,9 @@ object_event_add
         x = global.spawn_arr[0,0];
         y = global.spawn_arr[0,1];
     }
-    else if spawn_dist_var != 0
+    else if spawn_dist_02_var != 0
     {
-        local.dist = random_range(-spawn_dist_var,spawn_dist_var);
+        local.dist = random_range(-spawn_dist_02_var,spawn_dist_02_var);
         x += lengthdir_x(local.dist,yaw_var+90);
         y += lengthdir_y(local.dist,yaw_var+90);
     }

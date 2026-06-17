@@ -81,6 +81,7 @@ room_instance_add(argument0,224,256,floor_obj);
 room_instance_add(argument0,224,224,floor_obj);
 room_instance_add(argument0,256,224,floor_obj);
 room_instance_add(argument0,288,224,floor_obj);
+room_instance_add(argument0,256,416,floor_obj); // New
 //Ceilings
 room_instance_add(argument0,224,352,ceil_obj);
 room_instance_add(argument0,256,352,ceil_obj);
@@ -101,6 +102,7 @@ room_instance_add(argument0,224,256,ceil_obj);
 room_instance_add(argument0,224,224,ceil_obj);
 room_instance_add(argument0,256,224,ceil_obj);
 room_instance_add(argument0,288,224,ceil_obj);
+room_instance_add(argument0,256,416,ceil_obj); // New
 // Walls (Horizontal)
 room_instance_add(argument0,224,304,wall_hor_obj);
 room_instance_add(argument0,256,304,wall_hor_obj);
@@ -110,7 +112,6 @@ room_instance_add(argument0,256,336,wall_hor_obj);
 room_instance_add(argument0,224,336,wall_hor_obj);
 room_instance_add(argument0,224,368,wall_hor_obj);
 room_instance_add(argument0,288,368,wall_hor_obj);
-room_instance_add(argument0,256,400,wall_hor_obj);
 room_instance_add(argument0,352,304,wall_hor_obj);
 room_instance_add(argument0,352,336,wall_hor_obj);
 room_instance_add(argument0,384,368,wall_hor_obj);
@@ -126,6 +127,7 @@ room_instance_add(argument0,288,240,wall_hor_obj);
 room_instance_add(argument0,288,208,wall_hor_obj);
 room_instance_add(argument0,256,208,wall_hor_obj);
 room_instance_add(argument0,224,208,wall_hor_obj);
+room_instance_add(argument0,256,432,wall_hor_obj); // New
 // Walls (Vertical)
 room_instance_add(argument0,208,352,wall_vert_obj);
 room_instance_add(argument0,208,224,wall_vert_obj);
@@ -141,7 +143,9 @@ room_instance_add(argument0,400,320,wall_vert_obj);
 room_instance_add(argument0,400,352,wall_vert_obj);
 room_instance_add(argument0,272,384,wall_vert_obj);
 room_instance_add(argument0,240,384,wall_vert_obj);
-// Siren
-//room_instance_add(argument0,256,416,siren_spawn_obj);
+room_instance_add(argument0,240,416,wall_vert_obj); // New
+room_instance_add(argument0,272,416,wall_vert_obj);
+// Mermaid
+room_instance_add(argument0,256,416,mur_spawn_obj);
 // Grates
 room_instance_add(argument0,256,368,wall_grate_hor_obj);

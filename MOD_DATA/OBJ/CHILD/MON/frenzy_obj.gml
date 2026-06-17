@@ -246,41 +246,9 @@ object_event_add
 // Spawn Event
 object_event_add
 (argument0,ev_other,ev_user15,'
-    for (local.i=0; local.i<spawn_attempt_var; local.i+=1;)
-    {
-        local.flr = instance_find(floor_par_obj,irandom(instance_number(floor_par_obj)-1));
-        local.xtmp = local.flr.x;//+random_range(-local.flr.w_var/2,local.flr.w_var/2);
-        local.ytmp = local.flr.y;//+random_range(-local.flr.h_var/2,local.flr.h_var/2);
-        local.ztmp = local.flr.z;
-        local.bool = true;
-        if spawn_player_dist_var > 0
-        {
-            with player_obj
-            {
-                if on_var && !dead_var && !in_door_var
-                {
-                    if point_distance_3d_scr(local.xtmp,local.ytmp,local.ztmp,x,y,z) < other.spawn_player_dist_var
-                    { local.bool = false; break; }
-                }
-            }
-            if point_distance_3d_scr(local.xtmp,local.ytmp,local.ztmp,global.spawn_arr[0,0],global.spawn_arr[0,1],global.spawn_arr[0,2]) < spawn_player_dist_var
-            { local.bool = false; break; }
-        }
-        if local.bool
-        {
-            if !check_coll_scr(0,0,0,0,0,local.xtmp,local.ytmp,local.ztmp)
-            {
-                x = local.xtmp;
-                y = local.ytmp;
-                z = local.ztmp;
-                if impatience_alarm_var > 0
-                { set_alarm_scr(8,impatience_alarm_var); }
-                exit;
-            }
-            
-        }
-    }
-    on_var = false;
+    on_var = rand_spawn_scr(spawn_attempt_var,false,spawn_player_dist_var,spawn_player_dist_var,0);
+    if on_var && impatience_alarm_var > 0
+    { set_alarm_scr(8,impatience_alarm_var); }
 ');
 // Attack Success
 object_event_add

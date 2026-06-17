@@ -36,12 +36,17 @@ object_event_add
     dead_rm_var = ringu_dead_rm;
     do_anim_var = false;
     wander_spd_var = 0.25;
+    wander_time_var = 250;
     splash_time_var = 0;
     splash_rate_var = 12;
+    ring_rate_var = 12;
     water_spd_mult_var = 0.6;
     water_spd_mult_deep_var = 0.6;
     crateless_spd_mult_var = 1;
     zone_var = true;
+    sink_var = false;
+    move_arr_len = 0;
+    fast_spawn_var = false;
     // Fog
     fog_color_var = make_color_rgb(14,69,69);
     fog_prio_var = 2;
@@ -59,6 +64,7 @@ object_event_add
     {
         case 0:
         {
+            delay_var = 90;
             spd_base_var = 1.25; // 1.r3;
             splash_rate_var = 18.75;
             dmg_var = 10;
@@ -67,6 +73,9 @@ object_event_add
             water_spd_mult_var = 1;
             fog_end_var = 128;
             crateless_spd_mult_var = 0.64;
+            sink_var = true;
+            do_ring_var = true;
+            wander_time_var = 500;
             break;
         }
     }
@@ -186,12 +195,35 @@ object_event_add
         path_delete(water_path_var);
         ds_list_destroy(zone_list_var);
     }
+    with amn_water_obj { if par_var == other.id { instance_destroy(); }}
+    with amn_crate_obj { if par_var == other.id { instance_destroy(); }}
     zone_from_num_scr(global.zone_num_var);
 ');
 // Room Start Event
 object_event_add
 (argument0,ev_other,ev_room_start,'
-    event_inherited();
+    // Spawn
+    if instance_exists(mur_spawn_obj)
+    {
+        x = mur_spawn_obj.x;
+        y = mur_spawn_obj.y;
+        z = mur_spawn_obj.z;
+        spawn_var = -1;
+        event_inherited();
+        if !on_var && fast_spawn_var
+        {
+            event_perform(ev_alarm,0);
+            set_alarm_scr(0,-1);
+        }
+    }
+    else
+    {
+        spawn_var = 0;
+        event_inherited();
+    }
+    // Variables
+    move_len_var = 0;
+    splash_time_var = 0;
     // Water
     if !instance_exists(amn_water_obj)
     {
@@ -241,6 +273,9 @@ object_event_add
                     par_var = other.id;
                     store_tex_var = other.crate_tex_var;
                     tex_var = store_tex_var;
+                    sink_var = other.sink_var;
+                    zstart = water_obj.z_base_var-10;
+                    z = zstart;
                 }
                 global.mark_arr[local.i,3] = true;
                 local.crate = true;
@@ -258,29 +293,50 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user0,'
     event_inherited();
-    if spd_var > 0 && instance_exists(water_obj)
+    if instance_exists(water_obj)
     {
-        splash_time_var += spd_var*global.delta_time_var;
-        if splash_time_var > splash_rate_var
+        if spd_var > 0
         {
-            splash_time_var = 0;
-            with instance_create(x,y,splash_eff_obj)
+            splash_time_var += spd_var*global.delta_time_var;
+            if !instance_exists(target_var) && do_ring_var
             {
-                z = water_obj.z;
-                ring_tex_var = other.ring_tex_var;
-                part_tex_var = other.part_tex_var;
-                splash_spr_var = other.spr_var;
-                splash_tex_var = sprite_get_texture(splash_spr_var,0);
+                if splash_time_var > ring_rate_var
+                {
+                    splash_time_var = 0;
+                    with instance_create(x,y,splash_eff_obj)
+                    {
+                        z = water_obj.z;
+                        ring_tex_var = other.ring_tex_var;
+                        part_tex_var = other.part_tex_var;
+                        splash_spr_var = other.spr_var;
+                        splash_tex_var = sprite_get_texture(splash_spr_var,0);
+                        set_alarm_scr(0,-1);
+                        set_alarm_scr(2,-1);
+                    }
+                }
             }
-            // Splash Sound
-            /*if fmod_inst_is_play_scr(inst_var) && fmod_inst_is_3d_scr(inst_var)
-            { fmod_inst_stop_scr(inst_var); }*/
-            local.snd = irandom(snd_len_var-1);
-            inst_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0],x,y,z);
-            if global.pitch_bend_var { fmod_inst_set_pitch_scr(inst_var,random_range(0.95,1.05)); }
-            sub_var[0] = snd_arr[local.snd,1];
-            sub_var[1] = snd_arr[local.snd,2];
+            else if splash_time_var > splash_rate_var
+            {
+                splash_time_var = 0;
+                with instance_create(x,y,splash_eff_obj)
+                {
+                    z = water_obj.z;
+                    ring_tex_var = other.ring_tex_var;
+                    part_tex_var = other.part_tex_var;
+                    splash_spr_var = other.spr_var;
+                    splash_tex_var = sprite_get_texture(splash_spr_var,0);
+                }
+                // Splash Sound
+                /*if fmod_inst_is_play_scr(inst_var) && fmod_inst_is_3d_scr(inst_var)
+                { fmod_inst_stop_scr(inst_var); }*/
+                local.snd = irandom(snd_len_var-1);
+                inst_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0],x,y,z);
+                if global.pitch_bend_var { fmod_inst_set_pitch_scr(inst_var,random_range(0.95,1.05)); }
+                sub_var[0] = snd_arr[local.snd,1];
+                sub_var[1] = snd_arr[local.snd,2];
+            }
         }
+        else { splash_time_var = 0; }
     }
 ');
 // Target Event
@@ -292,17 +348,13 @@ object_event_add
     else if local.water
     {
         target_var = noone;
-        target_dist_var = 0;
         with (player_obj)
         {
             if z < water_obj.z
             {
                 local.dist = point_distance_3d_scr(other.x,other.y,other.z,x,y,z);
                 if on_var && !in_door_var && !dead_var && (other.target_var == noone || local.dist < other.target_dist_var)
-                {
-                    other.target_var = id;
-                    other.target_dist_var = local.dist;
-                }
+                { other.target_var = id; }
             }
         }
         if target_var != noone
@@ -310,6 +362,37 @@ object_event_add
             target_x_var = target_var.x;
             target_y_var = target_var.y;
             target_z_var = target_var.z;
+            // Save position
+            for (local.i=move_len_var-1; local.i>=0; local.i-=1;)
+            {
+                move_arr_var[local.i+1,0] =  move_arr_var[local.i,0];
+                move_arr_var[local.i+1,1] =  move_arr_var[local.i,1];
+                move_arr_var[local.i+1,2] =  move_arr_var[local.i,2];
+                move_arr_var[local.i+1,3] =  move_arr_var[local.i,3];
+            }
+            move_arr_var[0,0] = x;
+            move_arr_var[0,1] = y;
+            move_arr_var[0,2] = z;
+            move_arr_var[0,3] = current_time;
+            if move_len_var == 0 { move_len_var = 1; }
+            else
+            {
+                local.len = 0;
+                for (local.i=0; local.i<=move_len_var; local.i+=1;)
+                {
+                    if current_time-move_arr_var[local.i,3] <= wander_time_var
+                    || local.len == 0
+                    { local.len = local.i+1; }
+                }
+                move_len_var = local.len;
+            }
+        }
+        else if move_len_var > 0
+        {
+            target_x_var = move_arr_var[move_len_var-1,0];
+            target_y_var = move_arr_var[move_len_var-1,1];
+            target_z_var = move_arr_var[move_len_var-1,2];
+            spd_mult_var *= wander_spd_var;
         }
         else
         {
@@ -319,7 +402,10 @@ object_event_add
         }
     }
     if local.water
-    { target_z_var = min(water_obj.z,target_z_var); }
+    {
+        target_z_var = min(water_obj.z,target_z_var);
+        target_dist_var = point_distance_3d_scr(x,y,z,target_x_var,target_y_var,target_z_var);
+    }
 ');
 // End Step Event
 object_event_add
