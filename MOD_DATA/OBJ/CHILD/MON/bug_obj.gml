@@ -15,6 +15,7 @@ object_event_add
     snd_den_var = 2;
     snd_alarm_min_var = 80;
     snd_alarm_max_var = 240;
+    snd_dist_min_var = 0;
     snd_dist_max_var = 800;
     loop_snd_var[0] = true;
     loop_snd_dist_min_var = 0;

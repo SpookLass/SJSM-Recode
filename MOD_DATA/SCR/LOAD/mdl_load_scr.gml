@@ -24,7 +24,7 @@ Argument 0: Print
             while (local.file != "")
             {
                 // Not sure why, but it doesn't include the path.
-                globalvar_scr(local.file+"_path",local.dir+"\MDL\MON\"+local.file,argument0);
+                globalvar_scr(local.dir+"\MDL\MON\"+local.file,local.file+"_path",argument0);
                 local.file = filename_change_ext(file_find_next(),"");
                 local.i += 1;
                 // Draw
@@ -37,7 +37,7 @@ Argument 0: Print
             while (local.file != "")
             {
                 // Not sure why, but it doesn't include the path.
-                globalvar_scr(local.file+"_path",local.dir+"\MDL\RM\"+local.file,argument0);
+                globalvar_scr(local.dir+"\MDL\RM\"+local.file,local.file+"_path",argument0);
                 local.file = filename_change_ext(file_find_next(),"");
                 local.i += 1;
                 // Draw
@@ -50,7 +50,7 @@ Argument 0: Print
             while (local.file != "")
             {
                 // Not sure why, but it doesn't include the path.
-                globalvar_scr(local.file+"_path",local.dir+"\MDL\DEAD\"+local.file,argument0);
+                globalvar_scr(local.dir+"\MDL\DEAD\"+local.file,local.file+"_path",argument0);
                 local.file = filename_change_ext(file_find_next(),"");
                 local.i += 1;
                 // Draw
@@ -63,7 +63,7 @@ Argument 0: Print
             while (local.file != "")
             {
                 // Not sure why, but it doesn't include the path.
-                globalvar_scr(local.file+"_path",local.dir+"\MDL\UI\"+local.file,argument0);
+                globalvar_scr(local.dir+"\MDL\UI\"+local.file,local.file+"_path",argument0);
                 local.file = filename_change_ext(file_find_next(),"");
                 local.i += 1;
                 // Draw
@@ -76,7 +76,7 @@ Argument 0: Print
             while (local.file != "")
             {
                 // Not sure why, but it doesn't include the path.
-                globalvar_scr(local.file+"_path",local.dir+"\MDL\MINI\"+local.file,argument0);
+                globalvar_scr(local.dir+"\MDL\MINI\"+local.file,local.file+"_path",argument0);
                 local.file = filename_change_ext(file_find_next(),"");
                 local.i += 1;
                 // Draw
@@ -91,7 +91,7 @@ Argument 0: Print
                 while (local.file != "")
                 {
                     // Not sure why, but it doesn't include the path.
-                    globalvar_scr(local.file+"_path",local.dir+"\MDL\KH\"+local.file,argument0);
+                    globalvar_scr(local.dir+"\MDL\KH\"+local.file,local.file+"_path",argument0);
                     local.file = filename_change_ext(file_find_next(),"");
                     local.i += 1;
                     // Draw
@@ -107,7 +107,7 @@ Argument 0: Print
                 while (local.file != "")
                 {
                     // Not sure why, but it doesn't include the path.
-                    globalvar_scr(local.file+"_path",local.dir+"\MDL\DH\"+local.file,argument0);
+                    globalvar_scr(local.dir+"\MDL\DH\"+local.file,local.file+"_path",argument0);
                     local.file = filename_change_ext(file_find_next(),"");
                     local.i += 1;
                     // Draw
@@ -135,7 +135,7 @@ Argument 0: Print
     while (local.file != "")
     {
         // Not sure why, but it doesn't include the path.
-        globalvar_scr(local.file+"_path",main_directory_const+"\MDL\MON\"+local.file,argument0);
+        globalvar_scr(main_directory_const+"\MDL\MON\"+local.file,local.file+"_path",argument0);
         local.file = filename_change_ext(file_find_next(),"");
         local.i += 1;
         // Draw
@@ -148,7 +148,7 @@ Argument 0: Print
     while (local.file != "")
     {
         // Not sure why, but it doesn't include the path.
-        globalvar_scr(local.file+"_path",main_directory_const+"\MDL\RM\"+local.file,argument0);
+        globalvar_scr(main_directory_const+"\MDL\RM\"+local.file,local.file+"_path",argument0);
         local.file = filename_change_ext(file_find_next(),"");
         local.i += 1;
         // Draw
@@ -161,7 +161,7 @@ Argument 0: Print
     while (local.file != "")
     {
         // Not sure why, but it doesn't include the path.
-        globalvar_scr(local.file+"_path",main_directory_const+"\MDL\DEAD\"+local.file,argument0);
+        globalvar_scr(main_directory_const+"\MDL\DEAD\"+local.file,local.file+"_path",argument0);
         local.file = filename_change_ext(file_find_next(),"");
         local.i += 1;
         // Draw
@@ -174,7 +174,7 @@ Argument 0: Print
     while (local.file != "")
     {
         // Not sure why, but it doesn't include the path.
-        globalvar_scr(local.file+"_path",main_directory_const+"\MDL\UI\"+local.file,argument0);
+        globalvar_scr(main_directory_const+"\MDL\UI\"+local.file,local.file+"_path",argument0);
         local.file = filename_change_ext(file_find_next(),"");
         local.i += 1;
         // Draw
@@ -187,7 +187,7 @@ Argument 0: Print
     while (local.file != "")
     {
         // Not sure why, but it doesn't include the path.
-        globalvar_scr(local.file+"_path",main_directory_const+"\MDL\MINI\"+local.file,argument0);
+        globalvar_scr(main_directory_const+"\MDL\MINI\"+local.file,local.file+"_path",argument0);
         local.file = filename_change_ext(file_find_next(),"");
         local.i += 1;
         // Draw
@@ -202,7 +202,7 @@ Argument 0: Print
         while (local.file != "")
         {
             // Not sure why, but it doesn't include the path.
-            globalvar_scr(local.file+"_path",main_directory_const+"\MDL\KH\"+local.file,argument0);
+            globalvar_scr(main_directory_const+"\MDL\KH\"+local.file,local.file+"_path",argument0);
             local.file = filename_change_ext(file_find_next(),"");
             local.i += 1;
             // Draw
@@ -218,7 +218,7 @@ Argument 0: Print
         while (local.file != "")
         {
             // Not sure why, but it doesn't include the path.
-            globalvar_scr(local.file+"_path",main_directory_const+"\MDL\DH\"+local.file,argument0);
+            globalvar_scr(main_directory_const+"\MDL\DH\"+local.file,local.file+"_path",argument0);
             local.file = filename_change_ext(file_find_next(),"");
             local.i += 1;
             // Draw

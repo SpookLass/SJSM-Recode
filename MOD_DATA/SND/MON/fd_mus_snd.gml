@@ -9,5 +9,5 @@ Argument 5: Max distance
 local.snd = fmod_snd_add_scr(argument0+".mp3",false);
 fmod_snd_set_group_scr(local.snd,snd_group_mus_const);
 fmod_snd_set_max_vol_scr(local.snd,argument3);
-fmod_snd_set_loop_point_scr(mus_snd_var,0,0.972669769662);
+fmod_snd_set_loop_point_scr(local.snd,0,0.972669769662);
 return local.snd;

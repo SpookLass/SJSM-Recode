@@ -94,33 +94,26 @@ object_event_add
     {
         bg_var = bg_add_scr(flesh_bg_path,false,false);
         // Textures
-        wall_bg_var = background_add(vanilla_directory_const+"\TEX\mobile\MB5_01_tex.png",false,false);
-        floor_bg_var = background_add(vanilla_directory_const+"\TEX\mobile\MB5_04_tex.png",false,false);
-        ceil_bg_var = background_add(vanilla_directory_const+"\TEX\mobile\MB5_06_tex.png",false,false);
-        light_wall_spr_var = sprite_add(main_directory_const+"\SPR\MON\flesh_light_wall_spr.png",2,false,false,0,0);
-        light_floor_spr_var = sprite_add(main_directory_const+"\SPR\MON\flesh_light_floor_spr.png",2,false,false,0,0);
-        door_bg_var = background_add(vanilla_directory_const+"\TEX\mobile\MB5_09_tex.png",false,false);
+        wall_bg_var = bg_add_scr(mad_wall_bg_path,false,false);
+        floor_bg_var = bg_add_scr(mad_floor_bg_path,false,false);
+        ceil_bg_var = bg_add_scr(mad_ceil_bg_path,false,false);
+        light_wall_spr_var = spr_add_scr(flesh_light_wall_spr_path,2,false,false,0,0);
+        light_floor_spr_var = spr_add_scr(flesh_light_floor_spr_path,2,false,false,0,0);
+        door_bg_var = bg_add_scr(mad_door_bg_path,false,false);
         // Special Textures
-        wall_spr_var = sprite_add(vanilla_directory_const+"\TEX\mobile\MB5_EX_01_spr.png",5,false,false,0,0);
-        arrow_bg_var = background_add(main_directory_const+"\BG\MON\flesh_arrow_bg.png",false,false);
-        arrow_base_bg_var = background_add(main_directory_const+"\BG\MON\flesh_arrow_base_bg.png",false,false);
+        wall_spr_var = spr_add_scr(flesh_wall_spr_path,5,false,false,0,0);
+        arrow_bg_var = bg_add_scr(flesh_arrow_bg_path,false,false);
+        arrow_base_bg_var = bg_add_scr(flesh_arrow_base_bg_path,false,false);
         // Arrow Sound
-        arrow_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\flesh_arrow_snd.wav",true);
-        fmod_snd_set_minmax_dist_scr(arrow_snd_var,16,128);
+        arrow_snd_var = fmod_snd_add_scr(flesh_arrow_snd_path,true,snd_group_sfx_const,1,16,128);
         // Overlay
-        overlay_bg_var = background_add(main_directory_const+"\BG\MON\flesh_overlay_bg.png",false,false);
+        overlay_bg_var = bg_add_scr(flesh_overlay_bg_path,false,false);
         // Music
         switch theme_scr(global.flesh_theme_var,global.theme_var,1,0,0,1)
         {
-            case 1: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\flesh_rom_mus_snd.ogg"); break; }
-            default:
-            {
-                mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\flesh_mus_snd.mp3");
-                fmod_snd_set_loop_point_scr(mus_snd_var,5/22,9/11); // Ohhh 9/11
-                break;
-            }
+            case 1: { mus_snd_var = snd_add_scr(flesh_rom_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
+            default: { mus_snd_var = snd_add_scr(flesh_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
         }
-        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
         // Zone
         zone_list_var = ds_list_create();
         ds_list_clear(zone_list_var);

@@ -17,9 +17,9 @@ object_event_add
 ");
     ini_close();
     // Load assets
-    spr_01_var = execute_file(main_directory_const+"\SPR\DEAD\eel_dead_01_spr.gml",main_directory_const+"\SPR\DEAD\eel_dead_01_spr.png");
-    spr_02_var = execute_file(main_directory_const+"\SPR\DEAD\eel_dead_02_spr.gml",main_directory_const+"\SPR\DEAD\eel_dead_02_spr.png");
-    spr_03_var = execute_file(main_directory_const+"\SPR\DEAD\eel_dead_03_spr.gml",main_directory_const+"\SPR\DEAD\eel_dead_03_spr.png");
+    spr_01_var = spr_add_scr(eel_dead_01_spr_path,1,false,false,0,0);
+    spr_02_var = spr_add_scr(eel_dead_02_spr_path,1,false,false,0,0);
+    spr_03_var = spr_add_scr(eel_dead_02_spr_path,4,false,false,0,0);
     spr_04_var = static_01_spr;
     snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DEAD\eel_dead_snd.ogg");
     load_var = true;

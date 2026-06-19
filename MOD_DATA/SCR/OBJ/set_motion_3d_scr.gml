@@ -7,7 +7,7 @@ Argument 4: Pitch
 Argument 5: Set Pitch
 */
 if argument1 { spd_var = argument0; }
-if argument3 { yaw_var = execute_file(global.mod_scr,argument2,360); }
+if argument3 { yaw_var = mod_scr(argument2,360); }
 if argument5 { pitch_var = median(-90,90,argument4); }
 // Set x speed, y speed, and z speed to match
 x_spd_var = lengthdir_x(lengthdir_x(spd_var,yaw_var),pitch_var);

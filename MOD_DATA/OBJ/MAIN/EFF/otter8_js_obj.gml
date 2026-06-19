@@ -22,8 +22,8 @@ object_event_add
     }
     if !local.loaded
     {
-        spr_var = sprite_add(main_directory_const+"\SPR\MON\otter8_js_spr.png",12,false,false,0,0);
-        snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\otter8_js_snd.wav",false);
+        spr_var = spr_add_scr(otter8_js_spr_path,12,false,false,0,0);
+        snd_var = snd_add_scr(otter8_js_snd_path,false,snd_group_mon_const,1,0,0);
     }
     inst_var = noone;
     alarm_len_var = 2;

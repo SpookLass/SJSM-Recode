@@ -22,8 +22,8 @@ object_event_add
     sprite_set_offset(eye_face_spr_var,sprite_get_width(eye_face_spr_var)/2,sprite_get_height(eye_face_spr_var));
     hand_spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\FACE_04c_spr.png",1,0,0,0,0);
     sprite_set_offset(hand_spr_var,sprite_get_width(hand_spr_var),0);
-    eye_spr_var = execute_file(main_directory_const+"\SPR\DEAD\pup_eye_spr.gml",main_directory_const+"\SPR\DEAD\pup_eye_spr.png");
-    fade_spr_var = execute_file(main_directory_const+"\SPR\UI\static_fade_spr.gml",main_directory_const+"\SPR\UI\static_fade_spr.png");
+    eye_spr_var = spr_add_scr(pup_eye_spr_path,2,false,false,0,115);
+    fade_spr_var = spr_add_scr(static_fade_spr_path,5,false,false,0,0);
     bg_01_var = background_add(main_directory_const+"\BG\DEAD\pup_dead_01_bg.png",false,false);
     bg_02_var = background_add(main_directory_const+"\BG\DEAD\pup_dead_02_bg.png",false,false);
     snd_01_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\pup_"+choose("01","02","03","04")+"_snd.wav",false);

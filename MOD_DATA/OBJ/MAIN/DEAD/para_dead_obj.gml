@@ -36,8 +36,8 @@ object_event_add
     else { str_color_var = c_white; }
     // Sprite
     load_var = true;
-    spr_01_var = execute_file(main_directory_const+"\SPR\MON\para_eff_spr.gml",main_directory_const+"\SPR\MON\para_eff_spr.png");
-    spr_02_var = execute_file(main_directory_const+"\SPR\DEAD\para_dead_spr.gml",main_directory_const+"\SPR\DEAD\para_dead_spr.png");
+    spr_01_var = spr_add_scr(para_eff_spr_path,19,false,false,0,0);
+    spr_02_var = spr_add_scr(para_dead_spr_path,8,false,false,0,0);
     spr_id_01_var = irandom(sprite_get_number(spr_01_var)-1);
     spr_id_02_var = 0;
     spr_len_var = 12;

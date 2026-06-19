@@ -9,6 +9,7 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,1,'
+    // Translations
     ini_open("lang_"+global.lang_var+".ini");
     name_var = translate_mon_str_scr("lisa",global.name_var);
     wake_snd_var[2] = string_replace(ini_read_string("SUB","lisa","SUB_lisa"),"@n",name_var); wake_snd_var[3] = false;
@@ -35,7 +36,6 @@ object_event_add
     wake_snd_var[0] = 2;
     snd_dist_min_var = 0;
     snd_dist_max_var = 600;
-    // Theme
     mus_prio_var = mon_mus_prio_const;
     // Render
     do_mdl_var = true;
@@ -192,26 +192,21 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
-        bg_var = background_add(vanilla_directory_const+"\3D\lisa_tex.png",false,false);
-        js_bg_01_var = background_add(vanilla_directory_const+"\TEX\SCARE_01C.png",false,false);
-        js_bg_02_var = background_add(vanilla_directory_const+"\TEX\SCARE_01B.png",false,false);
-        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\lisa_wake_snd.wav",global.wake_3d_var);
-        amb_mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\LISA_AMB.mp3");
-        fmod_snd_set_group_scr(amb_mus_snd_var,snd_group_mus_const);
+        bg_var = bg_add_scr(lisa_bg_path,false,false);
+        js_bg_01_var = bg_add_scr(js_lisa_01_bg_path,false,false);
+        js_bg_02_var = bg_add_scr(js_lisa_02_bg_path,false,false);
+        wake_snd_var[1] = snd_add_scr(lisa_wake_snd_path,global.wake_3d_var,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        amb_mus_snd_var = snd_add_scr(lisa_amb_mus_snd_path,false,snd_group_mus_const,1,0,0);
         switch theme_scr(global.lisa_theme_var,global.theme_var,1,0,0,1)
         {
-            case 1: { chase_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\lisa_rom_mus_snd.ogg"); break; }
-            default: { chase_mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\LISA_AMB2.mp3"); break; }
+            case 1: { chase_mus_snd_var = snd_add_scr(lisa_rom_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
+            default: { chase_mus_snd_var = snd_add_scr(lisa_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
         }
-        fmod_snd_set_group_scr(chase_mus_snd_var,snd_group_mus_const);
-        mdl_var = d3d_model_create();
-        d3d_model_load(mdl_var,main_directory_const+"\MDL\MON\lisa_mdl.gmmod");
-        for (local.i=0; local.i<head_len_var; local.i+=1;)
-        { head_mdl_arr[local.i] = d3d_model_create(); }
-        d3d_model_load(head_mdl_arr[0],main_directory_const+"\MDL\MON\lisa_head_01_mdl.gmmod");
-        d3d_model_load(head_mdl_arr[1],main_directory_const+"\MDL\MON\lisa_head_02_mdl.gmmod");
-        d3d_model_load(head_mdl_arr[2],main_directory_const+"\MDL\MON\lisa_head_03_mdl.gmmod");
-        d3d_model_load(head_mdl_arr[3],main_directory_const+"\MDL\MON\lisa_head_04_mdl.gmmod");
+        mdl_var = mdl_add_scr(lisa_mdl_path);
+        head_mdl_arr[0] = mdl_add_scr(lisa_head_01_mdl_path);
+        head_mdl_arr[1] = mdl_add_scr(lisa_head_02_mdl_path);
+        head_mdl_arr[2] = mdl_add_scr(lisa_head_03_mdl_path);
+        head_mdl_arr[3] = mdl_add_scr(lisa_head_04_mdl_path);
         // Zone
         zone_list_var = ds_list_create();
         ds_list_clear(zone_list_var);

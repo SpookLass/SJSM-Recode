@@ -10,15 +10,15 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,0,'
     event_inherited();
-    kira_spr_var = execute_file(main_directory_const+"\SPR\UI\kira_spr.gml",main_directory_const+"\SPR\UI\kira_spr.png");
+    kira_spr_var = spr_add_scr(kira_spr_path,1,false,false,0,0);
     kira_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\kira_snd.wav");
     amg_vid_var = main_directory_const+"\VID\UI\amg_silent_vid.wmv";
     amg_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\amg_snd.wav");
     if !irandom(7) || current_month == 10
-    { recode_spr_var = execute_file(main_directory_const+"\SPR\UI\recode_pumpkin_spr.gml",main_directory_const+"\SPR\UI\recode_pumpkin_spr.png"); }
-    else { recode_spr_var = execute_file(main_directory_const+"\SPR\UI\recode_gear_spr.gml",main_directory_const+"\SPR\UI\recode_gear_spr.png"); }
+    { recode_spr_var = spr_add_scr(recode_pumpkin_spr_path,1,false,false,0,0); }
+    else { recode_spr_var = spr_add_scr(recode_gear_spr_path,1,false,false,0,0); }
     recode_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\acheese_snd.wav");
-    fmod_spr_var = execute_file(main_directory_const+"\SPR\UI\fmod_spr.gml",main_directory_const+"\SPR\UI\fmod_spr.png");
+    fmod_spr_var = spr_add_scr(fmod_spr_path,1,false,false,0,0);
     warn_bg_var = background_add(main_directory_const+"\BG\UI\warn_bg.png",false,false);
     ini_open("lang_"+global.lang_var+".ini");
     warn_str_01_var = ini_read_string("MENU","warn_01","MENU_warn_01");

@@ -11,7 +11,9 @@ object_event_add
 (argument0,ev_create,1,'
     ini_open("lang_"+global.lang_var+".ini");
     name_var = translate_mon_str_scr("patient",global.name_var);
-    wake_snd_var[2] = string_replace(ini_read_string("SUB","patient","SUB_patient"),"@n",name_var); wake_snd_var[3] = false;
+    local.sub = string_replace(ini_read_string("SUB","patient","SUB_patient"),"@n",name_var);
+    wake_snd_var[2] = local.sub; wake_snd_var[3] = false;
+    rage_snd_var[1] = local.sub; rage_snd_var[2] = false;
     ini_close();
     // Patient
     type_var = 0;
@@ -26,43 +28,6 @@ object_event_add
     eye_h_var = 18.7;
     // Theme
     mus_delay_var = 144
-    // Assets
-        // Search for existing assets to save memory
-    local.loaded = false;
-    with object_index
-    {
-        if id != other.id && object_index == other.object_index
-        {
-            other.spr_var = spr_var;
-            other.mdl_01_var = mdl_01_var;
-            other.mdl_02_var = mdl_02_var;
-            other.bg_overlay_var = bg_overlay_var;
-            other.wake_snd_var[1] = wake_snd_var[1];
-            other.mus_snd_var = mus_snd_var;
-            other.scare_snd_var = scare_snd_var;
-            local.loaded = true;
-            break;
-        }
-    }
-        // If no existing assets were found, load them
-    if !local.loaded
-    {
-        spr_var = sprite_add(main_directory_const+"\SPR\MON\patient_spr.png",3,false,false,0,0); // vanilla_directory_const+"\3D\npc_6_tex.png"
-        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\patient_wake_snd.wav",global.wake_3d_var);
-        switch theme_scr(global.patient_theme_var,global.theme_var,1,0,0,1)
-        {
-            case 1: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\patient_rom_mus_snd.ogg"); break; }
-            default: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\patient_mus_snd.mp3"); break; }
-        }
-        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
-        scare_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\KH\scare_01_snd.wav");
-        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
-        mdl_01_var = d3d_model_create();
-        mdl_02_var = d3d_model_create();
-        d3d_model_load(mdl_01_var,main_directory_const+"\MDL\MON\patient_01_mdl.gmmod");
-        d3d_model_load(mdl_02_var,main_directory_const+"\MDL\MON\patient_02_mdl.gmmod");
-        bg_overlay_var = background_add(vanilla_directory_const+"\TEX\sprites\fog_spr.png",false,false);
-    }
     // Seen
     do_seen_var = true;
     seen_type_var = 1;
@@ -119,6 +84,9 @@ object_event_add
     vis_alarm_max_var = 30;
     inv_alarm_min_var = 3;
     inv_alarm_max_var = 30;
+    // Wake
+    snd_dist_min_var = 0;
+    snd_dist_max_var = 600;
     // Behavior
     if global.patient_type_var == -1 { local.type = irandom(4); }
     else { local.type = global.patient_type_var; }
@@ -146,6 +114,8 @@ object_event_add
             hurt_dist_var = 8;
             stun_var = 3;
             inv_rand_var = false;
+            snd_dist_min_var = 0;
+            snd_dist_max_var = 300;
             // Corporeal?
             type_var = 2;
             // Silhouette (Lazy)
@@ -236,6 +206,41 @@ object_event_add
     }
     // Bools
     do_mdl_var = true;
+    // Assets
+        // Search for existing assets to save memory
+    local.loaded = false;
+    with object_index
+    {
+        if id != other.id && object_index == other.object_index
+        {
+            other.spr_var = spr_var;
+            other.mdl_01_var = mdl_01_var;
+            other.mdl_02_var = mdl_02_var;
+            other.bg_overlay_var = bg_overlay_var;
+            other.wake_snd_var[1] = wake_snd_var[1];
+            other.rage_snd_var[0] = rage_snd_var[0];
+            other.mus_snd_var = mus_snd_var;
+            other.scare_snd_var = scare_snd_var;
+            local.loaded = true;
+            break;
+        }
+    }
+        // If no existing assets were found, load them
+    if !local.loaded
+    {
+        spr_var = spr_add_scr(patient_spr_path,3,false,false,0,0); // vanilla_directory_const+"\3D\npc_6_tex.png"
+        wake_snd_var[1] = snd_add_scr(patient_wake_snd_path,global.wake_3d_var,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        rage_snd_var[0] = snd_add_scr(patient_wake_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        switch theme_scr(global.patient_theme_var,global.theme_var,1,0,0,1)
+        {
+            case 1: { mus_snd_var = snd_add_scr(patient_rom_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
+            default: { mus_snd_var = snd_add_scr(patient_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
+        }
+        scare_snd_var = snd_add_scr(scare_01_snd_path,false,snd_group_mon_const,1,0,0);
+        mdl_01_var = mdl_add_scr(patient_01_mdl_path);
+        mdl_02_var = mdl_add_scr(patient_02_mdl_path);
+        bg_overlay_var = bg_add_scr(fog_bg_path,false,false);
+    }
 ');
 // Destroy Event
 object_event_add
@@ -251,6 +256,7 @@ object_event_add
         d3d_model_destroy(mdl_02_var);
         fmod_snd_free_scr(mus_snd_var);
         fmod_snd_free_scr(wake_snd_var[1]);
+        fmod_snd_free_scr(rage_snd_var[0]);
         fmod_snd_free_scr(scare_snd_var);
     }
     with fog_overlay_obj
@@ -422,14 +428,14 @@ object_event_add
 (argument0,ev_alarm,12,'
     if seen_rage_var == 2
     {
-        if fmod_snd_is_3d_scr(wake_snd_var[1])
+        if fmod_snd_is_3d_scr(rage_snd_var[0])
         {
-            inst_var = fmod_snd_3d_play_scr(wake_snd_var[1]);
+            inst_var = fmod_snd_3d_play_scr(rage_snd_var[0]);
             if global.pitch_bend_var { fmod_inst_set_pitch_scr(inst_var,random_range(0.95,1.05)); }
         }
-        else { inst_var = fmod_snd_play_scr(wake_snd_var[1]); }
-        sub_var[0] = wake_snd_var[2];
-        sub_var[1] = wake_snd_var[3];
+        else { inst_var = fmod_snd_play_scr(rage_snd_var[0]); }
+        sub_var[0] = rage_snd_var[1];
+        sub_var[1] = rage_snd_var[2];
         rage_var = true;
     }
 ');

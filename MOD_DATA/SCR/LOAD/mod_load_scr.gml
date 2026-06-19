@@ -95,12 +95,12 @@ fmod_ini_scr(100,false); // 100 is max sounds, second argument is web sounds
 fmod_listen_set_num_scr(1);
 fmod_set_world_scale_scr(pixel_meter_rate_const);
 // Assets
-file_to_spr_scr(main_directory_const+"\SPR\MAIN\select_spr.png","select_spr",false,false,false);
-file_to_bg_scr(main_directory_const+"\BG\MAIN\settings_bg.png","settings_bg",false,false,false);
-file_to_snd_scr(main_directory_const+"\SND\MAIN\confirm_snd.wav","confirm_snd",false,snd_group_sfx_const,false);
-file_to_snd_scr(main_directory_const+"\SND\MAIN\deny_snd.wav","deny_snd",false,snd_group_sfx_const,false);
-file_to_snd_scr(main_directory_const+"\SND\MAIN\select_snd.wav","select_snd",false,snd_group_sfx_const,false);
-file_to_snd_scr(main_directory_const+"\SND\MAIN\result_mus_snd.ogg","result_mus_snd",false,snd_group_sfx_const,false);
+file_to_asset_scr(main_directory_const+"\SPR\MAIN\select_spr","select_spr",false,1,false,false,0,0);
+file_to_asset_scr(main_directory_const+"\BG\MAIN\settings_bg","settings_bg",false,false,false);
+file_to_asset_scr(main_directory_const+"\SND\MAIN\confirm_snd","confirm_snd",false,false,snd_group_sfx_const,1,0,0);
+file_to_asset_scr(main_directory_const+"\SND\MAIN\deny_snd","deny_snd",false,false,snd_group_sfx_const,1,0,0);
+file_to_asset_scr(main_directory_const+"\SND\MAIN\select_snd","select_snd",false,false,snd_group_sfx_const,1,0,0);
+file_to_asset_scr(main_directory_const+"\SND\MAIN\result_mus_snd","result_mus_snd",false,false,snd_group_mus_const,1,0,0);
 file_to_obj_scr(main_directory_const+"\OBJ\par_obj.gml","par_obj",false);
 file_to_obj_scr(main_directory_const+"\OBJ\par_3d_obj.gml","par_3d_obj",false);
 file_to_obj_scr(main_directory_const+"\OBJ\enemy_par_obj.gml","enemy_par_obj",false);

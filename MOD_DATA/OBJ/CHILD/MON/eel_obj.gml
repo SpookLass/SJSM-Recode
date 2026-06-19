@@ -31,7 +31,6 @@ object_event_add
     // Variables
     type_var = 1;
     spd_base_var = 17/30; // 0.5r6
-    spr_var = sprite_add(main_directory_const+"\SPR\MON\eel_spr.png",9,false,false,0,0);
     spr_spd_var = 1/3; // 0.r3
     dur_var = irandom_range(15,25);
     delay_var = 72;
@@ -151,7 +150,7 @@ object_event_add
         snd_arr[1,0] = snd_add_scr(eel_02_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
         snd_arr[2,0] = snd_add_scr(eel_03_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
         snd_arr[3,0] = snd_add_scr(eel_04_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-        wake_snd_var[1] = snd_add_scr(eel_wake_snd_path,global.wake_snd_var,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        wake_snd_var[1] = snd_add_scr(eel_wake_snd_path,global.wake_3d_var,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
         hurt_snd_var[1] = snd_add_scr(eel_hurt_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
         switch theme_scr(global.eel_theme_var,global.theme_var,1,0,1,0)
         {

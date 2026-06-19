@@ -17,7 +17,7 @@ object_event_add
 ");
     ini_close();
     // Load assets
-    spr_var = execute_file(main_directory_const+"\SPR\DEAD\lisa_dead_spr.gml",main_directory_const+"\SPR\DEAD\lisa_dead_spr.png");
+    spr_var = spr_add_scr(lisa_dead_spr_path,13,false,false,0,0);
     snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DEAD\spooper_dead_snd.wav");
     load_var = true;
     // Static

@@ -17,7 +17,7 @@ object_event_add
 ");
     ini_close();
     // Load assets
-    spr_var = execute_file(main_directory_const+"\SPR\DEAD\body_dead_spr.gml",main_directory_const+"\SPR\DEAD\body_dead_spr.png");
+    spr_var = spr_add_scr(body_dead_spr_path,6,false,false,0,0);
     snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\M6_AMB2.mp3");
     load_var = true;
     // Sound

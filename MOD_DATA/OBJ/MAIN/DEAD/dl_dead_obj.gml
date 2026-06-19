@@ -18,9 +18,8 @@ object_event_add
     ini_close();
     // Assets
     load_var = true;
-    spr_01_var = execute_file(main_directory_const+"\SPR\DEAD\dl_dead_spr.gml",main_directory_const+"\SPR\DEAD\dl_dead_spr.png");
-    local.spr = main_directory_const+"\SPR\MON\dl_eff_0"+string(irandom_range(1,2))+"_spr";
-    spr_02_var = execute_file(local.spr+".gml",local.spr+".png");
+    spr_01_var = spr_add_scr(dl_dead_spr_path,3,false,false,0,0);
+    spr_02_var = spr_add_scr(choose(dl_eff_01_spr_path,dl_eff_02_spr_path),24,false,false,0,0);
     snd_01_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\dl_mus_snd.mp3");
     local.snd = main_directory_const+"\SND\MON\dl_eff_0"+string(irandom_range(1,4))+"_snd.wav";
     snd_02_var = fmod_snd_add_scr(local.snd);

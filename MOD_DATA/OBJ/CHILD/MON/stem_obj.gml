@@ -201,20 +201,18 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
-        bg_var = background_add(vanilla_directory_const+"\3D\npc_5_tex.png",false,false);
-        mdl_01_var = d3d_model_create();
-        mdl_02_var = d3d_model_create();
-        d3d_model_load(mdl_01_var,main_directory_const+"\MDL\MON\stem_01_mdl.gmmod");
-        d3d_model_load(mdl_02_var,main_directory_const+"\MDL\MON\stem_02_mdl.gmmod");
-        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\stem_01_snd.wav",true);
-        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\stem_02_snd.wav",true);
-        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\stem_03_snd.wav",true);
-        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\stem_04_snd.wav",true);
-        snd_arr[4,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\stem_05_snd.wav",true);
+        bg_var = bg_add_scr(stem_bg_path,false,false);
+        mdl_01_var = mdl_add_scr(stem_01_mdl_path);
+        mdl_02_var = mdl_add_scr(stem_02_mdl_path);
+        snd_arr[0,0] = snd_add_scr(stem_01_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[1,0] = snd_add_scr(stem_02_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[2,0] = snd_add_scr(stem_03_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[3,0] = snd_add_scr(stem_04_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[4,0] = snd_add_scr(stem_05_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
         switch theme_scr(global.stem_theme_var,global.theme_var,1,0,0,1)
         {
-            case 1: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\stem_rom_mus_snd.ogg"); break; }
-            default: { mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\M5_AMB.mp3"); break; }
+            case 1: { mus_snd_var = snd_add_scr(stem_rom_mus_snd_path,false,snd_group_mus_const,1,0,0);; break; }
+            default: { mus_snd_var = snd_add_scr(stem_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
         }
         fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
     }

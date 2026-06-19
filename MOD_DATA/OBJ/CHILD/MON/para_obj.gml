@@ -241,30 +241,26 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
-        state_spr_var[0] = sprite_add(vanilla_directory_const+"\TEX\sprites\MS8_01_spr.png",6,false,false,0,0);
-        state_spr_var[1] = sprite_add(vanilla_directory_const+"\TEX\sprites\MS8_02_spr.png",6,false,false,0,0);
-        state_spr_var[2] = sprite_add(vanilla_directory_const+"\TEX\sprites\MS8_03_spr.png",7,false,false,0,0);
-        spr_eff_var = spr_add_scr(main_directory_const+"\SPR\MON\para_eff_spr",19,false,false,0,0);
-        spr_overlay_var = spr_add_scr(main_directory_const+"\SPR\MON\para_overlay_spr",3,false,false,0,0);
-        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\para_01_snd.wav",true);
-        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\para_02_snd.wav",true);
-        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\para_03_snd.wav",true);
-        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\para_04_snd.wav",true);
-        eff_snd_arr[0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\para_eff_01_snd.wav");
-        eff_snd_arr[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\para_eff_02_snd.wav");
-        eff_snd_arr[2] = fmod_snd_add_scr(main_directory_const+"\SND\MON\para_eff_03_snd.wav");
-        eff_snd_arr[3] = fmod_snd_add_scr(main_directory_const+"\SND\MON\dl_eff_03_snd.wav");
-        for (local.i=0; local.i<eff_snd_len_var; local.i+=1;)
-        { fmod_snd_set_group_scr(eff_snd_arr[local.i],snd_group_mon_const); }
-        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\para_wake_snd.wav",global.wake_3d_var);
+        state_spr_var[0] = spr_add_scr(para_spr_path,6,false,false,0,0);
+        state_spr_var[1] = spr_add_scr(para_open_spr_path,6,false,false,0,0);
+        state_spr_var[2] = spr_add_scr(para_leech_spr_path,7,false,false,0,0);
+        spr_eff_var = spr_add_scr(para_eff_spr_path,19,false,false,0,0);
+        spr_overlay_var = spr_add_scr(para_overlay_spr_path,3,false,false,0,0);
+        snd_arr[0,0] = snd_add_scr(para_01_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[1,0] = snd_add_scr(para_02_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[2,0] = snd_add_scr(para_03_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[3,0] = snd_add_scr(para_04_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        eff_snd_arr[0] = snd_add_scr(para_eff_01_snd_path,false,snd_group_mon_const,1,0,0);
+        eff_snd_arr[1] = snd_add_scr(para_eff_02_snd_path,false,snd_group_mon_const,1,0,0);
+        eff_snd_arr[2] = snd_add_scr(para_eff_03_snd_path,false,snd_group_mon_const,1,0,0);
+        eff_snd_arr[3] = snd_add_scr(dl_eff_03_snd_path,false,snd_group_mon_const,1,0,0);
+        wake_snd_var[1] = snd_add_scr(para_01_snd_path,global.wake_3d_var,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
         switch theme_scr(global.para_theme_var,global.theme_var,1,0,0,1)
         {
-            case 1: { main_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\para_rom_mus_snd.ogg"); break; }
-            default: { main_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\para_mus_snd.mp3"); break; }
+            case 1: { main_mus_snd_var = snd_add_scr(para_rom_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
+            default: { main_mus_snd_var = snd_add_scr(para_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
         }
-        fmod_snd_set_group_scr(main_mus_snd_var,snd_group_mus_const);
-        leech_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\para_leech_mus_snd.mp3");
-        fmod_snd_set_group_scr(leech_mus_snd_var,snd_group_mus_const);
+        leech_mus_snd_var = snd_add_scr(para_leech_mus_snd_path,false,snd_group_mus_const,1,0,0);
     }
     mus_snd_var = main_mus_snd_var;
     // Alarms

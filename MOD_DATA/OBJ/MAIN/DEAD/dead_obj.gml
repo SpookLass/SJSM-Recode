@@ -14,7 +14,7 @@ object_event_add
     // Assets
     menu_bg_var = background_add(vanilla_directory_const+"\TEX\menu\menu4_tex.png",false,false);
     bg_var = background_add(main_directory_const+"\BG\DEAD\dead_bg.png",false,false);
-    fade_spr_var = execute_file(main_directory_const+"\SPR\UI\static_fade_spr.gml",main_directory_const+"\SPR\UI\static_fade_spr.png");
+    fade_spr_var = spr_add_scr(static_fade_spr_path,5,false,false,0,0);
     snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DEAD\dead_snd.wav");
     mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\GAMEOVER_AMB.mp3");
     fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);

@@ -121,33 +121,27 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
-        main_spr_var = sprite_add(dh_directory_const+"\TEX\sprites\NPC1_SPR.png",17,false,false,0,0);
-        dead_spr_var = sprite_add(dh_directory_const+"\TEX\sprites\NPC1C_SPR.png",7,false,false,0,0);
-        hurt_bg_var = background_add(dh_directory_const+"\TEX\sprites\NPC1B_SPR.png",false,false);
-        doll_blood_bg_var = background_add(main_directory_const+"\BG\DH\doll_blood_bg.png",false,false);
-        shadow_bg_var = background_add(main_directory_const+"\BG\DH\shadow_bg.png",false,false);
-        mdl_bg_var = background_add(main_directory_const+"\BG\DH\husk_bg.png",false,false);
-        mdl_var = d3d_model_create();
-        d3d_model_load(mdl_var,main_directory_const+"\MDL\DH\husk_mdl.gmmod");
+        main_spr_var = spr_add_scr(husk_spr_path,17,false,false,0,0);
+        dead_spr_var = spr_add_scr(husk_dead_spr_path,7,false,false,0,0);
+        hurt_bg_var = bg_add_scr(husk_hurt_bg_path,false,false);
+        doll_blood_bg_var = bg_add_scr(doll_blood_bg_path,false,false);
+        shadow_bg_var = bg_add_scr(shadow_bg_path,false,false);
+        mdl_bg_var = bg_add_scr(husk_bg_path,false,false);
+        mdl_var = mdl_add_scr(husk_mdl_path);
         // Sounds
-        snd_arr[0] = fmod_snd_add_scr(main_directory_const+"\SND\DH\husk_01_snd.wav",true);
-        snd_arr[1] = fmod_snd_add_scr(main_directory_const+"\SND\DH\husk_02_snd.wav",true);
-        snd_arr[2] = fmod_snd_add_scr(main_directory_const+"\SND\DH\husk_03_snd.wav",true);
-        snd_arr[3] = fmod_snd_add_scr(main_directory_const+"\SND\DH\husk_04_snd.wav",true);
-        snd_arr[4] = fmod_snd_add_scr(main_directory_const+"\SND\DH\husk_05_snd.wav",true);
-        for (local.i=0; local.i<snd_len_var; local.i+=1;)
-        {
-            fmod_snd_set_minmax_dist_scr(snd_arr[local.i],snd_dist_min_var,snd_dist_max_var);
-            fmod_snd_set_group_scr(snd_arr[local.i],snd_group_mon_const);
-        }
+        snd_arr[0] = snd_add_scr(husk_01_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[1] = snd_add_scr(husk_02_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[2] = snd_add_scr(husk_03_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[3] = snd_add_scr(husk_04_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[4] = snd_add_scr(husk_05_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
         // Hurt Sound
-        hurt_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DH\doll_hurt_snd.wav");
+        hurt_snd_var = snd_add_scr(doll_hurt_snd_path,false,snd_group_mon_const,1,0,0);
         fmod_snd_set_group_scr(hurt_snd_var,snd_group_mon_const);
         // Music
         switch theme_scr(global.husk_theme_var,global.theme_var,1,0,1,0)
         {
-            case 1: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DH\east_mus_snd.mp3"); break; }
-            default: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\husk_mus_snd.ogg"); break; }
+            case 1: { mus_snd_var = snd_add_scr(east_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
+            default: { mus_snd_var = snd_add_scr(husk_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
         }
         
         fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);

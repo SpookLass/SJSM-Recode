@@ -17,7 +17,7 @@ object_event_add
     image_alpha = 0.8;
     // Assets
     load_var = true;
-    spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS26_01_spr.png",3,false,false,100,65);
+    spr_var = spr_add_scr(otto_spr_path,3,false,false,100,65);
     snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DEAD\otto_js_snd.wav",false);
     // Sound
     inst_var = noone;

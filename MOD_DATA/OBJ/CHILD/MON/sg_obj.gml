@@ -135,32 +135,27 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
-        bg_var = background_add(main_directory_const+"\BG\MON\sg_bg.png",false,false);
-        overlay_bg_var = background_add(main_directory_const+"\BG\KH\olga_bg.png",false,false);
-        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\sg_01_snd.wav",true);
-        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\sg_02_snd.wav",true);
-        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\sg_03_snd.wav",true);
-        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\sg_04_snd.wav",true);
-        hurt_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\sg_hurt_snd.wav",true);
-        fmod_snd_set_minmax_dist_scr(hurt_snd_var[1],0,snd_dist_max_var);
-        fmod_snd_set_group_scr(hurt_snd_var[1],snd_group_mon_const);
-        mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\sg_mus_snd.mp3");
-        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
+        bg_var = bg_add_scr(sg_bg_path,false,false);
+        overlay_bg_var = bg_add_scr(vignette_bg_path,false,false);
+        snd_arr[0,0] = snd_add_scr(sg_01_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[1,0] = snd_add_scr(sg_02_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[2,0] = snd_add_scr(sg_03_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[3,0] = snd_add_scr(sg_04_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        hurt_snd_var[1] = snd_add_scr(sg_hurt_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        mus_snd_var = snd_add_scr(sg_mus_snd_path,false,snd_group_mus_const,1,0,0);
         // Models
-        for (local.i=0; local.i<mdl_len_var; local.i+=1;)
-        { mdl_arr[local.i] = d3d_model_create(); }
-        d3d_model_load(mdl_arr[0],main_directory_const+"\MDL\MON\sg_01_mdl.gmmod");
-        d3d_model_load(mdl_arr[1],main_directory_const+"\MDL\MON\sg_02_mdl.gmmod");
-        d3d_model_load(mdl_arr[2],main_directory_const+"\MDL\MON\sg_03_mdl.gmmod");
-        d3d_model_load(mdl_arr[3],main_directory_const+"\MDL\MON\sg_04_mdl.gmmod");
-        d3d_model_load(mdl_arr[4],main_directory_const+"\MDL\MON\sg_05_mdl.gmmod");
-        d3d_model_load(mdl_arr[5],main_directory_const+"\MDL\MON\sg_06_mdl.gmmod");
-        d3d_model_load(mdl_arr[6],main_directory_const+"\MDL\MON\sg_07_mdl.gmmod");
-        d3d_model_load(mdl_arr[7],main_directory_const+"\MDL\MON\sg_08_mdl.gmmod");
-        d3d_model_load(mdl_arr[8],main_directory_const+"\MDL\MON\sg_09_mdl.gmmod");
-        d3d_model_load(mdl_arr[9],main_directory_const+"\MDL\MON\sg_10_mdl.gmmod");
-        d3d_model_load(mdl_arr[10],main_directory_const+"\MDL\MON\sg_11_mdl.gmmod");
-        d3d_model_load(mdl_arr[11],main_directory_const+"\MDL\MON\sg_12_mdl.gmmod");
+        mdl_arr[0] = mdl_add_scr(sg_01_mdl_path);
+        mdl_arr[1] = mdl_add_scr(sg_02_mdl_path);
+        mdl_arr[2] = mdl_add_scr(sg_03_mdl_path);
+        mdl_arr[3] = mdl_add_scr(sg_04_mdl_path);
+        mdl_arr[4] = mdl_add_scr(sg_05_mdl_path);
+        mdl_arr[5] = mdl_add_scr(sg_06_mdl_path);
+        mdl_arr[6] = mdl_add_scr(sg_07_mdl_path);
+        mdl_arr[7] = mdl_add_scr(sg_08_mdl_path);
+        mdl_arr[8] = mdl_add_scr(sg_09_mdl_path);
+        mdl_arr[9] = mdl_add_scr(sg_10_mdl_path);
+        mdl_arr[10] = mdl_add_scr(sg_11_mdl_path);
+        mdl_arr[11] = mdl_add_scr(sg_12_mdl_path);
     }
     tex_var = background_get_texture(bg_var);
     mdl_var = mdl_arr[0];
@@ -331,36 +326,4 @@ object_event_add
         mdl_var = mdl_arr[floor(spr_id_var)];
     }
     else { event_inherited(); }
-');
-// Draw Event
-object_event_add
-(argument0,ev_draw,0,'
-    if (on_var || visible_var) && (!possess_var || cam_id_var != view_current || global.reflect_var)
-    {
-        draw_set_color(image_blend); draw_set_alpha(image_alpha);
-        d3d_transform_set_identity();
-        d3d_transform_add_rotation_z(yaw_var+180);
-        d3d_transform_add_translation(x+x_off_var,y+y_off_var,z+z_off_var);
-        // Reflection Handing
-        if global.reflect_var
-        {
-            switch (global.reflect_axis_var)
-            {
-                case 0: { d3d_transform_add_scaling(-1,1,1); d3d_transform_add_translation(global.reflect_pos_var,0,0); break; }
-                case 1: { d3d_transform_add_scaling(1,-1,1); d3d_transform_add_translation(0,global.reflect_pos_var,0); break; }
-                case 2: { d3d_transform_add_scaling(1,1,-1); d3d_transform_add_translation(0,0,global.reflect_pos_var); break; }
-            }
-        }
-        d3d_model_draw(mdl_var,0,0,0,tex_var);
-        d3d_transform_set_identity();
-        draw_set_color(c_white); draw_set_alpha(1);
-        if global.debug_var
-        {
-            d3d_set_hidden(false);
-            if path_exists(path_var)
-            { draw_path(path_var,x,y,false); }
-            d3d_set_hidden(true);
-            // mp_grid_draw(grid_var);
-        }
-    }
 ');

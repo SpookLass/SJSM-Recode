@@ -45,7 +45,11 @@ object_event_add
                 other.par_var.possess_var,local.possesser, // Possess
                 0 // Stamina?
             )
-            { local.success = true; }
+            {
+                local.success = true;
+                if hp_var < hp_max_var && other.unheal_var
+                { unheal_var += other.dmg_var; }
+            }
         }
         if !dead_var { local.dead = false; }
     }

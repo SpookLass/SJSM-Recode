@@ -210,25 +210,19 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
-        spr_base_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS5_01_spr.png",4,false,false,0,0);
-        hurt_spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS5_02_spr.png",2,false,false,0,0);
-        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\pup_01_snd.wav",true);
-        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\pup_02_snd.wav",true);
-        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\pup_03_snd.wav",true);
-        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\pup_04_snd.wav",true);
-        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\pup_wake_snd.wav",global.wake_3d_var);
-        laugh_snd_var[0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\pup_wake_snd.wav",true);
+        spr_base_var = spr_add_scr(pup_spr_path,4,false,false,0,0);
+        hurt_spr_var = spr_add_scr(pup_down_spr_path,2,false,false,0,0);
+        snd_arr[0,0] = snd_add_scr(pup_01_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[1,0] = snd_add_scr(pup_02_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[2,0] = snd_add_scr(pup_03_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[3,0] = snd_add_scr(pup_04_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        wake_snd_var[1] = snd_add_scr(pup_wake_snd_path,global.wake_3d_var,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        laugh_snd_var[0] = snd_add_scr(pup_wake_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
         switch theme_scr(global.pup_theme_var,global.theme_var,1,0,0,1)
         {
-            case 1: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\pup_rom_mus_snd.ogg"); break; }
-            default:
-            {
-                mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\pup_mus_snd.mp3");
-                fmod_snd_set_loop_point_scr(mus_snd_var,3/144,137/144); // Not exact
-                break;
-            }
+            case 1: { mus_snd_var = snd_add_scr(pup_rom_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
+            default: { mus_snd_var = snd_add_scr(pup_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
         }
-        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
     }
     spr_var = spr_base_var;
     tex_var = sprite_get_texture(spr_var,irandom(sprite_get_number(spr_var)));

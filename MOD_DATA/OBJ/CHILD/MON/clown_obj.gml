@@ -116,8 +116,8 @@ object_event_add
         snd_arr[7,0] = snd_add_scr(clown_08_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
         snd_arr[8,0] = snd_add_scr(clown_09_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
         snd_arr[9,0] = snd_add_scr(clown_10_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-        leave_snd_arr[0,0] = snd_add_scr(clown_leave_01_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-        leave_snd_arr[1,0] = snd_add_scr(clown_leave_02_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        leave_snd_arr[0,0] = snd_add_scr(clown_leave_01_snd_path,false,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        leave_snd_arr[1,0] = snd_add_scr(clown_leave_02_snd_path,false,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
         mus_snd_var = snd_add_scr(clown_mus_snd_path,false,snd_group_mus_const,1,0,0);
     }
 ');

@@ -199,51 +199,6 @@ object_event_add
             default: { mus_snd_var = snd_add_scr(fd_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
         }
     }
-    meat_tex_var = background_get_texture(meat_bg_var);// Assets
-        // Search for existing assets to save memory
-    local.loaded = false;
-    with object_index
-    {
-        if id != other.id && object_index == other.object_index
-        {
-            other.spr_var = spr_var;
-            other.meat_bg_var = meat_bg_var;
-            other.eff_spr_01_var = eff_spr_01_var;
-            other.eff_spr_02_var = eff_spr_02_var;
-            for (local.i=0; local.i<snd_len_var; local.i+=1;)
-            { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
-            other.wake_snd_var[1] = wake_snd_var[1];
-            other.hurt_snd_var[1] = hurt_snd_var[1];
-            other.mus_snd_var = mus_snd_var;
-            local.loaded = true;
-            break;
-        }
-    }
-        // If no existing assets were found, load them
-    if !local.loaded
-    {
-        spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS9_01_spr.png",12,false,false,0,0);
-        meat_bg_var = background_add(vanilla_directory_const+"\TEX\mobile\MB8_26_tex.png",false,false);
-        eff_spr_01_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS9_02_spr.png",3,0,0,0,0);
-        eff_spr_02_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS9_03_spr.png",19,0,0,0,0);
-        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\fd_01_snd.wav",true);
-        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\fd_02_snd.wav",true);
-        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\fd_03_snd.wav",true);
-        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\fd_04_snd.wav",true);
-        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\fd_wake_snd.wav",global.wake_3d_var);
-        hurt_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\fd_hurt_snd.wav",true);
-        switch theme_scr(global.fd_theme_var,global.theme_var,1,0,0,1)
-        {
-            case 1: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\fd_rom_mus_snd.ogg"); break; }
-            default:
-            {
-                mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\fd_mus_snd.mp3");
-                fmod_snd_set_loop_point_scr(mus_snd_var,0,0.972669769662);
-                break;
-            }
-        }
-        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
-    }
     meat_tex_var = background_get_texture(meat_bg_var);
 ');
 // Destroy Event

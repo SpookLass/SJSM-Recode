@@ -5,11 +5,9 @@ Argument 2: Print
 Argument 3:
     Sprite: Number
     Sound: 3D
-    Background: Remove background
 Argument 4:
     Sprite: Remove Background
     Sound: Group
-    Background: Smooth
 Argument 5:
     Sprite: Smooth
     Sound: Volume

@@ -28,7 +28,7 @@ fmod_set_world_scale_scr(pixel_meter_rate_const);
             while (local.file != "")
             {
                 // Not sure why, but it doesn't include the path.
-                globalvar_scr(local.file+"_path",local.dir+"\SND\MON\"+local.file,argument0);
+                globalvar_scr(local.dir+"\SND\MON\"+local.file,local.file+"_path",argument0);
                 local.file = filename_change_ext(file_find_next(),"");
                 local.i += 1;
                 // Draw
@@ -41,7 +41,7 @@ fmod_set_world_scale_scr(pixel_meter_rate_const);
             while (local.file != "")
             {
                 // Not sure why, but it doesn't include the path.
-                globalvar_scr(local.file+"_path",local.dir+"\SND\RM\"+local.file,argument0);
+                globalvar_scr(local.dir+"\SND\RM\"+local.file,local.file+"_path",argument0);
                 local.file = filename_change_ext(file_find_next(),"");
                 local.i += 1;
                 // Draw
@@ -54,7 +54,7 @@ fmod_set_world_scale_scr(pixel_meter_rate_const);
             while (local.file != "")
             {
                 // Not sure why, but it doesn't include the path.
-                globalvar_scr(local.file+"_path",local.dir+"\SND\DEAD\"+local.file,argument0);
+                globalvar_scr(local.dir+"\SND\DEAD\"+local.file,local.file+"_path",argument0);
                 local.file = filename_change_ext(file_find_next(),"");
                 local.i += 1;
                 // Draw
@@ -67,7 +67,7 @@ fmod_set_world_scale_scr(pixel_meter_rate_const);
             while (local.file != "")
             {
                 // Not sure why, but it doesn't include the path.
-                globalvar_scr(local.file+"_path",local.dir+"\SND\UI\"+local.file,argument0);
+                globalvar_scr(local.dir+"\SND\UI\"+local.file,local.file+"_path",argument0);
                 local.file = filename_change_ext(file_find_next(),"");
                 local.i += 1;
                 // Draw
@@ -80,7 +80,7 @@ fmod_set_world_scale_scr(pixel_meter_rate_const);
             while (local.file != "")
             {
                 // Not sure why, but it doesn't include the path.
-                globalvar_scr(local.file+"_path",local.dir+"\SND\MINI\"+local.file,argument0);
+                globalvar_scr(local.dir+"\SND\MINI\"+local.file,local.file+"_path",argument0);
                 local.file = filename_change_ext(file_find_next(),"");
                 local.i += 1;
                 // Draw
@@ -95,7 +95,7 @@ fmod_set_world_scale_scr(pixel_meter_rate_const);
                 while (local.file != "")
                 {
                     // Not sure why, but it doesn't include the path.
-                    globalvar_scr(local.file+"_path",local.dir+"\SND\KH\"+local.file,argument0);
+                    globalvar_scr(local.dir+"\SND\KH\"+local.file,local.file+"_path",argument0);
                     local.file = filename_change_ext(file_find_next(),"");
                     local.i += 1;
                     // Draw
@@ -111,7 +111,7 @@ fmod_set_world_scale_scr(pixel_meter_rate_const);
                 while (local.file != "")
                 {
                     // Not sure why, but it doesn't include the path.
-                    globalvar_scr(local.file+"_path",local.dir+"\SND\DH\"+local.file,argument0);
+                    globalvar_scr(local.dir+"\SND\DH\"+local.file,local.file+"_path",argument0);
                     local.file = filename_change_ext(file_find_next(),"");
                     local.i += 1;
                     // Draw
@@ -139,7 +139,7 @@ fmod_set_world_scale_scr(pixel_meter_rate_const);
     while (local.file != "")
     {
         // Not sure why, but it doesn't include the path.
-        globalvar_scr(local.file+"_path",main_directory_const+"\SND\MON\"+local.file,argument0);
+        globalvar_scr(main_directory_const+"\SND\MON\"+local.file,local.file+"_path",argument0);
         local.file = filename_change_ext(file_find_next(),"");
         local.i += 1;
         // Draw
@@ -152,7 +152,7 @@ fmod_set_world_scale_scr(pixel_meter_rate_const);
     while (local.file != "")
     {
         // Not sure why, but it doesn't include the path.
-        globalvar_scr(local.file+"_path",main_directory_const+"\SND\RM\"+local.file,argument0);
+        globalvar_scr(main_directory_const+"\SND\RM\"+local.file,local.file+"_path",argument0);
         local.file = filename_change_ext(file_find_next(),"");
         local.i += 1;
         // Draw
@@ -165,7 +165,7 @@ fmod_set_world_scale_scr(pixel_meter_rate_const);
     while (local.file != "")
     {
         // Not sure why, but it doesn't include the path.
-        globalvar_scr(local.file+"_path",main_directory_const+"\SND\DEAD\"+local.file,argument0);
+        globalvar_scr(main_directory_const+"\SND\DEAD\"+local.file,local.file+"_path",argument0);
         local.file = filename_change_ext(file_find_next(),"");
         local.i += 1;
         // Draw
@@ -178,7 +178,7 @@ fmod_set_world_scale_scr(pixel_meter_rate_const);
     while (local.file != "")
     {
         // Not sure why, but it doesn't include the path.
-        globalvar_scr(local.file+"_path",main_directory_const+"\SND\UI\"+local.file,argument0);
+        globalvar_scr(main_directory_const+"\SND\UI\"+local.file,local.file+"_path",argument0);
         local.file = filename_change_ext(file_find_next(),"");
         local.i += 1;
         // Draw
@@ -191,7 +191,7 @@ fmod_set_world_scale_scr(pixel_meter_rate_const);
     while (local.file != "")
     {
         // Not sure why, but it doesn't include the path.
-        globalvar_scr(local.file+"_path",main_directory_const+"\SND\MINI\"+local.file,argument0);
+        globalvar_scr(main_directory_const+"\SND\MINI\"+local.file,local.file+"_path",argument0);
         local.file = filename_change_ext(file_find_next(),"");
         local.i += 1;
         // Draw
@@ -206,7 +206,7 @@ fmod_set_world_scale_scr(pixel_meter_rate_const);
         while (local.file != "")
         {
             // Not sure why, but it doesn't include the path.
-            globalvar_scr(local.file+"_path",main_directory_const+"\SND\KH\"+local.file,argument0);
+            globalvar_scr(main_directory_const+"\SND\KH\"+local.file,local.file+"_path",argument0);
             local.file = filename_change_ext(file_find_next(),"");
             local.i += 1;
             // Draw
@@ -222,7 +222,7 @@ fmod_set_world_scale_scr(pixel_meter_rate_const);
         while (local.file != "")
         {
             // Not sure why, but it doesn't include the path.
-            globalvar_scr(local.file+"_path",main_directory_const+"\SND\DH\"+local.file,argument0);
+            globalvar_scr(main_directory_const+"\SND\DH\"+local.file,local.file+"_path",argument0);
             local.file = filename_change_ext(file_find_next(),"");
             local.i += 1;
             // Draw

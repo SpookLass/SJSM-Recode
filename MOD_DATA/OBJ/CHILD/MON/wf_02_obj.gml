@@ -134,7 +134,7 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
-        boss_icon_var = execute_file(main_directory_const+"\SPR\MON\wf_icon_spr.gml",main_directory_const+"\SPR\MON\wf_icon_spr.png");
+        boss_icon_var = spr_add_scr(wf_icon_spr_path,1,false,false,0,0);
         spr_var = wf_spr;
         bg_var = background_add(vanilla_directory_const+"\TEX\sprites\MS28_02_spr.png",false,false);
         tex_spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS28_08_spr.png",3,false,false,0,0);

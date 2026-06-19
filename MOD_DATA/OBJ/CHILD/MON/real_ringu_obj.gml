@@ -162,27 +162,20 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
-        state_spr_var[0] = sprite_add(vanilla_directory_const+"\TEX\sprites\MS3_03_spr.png",6,false,false,0,0);
-        state_spr_var[1] = sprite_add(vanilla_directory_const+"\TEX\sprites\MS3_04_spr.png",6,false,false,0,0);
-        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_01_snd.wav",true);
-        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_02_snd.wav",true);
-        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_03_snd.wav",true);
-        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_04_snd.wav",true);
-        snd_arr[4,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_laugh_snd.wav",true);
-        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_real_wake_snd.wav",global.wake_3d_var);
-        cam_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_cam_snd.wav");
-        fmod_snd_set_group_scr(cam_snd_var,snd_group_mon_const);
+        state_spr_var[0] = spr_add_scr(ringu_real_01_spr_path,6,false,false,0,0);
+        state_spr_var[1] = spr_add_scr(ringu_real_02_spr_path,6,false,false,0,0);
+        snd_arr[0,0] = snd_add_scr(ringu_01_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[1,0] = snd_add_scr(ringu_02_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[2,0] = snd_add_scr(ringu_03_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[3,0] = snd_add_scr(ringu_04_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[4,0] = snd_add_scr(ringu_laugh_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        wake_snd_var[1] = snd_add_scr(ringu_real_wake_snd_path,global.wake_3d_var,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        cam_snd_var = snd_add_scr(ringu_cam_snd_path,false,snd_group_mon_const,1,0,0);
         switch theme_scr(global.real_ringu_theme_var,global.theme_var,1,0,0,1)
         {
-            case 1: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\real_ringu_rom_mus_snd.ogg"); break; }
-            default:
-            {
-                mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_real_mus_snd.mp3");
-                fmod_snd_set_loop_point_scr(mus_snd_var,0.5,1);
-                break;
-            }
+            case 1: { mus_snd_var = snd_add_scr(ringu_real_rom_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
+            default: { mus_snd_var = snd_add_scr(ringu_real_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
         }
-        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
     }
     // Alarms
     alarm_len_var = 9;
@@ -266,7 +259,12 @@ object_event_add
 (argument0,ev_other,ev_user4,'
     if !enter_var
     {
-        inst_var = fmod_snd_3d_play_scr(snd_arr[4,0]);
+        if fmod_inst_is_play_scr(inst_var) && fmod_inst_is_3d_scr(inst_var)
+        { fmod_inst_stop_scr(inst_var); }
+        inst_var = fmod_snd_3d_play_scr(snd_arr[4,0],x,y,z);
+        if global.pitch_bend_var { fmod_inst_set_pitch_scr(inst_var,random_range(0.95,1.05)); }
+        sub_var[0] = snd_arr[4,1];
+        sub_var[1] = snd_arr[4,2];
         event_inherited();
     }
 ');

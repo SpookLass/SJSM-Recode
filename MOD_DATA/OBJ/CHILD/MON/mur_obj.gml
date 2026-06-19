@@ -108,27 +108,27 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
-        spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS11_01_spr.png",8,false,false,0,0);
-        ring_bg_var = background_add(vanilla_directory_const+"\TEX\sprites\MS11_02_spr.png",false,false);
-        part_bg_var = background_add(vanilla_directory_const+"\TEX\sprites\MS11_03_spr.png",false,false);
-        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\mur_01_snd.wav",true);
-        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\mur_02_snd.wav",true);
-        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\mur_03_snd.wav",true);
-        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\mur_04_snd.wav",true);
-        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\mur_wake_snd.wav",global.wake_3d_var);
+        spr_var = spr_add_scr(mur_spr_path,8,false,false,0,0);
+        ring_bg_var = bg_add_scr(mur_ring_bg_path,false,false);
+        part_bg_var = bg_add_scr(mur_part_bg_path,false,false);
+        snd_arr[0,0] = snd_add_scr(mur_01_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[1,0] = snd_add_scr(mur_02_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[2,0] = snd_add_scr(mur_03_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[3,0] = snd_add_scr(mur_04_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        wake_snd_var[1] = snd_add_scr(mur_01_snd_path,global.wake_3d_var,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
         switch theme_scr(global.mur_theme_var,global.theme_var,1,0,0,1)
         {
-            case 1: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\mur_rom_mus_snd.ogg"); break; }
-            default: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\mur_mus_snd.mp3"); break; }
+            case 1: { mus_snd_var = snd_add_scr(mur_rom_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
+            default: { mus_snd_var = snd_add_scr(mur_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
         }
         fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
         // Textures
-        wall_bg_var = background_add(vanilla_directory_const+"\TEX\mobile\MB10_02_tex.png",false,false);
-        floor_bg_var = background_add(vanilla_directory_const+"\TEX\mobile\MB10_10_tex.png",false,false);
-        ceil_bg_var = background_add(vanilla_directory_const+"\TEX\mobile\MB10_03_tex.png",false,false);
-        crate_bg_var = background_add(vanilla_directory_const+"\TEX\mobile\MB10_18_tex.png",false,false);
+        wall_bg_var = bg_add_scr(amn_wall_bg_path,false,false);
+        floor_bg_var = bg_add_scr(amn_floor_bg_path,false,false);
+        ceil_bg_var = bg_add_scr(amn_ceil_bg_path,false,false);
+        crate_bg_var = bg_add_scr(amn_crate_bg_path,false,false);
         // Water
-        water_bg_var = background_add(vanilla_directory_const+"\TEX\mobile\MB10_16_tex.png",false,false);
+        water_bg_var = bg_add_scr(amn_water_bg_path,false,false);
         water_path_var = path_add();
         path_set_closed(water_path_var,true);
         path_set_kind(water_path_var,true);
@@ -230,6 +230,7 @@ object_event_add
         with water_obj { instance_destroy(); }
         with instance_create(0,0,amn_water_obj)
         {
+            par_var = other.id;
             store_tex_var = other.water_tex_var;
             tex_var = store_tex_var;
             path_var = other.water_path_var;

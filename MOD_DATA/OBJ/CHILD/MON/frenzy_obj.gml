@@ -59,46 +59,6 @@ object_event_add
     fog_prio_var = 3;
     fog_start_var = 32;
     fog_end_var = 200;
-    // Assets
-        // Search for existing assets to save memory
-    local.loaded = false;
-    with object_index
-    {
-        if id != other.id && object_index == other.object_index
-        {
-            other.spr_var = spr_var;
-            other.bg_var = bg_var;
-            other.charge_snd_var[0] = charge_snd_var[0];
-            other.mus_snd_var = mus_snd_var;
-            other.hurt_snd_var[1] = hurt_snd_var[1];
-            other.scare_snd_var = scare_snd_var;
-            local.loaded = true;
-            break;
-        }
-    }
-        // If no existing assets were found, load them
-    if !local.loaded
-    {
-        spr_var = sprite_add(dh_directory_const+"\TEX\sprites\frenzy2_spr.png",8,false,false,0,0); // working_directory+"\MODS\PLUS\SPR\MON\gangnam_frenzy_spr.gif"
-        bg_var = background_add(dh_directory_const+"\TEX\sprites\frenzy_spr.png",false,false);
-        charge_snd_var[0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\frenzy_atk_short_snd.wav",true);
-        
-        hurt_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\DH\frenzy_hurt_snd.wav",true);
-        scare_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\scare_short_snd.wav");
-        switch theme_scr(global.frenzy_theme_var,global.theme_var,1,0,1,0)
-        {
-            case 1: // Old (mid)
-            {
-                mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DH\frenzy_dead_snd.mp3");
-                fmod_snd_set_loop_point_scr(mus_snd_var,1/3,1);
-                break;
-            }
-            default: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\frenzy_mus_snd.ogg"); break; }
-        }
-        fmod_snd_set_group_scr(charge_snd_var[0],snd_group_mon_const);
-        fmod_snd_set_group_scr(hurt_snd_var[1],snd_group_mon_const);
-        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
-    }
     // Behavior
     if global.frenzy_type_var == -1 { local.type = irandom(2); }
     else { local.type = global.frenzy_type_var; }
@@ -134,6 +94,37 @@ object_event_add
             autobrake_spd_var = 0;
             autobrake_dir_var = 60;
             break;
+        }
+    }
+    // Assets
+        // Search for existing assets to save memory
+    local.loaded = false;
+    with object_index
+    {
+        if id != other.id && object_index == other.object_index
+        {
+            other.spr_var = spr_var;
+            other.bg_var = bg_var;
+            other.charge_snd_var[0] = charge_snd_var[0];
+            other.mus_snd_var = mus_snd_var;
+            other.hurt_snd_var[1] = hurt_snd_var[1];
+            other.scare_snd_var = scare_snd_var;
+            local.loaded = true;
+            break;
+        }
+    }
+        // If no existing assets were found, load them
+    if !local.loaded
+    {
+        spr_var = spr_add_scr(frenzy_spr_path,8,false,false,0,0);
+        bg_var = bg_add_scr(frenzy_bg_path,false,false);
+        charge_snd_var[0] = snd_add_scr(frenzy_atk_short_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        hurt_snd_var[1] = snd_add_scr(frenzy_hurt_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        scare_snd_var = snd_add_scr(scare_short_snd_path,false,snd_group_mon_const,1,0,0);
+        switch theme_scr(global.frenzy_theme_var,global.theme_var,1,0,1,0)
+        {
+            case 1: { mus_snd_var = snd_add_scr(frenzy_dead_snd_path,false,snd_group_mus_const,1,0,0); break; }
+            default: { mus_snd_var = snd_add_scr(frenzy_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
         }
     }
 ');

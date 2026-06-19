@@ -112,23 +112,20 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
-        spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS3_01_spr.png",6,false,false,0,0);
-        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_01_snd.wav",true);
-        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_02_snd.wav",true);
-        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_03_snd.wav",true);
-        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_04_snd.wav",true);
-        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_wake_snd.wav",global.wake_3d_var);
+        spr_var = spr_add_scr(ringu_spr_path,6,false,false,0,0);
+        snd_arr[0,0] = snd_add_scr(ringu_01_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[1,0] = snd_add_scr(ringu_02_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[2,0] = snd_add_scr(ringu_03_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[3,0] = snd_add_scr(ringu_04_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        wake_snd_var[1] = snd_add_scr(ringu_wake_snd_path,global.wake_3d_var,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
         switch theme_scr(global.ringu_theme_var,global.theme_var,3,0,1,2)
         {
-            case 3: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_alt_mus_snd.mp3"); break; }
-            case 2: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\ringu_rom_mus_snd.ogg"); break; }
-            case 1: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_old_mus_snd.mp3"); break; }
-            default: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_mus_snd.mp3"); break; }
+            case 3: { mus_snd_var = snd_add_scr(ringu_alt_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
+            case 2: { mus_snd_var = snd_add_scr(ringu_rom_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
+            case 1: { mus_snd_var = snd_add_scr(ringu_old_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
+            default: { mus_snd_var = snd_add_scr(ringu_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
         }
-        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
-        hurt_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_laugh_snd.wav",true);
-        fmod_snd_set_minmax_dist_scr(hurt_snd_var[1],0,snd_dist_max_var);
-        fmod_snd_set_group_scr(hurt_snd_var[1],snd_group_mon_const);
+        hurt_snd_var[1] = snd_add_scr(ringu_laugh_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
     }
 ');
 // Destroy Event

@@ -183,31 +183,29 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
-        spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS27_01_spr.png",3,false,false,0,0);
-        door_spr_var = sprite_add(vanilla_directory_const+"\3D\spooper_tex.png",6,false,false,0,0);
-        tex_spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS27_04_spr.png",3,false,false,0,0);
-        light_wall_spr_var = sprite_add(main_directory_const+"\SPR\MON\spooper_light_wall_spr.png",2,false,false,0,0);
-        light_floor_spr_var = sprite_add(main_directory_const+"\SPR\MON\spooper_light_floor_spr.png",2,false,false,0,0);
-        puke_bg_var = background_add(vanilla_directory_const+"\TEX\sprites\MS27_02_spr.png",false,false);
-        fetus_bg_var = background_add(vanilla_directory_const+"\TEX\sprites\MS27_03_spr.png",false,false);
-        mdl_var = d3d_model_create();
-        d3d_model_load(mdl_var,main_directory_const+"\MDL\MON\spooper_mdl.gmmod");
-        puke_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\spooper_puke_snd.wav");
-        choke_01_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\spooper_choke_01_snd.wav");
-        choke_02_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\spooper_choke_02_snd.wav");
+        spr_var = spr_add_scr(spooper_goo_spr_path,3,false,false,0,0);
+        door_spr_var = spr_add_scr(spooper_spr_path,6,false,false,0,0);
+        tex_spr_var = spr_add_scr(spooper_tex_spr_path,3,false,false,0,0);
+        light_wall_spr_var = spr_add_scr(spooper_light_wall_spr_path,2,false,false,0,0);
+        light_floor_spr_var = spr_add_scr(spooper_light_floor_spr_path,2,false,false,0,0);
+        puke_bg_var = bg_add_scr(spooper_puke_bg_path,false,false);
+        fetus_bg_var = bg_add_scr(spooper_fetus_bg_path,false,false);
+        mdl_var = mdl_add_scr(spooper_mdl_path);
+        puke_snd_var = snd_add_scr(spooper_puke_snd_path,false,snd_group_mon_const,1,0,0);
+        choke_01_snd_var = snd_add_scr(spooper_choke_01_snd_path,false,snd_group_mon_const,1,0,0);
+        choke_02_snd_var = snd_add_scr(spooper_choke_02_snd_path,false,snd_group_mon_const,1,0,0);
         switch theme_scr(global.spooper_theme_var,global.theme_var,1,0,0,1)
         {
-            case 1: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\spooper_rom_mus_snd.ogg"); break; }
-            default: { mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\SPOOPER_AMB.mp3"); break; }
+            case 1: { mus_snd_var = snd_add_scr(spooper_rom_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
+            default: { mus_snd_var = snd_add_scr(spooper_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
         }
-        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
-        loop_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\spooper_loop_snd.wav",true);
+        loop_snd_var[1] = snd_add_scr(spooper_loop_snd_path,true,snd_group_mon_const,1,loop_snd_dist_min_var,loop_snd_dist_max_var);
         // Duration
         dur_var = irandom_range(24,31);
         switch local.type
         {
             // Recode, HD, Old HD
-            case 0: case 2: case 3: { irandom_range(24,30); break; }
+            case 0: case 2: case 3: { dur_var = irandom_range(24,30); break; }
         }
     }
     fetus_tex_var = background_get_texture(fetus_bg_var);

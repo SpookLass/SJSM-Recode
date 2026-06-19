@@ -31,57 +31,6 @@ object_event_add
 	blood_spr_var = blood_kh_spr;
 	atk_range_var = 12;
 	dead_rm_var = hk_dead_rm;
-    // Assets
-        // Search for existing assets to save memory
-	local.loaded = false;
-    with object_index
-    {
-        if id != other.id && object_index == other.object_index
-        {
-            other.spr_var = spr_var;
-			other.static_bg_var = static_bg_var;
-			other.overlay_bg_var = overlay_bg_var;
-            
-			other.snd_arr[0,0] = snd_arr[0,0];
-			other.loop_snd_var[1] = loop_snd_var[1];
-			other.look_snd_var = look_snd_var;
-			other.hurt_snd_var[1] = hurt_snd_var[1];
-			other.mus_snd_var = mus_snd_var;
-			
-			other.lamp_mdl_var = lamp_mdl_var
-			other.lamp_bg_var = lamp_bg_var;
-			
-            local.loaded = true;
-            break;
-        }
-    }
-        // If no existing assets were found, load them
-    if !local.loaded
-    {
-        spr_var = sprite_add(dh_directory_const+"\TEX\sprites\HK_SPR2.png",20,false,false,0,0);
-		static_bg_var = background_add(main_directory_const+"\BG\DH\tile_static_bg.png",false,false);
-		overlay_bg_var = background_add(main_directory_const+"\BG\KH\olga_bg.png",false,false);
-
-		snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\DH\hk_breath_snd.wav",true);
-		loop_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\DH\hk_loop_02_snd.wav",true);
-		look_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DH\hk_loop_01_snd.wav",true);
-		fmod_snd_set_group_scr(look_snd_var,snd_group_mon_const);
-		switch theme_scr(global.hk_theme_var,global.theme_var,1,0,0,1)
-        {
-            case 1: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\hk_rom_mus_snd.ogg"); break; }
-            default: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DH\hk_mus_snd.mp3"); break; }
-        }
-		fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
-		hurt_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\DH\doll_hurt_snd.wav");
-		
-		lamp_mdl_var = d3d_model_create();
-        d3d_model_load(lamp_mdl_var,main_directory_const+"\MDL\MON\hk_lamp_mdl.gmmod");
-        lamp_bg_var = background_add(dh_directory_const+"\TEX\DOLL\DOOR_02.png",false,false);
-    }
-	tex_var = sprite_get_texture(spr_var,0);
-	fmod_snd_set_minmax_dist_scr(look_snd_var,40,240);
-    fmod_snd_set_group_scr(look_snd_var,snd_group_mon_const);
-	fmod_snd_set_max_vol_scr(mus_snd_var,1.8);
     // Sounds
 	loop_snd_var[0] = true;
 	do_snd_var = true;
@@ -252,6 +201,47 @@ object_event_add
             break;
         }
     }
+	// Assets
+        // Search for existing assets to save memory
+	local.loaded = false;
+    with object_index
+    {
+        if id != other.id && object_index == other.object_index
+        {
+            other.spr_var = spr_var;
+			other.static_bg_var = static_bg_var;
+			other.overlay_bg_var = overlay_bg_var;
+			other.snd_arr[0,0] = snd_arr[0,0];
+			other.loop_snd_var[1] = loop_snd_var[1];
+			other.look_snd_var = look_snd_var;
+			other.hurt_snd_var[1] = hurt_snd_var[1];
+			other.mus_snd_var = mus_snd_var;
+			other.lamp_mdl_var = lamp_mdl_var
+			other.lamp_bg_var = lamp_bg_var;
+            local.loaded = true;
+            break;
+        }
+    }
+        // If no existing assets were found, load them
+    if !local.loaded
+    {
+        spr_var = spr_add_scr(hk_spr_path,20,false,false,0,0);
+		static_bg_var = bg_add_scr(tile_static_bg_path,false,false);
+		overlay_bg_var = bg_add_scr(vignette_bg_path,false,false);
+		snd_arr[0,0] = snd_add_scr(hk_breath_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+		loop_snd_var[1] = snd_add_scr(hk_loop_02_snd_path,true,snd_group_mon_const,1,loop_snd_dist_min_var,loop_snd_dist_max_var);
+		look_snd_var = snd_add_scr(hk_loop_01_snd_path,true,snd_group_mon_const,1,loop_snd_dist_min_var,loop_snd_dist_max_var);
+		switch theme_scr(global.hk_theme_var,global.theme_var,1,0,0,1)
+        {
+            case 1: { mus_snd_var = snd_add_scr(hk_rom_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
+            default: { mus_snd_var = snd_add_scr(hk_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
+        }
+		hurt_snd_var[1] = snd_add_scr(doll_hurt_snd_path,false,snd_group_mon_const,1,0,0);
+        lamp_mdl_var = mdl_add_scr(hk_lamp_mdl_path);
+        lamp_bg_var = bg_add_scr(root_door_bg_path,false,false);
+    }
+	tex_var = sprite_get_texture(spr_var,0);
+	fmod_snd_set_max_vol_scr(mus_snd_var,1.8);
 	if do_look_snd_var
 	{
 		look_inst_var = fmod_snd_3d_loop_scr(look_snd_var);

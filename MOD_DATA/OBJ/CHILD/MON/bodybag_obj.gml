@@ -115,6 +115,7 @@ object_event_add
         {
             other.main_mdl_var = main_mdl_var;
             other.zip_mdl_var = zip_mdl_var;
+            other.mdl_var = other.zip_mdl_var;
             other.bg_var = bg_var;
             other.spr_overlay_var = spr_overlay_var;
             other.spr_eff_var = spr_eff_var;
@@ -130,10 +131,9 @@ object_event_add
     {
         spr_overlay_var = spr_add_scr(body_overlay_spr_path,4,false,false,0,0);
         spr_eff_var = spr_add_scr(body_eff_spr_path,8,false,false,0,0);
-        main_mdl_var = d3d_model_create();
-        d3d_model_load(mdl_var,main_directory_const+"\MDL\KH\bodybag_mon_mdl.gmmod"); // Ill worry about this later
-        zip_mdl_var = d3d_model_create();
-        d3d_model_load(mdl_var,main_directory_const+"\MDL\KH\bodybag_mdl.gmmod");
+        main_mdl_var = mdl_add_scr(body_mon_mdl_path);
+        zip_mdl_var = mdl_add_scr(body_mdl_path);
+        mdl_var = main_mdl_var;
         bg_var = bg_add_scr(body_bg_path,false,false);
         eff_snd_var = snd_add_scr(body_eff_snd_path,false,snd_group_mon_const,1,0,0);
         wake_snd_var[1] = snd_add_scr(body_wake_snd_path,global.wake_3d_var,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
@@ -145,11 +145,7 @@ object_event_add
                 fmod_snd_set_loop_point_scr(mus_snd_var,16/112,32/112);
                 break;
             }
-            case 2:
-            {
-                mus_snd_var = snd_add_scr(body_rom_mus_snd_path,false,snd_group_mus_const,1,0,0);
-                break;
-            }
+            case 2: { mus_snd_var = snd_add_scr(body_rom_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
             default:
             {
                 mus_snd_var = snd_add_scr(body_mus_snd_path,false,snd_group_mus_const,1,0,0);

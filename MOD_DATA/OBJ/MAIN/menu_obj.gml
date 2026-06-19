@@ -96,7 +96,7 @@ object_event_add
             case 0: // HD
             {
                 title_01_scale_var = 240;
-                title_spr_var = execute_file(main_directory_const+"\SPR\UI\menu_title_hd_spr.gml",main_directory_const+"\SPR\UI\menu_title_hd_spr.png");
+                title_spr_var = spr_add_scr(menu_title_hd_spr_path,1,false,false,0,0);
                 bg_var = background_add(main_directory_const+"\BG\UI\menu_hd_bg.png",false,false);
                 light_01_bg_var = background_add(vanilla_directory_const+"\MAT\blank.png",false,false);
                 light_02_bg_var = background_add(vanilla_directory_const+"\MAT\blank.png",false,false);
@@ -108,8 +108,8 @@ object_event_add
             case 1: // Old OG
             {
                 title_01_scale_var = 162;
-                title_spr_var = execute_file(main_directory_const+"\SPR\UI\menu_title_old_01_spr.gml",main_directory_const+"\SPR\UI\menu_title_old_01_spr.png");
-                title_02_spr_var = execute_file(main_directory_const+"\SPR\UI\menu_title_old_02_spr.gml",main_directory_const+"\SPR\UI\menu_title_old_02_spr.png");
+                title_spr_var = spr_add_scr(main_directory_const+"\SPR\UI\menu_title_old_01_spr",7,false,false,0,0);
+                title_02_spr_var = spr_add_scr(main_directory_const+"\SPR\UI\menu_title_old_02_spr",1,false,false,0,0);
                 old_var = true;
                 bg_var = background_add(main_directory_const+"\BG\UI\menu_old_bg.png",false,false);
                 light_01_bg_var = background_add(main_directory_const+"\BG\UI\menu_light_01_old_bg.png",false,false);
@@ -123,7 +123,7 @@ object_event_add
             case 2: // New / Promotional
             {
                 title_01_scale_var = 240;
-                title_spr_var = execute_file(main_directory_const+"\SPR\UI\menu_title_new_spr.gml",main_directory_const+"\SPR\UI\menu_title_new_spr.png");
+                title_spr_var = spr_add_scr(menu_title_new_spr_path,1,false,false,0,0);
                 rain_var = false;
                 bg_var = background_add(main_directory_const+"\BG\UI\menu_bg.png",false,false);
                 path_bg_var = background_add(main_directory_const+"\BG\UI\menu_path_bg.png",false,false);
@@ -151,7 +151,7 @@ object_event_add
     else // Recode
     {
         title_01_scale_var = 240;
-        title_spr_var = execute_file(main_directory_const+"\SPR\UI\menu_title_spr.gml",main_directory_const+"\SPR\UI\menu_title_spr.png");
+        title_spr_var = spr_add_scr(menu_title_spr_path,1,false,false,0,0);
         rain_var = (current_hour <= 6 || current_hour >= 18);
         if rain_var // Night
         {

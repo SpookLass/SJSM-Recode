@@ -18,7 +18,8 @@ object_event_add
     snd_dist_min_var = 0;
     snd_dist_max_var = 600;
     wake_snd_var[0] = true;
-    hurt_snd_var = 4;
+    if global.kh_var { hurt_snd_var = 4; }
+    else { hurt_snd_var = 1; }
     // Translations
     ini_open("lang_"+global.lang_var+".ini");
     name_var = translate_mon_str_scr("otto",global.name_var);
@@ -109,7 +110,7 @@ object_event_add
             for (local.i=0; local.i<snd_len_var; local.i+=1;)
             { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
             other.mus_snd_var = mus_snd_var;
-            other.hurt_snd_var[1] = hurt_snd_var[1];
+            if global.kh_var { other.hurt_snd_var[1] = hurt_snd_var[1]; }
             local.loaded = true;
             break;
         }
@@ -117,24 +118,20 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
-        spr_var = spr_add_scr(main_directory_const+"\SPR\MON\otto_spr",3,false,false,0,0);
-        eye_spr_var = execute_file(main_directory_const+"\SPR\MON\otto_eye_spr",3,false,false,0,0);
-        wake_snd_var[1] = snd_add_scr(main_directory_const+"\SND\MON\otto_01_snd",global.wake_3d_var,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-        snd_arr[0,0] = snd_add_scr(main_directory_const+"\SND\MON\otto_01_snd",true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-        snd_arr[1,0] = snd_add_scr(main_directory_const+"\SND\MON\otto_02_snd",true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-        snd_arr[2,0] = snd_add_scr(main_directory_const+"\SND\MON\otto_03_snd",true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-        snd_arr[3,0] = snd_add_scr(main_directory_const+"\SND\MON\otto_04_snd",true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        spr_var = spr_add_scr(otto_spr_path,3,false,false,100,65);
+        eye_spr_var = spr_add_scr(otto_eye_spr_path,3,false,false,0,0);
+        wake_snd_var[1] = snd_add_scr(otto_01_snd_path,global.wake_3d_var,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[0,0] = snd_add_scr(otto_01_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[1,0] = snd_add_scr(otto_02_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[2,0] = snd_add_scr(otto_03_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[3,0] = snd_add_scr(otto_04_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
         switch theme_scr(global.otto_theme_var,global.theme_var,1,0,0,1)
         {
-            case 1: { mus_snd_var = snd_add_scr(main_directory_const+"\SND\MON\ROMM\otto_rom_mus_snd",true,snd_group_mus_const,1,0,0); break; }
-            default:
-            {
-                mus_snd_var = snd_add_scr(main_directory_const+"\SND\MON\otto_mus_test_snd",true,snd_group_mus_const,1,0,0);
-                fmod_snd_set_loop_point_scr(mus_snd_var,0.0234541577825,0.977967306326);
-                break;
-            }
+            case 1: { mus_snd_var = snd_add_scr(otto_rom_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
+            default: { mus_snd_var = snd_add_scr(otto_mus_test_snd_path,false,snd_group_mus_const,1,0,0); break; }
         }
-        hurt_snd_var[1] = snd_add_scr(main_directory_const+"\SND\KH\radio_button_snd",true,snd_group_mon_const,1,0,0);
+        if global.kh_var
+        { hurt_snd_var[1] = snd_add_scr(radio_button_snd_path,false,snd_group_mon_const,1,0,0); }
     }
     eye_tex_var = sprite_get_texture(eye_spr_var,0);
 ');
@@ -162,6 +159,8 @@ object_event_add
         for (local.i=0; local.i<snd_len_var; local.i+=1;)
         { fmod_snd_free_scr(snd_arr[local.i,0]); }
         fmod_snd_free_scr(wake_snd_var[1]);
+        if global.kh_var
+        { fmod_snd_free_scr(hurt_snd_var[1]); }
     }
 ');
 // Animation

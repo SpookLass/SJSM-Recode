@@ -41,7 +41,7 @@ object_event_add
     str_dl_scale_rate_var = 80;
     str_dl_time_var = 0;
     // Title
-    spr_var = execute_file(main_directory_const+"\SPR\UI\menu_title_spr.gml",main_directory_const+"\SPR\UI\menu_title_spr.png");
+    spr_var = spr_add_scr(mmenu_title_spr_path,1,false,false,0,0);
     spr_scale_min_var = 500;
     spr_scale_max_var = 1057;
     spr_scale_var = spr_scale_min_var;
