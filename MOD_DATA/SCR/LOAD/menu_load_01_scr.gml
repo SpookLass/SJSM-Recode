@@ -409,6 +409,29 @@ draw_load_scr("Loading config...");
             custom_arr_set_scr(rare_chance_const,local.rare_chance,-1,0,-1); // Story Mode
             custom_arr_set_scr(0,local.rare_chance,-1,-1,1); // OG
             custom_arr_set_scr(rare_chance_const,local.rare_chance,-1,-1,2); // HD
+    // Random Textures
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Has Descriptions*/
+            local.set = custom_add_scr("tex_rand","tex_rand","tex_rand",true,custom_enum_const,false,true,true,local.toggle,false);
+            custom_add_label_scr(local.set,false,"off",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            custom_add_label_scr(local.set,true,"on",true,"");
+        // Defaults
+            custom_arr_add_len_scr(0,1);
+            custom_arr_set_scr(true,local.set,-1,-1,-1); // Default
+            custom_arr_set_scr(false,local.set,-1,0,-1); // Story Mode
+            custom_arr_set_scr(true,local.set,5,-1,-1); // :)
+    // Random Zones
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Has Descriptions*/
+            local.set = custom_add_scr("zone_rand","zone_rand","zone_rand",true,custom_enum_const,0,2,true,local.toggle,false);
+            custom_add_label_scr(local.set,0,"off",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            custom_add_label_scr(local.set,1,"on",true,"");
+            custom_add_label_scr(local.set,2,"rand",true,"");
+        // Defaults
+            custom_arr_add_len_scr(0,1);
+            custom_arr_set_scr(true,local.set,-1,-1,-1); // Default
+            custom_arr_set_scr(false,local.set,-1,0,-1); // Story Mode
+            custom_arr_set_scr(true,local.set,5,-1,-1); // :)
     // Elevator Type
         // Main
             /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Has Descriptions*/
@@ -436,6 +459,7 @@ draw_load_scr("Loading config...");
         // Defaults
             custom_arr_add_len_scr(0,1);
             custom_arr_set_scr(ele_end_02_const,local.ele_end_02,-1,-1,-1); // Default
+            custom_arr_set_scr(900,local.set,-1,0,-1); // Story Mode
     // Elevator Rate 1
         // Main
             /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Has Descriptions*/
@@ -458,6 +482,7 @@ draw_load_scr("Loading config...");
         // Defaults
             custom_arr_add_len_scr(0,1);
             custom_arr_set_scr(ele_rate_03_const,local.ele_rate_03,-1,-1,-1); // Default
+            custom_arr_set_scr(95,local.set,-1,0,-1); // Story Mode
 // Behaviors
     // Player
         local.player = type_add_scr("player",true,false,0,player_obj,noone,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/

@@ -18,7 +18,7 @@ object_event_add
     // Assets
     load_var = true;
     spr_var = spr_add_scr(otto_spr_path,3,false,false,100,65);
-    snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DEAD\otto_js_snd.wav",false);
+    snd_var = snd_add_scr(otto_js_snd_path,false,snd_group_sfx_const,1,0,0);
     // Sound
     inst_var = noone;
     // Animate

@@ -12,13 +12,11 @@ object_event_add
     event_inherited();
     bg_color_var = make_color_rgb(47,33,88);
     background_color = bg_color_var;
-    mdl_01_var = d3d_model_create();
-    d3d_model_load(mdl_01_var,main_directory_const+"\MDL\DH\dh_sky_01_mdl.gmmod");
-    mdl_02_var = d3d_model_create();
-    d3d_model_load(mdl_02_var,main_directory_const+"\MDL\DH\dh_sky_02_mdl.gmmod");
-    bg_01_var = background_add(dh_directory_const+"\TEX\DOLL\MODELS\SKY.png",false,false);
+    mdl_01_var = mdl_add_scr(dh_sky_01_mdl_path);
+    mdl_02_var = mdl_add_scr(dh_sky_02_mdl_path);
+    bg_01_var = bg_add_scr(dh_sky_01_bg_path,false,false);
+    bg_02_var = bg_add_scr(dh_sky_02_bg_path,false,false);
     tex_01_var = background_get_texture(bg_01_var);
-    bg_02_var = background_add(dh_directory_const+"\TEX\DOLL\MODELS\SKY2.png",false,false);
     tex_02_var = background_get_texture(bg_02_var);
     z_off_var = -10; // Rough estimate
     load_var = true;

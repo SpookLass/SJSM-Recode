@@ -1,6 +1,5 @@
 /*
 Argument 0: Sprite file path
-Author: Uncanny Goat
 */
 local.spr = sprite_add(vanilla_directory_const+"\TEX\sprites\MS4_04_spr.png",2,false,false,0,0);
 // Only include if sprite is centered

@@ -16,19 +16,16 @@ object_event_add
     str_var = ini_read_string("DEAD","pup","DEAD_pup");
     ini_close();
     // Assets
-    spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\FACE_04_spr.png",2,0,0,0,0);
-    sprite_set_offset(spr_var,sprite_get_width(spr_var)/2,sprite_get_height(spr_var));
-    eye_face_spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\FACE_04b_spr.png",1,0,0,0,0);
-    sprite_set_offset(eye_face_spr_var,sprite_get_width(eye_face_spr_var)/2,sprite_get_height(eye_face_spr_var));
-    hand_spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\FACE_04c_spr.png",1,0,0,0,0);
-    sprite_set_offset(hand_spr_var,sprite_get_width(hand_spr_var),0);
+    spr_var = spr_add_scr(pup_face_spr_path,2,0,0,0,0);
+    eye_face_spr_var = spr_add_scr(pup_eye_face_spr_path,1,0,0,0,0);
+    hand_spr_var = spr_add_scr(pup_hand_spr_path,1,0,0,0,0);
     eye_spr_var = spr_add_scr(pup_eye_spr_path,2,false,false,0,115);
     fade_spr_var = spr_add_scr(static_fade_spr_path,5,false,false,0,0);
-    bg_01_var = background_add(main_directory_const+"\BG\DEAD\pup_dead_01_bg.png",false,false);
-    bg_02_var = background_add(main_directory_const+"\BG\DEAD\pup_dead_02_bg.png",false,false);
-    snd_01_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\pup_"+choose("01","02","03","04")+"_snd.wav",false);
-    snd_02_var = fmod_snd_add_scr(main_directory_const+"\SND\DEAD\pup_dead_snd.wav",false);
-    snd_03_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\pup_wake_snd.wav",false);
+    bg_01_var = bg_add_scr(pup_dead_01_bg_path,false,false);
+    bg_02_var = bg_add_scr(pup_dead_02_bg_path,false,false);
+    snd_01_var = snd_add_scr(choose(pup_01_snd_path,pup_02_snd_path,pup_03_snd_path,pup_04_snd_path),false,snd_group_sfx_const,1,0,0);
+    snd_02_var = snd_add_scr(pup_dead_snd_path,false,snd_group_mus_const,1,0,0);
+    snd_03_var = snd_add_scr(pup_wake_snd_path,false,snd_group_sfx_const,1,0,0);
     load_var = true;
     // Sprites
     spr_id_var = 0;

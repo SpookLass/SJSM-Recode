@@ -47,47 +47,17 @@ object_event_add
 (argument0,ev_create,0,'
     event_inherited();
     true_time_var = true;
-	
-	local.array_index = 0;
-	local.wall_index = 1;
-	local.finalwall_index = "01"
-	
-    while file_exists(working_directory+"\DATA\TEX\WALL_"+local.finalwall_index+".png")
-	{
-        sub_bg_arr[local.array_index] = background_add(working_directory+"\DATA\TEX\WALL_"+local.finalwall_index+".png",false,false);
-        
-        local.array_index += 1;
-        local.wall_index += 1;
-        
-        if local.wall_index < 10 { local.finalwall_index = "0"+string(local.wall_index); }
-        else { local.finalwall_index = string(local.wall_index); }
-	}
-	
-	local.wall_index = 1;
-	local.finalwall_index = "01";
-	
-	while file_exists(working_directory+"\DATA\EM\TEX\EM_WALL_"+local.finalwall_index+".png")
-	{
-        sub_bg_arr[local.array_index] = background_add(working_directory+"\DATA\EM\TEX\EM_WALL_"+local.finalwall_index+".png",false,false);
-        
-        local.array_index += 1;
-        local.wall_index += 1;
-        
-        if local.wall_index < 10 { local.finalwall_index = "0"+string(local.wall_index); }
-        else { local.finalwall_index = string(local.wall_index); }
-	}
-	
-	sub_bg_len_var = local.array_index;
-	
+    // Sub backgrounds
+	sub_bg_len_var = tex_len_arr[1];
+    for (local.i=0; local.i<sub_bg_len_var; local.i+=1;)
+    { sub_bg_arr[local.i] = bg_add_scr(tex_wall_arr[1,local.i],false,true); }
 	sub_bg_var = 0;
-	
 	subbgscroll_var = 0;
-	
 	subbgalpha_var = 0;
 	player_id_var = 0;
     // Sprites
-    set_spr_var = sprite_add(main_directory_const+"\SPR\UI\settings_spr.png",2,false,false,46,48);
-    multi_spr_var = sprite_add(main_directory_const+"\SPR\UI\multi_spr.png",2,false,false,45,45);
+    set_spr_var = spr_add_scr(settings_spr_path,2,false,false,46,48);
+    multi_spr_var = spr_add_scr(multi_spr_path,2,false,false,45,45);
     old_var = false;
     if !irandom(7)
     {
@@ -97,26 +67,25 @@ object_event_add
             {
                 title_01_scale_var = 240;
                 title_spr_var = spr_add_scr(menu_title_hd_spr_path,1,false,false,0,0);
-                bg_var = background_add(main_directory_const+"\BG\UI\menu_hd_bg.png",false,false);
+                bg_var = bg_add_scr(menu_hd_bg_path,false,false);
                 light_01_bg_var = background_add(vanilla_directory_const+"\MAT\blank.png",false,false);
                 light_02_bg_var = background_add(vanilla_directory_const+"\MAT\blank.png",false,false);
-                path_bg_var = background_add(vanilla_directory_const+"\TEX\menu\path_tex.png",false,false);
-                menu_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\menu_mus_snd.mp3");
+                path_bg_var = bg_add_scr(menu_path_bg_path,false,false);
+                menu_mus_snd_var = snd_add_scr(menu_mus_snd_path,false,snd_group_mus_const,1,0,0);
                 rain_var = true;
                 break;
             }
             case 1: // Old OG
             {
                 title_01_scale_var = 162;
-                title_spr_var = spr_add_scr(main_directory_const+"\SPR\UI\menu_title_old_01_spr",7,false,false,0,0);
-                title_02_spr_var = spr_add_scr(main_directory_const+"\SPR\UI\menu_title_old_02_spr",1,false,false,0,0);
+                title_spr_var = spr_add_scr(menu_title_old_01_spr_path,7,false,false,0,0);
+                title_02_spr_var = spr_add_scr(menu_title_old_02_spr_path,1,false,false,0,0);
                 old_var = true;
-                bg_var = background_add(main_directory_const+"\BG\UI\menu_old_bg.png",false,false);
-                light_01_bg_var = background_add(main_directory_const+"\BG\UI\menu_light_01_old_bg.png",false,false);
-                light_02_bg_var = background_add(main_directory_const+"\BG\UI\menu_light_02_old_bg.png",false,false);
-                path_bg_var = background_add(vanilla_directory_const+"\TEX\menu\path_tex.png",false,false);
-                menu_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\menu_mus_old_snd.mp3");
-                fmod_snd_set_max_vol_scr(menu_mus_snd_var,0.75);
+                bg_var = bg_add_scr(menu_old_bg_path,false,false);
+                light_01_bg_var = bg_add_scr(menu_light_01_old_bg_path,false,false);
+                light_02_bg_var = bg_add_scr(menu_light_02_old_bg_path,false,false);
+                path_bg_var = bg_add_scr(menu_path_bg_path,false,false);
+                menu_mus_snd_var = snd_add_scr(menu_mus_old_snd_path,false,snd_group_mus_const,0.75,0,0);
                 rain_var = true;
                 break;
             }
@@ -125,24 +94,21 @@ object_event_add
                 title_01_scale_var = 240;
                 title_spr_var = spr_add_scr(menu_title_new_spr_path,1,false,false,0,0);
                 rain_var = false;
-                bg_var = background_add(main_directory_const+"\BG\UI\menu_bg.png",false,false);
-                path_bg_var = background_add(main_directory_const+"\BG\UI\menu_path_bg.png",false,false);
-                menu_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\menu_mus_snd.mp3");
+                bg_var = bg_add_scr(menu_day_bg_path,false,false);
+                path_bg_var = bg_add_scr(menu_path_day_bg_path,false,false);
                 background_color = make_color_rgb(31,37,89);
-                menu_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\menu_mus_snd.mp3");
+                menu_mus_snd_var = snd_add_scr(menu_mus_snd_path,false,snd_group_mus_const,1,0,0);
                 break;
             }
             default: // Random OG
             {
                 title_01_scale_var = 240;
-                local.path = vanilla_directory_const+"\TEX\menu\"+choose("name_uhh_spr","name_uhh_spr2","name_uhh_spr3","name_uhh_spr4")+".png";
-                title_spr_var = sprite_add(local.path,1,false,false,0,0);
-                sprite_set_offset(title_spr_var,sprite_get_width(title_spr_var)/2,sprite_get_height(title_spr_var)/2);
-                bg_var = background_add(vanilla_directory_const+"\TEX\menu\menu_tex.png",false,false);
-                light_01_bg_var = background_add(vanilla_directory_const+"\TEX\menu\menu2_tex.png",false,false);
-                light_02_bg_var = background_add(vanilla_directory_const+"\TEX\menu\menu3_tex.png",false,false);
-                path_bg_var = background_add(vanilla_directory_const+"\TEX\menu\path_tex.png",false,false);
-                menu_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\menu_mus_snd.mp3");
+                title_spr_var = spr_add_scr(choose(menu_title_tape_spr_path,menu_title_sand_spr_path,menu_title_bbq_spr_path,menu_title_teeth_spr_path),1,false,false,0,0);
+                bg_var = bg_add_scr(menu_bg_path,false,false);
+                light_01_bg_var = bg_add_scr(menu_light_01_bg_path,false,false);
+                light_02_bg_var = bg_add_scr(menu_light_02_bg_path,false,false);
+                path_bg_var = bg_add_scr(menu_path_bg_path,false,false);
+                menu_mus_snd_var = snd_add_scr(menu_mus_snd_path,false,snd_group_mus_const,1,0,0);
                 rain_var = true;
                 break;
             }
@@ -155,37 +121,32 @@ object_event_add
         rain_var = (current_hour <= 6 || current_hour >= 18);
         if rain_var // Night
         {
-            bg_var = background_add(vanilla_directory_const+"\TEX\menu\menu_tex.png",false,false);
-            light_01_bg_var = background_add(vanilla_directory_const+"\TEX\menu\menu2_tex.png",false,false);
-            light_02_bg_var = background_add(vanilla_directory_const+"\TEX\menu\menu3_tex.png",false,false);
-            path_bg_var = background_add(vanilla_directory_const+"\TEX\menu\path_tex.png",false,false);
+            bg_var = bg_add_scr(menu_bg_path,false,false);
+            light_01_bg_var = bg_add_scr(menu_light_01_bg_path,false,false);
+            light_02_bg_var = bg_add_scr(menu_light_02_bg_path,false,false);
+            path_bg_var = bg_add_scr(menu_path_bg_path,false,false);
             
         }
         else // Day
         {
-            bg_var = background_add(main_directory_const+"\BG\UI\menu_bg.png",false,false);
-            path_bg_var = background_add(main_directory_const+"\BG\UI\menu_path_bg.png",false,false);
-            menu_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\menu_mus_snd.mp3");
+            bg_var = bg_add_scr(menu_day_bg_path,false,false);
+            path_bg_var = bg_add_scr(menu_path_day_bg_path,false,false);
             background_color = make_color_rgb(31,37,89);
         }
-        menu_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\menu_mus_snd.mp3");
+        menu_mus_snd_var = snd_add_scr(menu_mus_snd_path,false,snd_group_mus_const,1,0,0);
     }
     title_y_var = 141; // 170
     title_02_y_var = 270;
     // Backgrounds
-    cloud_bg_var = background_add(vanilla_directory_const+"\TEX\menu\menu_clouds2_tex.png",false,false);
-    path_cloud_bg_var = background_add(vanilla_directory_const+"\TEX\menu\menu_clouds_tex.png",false,false);
-    multi_bg_var = background_add(main_directory_const+"\BG\UI\multi_bg.png",false,false);
+    cloud_bg_var = bg_add_scr(menu_cloud_bg_path,false,false);
+    path_cloud_bg_var = bg_add_scr(menu_path_cloud_bg_path,false,false);
+    multi_bg_var = bg_add_scr(multi_bg_path,false,false);
     // Sounds
-    select_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\menu_select_snd.wav");
-    confirm_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\menu_confirm_snd.wav");
-    popup_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\menu_popup_snd.wav");
-    start_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\menu_start_snd.wav");
-    fmod_snd_set_group_scr(start_snd_var,snd_group_mus_const);
-    story_mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\story_mus_snd.mp3");
-    fmod_snd_set_group_scr(story_mus_snd_var,snd_group_mus_const);
-    fmod_snd_set_group_scr(menu_mus_snd_var,snd_group_mus_const);
-    fmod_snd_set_loop_point_scr(menu_mus_snd_var,5/70,69/70);
+    select_snd_var = snd_add_scr(menu_select_snd_path,false,snd_group_sfx_const,1,0,0);
+    confirm_snd_var = snd_add_scr(menu_confirm_snd_path,false,snd_group_sfx_const,1,0,0);
+    popup_snd_var = snd_add_scr(menu_popup_snd_path,false,snd_group_sfx_const,1,0,0);
+    start_snd_var = snd_add_scr(menu_start_snd_path,false,snd_group_sfx_const,1,0,0);
+    story_mus_snd_var = snd_add_scr(story_mus_snd_path,false,snd_group_mus_const,1,0,0);
     // Text
     ini_open("lang_"+global.lang_var+".ini");
     skip_str_var = string_replace(ini_read_string("MENU","skip","MENU_skip"),"@k",key_to_str_scr(global.input_key_arr[confirm_input_const,0]));

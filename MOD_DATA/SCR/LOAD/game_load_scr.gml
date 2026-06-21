@@ -102,13 +102,13 @@ execute_file(main_directory_const+"\SCR\LOAD\coll_load_scr.gml");
 execute_file(main_directory_const+"\SCR\LOAD\part_load_scr.gml");
 execute_file(main_directory_const+"\SCR\LOAD\obj_load_scr.gml");
 execute_file(main_directory_const+"\SCR\LOAD\rm_load_scr.gml");
-execute_file(main_directory_const+"\SCR\LOAD\zone_load_scr.gml",true);
-execute_file(main_directory_const+"\SCR\LOAD\tex_load_scr.gml");
-execute_file(main_directory_const+"\SCR\LOAD\js_load_scr.gml");
 if gamemaker_version == 800 { shader_load_scr(); }
 // Settings
 execute_file(main_directory_const+"\SCR\LOAD\menu_load_01_scr.gml");
 execute_file(main_directory_const+"\SCR\LOAD\menu_load_02_scr.gml");
+// Lists
+execute_file(main_directory_const+"\SCR\LOAD\zone_load_scr.gml",true);
+execute_file(main_directory_const+"\SCR\LOAD\tex_load_scr.gml");
 // Load Mods
 execute_file(main_directory_const+"\SCR\LOAD\mod_load_02_scr.gml");
 // Load Settings
@@ -123,54 +123,6 @@ for (local.i=0; local.i<global.input_len_var; local.i+=1)
         global.input_press_arr[local.i,local.j] = 0;
     }
 }
-// Gay
-global.pride_len_var = 30;
-global.pride_arr[0] = pride_color_obj;
-global.pride_arr[1] = abro_color_obj;
-global.pride_arr[2] = ace_color_obj;
-global.pride_arr[3] = aceflux_color_obj;
-global.pride_arr[4] = agender_color_obj;
-global.pride_arr[5] = aro_color_obj;
-global.pride_arr[6] = aroace_color_obj;
-global.pride_arr[7] = bi_color_obj;
-global.pride_arr[8] = bigender_color_obj;
-global.pride_arr[9] = demiboy_color_obj;
-global.pride_arr[10] = demigirl_color_obj;
-global.pride_arr[11] = enby_color_obj;
-global.pride_arr[12] = gay_color_obj;
-global.pride_arr[13] = genderfluid_color_obj;
-global.pride_arr[14] = genderflux_color_obj;
-global.pride_arr[15] = genderqueer_color_obj;
-global.pride_arr[16] = grayce_color_obj;
-global.pride_arr[17] = grayro_color_obj;
-global.pride_arr[18] = lesbian_color_obj;
-global.pride_arr[19] = maverique_color_obj;
-global.pride_arr[20] = omni_color_obj;
-global.pride_arr[21] = pan_color_obj;
-global.pride_arr[22] = pangender_color_obj;
-global.pride_arr[23] = polyce_color_obj;
-global.pride_arr[24] = queer_color_obj;
-global.pride_arr[25] = trans_color_obj;
-global.pride_arr[26] = transfem_color_obj;
-global.pride_arr[27] = transmasc_color_obj;
-global.pride_arr[28] = trigender_color_obj;
-global.pride_arr[29] = xenogender_color_obj;
-// Trans
-global.trans_len_var = 14;
-global.trans_arr[0] = agender_color_obj;
-global.trans_arr[1] = bigender_color_obj;
-global.trans_arr[2] = demiboy_color_obj;
-global.trans_arr[3] = demigirl_color_obj;
-global.trans_arr[4] = enby_color_obj;
-global.trans_arr[5] = genderfluid_color_obj;
-global.trans_arr[6] = genderflux_color_obj;
-global.trans_arr[7] = genderqueer_color_obj;
-global.trans_arr[8] = pangender_color_obj;
-global.trans_arr[9] = trans_color_obj;
-global.trans_arr[10] = transfem_color_obj;
-global.trans_arr[11] = transmasc_color_obj;
-global.trans_arr[12] = trigender_color_obj;
-global.trans_arr[13] = xenogender_color_obj;
 // Stop drawing text
 draw_set_halign(fa_left); draw_set_valign(fa_top);
 // Load

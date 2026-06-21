@@ -20,7 +20,7 @@ object_event_add
     }
     ini_close();
     // Background
-    bg_var = background_add(main_directory_const+"\BG\UI\multi_bg.png",false,false);
+    bg_var = bg_add_scr(multi_bg_path,false,false);
     bg_xscale_var = 512;
     bg_yscale_var = 512;
     bg_x_var = 0;

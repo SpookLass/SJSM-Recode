@@ -9,7 +9,7 @@ object_set_visible(argument0,false);
 // Create event
 object_event_add
 (argument0,ev_create,0,'
-    bg_var = background_add(main_directory_const+"\BG\RM\asy_note_bg.png",false,false);
+    bg_var = bg_add_scr(asy_note_bg_path,false,false);
     bg_load_var = true;
     ini_open("lang_"+global.lang_var+".ini");
     str_var = ini_read_string("NOTE","pt","NOTE_pt");

@@ -17,9 +17,8 @@ object_event_add
 ");
     ini_close();
     // Load assets
-    spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS21_01_spr.png",8,0,0,0,0);
-    sprite_set_offset(spr_var,sprite_get_width(spr_var)/2,sprite_get_height(spr_var)/2);
-    snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\M6_AMB2.mp3");
+    spr_var = spr_add_scr(patient_dead_spr_path,8,0,0,0,0);
+    snd_var = snd_add_scr(kh_dead_snd_path,false,snd_group_mus_const,1,0,0);
     load_var = true;
     // Sound
     fmod_snd_play_scr(snd_var);

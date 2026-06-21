@@ -29,9 +29,7 @@ object_event_add
         for (local.i=0; local.i<bg_len_var; local.i+=1;)
         {
             draw_load_scr("Loading backgrounds ("+string(local.i+1)+" / "+string(bg_len_var)+")...");
-            local.gml = filename_change_ext(bg_arr_var[local.i,1],".gml");
-            if file_exists(local.gml) { bg_arr_var[local.i,0] = execute_file(local.gml,bg_arr_var[local.i,1]); }
-            else { bg_arr_var[local.i,0] = background_add(bg_arr_var[local.i,1],bg_arr_var[local.i,2],bg_arr_var[local.i,3]); }
+            bg_arr_var[local.i,0] = bg_add_scr(bg_arr_var[local.i,1],bg_arr_var[local.i,2],bg_arr_var[local.i,3]);
         }
         draw_load_scr("Loaded backgrounds!");
     }
@@ -41,9 +39,7 @@ object_event_add
         for (local.i=0; local.i<spr_len_var; local.i+=1;)
         {
             draw_load_scr("Loading sprites ("+string(local.i+1)+" / "+string(spr_len_var)+")...");
-            local.gml = filename_change_ext(spr_arr_var[local.i,1],".gml");
-            if file_exists(local.gml) { spr_arr_var[local.i,0] = execute_file(local.gml,spr_arr_var[local.i,1]); }
-            else { spr_arr_var[local.i,0] = sprite_add(spr_arr_var[local.i,1],spr_arr_var[local.i,2],spr_arr_var[local.i,3],spr_arr_var[local.i,4],spr_arr_var[local.i,5],spr_arr_var[local.i,6]); }
+            spr_arr_var[local.i,0] = spr_add_scr(spr_arr_var[local.i,1],spr_arr_var[local.i,2],spr_arr_var[local.i,3],spr_arr_var[local.i,4],spr_arr_var[local.i,5],spr_arr_var[local.i,6]);
         }
         draw_load_scr("Loaded sprites!");
     }
@@ -53,9 +49,7 @@ object_event_add
         for (local.i=0; local.i<snd_len_var; local.i+=1;)
         {
             draw_load_scr("Loading sounds ("+string(local.i+1)+" / "+string(snd_len_var)+")...");
-            local.gml = filename_change_ext(snd_arr_var[local.i,1],".gml");
-            if file_exists(local.gml) { snd_arr_var[local.i,0] = execute_file(local.gml,snd_arr_var[local.i,1]); }
-            else { snd_arr_var[local.i,0] = fmod_snd_add_scr(snd_arr_var[local.i,1],snd_arr_var[local.i,2]); }
+            snd_arr_var[local.i,0] = snd_add_scr(snd_arr_var[local.i,1],snd_arr_var[local.i,2],snd_arr_var[local.i,3],snd_arr_var[local.i,4],snd_arr_var[local.i,5],snd_arr_var[local.i,6]);
         }
         draw_load_scr("Loaded sounds!");
     }
@@ -65,8 +59,7 @@ object_event_add
         for (local.i=0; local.i<mdl_len_var; local.i+=1;)
         {
             draw_load_scr("Loading models ("+string(local.i+1)+" / "+string(mdl_len_var)+")...");
-            mdl_arr_var[local.i,0] = d3d_model_create();
-            d3d_model_load(mdl_arr_var[local.i,0],mdl_arr_var[local.i,1])
+            mdl_arr_var[local.i,0] = mdl_add_scr(mdl_arr_var[local.i,1]);
         }
         draw_load_scr("Loaded models!");
     }
@@ -93,7 +86,6 @@ object_event_add
         for (local.i=0; local.i<bg_len_var; local.i+=1;)
         {
             draw_load_scr("Unloading backgrounds ("+string(local.i+1)+" / "+string(bg_len_var)+")...");
-            local.gml = filename_change_ext(bg_arr_var[local.i,1],".gml");
             background_delete(bg_arr_var[local.i,0]);
         }
         draw_load_scr("Unloaded backgrounds!");
@@ -104,7 +96,6 @@ object_event_add
         for (local.i=0; local.i<spr_len_var; local.i+=1;)
         {
             draw_load_scr("Unloading sprites ("+string(local.i+1)+" / "+string(spr_len_var)+")...");
-            local.gml = filename_change_ext(spr_arr_var[local.i,1],".gml");
             sprite_delete(spr_arr_var[local.i,0]);
         }
         draw_load_scr("Unloaded sprites!");
@@ -115,7 +106,6 @@ object_event_add
         for (local.i=0; local.i<snd_len_var; local.i+=1;)
         {
             draw_load_scr("Unloading sounds ("+string(local.i+1)+" / "+string(snd_len_var)+")...");
-            local.gml = filename_change_ext(snd_arr_var[local.i,1],".gml");
             fmod_snd_free_scr(snd_arr_var[local.i,0]);
         }
         draw_load_scr("Unloaded sounds!");

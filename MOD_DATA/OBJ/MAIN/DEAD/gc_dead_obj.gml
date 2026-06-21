@@ -17,8 +17,8 @@ object_event_add
 ");
     ini_close();
     // Load assets
-    bg_var = background_add(vanilla_directory_const+"\TEX\sprites\MS22_01_spr.png",false,false);
-    snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\M6_AMB2.mp3");
+    bg_var = bg_add_scr(gc_dead_bg_path,false,false);
+    snd_var = snd_add_scr(kh_dead_snd_path,false,snd_group_mus_const,1,0,0);
     load_var = true;
     // Sound
     fmod_snd_play_scr(snd_var);

@@ -156,7 +156,7 @@ object_event_add
         {
             other.spr_var = spr_var;
             other.slime_bg_var = slime_bg_var;
-            other.overlay_bg_var = overlay_bg_var;
+            other.overlay_spr_var = overlay_spr_var;
             for (local.i=0; local.i<snd_len_var; local.i+=1;)
             { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
             other.wake_snd_var[1] = wake_snd_var[1];
@@ -171,7 +171,7 @@ object_event_add
     {
         spr_var = spr_add_scr(gel_spr_path,5,false,false,0,0);
         slime_bg_var = bg_add_scr(gel_slime_bg_path,false,false)
-        overlay_bg_var = background_add(vanilla_directory_const+"\TEX\sprites\MS_02_spr.png",false,false); // Uhhh
+        overlay_spr_var = spr_add_scr(gel_dead_spr_path,1,false,false,0,0); // Uhhh
         snd_arr[0,0] = snd_add_scr(gel_01_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
         snd_arr[1,0] = snd_add_scr(gel_02_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
         snd_arr[2,0] = snd_add_scr(gel_03_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
@@ -198,7 +198,7 @@ object_event_add
     {
         sprite_delete(spr_var);
         background_delete(slime_bg_var);
-        background_delete(overlay_bg_var);
+        sprite_delete(overlay_spr_var);
         for (local.i=0; local.i<snd_len_var; local.i+=1;)
         { fmod_snd_free_scr(snd_arr[local.i,0]); }
         fmod_snd_free_scr(wake_snd_var[1]);

@@ -34,10 +34,8 @@ object_event_add
     str_xscale_var = 0.6;
     str_yscale_var = 0.6; // Height equals 576 times scale
     // Sprites
-    spr_01_var = sprite_add(dh_directory_const+"\TEX\sprites\HK_SPR3.png",11,false,false,0,0);
-    sprite_set_offset(spr_01_var,sprite_get_width(spr_01_var)*0.5,sprite_get_height(spr_01_var)*0.5);
-    spr_02_var = sprite_add(dh_directory_const+"\TEX\sprites\HK_SPR4.png",9,false,false,0,0);
-    sprite_set_offset(spr_02_var,sprite_get_width(spr_02_var)*0.5,sprite_get_height(spr_02_var)*0.5);
+    spr_01_var = spr_add_scr(hk_dead_01_spr_path,11,false,false,0,0);
+    spr_02_var = spr_add_scr(hk_dead_02_spr_path,9,false,false,0,0);
     spr_spd_01_var = 0.6;
     spr_alpha_01_var = 0.5;
     spr_id_01_var = 0;
@@ -48,8 +46,8 @@ object_event_add
     spr_xscale_02_var = spr_xscale_base_02_var;
     spr_x_02_var = 0;
     // Backgrounds
-    bg_var = background_add(dh_directory_const+"\TEX\sprites\HK_SPR5.png",false,false);
-    static_bg_var = background_add(main_directory_const+"\BG\DH\tile_static_bg.png",false,false);
+    bg_var = bg_add_scr(hk_dead_bg_path,false,false);
+    static_bg_var = bg_add_scr(tile_static_bg_path,false,false);
     bg_yscale_var = 1440;
     x = 0;
     y = -32;
@@ -59,8 +57,8 @@ object_event_add
     static_x_var = random(static_xscale_var);
     static_y_var = random(static_yscale_var);
     // Sound
-    snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DH\hk_dead_snd.mp3");
-    atk_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DH\hk_atk_snd.wav");
+    snd_var = snd_add_scr(hk_dead_snd_path,false,snd_group_mus_const,1,0,0);
+    atk_snd_var = snd_add_scr(hk_atk_snd_path,false,snd_group_sfx_const,1,0,0);
     fmod_snd_loop_scr(snd_var);
     inst_var = noone;
     // Red

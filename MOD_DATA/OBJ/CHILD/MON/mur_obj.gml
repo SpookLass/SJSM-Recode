@@ -124,7 +124,7 @@ object_event_add
         fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
         // Textures
         wall_bg_var = bg_add_scr(amn_wall_bg_path,false,false);
-        floor_bg_var = bg_add_scr(amn_floor_bg_path,false,false);
+        floor_bg_var = bg_add_scr(amn_floor_02_bg_path,false,false);
         ceil_bg_var = bg_add_scr(amn_ceil_bg_path,false,false);
         crate_bg_var = bg_add_scr(amn_crate_bg_path,false,false);
         // Water

@@ -23,15 +23,14 @@ object_event_add
     // Assets
     load_var = true;
     spr_var = spr_add_scr(bab_dead_spr_path,2,false,false,0,0);
-    snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\BAB_D.mp3",false);
-    fmod_snd_set_group_scr(snd_var,snd_group_mus_const);
+    snd_var = snd_add_scr(bab_dead_snd_path,false,snd_group_mus_const,1,0,0);
     snd_len_var = 6;
-    snd_arr_var[0] = fmod_snd_add_scr(main_directory_const+"\SND\DEAD\bab_txt_01_snd.wav",false);
-    snd_arr_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\DEAD\bab_txt_02_snd.wav",false);
-    snd_arr_var[2] = fmod_snd_add_scr(main_directory_const+"\SND\DEAD\bab_txt_03_snd.wav",false);
-    snd_arr_var[3] = fmod_snd_add_scr(main_directory_const+"\SND\DEAD\bab_txt_04_snd.wav",false);
-    snd_arr_var[4] = fmod_snd_add_scr(main_directory_const+"\SND\DEAD\bab_txt_05_snd.wav",false);
-    snd_arr_var[5] = fmod_snd_add_scr(main_directory_const+"\SND\DEAD\bab_txt_06_snd.wav",false);
+    snd_arr_var[0] = snd_add_scr(bab_txt_01_snd_path,false,snd_group_sfx_const,1,0,0);
+    snd_arr_var[1] = snd_add_scr(bab_txt_02_snd_path,false,snd_group_sfx_const,1,0,0);
+    snd_arr_var[2] = snd_add_scr(bab_txt_03_snd_path,false,snd_group_sfx_const,1,0,0);
+    snd_arr_var[3] = snd_add_scr(bab_txt_04_snd_path,false,snd_group_sfx_const,1,0,0);
+    snd_arr_var[4] = snd_add_scr(bab_txt_05_snd_path,false,snd_group_sfx_const,1,0,0);
+    snd_arr_var[5] = snd_add_scr(bab_txt_06_snd_path,false,snd_group_sfx_const,1,0,0);
     static_spr_var = static_01_spr;
     // Sprite
     spr_visible_var = true;

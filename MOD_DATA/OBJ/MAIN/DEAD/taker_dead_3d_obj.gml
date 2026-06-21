@@ -12,9 +12,8 @@ object_event_add
     event_inherited();
     spot_alarm_var = 221.4; // 240
     inst_var = fmod_snd_loop_scr(taker_mus_snd);
-    spot_bg_var = background_add(vanilla_directory_const+"\TEX\mobile\MB5_20_tex.png",false,false);
-    spot_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DEAD\taker_spot_snd.wav",true);
-    fmod_snd_set_minmax_dist_scr(spot_snd_var,0,600)
+    spot_bg_var = bg_add_scr(mad_spot_bg_path,false,false);
+    spot_snd_var = snd_add_scr(taker_spot_snd_path,true,snd_group_sfx_const,1,0,600);
     load_var = true;
     spot_id_var = 0;
     // Alarm

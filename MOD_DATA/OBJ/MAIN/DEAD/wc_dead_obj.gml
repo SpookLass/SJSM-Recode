@@ -16,10 +16,9 @@ object_event_add
     str_var = ini_read_string("DEAD","wc","DEAD_wc");
     ini_close();
     // Load assets
-    bg_var = background_add(dh_directory_const+"\TEX\sprites\WD_SPR6.png",false,false);
-    spr_var = sprite_add(dh_directory_const+"\TEX\sprites\WD_SPR7.png",1,false,false,0,0);
-    sprite_set_offset(spr_var,sprite_get_width(spr_var),sprite_get_height(spr_var));
-    snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DH\wc_dead_snd.mp3");
+    bg_var = bg_add_scr(wc_dead_bg_path,false,false);
+    spr_var = spr_add_scr(wc_dead_spr_path,1,false,false,0,0);
+    snd_var = snd_add_scr(wc_dead_snd_path,false,snd_group_mus_const,1,0,0);
     load_var = true;
     // Background
     image_alpha = random_range(0.5,0.7);

@@ -150,17 +150,17 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
-        spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS24_01_spr.png",8,false,false,0,0);
-        bg_overlay_var = background_add(vanilla_directory_const+"\TEX\sprites\fog2_spr.png",false,false);
-        shadow_spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS24_02_spr.png",9,false,false,0,0);
-        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\tiri_01_snd.wav",true);
-        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\tiri_02_snd.wav",true);
-        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\tiri_03_snd.wav",true);
-        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\tiri_04_snd.wav",true);
+        spr_var = spr_add_scr(tiri_spr_path,8,false,false,0,0);
+        bg_overlay_var = bg_add_scr(tiri_snow_bg_path,false,false);
+        shadow_spr_var = spr_add_scr(tiri_shadow_spr_path,9,false,false,0,0);
+        snd_arr[0,0] = snd_add_scr(tiri_01_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[1,0] = snd_add_scr(tiri_02_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[2,0] = snd_add_scr(tiri_03_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[3,0] = snd_add_scr(tiri_04_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
         switch theme_scr(global.tiri_theme_var,global.theme_var,1,0,0,1)
         {
-            case 1: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\tiri_rom_mus_snd.ogg"); break; }
-            default: { mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\TIRSIAK_AMB.mp3"); break; }
+            case 1: { mus_snd_var = snd_add_scr(tiri_rom_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
+            default: { mus_snd_var = snd_add_scr(tiri_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
         }
         fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
     }

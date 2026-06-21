@@ -158,32 +158,31 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
-        main_spr_var = sprite_add(dh_directory_const+"\TEX\sprites\WD_SPR2.png",15,false,false,0,0);
-        rise_spr_var = sprite_add(dh_directory_const+"\TEX\sprites\WD_SPR1.png",18,false,false,0,0);
-        atk_spr_var = sprite_add(dh_directory_const+"\TEX\sprites\WD_SPR3.png",10,false,false,0,0);
-        atk_end_spr_var = sprite_add(dh_directory_const+"\TEX\sprites\WD_SPR4.png",9,false,false,0,0);
-        dead_spr_var = sprite_add(dh_directory_const+"\TEX\sprites\WD_SPR5.png",2,false,false,0,0);
-        static_bg_var = background_add(main_directory_const+"\BG\DH\tile_static_bg.png",false,false);
-        doll_blood_bg_var = background_add(main_directory_const+"\BG\DH\doll_blood_bg.png",false,false);
-        shadow_bg_var = background_add(main_directory_const+"\BG\DH\shadow_bg.png",false,false);
-        snd_arr[0,0] = fmod_snd_add_scr(main_directory_const+"\SND\DH\wc_01_snd.wav",true);
-        snd_arr[1,0] = fmod_snd_add_scr(main_directory_const+"\SND\DH\wc_02_snd.wav",true);
-        snd_arr[2,0] = fmod_snd_add_scr(main_directory_const+"\SND\DH\wc_03_snd.wav",true);
-        snd_arr[3,0] = fmod_snd_add_scr(main_directory_const+"\SND\DH\wc_04_snd.wav",true);
-        snd_arr[4,0] = fmod_snd_add_scr(main_directory_const+"\SND\DH\wc_05_snd.wav",true);
-        snd_arr[5,0] = fmod_snd_add_scr(main_directory_const+"\SND\DH\wc_06_snd.wav",true);
-        snd_arr[6,0] = fmod_snd_add_scr(main_directory_const+"\SND\DH\wc_07_snd.wav",true);
-        snd_arr[7,0] = fmod_snd_add_scr(main_directory_const+"\SND\DH\wc_08_snd.wav",true);
-        atk_start_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\DH\wc_atk_snd.wav",true);
-        hurt_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\DH\doll_hurt_snd.wav");
-        dead_snd_var[0]  = fmod_snd_add_scr(main_directory_const+"\SND\DH\wc_die_snd.wav",true);
+        main_spr_var = spr_add_scr(wc_spr_path,15,false,false,0,0);
+        rise_spr_var = spr_add_scr(wc_rise_spr_path,18,false,false,0,0);
+        atk_spr_var = spr_add_scr(wc_atk_spr_path,10,false,false,0,0);
+        atk_end_spr_var = spr_add_scr(wc_atk_end_spr_path,9,false,false,0,0);
+        dead_spr_var = spr_add_scr(wc_dead_spr_path,2,false,false,0,0);
+        static_bg_var = bg_add_scr(tile_static_bg_path,false,false);
+        doll_blood_bg_var = bg_add_scr(doll_blood_bg_path,false,false);
+        shadow_bg_var = bg_add_scr(shadow_bg_path,false,false);
+        snd_arr[0,0] = snd_add_scr(wc_01_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[1,0] = snd_add_scr(wc_02_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[2,0] = snd_add_scr(wc_03_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[3,0] = snd_add_scr(wc_04_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[4,0] = snd_add_scr(wc_05_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[5,0] = snd_add_scr(wc_06_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[6,0] = snd_add_scr(wc_07_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        snd_arr[7,0] = snd_add_scr(wc_08_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        atk_start_snd_var[1] = snd_add_scr(wc_atk_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        hurt_snd_var[1] = snd_add_scr(doll_hurt_snd_path,false,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        dead_snd_var[0]  = snd_add_scr(wc_die_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
         switch theme_scr(global.wc_theme_var,global.theme_var,2,0,1,2)
         {
-            case 2: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\wc_rom_mus_snd.ogg"); break; }
-            case 1: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DH\wc_static_snd.wav"); break; }
-            default: { mus_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\wc_mus_snd.mp3"); break; }
+            case 2: { mus_snd_var = snd_add_scr(wc_rom_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
+            case 1: { mus_snd_var = snd_add_scr(wc_static_snd_path,false,snd_group_mus_const,1,0,0); break; }
+            default: { mus_snd_var = snd_add_scr(wc_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
         }
-        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
     }
     shadow_tex_var = background_get_texture(shadow_bg_var);
     spr_var = main_spr_var;

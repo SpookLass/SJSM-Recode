@@ -38,8 +38,11 @@ object_event_add
         curr_prio_var = amb_mus_prio_const;
         local.curr_id = 0;
         local.mus = snd_var;
+        // Monsters
+        local.mons = 0;
         with mon_par_obj
         {
+            local.mons += 1;
             if variable_local_exists("mus_prio_var")
             {
                 if mus_prio_var > other.curr_prio_var
@@ -51,6 +54,15 @@ object_event_add
                 }
             }
         }
+        // Specimen Solstice!
+        if (((global.mult_mus_var == 1 || global.mult_mus_var == 2) && local.mons >= global.mult_max_var) 
+        || ((global.mult_mus_var == 1 || global.mult_mus_var == 3) && global.mult_type_var == 3))
+        && curr_prio_var < mb_mus_prio_const
+        {
+            curr_prio_var = mb_mus_prio_const;
+            local.mus = mult_mus_snd;
+        }
+        // Music Objects
         with mus_par_obj
         {
             // This can run before the create event for some reason
@@ -65,7 +77,7 @@ object_event_add
                 }
             }
         }
-        if local.curr_id != 0
+        if local.curr_id != 0 || curr_prio_var > amb_mus_prio_const
         {
             override_var = true;
             if local.mus != snd_var

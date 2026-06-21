@@ -18,7 +18,7 @@ object_event_add
     ini_close();
     // Load assets
     spr_var = spr_add_scr(body_dead_spr_path,6,false,false,0,0);
-    snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\M6_AMB2.mp3");
+    snd_var = snd_add_scr(kh_dead_snd_path,false,snd_group_mus_const,1,0,0);
     load_var = true;
     // Sound
     fmod_snd_loop_scr(snd_var);

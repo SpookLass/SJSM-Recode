@@ -593,6 +593,17 @@ draw_load_scr("Loading settings...");
         // Defaults
             set_add_default_scr(local.set,false);
 // Theme Toggle
+    // Shake Type
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("mult_mus","mult_mus","mult_mus",true,set_enum_const,0,3,true,local.theme_toggle,false,true);
+        // Labels
+            set_add_label_scr(local.set,0,"off",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            set_add_label_scr(local.set,1,"on",true,"");
+            set_add_label_scr(local.set,2,"mult",true,"");
+            set_add_label_scr(local.set,3,"hardest",true,"");
+        // Defaults
+            set_add_default_scr(local.set,2);
     // Gel
         local.set = set_add_theme_scr("gel",true,1,local.theme_toggle);
         set_add_label_scr(local.set,0,"main",true,"gel_theme_main");

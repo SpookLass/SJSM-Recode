@@ -9,24 +9,7 @@ object_set_visible(argument0,true);
 // Create event
 object_event_add
 (argument0,ev_create,0,'
-    store_tex_var = choose
-    (
-        art_01_bg_tex,
-        art_02_bg_tex,
-        art_03_bg_tex,
-        art_04_bg_tex,
-        art_05_bg_tex,
-        art_06_bg_tex,
-        art_07_bg_tex,
-        art_08_bg_tex,
-        art_09_bg_tex,
-        art_10_bg_tex,
-        art_11_bg_tex,
-        art_12_bg_tex,
-        art_13_bg_tex,
-        art_14_bg_tex,
-        art_15_bg_tex
-    );
+    store_tex_var = ds_list_find_value(art_list,irandom(ds_list_size(art_list)-1));
     event_inherited();
     solid_var = false;
     type_var = 6; // Double Plane

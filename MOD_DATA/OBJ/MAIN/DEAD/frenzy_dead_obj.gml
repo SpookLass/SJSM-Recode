@@ -22,8 +22,8 @@ object_event_add
     image_alpha = 0.8;
     // Assets
     load_var = true;
-    bg_var = background_add(main_directory_const+"\BG\DH\tile_static_bg.png",false,false);
-    snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DH\frenzy_dead_snd.mp3",false);
+    bg_var = bg_add_scr(tile_static_bg_path,false,false);
+    snd_var = snd_add_scr(frenzy_dead_snd_path,false,snd_group_mus_const,1,0,0);
     fmod_snd_play_scr(snd_var);
     // Background
     bg_xscale_min_var = 128;

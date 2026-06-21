@@ -61,35 +61,11 @@ object_event_add
         local.set = false;
         ele_var = false;
         // Elevator
-        switch global.ele_type_var
+        if ele_rm_scr(global.rm_count_var+1)
         {
-            case 2:
-            {
-                if global.ele_rate_03_var > 0
-                {
-                    if mod_scr(global.rm_count_var+1,global.ele_rate_03_var) == 0
-                    { rm_var = ele_rm; ele_var = true; local.set = true; break; }
-                }
-                if global.rm_count_var >= global.ele_end_02_var { break; }
-            }
-            case 1:
-            {
-                if global.ele_rate_02_var > 0
-                {
-                    if mod_scr(global.rm_count_var+1,global.ele_rate_02_var) == 0
-                    { rm_var = ele_rm; ele_var = true; local.set = true; break; }
-                }
-                if global.rm_count_var >= global.ele_end_01_var { break; }
-            }
-            default:
-            {
-                if global.ele_rate_01_var > 0
-                {
-                    if mod_scr(global.rm_count_var+1,global.ele_rate_01_var) == 0
-                    { rm_var = ele_rm; ele_var = true; local.set = true; break; }
-                }
-                break;
-            }
+            rm_var = ele_rm;
+            ele_var = true;
+            local.set = true;
         }
         // Rare Rooms
         if safe_var && !instance_exists(enemy_par_obj) && !local.set

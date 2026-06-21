@@ -230,8 +230,8 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
-        close_spr_var = spr_add_scr(dl_open_spr_path,4,false,false,0,0);
-        open_spr_var = spr_add_scr(dl_close_spr_path,4,false,false,0,0);
+        close_spr_var = spr_add_scr(dl_spr_path,4,false,false,0,0);
+        open_spr_var = spr_add_scr(dl_open_spr_path,4,false,false,0,0);
         snd_arr[0,0] = snd_add_scr(dl_01_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
         snd_arr[1,0] = snd_add_scr(dl_02_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
         snd_arr[2,0] = snd_add_scr(dl_03_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);

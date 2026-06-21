@@ -19,9 +19,9 @@ object_event_add
     // Load assets
     spr_01_var = spr_add_scr(eel_dead_01_spr_path,1,false,false,0,0);
     spr_02_var = spr_add_scr(eel_dead_02_spr_path,1,false,false,0,0);
-    spr_03_var = spr_add_scr(eel_dead_02_spr_path,4,false,false,0,0);
+    spr_03_var = spr_add_scr(eel_dead_03_spr_path,4,false,false,0,0);
     spr_04_var = static_01_spr;
-    snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DEAD\eel_dead_snd.ogg");
+    snd_var = snd_add_scr(eel_dead_snd_path,false,snd_group_mus_const,1,0,0);
     load_var = true;
     // Sprite
     spr_03_id_var = irandom(sprite_get_number(spr_03_var)-1);

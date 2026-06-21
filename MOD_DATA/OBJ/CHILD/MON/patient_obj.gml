@@ -44,8 +44,6 @@ object_event_add
     inv_limit_var = -1;
     atk_seen_delay_var = -1;
     // Render
-    tex_var = sprite_get_texture(spr_var,0);
-    mdl_var = mdl_01_var;
     draw_pos_var = false;
     weird_var = false;
     draw_x_var = x;
@@ -241,6 +239,8 @@ object_event_add
         mdl_02_var = mdl_add_scr(patient_02_mdl_path);
         bg_overlay_var = bg_add_scr(fog_bg_path,false,false);
     }
+    tex_var = sprite_get_texture(spr_var,0);
+    mdl_var = mdl_01_var;
 ');
 // Destroy Event
 object_event_add

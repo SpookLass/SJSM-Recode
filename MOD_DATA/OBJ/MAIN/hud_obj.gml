@@ -352,7 +352,7 @@ Taker
     Taker: "+string(par_var.alarm_arr[3,0])+" / "+string(par_var.alarm_arr[3,1])+"
 Zone
     Zone: "+cond_scr(global.zone_num_var < global.zone_len_var,"Endless "+string(global.zone_num_var),"Story "+string(global.zone_num_var-global.zone_len_var))+"
-    Tex: "+cond_scr(global.tex_var < global.tex_story_len_var,"Story "+string(global.tex_var),"Endless "+string(global.tex_var-global.tex_story_len_var))+"
+    Tex: "+string(global.tex_var)+"
     Rooms Left: "+string(ds_list_size(global.rm_list_var))+"
 Spawning
     Count: "+string(global.count_var)+"
@@ -376,7 +376,7 @@ Spawning
                     draw_set_color(c_white);
                     draw_set_blend_mode(bm_normal);*/
                     draw_set_blend_mode(bm_add);
-                    draw_background_stretched_ext(par_var.mon_var.overlay_bg_var,view_wview[view_current]*-0.15,0,view_wview[view_current]*2.15,view_hview[view_current],c_white,0.5);
+                    draw_sprite_stretched_ext(par_var.mon_var.overlay_spr_var,0,view_wview[view_current]*-0.15,0,view_wview[view_current]*2.15,view_hview[view_current],c_white,0.5);
                     draw_set_blend_mode(bm_normal);
                     break;
                 }

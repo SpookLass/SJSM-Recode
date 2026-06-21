@@ -305,15 +305,14 @@ object_event_add
     if !local.loaded
     {
         spr_var = wf_spr;
-        bg_var = background_add(vanilla_directory_const+"\TEX\sprites\MS28_02_spr.png",false,false);
-        tex_spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS28_03_spr.png",3,false,false,0,0);
-        door_bg_var = background_add(vanilla_directory_const+"\TEX\sprites\MS28_04_spr.png",false,false);
-        light_wall_spr_var = sprite_add(main_directory_const+"\SPR\MON\wf_light_wall_spr.png",2,false,false,0,0);
-        light_floor_spr_var = sprite_add(main_directory_const+"\SPR\MON\wf_light_floor_spr.png",2,false,false,0,0);
-        eff_spr_var = sprite_add(main_directory_const+"\SPR\DEAD\killer_static_02_spr.png",6,false,false,0,0);
-        web_bg_var = background_add(vanilla_directory_const+"\TEX\sprites\MS28_05_spr.png",false,false);
-        web_mdl_var = d3d_model_create();
-        d3d_model_load(web_mdl_var,main_directory_const+"\MDL\MON\wf_web_mdl.gmmod");
+        bg_var = bg_add_scr(wf_bg_path,false,false);
+        tex_spr_var = spr_add_scr(wf_tex_spr_path,3,false,false,0,0);
+        door_bg_var = bg_add_scr(wf_door_bg_path,false,false);
+        light_wall_spr_var = spr_add_scr(wf_light_wall_spr_path,2,false,false,0,0);
+        light_floor_spr_var = spr_add_scr(wf_light_floor_spr_path,2,false,false,0,0);
+        eff_spr_var = spr_add_scr(killer_static_02_spr_path,6,false,false,0,0);
+        web_bg_var = bg_add_scr(wf_web_bg_path,false,false);
+        web_mdl_var = mdl_add_scr(wf_web_mdl_path);
         zone_list_var = ds_list_create();
         ds_list_clear(zone_list_var);
         ds_list_add(zone_list_var,long_hall_01_rm);
@@ -325,20 +324,17 @@ object_event_add
         ds_list_add(zone_list_var,long_hall_10_rm);
         ds_list_add(zone_list_var,long_hall_11_rm);
         wake_snd_var[0] = true;
-        wake_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\wf_wake_snd.mp3");
-        loop_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\wf_snd.wav",true);
-        glitch_snd_arr[0] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_01_snd.wav");
-        glitch_snd_arr[1] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_02_snd.wav");
-        glitch_snd_arr[2] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_03_snd.wav");
-        glitch_snd_arr[3] = fmod_snd_add_scr(main_directory_const+"\SND\MON\glitch_04_snd.wav");
-        for (local.i=0; local.i<glitch_snd_len_var; local.i+=1;)
-        { fmod_snd_set_group_scr(glitch_snd_arr[local.i],snd_group_mon_const); }
+        wake_snd_var[1] = snd_add_scr(wf_wake_snd_path,false,snd_group_mus_const,1,0,0);
+        loop_snd_var[1] = snd_add_scr(wf_snd_path,true,snd_group_mon_const,1,loop_snd_dist_min_var,loop_snd_dist_max_var);
+        glitch_snd_arr[0] = snd_add_scr(glitch_01_snd_path,false,snd_group_mon_const,1,0,0);
+        glitch_snd_arr[1] = snd_add_scr(glitch_02_snd_path,false,snd_group_mon_const,1,0,0);
+        glitch_snd_arr[2] = snd_add_scr(glitch_03_snd_path,false,snd_group_mon_const,1,0,0);
+        glitch_snd_arr[3] = snd_add_scr(glitch_04_snd_path,false,snd_group_mon_const,1,0,0);
         switch theme_scr(global.wf_theme_var,global.theme_var,1,0,0,1)
         {
-            case 1: { mus_imscared_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ROMM\wf_rom_mus_snd.ogg"); break; }
-            default: { mus_imscared_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\wf_mus_snd.ogg"); break; }
+            case 1: { mus_imscared_snd_var = fmod_snd_add_scr(wf_rom_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
+            default: { mus_imscared_snd_var = fmod_snd_add_scr(wf_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
         }
-        fmod_snd_set_group_scr(mus_imscared_snd_var,snd_group_mus_const);
     }
     tex_02_var = background_get_texture(bg_var);
     web_tex_var = background_get_texture(web_bg_var);

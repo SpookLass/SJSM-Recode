@@ -92,70 +92,85 @@ object_event_add
         }
         // Assets
         load_var = true;
-        if global.mode_var == 0
-        {
-            if global.rm_count_var < 600 { local.arr_len = 7; local.snd = global.js_snd_arr[irandom(7)]; }
-            else { local.arr_len = global.js_story_len_var; local.snd = global.js_snd_arr[irandom(global.js_snd_story_len_var-1)]; }
-        }
-        else { local.arr_len = global.js_len_var; local.snd = global.js_snd_arr[irandom(global.js_snd_len_var-1)]; }
+        if global.mode_var == 0 && global.rm_count_var < 600 { local.arr_len = 7; local.snd = js_snd_arr[global.mode_var,irandom(7)]; }
+        else { local.arr_len = js_len_arr[global.mode_var]; local.snd = js_snd_arr[global.mode_var,irandom(js_snd_len_arr[global.mode_var]-1)];}
             // Loop Through
         for (local.i=0; local.i<local.arr_len; local.i+=1;)
         {
-            local.arr[local.i,0] = global.js_arr[local.i,0];
-            local.arr[local.i,1] = global.js_arr[local.i,1];
-            local.arr[local.i,2] = global.js_arr[local.i,2];
+            local.arr[local.i,0] = js_type_arr[global.mode_var,local.i];
+            local.arr[local.i,1] = js_front_arr[global.mode_var,local.i];
+            if local.arr[local.i,0] != 1
+            { local.arr[local.i,2] = js_back_arr[global.mode_var,local.i]; }
+            local.arr[local.i,3] = js_sp_snd_arr[global.mode_var,local.i];
         }
             // Holidays
         if current_month == 10 || global.halloween_var
         {
-            local.arr[local.arr_len,0] = vanilla_directory_const+"\TEX\SCARE_05.png";
-            local.arr[local.arr_len,1] = vanilla_directory_const+"\TEX\SCARE_05B.png";
-            local.arr[local.arr_len,2] = "";
-            local.arr[local.arr_len+1,0] = vanilla_directory_const+"\EM\TEX\JS_13.png";
-            local.arr[local.arr_len+1,1] = vanilla_directory_const+"\EM\TEX\JS_13B.png";
-            local.arr[local.arr_len+1,2] = "";
+            local.arr[local.arr_len,0] = 0;
+            local.arr[local.arr_len,1] = js_pumpkin_01_bg_path;
+            local.arr[local.arr_len,2] = js_pumpkin_02_bg_path;
+            local.arr[local.arr_len,3] = "";
+            local.arr[local.arr_len+1,0] = 0;
+            local.arr[local.arr_len+1,1] = js_candycorn_01_bg_path;
+            local.arr[local.arr_len+1,2] = js_candycorn_02_bg_path;
+            local.arr[local.arr_len+1,3] = "";
             local.arr_len += 2;
         }
         if current_month == 12 || global.christmas_var
         {
-            local.arr[local.arr_len,0] = main_directory_const+"\BG\MON\js_present_01_bg.png";
-            local.arr[local.arr_len,1] = main_directory_const+"\BG\MON\js_present_02_bg.png";
-            local.arr[local.arr_len,2] = "";
+            local.arr[local.arr_len,0] = 0;
+            local.arr[local.arr_len,1] = js_present_01_bg_path;
+            local.arr[local.arr_len,2] = js_present_02_bg_path;
+            local.arr[local.arr_len,3] = "";
             local.arr_len += 1;
         }
         if easter_scr(current_day,current_month,current_year) || global.easter_var
         {
-            local.arr[local.arr_len,0] = main_directory_const+"\BG\MON\js_basket_01_bg.png";
-            local.arr[local.arr_len,1] = main_directory_const+"\BG\MON\js_basket_02_bg.png";
-            local.arr[local.arr_len,2] = "";
-            local.arr[local.arr_len+1,0] = main_directory_const+"\BG\MON\js_egg_01_bg.png";
-            local.arr[local.arr_len+1,1] = main_directory_const+"\BG\MON\js_egg_02_bg.png";
-            local.arr[local.arr_len+1,2] = "";
+            local.arr[local.arr_len,0] = 0;
+            local.arr[local.arr_len,1] = js_basket_01_bg_path;
+            local.arr[local.arr_len,2] = js_basket_02_bg_path;
+            local.arr[local.arr_len,3] = "";
+            local.arr[local.arr_len+1,0] = 0;
+            local.arr[local.arr_len+1,1] = js_egg_01_bg_path;
+            local.arr[local.arr_len+1,2] = js_egg_02_bg_path;
+            local.arr[local.arr_len+1,3] = "";
             local.arr_len += 2;
         }
         if global.save_name_var == "1987"
         {
-            local.arr[local.arr_len,0] = main_directory_const+"\BG\MON\js_otter8_01_bg.png";
-            local.arr[local.arr_len,1] = main_directory_const+"\BG\MON\js_otter8_02_bg.png";
-            local.arr[local.arr_len,2] = "";
+            local.arr[local.arr_len,0] = 0;
+            local.arr[local.arr_len,1] = js_otter8_01_bg_path;
+            local.arr[local.arr_len,2] = js_otter8_02_bg_path;
+            local.arr[local.arr_len,3] = "";
             local.otter8 = local.arr_len;
             local.arr_len += 1;
         }
         else { local.otter8 = -1; }
             // Backgrounds
         local.tex = irandom(local.arr_len-1);
-        bg_01_var = background_add(local.arr[local.tex,0],false,false);
-        bg_02_var = background_add(local.arr[local.tex,1],false,false);
-        store_tex_var = background_get_texture(bg_01_var);
+        js_type_var = local.arr[local.tex,0];
+        switch js_type_var
+        {
+            case 1:
+            {
+                spr_var = spr_add_scr(local.arr[local.tex,1],2,false,false,0,0);
+                store_tex_var = sprite_get_texture(spr_var,0);
+                store_tex_02_var = sprite_get_texture(spr_var,1);
+            }
+            default:
+            {
+                bg_01_var = bg_add_scr(local.arr[local.tex,1],false,false);
+                bg_02_var = bg_add_scr(local.arr[local.tex,2],false,false);
+                store_tex_var = background_get_texture(bg_01_var);
+                store_tex_02_var = background_get_texture(bg_02_var);
+            }
+        }
         tex_var = store_tex_var;
-        store_tex_02_var = background_get_texture(bg_02_var);
         tex_02_var = store_tex_02_var;
             // Sounds
         if local.arr[local.tex,2] != ""
-        { snd_var = fmod_snd_add_scr(local.arr[local.tex,2],snd_3d_var); }
-        else { snd_var = fmod_snd_add_scr(local.snd,snd_3d_var); }
-        if snd_dist_max_var > 0
-        { fmod_snd_set_minmax_dist_scr(snd_var,0,snd_dist_max_var); }
+        { snd_var = snd_add_scr(local.arr[local.tex,3],snd_3d_var,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var); }
+        else { snd_var = snd_add_scr(local.snd,snd_3d_var,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var); }
         // Otter8
         if local.tex == local.otter8
         {
@@ -233,8 +248,20 @@ object_event_add
 (argument0,ev_other,ev_user0,'
     if load_var
     {
-        background_delete(bg_01_var);
-        background_delete(bg_02_var);
+        switch js_type_var
+        {
+            case 1:
+            {
+                sprite_delete(spr_var);
+                break;
+            }
+            default:
+            {
+                background_delete(bg_01_var);
+                background_delete(bg_02_var);
+                break;
+            }
+        }
         fmod_snd_free_scr(snd_var);
         load_var = false;
     }

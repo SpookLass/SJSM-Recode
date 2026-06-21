@@ -25,25 +25,23 @@ object_event_add
     fall_var = false;
     // Sprite
     load_var = true;
-    spr_01_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS24_04_spr.png",4,false,false,0,0);
-    sprite_set_offset(spr_01_var,sprite_get_width(spr_01_var)/2,sprite_get_height(spr_01_var)/2);
-    spr_02_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS24_05_spr.png",1,false,false,0,0);
-    sprite_set_offset(spr_02_var,sprite_get_width(spr_02_var)/2,sprite_get_height(spr_02_var)/2);
+    spr_01_var = spr_add_scr(tiri_dead_01_spr_path,4,false,false,0,0);
+    spr_02_var = spr_add_scr(tiri_dead_02_spr_path,1,false,false,0,0);
     // Background
-    bg_var = background_add(vanilla_directory_const+"\TEX\sprites\MS24_03_spr.png",false,false);
-    dead_bg_var = background_add(vanilla_directory_const+"\TEX\sprites\MS24_06_spr.png",false,false);
+    bg_var = bg_add_scr(tiri_dead_01_bg_path,false,false);
+    dead_bg_var = bg_add_scr(tiri_dead_02_bg_path,false,false);
     image_yscale = 920;
     image_xscale = background_get_width(bg_var)*image_yscale/background_get_height(bg_var);
     cam_mult_var = 7; // 7.r1
     yaw_mult_var = image_xscale*round(cam_mult_var*360/image_xscale)/360;
     dead_y_var = 0;
     // Sound
-    snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DEAD\tiri_howl_snd.wav",false);
-    atk_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DEAD\tiri_atk_snd.wav",false);
+    snd_var = snd_add_scr(tiri_howl_snd_path,false,snd_group_sfx_const,1,0,0);
+    atk_snd_var = snd_add_scr(tiri_atk_snd_path,false,snd_group_sfx_const,1,0,0);
     growl_snd_len_var = 2;
-    growl_snd_var[0] = fmod_snd_add_scr(main_directory_const+"\SND\DEAD\tiri_growl_01_snd.wav",false);
-    growl_snd_var[1] = fmod_snd_add_scr(main_directory_const+"\SND\DEAD\tiri_growl_02_snd.wav",false);
-    dead_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DEAD\tiri_dead_snd.wav",false);
+    growl_snd_var[0] = snd_add_scr(tiri_growl_01_snd_path,false,snd_group_sfx_const,1,0,0);
+    growl_snd_var[1] = snd_add_scr(tiri_growl_02_snd_path,false,snd_group_sfx_const,1,0,0);
+    dead_snd_var = snd_add_scr(tiri_dead_snd_path,false,snd_group_mus_const,1,0,0);
     inst_var = fmod_snd_play_scr(snd_var);
     // Static
     static_spr_var = static_01_spr;

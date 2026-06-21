@@ -17,10 +17,9 @@ object_event_add
 ");
     ini_close();
     // Load assets
-    spr_01_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS25_01_spr.png",1,false,false,0,0);
-    sprite_set_offset(spr_01_var,sprite_get_width(spr_01_var)/2,sprite_get_height(spr_01_var)/2);
+    spr_01_var = spr_add_scr(lisa_face_spr_path,1,false,false,0,0);
     spr_02_var = spr_add_scr(lisa_dead_spr_path,13,false,false,0,0);
-    snd_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\lisa_wake_snd.wav");
+    snd_var = snd_add_scr(lisa_wake_snd_path,false,snd_group_sfx_const,1,0,0);
     load_var = true;
     // Sprite
     y = random_range(-0.5,-2);

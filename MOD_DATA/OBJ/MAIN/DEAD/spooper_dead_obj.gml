@@ -18,7 +18,7 @@ object_event_add
     ini_close();
     // Load assets
     spr_var = spr_add_scr(lisa_dead_spr_path,13,false,false,0,0);
-    snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DEAD\spooper_dead_snd.wav");
+    snd_var = snd_add_scr(spooper_dead_snd_path,false,snd_group_mus_const,1,0,0);
     load_var = true;
     // Static
     static_spr_var = static_01_spr;

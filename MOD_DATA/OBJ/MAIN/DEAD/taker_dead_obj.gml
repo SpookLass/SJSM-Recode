@@ -21,7 +21,7 @@ object_event_add
     spr_w_max_var = 1280;
     spr_w_var = random_range(spr_w_min_var,spr_w_max_var);
     // Sounds
-    snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DEAD\taker_dead_snd.wav");
+    snd_var = snd_add_scr(taker_dead_snd_path,false,snd_group_mus_const,1,0,0);
     fmod_snd_loop_scr(snd_var);
     load_var = true;
     // Alarms

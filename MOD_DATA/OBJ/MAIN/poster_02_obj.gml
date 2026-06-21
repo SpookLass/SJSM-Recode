@@ -9,35 +9,19 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,0,'
     load_var = false;
-    if ((global.mode_var == 0 && global.rm_count_var > 100) 
-    || (global.mode_var != 0 && global.kh_var))
-    && frac_chance_scr(2,3)
+    if (global.mode_var != 0 || global.rm_count_var > 100)
+    && ds_list_size(poster_02_arr[global.mode_var]) > 0 && frac_chance_scr(2,3)
     {
         if global.mode_var == 0
         {
             local.rand = 0;
-            if global.rm_count_var >= 500 { local.rand = irandom(5); }
+            if global.rm_count_var >= 500 { local.rand = irandom(ds_list_size(poster_02_arr[global.mode_var])-1); }
             else if global.rm_count_var >= 400 { local.rand = irandom(1); }
-            switch local.rand
-            {
-                case 0: { local.path = vanilla_directory_const+"\TEX\sprites\POS_01_spr.png"; break; }
-                case 1: { local.path = vanilla_directory_const+"\TEX\sprites\POS_02_spr.png"; break; }
-                case 2: { local.path = vanilla_directory_const+"\TEX\sprites\POS_03_spr.png"; break; }
-                case 3: { local.path = vanilla_directory_const+"\TEX\sprites\POS_04_spr.png"; break; }
-                case 4: { local.path = vanilla_directory_const+"\TEX\sprites\POS_05_spr.png"; break; }
-                case 5: { local.path = vanilla_directory_const+"\TEX\sprites\POS_06_spr.png"; break; }
-            }
+            local.path = ds_list_find_value(poster_02_arr[global.mode_var],local.rand);
         }
-        else if global.kh_var
-        {
-            switch irandom(1)
-            {
-                case 0: { local.path = kh_directory_const+"\TEX\BGN_07.png"; break; }
-                case 1: { local.path = kh_directory_const+"\TEX\BGN_07b.png"; break; } // I should probably make an array
-            }
-        }
-        bg_var = background_add(local.path,false,false);
-        bg_load_var = true;
+        else { local.path = ds_list_find_value(poster_02_arr[global.mode_var],irandom(ds_list_size(poster_02_arr[global.mode_var])-1)); }
+        bg_var = bg_add_scr(local.path,false,false);
+        load_var = true;
         store_tex_var = background_get_texture(bg_var);
         event_inherited();
         type_var = 10;

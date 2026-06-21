@@ -27,12 +27,12 @@ object_event_add
     str_x_var = 0;
     str_y_var = (string_height(str_var)*str_yscale_var*0.5)-160;
     // Sprite
-    spr_var = sprite_add(dh_directory_const+"\TEX\sprites\NPC1D_SPR.png",4,false,false,0,0);
+    spr_var = spr_add_scr(husk_dead_spr_path,4,false,false,0,0);
     spr_rate_var = 36;
     spr_time_var = 0;
     spr_id_var = 0;
     // Sound
-    snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DH\husk_dead_snd.mp3",false);
+    snd_var = snd_add_scr(husk_dead_snd_path,false,snd_group_mus_const,1,0,0);
     inst_var = fmod_snd_loop_scr(snd_var);
     // Path
     path_var = path_add();

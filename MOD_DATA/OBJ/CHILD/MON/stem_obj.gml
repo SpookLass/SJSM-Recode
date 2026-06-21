@@ -211,7 +211,7 @@ object_event_add
         snd_arr[4,0] = snd_add_scr(stem_05_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
         switch theme_scr(global.stem_theme_var,global.theme_var,1,0,0,1)
         {
-            case 1: { mus_snd_var = snd_add_scr(stem_rom_mus_snd_path,false,snd_group_mus_const,1,0,0);; break; }
+            case 1: { mus_snd_var = snd_add_scr(stem_rom_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
             default: { mus_snd_var = snd_add_scr(stem_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
         }
         fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);

@@ -35,10 +35,10 @@ object_event_add
     str_color_var = make_color_rgb(255,255,128);
     // Sprite
     load_var = true;
-    spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS9_03_spr.png",19,false,false,0,0);
+    spr_var = spr_add_scr(fd_eff_02_spr_path,19,false,false,0,0);
     spr_id_var = irandom(sprite_get_number(spr_var)-1);
     // Sound
-    snd_var = fmod_snd_add_scr(main_directory_const+"\SND\RM\food_chain_snd.wav",false);
+    snd_var = snd_add_scr(food_chain_snd_path,false,snd_group_mus_const,1,0,0);
     fmod_snd_loop_scr(snd_var);
     // Alarm
     alarm_var = 3;

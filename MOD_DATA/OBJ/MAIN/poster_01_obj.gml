@@ -9,44 +9,21 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,0,'
     load_var = false;
-    if global.mode_var == 0 { local.path = vanilla_directory_const+"\TEX\sprites\POS_"+choose("07","08","09","10")+"_spr.png"; }
-    else
+    if ds_list_size(poster_01_arr[global.mode_var]) > 0
     {
-        if global.kh_var { local.rand = irandom(18); }
-        else { local.rand = irandom(17); }
-        switch local.rand
-        {
-            case 0: { local.path = vanilla_directory_const+"\TEX\sprites\POS_07_spr.png"; break; }
-            case 1: { local.path = vanilla_directory_const+"\TEX\sprites\POS_08_spr.png"; break; }
-            case 2: { local.path = vanilla_directory_const+"\TEX\sprites\POS_09_spr.png"; break; }
-            case 3: { local.path = vanilla_directory_const+"\TEX\sprites\POS_10_spr.png"; break; }
-            case 4: { local.path = vanilla_directory_const+"\EM\TEX\EM_POS_01.png"; break; }
-            case 5: { local.path = vanilla_directory_const+"\EM\TEX\EM_POS_02.png"; break; }
-            case 6: { local.path = vanilla_directory_const+"\EM\TEX\EM_POS_03.png"; break; }
-            case 7: { local.path = vanilla_directory_const+"\EM\TEX\EM_POS_04.png"; break; }
-            case 8: { local.path = vanilla_directory_const+"\EM\TEX\EM_POS_05.png"; break; }
-            case 9: { local.path = vanilla_directory_const+"\EM\TEX\EM_POS_06.png"; break; }
-            case 10: { local.path = vanilla_directory_const+"\EM\TEX\EM_POS_07.png"; break; }
-            case 11: { local.path = vanilla_directory_const+"\EM\TEX\EM_POS_08.png"; break; }
-            case 12: { local.path = vanilla_directory_const+"\EM\TEX\EM_POS_09.png"; break; }
-            case 13: { local.path = vanilla_directory_const+"\EM\TEX\EM_POS_10.png"; break; }
-            case 14: { local.path = vanilla_directory_const+"\EM\TEX\EM_POS_11.png"; break; }
-            case 15: { local.path = vanilla_directory_const+"\EM\TEX\EM_POS_12.png"; break; }
-            case 16: { local.path = vanilla_directory_const+"\EM\TEX\EM_POS_13.png"; break; }
-            case 17: { local.path = vanilla_directory_const+"\EM\TEX\EM_POS_14.png"; break; } // I should probably make an array
-            case 18: { local.path = kh_directory_const+"\TEX\BGN_08.png"; break; }
-        }
+        load_var = true;
+        local.path = ds_list_find_value(poster_01_arr[global.mode_var],irandom(ds_list_size(poster_01_arr[global.mode_var])-1));
+        bg_var = bg_add_scr(local.path,false,false);
+        store_tex_var = background_get_texture(bg_var);
+        event_inherited();
+        type_var = 10;
+        dist_var = 0.1;
+        direction = 90;
+        w_var = 11.4;
+        h_var = 16;
+        z = 14.5;
     }
-    bg_var = background_add(local.path,false,false);
-    bg_load_var = true;
-    store_tex_var = background_get_texture(bg_var);
-    event_inherited();
-    type_var = 10;
-    dist_var = 0.1;
-    direction = 90;
-    w_var = 11.4;
-    h_var = 16;
-    z = 14.5;
+    else { instance_destroy(); }
 ');
 // Destroy Event
 object_event_add

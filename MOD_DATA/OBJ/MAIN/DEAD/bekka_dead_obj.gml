@@ -16,9 +16,8 @@ object_event_add
     str_var = ini_read_string("DEAD","bekka","DEAD_bekka");
     ini_close();
     // Load assets
-    spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS23_01_spr.png",1,false,false,0,0);
-    sprite_set_offset(spr_var,sprite_get_width(spr_var)/2,125);
-    snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DEAD\bekka_dead_snd.ogg");
+    spr_var = spr_add_scr(bekka_spr_path,1,false,false,0,0);
+    snd_var = snd_add_scr(bekka_dead_snd_path,false,snd_group_mus_const,1,0,0);
     load_var = true;
     // Sprite
     spr_visible_var = !irandom(2);

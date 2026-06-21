@@ -12,9 +12,9 @@ object_event_add
     event_inherited();
     true_time_var = true;
     // Load
-    spr_var = sprite_add(main_directory_const+"\SPR\DEAD\killer_static_02_spr.png",6,false,false,0,0);
-    bg_var = background_add(vanilla_directory_const+"\TEX\sprites\MS28_07_spr.png",false,false);
-    snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DEAD\wf_scream_snd.wav",false);
+    spr_var = spr_add_scr(killer_static_02_spr_path,6,false,false,0,0);
+    bg_var = bg_add_scr(wf_dead_bg_path,false,false);
+    snd_var = snd_add_scr(wf_scream_snd_path,false,snd_group_sfx_const,1,0,0);
     load_var = true;
     // Sound
     inst_var = fmod_snd_play_scr(snd_var);

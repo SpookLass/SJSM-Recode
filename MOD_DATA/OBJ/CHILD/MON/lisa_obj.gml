@@ -193,8 +193,8 @@ object_event_add
     if !local.loaded
     {
         bg_var = bg_add_scr(lisa_bg_path,false,false);
-        js_bg_01_var = bg_add_scr(js_lisa_01_bg_path,false,false);
-        js_bg_02_var = bg_add_scr(js_lisa_02_bg_path,false,false);
+        js_bg_01_var = bg_add_scr(js_lisa_slime_01_bg_path,false,false);
+        js_bg_02_var = bg_add_scr(js_slime_02_bg_path,false,false);
         wake_snd_var[1] = snd_add_scr(lisa_wake_snd_path,global.wake_3d_var,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
         amb_mus_snd_var = snd_add_scr(lisa_amb_mus_snd_path,false,snd_group_mus_const,1,0,0);
         switch theme_scr(global.lisa_theme_var,global.theme_var,1,0,0,1)

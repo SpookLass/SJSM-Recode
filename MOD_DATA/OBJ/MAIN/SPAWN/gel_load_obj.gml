@@ -11,7 +11,7 @@ object_event_add
 (argument0,ev_create,0,'
     menu_var = false;
     bg_len_var = 1;
-    bg_arr_var[0,1] = main_directory_const+"\BG\MON\gel_slime_bg.png";
+    bg_arr_var[0,1] = gel_slime_bg_path;
     bg_arr_var[0,2] = false;
     bg_arr_var[0,3] = false;
     rm_var = gel_rm;

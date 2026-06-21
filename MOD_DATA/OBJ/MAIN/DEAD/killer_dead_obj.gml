@@ -12,12 +12,11 @@ object_event_add
     event_inherited();
     true_time_var = true;
     // Assets
-    face_spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\FACE_02_spr.png",1,0,0,0,0);
-    sprite_set_offset(face_spr_var,sprite_get_width(face_spr_var)/2,sprite_get_height(face_spr_var)/2);
-    eff_spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\FACE_02b_spr.png",10,0,0,0,0);
+    face_spr_var = spr_add_scr(killer_face_spr_path,1,0,0,0,0);
+    eff_spr_var = spr_add_scr(killer_dead_spr_path,10,0,0,0,0);
     static_01_spr_var = spr_add_scr(killer_static_01_spr_path,4,false,false,0,0);
     static_02_spr_var = spr_add_scr(killer_static_02_spr_path,4,false,false,0,0);
-    snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DEAD\killer_dead_snd.wav");
+    snd_var = snd_add_scr(killer_dead_snd_path,false,snd_group_mus_const,1,0,0);
     load_var = true;
     // Sound
     fmod_snd_play_scr(snd_var);

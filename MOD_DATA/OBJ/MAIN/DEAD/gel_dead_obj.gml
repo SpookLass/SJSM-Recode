@@ -18,8 +18,7 @@ object_event_add
     // State 0
     state_var = 0;
     color_var = c_white;
-    spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS_02_spr.png",1,false,false,0,0);
-    sprite_set_offset(spr_var,sprite_get_width(spr_var)/2,sprite_get_height(spr_var)/2);
+    spr_var = spr_add_scr(gel_dead_spr_path,1,false,false,0,0);
     scale_base_var = 1280;
     scale_var = scale_base_var;
     // Text
@@ -32,8 +31,8 @@ object_event_add
     scale_min_var = 0.125;
     // Sound
     load_var = true;
-    snd_01_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\gel_wake_snd.wav");
-    snd_02_var = fmod_snd_add_scr(main_directory_const+"\SND\DEAD\gel_dead_snd.wav");
+    snd_01_var = snd_add_scr(gel_wake_snd_path,false,snd_group_sfx_const,1,0,0);
+    snd_02_var = snd_add_scr(gel_dead_snd_path,false,snd_group_mus_const,1,0,0);
     inst_var = fmod_snd_play_scr(snd_01_var);
     // Alarms
     alarm_len_var = 5;

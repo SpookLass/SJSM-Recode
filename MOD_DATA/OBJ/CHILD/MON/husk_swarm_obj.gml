@@ -122,7 +122,7 @@ object_event_add
     if !local.loaded
     {
         main_spr_var = spr_add_scr(husk_spr_path,17,false,false,0,0);
-        dead_spr_var = spr_add_scr(husk_dead_spr_path,7,false,false,0,0);
+        dead_spr_var = spr_add_scr(husk_die_spr_path,7,false,false,0,0);
         hurt_bg_var = bg_add_scr(husk_hurt_bg_path,false,false);
         doll_blood_bg_var = bg_add_scr(doll_blood_bg_path,false,false);
         shadow_bg_var = bg_add_scr(shadow_bg_path,false,false);

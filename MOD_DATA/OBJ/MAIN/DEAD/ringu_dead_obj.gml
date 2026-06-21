@@ -17,8 +17,8 @@ object_event_add
     ini_close();
     // State 0
     state_var = 0;
-    spr_var = sprite_add(vanilla_directory_const+"\TEX\sprites\MS3_02_spr.png",12,false,false,0,0);
-    bg_var = background_add(vanilla_directory_const+"\TEX\menu\hand_tex.png",false,false);
+    spr_var = spr_add_scr(ringu_dead_spr_path,12,false,false,0,0);
+    bg_var = bg_add_scr(ringu_dead_bg_path,false,false);
     // Sprite
     spr_id_var = 0;
     // Text
@@ -32,8 +32,8 @@ object_event_add
     scale_min_var = 0.125;
     // Sound
     load_var = true;
-    snd_01_var = fmod_snd_add_scr(main_directory_const+"\SND\MON\ringu_wake_snd.wav");
-    snd_02_var = fmod_snd_add_scr(main_directory_const+"\SND\DEAD\gel_dead_snd.wav");
+    snd_01_var = snd_add_scr(ringu_wake_snd_path,false,snd_group_sfx_const,1,0,0);
+    snd_02_var = snd_add_scr(gel_dead_snd_path,false,snd_group_mus_const,1,0,0);
     inst_var = fmod_snd_play_scr(snd_01_var);
     // Alarms
     alarm_len_var = 3;

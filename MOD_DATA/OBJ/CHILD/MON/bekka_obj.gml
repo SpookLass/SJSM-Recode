@@ -40,7 +40,7 @@ object_event_add
     {
         if id != other.id && object_index == other.object_index
         {
-            other.bg_var = bg_var;
+            other.spr_var = spr_var;
             other.bg_overlay_var = bg_overlay_var;
             other.mus_snd_var = mus_snd_var;
             local.loaded = true;
@@ -50,7 +50,7 @@ object_event_add
     // If no existing assets were found, load them
     if !local.loaded
     {
-        bg_var = bg_add_scr(bekka_bg_path,false,false);
+        spr_var = spr_add_scr(bekka_spr_path,1,false,false,0,0);
         bg_overlay_var = bg_add_scr(fog_bg_path,false,false);
         switch theme_scr(global.bekka_theme_var,global.theme_var,1,0,0,1)
         {
@@ -58,7 +58,7 @@ object_event_add
             default: { mus_snd_var = snd_add_scr(bekka_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
         }
     }
-    tex_var = background_get_texture(bg_var);
+    tex_var = sprite_get_texture(spr_var,0);
     // Sounds
     snd_len_var = -1;
     // Rand
@@ -187,7 +187,7 @@ object_event_add
     if !local.bool
     {
         fmod_snd_free_scr(mus_snd_var);
-        background_delete(bg_var);
+        sprite_delete(spr_var);
         background_delete(bg_overlay_var);
     }
     with fog_overlay_obj

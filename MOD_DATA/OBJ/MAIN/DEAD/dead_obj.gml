@@ -12,12 +12,11 @@ object_event_add
     event_inherited();
     true_time_var = true;
     // Assets
-    menu_bg_var = background_add(vanilla_directory_const+"\TEX\menu\menu4_tex.png",false,false);
-    bg_var = background_add(main_directory_const+"\BG\DEAD\dead_bg.png",false,false);
+    menu_bg_var = bg_add_scr(dead_menu_bg_path,false,false);
+    bg_var = bg_add_scr(dead_bg_path,false,false);
     fade_spr_var = spr_add_scr(static_fade_spr_path,5,false,false,0,0);
-    snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DEAD\dead_snd.wav");
-    mus_snd_var = fmod_snd_add_scr(vanilla_directory_const+"\SND\AMB\GAMEOVER_AMB.mp3");
-    fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
+    snd_var = snd_add_scr(dead_snd_path,false,snd_group_sfx_const,1,0,0);
+    mus_snd_var = snd_add_scr(dead_mus_snd_path,false,snd_group_mus_const,1,0,0);
     load_var = true;
     // Translation
     ini_open("lang_"+global.lang_var+".ini");

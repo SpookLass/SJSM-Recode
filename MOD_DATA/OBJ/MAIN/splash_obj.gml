@@ -11,27 +11,25 @@ object_event_add
 (argument0,ev_create,0,'
     event_inherited();
     kira_spr_var = spr_add_scr(kira_spr_path,1,false,false,0,0);
-    kira_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\kira_snd.wav");
+    kira_snd_var = snd_add_scr(kira_snd_path,false,snd_group_sfx_const,1,0,0);
     amg_vid_var = main_directory_const+"\VID\UI\amg_silent_vid.wmv";
-    amg_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\amg_snd.wav");
+    amg_snd_var = snd_add_scr(amg_snd_path,false,snd_group_sfx_const,1,0,0);
+    warn_snd_var = snd_add_scr(warn_snd_path,false,snd_group_sfx_const,1,0,0);
     if !irandom(7) || current_month == 10
     { recode_spr_var = spr_add_scr(recode_pumpkin_spr_path,1,false,false,0,0); }
     else { recode_spr_var = spr_add_scr(recode_gear_spr_path,1,false,false,0,0); }
-    recode_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\acheese_snd.wav");
+    recode_snd_var = snd_add_scr(acheese_snd_path,false,snd_group_sfx_const,1,0,0);
     fmod_spr_var = spr_add_scr(fmod_spr_path,1,false,false,0,0);
-    warn_bg_var = background_add(main_directory_const+"\BG\UI\warn_bg.png",false,false);
+    warn_bg_var = bg_add_scr(warn_bg_path,false,false);
     ini_open("lang_"+global.lang_var+".ini");
     warn_str_01_var = ini_read_string("MENU","warn_01","MENU_warn_01");
     warn_str_02_var = ini_read_string("MENU","warn_02_hd","MENU_warn_02_hd");
     warn_str_03_var = ""; //ini_read_string("MENU","warn_03","MENU_warn_03");
     ini_close();
-    warn_snd_var = fmod_snd_add_scr(main_directory_const+"\SND\UI\warn_snd.wav");
     image_xscale = 2.16;
     image_alpha = 0;
     shadow_off_var = 4;
-    
     state_var = 0;
-    
     inst_var = fmod_snd_play_scr(kira_snd_var);
     fade_alpha_var = 0;
     // Alarms

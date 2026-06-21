@@ -27,7 +27,7 @@ object_event_add
     x_off_var = 0;
     y_off_var = 0;
     z_off_var = 14;
-    spr_var = load_par_obj.spr_arr_var[0,0];
+    spr_var = wf_spr;
     spr_id_var = 0;
     spr_spd_var = 0;
     tex_var = sprite_get_texture(spr_var,spr_id_var);
@@ -115,7 +115,7 @@ object_event_add
     with instance_create(0,0,wf_eff_obj)
     {
         par_var = other.id;
-        spr_var = load_par_obj.spr_arr_var[1,0];
+        spr_var = load_par_obj.spr_arr_var[0,0];
     }
     cam_dead_obj.fov_var = fov_var;
     with wf_chair_obj

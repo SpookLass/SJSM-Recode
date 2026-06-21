@@ -43,7 +43,7 @@ object_event_add
     spr_len_var = 12;
     image_alpha = 0.4;
     // Sound
-    snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DEAD\para_dead_snd.wav",false);
+    snd_var = snd_add_scr(para_dead_snd_path,false,snd_group_mus_const,1,0,0);
     fmod_snd_loop_scr(snd_var);
     // Alarm
     fade_alarm_var = 60;

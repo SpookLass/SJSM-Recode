@@ -27,7 +27,7 @@ object_event_add
     ini_close();
     // Load assets
     spr_var = spr_add_scr(flesh_dead_spr_path,2,false,false,0,0);
-    snd_var = fmod_snd_add_scr(main_directory_const+"\SND\DEAD\flesh_dead_snd.wav");
+    snd_var = snd_add_scr(flesh_dead_snd_path,false,snd_group_mus_const,1,0,0);
     load_var = true;
     // Sound
     fmod_snd_play_scr(snd_var);
