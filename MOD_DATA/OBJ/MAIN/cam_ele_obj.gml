@@ -76,8 +76,11 @@ object_event_add
     eye_yaw_var = mod_scr(eye_yaw_var,360);
     eye_pitch_var = median(-89.9,89.9,eye_pitch_var);
     // As We Breathe
-    breath_time_var = (breath_time_var+(breath_rate_var*global.delta_time_var)) mod 360;
-    breath_var = breath_mult_var*sin(degtorad(breath_time_var));
+    if breath_mult_var > 0
+    {
+        breath_time_var = (breath_time_var+(breath_rate_var*global.delta_time_var)) mod 360;
+        breath_var = breath_mult_var*sin(degtorad(breath_time_var));
+    }
     // Move
     if on_var
     {

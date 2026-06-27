@@ -15,6 +15,11 @@ object_event_add
     roll_var = 0;
     cam_id_var = 0;
     player_id_var = global.menu_player_var;
+    control_var = true;
+    yaw_clamp_var = false;
+    yaw_clamp_min_var = -1;
+    yaw_clamp_max_var = -1;
+    pitch_clamp_var = 89.9;
     // Idle Bob
     breath_rate_var = 1;
     breath_mult_var = global.idle_bob_var/100;
@@ -33,13 +38,21 @@ object_event_add
 // Step
 object_event_add
 (argument0,ev_step,ev_step_normal,'
-    yaw_var += input_yaw_scr(player_id_var);
-    pitch_var += input_pitch_scr(player_id_var);
-    yaw_var = mod_scr(yaw_var,360);
-    pitch_var = median(-89.9,89.9,pitch_var);
+    if control_var
+    {
+        yaw_var += input_yaw_scr(player_id_var);
+        pitch_var += input_pitch_scr(player_id_var);
+    }
+    if yaw_clamp_var
+    { yaw_var = median(yaw_clamp_min_var,yaw_clamp_max_var,yaw_var); }
+    else { yaw_var = mod_scr(yaw_var,360); }
+    pitch_var = median(-pitch_clamp_var,pitch_clamp_var,pitch_var);
     // As We Breathe
-    breath_time_var = (breath_time_var+(breath_rate_var*global.delta_time_var)) mod 360;
-    breath_var = breath_mult_var*sin(degtorad(breath_time_var));
+    if breath_mult_var > 0
+    {
+        breath_time_var = (breath_time_var+(breath_rate_var*global.delta_time_var)) mod 360;
+        breath_var = breath_mult_var*sin(degtorad(breath_time_var));
+    }
 ');
 // End Step
 object_event_add

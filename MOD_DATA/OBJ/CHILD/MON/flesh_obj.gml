@@ -105,7 +105,7 @@ object_event_add
         arrow_bg_var = bg_add_scr(flesh_arrow_bg_path,false,false);
         arrow_base_bg_var = bg_add_scr(flesh_arrow_base_bg_path,false,false);
         // Arrow Sound
-        arrow_snd_var = fmod_snd_add_scr(flesh_arrow_snd_path,true,snd_group_sfx_const,1,16,128);
+        arrow_snd_var = snd_add_scr(flesh_arrow_snd_path,true,snd_group_sfx_const,1,16,128);
         // Overlay
         overlay_bg_var = bg_add_scr(flesh_overlay_bg_path,false,false);
         // Music

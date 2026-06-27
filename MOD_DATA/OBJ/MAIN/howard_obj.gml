@@ -42,7 +42,7 @@ object_event_add
     active_var = false;
     // Sound
     inst_var = noone;
-    snd_var = snd_add_scr(stab_11_snd_path,false,snd_group_mon_const,1,0,0);
+    snd_var = snd_add_scr(js_11_snd_path,false,snd_group_mon_const,1,0,0);
     load_var = true;
 ');
 // Destroy Event

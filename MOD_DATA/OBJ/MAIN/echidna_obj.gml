@@ -440,10 +440,10 @@ object_event_add
         y = global.spawn_arr[spawn_var,1]-lengthdir_y(spawn_dist_var,yaw_var);
         z = global.spawn_arr[spawn_var,2];
         set_motion_3d_scr(0,true,yaw_var,true,0,true);
-        eye_yaw_var = yaw_var;
-        eye_pitch_var = 0;
     }
     else { enter_var = false; }
+    eye_yaw_var = yaw_var;
+    eye_pitch_var = 0;
     if enter_var { do_coll_var = false; }
     else if type_var > 0 { do_coll_var = mon_solid_const; }
     // Set target

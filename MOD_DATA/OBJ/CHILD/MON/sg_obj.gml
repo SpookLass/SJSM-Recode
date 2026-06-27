@@ -46,6 +46,7 @@ object_event_add
     atk_snd_var = 0;
     kill_var = true;
     eye_h_var = 17.7;
+    dead_rm_var = sg_dead_load_rm;
     // No official value
     dur_var = irandom_range(10,20); 
     delay_var = 120;
@@ -69,13 +70,14 @@ object_event_add
     chase_dist_var = 128/3;
     // Effects
     fog_end_var = 96;
+    fog_color_var = c_black;
 	do_fog_var = true;
 	fog_type_var = 0;
 	wall_num_var = 6;
 	wall_alpha_var = 0.15;
 	wall_start_var = 24;
 	wall_end_var = 64;
-	fog_color_var = make_color_rgb(98,57,57);
+	wall_color_var = make_color_rgb(98,57,57);
     fog_prio_var = 2;
     // Theme
     mus_prio_var = mon_mus_prio_const;
@@ -91,6 +93,7 @@ object_event_add
             dmg_var = 30;
             atk_range_var = global.mon_coll[2];
             fog_end_var = 128;
+            fog_color_var = wall_color_var;
             delay_var = 30;
             snd_dist_max_var = 300;
             break;
@@ -237,7 +240,7 @@ object_event_add
                 prio_var = other.fog_prio_var;
                 par_var = other.id;
                 fog_var = true;
-                fog_color_var = c_black;//other.fog_color_var;
+                fog_color_var = other.fog_color_var;
                 fog_start_var = 0;
                 fog_end_var = other.fog_end_var;
                 fog_dark_var = true;
@@ -250,8 +253,8 @@ object_event_add
             {
                 prio_var = other.fog_prio_var;
                 par_var = other.id;
-                fog_type_var = other.fog_type_var
-                image_blend = other.fog_color_var;
+                fog_type_var = other.fog_type_var;
+                image_blend = other.wall_color_var;
                 image_alpha = other.wall_alpha_var;
                 wall_num_var = other.wall_num_var;
                 wall_start_var = other.wall_start_var;

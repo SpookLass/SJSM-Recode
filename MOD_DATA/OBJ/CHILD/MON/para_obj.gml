@@ -38,13 +38,14 @@ object_event_add
     snd_dist_min_var = 0;
     snd_dist_max_var = 600;
     eff_snd_len_var = 4;
+    wake_snd_var[0] = true;
     // Translations
     ini_open("lang_"+global.lang_var+".ini");
     name_var = translate_mon_str_scr("para",global.name_var);
     local.sub = string_replace(ini_read_string("SUB","para","SUB_para"),"@n",name_var);
     for (local.i=0; local.i<snd_len_var; local.i+=1)
     { snd_arr[local.i,1] = local.sub; snd_arr[local.i,2] = false; }
-    wake_snd_var[2] = local.sub;
+    wake_snd_var[2] = local.sub; wake_snd_var[3] = false;
     ini_close();
     // Variables
     type_var = 1;
@@ -254,7 +255,7 @@ object_event_add
         eff_snd_arr[1] = snd_add_scr(para_eff_02_snd_path,false,snd_group_mon_const,1,0,0);
         eff_snd_arr[2] = snd_add_scr(para_eff_03_snd_path,false,snd_group_mon_const,1,0,0);
         eff_snd_arr[3] = snd_add_scr(dl_eff_03_snd_path,false,snd_group_mon_const,1,0,0);
-        wake_snd_var[1] = snd_add_scr(para_01_snd_path,global.wake_3d_var,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        wake_snd_var[1] = snd_add_scr(para_wake_snd_path,global.wake_3d_var,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
         switch theme_scr(global.para_theme_var,global.theme_var,1,0,0,1)
         {
             case 1: { main_mus_snd_var = snd_add_scr(para_rom_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }

@@ -15,7 +15,6 @@ object_event_add
     rate_var = 2400;
     mult_var = 12;
     time_var = 0;
-    deep_per_var = 0;
 ');
 // Step Event
 object_event_add

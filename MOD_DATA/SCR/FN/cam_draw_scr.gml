@@ -16,6 +16,6 @@ if view_current == argument0
         global.cam_uz_var[argument0],
         global.cam_fov_var[argument0],
         view_wport[argument0]/view_hport[argument0],
-        1,1280 // 800
+        1,global.cam_end_var // 800
     ); 
 }

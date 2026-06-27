@@ -296,8 +296,8 @@ object_event_add
         glitch_snd_arr[2] = snd_add_scr(glitch_03_snd_path,false,snd_group_mon_const,1,0,0);
         glitch_snd_arr[3] = snd_add_scr(glitch_04_snd_path,false,snd_group_mon_const,1,0,0);
         scare_snd_var = snd_add_scr(scare_01_snd_path,false,snd_group_mon_const,1,0,0);
-        dmg_snd_arr[0,0] = fmod_snd_add_scr(gc_01_snd_path,false,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-        dmg_snd_arr[1,0] = fmod_snd_add_scr(gc_02_snd_path,false,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        dmg_snd_arr[0,0] = snd_add_scr(gc_01_snd_path,false,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        dmg_snd_arr[1,0] = snd_add_scr(gc_02_snd_path,false,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
         switch theme_scr(global.gc_theme_var,global.theme_var,2,0,1,2)
         {
             case 2: { mus_snd_var = snd_add_scr(gc_rom_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }

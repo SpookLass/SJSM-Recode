@@ -114,7 +114,7 @@ object_event_add
             do_hurt_var = true;
             hurt_alarm_var = 30;
             hurt_tp_var = true;
-            tp_dist_min_var = 64;
+            tp_dist_min_var = 96;
             move_type_var = 0;
             hurt_snd_var = 1;
             blood_spr_var = blood_kh_spr;
@@ -394,7 +394,6 @@ object_event_add
                 case 2: { d3d_transform_add_scaling(1,1,-1); d3d_transform_add_translation(0,0,global.reflect_pos_var); break; }
             }
         }
-        d3d_model_draw(mdl_var,0,0,0,tex_var);
         d3d_model_draw(mdl_var,0,0,0,tex_var);
         d3d_transform_set_identity();
         draw_set_color(c_white); draw_set_alpha(1);

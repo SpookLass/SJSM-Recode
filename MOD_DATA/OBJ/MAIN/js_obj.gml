@@ -168,7 +168,7 @@ object_event_add
         tex_var = store_tex_var;
         tex_02_var = store_tex_02_var;
             // Sounds
-        if local.arr[local.tex,2] != ""
+        if local.arr[local.tex,3] != ""
         { snd_var = snd_add_scr(local.arr[local.tex,3],snd_3d_var,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var); }
         else { snd_var = snd_add_scr(local.snd,snd_3d_var,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var); }
         // Otter8

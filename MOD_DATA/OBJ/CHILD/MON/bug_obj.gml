@@ -43,6 +43,7 @@ object_event_add
     eye_h_var = 8.9;
     atk_range_var = 33.6;
     dupe_var = dupe_canon_const;
+    dead_rm_var = bug_dead_load_rm;
     // Hurt
     do_hurt_var = 2; // Damage
     hurt_alarm_var = 60;

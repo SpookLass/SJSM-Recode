@@ -19,9 +19,11 @@ object_event_add
     // Language
     ini_open("lang_"+global.lang_var+".ini");
     name_var = translate_mon_str_scr("nm",global.name_var);
-    
-    wake_snd_var[2] = string_replace(ini_read_string("SUB","nm","SUB_nm"),"@n",name_var); wake_snd_var[3] = false;
+    local.sub = string_replace(ini_read_string("SUB","nm","SUB_nm"),"@n",name_var);
+    for (local.i=0; local.i<snd_len_var; local.i+=1;)
+    { snd_arr[local.i,1] = local.sub; snd_arr[local.i,2] = false; }
     hurt_snd_var[2] = string_replace(ini_read_string("SUB","doll_hurt","SUB_doll_hurt"),"@n",name_var); hurt_snd_var[3] = false;
+    atk_snd_var[2] = string_replace(ini_read_string("SUB","doll_hurt","SUB_doll_hurt"),"@n",name_var); atk_snd_var[3] = false;
     ini_close();
     // Variables
     type_var = 2;
@@ -33,11 +35,20 @@ object_event_add
     blood_spr_var = blood_kh_spr;
     w_base_var = 10;
     h_base_var = 16.4;
-    w_var = w_base_var*random_range(0.95,1.05);
-    h_var = h_base_var*random_range(0.95,1.05);
+    w_var = w_base_var;
+    h_var = h_base_var;
     eye_h_var = 14;
     spawn_var = -1;
+    z_off_var = 5;
+    acc_var = 16/675; // 0.02r370
+    frick_var = acc_var;
+    // Animation
+    anim_off_var = false;
+    scale_min_var = 0.95;
+    scale_max_var = 1.05;
+    off_var = 0.2/pixel_meter_rate_const;
     // Attack
+    fake_dmg_var = true;
     atk_range_var = 10; // 6
     // Hurt
     hp_var = irandom_range(1,3);
@@ -47,6 +58,7 @@ object_event_add
     hurt_die_var = 2;
     hurt_weird_var = true;
     stun_var = true;
+    hurt_rand_dist_var = 0;
     // hurt_dist_var = 5;
     // Wake
     woke_var = false;
@@ -74,13 +86,35 @@ object_event_add
         y = ystart;
         z = zstart;
     }
+    else if hurt_rand_dist_var > 0
+    {
+        local.dir = point_direction(hurt_target_var.x,hurt_target_var.y,x,y)+90;
+        local.dist = random_range(-hurt_rand_dist_var,hurt_rand_dist_var)
+        local.xtmp = x+lengthdir_x(local.dist,local.dir);
+        local.ytmp = y+lengthdir_y(local.dist,local.dir);
+        if do_coll_var { local.bool = !check_coll_scr(0,0,0,0,0,local.xtmp,local.ytmp,z); }
+        else { local.bool = true; }
+        if local.bool
+        {
+            x = local.xtmp;
+            y = local.ytmp;
+        }
+    }
     fmod_snd_play_scr(doll_hurt_snd_var);
 ');
 // Animate Alarm
 object_event_add
 (argument0,ev_alarm,8,'
-    w_var = w_base_var*random_range(0.95,1.05);
-    h_var = h_base_var*random_range(0.95,1.05);
+    if anim_off_var
+    {
+        x_off_var = random_range(-off_var,off_var);
+        y_off_var = random_range(-off_var,off_var);
+    }
+    else
+    {
+        w_var = w_base_var*random_range(scale_min_var,scale_max_var);
+        h_var = h_base_var*random_range(scale_min_var,scale_max_var);
+    }
     set_alarm_scr(8,1);
 ');
 // Step event
@@ -98,13 +132,46 @@ object_event_add
                 woke_var = true;
                 anim_var = true;
                 move_var = true;
-                inst_var = fmod_snd_3d_play_scr(wake_snd_var[1]);
-                sub_var[0] = wake_snd_var[2];
-                sub_var[1] = wake_snd_var[3];
+                local.snd = irandom(snd_len_var-1);
+                inst_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0]);
+                sub_var[0] = snd_arr[local.snd,1];
+                sub_var[1] = snd_arr[local.snd,2];
             }
         }
     }
     event_inherited();
+');
+// Attack Event
+object_event_add
+(argument0,ev_other,ev_user2,'
+    if fake_dmg_var
+    {
+        local.success = false;
+        with player_obj
+        {
+            if cyl_coll_scr
+            (
+                x,y,z,coll_var[2],coll_var[1],
+                other.x,other.y,other.z,other.atk_range_var,other.coll_var[1]
+            )
+            {
+                if instance_exists(nm_eff_obj)
+                { nm_eff_obj.fake_hp_var[cam_id_var] -= other.dmg_var; }
+                hurt_target_var = other.id;
+                event_user(0);
+                local.success = true;
+                other.atk_target_var = id;
+            }
+        }
+        if local.success { event_user(3); }
+    }
+    else { event_inherited(); }
+');
+// Attack Success
+object_event_add
+(argument0,ev_other,ev_user3,'
+    event_inherited();
+    instance_destroy();
 ');
 // Die event
 object_event_add

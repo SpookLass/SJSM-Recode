@@ -29,9 +29,9 @@ room_set_code
     }
     with instance_create(384,464,lab_door_obj) { global.spawn_arr[0,5] = id; direction = 0; }
     // Lights
-    with instance_create(432,464,brain_light_obj) { light_var = 0.66; event_user(0); }
-    with instance_create(560,464,brain_light_obj) { light_var = 0.33; event_user(0); }
-    with instance_create(656,464,brain_light_obj) { light_var = 0.1; event_user(0); }
+    with instance_create(432,464,bug_dead_light_obj) { light_var = 0.66; event_user(0); }
+    with instance_create(560,464,bug_dead_light_obj) { light_var = 0.33; event_user(0); }
+    with instance_create(656,464,bug_dead_light_obj) { light_var = 0.1; event_user(0); }
 ');
 // Room settings
 room_set_width(argument0,1280);

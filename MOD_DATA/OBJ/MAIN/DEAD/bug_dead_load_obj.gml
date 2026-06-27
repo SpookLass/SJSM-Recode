@@ -53,18 +53,62 @@ object_event_add
     bg_arr_var[13,1] = lab_subject_05_bg_path;
     bg_arr_var[13,2] = false;
     bg_arr_var[13,3] = false;
-    spr_len_var = 1;
-    spr_arr_var[0,1] = lab_subject_spr_path;
-    spr_arr_var[0,2] = 4;
+    spr_len_var = 3;
+    spr_arr_var[0,1] = bug_spr_path;
+    spr_arr_var[0,2] = 8;
     spr_arr_var[0,3] = false;
     spr_arr_var[0,4] = false;
     spr_arr_var[0,5] = 0;
     spr_arr_var[0,6] = 0;
+    spr_arr_var[1,1] = bug_bod_spr_path;
+    spr_arr_var[1,2] = 7;
+    spr_arr_var[1,3] = false;
+    spr_arr_var[1,4] = false;
+    spr_arr_var[1,5] = 0;
+    spr_arr_var[1,6] = 0;
+    spr_arr_var[2,1] = bug_head_spr_path;
+    spr_arr_var[2,2] = 8;
+    spr_arr_var[2,3] = false;
+    spr_arr_var[2,4] = false;
+    spr_arr_var[2,5] = 0;
+    spr_arr_var[2,6] = 0;
+    snd_len_var = 4;
+    snd_arr_var[0,1] = wf_static_snd_path;
+    snd_arr_var[0,2] = false;
+    snd_arr_var[0,3] = snd_group_sfx_const;
+    snd_arr_var[0,4] = 1;
+    snd_arr_var[0,5] = 0;
+    snd_arr_var[0,6] = 0;
+    snd_arr_var[1,1] = bug_light_snd_path;
+    snd_arr_var[1,2] = true;
+    snd_arr_var[1,3] = snd_group_sfx_const;
+    snd_arr_var[1,4] = 1;
+    snd_arr_var[1,5] = 20;
+    snd_arr_var[1,6] = 200;
+    snd_arr_var[2,1] = bug_light_blink_snd_path;
+    snd_arr_var[2,2] = true;
+    snd_arr_var[2,3] = snd_group_sfx_const;
+    snd_arr_var[2,4] = 1;
+    snd_arr_var[2,5] = 20;
+    snd_arr_var[2,6] = 200;
+    snd_arr_var[3,1] = bug_loop_snd_path;
+    snd_arr_var[3,2] = true;
+    snd_arr_var[3,3] = snd_group_mon_const;
+    snd_arr_var[3,4] = 1;
+    snd_arr_var[3,5] = 0;
+    snd_arr_var[3,6] = 200;
     mdl_len_var = 2;
     mdl_arr_var[0,1] = lab_door_mdl_path
     mdl_arr_var[1,1] = lab_doorframe_mdl_path
     rm_var = bug_dead_rm;
+    global.can_pause_var = false;
     event_inherited();
     key_var = false;
     broke_var = (global.diff_var != 0);
+');
+// Destroy Event
+object_event_add
+(argument0,ev_destroy,0,'
+    global.can_pause_var = true;
+    event_inherited();
 ');

@@ -11,6 +11,7 @@ object_event_add
 (argument0,ev_create,0,'
     if global.diff_var == 0 { instance_destroy(); exit; }
     event_inherited();
+    on_var = false;
     // Texture
     if instance_exists(load_par_obj)
     { tex_var = background_get_texture(load_par_obj.bg_arr_var[12,0]); }

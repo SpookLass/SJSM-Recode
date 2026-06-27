@@ -40,7 +40,7 @@ room_set_code
     global.cam_end_var = 1280;
     // Doors
     spawn_create_scr(true,false);
-')
+');
 // Room settings
 room_set_width(argument0,1280);
 room_set_height(argument0,720);

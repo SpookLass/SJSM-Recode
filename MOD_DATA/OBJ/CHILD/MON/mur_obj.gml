@@ -115,7 +115,7 @@ object_event_add
         snd_arr[1,0] = snd_add_scr(mur_02_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
         snd_arr[2,0] = snd_add_scr(mur_03_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
         snd_arr[3,0] = snd_add_scr(mur_04_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-        wake_snd_var[1] = snd_add_scr(mur_01_snd_path,global.wake_3d_var,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        wake_snd_var[1] = snd_add_scr(mur_wake_snd_path,global.wake_3d_var,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
         switch theme_scr(global.mur_theme_var,global.theme_var,1,0,0,1)
         {
             case 1: { mus_snd_var = snd_add_scr(mur_rom_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }

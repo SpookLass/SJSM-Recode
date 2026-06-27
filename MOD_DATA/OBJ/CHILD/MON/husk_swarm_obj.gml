@@ -31,6 +31,7 @@ object_event_add
     revive_var = false;
     atk_dist_var = 8.5;
     atk_range_var = 20;
+    atk_delay_var = 12;
     hp_min_var = 2;
     hp_max_var = 7;
     spd_min_var = 0.15;
@@ -57,6 +58,7 @@ object_event_add
             dur_var = irandom_range(30,40);
             atk_dist_var = 8;
             atk_range_var = 16;
+            atk_delay_var = 15;
             persist_var = true;
             spawn_dist_var = 96;
             husk_dist_var = 32;
@@ -162,13 +164,16 @@ object_event_add
                 persistent = true;
                 par_var = other.id;
                 // Variables
-                spawn_dist_var = other.spawn_dist_var;
+                spawn_player_dist_var = other.spawn_dist_var;
                 husk_dist_var = other.husk_dist_var;
                 revive_var = other.revive_var;
                 hurt_dist_base_var = other.hurt_dist_var;
                 heal_var = other.heal_var;
                 hurt_down_var = other.hurt_down_var;
                 dead_rm_var = other.dead_rm_var;
+                atk_delay_var = other.atk_delay_var;
+                atk_dist_var = other.atk_dist_var;
+                atk_range_var = other.atk_range_var;
                 // Random
                 hp_var = irandom_range(other.hp_min_var,other.hp_max_var);
                 hp_max_var = hp_var;
@@ -246,13 +251,16 @@ object_event_add
                     y = global.mark_arr[local.i,1];
                     z = global.mark_arr[local.i,2];
                     // Variables
-                    spawn_dist_var = other.spawn_dist_var;
+                    spawn_player_dist_var = other.spawn_dist_var;
                     husk_dist_var = other.husk_dist_var;
                     revive_var = other.revive_var;
                     hurt_dist_base_var = other.hurt_dist_var;
                     heal_var = other.heal_var;
                     hurt_down_var = other.hurt_down_var;
                     dead_rm_var = other.dead_rm_var;
+                    atk_delay_var = other.atk_delay_var;
+                    atk_dist_var = other.atk_dist_var;
+                    atk_range_var = other.atk_range_var;
                     // Sound
                     snd_alarm_min_var = other.snd_alarm_min_var;
                     snd_alarm_max_var = other.snd_alarm_max_var;

@@ -332,8 +332,8 @@ object_event_add
         glitch_snd_arr[3] = snd_add_scr(glitch_04_snd_path,false,snd_group_mon_const,1,0,0);
         switch theme_scr(global.wf_theme_var,global.theme_var,1,0,0,1)
         {
-            case 1: { mus_imscared_snd_var = fmod_snd_add_scr(wf_rom_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
-            default: { mus_imscared_snd_var = fmod_snd_add_scr(wf_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
+            case 1: { mus_imscared_snd_var = snd_add_scr(wf_rom_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
+            default: { mus_imscared_snd_var = snd_add_scr(wf_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
         }
     }
     tex_02_var = background_get_texture(bg_var);

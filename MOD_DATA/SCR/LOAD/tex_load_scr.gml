@@ -180,6 +180,7 @@ for (local.i=0; local.i<global.mode_len_var; local.i+=1;)
 draw_load_scr("Loaded art!");
 // Gay
 globalvar pride_list;
+pride_list = ds_list_create();
 ds_list_clear(pride_list);
 ds_list_add(pride_list,pride_color_obj);
 ds_list_add(pride_list,abro_color_obj);
@@ -213,6 +214,7 @@ ds_list_add(pride_list,trigender_color_obj);
 ds_list_add(pride_list,xenogender_color_obj);
 // Trans
 globalvar trans_list;
+trans_list = ds_list_create();
 ds_list_clear(trans_list);
 ds_list_add(trans_list,agender_color_obj);
 ds_list_add(trans_list,bigender_color_obj);

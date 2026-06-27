@@ -66,13 +66,13 @@ room_set_code
     }
     with instance_create(544,240,lab_door_obj) { global.spawn_arr[3,5] = id; direction = 180; }
     // Lights
-    with instance_create(176,240,brain_light_obj) { light_var = 0.6; event_user(0); } // Entrance
-    with instance_create(304,240,brain_light_obj) { light_var = 0.4; event_user(0); }
-    with instance_create(400,160,brain_light_obj) { light_var = 1; event_user(0); } // Left Door
-    with instance_create(400,240,brain_light_obj) { light_var = 0.9; event_user(0); } // Center
-    with instance_create(400,320,brain_light_obj) { light_var = 0.8; event_user(0); } // Right Door
-    with instance_create(448,272,brain_light_obj) { light_var = 0.7; event_user(0); } // Table
-    with instance_create(512,240,brain_light_obj) { light_var = 0.5; event_user(0); } // Forward Door
+    with instance_create(176,240,bug_dead_light_obj) { light_var = 0.6; event_user(0); } // Entrance
+    with instance_create(304,240,bug_dead_light_obj) { light_var = 0.4; event_user(0); }
+    with instance_create(400,160,bug_dead_light_obj) { light_var = 1; event_user(0); } // Left Door
+    with instance_create(400,240,bug_dead_light_obj) { light_var = 0.9; event_user(0); } // Center
+    with instance_create(400,320,bug_dead_light_obj) { light_var = 0.8; event_user(0); } // Right Door
+    with instance_create(448,272,bug_dead_light_obj) { light_var = 0.7; event_user(0); } // Table
+    with instance_create(512,240,bug_dead_light_obj) { light_var = 0.5; event_user(0); } // Forward Door
 ');
 // Room settings
 room_set_width(argument0,1280);

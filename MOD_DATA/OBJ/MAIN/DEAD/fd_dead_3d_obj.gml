@@ -66,6 +66,7 @@ object_event_add
     with player_obj { if point_distance_3d_scr(x,y,z,other.x,other.y,other.z) < other.dist_var { local.active = true; }}
     if local.active || global.input_press_arr[confirm_input_const,global.menu_player_var] == 1
     || global.input_press_arr[back_input_const,global.menu_player_var] == 1
+    || global.input_press_arr[pause_input_const,global.menu_player_var] == 1
     {
         with load_par_obj { instance_destroy(); }
         rm_goto_menu_scr(rm_var,true);

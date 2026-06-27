@@ -101,8 +101,8 @@ object_event_add
     { global.game_spd_var = 1; fmod_group_set_pitch_scr(0,global.game_spd_var); }
     if instance_exists(load_par_obj)
     {
-        if ds_list_find_index(global.mon_list,gel_obj) < 0
-        { ds_list_add(global.mon_list,gel_obj); }
+        if ds_list_find_index(global.mon_list,brain_chase_obj) < 0
+        { ds_list_add(global.mon_list,brain_chase_obj); }
         with door_trig_obj { lock_var = !lock_var; }
     }
     else { with door_trig_obj { save_var = false; event_user(0); }}

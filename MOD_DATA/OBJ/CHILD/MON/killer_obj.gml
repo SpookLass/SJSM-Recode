@@ -402,8 +402,8 @@ object_event_add
                 snd_arr[2,0] = snd_add_scr(killer_03_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
                 breath_snd_arr[0,0] = snd_add_scr(killer_breath_01_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
                 breath_snd_arr[1,0] = snd_add_scr(killer_breath_02_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-                wake_snd_var[1] = snd_add_scr(stab_11_snd_path,global.wake_3d_var,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-                charge_snd_arr[0,0] = snd_add_scr(stab_11_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+                wake_snd_var[1] = snd_add_scr(js_11_snd_path,global.wake_3d_var,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+                charge_snd_arr[0,0] = snd_add_scr(js_11_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
                 break;
             }
             case 1: // DirectorFlik
@@ -419,8 +419,8 @@ object_event_add
                 snd_arr[8,0] = snd_add_scr(killer_hd_09_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
                 breath_snd_arr[0,0] = snd_add_scr(killer_breath_hd_01_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
                 breath_snd_arr[1,0] = snd_add_scr(killer_breath_hd_02_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-                wake_snd_var[1] = snd_add_scr(stab_11_snd_path,global.wake_3d_var,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-                charge_snd_arr[0,0] = snd_add_scr(stab_11_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+                wake_snd_var[1] = snd_add_scr(js_11_snd_path,global.wake_3d_var,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+                charge_snd_arr[0,0] = snd_add_scr(js_11_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
                 break;
             }
             case 2: // Spook Lass
@@ -432,8 +432,8 @@ object_event_add
                 breath_snd_arr[0,0] = snd_add_scr(killer_breath_lass_01_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
                 breath_snd_arr[1,0] = snd_add_scr(killer_breath_lass_02_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
                 breath_snd_arr[2,0] = snd_add_scr(killer_breath_lass_03_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-                wake_snd_var[1] = snd_add_scr(stab_11_snd_path,global.wake_3d_var,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-                charge_snd_arr[0,0] = snd_add_scr(stab_11_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+                wake_snd_var[1] = snd_add_scr(js_11_snd_path,global.wake_3d_var,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+                charge_snd_arr[0,0] = snd_add_scr(js_11_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
                 break;
             }
             case 3:

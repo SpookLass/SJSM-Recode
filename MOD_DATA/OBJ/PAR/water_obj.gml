@@ -16,7 +16,7 @@ object_event_add
     y = 0;
     spd_mult_var = 0.6;
     spd_mult_deep_var = 0.6;
-    deep_per_var = 0.75;
+    deep_per_var = 0.5;
     grav_mult_var = 0.5;
     grav_mult_deep_var = 0;
 ');

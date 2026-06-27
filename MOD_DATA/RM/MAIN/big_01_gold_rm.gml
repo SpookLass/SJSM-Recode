@@ -57,8 +57,7 @@ room_set_code
         instance_create(1024,304,torch_east_obj);
         instance_create(1024,368,torch_east_obj);
     }
-    
-')
+');
 // Room settings
 room_set_width(argument0,1280);
 room_set_height(argument0,720);

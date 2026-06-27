@@ -46,7 +46,7 @@ room_set_code
     }
     with instance_create(560,256,door_obj) { global.spawn_arr[1,5] = id; direction = 0; }
     // Lights
-    with instance_create(352,224,brain_light_obj) { light_var = 1; event_user(0); } // Entrance
+    with instance_create(352,224,bug_dead_light_obj) { light_var = 1; event_user(0); } // Entrance
 ');
 // Room settings
 room_set_width(argument0,1280);

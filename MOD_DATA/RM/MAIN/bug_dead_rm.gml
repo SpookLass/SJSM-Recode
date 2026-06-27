@@ -36,27 +36,10 @@ room_set_code
     // Exit
     with instance_create(400,136,spawn_door_trig_obj) { global.spawn_arr[1,4] = id; lock_var = true; }
     with instance_create(400,128,lab_door_obj) { global.spawn_arr[1,5] = id; direction = 270; }
-    with instance_create(400,344,spawn_door_trig_obj)
-    {
-        global.spawn_arr[2,4] = id;
-        rm_var = lab_02_rm;
-        snd_len_var = 1;
-        snd_arr[0] = door_m_02_snd;
-    }
     with instance_create(400,352,lab_door_obj) { global.spawn_arr[2,5] = id; direction = 90; }
-    with instance_create(536,240,spawn_door_trig_obj)
-    {
-        global.spawn_arr[3,4] = id; 
-        rm_var = lab_03_rm;
-        lock_var = !load_par_obj.key_var;
-        ini_open("lang_"+global.lang_var+".ini");
-        txt_lock_var = ini_read_string("UI","keycard_hint","UI_keycard_hint");
-        ini_close();
-        snd_len_var = 1;
-        snd_arr[0] = door_m_02_snd;
-    }
     with instance_create(544,240,lab_door_obj) { global.spawn_arr[3,5] = id; direction = 180; }
-    
+    with instance_create(448,208,bug_dead_light_obj) { light_var = 1; event_user(0); }
+    with instance_create(400,160,bug_dead_light_obj) { light_var = 1; event_user(0); }
 ');
 // Room settings
 room_set_width(argument0,1280);
@@ -202,7 +185,7 @@ room_instance_add(argument0,416,144,spawn_wall_up_vert_obj);
 room_instance_add(argument0,384,144,spawn_wall_up_vert_obj);
 room_instance_add(argument0,544,240,spawn_wall_up_vert_obj);
 // Props
-room_instance_add(argument0,304,240,lab_light_obj);
+/*room_instance_add(argument0,304,240,lab_light_obj);
 room_instance_add(argument0,240,240,lab_light_obj);
 room_instance_add(argument0,176,240,lab_light_obj);
 room_instance_add(argument0,352,208,lab_light_obj);
@@ -212,6 +195,16 @@ room_instance_add(argument0,352,272,lab_light_obj);
 room_instance_add(argument0,400,240,lab_light_obj);
 room_instance_add(argument0,400,160,lab_light_obj);
 room_instance_add(argument0,400,320,lab_light_obj);
-room_instance_add(argument0,512,240,lab_light_obj);
+room_instance_add(argument0,512,240,lab_light_obj);*/
 room_instance_add(argument0,464,208,table_metal_obj);
 room_instance_add(argument0,464,272,table_metal_obj);
+room_instance_add(argument0,461.8667,241.0667,lab_hole_obj); // 461.8r6, 241.0r6
+room_instance_add(argument0,405.8667,261.8667,lab_hole_obj); // 405.8r6, 261.8r6
+room_instance_add(argument0,424.5333,230.5067,lab_hole_obj); // 424.5r3, 230.50r6
+room_instance_add(argument0,376.4267,240.8533,lab_hole_obj); // 376.42r6, 240.85r3
+room_instance_add(argument0,401.7067,207.8933,bug_dead_hole_big_obj); // 401.70r6, 207.89r3
+room_instance_add(argument0,445.9733,229.2267,bug_dead_hole_small_obj); // 445.97r3, 229.22r6
+room_instance_add(argument0,401.28,240.32,bug_dead_hole_small_obj);
+room_instance_add(argument0,480,272.32,bug_dead_hole_wall_obj);
+// Please dont fail me!
+room_instance_add(argument0,0,0,bug_dead_obj);

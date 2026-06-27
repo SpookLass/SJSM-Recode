@@ -5,7 +5,7 @@ Argument 0: Print
     for (local.j=0; local.j<ds_list_size(global.mod_list); local.j+=1;)
     {
         local.dir = ds_list_find_value(global.mod_list,local.j);
-        local.file = file_find_first(local.dir+"\SPR\MAIN\*.png",-1);
+        local.file = file_find_first(local.dir+"\SPR\MAIN\*.gml",-1);
         // Get the first file in the main directory
             local.i = 0;
             local.file = filename_change_ext(file_find_first(local.dir+"\SPR\MAIN\*.gml",-1),"");
@@ -60,7 +60,7 @@ Argument 0: Print
             file_find_close();
         // Get the first file in the UI directory
             local.i = 0;
-            local.file = filename_change_ext(file_find_first(local.dir+"\SPR\UI\*.png",-1),"");
+            local.file = filename_change_ext(file_find_first(local.dir+"\SPR\UI\*.gml",-1),"");
             while (local.file != "")
             {
                 // Not sure why, but it doesn't include the path.
@@ -73,7 +73,7 @@ Argument 0: Print
             file_find_close();
         // Get the first file in the minigame directory
             local.i = 0;
-            local.file = filename_change_ext(file_find_first(local.dir+"\SPR\MINI\*.png",-1),"");
+            local.file = filename_change_ext(file_find_first(local.dir+"\SPR\MINI\*.gml",-1),"");
             while (local.file != "")
             {
                 // Not sure why, but it doesn't include the path.
@@ -171,7 +171,7 @@ Argument 0: Print
     file_find_close();
 // Get the first file in the UI directory
     local.i = 0;
-    local.file = filename_change_ext(file_find_first(main_directory_const+"\SPR\UI\*.png",-1),"");
+    local.file = filename_change_ext(file_find_first(main_directory_const+"\SPR\UI\*.gml",-1),"");
     while (local.file != "")
     {
         // Not sure why, but it doesn't include the path.
@@ -184,7 +184,7 @@ Argument 0: Print
     file_find_close();
 // Get the first file in the minigame directory
     local.i = 0;
-    local.file = filename_change_ext(file_find_first(main_directory_const+"\SPR\MINI\*.png",-1),"");
+    local.file = filename_change_ext(file_find_first(main_directory_const+"\SPR\MINI\*.gml",-1),"");
     while (local.file != "")
     {
         // Not sure why, but it doesn't include the path.
