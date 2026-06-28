@@ -41,6 +41,7 @@ object_event_add
     smart_var = false;
     atk_range_var = 32;
     eff_mult_var = false;
+    dead_rm_var = brain_dead_rm;
     // Sounds
     do_snd_var = true;
     loop_snd_var[0] = false;

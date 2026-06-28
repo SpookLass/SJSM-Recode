@@ -93,7 +93,7 @@ object_event_add
             dmg_var = 30;
             atk_range_var = global.mon_coll[2];
             fog_end_var = 128;
-            fog_color_var = wall_color_var;
+            //fog_color_var = wall_color_var;
             delay_var = 30;
             snd_dist_max_var = 300;
             break;

@@ -13,6 +13,8 @@ object_event_add
     //Defaults
     fade_var = false;
     cam_id_var = 0;
+    if global.reduce_flash_var
+    { image_blend = c_gray; }
     // Sound
     do_snd_var = false;
     // Animate

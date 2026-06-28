@@ -61,7 +61,7 @@ object_event_add
     else
     {
         draw_set_font(taker_font);
-        off_len_var = round(720/(string_height(str_var)*image_yscale));
+        off_len_var = ceil(720/(string_height(str_var)*image_yscale));
         for (local.i=0; local.i < off_len_var; local.i+=1;)
         { off_arr_var[local.i] = random(string_width(str_var)*image_xscale); }
         draw_set_font(main_font);
@@ -136,7 +136,7 @@ object_event_add
     local.width = string_width(str_var)*local.xscale;
     local.height = (string_height(str_var)+8)*local.yscale;
     // Loop top to bottom
-    for (local.i=0; local.i<round(view_hview[view_current]/local.height)+(off_len_var*2); local.i+=1;)
+    for (local.i=0; local.i<ceil(view_hview[view_current]/local.height)+(off_len_var*2); local.i+=1;)
     {
         // Calculate horizontal offset (what a mess!)
         if cool_var && (local.i mod off_len_var) mod 2 { local.xtmp = (((-x+off_arr_var[local.i mod off_len_var])*local.viewscale) mod local.width)-local.width; }
@@ -144,7 +144,7 @@ object_event_add
         // Calculate vertical offset
         local.ytmp = ((y * local.viewscale) mod (local.height*off_len_var))+(local.height*(local.i-off_len_var));
         // Loop left to right
-        for (local.w=0; local.w<round(view_wview[view_current]/local.width)+2; local.w+=1;)
+        for (local.w=0; local.w<ceil(view_wview[view_current]/local.width)+2; local.w+=1;)
         // Draw!
         { draw_text_transformed(local.xtmp+(local.w*local.width),local.ytmp,str_var,local.xscale,local.yscale,0); }
     }

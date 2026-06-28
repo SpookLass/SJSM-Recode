@@ -63,7 +63,7 @@ object_event_add
         case 0:
         {
             fog_end_var = 128;
-            fog_color_var = wall_color_var;
+            // fog_color_var = wall_color_var;
             break;
         }
     }
