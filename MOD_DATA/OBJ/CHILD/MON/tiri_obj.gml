@@ -162,7 +162,6 @@ object_event_add
             case 1: { mus_snd_var = snd_add_scr(tiri_rom_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
             default: { mus_snd_var = snd_add_scr(tiri_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
         }
-        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
     }
 ');
 // Destroy Event

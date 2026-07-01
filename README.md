@@ -2,10 +2,8 @@
 
 ## Description:
 
-Spooky's Jump Scare Mansion - Project Recode is a complete reconstruction of Spooky's Jump Scare Mansion from the ground up built in Game Maker 8, the same engine as the original.
-The goal of Recode is to be the best version of the game possible, with lots of settings, quality of life features, couch co-op, and mod loading.
-Recode also attempts to emulate the Original and HD Renovation experience as close as possible to the original vision, while still fixing bugs and quirks, through behaviors.
-This demo only includes Endless Mode at the moment, but will get Story Mode support as well.
+Spooky's Jump Scare Mansion - Project Recode is a complete reconstruction of Spooky's Jump Scare Mansion from the ground up built in Game Maker 8, the same engine as the original. The goal of Recode is to be the best version of the game possible, with lots of settings, quality of life features, couch co-op, and mod loading.
+Recode also attempts to emulate the Original and HD Renovation experience as close as possible to the original vision, while still fixing bugs and quirks, through behaviors. This demo only includes Endless Mode at the moment, but will get Story Mode support as well.
 
 ## Installation Instructions:
 
@@ -82,7 +80,6 @@ This demo only includes Endless Mode at the moment, but will get Story Mode supp
 
 - Dondytrap: Italian translation
 - Lunnay: Brazilian Portugeuse translation
-- Roxi Kersti: Spanish translation
 
 ### Plugins
 

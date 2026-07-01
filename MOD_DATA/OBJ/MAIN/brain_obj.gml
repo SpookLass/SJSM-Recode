@@ -31,16 +31,6 @@ object_event_add
     z_rate_var=480;
     z_base_var=5;
     z = z_base_var;
-    // Weapon
-    delay_var = 180;
-    weapon_var = true;
-    state_var = 2;
-    alarm_len_var = 1;
-    alarm_ini_scr();
-    // Slow
-    target_spd_mult_var = 0.3;
-    if global.brain_type_var < 1 && global.mode_var != 0
-    { target_spd_mult_var = 0.6; }
 ');
 // Draw
 object_event_add
@@ -55,56 +45,4 @@ object_event_add
 (argument0,ev_step,ev_step_normal,'
     z_time_var = (z_time_var+global.delta_time_var) mod z_rate_var;
     z = z_base_var+(sin(2*z_time_var*pi/z_rate_var)*z_mult_var*0.5);
-    if state_var <= 0 && instance_number(mon_par_obj) < 2
-    {
-        with (player_obj)
-        {
-            if spd_mult_var > other.target_spd_mult_var
-            { spd_mult_var = other.target_spd_mult_var; }
-        }
-    }
 ');
-// Weapon
-object_event_add
-(argument0,ev_other,ev_user4,'
-    if state_var > 0
-    {
-        state_var -= 1;
-        if state_var <= 0
-        { set_alarm_scr(0,delay_var); }
-    }
-');
-// Alarm
-object_event_add
-(argument0,ev_alarm,0,'
-    fmod_update_take_over_when_lock_scr();
-    with instance_create(x,y,brain_chase_obj)
-    {
-        set_alarm_scr(0,-1);
-        on_var = true;
-        x = other.x;
-        y = other.y;
-        z = 0;
-        z_off_time_var = other.z_time_var;
-        z_off_base_var = other.z_base_var;
-        z_off_rate_var = other.z_rate_var;
-        z_off_mult_var = other.z_mult_var;
-        z_off_var = other.z;
-        tex_var = other.store_tex_var;
-        w_var = other.w_var;
-        h_var = other.h_var;
-        if loop_snd_var[0] == 1 { loop_inst_var = fmod_snd_3d_loop_scr(loop_snd_var[1]); }
-    }
-    global.last_time_var = current_time;
-    fmod_update_take_over_done_scr();
-    if global.reset_spd_var > 0 && global.game_spd_var > 1
-    { global.game_spd_var = 1; fmod_group_set_pitch_scr(0,global.game_spd_var); }
-    if instance_exists(load_par_obj)
-    {
-        if ds_list_find_index(global.mon_list,brain_chase_obj) < 0
-        { ds_list_add(global.mon_list,brain_chase_obj); }
-        with door_trig_obj { lock_var = !lock_var; }
-    }
-    else { with door_trig_obj { save_var = false; event_user(0); }}
-    instance_destroy();
-')

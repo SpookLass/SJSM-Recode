@@ -5,6 +5,8 @@ Argument 2: Group
 Argument 3: Volume
 Argument 4: Min distance
 Argument 5: Max distance
+Title: Got Here
+Author: Spook Lass
 */
 local.snd = fmod_snd_add_scr(argument0+".mp3",false);
 fmod_snd_set_group_scr(local.snd,snd_group_mus_const);

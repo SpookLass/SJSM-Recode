@@ -187,42 +187,10 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_room_start,'
     if do_wander_var { wander_var = true; }
+    // Spawn
     spawn_var = 0;
     if rand_spawn_scr(spawn_attempt_var,false,spawn_player_dist_var,spawn_player_dist_var,0)
     { spawn_var = -1; }
-    // Spawn
-    for (local.i=0; local.i<spawn_attempt_var; local.i+=1;)
-    {
-        local.flr = instance_find(floor_par_obj,irandom(instance_number(floor_par_obj)-1));
-        local.xtmp = local.flr.x;//+random_range(-local.flr.w_var/2,local.flr.w_var/2);
-        local.ytmp = local.flr.y;//+random_range(-local.flr.h_var/2,local.flr.h_var/2);
-        local.ztmp = local.flr.z;
-        local.bool = true;
-        if spawn_player_dist_var > 0
-        {
-            with player_obj
-            {
-                if on_var && !dead_var && !in_door_var
-                {
-                    if point_distance_3d_scr(local.xtmp,local.ytmp,local.ztmp,x,y,z) < other.spawn_player_dist_var
-                    { local.bool = false; break; }
-                }
-            }
-            if point_distance_3d_scr(local.xtmp,local.ytmp,local.ztmp,global.spawn_arr[0,0],global.spawn_arr[0,1],global.spawn_arr[0,2]) < spawn_player_dist_var
-            { local.bool = false; break; }
-        }
-        if local.bool
-        {
-            if !check_coll_scr(0,0,0,0,0,local.xtmp,local.ytmp,local.ztmp)
-            {
-                x = local.xtmp;
-                y = local.ytmp;
-                z = local.ztmp;
-                spawn_var = -1;
-                break;
-            }
-        }
-    }
     event_inherited();
     if spawn_var == -1
     {

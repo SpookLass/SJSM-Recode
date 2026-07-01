@@ -959,7 +959,7 @@ object_event_add
             {
                 hp_var -= hurt_hp_var;
                 if hurt_die_var == 2 && hp_var <= 0 { event_user(11); exit; }
-                else { hp_var = max(1,hp_var); }
+                else { hp_var = max(0,hp_var); }
             }
         }
         // Hurt sound

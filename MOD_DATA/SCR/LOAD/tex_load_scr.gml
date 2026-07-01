@@ -155,26 +155,26 @@ for (local.i=0; local.i<global.mode_len_var; local.i+=1;)
     poster_add_scr(poster_depo_bg_path,1,0);
     poster_add_scr(poster_beef_bg_path,1,0);
 // Endless 1
-    poster_add_scr(poster_smile_bg_path,0,1);
-    poster_add_scr(poster_ghost_bg_path,0,1);
-    poster_add_scr(poster_pizza_bg_path,0,1);
-    poster_add_scr(poster_hedgehog_bg_path,0,1);
-    poster_add_scr(poster_home_bg_path,0,1);
-    poster_add_scr(poster_freedom_bg_path,0,1);
-    poster_add_scr(poster_tlc_bg_path,0,1);
-    poster_add_scr(poster_cactus_bg_path,0,1);
-    poster_add_scr(poster_pout_bg_path,0,1);
-    poster_add_scr(poster_bunnee_bg_path,0,1);
-    poster_add_scr(poster_broccoli_bg_path,0,1);
-    poster_add_scr(poster_sports_bg_path,0,1);
-    poster_add_scr(poster_team_bg_path,0,1);
-    poster_add_scr(poster_spiral_bg_path,0,1);
-    if global.kh_var { poster_add_scr(poster_worm_bg_path,0,1); }
+    poster_add_scr(poster_smile_bg_path,0,1); poster_add_scr(poster_smile_bg_path,0,2);
+    poster_add_scr(poster_ghost_bg_path,0,1); poster_add_scr(poster_ghost_bg_path,0,2);
+    poster_add_scr(poster_pizza_bg_path,0,1); poster_add_scr(poster_pizza_bg_path,0,2);
+    poster_add_scr(poster_hedgehog_bg_path,0,1); poster_add_scr(poster_hedgehog_bg_path,0,2);
+    poster_add_scr(poster_home_bg_path,0,1); poster_add_scr(poster_home_bg_path,0,2);
+    poster_add_scr(poster_freedom_bg_path,0,1); poster_add_scr(poster_freedom_bg_path,0,2);
+    poster_add_scr(poster_tlc_bg_path,0,1); poster_add_scr(poster_tlc_bg_path,0,2);
+    poster_add_scr(poster_cactus_bg_path,0,1); poster_add_scr(poster_cactus_bg_path,0,2);
+    poster_add_scr(poster_pout_bg_path,0,1); poster_add_scr(poster_pout_bg_path,0,2);
+    poster_add_scr(poster_bunnee_bg_path,0,1); poster_add_scr(poster_bunnee_bg_path,0,2);
+    poster_add_scr(poster_broccoli_bg_path,0,1); poster_add_scr(poster_broccoli_bg_path,0,2);
+    poster_add_scr(poster_sports_bg_path,0,1); poster_add_scr(poster_sports_bg_path,0,2);
+    poster_add_scr(poster_team_bg_path,0,1); poster_add_scr(poster_team_bg_path,0,2);
+    poster_add_scr(poster_spiral_bg_path,0,1); poster_add_scr(poster_spiral_bg_path,0,2);
+    if global.kh_var { poster_add_scr(poster_worm_bg_path,0,1); poster_add_scr(poster_worm_bg_path,0,2); }
 // Endless 2
     if global.kh_var
     {
-        poster_add_scr(poster_wednesday_01_bg_path,0,1);
-        poster_add_scr(poster_wednesday_02_bg_path,0,1);
+        poster_add_scr(poster_wednesday_01_bg_path,0,1); poster_add_scr(poster_wednesday_01_bg_path,0,2);
+        poster_add_scr(poster_wednesday_02_bg_path,0,1); poster_add_scr(poster_wednesday_02_bg_path,0,2);
     }
 // Draw
 draw_load_scr("Loaded art!");

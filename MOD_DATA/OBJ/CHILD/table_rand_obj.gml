@@ -9,11 +9,7 @@ object_set_visible(argument0,true);
 // Create event
 object_event_add
 (argument0,ev_create,0,'
-    if !irandom(1)
-    {
-        event_inherited();
-        
-    }
+    if !irandom(1) { event_inherited(); }
     else { instance_destroy(); }
 ');
 // Room Start Event

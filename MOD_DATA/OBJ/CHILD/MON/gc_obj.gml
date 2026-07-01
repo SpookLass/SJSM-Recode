@@ -56,13 +56,16 @@ object_event_add
     // Animation
     turn_rate_var = 5/3;
     turn_max_var = 30;
-    inv_chance_var = 3;
+    inv_num_var = 1;
+    inv_den_var = 3;
     vis_num_var = 2;
     vis_den_var = 3;
+    alpha_min_var = 0.5;
+    alpha_max_var = 1;
     rand_alarm_min_var = 6;
     rand_alarm_max_var = 30;
-    flash_var = false;
     dmg_stun_alarm_var = 30;
+    shake_dist_var = 0.5;
     // Seen
     do_seen_var = true;
     spd_per_min_var = 1;
@@ -161,7 +164,7 @@ object_event_add
         {
             delay_var = 94; // (128/2.5) + (64/1.5)
             spd_base_var = 1.5;
-            inv_chance_var = 4;
+            inv_den_var = 4;
             type_var = 2;
             move_type_var = 3;
             dmg_var = 20;
@@ -376,7 +379,6 @@ object_event_add
         with player_obj
         { if !dead_var && fov_var > other.fov_var { fov_var = other.fov_var; }}
     }
-    
     if cam_end_var > 0 { global.cam_end_var = cam_end_var; }
     if !instance_exists(gc_eff_obj)
     {
@@ -492,8 +494,8 @@ object_event_add
 // Random anim
 object_event_add
 (argument0,ev_alarm,8,'
-    if !irandom(inv_chance_var-1) && image_alpha != 0 { image_alpha = 0; }
-    else { image_alpha = choose(1,random_range(0.5,1)); }
+    if inv_num_var > 0 && frac_chance_scr(inv_num_var,inv_den_var) && image_alpha != 0 { image_alpha = 0; }
+    else { image_alpha = choose(1,random_range(alpha_min_var,alpha_max_var)); }
     set_alarm_scr(8,irandom_range(rand_alarm_min_var,rand_alarm_max_var));
 ');
 // Seen Alarm
@@ -603,9 +605,9 @@ object_event_add
     if spr_prog_var <= 0
     {
         spr_prog_var = 1;
-        x_off_var = random_range(-0.5,0.5);
-        y_off_var = random_range(-0.5,0.5);
-        z_off_var = random_range(-0.5,0.5);
+        x_off_var = random_range(-shake_dist_var,shake_dist_var);
+        y_off_var = random_range(-shake_dist_var,shake_dist_var);
+        z_off_var = random_range(-shake_dist_var,shake_dist_var);
         if upside_var { z_off_var += 24.5; }
         visible = frac_chance_scr(vis_num_var,vis_den_var);
     }
@@ -658,8 +660,8 @@ object_event_add
     event_inherited();
     local.index = irandom(dmg_snd_len_var-1);
     inst_var = fmod_snd_play_scr(dmg_snd_arr[local.index,0]);
-    sub_var[0] = dmg_snd_arr[local.index,1]
-    sub_var[1] = dmg_snd_arr[local.index,2]
+    sub_var[0] = dmg_snd_arr[local.index,1];
+    sub_var[1] = dmg_snd_arr[local.index,2];
     if dmg_stun_alarm_var > 0
     {
         set_motion_3d_scr(0,true);

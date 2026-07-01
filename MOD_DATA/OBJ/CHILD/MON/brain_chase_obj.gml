@@ -62,12 +62,12 @@ object_event_add
                 wake_snd_var[0] = false;
                 mus_prio_var = theme_mus_prio_const;
                 dur_var = irandom_range(10,15);
-                spd_var = 8/15; // Old HD: 0.5r3
+                spd_var = 0.5; // Old HD: 0.5r3
                 target_spd_mult_var = 0.6;
                 smart_var = true;
                 eff_var = true;
                 eff_mult_var = true;
-                dmg_var = 60;
+                dmg_var = 40;
                 delay_var = 30;
                 dmg_alarm_var = 180;
                 atk_alarm_var = 0;
@@ -75,7 +75,7 @@ object_event_add
                 sil_var = true;
                 sil_type_var = 1; // Pure color
                 sil_color_var = make_color_rgb(159,196,156);
-                sil_alpha_var = 0.6;
+                sil_alpha_var = 0.33;
                 sil_dist_var = 0.1;
             }
             break;

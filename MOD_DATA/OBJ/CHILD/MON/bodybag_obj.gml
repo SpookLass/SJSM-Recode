@@ -65,7 +65,7 @@ object_event_add
             frick_var = 0.05;
             delay_var = 60; // 90
             atk_spawn_delay_var = 60;
-            shake_var = 0.32;
+            shake_var = 0.25;
             eff_fade_var = true;
             strobe_var = false;
             atk_range_var = global.mon_coll[2];

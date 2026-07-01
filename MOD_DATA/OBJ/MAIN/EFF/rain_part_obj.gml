@@ -25,14 +25,12 @@ object_event_add
     part_pitch_var = -78.75;
     do_coll_var = true;
     // Ring
-    ring_time_var = 60;
-    ring_base_w_var = 2;
+    ring_time_var = 30;
+    ring_base_w_var = 3;
     do_ring_var = true;
     // Droplet
-    droplet_time_var = 60;
-    droplet_w_var = 1;
-    droplet_dist = 0.5;
-    do_droplet_var = true;
+    droplet_w_var = 4;
+    droplet_h_var = 0.25;
     // Spawning
     player_var = true;
     do_spawn_coll_var = false; // Horribly inefficient, do not recommmend!
@@ -92,7 +90,7 @@ object_event_add
             (
                 local.xtmp2,local.ytmp2,local.ztmp2,
                 local.spd,part_yaw_var,part_pitch_var,
-                0.5,4,0,
+                droplet_w_var,droplet_h_var,0,
                 image_blend,image_alpha,
                 false,white_bg_tex,
                 0,0,
@@ -117,36 +115,37 @@ object_event_add
             else if do_coll_var
             {
                 // Collisions (I hope this doesnt lag the game!)
-                local.ztmp = part_arr[local.i,3]-(part_arr[local.i,8]/2);
+                local.coll = false;
                 local.spd = part_arr[local.i,4]*global.delta_time_var;
-                if do_ring_var
+                // Raycast
+                local.xvel = lengthdir_x(lengthdir_x(1,part_arr[local.i,5]),part_arr[local.i,6]);
+                local.yvel = lengthdir_x(lengthdir_y(1,part_arr[local.i,5]),part_arr[local.i,6]);
+                local.zvel = -lengthdir_y(1,part_arr[local.i,6]);
+                if check_ray_scr(part_arr[local.i,1],part_arr[local.i,2],part_arr[local.i,3],local.xvel,local.yvel,local.zvel) < local.spd+(part_arr[local.i,7]*0.5)
+                { local.coll = true; }
+                // If collided, check if collision is with floor
+                if local.coll && do_ring_var && part_arr[local.i,6] < 0
                 {
-                    local.dist = check_ray_scr(part_arr[local.i,1],part_arr[local.i,2],local.ztmp,0,0,-1);
-                    
-                    if local.dist < local.spd
+                    local.dist = check_ray_scr(part_arr[local.i,1],part_arr[local.i,2],part_arr[local.i,3],0,0,-1);
+                    if local.dist < local.spd+(part_arr[local.i,7]*0.5)
                     {
+                        local.coll = false;
                         // Become ring
                         part_arr[local.i,11] = 1; // Alpha
                         part_arr[local.i,7] = 0; // Width
                         part_arr[local.i,8] = 0; // Height
-                        part_arr[local.i,3] = local.ztmp-local.dist; // Z axis
+                        part_arr[local.i,3] = part_arr[local.i,3]-local.dist; // Z axis
                         part_arr[local.i,4] = 0; // Speed
                         part_arr[local.i,13] = rain_ring_bg_tex; // Texture
                         part_arr[local.i,17] = ring_time_var; // Time
                         part_arr[local.i,18] = true; // Ring
                     }
                 }
-                if !part_arr[local.i,18]
+                if local.coll
                 {
-                    local.xvel = lengthdir_x(lengthdir_x(1,part_arr[local.i,5]),part_arr[local.i,6]);
-                    local.yvel = lengthdir_x(lengthdir_y(1,part_arr[local.i,5]),part_arr[local.i,6]);
-                    local.zvel = -lengthdir_y(1,part_arr[local.i,6]);
-                    if check_ray_scr(part_arr[local.i,1],part_arr[local.i,2],local.ztmp,local.xvel,local.yvel,local.zvel) < local.spd
-                    {
-                        part_arr[local.i,0] = false;
-                        for (local.j=0; local.j<19; local.j+=1)
-                        { part[local.i,local.j] = 0; }
-                    }
+                    part_arr[local.i,0] = false;
+                    for (local.j=0; local.j<19; local.j+=1)
+                    { part[local.i,local.j] = 0; }
                 }
             }
         }
@@ -181,11 +180,11 @@ object_event_add
             }
             else // Droplet
             {
-                d3d_transform_add_rotation_x(part_arr[local.i,9]);
-                d3d_transform_add_rotation_y(point_direction_3d_scr(part_arr[local.i,1],part_arr[local.i,2],part_arr[local.i,3],global.cam_x_var[view_current],global.cam_y_var[view_current],global.cam_z_var[view_current]));
-                d3d_transform_add_rotation_z(point_direction(part_arr[local.i,1],part_arr[local.i,2],global.cam_x_var[view_current],global.cam_y_var[view_current]));
+                d3d_transform_add_rotation_x(part_arr[local.i,5]-point_direction(part_arr[local.i,1],part_arr[local.i,2],global.cam_x_var,global.cam_y_var)+90);
+                d3d_transform_add_rotation_y(part_arr[local.i,6]);
+                d3d_transform_add_rotation_z(part_arr[local.i,5]);
                 d3d_transform_add_translation(part_arr[local.i,1],part_arr[local.i,2],part_arr[local.i,3]);
-                d3d_draw_wall(0,part_arr[local.i,7]/2,part_arr[local.i,8]/2,0,-part_arr[local.i,7]/2,-part_arr[local.i,8]/2,part_arr[local.i,13],1,1);
+                d3d_draw_wall(part_arr[local.i,7]/2,0,part_arr[local.i,8]/2,-part_arr[local.i,7]/2,0,-part_arr[local.i,8]/2,part_arr[local.i,13],1,1);
             }
         }
     }

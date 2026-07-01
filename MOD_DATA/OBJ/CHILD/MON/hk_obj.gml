@@ -131,6 +131,8 @@ object_event_add
 			// Teleport
 			tp_type_var = 2;
 			tp_dist_min_var = 96;
+			tp_alarm_min_var = 300;
+			tp_alarm_max_var = 600;
 			break;
 		}
 		case 2: // HD

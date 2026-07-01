@@ -10,7 +10,8 @@ room_set_code
     global.rm_name_var = ini_read_string("ROOM","big","ROOM_big")+" 6 A";
     ini_close();
     // Spawn
-    global.spawn_len_var = 3;
+    global.spawn_len_var = 2;
+    global.spawn_len_extra_var = 3;
     global.spawn_arr[0,0] = 80;
     global.spawn_arr[0,1] = 304;
     global.spawn_arr[0,2] = 0;

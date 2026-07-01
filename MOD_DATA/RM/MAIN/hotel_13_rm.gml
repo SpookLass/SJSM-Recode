@@ -42,11 +42,32 @@ room_set_code
     d3d_start();
     global.draw_3d_var = true;
     // Doors
-    spawn_create_scr(true,true);
-    for (local.i=1; local.i<global.spawn_len_var; local.i+=1;)
+    local.lock = lock_scr();
+    local.gold = gold_scr(local.lock);
+    spawn_create_scr(true,local.lock);
+    if local.lock
     {
-        if local.i != global.unlock_var
-        { instance_create(global.spawn_arr[local.i,0],global.spawn_arr[local.i,1],bar_vert_obj); }
+        for (local.i=1; local.i<global.spawn_len_var; local.i+=1;)
+        {
+            if local.i != global.unlock_var
+            { instance_create(global.spawn_arr[local.i,0],global.spawn_arr[local.i,1],bar_vert_obj); }
+        }
+    }
+    if local.gold
+    {
+        instance_create(0,0,maze_dark_color_obj);
+        instance_create(0,0,maze_dark_fog_obj);
+        local.torch = instance_create(336,256,torch_gold_east_obj);
+        local.torch.door_var = global.spawn_arr[1,4];
+        local.torch = instance_create(336,384,torch_gold_east_obj);
+        local.torch.door_var = global.spawn_arr[2,4];
+        local.torch = instance_create(336,512,torch_gold_east_obj);
+        local.torch.door_var = global.spawn_arr[3,4];
+    }
+    else
+    {
+        instance_create(0,0,color_control_02_obj);
+        instance_create(0,0,fog_01_obj);
     }
 ');
 // Room settings
@@ -58,8 +79,6 @@ for (local.i=0; local.i<8; local.i+=1;)
 { room_set_view(argument0,local.i,false,0,0,1280,720,0,0,1280,720,32,32,-1,-1,noone); }
 room_set_view(argument0,0,true,0,0,1280,720,0,0,1280,720,32,32,-1,-1,noone);
 // Effects
-room_instance_add(argument0,0,0,fog_01_obj);
-room_instance_add(argument0,0,0,color_control_02_obj);
 room_instance_add(argument0,0,0,rand_mon_spawn_obj);
 room_instance_add(argument0,0,0,amb_control_obj);
 // Floors

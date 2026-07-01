@@ -243,7 +243,6 @@ object_event_add
             case 2: { mus_snd_var = snd_add_scr(dl_alt_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
             default: { mus_snd_var = snd_add_scr(dl_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
         }
-        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
         // Effect
         eff_spr_01_var = spr_add_scr(dl_eff_01_spr_path,24,false,false,0,0);
         eff_spr_02_var = spr_add_scr(dl_eff_02_spr_path,24,false,false,0,0);

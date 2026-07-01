@@ -13,8 +13,9 @@ switch argument0
     {
         switch argument1
         {
-            case 2: { return argument5; }
+            case -1: { return irandom(argument2); }
             case 1: { return argument4; }
+            case 2: { return argument5; }
         }
         return argument3;
     }
