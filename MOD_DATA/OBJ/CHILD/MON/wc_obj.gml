@@ -162,7 +162,7 @@ object_event_add
         rise_spr_var = spr_add_scr(wc_rise_spr_path,18,false,false,0,0);
         atk_spr_var = spr_add_scr(wc_atk_spr_path,10,false,false,0,0);
         atk_end_spr_var = spr_add_scr(wc_atk_end_spr_path,9,false,false,0,0);
-        dead_spr_var = spr_add_scr(wc_dead_spr_path,2,false,false,0,0);
+        dead_spr_var = spr_add_scr(wc_die_spr_path,2,false,false,0,0);
         static_bg_var = bg_add_scr(tile_static_bg_path,false,false);
         doll_blood_bg_var = bg_add_scr(doll_blood_bg_path,false,false);
         shadow_bg_var = bg_add_scr(shadow_bg_path,false,false);

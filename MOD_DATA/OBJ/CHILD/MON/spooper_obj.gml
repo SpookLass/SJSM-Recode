@@ -287,7 +287,6 @@ object_event_add
         on_var = false;
         set_motion_3d_scr(0,true);
         reset_alarm_scr();
-        fmod_inst_stop_scr(loop_inst_var);
     }
     else
     {
@@ -337,7 +336,7 @@ object_event_add
             on_var = false;
             set_motion_3d_scr(0,true);
             reset_alarm_scr();
-            fmod_inst_stop_scr(loop_inst_var);
+            if do_snd_var { fmod_inst_stop_scr(loop_inst_var); }
         }
         if local.start >= puke_start_var && frac_chance_scr(global.player_len_var,puke_chance_var) && instance_number(mon_par_obj) <= 1 && !do_atk_var
         { set_alarm_scr(8,irandom_range(puke_delay_min_var,puke_delay_max_var)); }
@@ -402,7 +401,7 @@ object_event_add
                     on_var = false;
                     set_motion_3d_scr(0,true);
                     reset_alarm_scr();
-                    fmod_inst_stop_scr(loop_inst_var);
+                    if do_snd_var { fmod_inst_stop_scr(loop_inst_var); }
                 }
             }
         }
@@ -567,7 +566,7 @@ object_event_add
             on_var = false;
             set_motion_3d_scr(0,true);
             reset_alarm_scr();
-            fmod_inst_stop_scr(loop_inst_var);
+            if do_snd_var { fmod_inst_stop_scr(loop_inst_var); }
         }
     }
 ');

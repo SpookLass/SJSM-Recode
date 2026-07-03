@@ -228,7 +228,7 @@ object_event_add
             web_start_var = -1;
             do_fog_var = false;
             door_trig_var = false;
-            mus_snd_var = mus_imscared_snd_var;
+            mus_start_var = 0;
             // Smaller Resolution
             res_w_var = 180;
             res_h_var = 180;
@@ -255,7 +255,7 @@ object_event_add
             res_w_var = 640;
             res_h_var = 480;
             atk_range_var = global.mon_coll[2];
-            mus_snd_var = mus_imscared_snd_var;
+            mus_start_var = 0;
             // Remove some stuff from SJSM White Face
             tp_spawn_var = false;
             exit_spawn_var = false;
@@ -343,6 +343,8 @@ object_event_add
     // Alarms
     alarm_len_var = 11;
     alarm_ini_scr();
+    // Music
+    if mus_start_var == 0 { mus_snd_var = mus_imscared_snd_var; }
 ');
 // Destroy Event
 object_event_add

@@ -13,6 +13,7 @@ object_event_add
     if !global.dh_var { event_inherited(); }
     else
     {
+        true_time_var = true;
         // Translation
         ini_open("lang_"+global.lang_var+".ini");
         str_var = ini_read_string("DEAD","real_ringu","DEAD_real_ringu");

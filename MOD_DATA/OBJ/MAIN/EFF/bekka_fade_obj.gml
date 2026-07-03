@@ -70,9 +70,6 @@ object_event_add
 (argument0,ev_draw,0,'
     if global.cam_type_var[view_current] == cam_alive_const
     {
-        if view_wview[view_current] >= view_hview[view_current]
-        { local.scale = view_hview[view_current]/720; }
-        else { local.scale = view_wview[view_current]/1280; }
         d3d_set_fog(false,c_black,0,0);
         d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
         d3d_set_hidden(false);
@@ -80,7 +77,7 @@ object_event_add
         draw_rectangle(0,0,view_wview[view_current],view_hview[view_current],false);
         draw_set_color(c_white); draw_set_alpha(1);
         // Lazy
-        if atk_var && !irandom(2) { draw_background_ext(bg_var,local.scale*-820,local.scale*-141,local.scale*4,local.scale*4,0,c_white,1); }
+        if atk_var && !irandom(2) { draw_spr_stretch_scr(spr_var,0,0,0,2864,0,fa_center,fa_middle); }
         d3d_set_hidden(true);
     }
 ');

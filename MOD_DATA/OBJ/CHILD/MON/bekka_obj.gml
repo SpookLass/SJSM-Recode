@@ -409,7 +409,7 @@ object_event_add
             dmg_alarm_var = other.fade_dmg_alarm_var;
             dead_rm_var = other.dead_rm_var;
             mon_var = other.id;
-            bg_var = other.bg_var;
+            spr_var = other.spr_var;
             set_alarm_scr(0,other.fade_alarm_var);
         }
         set_motion_3d_scr(0,true);
