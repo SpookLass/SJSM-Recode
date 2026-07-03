@@ -154,7 +154,7 @@ object_event_add
             }
             else // Droplet
             {
-                d3d_transform_add_rotation_x(part_arr[local.i,5]-point_direction(part_arr[local.i,1],part_arr[local.i,2],global.cam_x_var,global.cam_y_var)+90);
+                d3d_transform_add_rotation_x(part_arr[local.i,5]-point_direction(part_arr[local.i,1],part_arr[local.i,2],global.cam_x_var[view_current],global.cam_y_var[view_current])+90);
                 d3d_transform_add_rotation_y(part_arr[local.i,6]);
                 d3d_transform_add_rotation_z(part_arr[local.i,5]);
                 d3d_transform_add_translation(part_arr[local.i,1],part_arr[local.i,2],part_arr[local.i,3]);

@@ -10,7 +10,7 @@ room_set_code
 	ini_close();
     // Spawn
     global.spawn_len_var = 4;
-    global.spawn_arr[0,0] = 256;
+    global.spawn_arr[0,0] = 192;
     global.spawn_arr[0,1] = 256;
     global.spawn_arr[0,2] = 0;
     global.spawn_arr[0,3] = 0;
@@ -107,6 +107,8 @@ room_instance_add(argument0,256,544,floor_obj);
 room_instance_add(argument0,352,416,floor_obj);
 room_instance_add(argument0,352,544,floor_obj);
 room_instance_add(argument0,352,288,floor_obj);
+room_instance_add(argument0,224,256,floor_obj); // New
+room_instance_add(argument0,192,256,floor_obj);
 // Ceilings
 room_instance_add(argument0,256,256,ceil_obj);
 room_instance_add(argument0,288,256,ceil_obj);
@@ -133,6 +135,8 @@ room_instance_add(argument0,256,544,ceil_obj);
 room_instance_add(argument0,352,416,ceil_obj);
 room_instance_add(argument0,352,544,ceil_obj);
 room_instance_add(argument0,352,288,ceil_obj);
+room_instance_add(argument0,224,256,ceil_obj); // New
+room_instance_add(argument0,192,256,ceil_obj);
 // Walls (Horizontal)
 room_instance_add(argument0,256,240,wall_hor_obj);
 room_instance_add(argument0,288,240,wall_hor_obj);
@@ -154,8 +158,11 @@ room_instance_add(argument0,256,496,wall_hor_obj);
 room_instance_add(argument0,256,432,wall_hor_obj);
 room_instance_add(argument0,256,368,wall_hor_obj);
 room_instance_add(argument0,256,304,wall_hor_obj);
+room_instance_add(argument0,224,240,wall_hor_obj); // New
+room_instance_add(argument0,192,240,wall_hor_obj);
+room_instance_add(argument0,224,272,wall_hor_obj);
+room_instance_add(argument0,192,272,wall_hor_obj);
 // Walls (Vertical)
-room_instance_add(argument0,240,256,wall_vert_obj);
 room_instance_add(argument0,240,288,wall_vert_obj);
 room_instance_add(argument0,272,320,wall_vert_obj);
 room_instance_add(argument0,272,352,wall_vert_obj);
@@ -175,6 +182,7 @@ room_instance_add(argument0,272,480,wall_vert_obj);
 room_instance_add(argument0,272,448,wall_vert_obj);
 room_instance_add(argument0,240,416,wall_vert_obj);
 room_instance_add(argument0,240,384,wall_vert_obj);
+room_instance_add(argument0,176,256,wall_vert_obj); // New
 // Props
 room_instance_add(argument0,288,304,doorframe_01_hor_obj);
 room_instance_add(argument0,288,368,doorframe_01_hor_obj);

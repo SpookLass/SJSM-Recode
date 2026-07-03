@@ -99,9 +99,36 @@ object_event_add
         z = other.z;
         set_alarm_scr(0,local.time);
     }
+    local.shake_mult = 0.5*abs(z_end_var-z_start_var)/local.time;
+    with player_obj
+    {
+        local.player = id;
+        with instance_create(0,0,shake_eff_obj)
+        {
+            player_var = local.player;
+            set_alarm_scr(0,local.time);
+            switch global.shake_type_var
+            {
+                case shake_classic_const: { mult_var = local.shake_mult*local.player.shake_pos_base_var; break; }
+                case shake_modern_const: { mult_var = local.shake_mult*local.player.shake_angle_base_var; break; }
+            }
+        }
+    }
 ');
 // Alarm 2
 object_event_add
 (argument0,ev_alarm,2,'
-    // Nothing yet
+    with player_obj
+    {
+        local.player = id;
+        with instance_create(0,0,shake_eff_obj)
+        {
+            player_var = local.player;
+            switch global.shake_type_var
+            {
+                case shake_classic_const: { mult_var = local.player.shake_pos_base_var; break; }
+                case shake_modern_const: { mult_var = local.player.shake_angle_base_var; type_var = 1; break; }
+            }
+        }
+    }
 ');

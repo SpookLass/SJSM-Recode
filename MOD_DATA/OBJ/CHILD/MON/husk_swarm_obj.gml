@@ -30,7 +30,7 @@ object_event_add
     husk_dist_var = 0;
     revive_var = false;
     atk_dist_var = 8.5;
-    atk_range_var = 20;
+    atk_range_var = 17;
     atk_delay_var = 12;
     hp_min_var = 2;
     hp_max_var = 7;
@@ -57,12 +57,12 @@ object_event_add
         {
             dur_var = irandom_range(30,40);
             atk_dist_var = 8;
-            atk_range_var = 16;
-            atk_delay_var = 15;
+            atk_range_var = 12; // 16
             persist_var = true;
             spawn_dist_var = 96;
             husk_dist_var = 32;
             revive_var = true;
+            //atk_delay_var = 15;
             // Sounds
             snd_alarm_min_var = 60;
             snd_alarm_max_var = 120;
