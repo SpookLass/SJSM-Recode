@@ -27,6 +27,7 @@ object_event_add
     snd_den_var = 8;
     // Husk
     spawn_dist_var = 24;
+    spawn_player_dist_var = 24;
     husk_dist_var = 0;
     revive_var = false;
     atk_dist_var = 8.5;
@@ -57,10 +58,11 @@ object_event_add
         {
             dur_var = irandom_range(30,40);
             atk_dist_var = 8;
-            atk_range_var = 12; // 16
+            atk_range_var = 8; // 16
             persist_var = true;
-            spawn_dist_var = 96;
-            husk_dist_var = 32;
+            spawn_dist_var = 32;
+            spawn_player_dist_var = 64; // 96
+            husk_dist_var = 16; // 32
             revive_var = true;
             //atk_delay_var = 15;
             // Sounds
@@ -84,6 +86,7 @@ object_event_add
             hurt_dist_var = 2/pixel_meter_rate_const;
             heal_var = true;
             spawn_dist_var = 0;
+            spawn_player_dist_var = 0;
             hurt_down_var = false;
             // Sounds
             snd_dist_min_var = 32/3;
@@ -164,7 +167,8 @@ object_event_add
                 persistent = true;
                 par_var = other.id;
                 // Variables
-                spawn_player_dist_var = other.spawn_dist_var;
+                spawn_dist_var = other.spawn_dist_var;
+                spawn_player_dist_var = other.spawn_player_dist_var;
                 husk_dist_var = other.husk_dist_var;
                 revive_var = other.revive_var;
                 hurt_dist_base_var = other.hurt_dist_var;
@@ -251,7 +255,8 @@ object_event_add
                     y = global.mark_arr[local.i,1];
                     z = global.mark_arr[local.i,2];
                     // Variables
-                    spawn_player_dist_var = other.spawn_dist_var;
+                    spawn_dist_var = other.spawn_dist_var;
+                    spawn_player_dist_var = other.spawn_player_dist_var;
                     husk_dist_var = other.husk_dist_var;
                     revive_var = other.revive_var;
                     hurt_dist_base_var = other.hurt_dist_var;

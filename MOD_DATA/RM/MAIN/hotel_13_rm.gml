@@ -192,3 +192,7 @@ room_instance_add(argument0,288,304,doorframe_02_hor_obj);
 room_instance_add(argument0,288,368,doorframe_02_hor_obj);
 room_instance_add(argument0,288,432,doorframe_02_hor_obj);
 room_instance_add(argument0,288,496,doorframe_02_hor_obj);
+// Flesh
+room_instance_add(argument0,288,288,flesh_arrow_obj);
+room_instance_add(argument0,288,416,flesh_arrow_obj);
+room_instance_add(argument0,288,544,flesh_arrow_obj);

@@ -47,6 +47,7 @@ object_event_add
     sink_var = false;
     move_arr_len = 0;
     fast_spawn_var = false;
+    do_ring_var = false;
     // Fog
     fog_color_var = make_color_rgb(14,69,69);
     fog_prio_var = 2;

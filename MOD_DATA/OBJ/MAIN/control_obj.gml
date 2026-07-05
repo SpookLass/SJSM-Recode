@@ -90,7 +90,7 @@ object_event_add
         }
     }
     // Game Time
-    if global.game_var { global.game_time_var += global.time_diff_var; }
+    if global.game_var && !global.pause_var { global.game_time_var += global.time_diff_var; }
     // Speed!
     if global.pause_var { if global.game_spd_var != 0 { global.game_spd_var = 0; }}
     else if global.draw_3d_var

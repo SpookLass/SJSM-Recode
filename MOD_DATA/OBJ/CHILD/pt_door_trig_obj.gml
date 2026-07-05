@@ -48,7 +48,7 @@ object_event_add
     if lock_var
     {
         local.note = true;
-        if note_var { if !pt_note_obj.read_var { local.note = false; }}
+        if note_var && instance_exists(pt_note_obj) { if !pt_note_obj.read_var { local.note = false; }}
         if prog_var <= 0 && local.note { lock_var = false; }
     }
     event_inherited();

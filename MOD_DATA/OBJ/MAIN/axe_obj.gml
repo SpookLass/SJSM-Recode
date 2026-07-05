@@ -46,6 +46,8 @@ object_event_add
         {
             check_stam_var = true;
             spam_var = false;
+            stam_start_var = 10;
+            stam_end_var = 10;
             spr_spd_raise_var = 30/69; // 13.8 frames
             spr_spd_swing_var = 1; // 6 frames
             break;
@@ -74,7 +76,7 @@ object_event_add
             case 0:
             {
                 if global.input_press_arr[attack_input_const,par_var.player_id_var]
-                && (par_var.stam_var > stam_start_var || stam_start_var <= 0 || !par_var.do_stam_var || !check_stam_var)
+                && (par_var.stam_var > stam_start_var+stam_end_var || !par_var.do_stam_var || !check_stam_var)
                 {
                     visible = true;
                     state_var = 1;

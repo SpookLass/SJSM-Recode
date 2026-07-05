@@ -499,7 +499,7 @@ object_event_add
                         other.dmg_var*global.delta_time_var,0,other.dmg_min_var, // Damage
                         false,0, // Collisions
                         !other.dmg_unbalance_var,false, // Effects
-                        other.possess_var,local.possesser, // Possess
+                        false,noone, // Possess
                         other.dmg_stam_var // Stamina?
                     )
                     {

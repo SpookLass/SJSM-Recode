@@ -12,6 +12,9 @@ object_event_add
     event_inherited();
     on_var = false;
     ready_var = false;
+    load_var = true;
+    x_spd_var = 0;
+    y_spd_var = 0;
     // Alarms
     alarm_len_var = 2;
     alarm_ini_scr();
@@ -46,13 +49,22 @@ object_event_add
     path_add_point(path_var,80,16,100);
     path_add_point(path_var,240,-48,100);
     path_add_point(path_var,112,-208,100);
-    path_start(path_var,10*global.delta_time_var,1,true);
+    if global.reduce_flash_var
+    {
+        x_spd_var = 10*global.delta_time_var;
+        scale_rate_var = 0; // 250?
+    }
+    else { path_start(path_var,10*global.delta_time_var,1,true); }
 ');
 // Destroy Event
 object_event_add
 (argument0,ev_destroy,0,'
-    surface_free(surf_var);
-    path_delete(path_var);
+    if load_var
+    {
+        surface_free(surf_var);
+        path_delete(path_var);
+        load_var = false;
+    }
     with floor_par_obj { tex_var = store_tex_var; }
     with ceil_par_obj { tex_var = store_tex_var; }
     with wall_par_obj { tex_var = store_tex_var; }
@@ -66,7 +78,7 @@ object_event_add
     if alarm_arr[0,0] <= 0
     { set_alarm_scr(0,irandom_range(alarm_min_var,alarm_max_var)); }
 ');
-// Alarm 0 Event
+// User 0 Event
 object_event_add
 (argument0,ev_other,ev_user0,'
     if on_var
@@ -124,9 +136,14 @@ object_event_add
 (argument0,ev_step,ev_step_normal,'
     if on_var
     {
-        scale_time_var = (scale_time_var+global.delta_time_var) mod scale_rate_var;
-        scale_var = scale_base_var+(sin(2*scale_time_var*pi/scale_rate_var)*scale_mult_var/2);
+        if scale_rate_var > 0 && scale_mult_var != 1
+        {
+            scale_time_var = (scale_time_var+global.delta_time_var) mod scale_rate_var;
+            scale_var = scale_base_var+(sin(2*scale_time_var*pi/scale_rate_var)*scale_mult_var/2);
+        }
         path_speed = 10*global.delta_time_var;
+        if x_spd_var > 0 { x = mod_scr(x+(x_spd_var*global.delta_time_var),256); }
+        if y_spd_var > 0 { y = mod_scr(y+(y_spd_var*global.delta_time_var),256); }
         // Draw Surface
         surface_set_target(surf_var);
         draw_clear_alpha(c_black,0);

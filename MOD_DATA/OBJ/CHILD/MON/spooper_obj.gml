@@ -31,6 +31,7 @@ object_event_add
     dupe_var = dupe_never_const;
     dead_rm_var = spooper_dead_rm;
     hide_var = true;
+    kill_var = true;
     // Sounds
     do_snd_var = false;
     loop_snd_dist_min_var = 0;
@@ -287,6 +288,7 @@ object_event_add
         on_var = false;
         set_motion_3d_scr(0,true);
         reset_alarm_scr();
+        if do_snd_var { fmod_inst_stop_scr(loop_inst_var); }
     }
     else
     {
@@ -427,7 +429,7 @@ object_event_add
                     false,0, // Collisions
                     !other.dmg_unbalance_var,false, // Effects
                     other.possess_var,local.possesser, // Possess
-                    other.dmg_stam_var // Stamina?
+                    false // Stamina?
                 )
                 {
                     if hp_var < hp_max_var && other.unheal_var

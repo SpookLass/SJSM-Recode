@@ -242,7 +242,6 @@ object_event_add
             w_var = 10; // 16 x 40 / 64
             h_var = 10.3125; // 12 x 55 / 64
             z_off_base_var = 16;
-            tex_var = sprite_get_texture(spr_var,0);
             break;
         }
         case 7: // Imscared Recode
@@ -271,7 +270,6 @@ object_event_add
             w_var = 9;
             h_var = 12.3;
             z_off_base_var = 10;
-            tex_var = sprite_get_texture(spr_var,0);
             break;
         }
     }

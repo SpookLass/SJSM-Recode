@@ -46,6 +46,8 @@ object_event_add
     eff_snd_len_var = 4;
     eff_min_var = 30;
     eff_max_var = 60;
+    eff_alpha_min_var = 0.2;
+    eff_alpha_max_var = 0.6;
     // Special
     open_var = false;
     open_dist_var = 48;
@@ -109,6 +111,8 @@ object_event_add
             // Effect
             eff_min_var = 15;
             eff_max_var = 30;
+            eff_alpha_min_var = 0.15;
+            eff_alpha_min_var = 0.4;
             // Axe
             do_hurt_var = 1;
             hurt_snd_var = 1;
@@ -300,6 +304,8 @@ object_event_add
         {
             par_var = other.id;
             slender_var = other.slender_var;
+            alpha_min_var = other.eff_alpha_min_var;
+            alpha_max_var = other.eff_alpha_max_var;
         }
     }
     else if slender_var { with dl_eff_obj { slender_var = true; }}

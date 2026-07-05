@@ -30,7 +30,7 @@ object_event_add
     type_var = 1;
     spd_base_var = random_range(0.15,0.2);
     spr_spd_var = spd_base_var/1.45;
-    delay_var = 0;
+    delay_var = -1;
     dmg_var = 15;
     dmg_alarm_var = 30;
     blood_spr_var = blood_kh_spr;
@@ -89,7 +89,8 @@ object_event_add
     event_inherited();
     if persistent
     {
-        on_var = rand_spawn_scr(spawn_attempt_var,true,spawn_player_dist_var,spawn_player_dist_var,husk_dist_var);
+        on_var = rand_spawn_scr(spawn_attempt_var,true,spawn_player_dist_var,spawn_dist_var,husk_dist_var);
+        if on_var { event_perform(ev_alarm,0); }
         if revive_var && dead_var == 1
         {
             // Enable behavior

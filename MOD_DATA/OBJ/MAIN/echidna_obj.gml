@@ -528,7 +528,6 @@ object_event_add
                 { event_user(0); }
             }
         }
-        
     }
     if possess_var && !enter_var
     {

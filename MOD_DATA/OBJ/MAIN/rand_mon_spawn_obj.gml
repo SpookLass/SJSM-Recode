@@ -19,7 +19,8 @@ object_event_add // ev_create,0
         if intro_var || boss_var
         { local.nospawn = true; }
     }
-    if local.mons < get_mult_scr() && !local.nospawn
+    local.mult = get_mult_scr();
+    if (local.mons < local.mult || local.mult < 0) && !local.nospawn
     {
         if global.count_var <= 0
         {
@@ -38,7 +39,7 @@ object_event_add // ev_create,0
                     }
                 }
                 local.size = ds_list_size(global.mon_spawn_list);
-                while local.size > 0 && local.mons < get_mult_scr()
+                while local.size > 0 && (local.mons < local.mult || (local.mult < 0 && local.mons < 5))
                 {
                     local.mon = instance_create(0,0,ds_list_find_value(global.mon_spawn_list,irandom(local.size-1)));
                     ds_list_add(global.mon_curr_list,local.mon);

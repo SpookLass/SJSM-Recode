@@ -93,7 +93,7 @@ object_event_add
             spd_base_var = 1.1;
             spr_spd_var = 0.55;
             hp_var = 10;
-            static_alpha_var = 0.125;
+            static_alpha_var = 0.15;
             delay_var = 112;
             snd_dist_max_var = 300;
             break;
