@@ -9,6 +9,8 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,0,'
+    event_inherited();
+    true_time_var = true;
     // Translation
     str_var = "Once a world of dreams and excitement,
 a land of journey and enlightenment.
@@ -16,7 +18,7 @@ a land of journey and enlightenment.
 Now a forgotten soul tattered and stretched thin,
 still living yet buried under the scorched skin.";
     // Load assets
-    snd_var = fmod_snd_add_scr(example_directory_const+"\SND\DEAD\gurgle_dead_snd.wav");
+    snd_var = snd_add_scr(gurgle_dead_snd_path,false,snd_group_mus_const,1,0,0);
     load_var = true;
     // Sound
     inst_var = fmod_snd_loop_scr(snd_var);

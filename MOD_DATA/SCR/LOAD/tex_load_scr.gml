@@ -23,6 +23,7 @@ for (local.i=0; local.i<global.mode_len_var; local.i+=1;)
     tex_add_scr(floor_09_bg_path,wall_09_bg_path,ceil_09_bg_path,light_floor_09_spr_path,light_wall_09_spr_path,-1);
     tex_add_scr(floor_10_bg_path,wall_10_bg_path,ceil_10_bg_path,light_floor_10_spr_path,light_wall_10_spr_path,-1);
     tex_add_scr(floor_11_bg_path,wall_11_bg_path,ceil_11_bg_path,light_floor_11_spr_path,light_wall_11_spr_path,-1);
+    tex_add_scr(floor_03_bg_path,wall_03_bg_path,ceil_03_bg_path,light_floor_03_spr_path,light_wall_03_spr_path,0); // Extra one in story
 // Endless Mode
     tex_add_scr(floor_em_01_bg_path,wall_em_01_bg_path,ceil_em_01_bg_path,light_floor_em_01_spr_path,light_wall_em_01_spr_path,1);
     tex_add_scr(floor_em_01_bg_path,wall_em_01_bg_path,ceil_em_01_bg_path,light_floor_em_01_spr_path,light_wall_em_01_spr_path,2);
@@ -171,10 +172,11 @@ for (local.i=0; local.i<global.mode_len_var; local.i+=1;)
     poster_add_scr(poster_spiral_bg_path,0,1); poster_add_scr(poster_spiral_bg_path,0,2);
     if global.kh_var { poster_add_scr(poster_worm_bg_path,0,1); poster_add_scr(poster_worm_bg_path,0,2); }
 // Endless 2
+    poster_add_scr(poster_hush_bg_path,1,1); poster_add_scr(poster_hush_bg_path,1,2);
     if global.kh_var
     {
-        poster_add_scr(poster_wednesday_01_bg_path,0,1); poster_add_scr(poster_wednesday_01_bg_path,0,2);
-        poster_add_scr(poster_wednesday_02_bg_path,0,1); poster_add_scr(poster_wednesday_02_bg_path,0,2);
+        poster_add_scr(poster_wednesday_01_bg_path,1,1); poster_add_scr(poster_wednesday_01_bg_path,1,2);
+        poster_add_scr(poster_wednesday_02_bg_path,1,1); poster_add_scr(poster_wednesday_02_bg_path,1,2);
     }
 // Draw
 draw_load_scr("Loaded art!");

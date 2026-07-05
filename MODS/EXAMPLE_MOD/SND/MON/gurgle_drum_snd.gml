@@ -1,0 +1,14 @@
+/*
+Argument 0: Sound file path
+Argument 1: 3D
+Argument 2: Group
+Argument 3: Volume
+Argument 4: Min distance
+Argument 5: Max distance
+Title: OwO No You're Going To @!$&y Wucky Land
+Author: Rom M
+*/
+local.snd = fmod_snd_add_scr(argument0+".ogg",false);
+fmod_snd_set_group_scr(local.snd,argument2);
+fmod_snd_set_max_vol_scr(local.snd,argument3);
+return local.snd;
