@@ -482,7 +482,7 @@ object_event_add
         if hurt_var { set_motion_3d_scr(spd_base_var*hurt_spd_mult_var,true); }
         else { set_motion_3d_scr(spd_base_var,true); }
         // Damage
-        local.dead = (dmg_min_var > 0);
+        local.dead = (dmg_min_var <= 0);
         local.success = false;
         local.dmg = dmg_var*global.delta_time_var;
         with player_obj

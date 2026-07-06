@@ -11,7 +11,7 @@ object_event_add
 (argument0,ev_create,0,'
     menu_var = true;
     bg_len_var = 2;
-    bg_arr_var[0,1] = woods_shrine_bg_path;
+    bg_arr_var[0,1] = woods_shrine_wall_bg_path;
     bg_arr_var[0,2] = false;
     bg_arr_var[0,3] = false;
     bg_arr_var[1,1] = dl_dead_bg_path;
