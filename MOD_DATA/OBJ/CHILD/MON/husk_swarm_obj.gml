@@ -117,7 +117,7 @@ object_event_add
             other.mdl_var = mdl_var;
             for (local.i=0; local.i<snd_len_var; local.i+=1;)
             { other.snd_arr[local.i] = snd_arr[local.i]; }
-            other.hurt_snd_var = hurt_snd_var[1];
+            other.hurt_snd_var = hurt_snd_var;
             other.mus_snd_var = mus_snd_var;
             local.loaded = true;
             break;

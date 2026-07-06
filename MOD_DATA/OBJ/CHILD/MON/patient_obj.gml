@@ -26,6 +26,7 @@ object_event_add
     inv_time_var = 0;
     atk_range_var = 48;
     eye_h_var = 18.7;
+    snd_h_var = eye_h_var;
     // Theme
     mus_delay_var = 144
     // Seen
@@ -329,7 +330,7 @@ object_event_add
         seen_pitch_var = seen_pitch_02_var;
         if fmod_snd_is_3d_scr(wake_snd_var[1])
         {
-            inst_var = fmod_snd_3d_play_scr(wake_snd_var[1]);
+            inst_var = fmod_snd_3d_play_scr(wake_snd_var[1],x,y,z+snd_h_var);
             if global.pitch_bend_var { fmod_inst_set_pitch_scr(inst_var,random_range(0.95,1.05)); }
         }
         else { inst_var = fmod_snd_play_scr(wake_snd_var[1]); }
@@ -430,7 +431,7 @@ object_event_add
     {
         if fmod_snd_is_3d_scr(rage_snd_var[0])
         {
-            inst_var = fmod_snd_3d_play_scr(rage_snd_var[0]);
+            inst_var = fmod_snd_3d_play_scr(rage_snd_var[0],x,y,z+snd_h_var);
             if global.pitch_bend_var { fmod_inst_set_pitch_scr(inst_var,random_range(0.95,1.05)); }
         }
         else { inst_var = fmod_snd_play_scr(rage_snd_var[0]); }
@@ -500,7 +501,7 @@ object_event_add
                 seen_pitch_var = seen_pitch_02_var;
                 if fmod_snd_is_3d_scr(wake_snd_var[1])
                 {
-                    inst_var = fmod_snd_3d_play_scr(wake_snd_var[1]);
+                    inst_var = fmod_snd_3d_play_scr(wake_snd_var[1],x,y,z+snd_h_var);
                     if global.pitch_bend_var { fmod_inst_set_pitch_scr(inst_var,random_range(0.95,1.05)); }
                 }
                 else { inst_var = fmod_snd_play_scr(wake_snd_var[1]); }

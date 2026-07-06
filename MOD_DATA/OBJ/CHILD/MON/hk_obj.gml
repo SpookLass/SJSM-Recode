@@ -28,6 +28,7 @@ object_event_add
     dmg_alarm_var = 10;
     z_off_var = -1.5;
 	eye_h_var = 18.75;
+	snd_h_var = eye_h_var;
 	blood_spr_var = blood_kh_spr;
 	atk_range_var = 12;
 	dead_rm_var = hk_dead_rm;
@@ -246,7 +247,7 @@ object_event_add
 	fmod_snd_set_max_vol_scr(mus_snd_var,1.8);
 	if do_look_snd_var
 	{
-		look_inst_var = fmod_snd_3d_loop_scr(look_snd_var);
+		look_inst_var = fmod_snd_3d_loop_scr(look_snd_var,x,y,z+snd_h_var);
 		fmod_inst_set_vol_scr(look_inst_var,0);
 	}
 	w_var = base_w_var;
@@ -325,7 +326,7 @@ object_event_add
 	}
 	event_inherited();
 	if do_look_snd_var
-	{ fmod_inst_set_3d_pos_scr(look_inst_var,x,y,z); }
+	{ fmod_inst_set_3d_pos_scr(look_inst_var,x,y,z+snd_h_var); }
 ');
 // Teleport Alarm
 object_event_add

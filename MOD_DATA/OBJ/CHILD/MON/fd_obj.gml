@@ -54,6 +54,7 @@ object_event_add
     w_var = w_base_var;
     h_var = h_base_var;
     eye_h_var = 20.3;
+    snd_h_var = eye_h_var;
     z_off_var = z_off_base_var;
     flame_z_off_var = flame_z_off_base_var;
     tp_door_var = false;

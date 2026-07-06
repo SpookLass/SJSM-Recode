@@ -31,6 +31,7 @@ object_event_add
     if !variable_local_exists("do_snd_var") { do_snd_var = true; }
     if do_snd_var
     {
+        if !variable_local_exists("snd_h_var") { snd_h_var = 0; }
         if !variable_local_exists("snd_dist_min_var") { snd_dist_min_var = 0; }
         if !variable_local_exists("snd_dist_max_var") { snd_dist_max_var = 600; }
         if !variable_local_exists("loop_snd_var") { loop_snd_var[0] = false; }
@@ -77,7 +78,7 @@ object_event_add
     event_inherited();
     if do_snd_var
     {
-        fmod_inst_set_3d_pos_scr(inst_var,x,y,z);
-        fmod_inst_set_3d_pos_scr(loop_inst_var,x,y,z);
+        fmod_inst_set_3d_pos_scr(inst_var,x,y,z+snd_h_var);
+        fmod_inst_set_3d_pos_scr(loop_inst_var,x,y,z+snd_h_var);
     }
 ');

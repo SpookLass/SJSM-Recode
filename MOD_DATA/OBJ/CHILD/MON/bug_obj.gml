@@ -41,6 +41,7 @@ object_event_add
     w_var = 16;
     h_var = 13;
     eye_h_var = 8.9;
+    snd_h_var = eye_h_var;
     atk_range_var = 33.6;
     dupe_var = dupe_canon_const;
     dead_rm_var = bug_dead_load_rm;
@@ -363,7 +364,7 @@ object_event_add
             if loop_snd_var[0] == 1
             {
                 fmod_inst_stop_scr(loop_inst_var);
-                loop_inst_var = fmod_snd_3d_loop_scr(loop_snd_var[1]);
+                loop_inst_var = fmod_snd_3d_loop_scr(loop_snd_var[1],x,y,z+snd_h_var);
             }
             set_alarm_scr(6,irandom_range(snd_delay_min_var,snd_delay_max_var));
         }
@@ -406,7 +407,7 @@ object_event_add
         if fmod_inst_is_play_scr(inst_var) && fmod_inst_is_3d_scr(inst_var)
         { fmod_inst_stop_scr(inst_var); }
         local.snd = irandom(snd_len_var-1);
-        inst_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0]);
+        inst_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0],x,y,z+snd_h_var);
         sub_var[0] = snd_arr[local.snd,1];
         sub_var[1] = snd_arr[local.snd,2];
         set_alarm_scr(6,irandom_range(snd_delay_min_var,snd_delay_min_var));

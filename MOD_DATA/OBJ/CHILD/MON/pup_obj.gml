@@ -40,6 +40,7 @@ object_event_add
     w_base_var = 10;
     h_base_var = 20;
     eye_h_var = 17.7;
+    snd_h_var = eye_h_var;
     hd_var = false;
     hd_snd_var = false;
     terrible_var = false;
@@ -552,7 +553,7 @@ object_event_add
         if fmod_inst_is_play_scr(inst_var) && fmod_inst_is_3d_scr(inst_var)
         { fmod_inst_stop_scr(inst_var); }
         local.snd = irandom(snd_len_var-1);
-        inst_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0]);
+        inst_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0],x,y,z+snd_h_var);
         sub_var[0] = snd_arr[local.snd,1];
         sub_var[1] = snd_arr[local.snd,2];
     }
@@ -587,7 +588,7 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user15,'
     fmod_inst_stop_scr(inst_var);
-    inst_var = fmod_snd_3d_play_scr(laugh_snd_var[0]);
+    inst_var = fmod_snd_3d_play_scr(laugh_snd_var[0],x,y,z+snd_h_var);
     sub_var[0] = laugh_snd_var[1];
     sub_var[1] = laugh_snd_var[2];
     if instance_exists(target_var)
@@ -665,7 +666,7 @@ object_event_add
                 if fmod_inst_is_play_scr(inst_var) && fmod_inst_is_3d_scr(inst_var)
                 { fmod_inst_stop_scr(inst_var); }
                 local.snd = irandom(snd_len_var-1);
-                inst_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0]);
+                inst_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0],x,y,z+snd_h_var);
                 sub_var[0] = snd_arr[local.snd,1];
                 sub_var[1] = snd_arr[local.snd,2];
             }

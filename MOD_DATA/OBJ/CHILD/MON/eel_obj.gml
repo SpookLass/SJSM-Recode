@@ -39,6 +39,7 @@ object_event_add
     w_var = 16;
     h_var = 12;
     eye_h_var = 12.765625;
+    snd_h_var = eye_h_var;
     z_off_var = 4;
     dupe_var = dupe_canon_const;
     atk_range_var = 48;

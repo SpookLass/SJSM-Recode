@@ -35,6 +35,7 @@ object_event_add
     w_var = 10;
     h_var = 10;
     eye_h_var = 10;
+    snd_h_var = eye_h_var;
     spd_var = 8/9;
     target_spd_mult_var = 0.3;
     eff_var = false;

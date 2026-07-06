@@ -277,6 +277,7 @@ object_event_add
     h_var = state_h_var[0];
     eye_h_var = state_eye_h_var[0];
     do_acc_var = state_acc_var[0];
+    snd_h_var = eye_h_var;
 ');
 // Destroy Event
 object_event_add
@@ -558,6 +559,7 @@ object_event_add
     h_var = state_h_var[state_var];
     eye_h_var = state_eye_h_var[state_var];
     do_acc_var = state_acc_var[state_var];
+    snd_h_var = eye_h_var;
     spr_id_var = 0;
     tex_var = sprite_get_texture(spr_var,0);
 ');

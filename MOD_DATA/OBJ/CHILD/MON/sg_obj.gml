@@ -46,6 +46,7 @@ object_event_add
     atk_snd_var = 0;
     kill_var = true;
     eye_h_var = 17.7;
+    snd_h_var = eye_h_var;
     dead_rm_var = sg_dead_load_rm;
     // No official value
     dur_var = irandom_range(10,20); 

@@ -32,6 +32,7 @@ object_event_add
     dead_rm_var = lisa_dead_rm;
     atk_range_var = 48;
     eye_h_var = 18.6;
+    snd_h_var = eye_h_var;
     // Sounds
     wake_snd_var[0] = 2;
     snd_dist_min_var = 0;
@@ -275,7 +276,7 @@ object_event_add
             hide_var = false;
             if fmod_snd_is_3d_scr(wake_snd_var[1])
             {
-                inst_var = fmod_snd_3d_play_scr(wake_snd_var[1]);
+                inst_var = fmod_snd_3d_play_scr(wake_snd_var[1],x,y,z+snd_h_var);
                 if global.pitch_bend_var { fmod_inst_set_pitch_scr(inst_var,random_range(0.95,1.05)); }
             }
             else { inst_var = fmod_snd_play_scr(wake_snd_var[1]); }

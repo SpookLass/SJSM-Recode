@@ -164,7 +164,7 @@ object_event_add
             // Sound
             if fmod_snd_is_3d_scr(wake_snd_var[1])
             {
-                inst_var = fmod_snd_3d_play_scr(wake_snd_var[1]);
+                inst_var = fmod_snd_3d_play_scr(wake_snd_var[1],x,y,z+snd_h_var);
                 if global.pitch_bend_var { fmod_inst_set_pitch_scr(inst_var,random_range(0.95,1.05)); }
             }
             else { inst_var = fmod_snd_play_scr(wake_snd_var[1]); }
@@ -205,7 +205,7 @@ object_event_add
     // Play sound
     if fmod_inst_is_play_scr(inst_var) && fmod_inst_is_3d_scr(inst_var)
     { fmod_inst_stop_scr(inst_var); }
-    inst_var = fmod_snd_3d_play_scr(dead_snd_var[0]);
+    inst_var = fmod_snd_3d_play_scr(dead_snd_var[0],x,y,z+snd_h_var);
     sub_var[0] = dead_snd_var[1];
     sub_var[1] = dead_snd_var[2];
     // Play animation

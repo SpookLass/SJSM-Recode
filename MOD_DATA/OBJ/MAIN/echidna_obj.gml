@@ -375,7 +375,7 @@ object_event_add
         {
             if fmod_snd_is_3d_scr(wake_snd_var[1])
             {
-                inst_var = fmod_snd_3d_play_scr(wake_snd_var[1],x,y,z);
+                inst_var = fmod_snd_3d_play_scr(wake_snd_var[1],x,y,z+snd_h_var);
                 if global.pitch_bend_var { fmod_inst_set_pitch_scr(inst_var,random_range(0.95,1.05)); }
             }
             else { inst_var = fmod_snd_play_scr(wake_snd_var[1]); }
@@ -385,7 +385,7 @@ object_event_add
         else if !loop_snd_var[0] && snd_len_var > 0
         {
             local.snd = irandom(snd_len_var-1);
-            inst_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0],x,y,z);
+            inst_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0],x,y,z+snd_h_var);
             sub_var[0] = snd_arr[local.snd,1];
             sub_var[1] = snd_arr[local.snd,2];
         } 
@@ -514,7 +514,7 @@ object_event_add
         if loop_snd_var[0] == 1
         {
             fmod_inst_stop_scr(loop_inst_var);
-            loop_inst_var = fmod_snd_3d_loop_scr(loop_snd_var[1],x,y,z);
+            loop_inst_var = fmod_snd_3d_loop_scr(loop_snd_var[1],x,y,z+snd_h_var);
         }
         if snd_len_var > 0 { set_alarm_scr(6,irandom_range(snd_delay_min_var,snd_delay_max_var)); }
     }
@@ -590,7 +590,7 @@ object_event_add
             if fmod_inst_is_play_scr(inst_var) && fmod_inst_is_3d_scr(inst_var)
             { fmod_inst_stop_scr(inst_var); }
             local.snd = irandom(snd_len_var-1);
-            inst_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0],x,y,z);
+            inst_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0],x,y,z+snd_h_var);
             if global.pitch_bend_var { fmod_inst_set_pitch_scr(inst_var,random_range(0.95,1.05)); }
             sub_var[0] = snd_arr[local.snd,1];
             sub_var[1] = snd_arr[local.snd,2];
@@ -887,7 +887,7 @@ object_event_add
             {
                 if fmod_inst_is_play_scr(inst_var) && fmod_inst_is_3d_scr(inst_var)
                 { fmod_inst_stop_scr(inst_var); }
-                inst_var = fmod_snd_3d_play_scr(atk_snd_var[1],x,y,z);
+                inst_var = fmod_snd_3d_play_scr(atk_snd_var[1],x,y,z+snd_h_var);
                 if global.pitch_bend_var { fmod_inst_set_pitch_scr(inst_var,random_range(0.95,1.05)); }
                 sub_var[0] = atk_snd_var[2];
                 sub_var[1] = atk_snd_var[3];
@@ -976,7 +976,7 @@ object_event_add
                     {
                         if fmod_inst_is_play_scr(inst_var) && fmod_inst_is_3d_scr(inst_var)
                         { fmod_inst_stop_scr(inst_var); }
-                        inst_var = fmod_snd_3d_play_scr(hurt_snd_var[1],x,y,z);
+                        inst_var = fmod_snd_3d_play_scr(hurt_snd_var[1],x,y,z+snd_h_var);
                         if global.pitch_bend_var { fmod_inst_set_pitch_scr(inst_var,random_range(0.95,1.05)); }
                         sub_var[0] = hurt_snd_var[2];
                         sub_var[1] = hurt_snd_var[3];
@@ -1214,7 +1214,7 @@ object_event_add
                     {
                         if fmod_inst_is_play_scr(inst_var) && fmod_inst_is_3d_scr(inst_var)
                         { fmod_inst_stop_scr(inst_var); }
-                        inst_var = fmod_snd_3d_play_scr(atk_start_snd_var[1],x,y,z);
+                        inst_var = fmod_snd_3d_play_scr(atk_start_snd_var[1],x,y,z+snd_h_var);
                         if global.pitch_bend_var { fmod_inst_set_pitch_scr(inst_var,random_range(0.95,1.05)); }
                         sub_var[0] = atk_start_snd_var[2];
                         sub_var[1] = atk_start_snd_var[3];

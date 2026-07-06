@@ -296,7 +296,7 @@ object_event_add
     }
     if !silent_var
     {
-        if snd_3d_var { inst_var = fmod_snd_3d_play_scr(snd_var); }
+        if snd_3d_var { inst_var = fmod_snd_3d_play_scr(snd_var,x+lengthdir_x(w_var/2,direction-90),y+lengthdir_y(w_var/2,direction-90),z+(h_var/2)); }
         else { inst_var = fmod_snd_play_scr(snd_var); }
     }
     if rotate_var

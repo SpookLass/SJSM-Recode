@@ -21,6 +21,8 @@ object_event_add
     tex_var = howard_bg_tex;
     w_var = 6.375; // 8.5
     h_var = 25.5; // 34
+    eye_h_var = 23.7;
+    snd_h_var = 22.5;
     x_off_var = 0;
     y_off_var = 0;
     z_off_var = 0;

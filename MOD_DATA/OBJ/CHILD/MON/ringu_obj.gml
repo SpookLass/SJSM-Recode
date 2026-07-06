@@ -28,6 +28,7 @@ object_event_add
     w_var = 10;
     h_var = 20;
     eye_h_var = 18.7;
+    snd_h_var = eye_h_var;
     z_off_var = 2;
     atk_range_var = 48;
     dead_rm_var = ringu_dead_rm;

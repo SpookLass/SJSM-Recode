@@ -14,7 +14,7 @@ object_event_add
     bg_arr_var[0,1] = wf_body_bg_path;
     bg_arr_var[0,2] = false;
     bg_arr_var[0,3] = false;
-    spr_len_var = 2;
+    spr_len_var = 1;
     spr_arr_var[0,1] = killer_static_02_spr_path;
     spr_arr_var[0,2] = 6;
     spr_arr_var[0,3] = false;

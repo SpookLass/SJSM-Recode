@@ -26,6 +26,7 @@ object_event_add
     dmg_alarm_var = 120;
     h_var = 20;
     eye_h_var = 18.6;
+    snd_h_var = eye_h_var;
     z_off_var = 2;
     atk_range_var = 48;
     dead_rm_var = real_ringu_dead_rm;
@@ -261,7 +262,7 @@ object_event_add
     {
         if fmod_inst_is_play_scr(inst_var) && fmod_inst_is_3d_scr(inst_var)
         { fmod_inst_stop_scr(inst_var); }
-        inst_var = fmod_snd_3d_play_scr(snd_arr[4,0],x,y,z);
+        inst_var = fmod_snd_3d_play_scr(snd_arr[4,0],x,y,z+snd_h_var);
         if global.pitch_bend_var { fmod_inst_set_pitch_scr(inst_var,random_range(0.95,1.05)); }
         sub_var[0] = snd_arr[4,1];
         sub_var[1] = snd_arr[4,2];

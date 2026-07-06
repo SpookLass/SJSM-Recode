@@ -34,6 +34,7 @@ object_event_add
     w_var = 24.7;
     h_var = 25.3;
     eye_h_var = 23.4;
+    snd_h_var = eye_h_var;
     z_off_var = -0.3;
     blood_spr_var = blood_kh_spr;
     dead_rm_var = clown_dead_load_rm;

@@ -27,6 +27,7 @@ object_event_add
     w_var = 8.6;
     h_var = 22;
     eye_h_var = 16.8;
+    snd_h_var = eye_h_var;
     z_off_var = 1;
     atk_range_var = 48;
     dead_rm_var = tiri_dead_rm;

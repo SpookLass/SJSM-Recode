@@ -418,7 +418,7 @@ object_event_add
         // Play sound
         if fmod_inst_is_play_scr(inst_var) && fmod_inst_is_3d_scr(inst_var)
         { fmod_inst_stop_scr(inst_var); }
-        inst_var = fmod_snd_3d_play_scr(dead_snd_var[0]);
+        inst_var = fmod_snd_3d_play_scr(dead_snd_var[0],x,y,z+snd_h_var);
         sub_var[0] = dead_snd_var[1];
         sub_var[1] = dead_snd_var[2];
         // Play animation

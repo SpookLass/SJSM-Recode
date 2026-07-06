@@ -42,7 +42,8 @@ object_event_add
     frick_var = acc_var;
     w_var = 10;
     h_var = 10;
-    eye_h_var = 18; // Temp
+    eye_h_var = 13;
+    snd_h_var = 8.6;
     dupe_var = dupe_canon_const;
     spr_spd_var = 1;
     spawn_var = -1;

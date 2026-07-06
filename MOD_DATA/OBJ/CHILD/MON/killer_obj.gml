@@ -123,6 +123,7 @@ object_event_add
     dmg_alarm_var = 30;
     h_var = 22;
     eye_h_var = 18.4;
+    snd_h_var = eye_h_var;
     atk_range_var = 48;
     dead_rm_var = killer_dead_rm;
     scary_var = false;
@@ -606,7 +607,7 @@ object_event_add
                     if fmod_inst_is_play_scr(inst_var) && fmod_inst_is_3d_scr(inst_var)
                     { fmod_inst_stop_scr(inst_var); }
                     local.index = irandom(charge_snd_len_var-1);
-                    inst_var = fmod_snd_3d_play_scr(charge_snd_arr[local.index,0]);
+                    inst_var = fmod_snd_3d_play_scr(charge_snd_arr[local.index,0],x,y,z+snd_h_var);
                     sub_var[0] = charge_snd_arr[local.index,1];
                     sub_var[1] = charge_snd_arr[local.index,2];
                 }
@@ -673,7 +674,7 @@ object_event_add
             sub_var[0] = snd_arr[local.index,1];
             sub_var[1] = snd_arr[local.index,2];
         }
-        inst_var = fmod_snd_3d_play_scr(local.snd);
+        inst_var = fmod_snd_3d_play_scr(local.snd,x,y,z+snd_h_var);
     }
     set_alarm_scr(6,irandom_range(snd_alarm_min_var,snd_alarm_max_var));
 ');
@@ -683,7 +684,7 @@ object_event_add
     if do_snd_var && drag_snd_len_var > 0 && frac_chance_scr(drag_snd_num_var,drag_snd_den_var)
     {
         local.snd = irandom(drag_snd_len_var-1);
-        drag_snd_var = fmod_snd_3d_play_scr(drag_snd_arr[local.snd,0]);
+        drag_snd_var = fmod_snd_3d_play_scr(drag_snd_arr[local.snd,0],x,y,z+snd_h_var);
         drag_sub_var[0] = drag_snd_arr[local.snd,1];
         drag_sub_var[1] = drag_snd_arr[local.snd,2];
     }

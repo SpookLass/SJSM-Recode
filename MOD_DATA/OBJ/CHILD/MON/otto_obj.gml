@@ -42,6 +42,7 @@ object_event_add
     w_var = 11;
     h_var = 24;
     eye_h_var = 21.8;
+    snd_h_var = eye_h_var;
     spr_num_var = 4;
     anim_type_var = 4;
     sil_dist_var = 0.1;

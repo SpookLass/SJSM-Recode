@@ -24,6 +24,7 @@ object_event_add
     w_var = 11;
     h_var = 28.9;
     eye_h_var = 24.8;
+    snd_h_var = eye_h_var;
     dupe_var = dupe_canon_const;
     blood_spr_var = blood_kh_spr;
     atk_range_var = 48;

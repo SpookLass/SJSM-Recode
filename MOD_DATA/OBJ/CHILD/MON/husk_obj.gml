@@ -41,6 +41,7 @@ object_event_add
     blob_w_var = lerp_scr(0.91,1.43,local.width);
     blob_h_var = lerp_scr(13/11,13/7,local.height);
     eye_h_var = h_var*11/15; // x0.7r3
+    snd_h_var = eye_h_var;
     dead_var = false;
     spawn_attempt_var = 30;
     spawn_player_dist_var = 24;

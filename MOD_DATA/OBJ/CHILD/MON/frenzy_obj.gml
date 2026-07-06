@@ -25,6 +25,7 @@ object_event_add
     w_var = 16.8;
     h_var = 25.2;
     eye_h_var = 22.6;
+    snd_h_var = eye_h_var;
     atk_range_var = 12;
     blood_spr_var = blood_kh_spr;
     dupe_var = dupe_canon_const;
@@ -195,7 +196,7 @@ object_event_add
         woke_var = true;
         image_alpha = 1;
         move_var = true;
-        inst_var = fmod_snd_3d_play_scr(charge_snd_var[0],x,y,z);
+        inst_var = fmod_snd_3d_play_scr(charge_snd_var[0],x,y,z+snd_h_var);
         if global.pitch_bend_var { fmod_inst_set_pitch_scr(inst_var,random_range(0.95,1.05)); }
         sub_var[0] = charge_snd_var[1];
         sub_var[1] = charge_snd_var[2];
