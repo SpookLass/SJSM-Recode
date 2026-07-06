@@ -66,7 +66,7 @@ Recode also attempts to emulate the Original and HD Renovation experience as clo
 ### Music:
 
 - SammyDaGurl: Eel death screen theme
-- Uncanny Goat: Eel chase theme
+- Uncanny Goat: Eel chase theme, multichase theme
 - Birdbonanza: Team Recode Jingle
 - Rom M: Rom M Soundtrack
 - Spook Lass: Brain and Frenzy chase theme, Bekka death screen theme

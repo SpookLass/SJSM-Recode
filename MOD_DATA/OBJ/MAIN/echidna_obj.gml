@@ -687,6 +687,7 @@ object_event_add
             z = target_z_var;
             set_motion_3d_scr(0,true);
             if wander_var { event_user(13); }
+            if do_seen_var { is_seen_var = -1; }
         }
         else
         {

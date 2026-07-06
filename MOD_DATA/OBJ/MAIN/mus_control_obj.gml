@@ -55,7 +55,7 @@ object_event_add
             }
         }
         // Specimen Solstice!
-        if (((global.mult_mus_var == 1 || global.mult_mus_var == 2) && local.mons >= global.mult_max_var) 
+        if (((global.mult_mus_var == 1 || global.mult_mus_var == 2) && local.mons >= global.mult_max_var && global.mult_type_var != 3) 
         || ((global.mult_mus_var == 1 || global.mult_mus_var == 3) && global.mult_type_var == 3))
         && curr_prio_var < mb_mus_prio_const
         {

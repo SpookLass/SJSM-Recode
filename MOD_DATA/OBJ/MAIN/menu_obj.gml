@@ -911,6 +911,7 @@ object_event_add
                                 ini_close();
                                 preset_arr_var[preset_len_var] = local.preset;
                                 preset_len_var += 1;
+                                preset_var = median(0,preset_var,preset_len_var-1);
                             }
                             ini_open("preset_"+local.preset+".ini");
                             for (local.i=0; local.i<global.custom_len_var; local.i+=1)
@@ -978,7 +979,7 @@ object_event_add
                             preset_len_var = ds_list_size(global.preset_list);
                             for (local.i=0; local.i<preset_len_var; local.i+=1;)
                             { preset_arr_var[local.i] = ds_list_find_value(global.preset_list,local.i); }
-                            preset_var = min(preset_var,preset_len_var-1);
+                            preset_var = median(0,preset_var,preset_len_var-1);
                         }
                         break;
                     }
