@@ -45,7 +45,7 @@ object_event_add
     snd_arr_var[3,3] = snd_group_sfx_const;
     snd_arr_var[3,4] = 1;
     snd_arr_var[3,5] = 0;
-    snd_arr_var[4,6] = 0;
+    snd_arr_var[3,6] = 0;
     snd_arr_var[4,1] = wf_txt_05_snd_path;
     snd_arr_var[4,2] = false;
     snd_arr_var[4,3] = snd_group_sfx_const;
