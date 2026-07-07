@@ -62,7 +62,6 @@ room_instance_add(argument0,224,288,floor_obj);
 room_instance_add(argument0,416,352,floor_obj);
 room_instance_add(argument0,448,352,floor_obj);
 room_instance_add(argument0,480,352,floor_obj);
-
 //Ceilings
 room_instance_add(argument0,224,352,ceil_obj);
 room_instance_add(argument0,256,352,ceil_obj);
@@ -76,7 +75,6 @@ room_instance_add(argument0,224,288,ceil_obj);
 room_instance_add(argument0,416,352,ceil_obj);
 room_instance_add(argument0,448,352,ceil_obj);
 room_instance_add(argument0,480,352,ceil_obj);
-
 // Walls (Horizontal)
 room_instance_add(argument0,224,336,wall_hor_obj);
 room_instance_add(argument0,288,336,wall_hor_obj);
@@ -97,6 +95,7 @@ room_instance_add(argument0,448,336,wall_hor_obj);
 room_instance_add(argument0,448,368,wall_hor_obj);
 room_instance_add(argument0,480,368,wall_hor_obj);
 room_instance_add(argument0,480,336,wall_hor_obj);
+room_instance_add(argument0,224,304,wall_hor_obj); // New
 // Walls (Vertical)
 room_instance_add(argument0,208,352,wall_vert_obj);
 room_instance_add(argument0,208,288,wall_vert_obj);

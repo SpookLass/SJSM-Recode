@@ -22,6 +22,7 @@ object_event_add
     h_var = 24;
     step_var = 8;
     image_alpha = 0.2;
+    flesh_var = false;
     // Collisions
     coll_var[0] = global.tiri_shadow_coll[0];
     coll_var[1] = global.tiri_shadow_coll[1];

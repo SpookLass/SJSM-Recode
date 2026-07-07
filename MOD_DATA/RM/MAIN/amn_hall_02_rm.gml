@@ -117,6 +117,7 @@ room_instance_add(argument0,448,432,wall_hor_obj);
 room_instance_add(argument0,416,432,wall_hor_obj);
 room_instance_add(argument0,384,432,wall_hor_obj);
 room_instance_add(argument0,352,432,wall_hor_obj);
+room_instance_add(argument0,224,304,wall_hor_obj); // New
 // Walls (Vertical)
 room_instance_add(argument0,208,352,wall_vert_obj);
 room_instance_add(argument0,208,288,wall_vert_obj);
