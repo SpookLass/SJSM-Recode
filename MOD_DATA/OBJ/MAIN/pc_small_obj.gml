@@ -35,8 +35,8 @@ object_event_add
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,'
-    // Transformation
     d3d_transform_set_identity();
+    // Check if billboard
     d3d_transform_add_rotation_z(direction);
     d3d_transform_add_translation(x,y,z);
     // Reflection handling
@@ -54,16 +54,15 @@ object_event_add
     if tone_var >= 0
     { draw_set_color(color_mult_scr(image_blend,tone_var)); }
     else { draw_set_color(image_blend); }
-    // Draw
     local.width = w_var/2;
     local.length = l_var/2;
     local.tex_height = tex_h_var*sign(h_var);
-    d3d_draw_wall(-local.width,-local.length,h_var,local.width,-local.length,0,tex_var,tex_w_var,local.tex_height);
-    d3d_draw_wall(-local.width,local.length,h_var,local.width,local.length,0,tex_var,tex_w_var,local.tex_height);
-    d3d_draw_wall(-local.width,-local.length,h_var,-local.width,local.length,0,tex_02_var,tex_l_var,local.tex_height);
-    d3d_draw_wall(local.width,-local.length,h_var,local.width,local.length,0,tex_02_var,tex_l_var,local.tex_height);
-    d3d_draw_floor(-local.width,-local.length,0,local.width,local.length,0,tex_var,tex_w_var,tex_l_var);
-    d3d_draw_floor(-local.width,-local.length,h_var,local.width,local.length,h_var,tex_var,tex_w_var,tex_l_var);
+    d3d_draw_wall(local.width,-local.length,h_var,-local.width,-local.length,0,tex_var,tex_w_var,local.tex_height);
+    d3d_draw_wall(local.width,local.length,h_var,-local.width,local.length,0,tex_var,tex_w_var,local.tex_height);
+    d3d_draw_wall(-local.width,local.length,h_var,-local.width,-local.length,0,tex_02_var,tex_l_var,local.tex_height);
+    d3d_draw_wall(local.width,local.length,h_var,local.width,-local.length,0,tex_02_var,tex_l_var,local.tex_height);
+    d3d_draw_floor(local.width,local.length,0,-local.width,-local.length,0,tex_var,tex_w_var,tex_l_var);
+    d3d_draw_floor(local.width,local.length,h_var,-local.width,-local.length,h_var,tex_var,tex_w_var,tex_l_var);
     // Reset
     d3d_transform_set_identity();
     draw_set_color(c_white); draw_set_alpha(1);

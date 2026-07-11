@@ -97,7 +97,7 @@ object_event_add
     grav_var = grav_base_var*grav_mult_var*grav_mult_per_var;
     on_floor_var = true;
     // Bob
-    bob_rate_var = 3.75;
+    bob_rate_var = 48;
     bob_mult_var = global.move_bob_var/100; // 12/7
     bob_var = 0;
     ft_snd_var = true;
@@ -304,7 +304,7 @@ object_event_add
         if heal_delay_var <= 0 || alarm_arr[1,1] <= 0
         { heal_var = true; }
         // Bob
-        bob_time_var = 45;
+        bob_time_var = bob_rate_var*0.25;
         breath_time_var = 0;
         // Camera
         cam_x_var = x;
@@ -702,8 +702,8 @@ object_event_add
             if local.real_spd
             {
                 local.bobprev = bob_time_var;
-                bob_time_var = (bob_time_var+(bob_rate_var*local.real_spd)) mod 180;
-                bob_var = bob_mult_var*(sin(degtorad(bob_time_var))-0.5);
+                bob_time_var = mod_scr(bob_time_var+local.real_spd,bob_rate_var)
+                bob_var = bob_mult_var*(sin(pi*bob_time_var/bob_rate_var)-0.5);
                 if local.bobprev > bob_time_var && ft_snd_var
                 {
                     // Play footsteps

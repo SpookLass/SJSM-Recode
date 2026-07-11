@@ -8,7 +8,7 @@ object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
 // Create event
 object_event_add
-(argument0,ev_create,0,"
+(argument0,ev_create,0,'
     dist_var = 32;
     color_len_var = 8;
     color_arr[0] = make_color_hsv(100,120,194);
@@ -20,5 +20,4 @@ object_event_add
     color_arr[6] = color_arr[2];
     color_arr[7] = color_arr[1];
     event_inherited();
-");
-
+');

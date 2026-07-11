@@ -10,7 +10,6 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,1,'
     // Sounds
-    snd_len_var = 3;
     wake_snd_var[0] = true;
     do_snd_var = true;
     snd_num_var = 1;
@@ -21,10 +20,7 @@ object_event_add
     snd_dist_max_var = 600;
     loop_snd_dist_min_var = 0;
     loop_snd_dist_max_var = 400;
-    // Charge sounds
-    charge_snd_len_var = 1;
     // Breath sounds
-    breath_snd_len_var = 2;
     breath_snd_num_var = 2;
     breath_snd_den_var = 3;
     // Drag Sounds
@@ -38,77 +34,6 @@ object_event_add
     // Translations
     ini_open("lang_"+global.lang_var+".ini");
     name_var = translate_mon_str_scr("killer",global.name_var);
-    switch global.killer_voice_var
-    {
-        case 0: // Vernon Shaw
-        {
-            wake_snd_var[2] = string_replace(ini_read_string("SUB","killer_wake","SUB_killer_wake"),"@n",name_var); wake_snd_var[3] = false;
-            charge_snd_arr[0,1] = wake_snd_var[2]; charge_snd_arr[0,2] = wake_snd_var[3];
-            snd_arr[0,1] = ini_read_string("SUB","killer_01","SUB_killer_01"); snd_arr[0,2] = true;
-            snd_arr[1,1] = ini_read_string("SUB","killer_02","SUB_killer_02"); snd_arr[1,2] = true;
-            snd_arr[2,1] = ini_read_string("SUB","killer_03","SUB_killer_03"); snd_arr[2,2] = true;
-            local.sub = string_replace(ini_read_string("SUB","killer_breath","SUB_killer_breath"),"@n",name_var);
-            for (local.i=0; local.i<breath_snd_len_var; local.i+=1;)
-            { breath_snd_arr[local.i,1] = local.sub; breath_snd_arr[local.i,2] = false; }
-            break;
-        }
-        case 1: // DirectorFlik
-        {
-            snd_len_var = 9;
-            wake_snd_var[2] = string_replace(ini_read_string("SUB","killer_wake","SUB_killer_wake"),"@n",name_var); wake_snd_var[3] = false;
-            charge_snd_arr[0,1] = wake_snd_var[2]; charge_snd_arr[0,2] = wake_snd_var[3];
-            snd_arr[0,1] = ini_read_string("SUB","killer_hd_01","SUB_killer_hd_01"); snd_arr[0,2] = true;
-            snd_arr[1,1] = ini_read_string("SUB","killer_hd_02","SUB_killer_hd_02"); snd_arr[1,2] = true;
-            snd_arr[2,1] = ini_read_string("SUB","killer_hd_03","SUB_killer_hd_03"); snd_arr[2,2] = true;
-            snd_arr[3,1] = ini_read_string("SUB","killer_hd_04","SUB_killer_hd_04"); snd_arr[3,2] = true;
-            snd_arr[4,1] = ini_read_string("SUB","killer_hd_05","SUB_killer_hd_05"); snd_arr[4,2] = true;
-            snd_arr[5,1] = ini_read_string("SUB","killer_hd_06","SUB_killer_hd_06"); snd_arr[5,2] = true;
-            snd_arr[6,1] = ini_read_string("SUB","killer_hd_07","SUB_killer_hd_07"); snd_arr[6,2] = true;
-            snd_arr[7,1] = ini_read_string("SUB","killer_hd_08","SUB_killer_hd_08"); snd_arr[7,2] = true;
-            snd_arr[8,1] = ini_read_string("SUB","killer_hd_09","SUB_killer_hd_09"); snd_arr[8,2] = true;
-            local.sub = string_replace(ini_read_string("SUB","killer_breath","SUB_killer_breath"),"@n",name_var);
-            for (local.i=0; local.i<breath_snd_len_var; local.i+=1;)
-            { breath_snd_arr[local.i,1] = local.sub; breath_snd_arr[local.i,2] = false; }
-            break;
-        }
-        case 2: // Spook Lass
-        {
-            snd_len_var = 4;
-            breath_snd_len_var = 3;
-            wake_snd_var[2] = string_replace(ini_read_string("SUB","killer_wake","SUB_killer_wake"),"@n",name_var); wake_snd_var[3] = false;
-            charge_snd_arr[0,1] = wake_snd_var[2]; charge_snd_arr[0,2] = wake_snd_var[3];
-            snd_arr[0,1] = ini_read_string("SUB","killer_hd_01","SUB_killer_hd_01"); snd_arr[0,2] = true;
-            snd_arr[1,1] = ini_read_string("SUB","killer_hd_02","SUB_killer_hd_02"); snd_arr[1,2] = true;
-            snd_arr[2,1] = ini_read_string("SUB","killer_hd_08","SUB_killer_hd_08"); snd_arr[2,2] = true;
-            snd_arr[3,1] = ini_read_string("SUB","killer_hd_09","SUB_killer_hd_09"); snd_arr[3,2] = true;
-            local.sub = string_replace(ini_read_string("SUB","killer_breath","SUB_killer_breath"),"@n",name_var);
-            for (local.i=0; local.i<breath_snd_len_var; local.i+=1;)
-            { breath_snd_arr[local.i,1] = local.sub; breath_snd_arr[local.i,2] = false; }
-            break;
-        }
-        case 3: // Ryan J
-        {
-            snd_len_var = 8;
-            breath_snd_len_var = 3;
-            charge_snd_len_var = 3;
-            wake_snd_var[2] = string_replace(ini_read_string("SUB","killer_ryan_05","SUB_killer_ryan_05"),"@n",name_var); wake_snd_var[3] = true;
-            snd_arr[0,1] = ini_read_string("SUB","killer_ryan_01","SUB_killer_ryan_01"); snd_arr[0,2] = true;
-            snd_arr[1,1] = ini_read_string("SUB","killer_ryan_02","SUB_killer_ryan_02"); snd_arr[1,2] = true;
-            snd_arr[2,1] = ini_read_string("SUB","killer_ryan_03","SUB_killer_ryan_03"); snd_arr[2,2] = true;
-            snd_arr[3,1] = ini_read_string("SUB","killer_ryan_04","SUB_killer_ryan_04"); snd_arr[3,2] = true;
-            snd_arr[4,1] = ini_read_string("SUB","killer_ryan_05","SUB_killer_ryan_05"); snd_arr[4,2] = true;
-            snd_arr[5,1] = ini_read_string("SUB","killer_ryan_06","SUB_killer_ryan_06"); snd_arr[5,2] = true;
-            snd_arr[6,1] = ini_read_string("SUB","killer_ryan_07","SUB_killer_ryan_07"); snd_arr[6,2] = true;
-            snd_arr[7,1] = ini_read_string("SUB","killer_ryan_08","SUB_killer_ryan_08"); snd_arr[7,2] = true;
-            charge_snd_arr[0,1] = ini_read_string("SUB","killer_charge_ryan_01","SUB_killer_charge_ryan_01"); charge_snd_arr[0,2] = true;
-            charge_snd_arr[1,1] = ini_read_string("SUB","killer_charge_ryan_02","SUB_killer_charge_ryan_02"); charge_snd_arr[1,2] = true;
-            charge_snd_arr[2,1] = string_replace(ini_read_string("SUB","killer_charge_ryan_03","SUB_killer_charge_ryan_03"),"@n",name_var); charge_snd_arr[2,2] = false;
-            local.sub = string_replace(ini_read_string("SUB","killer_mumble_ryan","SUB_killer_mumble_ryan"),"@n",name_var);
-            for (local.i=0; local.i<breath_snd_len_var; local.i+=1;)
-            { breath_snd_arr[local.i,1] = local.sub; breath_snd_arr[local.i,2] = false; }
-            break;
-        }
-    }
     loop_snd_var[2] = string_replace(ini_read_string("SUB","killer_creep","SUB_killer_creep"),"@n",name_var); loop_snd_var[3] = false;
     drag_snd_arr[0,1] = ini_read_string("SUB","killer_drag","SUB_killer_drag"); drag_snd_arr[0,2] = false;
     drag_snd_arr[1,1] = drag_snd_arr[0,1]; drag_snd_arr[1,2] = false;
@@ -355,15 +280,32 @@ object_event_add
                 other.spr_arr_var[14,0] = spr_arr_var[14,0];
                 other.spr_arr_var[15,0] = spr_arr_var[15,0];
             }
+            snd_len_var = other.snd_len_var;
+            breath_snd_len_var = other.breath_snd_len_var;
+            charge_snd_len_var = other.charge_snd_len_var;
             for (local.i=0; local.i<snd_len_var; local.i+=1;)
-            { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
+            {
+                other.snd_arr[local.i,0] = snd_arr[local.i,0];
+                other.snd_arr[local.i,1] = snd_arr[local.i,1];
+                other.snd_arr[local.i,2] = snd_arr[local.i,2];
+            }
             for (local.i=0; local.i<breath_snd_len_var; local.i+=1;)
-            { other.breath_snd_arr[local.i,0] = breath_snd_arr[local.i,0]; }
+            {
+                other.breath_snd_arr[local.i,0] = breath_snd_arr[local.i,0];
+                other.breath_snd_arr[local.i,1] = breath_snd_arr[local.i,1];
+                other.breath_snd_arr[local.i,2] = breath_snd_arr[local.i,2];
+            }
             for (local.i=0; local.i<drag_snd_len_var; local.i+=1;)
             { other.drag_snd_arr[local.i,0] = drag_snd_arr[local.i,0]; }
             for (local.i=0; local.i<charge_snd_len_var; local.i+=1;)
-            { other.charge_snd_arr[local.i,0] = charge_snd_arr[local.i,0]; }
+            {
+                other.charge_snd_arr[local.i,0] = charge_snd_arr[local.i,0];
+                other.charge_snd_arr[local.i,1] = charge_snd_arr[local.i,1];
+                other.charge_snd_arr[local.i,2] = charge_snd_arr[local.i,2];
+            }
             other.wake_snd_var[1] = wake_snd_var[1];
+            other.wake_snd_var[2] = wake_snd_var[2];
+            other.wake_snd_var[3] = wake_snd_var[3];
             other.loop_snd_var[1] = loop_snd_var[1];
             other.hide_mus_snd_var = hide_mus_snd_var;
             other.main_mus_snd_var = main_mus_snd_var;
@@ -394,69 +336,97 @@ object_event_add
             spr_arr_var[14,0] = spr_add_scr(killer_sprint_07_spr_path,15,false,false,0,0);
             spr_arr_var[15,0] = spr_add_scr(killer_sprint_08_spr_path,15,false,false,0,0);
         }
+        ini_open("lang_"+global.lang_var+".ini");
         switch global.killer_voice_var
         {
             case 0: // Vernon Shaw
             {
-                snd_arr[0,0] = snd_add_scr(killer_01_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-                snd_arr[1,0] = snd_add_scr(killer_02_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-                snd_arr[2,0] = snd_add_scr(killer_03_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+                snd_len_var = 3;
+                snd_arr[0,0] = snd_add_scr(killer_01_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var); snd_arr[0,1] = ini_read_string("SUB","killer_01","SUB_killer_01"); snd_arr[0,2] = true;
+                snd_arr[1,0] = snd_add_scr(killer_02_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var); snd_arr[1,1] = ini_read_string("SUB","killer_02","SUB_killer_02"); snd_arr[1,2] = true;
+                snd_arr[2,0] = snd_add_scr(killer_03_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var); snd_arr[2,1] = ini_read_string("SUB","killer_03","SUB_killer_03"); snd_arr[2,2] = true;
+                breath_snd_len_var = 2;
                 breath_snd_arr[0,0] = snd_add_scr(killer_breath_01_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
                 breath_snd_arr[1,0] = snd_add_scr(killer_breath_02_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-                wake_snd_var[1] = snd_add_scr(js_11_snd_path,global.wake_3d_var,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-                charge_snd_arr[0,0] = snd_add_scr(js_11_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+                local.sub = string_replace(ini_read_string("SUB","killer_breath","SUB_killer_breath"),"@n",name_var);
+                for (local.i=0; local.i<breath_snd_len_var; local.i+=1;)
+                { breath_snd_arr[local.i,1] = local.sub; breath_snd_arr[local.i,2] = false; }
+                wake_snd_var[1] = snd_add_scr(js_11_snd_path,global.wake_3d_var,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var); wake_snd_var[2] = string_replace(ini_read_string("SUB","killer_wake","SUB_killer_wake"),"@n",name_var); wake_snd_var[3] = false;
+                charge_snd_len_var = 1;
+                charge_snd_arr[0,0] = snd_add_scr(js_11_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var); charge_snd_arr[0,1] = wake_snd_var[2]; charge_snd_arr[0,2] = wake_snd_var[3];
                 break;
             }
             case 1: // DirectorFlik
             {
-                snd_arr[0,0] = snd_add_scr(killer_hd_01_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-                snd_arr[1,0] = snd_add_scr(killer_hd_02_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-                snd_arr[2,0] = snd_add_scr(killer_hd_03_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-                snd_arr[3,0] = snd_add_scr(killer_hd_04_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-                snd_arr[4,0] = snd_add_scr(killer_hd_05_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-                snd_arr[5,0] = snd_add_scr(killer_hd_06_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-                snd_arr[6,0] = snd_add_scr(killer_hd_07_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-                snd_arr[7,0] = snd_add_scr(killer_hd_08_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-                snd_arr[8,0] = snd_add_scr(killer_hd_09_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+                snd_len_var = 9;
+                snd_arr[0,0] = snd_add_scr(killer_hd_01_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var); snd_arr[0,1] = ini_read_string("SUB","killer_hd_01","SUB_killer_hd_01"); snd_arr[0,2] = true;
+                snd_arr[1,0] = snd_add_scr(killer_hd_02_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var); snd_arr[1,1] = ini_read_string("SUB","killer_hd_02","SUB_killer_hd_02"); snd_arr[1,2] = true;
+                snd_arr[2,0] = snd_add_scr(killer_hd_03_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var); snd_arr[2,1] = ini_read_string("SUB","killer_hd_03","SUB_killer_hd_03"); snd_arr[2,2] = true;
+                snd_arr[3,0] = snd_add_scr(killer_hd_04_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var); snd_arr[3,1] = ini_read_string("SUB","killer_hd_04","SUB_killer_hd_04"); snd_arr[3,2] = true;
+                snd_arr[4,0] = snd_add_scr(killer_hd_05_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var); snd_arr[4,1] = ini_read_string("SUB","killer_hd_05","SUB_killer_hd_05"); snd_arr[4,2] = true;
+                snd_arr[5,0] = snd_add_scr(killer_hd_06_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var); snd_arr[5,1] = ini_read_string("SUB","killer_hd_06","SUB_killer_hd_06"); snd_arr[5,2] = true;
+                snd_arr[6,0] = snd_add_scr(killer_hd_07_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var); snd_arr[6,1] = ini_read_string("SUB","killer_hd_07","SUB_killer_hd_07"); snd_arr[6,2] = true;
+                snd_arr[7,0] = snd_add_scr(killer_hd_08_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var); snd_arr[7,1] = ini_read_string("SUB","killer_hd_08","SUB_killer_hd_08"); snd_arr[7,2] = true;
+                snd_arr[8,0] = snd_add_scr(killer_hd_09_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var); snd_arr[8,1] = ini_read_string("SUB","killer_hd_09","SUB_killer_hd_09"); snd_arr[8,2] = true;
+                breath_snd_len_var = 2;
                 breath_snd_arr[0,0] = snd_add_scr(killer_breath_hd_01_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
                 breath_snd_arr[1,0] = snd_add_scr(killer_breath_hd_02_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-                wake_snd_var[1] = snd_add_scr(js_11_snd_path,global.wake_3d_var,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-                charge_snd_arr[0,0] = snd_add_scr(js_11_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+                local.sub = string_replace(ini_read_string("SUB","killer_breath","SUB_killer_breath"),"@n",name_var);
+                for (local.i=0; local.i<breath_snd_len_var; local.i+=1;)
+                { breath_snd_arr[local.i,1] = local.sub; breath_snd_arr[local.i,2] = false; }
+                wake_snd_var[1] = snd_add_scr(js_11_snd_path,global.wake_3d_var,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var); wake_snd_var[2] = string_replace(ini_read_string("SUB","killer_wake","SUB_killer_wake"),"@n",name_var); wake_snd_var[3] = false;
+                charge_snd_len_var = 1;
+                charge_snd_arr[0,0] = snd_add_scr(js_11_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var); charge_snd_arr[0,1] = wake_snd_var[2]; charge_snd_arr[0,2] = wake_snd_var[3];
                 break;
             }
             case 2: // Spook Lass
             {
-                snd_arr[0,0] = snd_add_scr(killer_lass_01_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-                snd_arr[1,0] = snd_add_scr(killer_lass_02_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-                snd_arr[2,0] = snd_add_scr(killer_lass_08_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-                snd_arr[3,0] = snd_add_scr(killer_lass_09_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+                snd_len_var = 4;
+                snd_arr[0,0] = snd_add_scr(killer_lass_01_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var); snd_arr[0,1] = ini_read_string("SUB","killer_lass_01","SUB_killer_lass_01"); snd_arr[0,2] = true;
+                snd_arr[1,0] = snd_add_scr(killer_lass_02_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var); snd_arr[1,1] = ini_read_string("SUB","killer_lass_02","SUB_killer_lass_02"); snd_arr[1,2] = true;
+                snd_arr[2,0] = snd_add_scr(killer_lass_03_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var); snd_arr[2,1] = ini_read_string("SUB","killer_lass_03","SUB_killer_lass_03"); snd_arr[2,2] = true;
+                snd_arr[3,0] = snd_add_scr(killer_lass_04_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var); snd_arr[3,1] = ini_read_string("SUB","killer_lass_04","SUB_killer_lass_04"); snd_arr[3,2] = true;
+                breath_snd_len_var = 5;
                 breath_snd_arr[0,0] = snd_add_scr(killer_breath_lass_01_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
                 breath_snd_arr[1,0] = snd_add_scr(killer_breath_lass_02_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
                 breath_snd_arr[2,0] = snd_add_scr(killer_breath_lass_03_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-                wake_snd_var[1] = snd_add_scr(js_11_snd_path,global.wake_3d_var,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-                charge_snd_arr[0,0] = snd_add_scr(js_11_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+                breath_snd_arr[3,0] = snd_add_scr(killer_breath_lass_04_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+                breath_snd_arr[4,0] = snd_add_scr(killer_breath_lass_05_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+                local.sub = string_replace(ini_read_string("SUB","killer_breath","SUB_killer_breath"),"@n",name_var);
+                for (local.i=0; local.i<breath_snd_len_var; local.i+=1;)
+                { breath_snd_arr[local.i,1] = local.sub; breath_snd_arr[local.i,2] = false; }
+                wake_snd_var[1] = snd_add_scr(js_11_snd_path,global.wake_3d_var,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var); wake_snd_var[2] = string_replace(ini_read_string("SUB","killer_wake","SUB_killer_wake"),"@n",name_var); wake_snd_var[3] = false;
+                charge_snd_len_var = 1;
+                charge_snd_arr[0,0] = snd_add_scr(js_11_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var); charge_snd_arr[0,1] = wake_snd_var[2]; charge_snd_arr[0,2] = wake_snd_var[3];
                 break;
             }
-            case 3:
+            case 3: // Ryan J.
             {
-                snd_arr[0,0] = snd_add_scr(killer_ryan_01_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-                snd_arr[1,0] = snd_add_scr(killer_ryan_02_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-                snd_arr[2,0] = snd_add_scr(killer_ryan_03_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-                snd_arr[3,0] = snd_add_scr(killer_ryan_04_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-                snd_arr[4,0] = snd_add_scr(killer_ryan_05_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-                snd_arr[5,0] = snd_add_scr(killer_ryan_06_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-                snd_arr[6,0] = snd_add_scr(killer_ryan_07_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-                snd_arr[7,0] = snd_add_scr(killer_ryan_08_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+                snd_len_var = 8;
+                snd_arr[0,0] = snd_add_scr(killer_ryan_01_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var); snd_arr[0,1] = ini_read_string("SUB","killer_ryan_01","SUB_killer_ryan_01"); snd_arr[0,2] = true;
+                snd_arr[1,0] = snd_add_scr(killer_ryan_02_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var); snd_arr[1,1] = ini_read_string("SUB","killer_ryan_02","SUB_killer_ryan_02"); snd_arr[1,2] = true;
+                snd_arr[2,0] = snd_add_scr(killer_ryan_03_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var); snd_arr[2,1] = ini_read_string("SUB","killer_ryan_03","SUB_killer_ryan_03"); snd_arr[2,2] = true;
+                snd_arr[3,0] = snd_add_scr(killer_ryan_04_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var); snd_arr[3,1] = ini_read_string("SUB","killer_ryan_04","SUB_killer_ryan_04"); snd_arr[3,2] = true;
+                snd_arr[4,0] = snd_add_scr(killer_ryan_05_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var); snd_arr[4,1] = ini_read_string("SUB","killer_ryan_05","SUB_killer_ryan_05"); snd_arr[4,2] = true;
+                snd_arr[5,0] = snd_add_scr(killer_ryan_06_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var); snd_arr[5,1] = ini_read_string("SUB","killer_ryan_06","SUB_killer_ryan_06"); snd_arr[5,2] = true;
+                snd_arr[6,0] = snd_add_scr(killer_ryan_07_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var); snd_arr[6,1] = ini_read_string("SUB","killer_ryan_07","SUB_killer_ryan_07"); snd_arr[6,2] = true;
+                snd_arr[7,0] = snd_add_scr(killer_ryan_08_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var); snd_arr[7,1] = ini_read_string("SUB","killer_ryan_08","SUB_killer_ryan_08"); snd_arr[7,2] = true;
+                breath_snd_len_var = 3;
                 breath_snd_arr[0,0] = snd_add_scr(killer_mumble_ryan_01_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
                 breath_snd_arr[1,0] = snd_add_scr(killer_mumble_ryan_02_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
                 breath_snd_arr[2,0] = snd_add_scr(killer_mumble_ryan_03_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-                wake_snd_var[1] = snd_add_scr(killer_ryan_05_snd_path,global.wake_3d_var,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-                charge_snd_arr[0,0] = snd_add_scr(killer_charge_ryan_01_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-                charge_snd_arr[1,0] = snd_add_scr(killer_charge_ryan_02_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
-                charge_snd_arr[2,0] = snd_add_scr(killer_charge_ryan_03_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+                local.sub = string_replace(ini_read_string("SUB","killer_mumble_ryan","SUB_killer_mumble_ryan"),"@n",name_var);
+                for (local.i=0; local.i<breath_snd_len_var; local.i+=1;)
+                { breath_snd_arr[local.i,1] = local.sub; breath_snd_arr[local.i,2] = false; }
+                wake_snd_var[1] = snd_add_scr(killer_ryan_05_snd_path,global.wake_3d_var,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var); wake_snd_var[2] = string_replace(ini_read_string("SUB","killer_ryan_05","SUB_killer_ryan_05"),"@n",name_var); wake_snd_var[3] = true;
+                charge_snd_len_var = 3;
+                charge_snd_arr[0,0] = snd_add_scr(killer_charge_ryan_01_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var); charge_snd_arr[0,1] = ini_read_string("SUB","killer_charge_ryan_01","SUB_killer_charge_ryan_01"); charge_snd_arr[0,2] = true;
+                charge_snd_arr[1,0] = snd_add_scr(killer_charge_ryan_02_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var); charge_snd_arr[1,1] = ini_read_string("SUB","killer_charge_ryan_02","SUB_killer_charge_ryan_02"); charge_snd_arr[1,2] = true;
+                charge_snd_arr[2,0] = snd_add_scr(killer_charge_ryan_03_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var); charge_snd_arr[2,1] = string_replace(ini_read_string("SUB","killer_charge_ryan_03","SUB_killer_charge_ryan_03"),"@n",name_var); charge_snd_arr[2,2] = false;
                 break;
             }
         }
+        ini_close();
         drag_snd_arr[0,0] = snd_add_scr(killer_drag_01_snd_path,true,snd_group_mon_const,1,drag_snd_dist_min_var,drag_snd_dist_max_var);
         drag_snd_arr[1,0] = snd_add_scr(killer_drag_02_snd_path,true,snd_group_mon_const,1,drag_snd_dist_min_var,drag_snd_dist_max_var);
         drag_snd_arr[2,0] = snd_add_scr(killer_drag_03_snd_path,true,snd_group_mon_const,1,drag_snd_dist_min_var,drag_snd_dist_max_var);

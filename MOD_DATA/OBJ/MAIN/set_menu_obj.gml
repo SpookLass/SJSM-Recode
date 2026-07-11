@@ -105,7 +105,7 @@ object_event_add
             ini_open("lang_"+global.lang_var+"_"+set_arr[local.i,3]+".ini");
             name_arr_var[local.stateid,local.setid] = ini_read_string("SET",set_arr[local.i,1],"SET_"+set_arr[local.i,1]); // Name
             desc_arr_var[local.stateid,local.setid] = ini_read_string("SET_DESC",set_arr[local.i,2],"SET_DESC_"+set_arr[local.i,2]); // Description
-            if set_arr[local.i,4] == set_mon_enum_const { local.name = translate_mon_str_scr(set_arr[local.i,11]); }
+            if set_arr[local.i,4] == set_mon_enum_const { local.name = translate_mon_str_scr(set_arr[local.i,11],global.name_var); }
             ini_close();
             ini_open("lang_"+global.lang_var+".ini");
         }
@@ -113,7 +113,7 @@ object_event_add
         {
             name_arr_var[local.stateid,local.setid] = ini_read_string("SET",set_arr[local.i,1],"SET_"+set_arr[local.i,1]); // Name
             desc_arr_var[local.stateid,local.setid] = ini_read_string("SET_DESC",set_arr[local.i,2],"SET_DESC_"+set_arr[local.i,2]); // Description
-            if set_arr[local.i,4] == set_mon_enum_const { local.name = translate_mon_str_scr(set_arr[local.i,11]); }
+            if set_arr[local.i,4] == set_mon_enum_const { local.name = translate_mon_str_scr(set_arr[local.i,11],global.name_var); }
         }
         else
         {

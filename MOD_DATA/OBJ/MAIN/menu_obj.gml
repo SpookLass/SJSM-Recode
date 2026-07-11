@@ -312,7 +312,7 @@ object_event_add
         {
             ini_close();
             ini_open("lang_"+global.lang_var+"_"+custom_arr[local.i,3]+".ini");
-            if custom_arr[local.i,4] == custom_type_const { custom_name_arr_var[local.stateid,local.setid] = string_upper(translate_mon_str_scr(custom_arr[local.i,1])); }
+            if custom_arr[local.i,4] == custom_type_const { custom_name_arr_var[local.stateid,local.setid] = string_upper(translate_mon_str_scr(custom_arr[local.i,1],global.name_var)); }
             else { custom_name_arr_var[local.stateid,local.setid] = ini_read_string("MENU",custom_arr[local.i,1],"MENU_"+custom_arr[local.i,1]); }
             custom_desc_arr_var[local.stateid,local.setid] = ini_read_string("DESC",custom_arr[local.i,2],"DESC_"+custom_arr[local.i,2]); // Description
             ini_close();
@@ -321,7 +321,7 @@ object_event_add
         else if custom_arr[local.i,3] // Translate
         {
             // Name
-            if custom_arr[local.i,4] == custom_type_const { custom_name_arr_var[local.stateid,local.setid] = string_upper(translate_mon_str_scr(custom_arr[local.i,1])); }
+            if custom_arr[local.i,4] == custom_type_const { custom_name_arr_var[local.stateid,local.setid] = string_upper(translate_mon_str_scr(custom_arr[local.i,1],global.name_var)); }
             else { custom_name_arr_var[local.stateid,local.setid] = ini_read_string("MENU",custom_arr[local.i,1],"MENU_"+custom_arr[local.i,1]); }
             custom_desc_arr_var[local.stateid,local.setid] = ini_read_string("DESC",custom_arr[local.i,2],"DESC_"+custom_arr[local.i,2]); // Description
         }

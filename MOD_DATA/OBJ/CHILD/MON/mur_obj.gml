@@ -49,6 +49,7 @@ object_event_add
     move_arr_len = 0;
     fast_spawn_var = false;
     do_ring_var = false;
+    move_len_var = 0;
     // Fog
     fog_color_var = make_color_rgb(14,69,69);
     fog_prio_var = 2;
@@ -77,7 +78,21 @@ object_event_add
             crateless_spd_mult_var = 0.64;
             sink_var = true;
             do_ring_var = true;
-            wander_time_var = 500;
+            wander_time_var = 800; // 1000
+            break;
+        }
+        case 2:
+        {
+            spd_base_var = 5/pf_ms_rate_const;
+            wander_spd_var = 0.4;
+            do_ring_var = true;
+            type_var = 2;
+            dmg_var = 45;
+            dmg_alarm_var = 30;
+            atk_alarm_var = 180;
+            atk_range_var = 32;
+            splash_rate_var = 15/spd_base_var;
+            ring_rate_var = 7.5/(spd_base_var*wander_spd_var);
             break;
         }
     }

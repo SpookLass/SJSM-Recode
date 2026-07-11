@@ -2,8 +2,8 @@
 Argument 0: Room Variable (same for all rooms)
 */
 // Size (Don't go above 38!!!)
-    local.width = 4; 
-    local.height = 4;
+    local.width = 32; 
+    local.height = 2;
 // Room Code
     room_set_code
     (
@@ -44,20 +44,32 @@ Argument 0: Room Variable (same for all rooms)
     }
 // Walls
     local.ytmp = 32+(local.height*32);
-    for (local.i=0; local.i<30; local.i+=1;)
+    for (local.i=0; local.i<local.width; local.i+=1;)
     {
         local.xtmp = 48+(local.i*32);
         room_instance_add(argument0,local.xtmp,32,spawn_wall_hor_obj);
         room_instance_add(argument0,local.xtmp,local.ytmp,spawn_wall_hor_obj);
     }
     local.xtmp = 32+(local.width*32);
-    for (local.i=0; local.i<30; local.i+=1;)
+    for (local.i=0; local.i<local.height; local.i+=1;)
     {
         local.ytmp = 48+(local.i*32);
         room_instance_add(argument0,32,local.ytmp,spawn_wall_vert_obj);
         room_instance_add(argument0,local.xtmp,local.ytmp,spawn_wall_vert_obj);
     }
 // Lab
-    room_instance_add(argument0,80,80,lab_wall_obj);
-    room_instance_add(argument0,112,80,lab_tank_obj);
-    room_instance_add(argument0,144,80,lab_tank_broke_obj);
+    room_instance_add(argument0,80,80,school_locker_obj);
+    room_instance_add(argument0,112,80,school_desk_obj);
+    room_instance_add(argument0,144,80,school_clock_obj);
+    room_instance_add(argument0,176,80,school_stickynote_obj);
+    room_instance_add(argument0,208,80,school_poster_01_obj);
+    room_instance_add(argument0,240,80,school_poster_02_obj);
+    room_instance_add(argument0,272,80,school_poster_03_obj);
+    room_instance_add(argument0,304,80,school_poster_04_obj);
+    room_instance_add(argument0,336,80,school_poster_05_obj);
+    room_instance_add(argument0,368,80,school_poster_06_obj);
+    room_instance_add(argument0,400,80,school_chalk_obj);
+    room_instance_add(argument0,432,80,school_desk_teacher_obj);
+    room_instance_add(argument0,464,80,school_window_obj);
+    room_instance_add(argument0,496,80,school_blind_obj);
+    room_instance_add(argument0,528,80,ghost_obj);

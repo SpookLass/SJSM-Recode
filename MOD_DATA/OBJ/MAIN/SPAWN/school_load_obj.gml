@@ -1,0 +1,96 @@
+// Builtin Variables
+object_set_depth(argument0,100);
+object_set_mask(argument0,noone);
+object_set_parent(argument0,load_par_obj);
+object_set_persistent(argument0,true);
+object_set_solid(argument0,false);
+object_set_sprite(argument0,noone);
+object_set_visible(argument0,false);
+// Create Event
+object_event_add
+(argument0,ev_create,0,'
+    menu_var = false;
+    bg_len_var = 13;
+    bg_arr_var[0,1] = school_wall_bg_path;
+    bg_arr_var[0,2] = false;
+    bg_arr_var[0,3] = false;
+    bg_arr_var[1,1] = school_floor_bg_path;
+    bg_arr_var[1,2] = false;
+    bg_arr_var[1,3] = false;
+    bg_arr_var[2,1] = school_ceil_bg_path;
+    bg_arr_var[2,2] = false;
+    bg_arr_var[2,3] = false;
+    bg_arr_var[3,1] = school_wall_up_bg_path;
+    bg_arr_var[3,2] = false;
+    bg_arr_var[3,3] = false;
+    bg_arr_var[4,1] = school_door_bg_path;
+    bg_arr_var[4,2] = false;
+    bg_arr_var[4,3] = false;
+    bg_arr_var[5,1] = school_window_bg_path;
+    bg_arr_var[5,2] = false;
+    bg_arr_var[5,3] = false;
+    bg_arr_var[6,1] = school_blind_bg_path;
+    bg_arr_var[6,2] = false;
+    bg_arr_var[6,3] = false;
+    bg_arr_var[7,1] = school_locker_01_bg_path;
+    bg_arr_var[7,2] = false;
+    bg_arr_var[7,3] = false;
+    bg_arr_var[8,1] = school_desk_top_bg_path;
+    bg_arr_var[8,2] = false;
+    bg_arr_var[8,3] = false;
+    bg_arr_var[9,1] = school_desk_metal_bg_path;
+    bg_arr_var[9,2] = false;
+    bg_arr_var[9,3] = false;
+    bg_arr_var[10,1] = school_desk_wood_bg_path;
+    bg_arr_var[10,2] = false;
+    bg_arr_var[10,3] = false;
+    bg_arr_var[11,1] = school_chalk_bg_path;
+    bg_arr_var[11,2] = false;
+    bg_arr_var[11,3] = false;
+    bg_arr_var[12,1] = school_locker_02_bg_path;
+    bg_arr_var[12,2] = false;
+    bg_arr_var[12,3] = false;
+    spr_len_var = 1;
+    spr_arr_var[0,1] = school_decor_spr_path;
+    spr_arr_var[0,2] = 8;
+    spr_arr_var[0,3] = false;
+    spr_arr_var[0,4] = false;
+    spr_arr_var[0,5] = 0;
+    spr_arr_var[0,6] = 0;
+    mdl_len_var = 1;
+    mdl_arr_var[0,1] = school_door_mdl_path;
+    snd_len_var = 4;
+    snd_arr_var[0,1] = ghost_01_snd_path;
+    snd_arr_var[0,2] = true;
+    snd_arr_var[0,3] = snd_group_mon_const;
+    snd_arr_var[0,4] = 1;
+    snd_arr_var[0,5] = 0;
+    snd_arr_var[0,6] = 0;
+    snd_arr_var[1,1] = ghost_02_snd_path;
+    snd_arr_var[1,2] = true;
+    snd_arr_var[1,3] = snd_group_mon_const;
+    snd_arr_var[1,4] = 1;
+    snd_arr_var[1,5] = 0;
+    snd_arr_var[1,6] = 0;
+    snd_arr_var[2,1] = ghost_03_snd_path;
+    snd_arr_var[2,2] = true;
+    snd_arr_var[2,3] = snd_group_mon_const;
+    snd_arr_var[2,4] = 1;
+    snd_arr_var[2,5] = 0;
+    snd_arr_var[2,6] = 0;
+    snd_arr_var[3,1] = ghost_04_snd_path;
+    snd_arr_var[3,2] = true;
+    snd_arr_var[3,3] = snd_group_mon_const;
+    snd_arr_var[3,4] = 1;
+    snd_arr_var[3,5] = 0;
+    snd_arr_var[3,6] = 0;
+    rm_var = test_spawn_rm;//school_01_rm;
+    instance_create(0,0,school_flash_obj);
+    event_inherited();
+');
+// Destroy Event
+object_event_add
+(argument0,ev_destroy,0,'
+    event_inherited();
+    with school_flash_obj { instance_destroy(); }
+');

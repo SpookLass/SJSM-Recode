@@ -36,38 +36,34 @@ object_event_add
 object_event_add
 (argument0,ev_draw,0,'
     d3d_transform_set_identity();
-    if type_var == 5 { d3d_transform_add_rotation_z(point_direction(x,y,global.cam_x_var[view_current],global.cam_y_var[view_current])); }
-    else { d3d_transform_add_rotation_z(direction); }
+    // Check if billboard
+    d3d_transform_add_rotation_z(direction);
     d3d_transform_add_translation(x,y,z);
-    draw_set_color(image_blend); draw_set_alpha(image_alpha);
-    switch type_var
+    // Reflection handling
+    if global.reflect_var
     {
-        case 0: { d3d_model_draw(mdl_var,0,0,0,tex_var); break; }
-        case 1: { d3d_draw_wall(0,-w_var/2,h_var,0,w_var/2,0,tex_var,tex_w_var,tex_h_var*sign(h_var)); break; }
-        case 2: { d3d_draw_block(-w_var/2,-l_var/2,h_var,w_var/2,l_var/2,0,tex_var,tex_w_var,tex_h_var*sign(h_var)); break; }
-        case 3: { d3d_draw_cylinder(-w_var/2,-l_var/2,h_var,w_var/2,l_var/2,0,tex_var,tex_w_var,tex_h_var*sign(h_var),close_var,step_var); break; }
-        case 4: { d3d_draw_floor(-w_var/2,-l_var/2,0,w_var/2,l_var/2,0,tex_var,tex_w_var,tex_h_var); break; }
-        case 5: { d3d_draw_wall(0,-w_var/2,h_var,0,w_var/2,0,tex_var,tex_w_var,tex_h_var*sign(h_var)); break; }
-        case 6:
+        switch (global.reflect_axis_var)
         {
-            d3d_draw_wall(0.1,-w_var/2,h_var,0.1,w_var/2,0,tex_var,tex_w_var,tex_h_var*sign(h_var));
-            d3d_draw_wall(-0.1,-w_var/2,h_var,-0.1,w_var/2,0,tex_var,tex_w_var,tex_h_var*sign(h_var));
-            break;
-        }
-        case 7:
-        {
-            local.width = w_var/2;
-            local.length = l_var/2;
-            local.tex_height = tex_h_var*sign(h_var);
-            d3d_draw_wall(-local.width,-local.length,h_var,local.width,-local.length,0,tex_var,tex_w_var,local.tex_height);
-            d3d_draw_wall(-local.width,local.length,h_var,local.width,local.length,0,tex_var,tex_w_var,local.tex_height);
-            d3d_draw_wall(-local.width,-local.length,h_var,-local.width,local.length,0,tex_var,tex_l_var,local.tex_height);
-            d3d_draw_wall(local.width,-local.length,h_var,local.width,local.length,0,tex_var,tex_l_var,local.tex_height);
-            d3d_draw_floor(-local.width,-local.length,0,local.width,local.length,0,tex_02_var,tex_w_var,tex_l_var);
-            d3d_draw_floor(-local.width,-local.length,h_var,local.width,local.length,h_var,tex_02_var,tex_w_var,tex_l_var);
-            break;
+            case 0: { d3d_transform_add_scaling(-1,1,1); d3d_transform_add_translation(global.reflect_pos_var,0,0); break; }
+            case 1: { d3d_transform_add_scaling(1,-1,1); d3d_transform_add_translation(0,global.reflect_pos_var,0); break; }
+            case 2: { d3d_transform_add_scaling(1,1,-1); d3d_transform_add_translation(0,0,global.reflect_pos_var); break; }
         }
     }
+    // Draw
+    draw_set_alpha(image_alpha);
+    if tone_var >= 0
+    { draw_set_color(color_mult_scr(image_blend,tone_var)); }
+    else { draw_set_color(image_blend); }
+    local.width = w_var/2;
+    local.length = l_var/2;
+    local.tex_height = tex_h_var*sign(h_var);
+    d3d_draw_wall(local.width,-local.length,h_var,-local.width,-local.length,0,tex_var,tex_w_var,local.tex_height);
+    d3d_draw_wall(local.width,local.length,h_var,-local.width,local.length,0,tex_var,tex_w_var,local.tex_height);
+    d3d_draw_wall(-local.width,local.length,h_var,-local.width,-local.length,0,tex_var,tex_l_var,local.tex_height);
+    d3d_draw_wall(local.width,local.length,h_var,local.width,-local.length,0,tex_var,tex_l_var,local.tex_height);
+    d3d_draw_floor(local.width,local.length,0,-local.width,-local.length,0,tex_02_var,tex_w_var,tex_l_var);
+    d3d_draw_floor(local.width,local.length,h_var,-local.width,-local.length,h_var,tex_02_var,tex_w_var,tex_l_var);
+    // Reset
     d3d_transform_set_identity();
     draw_set_color(c_white); draw_set_alpha(1);
 ');

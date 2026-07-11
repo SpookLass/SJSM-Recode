@@ -251,6 +251,7 @@ object_event_add
                 {
                     persistent = false;
                     par_var = other.id;
+                    on_var = true;
                     x = global.mark_arr[local.i,0];
                     y = global.mark_arr[local.i,1];
                     z = global.mark_arr[local.i,2];

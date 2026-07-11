@@ -56,7 +56,6 @@ room_set_code
         snd_arr[0] = door_m_02_snd;
     }
     with instance_create(544,240,lab_door_obj) { global.spawn_arr[3,5] = id; direction = 180; }
-    
 ');
 // Room settings
 room_set_width(argument0,1280);
