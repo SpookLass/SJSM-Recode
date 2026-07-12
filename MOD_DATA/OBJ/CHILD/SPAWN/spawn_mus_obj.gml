@@ -15,5 +15,4 @@ object_event_add
         prio_var = mon_mus_prio_const;
         snd_var = load_par_obj.snd_arr_var[0,0];
     }
-    
 ');

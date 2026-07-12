@@ -33,8 +33,16 @@ object_event_add
     snd_len_var = 2;
     snd_arr_var[0,1] = dl_dead_snd_path;
     snd_arr_var[0,2] = false;
+    snd_arr_var[0,3] = snd_group_mus_const;
+    snd_arr_var[0,4] = 1;
+    snd_arr_var[0,5] = 0;
+    snd_arr_var[0,6] = 0;
     snd_arr_var[1,1] = choose(dl_eff_01_snd_path,dl_eff_02_snd_path,dl_eff_03_snd_path,dl_eff_04_snd_path);
     snd_arr_var[1,2] = false;
+    snd_arr_var[1,3] = snd_group_mon_const;
+    snd_arr_var[1,4] = 1;
+    snd_arr_var[1,5] = 0;
+    snd_arr_var[1,6] = 0;
     mdl_len_var = 1;
     mdl_arr_var[0,1] = dl_dead_mdl_path;
     rm_var = dl_dead_3d_rm;

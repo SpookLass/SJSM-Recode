@@ -46,6 +46,7 @@ object_event_add
     for (local.i=0; local.i<snd_len_var; local.i+=1)
     { snd_arr[local.i,1] = local.sub; snd_arr[local.i,2] = false; }
     wake_snd_var[2] = local.sub; wake_snd_var[3] = false;
+    leech_snd_var[1] = string_replace(ini_read_string("SUB","para_leech","SUB_para_leech"),"@n",name_var); leech_snd_var[2] = false;
     ini_close();
     // Variables
     type_var = 1;
@@ -233,6 +234,7 @@ object_event_add
             for (local.i=0; local.i<eff_snd_len_var; local.i+=1;)
             { other.eff_snd_arr[local.i] = eff_snd_arr[local.i]; }
             other.wake_snd_var[1] = wake_snd_var[1];
+            other.leech_snd_var[0] = leech_snd_var[0];
             other.main_mus_snd_var = main_mus_snd_var;
             other.leech_mus_snd_var = leech_mus_snd_var;
             local.loaded = true;
@@ -256,6 +258,7 @@ object_event_add
         eff_snd_arr[2] = snd_add_scr(para_eff_03_snd_path,false,snd_group_mon_const,1,0,0);
         eff_snd_arr[3] = snd_add_scr(dl_eff_03_snd_path,false,snd_group_mon_const,1,0,0);
         wake_snd_var[1] = snd_add_scr(para_wake_snd_path,global.wake_3d_var,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
+        leech_snd_var[0] = snd_add_scr(para_leech_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
         switch theme_scr(global.para_theme_var,global.theme_var,1,0,0,1)
         {
             case 1: { main_mus_snd_var = snd_add_scr(para_rom_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
@@ -299,6 +302,7 @@ object_event_add
         if wake_snd_var[0] { fmod_snd_free_scr(wake_snd_var[1]); }
         for (local.i=0; local.i<eff_snd_len_var; local.i+=1;)
         { fmod_snd_free_scr(eff_snd_arr[local.i]); }
+        fmod_snd_free_scr(leech_snd_var[0]);
     }
     with spr_flash_eff_obj
     { if par_var == other.id { instance_destroy(); }}
@@ -541,6 +545,14 @@ object_event_add
         }
         if state_miniboss_var
         {
+            if fmod_snd_is_3d_scr(leech_snd_var[1])
+            {
+                inst_var = fmod_snd_3d_play_scr(leech_snd_var[0],x,y,z+snd_h_var);
+                if global.pitch_bend_var { fmod_inst_set_pitch_scr(inst_var,random_range(0.95,1.05)); }
+            }
+            else { inst_var = fmod_snd_play_scr(leech_snd_var[0]); }
+            sub_var[0] = leech_snd_var[1];
+            sub_var[1] = leech_snd_var[2];
             mus_prio_var = mb_mus_prio_const;
             mus_snd_var = leech_mus_snd_var;
             with mus_control_obj { event_user(0); }

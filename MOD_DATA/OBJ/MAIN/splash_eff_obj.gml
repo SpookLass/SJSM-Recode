@@ -95,9 +95,9 @@ object_event_add
     {
         switch (global.reflect_axis_var)
         {
-            case 0: { local.xtmp = global.reflect_pos_var-local.xtmp; d3d_transform_add_scaling(-1,1,1); break; }
-            case 1: { local.ytmp = global.reflect_pos_var-local.ytmp; d3d_transform_add_scaling(1,-1,1); break; }
-            case 2: { local.ztmp = global.reflect_pos_var-local.ztmp; d3d_transform_add_scaling(1,1,-1); break; }
+            case 0: { local.xtmp = (global.reflect_pos_var*2)-local.xtmp; d3d_transform_add_scaling(-1,1,1); break; }
+            case 1: { local.ytmp = (global.reflect_pos_var*2)-local.ytmp; d3d_transform_add_scaling(1,-1,1); break; }
+            case 2: { local.ztmp = (global.reflect_pos_var*2)-local.ztmp; d3d_transform_add_scaling(1,1,-1); break; }
         }
     }
     // Transformations
@@ -123,9 +123,9 @@ object_event_add
         {
             switch (global.reflect_axis_var)
             {
-                case 0: { d3d_transform_add_scaling(-1,1,1); d3d_transform_add_translation(global.reflect_pos_var,0,0); break; }
-                case 1: { d3d_transform_add_scaling(1,-1,1); d3d_transform_add_translation(0,global.reflect_pos_var,0); break; }
-                case 2: { d3d_transform_add_scaling(1,1,-1); d3d_transform_add_translation(0,0,global.reflect_pos_var); break; }
+                case 0: { d3d_transform_add_scaling(-1,1,1); d3d_transform_add_translation(global.reflect_pos_var*2,0,0); break; }
+                case 1: { d3d_transform_add_scaling(1,-1,1); d3d_transform_add_translation(0,global.reflect_pos_var*2,0); break; }
+                case 2: { d3d_transform_add_scaling(1,1,-1); d3d_transform_add_translation(0,0,global.reflect_pos_var*2); break; }
             }
         }
         draw_set_alpha(ring_alpha_var);

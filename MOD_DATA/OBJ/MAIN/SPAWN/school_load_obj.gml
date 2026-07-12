@@ -10,7 +10,7 @@ object_set_visible(argument0,false);
 object_event_add
 (argument0,ev_create,0,'
     menu_var = false;
-    bg_len_var = 13;
+    bg_len_var = 14;
     bg_arr_var[0,1] = school_wall_bg_path;
     bg_arr_var[0,2] = false;
     bg_arr_var[0,3] = false;
@@ -50,6 +50,9 @@ object_event_add
     bg_arr_var[12,1] = school_locker_02_bg_path;
     bg_arr_var[12,2] = false;
     bg_arr_var[12,3] = false;
+    bg_arr_var[13,1] = lab_note_bg_path;
+    bg_arr_var[13,2] = false;
+    bg_arr_var[13,3] = false;
     spr_len_var = 1;
     spr_arr_var[0,1] = school_decor_spr_path;
     spr_arr_var[0,2] = 8;
@@ -84,7 +87,7 @@ object_event_add
     snd_arr_var[3,4] = 1;
     snd_arr_var[3,5] = 0;
     snd_arr_var[3,6] = 0;
-    rm_var = test_spawn_rm;//school_01_rm;
+    rm_var = school_01_rm;
     instance_create(0,0,school_flash_obj);
     event_inherited();
 ');

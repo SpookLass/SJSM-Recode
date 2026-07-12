@@ -14,6 +14,7 @@ object_event_add
 // User 0
 object_event_add
 (argument0,ev_other,ev_user0,'
+    fmod_update_take_over_when_lock_scr();
     if ds_list_find_index(global.mon_list,bug_obj) < 0
     { ds_list_add(global.mon_list,bug_obj); }
     with spawn_door_trig_obj { lock_var = true; }
@@ -24,4 +25,8 @@ object_event_add
         hole_z_var = lab_hole_obj.z+lab_hole_obj.h_var-16;
         event_user(15);
     }
+    global.last_time_var = current_time;
+    fmod_update_take_over_done_scr();
+    if global.reset_spd_var > 0 && global.game_spd_var > 1
+    { global.game_spd_var = 1; fmod_group_set_pitch_scr(0,global.game_spd_var); }
 ');

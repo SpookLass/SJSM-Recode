@@ -86,9 +86,9 @@ object_event_add
     {
         switch (global.reflect_axis_var)
         {
-            case 0: { local.xtmp = global.reflect_pos_var-local.xtmp; d3d_transform_add_scaling(-1,1,1); break; }
-            case 1: { local.ytmp = global.reflect_pos_var-local.ytmp; d3d_transform_add_scaling(1,-1,1); break; }
-            case 2: { local.ztmp = global.reflect_pos_var-local.ztmp; d3d_transform_add_scaling(1,1,-1); break; }
+            case 0: { local.xtmp = (global.reflect_pos_var*2)-local.xtmp; d3d_transform_add_scaling(-1,1,1); break; }
+            case 1: { local.ytmp = (global.reflect_pos_var*2)-local.ytmp; d3d_transform_add_scaling(1,-1,1); break; }
+            case 2: { local.ztmp = (global.reflect_pos_var*2)-local.ztmp; d3d_transform_add_scaling(1,1,-1); break; }
         }
     }
     d3d_transform_add_rotation_z(point_direction(local.xtmp,local.ytmp,global.cam_x_var[view_current],global.cam_y_var[view_current]));
@@ -109,9 +109,9 @@ object_event_add
         {
             switch (global.reflect_axis_var)
             {
-                case 0: { local.xtmp = global.reflect_pos_var-local.xtmp; d3d_transform_add_scaling(-1,1,1); break; }
-                case 1: { local.ytmp = global.reflect_pos_var-local.ytmp; d3d_transform_add_scaling(1,-1,1); break; }
-                case 2: { local.ztmp = global.reflect_pos_var-local.ztmp; d3d_transform_add_scaling(1,1,-1); break; }
+                case 0: { local.xtmp = (global.reflect_pos_var*2)-local.xtmp; d3d_transform_add_scaling(-1,1,1); break; }
+                case 1: { local.ytmp = (global.reflect_pos_var*2)-local.ytmp; d3d_transform_add_scaling(1,-1,1); break; }
+                case 2: { local.ztmp = (global.reflect_pos_var*2)-local.ztmp; d3d_transform_add_scaling(1,1,-1); break; }
             }
         }
         // Transformations

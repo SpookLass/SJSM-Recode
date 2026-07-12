@@ -58,18 +58,20 @@ Argument 0: Room Variable (same for all rooms)
         room_instance_add(argument0,local.xtmp,local.ytmp,spawn_wall_vert_obj);
     }
 // Lab
-    room_instance_add(argument0,80,80,school_locker_obj);
-    room_instance_add(argument0,112,80,school_desk_obj);
-    room_instance_add(argument0,144,80,school_clock_obj);
-    room_instance_add(argument0,176,80,school_stickynote_obj);
-    room_instance_add(argument0,208,80,school_poster_01_obj);
-    room_instance_add(argument0,240,80,school_poster_02_obj);
-    room_instance_add(argument0,272,80,school_poster_03_obj);
-    room_instance_add(argument0,304,80,school_poster_04_obj);
-    room_instance_add(argument0,336,80,school_poster_05_obj);
-    room_instance_add(argument0,368,80,school_poster_06_obj);
-    room_instance_add(argument0,400,80,school_chalk_obj);
+    room_instance_add(argument0,80,80,asy_pole_obj);
+    room_instance_add(argument0,112,80,asy_body_obj);
+    room_instance_add(argument0,144,80,asy_table_obj);
+    room_instance_add(argument0,176,80,asy_bed_obj);
+    room_instance_add(argument0,208,80,asy_matt_man_01_obj);
+    room_instance_add(argument0,240,80,asy_bed_hole_obj);
+    room_instance_add(argument0,272,80,asy_baby_obj);
+    room_instance_add(argument0,304,80,asy_matt_man_02_obj);
+    room_instance_add(argument0,336,80,asy_wood_wall_obj);
+    room_instance_add(argument0,368,80,asy_womb_wall_obj);
+    room_instance_add(argument0,400,80,asy_cage_obj);
+/*
     room_instance_add(argument0,432,80,school_desk_teacher_obj);
     room_instance_add(argument0,464,80,school_window_obj);
     room_instance_add(argument0,496,80,school_blind_obj);
     room_instance_add(argument0,528,80,ghost_obj);
+*/

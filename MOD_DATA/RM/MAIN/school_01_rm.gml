@@ -7,7 +7,7 @@ room_set_code
     argument0,'
     // Name
     ini_open("lang_"+global.lang_var+".ini");
-    global.rm_name_var = ini_read_string("ROOM","argument0","ROOM_school")+" 1"
+    global.rm_name_var = ini_read_string("ROOM","school","ROOM_school")+" 1"
     ini_close();
     // Spawns
     global.spawn_len_var = 7;
@@ -44,6 +44,12 @@ room_set_code
     global.draw_3d_var = true;
     // Doors
     spawn_create_scr(true,false,false,school_door_obj,spawn_door_trig_obj);
+    with spawn_arr[1,4] { rm_var = school_class_01_rm; }
+    with spawn_arr[2,4] { lock_var = true; }
+    with spawn_arr[3,4] { rm_var = school_class_02_rm; }
+    with spawn_arr[4,4] { rm_var = school_class_04_rm; }
+    with spawn_arr[5,4] { rm_var = school_class_03_rm; }
+    with spawn_arr[6,4] { rm_var = school_02_rm; }
 ');
 // Effects
 room_instance_add(argument0,0,0,school_color_obj);

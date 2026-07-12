@@ -17,5 +17,4 @@ object_event_add
     w_var = 12;
     h_var = 12;
     dist_var = 0.2;
-    direction = 180;
 ');

@@ -56,9 +56,9 @@ object_event_add
     {
         switch (global.reflect_axis_var)
         {
-            case 0: { d3d_transform_add_scaling(-1,1,1); d3d_transform_add_translation(global.reflect_pos_var,0,0); break; }
-            case 1: { d3d_transform_add_scaling(1,-1,1); d3d_transform_add_translation(0,global.reflect_pos_var,0); break; }
-            case 2: { d3d_transform_add_scaling(1,1,-1); d3d_transform_add_translation(0,0,global.reflect_pos_var); break; }
+            case 0: { d3d_transform_add_scaling(-1,1,1); d3d_transform_add_translation(global.reflect_pos_var*2,0,0); break; }
+            case 1: { d3d_transform_add_scaling(1,-1,1); d3d_transform_add_translation(0,global.reflect_pos_var*2,0); break; }
+            case 2: { d3d_transform_add_scaling(1,1,-1); d3d_transform_add_translation(0,0,global.reflect_pos_var*2); break; }
         }
     }
     // Draw
@@ -74,12 +74,12 @@ object_event_add
     d3d_draw_wall(local.width,local.length,h_var,local.width,-local.length,0,tex_02_var,1,1);
     d3d_draw_wall(-local.width,local.length,h_var,-local.width,-local.length,0,tex_02_var,1,1);*/
     // Inner
-        d3d_draw_floor(local.width-leg_w_var,local.length-leg_w_var,h_var-leg_w_var,-local.width,-local.length+leg_w_var,h_var-leg_w_var,tex_02_var,1,1);
+        d3d_draw_floor(-local.width,-local.length+leg_w_var,h_var-leg_w_var,local.width-leg_w_var,local.length-leg_w_var,h_var-leg_w_var,tex_02_var,1,1);
         d3d_draw_wall(local.width-leg_w_var,-local.length+leg_w_var,0,-local.width,-local.length+leg_w_var,h_var-leg_w_var,tex_02_var,1,-0.96875);
         d3d_draw_wall(local.width-leg_w_var,local.length-leg_w_var,0,-local.width,local.length-leg_w_var,h_var-leg_w_var,tex_02_var,1,-0.96875);
         d3d_draw_wall(local.width-leg_w_var,local.length-leg_w_var,0,local.width-leg_w_var,-local.length+leg_w_var,h_var-leg_w_var,tex_02_var,1,-0.96875);
     // Outer
-        d3d_draw_floor(local.width,local.length,h_var,-local.width,-local.length,h_var,tex_var,1,1);
+        d3d_draw_floor(-local.width,-local.length,h_var,local.width,local.length,h_var,tex_var,1,1);
         d3d_draw_wall(local.width,-local.length,h_var,-local.width,-local.length,0,tex_02_var,1,1);
         d3d_draw_wall(local.width,local.length,h_var,-local.width,local.length,0,tex_02_var,1,1);
         d3d_draw_wall(local.width,local.length,h_var,local.width,-local.length,0,tex_02_var,1,1);

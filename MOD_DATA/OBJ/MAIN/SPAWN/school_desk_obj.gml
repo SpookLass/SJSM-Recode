@@ -57,9 +57,9 @@ object_event_add
     {
         switch (global.reflect_axis_var)
         {
-            case 0: { d3d_transform_add_scaling(-1,1,1); d3d_transform_add_translation(global.reflect_pos_var,0,0); break; }
-            case 1: { d3d_transform_add_scaling(1,-1,1); d3d_transform_add_translation(0,global.reflect_pos_var,0); break; }
-            case 2: { d3d_transform_add_scaling(1,1,-1); d3d_transform_add_translation(0,0,global.reflect_pos_var); break; }
+            case 0: { d3d_transform_add_scaling(-1,1,1); d3d_transform_add_translation(global.reflect_pos_var*2,0,0); break; }
+            case 1: { d3d_transform_add_scaling(1,-1,1); d3d_transform_add_translation(0,global.reflect_pos_var*2,0); break; }
+            case 2: { d3d_transform_add_scaling(1,1,-1); d3d_transform_add_translation(0,0,global.reflect_pos_var*2); break; }
         }
     }
     // Draw
@@ -79,8 +79,8 @@ object_event_add
     d3d_draw_wall(-3.5,5,9,-3.5,-5,7.5,tex_03_var,1,1);*/
     d3d_draw_block(3.5,5,9,-3.5,-5,7.5,tex_03_var,1,1);
     // Top
-    d3d_draw_floor(4.5,6,9.5,-4.5,-6,9.5,tex_var,1,1);
-    d3d_draw_floor(4.5,6,9,-4.5,-6,9,tex_var,1,1);
+    d3d_draw_floor(-4.5,-6,9.5,4.5,6,9.5,tex_var,1,1);
+    d3d_draw_floor(-4.5,-6,9,4.5,6,9,tex_var,1,1);
     d3d_draw_wall(4.5,-6,9.5,-4.5,-6,9,tex_03_var,1,1);
     d3d_draw_wall(4.5,6,9.5,-4.5,6,9,tex_03_var,1,1);
     d3d_draw_wall(4.5,6,9.5,4.5,-6,9,tex_03_var,1,1);

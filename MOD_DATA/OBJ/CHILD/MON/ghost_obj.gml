@@ -2,7 +2,7 @@
 object_set_depth(argument0,-3);
 object_set_mask(argument0,noone);
 object_set_parent(argument0,kidna_obj);
-object_set_persistent(argument0,true);
+object_set_persistent(argument0,false);
 object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
@@ -10,6 +10,14 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,1,'
     snd_len_var = 4;
+    // Assets
+    tex_var = sprite_get_texture(ghost_spr,irandom(sprite_get_number(ghost_spr)-1));
+    if instance_exists(load_par_obj)
+    {
+        for (local.i=0; local.i<snd_len_var; local.i+=1;)
+        { snd_arr[local.i,0] = load_par_obj.snd_arr_var[local.i,0]; }
+        if global.diff_var == 0 { type_var = 0; do_snd_var = false; possess_var = false; instance_destroy(); exit; }
+    }
     // Translations
     ini_open("lang_"+global.lang_var+".ini");
     name_var = translate_mon_str_scr("ghost",global.name_var);
@@ -36,6 +44,8 @@ object_event_add
     seen_pitch_var = 15;
     delay_var = 0;
     spawn_var = -1;
+    reflect_var = false;
+    do_hurt_var = true;
     // Behavior
     if global.ringu_type_var == -1 { local.type = irandom(3); }
     else { local.type = global.ringu_type_var; }
@@ -54,13 +64,6 @@ object_event_add
             vanish_var = false;
             break;
         }
-    }
-    // Assets
-    tex_var = sprite_get_texture(ghost_spr,irandom(sprite_get_number(ghost_spr)-1));
-    if instance_exists(load_par_obj)
-    {
-        for (local.i=0; local.i<snd_len_var; local.i+=1;)
-        { snd_arr[local.i,0] = load_par_obj.snd_arr_var[local.i,0]; }
     }
 ');
 // Animation
@@ -86,4 +89,17 @@ object_event_add
     sub_var[1] = snd_arr[local.snd,2];
     // Disable (if not HD)
     if vanish_var { on_var = false; }
+');
+// Hurt event
+object_event_add
+(argument0,ev_other,ev_user4,'
+    event_inherited();
+    // Sound
+    local.snd = irandom(snd_len_var-1);
+    inst_var = fmod_snd_3d_play_scr(snd_arr[local.snd,0],x,y,z+snd_h_var);
+    if global.pitch_bend_var { fmod_inst_set_pitch_scr(inst_var,random_range(0.95,1.05)); }
+    sub_var[0] = snd_arr[local.snd,1];
+    sub_var[1] = snd_arr[local.snd,2];
+    // Disable
+    on_var = false;
 ');
