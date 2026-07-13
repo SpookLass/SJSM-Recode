@@ -380,7 +380,11 @@ object_event_add
         if instance_exists(note_var)
         {
             with note_var
-            { instance_destroy(); }
+            {
+                visible = false;
+                if read_var { event_user(3); }
+                trig_var.on_var = false;
+            }
         }
     }
 ');

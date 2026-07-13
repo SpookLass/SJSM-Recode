@@ -16,14 +16,14 @@ room_set_code
     global.spawn_arr[0,1] = 304;
     global.spawn_arr[0,2] = 0;
     global.spawn_arr[0,3] = 0;
-    global.spawn_arr[1,0] = 1008;
-    global.spawn_arr[1,1] = 272;
+    global.spawn_arr[1,0] = 560;
+    global.spawn_arr[1,1] = 144;
     global.spawn_arr[1,2] = 0;
-    global.spawn_arr[1,3] = 180;
-    global.spawn_arr[2,0] = 560;
-    global.spawn_arr[2,1] = 144;
+    global.spawn_arr[1,3] = 270;
+    global.spawn_arr[2,0] = 1008;
+    global.spawn_arr[2,1] = 272;
     global.spawn_arr[2,2] = 0;
-    global.spawn_arr[2,3] = 270;
+    global.spawn_arr[2,3] = 180;
     // 3D Draw
     d3d_start();
     global.draw_3d_var = true;

@@ -50,7 +50,6 @@ object_event_add
     {
         par_var = other.id;
         z = other.z;
-        str_var = "Read";
         other.trig_var = id;
     }
     // Main type

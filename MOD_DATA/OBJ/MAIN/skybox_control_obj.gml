@@ -14,7 +14,7 @@ object_event_add
     if global.dh_var { local.night = (current_hour <= 5 || current_hour >= 19); }
     else { local.night = (current_hour <= 6 || current_hour >= 18); }
     // Skyboxes
-    if local.night || global.rm_count_var < 100 { instance_create(0,0,skybox_obj); } // Night
+    if local.night || ele_prog_scr(global.rm_count_var) <= 0 { instance_create(0,0,skybox_obj); } // Night
     else if current_hour > 6 || current_hour < 18 { instance_create(0,0,skybox_fake_obj); } // Day
     else { instance_create(0,0,skybox_dh_obj); } // Sunrise / Sunset
     instance_destroy();
