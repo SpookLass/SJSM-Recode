@@ -294,7 +294,7 @@ draw_load_scr("Loading config...");
             custom_arr_add_len_scr(0,1);
             custom_arr_set_scr(dupe_canon_const,local.dupe,-1,-1,-1); // Default (Canon)
             custom_arr_set_scr(dupe_never_const,local.dupe,0,-1,-1); // Easiest (Never)
-            custom_arr_set_scr(dupe_always_const,local.dupe,4,-1,-1); // Hardest (Always)
+            //custom_arr_set_scr(dupe_always_const,local.dupe,4,-1,-1); // Hardest (Always)
             custom_arr_set_scr(dupe_always_const,local.dupe,5,-1,-1); // :) (Always)
             custom_arr_set_scr(dupe_always_const,local.dupe,-1,-1,1); // OG (Always)
             custom_arr_set_scr(dupe_always_const,local.dupe,-1,-1,2); // HD (Always)

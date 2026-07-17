@@ -8,7 +8,7 @@ room_set_code
     argument0,'
     // Name
     ini_open("lang_"+global.lang_var+".ini");
-    global.rm_name_var = ini_read_string("ROOM","school","ROOM_school")+" 1"
+    global.rm_name_var = ini_read_string("ROOM","asy","ROOM_asy")+" 1"
     ini_close();
     // Spawns
     global.spawn_len_var = 2;
@@ -25,7 +25,7 @@ room_set_code
     global.draw_3d_var = true;
     // Doors
     spawn_create_scr(true,false,false,asy_door_obj,spawn_door_trig_obj);
-    with spawn_arr[1,4] { rm_var = test_spawn_rm; }
+    with spawn_arr[1,4] { rm_var = asy_02_rm; snd_len_var = 1; snd_arr[0] = door_m_02_snd; }
 ');
 // Effects
 room_instance_add(argument0,0,0,fog_01_obj);
@@ -127,9 +127,9 @@ room_instance_add(argument0,224,368,spawn_wall_flip_hor_obj);
 room_instance_add(argument0,272,320,spawn_wall_vert_obj);
 room_instance_add(argument0,208,352,spawn_wall_vert_obj);
 room_instance_add(argument0,272,384,spawn_wall_vert_obj);
+room_instance_add(argument0,592,320,spawn_wall_flip_vert_obj);
 room_instance_add(argument0,592,384,spawn_wall_vert_obj);
-room_instance_add(argument0,592,320,spawn_wall_vert_obj);
-room_instance_add(argument0,592,352,spawn_wall_vert_obj);
+room_instance_add(argument0,592,352,spawn_wall_flip_vert_obj);
 // Props
 room_instance_add(argument0,584,336,asy_pole_obj);
 room_instance_add(argument0,584,368,asy_pole_obj);

@@ -35,7 +35,7 @@ object_event_add(argument0,ev_step,ev_step_begin,'
                 // Keyboard
                 if global.input_key_arr[local.i,local.j] >= 1 
                 {
-                    if global.input_type_var[local.j] == 1 // Direct
+                    if global.input_type_var[local.j] == 1 && !global.pause_var // Direct
                     { global.input_arr[local.i,local.j] = keyboard_check_direct(global.input_key_arr[local.i,local.j]); }
                     else
                     {

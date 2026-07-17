@@ -272,10 +272,19 @@ object_event_add
                     {
                         if !hide_var
                         {
+                            local.xtmp = 54;
+                            if icon_spr_var > 0
+                            {
+                                local.sprid = 1;
+                                if dur_start_var-dur_var == 0 { local.sprid = 0; }
+                                else if dur_var == 1 { local.sprid = 2; }
+                                draw_spr_stretch_scr(icon_spr_var,local.sprid,local.xtmp,local.offset,36*local.hudscale,0,fa_left,fa_bottom);
+                                local.xtmp += 36*local.hudscale;
+                            }
                             local.str = name_var;
                             if global.mon_hud_var == 2 { local.str += ": "+string(dur_var); }
-                            draw_set_valign(fa_bottom);
-                            draw_str_shadow_scr(local.str,54,local.offset,0.5*local.hudscale,0.5*local.hudscale,other.scale_min_var,fa_left,fa_bottom,-2*local.hudscale,2*local.hudscale,make_color_rgb(30,0,50),c_yellow,1,0);
+                            draw_set_valign(fa_middle);
+                            draw_str_shadow_scr(local.str,local.xtmp,local.offset,0.5*local.hudscale,0.5*local.hudscale,other.scale_min_var,fa_left,fa_bottom,-2*local.hudscale,2*local.hudscale,make_color_rgb(30,0,50),c_yellow,1,0);
                             draw_set_valign(fa_top);
                             local.offset -= 36*local.hudscale;
                         }

@@ -38,6 +38,7 @@ object_event_add
     color_prio_var = 0;
     reflect_var = false;
     dead_rm_var = flesh_dead_rm;
+    kill_var = true;
     unlock_var = 1;
     // Damage
     dmg_var = 99999;
@@ -94,7 +95,7 @@ object_event_add
     {
         bg_var = bg_add_scr(flesh_bg_path,false,false);
         // Textures
-        wall_bg_var = bg_add_scr(mad_wall_bg_path,false,false);
+        wall_bg_var = bg_add_scr(mad_trim_bg_path,false,false);
         floor_bg_var = bg_add_scr(mad_floor_bg_path,false,false);
         ceil_bg_var = bg_add_scr(mad_ceil_bg_path,false,false);
         light_wall_spr_var = spr_add_scr(flesh_light_wall_spr_path,2,false,false,0,0);

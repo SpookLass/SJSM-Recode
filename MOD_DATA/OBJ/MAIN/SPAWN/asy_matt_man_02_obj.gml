@@ -24,6 +24,7 @@ object_event_add
     h_var = 32;
     radius_var = 3;
     color_var = true;
+    direction = 180;
     // Collisions
     coll_var[0] = asy_matt_man_02_coll[0];
     coll_var[1] = asy_matt_man_02_coll[1];

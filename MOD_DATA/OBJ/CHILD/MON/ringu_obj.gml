@@ -102,6 +102,7 @@ object_event_add
         if id != other.id && object_index == other.object_index
         {
             other.spr_var = spr_var;
+            other.icon_spr_var = icon_spr_var;
             for (local.i=0; local.i<snd_len_var; local.i+=1;)
             { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
             other.wake_snd_var[1] = wake_snd_var[1];
@@ -115,6 +116,7 @@ object_event_add
     if !local.loaded
     {
         spr_var = spr_add_scr(ringu_spr_path,6,false,false,0,0);
+        icon_spr_var = spr_add_scr(ringu_icon_spr_path,3,false,false,0,0);
         snd_arr[0,0] = snd_add_scr(ringu_01_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
         snd_arr[1,0] = snd_add_scr(ringu_02_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
         snd_arr[2,0] = snd_add_scr(ringu_03_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);

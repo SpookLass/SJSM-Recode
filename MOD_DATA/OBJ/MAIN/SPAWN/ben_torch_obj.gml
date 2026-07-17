@@ -1,0 +1,76 @@
+// Builtin Variables
+object_set_depth(argument0,-1);
+object_set_mask(argument0,noone);
+object_set_parent(argument0,prop_par_obj);
+object_set_persistent(argument0,false);
+object_set_solid(argument0,false);
+object_set_sprite(argument0,noone);
+object_set_visible(argument0,true);
+// Collisions
+globalvar ben_torch_coll;
+ben_torch_coll[1] = 14;
+ben_torch_coll[2] = 6;
+ben_torch_coll[3] = 6;
+ben_torch_coll[0] = prop_to_coll_scr(7,'',ben_torch_coll[2],ben_torch_coll[3],ben_torch_coll[1]);
+// Create event
+object_event_add
+(argument0,ev_create,0,'
+    snap_var = 1;
+    if instance_exists(load_par_obj)
+    { store_tex_var = background_get_texture(load_par_obj.bg_arr_var[9,0]); }
+    event_inherited();
+    solid_var = true;
+    w_var = 6;
+    h_var = 14;
+    l_var = 6;
+    type_var = 7;
+    store_tex_02_var = white_bg_tex;
+    tex_02_var = store_tex_02_var;
+    tone_var = c_black;
+    // Collisions
+    coll_var[0] = ben_torch_coll[0];
+    coll_var[1] = ben_torch_coll[1];
+    coll_var[2] = ben_torch_coll[2];
+    coll_var[3] = ben_torch_coll[3];
+    // Flame
+    on_var = true;
+    with instance_create(x,y,ben_flame_obj)
+    {
+        par_var = other.id;
+        z = other.z+other.h_var+1;
+    }
+');
+// Draw Event
+object_event_add
+(argument0,ev_draw,0,'
+    d3d_transform_set_identity();
+    // Check if billboard
+    d3d_transform_add_rotation_z(direction);
+    d3d_transform_add_translation(x,y,z);
+    // Reflection handling
+    if global.reflect_var
+    {
+        switch (global.reflect_axis_var)
+        {
+            case 0: { d3d_transform_add_scaling(-1,1,1); d3d_transform_add_translation(global.reflect_pos_var*2,0,0); break; }
+            case 1: { d3d_transform_add_scaling(1,-1,1); d3d_transform_add_translation(0,global.reflect_pos_var*2,0); break; }
+            case 2: { d3d_transform_add_scaling(1,1,-1); d3d_transform_add_translation(0,0,global.reflect_pos_var*2); break; }
+        }
+    }
+    // Draw
+    draw_set_alpha(image_alpha);
+    local.width = w_var/2;
+    local.length = l_var/2;
+    local.tex_height = tex_h_var*sign(h_var);
+    draw_set_color(image_blend);
+    d3d_draw_wall(local.width,-local.length,h_var,-local.width,-local.length,0,tex_var,tex_w_var,local.tex_height);
+    d3d_draw_wall(local.width,local.length,h_var,-local.width,local.length,0,tex_var,tex_w_var,local.tex_height);
+    d3d_draw_wall(-local.width,local.length,h_var,-local.width,-local.length,0,tex_var,tex_l_var,local.tex_height);
+    d3d_draw_wall(local.width,local.length,h_var,local.width,-local.length,0,tex_var,tex_l_var,local.tex_height);
+    draw_set_color(color_mult_scr(image_blend,tone_var));
+    d3d_draw_floor(local.width,local.length,0,-local.width,-local.length,0,tex_02_var,tex_w_var,tex_l_var);
+    d3d_draw_floor(local.width,local.length,h_var,-local.width,-local.length,h_var,tex_02_var,tex_w_var,tex_l_var);
+    // Reset
+    d3d_transform_set_identity();
+    draw_set_color(c_white); draw_set_alpha(1);
+');

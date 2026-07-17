@@ -97,6 +97,7 @@ object_event_add
         {
             other.main_spr_var = main_spr_var;
             other.head_spr_var = head_spr_var;
+            other.icon_spr_var = icon_spr_var;
             other.bod_spr_var = bod_spr_var;
             other.hole_bg_var = hole_bg_var;
             for (local.i=0; local.i<snd_len_var; local.i+=1;)
@@ -113,6 +114,7 @@ object_event_add
         main_spr_var = spr_add_scr(bug_spr_path,8,false,false,0,0);
         head_spr_var = spr_add_scr(bug_head_spr_path,8,false,false,0,0);
         bod_spr_var = spr_add_scr(bug_bod_spr_path,7,false,false,0,0);
+        icon_spr_var = spr_add_scr(bug_icon_spr_path,3,false,false,0,0);
         hole_bg_var = bg_add_scr(bug_hole_bg_path,false,false);
         snd_arr[0,0] = snd_add_scr(bug_01_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
         snd_arr[1,0] = snd_add_scr(bug_02_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
@@ -262,6 +264,7 @@ object_event_add
         sprite_delete(main_spr_var);
         sprite_delete(head_spr_var);
         sprite_delete(bod_spr_var);
+        sprite_delete(icon_spr_var);
         background_delete(hole_bg_var);
         for (local.i=0; local.i<snd_len_var; local.i+=1;)
         { fmod_snd_free_scr(snd_arr[local.i,0]); }

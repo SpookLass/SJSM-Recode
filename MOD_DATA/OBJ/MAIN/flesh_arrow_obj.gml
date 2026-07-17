@@ -37,11 +37,17 @@ object_event_add
     // Special
     turn_rate_var = 0;
 ');
-// Create event
+// Room end event
 object_event_add
 (argument0,ev_other,ev_room_end,'
     event_inherited();
     if on_var { fmod_inst_stop_scr(inst_var); }
+');
+// Room start event
+object_event_add
+(argument0,ev_other,ev_room_start,'
+    event_inherited();
+    if on_var { event_user(0); }
 ');
 // Step Event
 object_event_add
@@ -60,7 +66,7 @@ object_event_add
 // Calculate Path
 object_event_add
 (argument0,ev_other,ev_user0,'
-    target_dir_var = point_direction(x,y,global.spawn_arr[1,0],global.spawn_arr[1,1]);
+    target_dir_var = point_direction(x,y,global.spawn_arr[global.unlock_var,0],global.spawn_arr[global.unlock_var,1]);
     with player_obj
     {
         if on_var && !dead_var

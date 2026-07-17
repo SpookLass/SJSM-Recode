@@ -93,6 +93,7 @@ object_event_add
         {
             other.new_spr_var = new_spr_var;
             other.old_spr_var = old_spr_var;
+            other.icon_spr_var = icon_spr_var;
             other.overlay_spr_var = overlay_spr_var;
             other.flesh_spr_var = flesh_spr_var;
             other.eff_spr_var = eff_spr_var;
@@ -110,6 +111,7 @@ object_event_add
     {
         new_spr_var = spr_add_scr(bab_spr_path,16,false,false,0,0);
         old_spr_var = spr_add_scr(bab_old_spr_path,11,false,false,0,0);
+        icon_spr_var = spr_add_scr(bab_icon_spr_path,3,false,false,0,0);
         overlay_spr_var = spr_add_scr(bab_dead_spr_path,2,false,false,0,0);
         flesh_spr_var = spr_add_scr(bab_flesh_spr_path,4,false,false,0,0);
         eff_spr_var = spr_add_scr(bab_eff_spr_path,4,false,false,0,0);
@@ -263,6 +265,7 @@ object_event_add
     {
         sprite_delete(new_spr_var);
         sprite_delete(old_spr_var);
+        sprite_delete(icon_spr_var);
         sprite_delete(overlay_spr_var);
         sprite_delete(flesh_spr_var);
         sprite_delete(eff_spr_var);

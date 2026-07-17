@@ -53,13 +53,15 @@ object_event_add
     anim_spd_var = 1;
     reflect_var = -1;
     unheal_var = false;
+    heal_var = false;
     dmg_unbalance_var = true;
     // Teleport
     tp_type_var = 1;
     tp_off_var = 300;
     tp_dist_min_var = 0;
     tp_dist_max_var = 200;
-    tp_seen_var = false;
+    respawn_alarm_var = 90;
+    respawn_alone_var = false;
     // Puke
     alarm_len_var = 9;
     alarm_ini_scr();
@@ -71,6 +73,7 @@ object_event_add
     puke_dmg_var = 10;
     puke_slow_var = 0;
     puke_turn_var = true;
+    puke_turn_alone_var = true;
     // Mark
     mark_seen_yaw_var = 30;
     mark_seen_pitch_var = 0;
@@ -102,7 +105,7 @@ object_event_add
         {
             seen_pitch_var = 30;
             mark_seen_pitch_var = 30;
-            seen_dist_var = 96;
+            seen_dist_var = 128; // 96
             seen_fade_var = true;
             dmg_min_var = 10;
             door_type_var = 0;
@@ -112,7 +115,6 @@ object_event_add
             goo_chance_var = 1;
             mark_start_var = -1;
             spd_base_var = 0.4;
-            tp_seen_var = true;
             puke_slow_var = 0.5;
             puke_alarm_02_var = 120;
             puke_alarm_03_var = 72;
@@ -120,9 +122,15 @@ object_event_add
             do_snd_var = true;
             loop_snd_var[0] = true;
             unheal_var = true;
+            heal_var = true;
             dmg_unbalance_var = false;
             loop_snd_dist_min_var = 32;
             loop_snd_dist_max_var = 200;
+            // Balance adjustments
+            respawn_alarm_var = 90;
+            respawn_alone_var = true;
+            tp_off_var = 320; // 384
+            tp_dist_max_var = 128; // 192
             // Silhouette
             sil_var = true;
             sil_type_var = 1; // Pure color
@@ -243,7 +251,15 @@ object_event_add
     with spooper_fetus_obj { if par_var == other.id { instance_destroy(); }}
     with spooper_door_obj { if par_var == other.id { instance_destroy(); }}
     with spooper_mark_obj { if par_var == other.id { instance_destroy(); }}
-    if unheal_var { with player_obj { unheal_var = 0; }}
+    if unheal_var
+    {
+        with player_obj
+        {
+            if other.heal_var && unheal_var > 0
+            { hp_var = median(0,hp_max_var,hp_var+unheal_var); } 
+            unheal_var = 0;
+        }
+    }
 ');
 // Room Start Event
 object_event_add
@@ -332,9 +348,7 @@ object_event_add
                 }
             }
         }
-        if local.start >= goo_start_var && frac_chance_scr(1,goo_chance_var)
-        { event_user(14); }
-        else
+        if local.start < goo_start_var || irandom(goo_chance_var-1)
         {
             on_var = false;
             set_motion_3d_scr(0,true);
@@ -398,14 +412,12 @@ object_event_add
             if !seen_fade_var || image_alpha <= 0
             {
                 image_alpha = 1;
-                if tp_seen_var { event_user(14); }
-                else
-                {
-                    on_var = false;
-                    set_motion_3d_scr(0,true);
-                    reset_alarm_scr();
-                    if do_snd_var { fmod_inst_stop_scr(loop_inst_var); }
-                }
+                on_var = false;
+                set_motion_3d_scr(0,true);
+                if do_snd_var { fmod_inst_stop_scr(loop_inst_var); }
+                if respawn_alarm_var > 0 && (instance_number(mon_par_obj) <= 1 || !respawn_alone_var)
+                { set_alarm_scr(0,respawn_alarm_var) }
+                else { reset_alarm_scr(); }
             }
         }
     }
@@ -471,13 +483,19 @@ object_event_add
         visible = frac_chance_scr(1,2);
     }
 ');
+// Delay Alarm
+object_event_add
+(argument0,ev_alarm,0,'
+    event_inherited();
+    event_user(14);
+');
 // Puke Alarm
 object_event_add
 (argument0,ev_alarm,8,'
     local.player = global.player_arr[irandom(global.player_len_var-1)];
     if !local.player.dead_var
     {
-        if puke_turn_var
+        if puke_turn_var && (instance_number(mon_par_obj) <= 1 || !puke_turn_alone_var)
         {
             with local.player
             {
@@ -525,7 +543,7 @@ object_event_add
             if cyl_coll_scr(x,y,z,coll_var[2],coll_var[1],other.x,other.y,other.z,other.atk_range_var,other.coll_var[1])
             {
                 // Turn
-                if other.puke_turn_var
+                if other.puke_turn_var && (instance_number(mon_par_obj) <= 1 || !other.puke_turn_alone_var)
                 {
                     turn_var = true;
                     turn_yaw_var = eye_yaw_var;
@@ -563,14 +581,12 @@ object_event_add
     }
     if local.success
     {
-        if tp_seen_var { event_user(14); }
-        else
-        {
-            on_var = false;
-            set_motion_3d_scr(0,true);
-            reset_alarm_scr();
-            if do_snd_var { fmod_inst_stop_scr(loop_inst_var); }
-        }
+        on_var = false;
+        set_motion_3d_scr(0,true);
+        if do_snd_var { fmod_inst_stop_scr(loop_inst_var); }
+        if respawn_alarm_var > 0 && (instance_number(mon_par_obj) <= 1 || !respawn_alone_var)
+        { set_alarm_scr(0,respawn_alarm_var) }
+        else { reset_alarm_scr(); }
     }
 ');
 // Teleport Event

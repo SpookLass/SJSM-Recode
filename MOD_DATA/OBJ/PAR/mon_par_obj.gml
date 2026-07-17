@@ -16,6 +16,7 @@ object_event_add
 (argument0,ev_create,2,'
     event_inherited();
     // Variables
+    if !variable_local_exists("icon_spr_var") { icon_spr_var = noone; }
     if !variable_local_exists("dur_var") { dur_var = -1; }
     if !variable_local_exists("boss_var") { boss_var = false; }
     if !variable_local_exists("intro_var") { intro_var = false; }

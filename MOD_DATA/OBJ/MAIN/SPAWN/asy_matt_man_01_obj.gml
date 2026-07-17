@@ -28,6 +28,7 @@ object_event_add
     h_var = 28;
     l_var = 12;
     type_var = 7; // I guess?
+    direction = 180;
     // Collisions
     coll_var[0] = asy_matt_man_01_coll[0];
     coll_var[1] = asy_matt_man_01_coll[1];

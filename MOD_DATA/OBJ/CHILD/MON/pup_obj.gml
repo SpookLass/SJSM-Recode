@@ -199,6 +199,7 @@ object_event_add
         {
             other.spr_base_var = spr_base_var;
             other.hurt_spr_var = hurt_spr_var;
+            other.icon_spr_var = icon_spr_var;
             for (local.i=0; local.i<snd_len_var; local.i+=1;)
             { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
             other.wake_snd_var[1] = wake_snd_var[1];
@@ -213,6 +214,7 @@ object_event_add
     {
         spr_base_var = spr_add_scr(pup_spr_path,4,false,false,0,0);
         hurt_spr_var = spr_add_scr(pup_down_spr_path,2,false,false,0,0);
+        icon_spr_var = spr_add_scr(pup_icon_spr_path,3,false,false,0,0);
         snd_arr[0,0] = snd_add_scr(pup_01_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
         snd_arr[1,0] = snd_add_scr(pup_02_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
         snd_arr[2,0] = snd_add_scr(pup_03_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
@@ -264,6 +266,7 @@ object_event_add
     {
         sprite_delete(spr_base_var);
         sprite_delete(hurt_spr_var);
+        sprite_delete(icon_spr_var);
         fmod_snd_free_scr(mus_snd_var);
         fmod_snd_free_scr(wake_snd_var[1]);
         fmod_snd_free_scr(laugh_snd_var[0]);

@@ -154,5 +154,7 @@ room_instance_add(argument0,160,464,rail_metal_vert_obj);
 room_instance_add(argument0,143,493,web_rand_obj);
 room_instance_add(argument0,202,452,web_rand_obj);
 room_instance_add(argument0,259,517,web_rand_obj);
+room_instance_add(argument0,320,464,torch_east_obj);
+room_instance_add(argument0,320,528,torch_east_obj);
 // Jumpscare
 room_instance_add(argument0,256,512,js_obj);

@@ -95,5 +95,9 @@ room_instance_add(argument0,560,336,wall_vert_obj);
 // Props
 room_instance_add(argument0,566,240,web_rand_obj);
 room_instance_add(argument0,465,199,web_rand_obj);
+room_instance_add(argument0,576,192,torch_north_obj);
+room_instance_add(argument0,592,208,torch_east_obj);
+room_instance_add(argument0,560,272,torch_west_obj);
+room_instance_add(argument0,592,272,torch_east_obj);
 // Jumpscare
 room_instance_add(argument0,528,224,js_obj);
