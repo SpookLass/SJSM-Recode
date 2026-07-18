@@ -114,6 +114,7 @@ object_event_add
     {
         if id != other.id && object_index == other.object_index
         {
+            other.icon_spr_var = icon_spr_var;
             other.main_mdl_var = main_mdl_var;
             other.zip_mdl_var = zip_mdl_var;
             other.mdl_var = other.zip_mdl_var;
@@ -130,6 +131,7 @@ object_event_add
     // If no existing assets were found, load them
     if !local.loaded
     {
+        icon_spr_var = spr_add_scr(body_icon_spr_path,4,false,false,0,0);
         spr_overlay_var = spr_add_scr(body_overlay_spr_path,4,false,false,0,0);
         spr_eff_var = spr_add_scr(body_eff_spr_path,8,false,false,0,0);
         main_mdl_var = mdl_add_scr(body_mon_mdl_path);
@@ -171,6 +173,7 @@ object_event_add
     with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
     if !local.bool
     {
+        sprite_delete(icon_spr_var);
         fmod_snd_free_scr(mus_snd_var);
         background_delete(bg_var);
         d3d_model_destroy(main_mdl_var);

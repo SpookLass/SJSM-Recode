@@ -227,6 +227,9 @@ object_event_add
             other.state_spr_var[0] = state_spr_var[0];
             other.state_spr_var[1] = state_spr_var[1];
             other.state_spr_var[2] = state_spr_var[2];
+            other.state_icon_spr_var[0] = state_icon_spr_var[0];
+            other.state_icon_spr_var[1] = state_icon_spr_var[1];
+            other.state_icon_spr_var[2] = state_icon_spr_var[2];
             other.spr_eff_var = spr_eff_var;
             other.spr_overlay_var = spr_overlay_var;
             for (local.i=0; local.i<snd_len_var; local.i+=1;)
@@ -247,6 +250,9 @@ object_event_add
         state_spr_var[0] = spr_add_scr(para_spr_path,6,false,false,0,0);
         state_spr_var[1] = spr_add_scr(para_open_spr_path,6,false,false,0,0);
         state_spr_var[2] = spr_add_scr(para_leech_spr_path,7,false,false,0,0);
+        state_icon_spr_var[0] = spr_add_scr(para_icon_spr_path,3,false,false,0,0);
+        state_icon_spr_var[1] = state_icon_spr_var[0];
+        state_icon_spr_var[2] = spr_add_scr(para_leech_icon_spr_path,3,false,false,0,0);
         spr_eff_var = spr_add_scr(para_eff_spr_path,19,false,false,0,0);
         spr_overlay_var = spr_add_scr(para_overlay_spr_path,3,false,false,0,0);
         snd_arr[0,0] = snd_add_scr(para_01_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
@@ -272,7 +278,8 @@ object_event_add
     alarm_ini_scr();
     // Defaults
     spd_base_var = state_spd_var[0];
-    spr_var = state_spr_var[0]
+    spr_var = state_spr_var[0];
+    icon_spr_var = state_icon_spr_var[0];
     spr_spd_var = state_spr_spd_var[0];
     dmg_var = state_dmg_var[0];
     dmg_alarm_var = state_dmg_alarm_var[0];
@@ -296,6 +303,8 @@ object_event_add
         sprite_delete(state_spr_var[0]);
         sprite_delete(state_spr_var[1]);
         sprite_delete(state_spr_var[2]);
+        sprite_delete(state_icon_spr_var[0]);
+        sprite_delete(state_icon_spr_var[2]);
         sprite_delete(spr_overlay_var);
         for (local.i=0; local.i<snd_len_var; local.i+=1;)
         { fmod_snd_free_scr(snd_arr[local.i,0]); }
@@ -469,6 +478,14 @@ object_event_add
                 }
                 if state_miniboss_var
                 {
+                    if fmod_snd_is_3d_scr(leech_snd_var[0])
+                    {
+                        inst_var = fmod_snd_3d_play_scr(leech_snd_var[0],x,y,z+snd_h_var);
+                        if global.pitch_bend_var { fmod_inst_set_pitch_scr(inst_var,random_range(0.95,1.05)); }
+                    }
+                    else { inst_var = fmod_snd_play_scr(leech_snd_var[0]); }
+                    sub_var[0] = leech_snd_var[1];
+                    sub_var[1] = leech_snd_var[2];
                     mus_prio_var = mb_mus_prio_const;
                     mus_snd_var = leech_mus_snd_var;
                     with mus_control_obj { event_user(0); }
@@ -545,7 +562,7 @@ object_event_add
         }
         if state_miniboss_var
         {
-            if fmod_snd_is_3d_scr(leech_snd_var[1])
+            if fmod_snd_is_3d_scr(leech_snd_var[0])
             {
                 inst_var = fmod_snd_3d_play_scr(leech_snd_var[0],x,y,z+snd_h_var);
                 if global.pitch_bend_var { fmod_inst_set_pitch_scr(inst_var,random_range(0.95,1.05)); }
@@ -563,7 +580,8 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user15,'
     spd_base_var = state_spd_var[state_var];
-    spr_var = state_spr_var[state_var]
+    spr_var = state_spr_var[state_var];
+    icon_spr_var = state_icon_spr_var[state_var];
     spr_spd_var = state_spr_spd_var[state_var];
     dmg_var = state_dmg_var[state_var];
     dmg_alarm_var = state_dmg_alarm_var[state_var];

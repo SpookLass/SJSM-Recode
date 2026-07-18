@@ -213,6 +213,7 @@ object_event_add
         if id != other.id && object_index == other.object_index
         {
             other.spr_var = spr_var;
+            other.icon_spr_var = icon_spr_var;
             other.mdl_01_var = mdl_01_var;
             other.mdl_02_var = mdl_02_var;
             other.bg_overlay_var = bg_overlay_var;
@@ -228,6 +229,7 @@ object_event_add
     if !local.loaded
     {
         spr_var = spr_add_scr(patient_spr_path,3,false,false,0,0); // vanilla_directory_const+"\3D\npc_6_tex.png"
+        icon_spr_var = spr_add_scr(patient_icon_spr_path,3,false,false,0,0);
         wake_snd_var[1] = snd_add_scr(patient_wake_snd_path,global.wake_3d_var,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
         rage_snd_var[0] = snd_add_scr(patient_wake_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
         switch theme_scr(global.patient_theme_var,global.theme_var,1,0,0,1)
@@ -252,6 +254,7 @@ object_event_add
     if !local.bool
     {
         sprite_delete(spr_var);
+        sprite_delete(icon_spr_var);
         background_delete(bg_overlay_var);
         d3d_model_destroy(mdl_01_var);
         d3d_model_destroy(mdl_02_var);

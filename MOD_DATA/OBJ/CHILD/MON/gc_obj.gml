@@ -123,6 +123,7 @@ object_event_add
             blood_spr_var = blood_kh_spr;
             atk_range_var = global.mon_coll[2];
             snd_dist_max_var = 300;
+            spawn_dist_02_var = 128;
             // mus_prio_var = mb_mus_prio_const; // Miniboss?
             stun_var = true;
             hurt_alarm_var = 30;

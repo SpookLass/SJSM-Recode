@@ -9,6 +9,7 @@ object_set_visible(argument0,true);
 // Create Event
 object_event_add
 (argument0,ev_create,0,'
+    event_inherited();
     // Translate
     ini_open("lang_"+global.lang_var+".ini");
     str_var[0] = "";

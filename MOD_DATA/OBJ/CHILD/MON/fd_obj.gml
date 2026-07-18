@@ -169,6 +169,7 @@ object_event_add
         if id != other.id && object_index == other.object_index
         {
             other.spr_var = spr_var;
+            other.icon_spr_var = icon_spr_var;
             other.meat_bg_var = meat_bg_var;
             other.eff_spr_01_var = eff_spr_01_var;
             other.eff_spr_02_var = eff_spr_02_var;
@@ -185,6 +186,7 @@ object_event_add
     if !local.loaded
     {
         spr_var = spr_add_scr(fd_spr_path,12,false,false,0,0);
+        icon_spr_var = spr_add_scr(fd_icon_spr_path,3,false,false,0,0);
         meat_bg_var = bg_add_scr(food_meat_bg_path,false,false);
         eff_spr_01_var = spr_add_scr(fd_eff_01_spr_path,3,false,false,0,0);
         eff_spr_02_var = spr_add_scr(fd_eff_02_spr_path,19,false,false,0,0);
@@ -212,6 +214,7 @@ object_event_add
     {
         fmod_snd_free_scr(mus_snd_var);
         sprite_delete(spr_var);
+        sprite_delete(icon_spr_var);
         background_delete(meat_bg_var);
         sprite_delete(eff_spr_01_var);
         sprite_delete(eff_spr_02_var);

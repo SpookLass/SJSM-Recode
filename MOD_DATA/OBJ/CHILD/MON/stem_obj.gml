@@ -189,6 +189,7 @@ object_event_add
     {
         if id != other.id && object_index == other.object_index
         {
+            other.icon_spr_var = icon_spr_var;
             other.bg_var = bg_var;
             other.mdl_01_var = mdl_01_var;
             other.mdl_02_var = mdl_02_var;
@@ -202,6 +203,7 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
+        icon_spr_var = spr_add_scr(stem_icon_spr_path,3,false,false,0,0);
         bg_var = bg_add_scr(stem_bg_path,false,false);
         mdl_01_var = mdl_add_scr(stem_01_mdl_path);
         mdl_02_var = mdl_add_scr(stem_02_mdl_path);
@@ -232,6 +234,7 @@ object_event_add
     with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
     if !local.bool
     { 
+        sprite_delete(icon_spr_var);
         background_delete(bg_var);
         d3d_model_destroy(mdl_01_var);
         d3d_model_destroy(mdl_02_var);

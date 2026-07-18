@@ -129,7 +129,7 @@ object_event_add
             // Balance adjustments
             respawn_alarm_var = 90;
             respawn_alone_var = true;
-            tp_off_var = 320; // 384
+            tp_off_var = 288; // 384
             tp_dist_max_var = 128; // 192
             // Silhouette
             sil_var = true;

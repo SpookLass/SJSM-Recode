@@ -260,6 +260,7 @@ object_event_add
     {
         if id != other.id && object_index == other.object_index
         {
+            other.icon_spr_var = icon_spr_var;
             other.spr_arr_var[0,0] = spr_arr_var[0,0];
             other.spr_arr_var[8,0] = spr_arr_var[8,0];
             other.do_turn_var = do_turn_var;
@@ -316,6 +317,7 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
+        icon_spr_var = spr_add_scr(killer_icon_spr_path,3,false,false,0,0);
         spr_arr_var[0,0] = spr_add_scr(killer_01_spr_path,15,false,false,0,0);
         spr_arr_var[8,0] = spr_add_scr(killer_sprint_01_spr_path,15,false,false,0,0);
         do_turn_var = !global.mem_save_var;
@@ -456,6 +458,7 @@ object_event_add
     with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
     if !local.bool
     {
+        sprite_delete(icon_spr_var);
         fmod_snd_free_scr(main_mus_snd_var);
         fmod_snd_free_scr(hide_mus_snd_var);
         for (local.i=0; local.i<drag_snd_len_var; local.i+=1;)

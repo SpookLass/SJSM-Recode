@@ -121,7 +121,7 @@ object_event_add
             local.sub_xdist = (view_wview[view_current]-(sub_offset_var*local.viewscale))/2;
             local.sub_ydist = 128*local.viewscale;
             local.sub_scale = local.hudscale*0.5*local.viewscale;
-            local.sub_w = sub_offset_var/(local.hudscale*0.5);
+            local.sub_w = 2*sub_offset_var/local.hudscale;
             local.sub_shadow_dist = 2*local.viewscale*local.hudscale;
             // Loop through monsters
             with enemy_par_obj

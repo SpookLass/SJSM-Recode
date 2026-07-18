@@ -12,7 +12,7 @@ local.ytmp = 48+((local.width+(local.edgewidth*2)-1)*32);
 // Doors
     // Broken
         local.ytmp1 = 48+((local.middle-local.dooroff)*32);
-    // Entrance
+    // Entrance / Exit
         local.ytmp2 = 48+(local.middle*32);
     // Broken
         local.ytmp3 = 48+((local.middle+local.dooroff)*32);
@@ -22,6 +22,9 @@ local.ytmp = 48+((local.width+(local.edgewidth*2)-1)*32);
         local.xtmp2 = 48+((local.halllength+local.middle)*32);
     // Daycare / Broken
         local.xtmp3 = 48+((local.halllength+local.middle+local.dooroff)*32);
+// Mark
+    local.xtmp4 = 32*(1+local.halllength+(local.edgewidth*0.75));
+    local.ytmp4 = 32*(1+local.edgewidth+(local.width*0.5));
 // Load
 room_set_code
 (
@@ -72,6 +75,11 @@ room_set_code
     global.spawn_arr[9,1] = '+string(local.ytmp3)+';
     global.spawn_arr[9,2] = 0;
     global.spawn_arr[9,3] = 180;
+    // Mark Array
+    global.mark_len_var = 1;
+    global.mark_arr[0,0] = '+string(local.xtmp4)+';
+    global.mark_arr[0,1] = '+string(local.ytmp4)+';
+    global.mark_arr[0,2] = 0;
     // 3D Draw
     d3d_start();
     global.draw_3d_var = true;
@@ -88,6 +96,9 @@ for (local.i=0; local.i<8; local.i+=1;)
 room_set_view(argument0,0,true,0,0,1280,720,0,0,1280,720,32,32,-1,-1,noone);
 // Effects
     room_instance_add(argument0,0,0,fog_big_obj);
+// Blood
+local.bloodxtmp = local.xtmp;
+local.bloodytmp = local.ytmp2;
 // Floors and ceilings
     local.ytmp = 48+(local.middle*32);
     for (local.i=0; local.i<local.halllength; local.i+=1;)
@@ -118,8 +129,12 @@ room_set_view(argument0,0,true,0,0,1280,720,0,0,1280,720,32,32,-1,-1,noone);
             local.ytmp = 48+((local.j+local.edgewidth)*32);
             room_instance_add(argument0,local.xtmp1,local.ytmp,spawn_floor_obj);
             room_instance_add(argument0,local.xtmp1,local.ytmp,spawn_ceil_2high_obj);
-            room_instance_add(argument0,local.xtmp2,local.ytmp,spawn_floor_obj);
             room_instance_add(argument0,local.xtmp2,local.ytmp,spawn_ceil_2high_obj);
+            local.dist = point_distance(local.xtmp2,local.ytmp,local.bloodxtmp,local.bloodytmp)+random_range(-32,32);
+            local.blood = median(0,1,1-floor(local.dist/96));
+            if local.blood
+            { room_instance_add(argument0,local.xtmp2,local.ytmp,mad_blood_floor_obj); }
+            else { room_instance_add(argument0,local.xtmp2,local.ytmp,spawn_floor_obj); }
         }
     }
 // Walls
@@ -149,9 +164,7 @@ room_set_view(argument0,0,true,0,0,1280,720,0,0,1280,720,32,32,-1,-1,noone);
             room_instance_add(argument0,local.xtmp,local.ytmp1,spawn_wall_high_hor_obj);
             room_instance_add(argument0,local.xtmp,local.ytmp1,mad_trim_up_high_hor_obj);
             room_instance_add(argument0,local.xtmp,local.ytmp2,spawn_wall_high_hor_obj);
-            
             room_instance_add(argument0,local.xtmp,local.ytmp2,mad_trim_up_high_hor_obj);
-            
         }
         local.ytmp1 = 32*(1+local.edgewidth);
         local.ytmp2 = 32*(1+local.width+local.edgewidth);
@@ -173,13 +186,10 @@ room_set_view(argument0,0,true,0,0,1280,720,0,0,1280,720,32,32,-1,-1,noone);
         for (local.i=0; local.i<local.width+(local.edgewidth*2); local.i+=1;)
         {
             local.ytmp = 48+(local.i*32);
-            if local.i == local.middle || local.i == local.middle-local.dooroff || local.i == local.middle+local.dooroff
-            { room_instance_add(argument0,local.xtmp2,local.ytmp,mad_trim_door_vert_obj); }
-            else { room_instance_add(argument0,local.xtmp2,local.ytmp,mad_trim_down_vert_obj); }
             if local.i == local.middle
             {
                 room_instance_add(argument0,local.xtmp1,local.ytmp,spawn_wall_doorway_vert_obj);
-                room_instance_add(argument0,local.xtmp1,local.ytmp,mad_trim_doorframe_vert_obj);
+                room_instance_add(argument0,local.xtmp1,local.ytmp,fake_wall_vert_obj); // mad_trim_doorframe_vert_obj
             }
             else
             {
@@ -187,8 +197,38 @@ room_set_view(argument0,0,true,0,0,1280,720,0,0,1280,720,32,32,-1,-1,noone);
                 room_instance_add(argument0,local.xtmp1,local.ytmp,mad_trim_down_vert_obj);
             }
             room_instance_add(argument0,local.xtmp1,local.ytmp,mad_trim_up_high_vert_obj);
-            room_instance_add(argument0,local.xtmp2,local.ytmp,spawn_wall_high_vert_obj);
-            room_instance_add(argument0,local.xtmp2,local.ytmp,mad_trim_up_high_vert_obj);
+            local.dist = point_distance(local.xtmp2,local.ytmp,local.bloodxtmp,local.bloodytmp)+random_range(-32,32);
+            local.blood = median(0,2,2-floor(local.dist/64));
+            switch local.blood
+            {
+                case 2:
+                {
+                    if local.i == local.middle || local.i == local.middle-local.dooroff || local.i == local.middle+local.dooroff
+                    { room_instance_add(argument0,local.xtmp2,local.ytmp,mad_blood_trim_02_door_vert_obj); }
+                    else { room_instance_add(argument0,local.xtmp2,local.ytmp,mad_blood_trim_02_down_vert_obj); }
+                    room_instance_add(argument0,local.xtmp2,local.ytmp,mad_blood_wall_02_high_vert_obj);
+                    room_instance_add(argument0,local.xtmp2,local.ytmp,mad_blood_trim_02_up_high_vert_obj);
+                    break;
+                }
+                case 1:
+                {
+                    if local.i == local.middle || local.i == local.middle-local.dooroff || local.i == local.middle+local.dooroff
+                    { room_instance_add(argument0,local.xtmp2,local.ytmp,mad_blood_trim_01_door_vert_obj); }
+                    else { room_instance_add(argument0,local.xtmp2,local.ytmp,mad_blood_trim_01_down_vert_obj); }
+                    room_instance_add(argument0,local.xtmp2,local.ytmp,mad_blood_wall_01_high_vert_obj);
+                    room_instance_add(argument0,local.xtmp2,local.ytmp,mad_blood_trim_01_up_high_vert_obj);
+                    break;
+                }
+                default:
+                {
+                    if local.i == local.middle || local.i == local.middle-local.dooroff || local.i == local.middle+local.dooroff
+                    { room_instance_add(argument0,local.xtmp2,local.ytmp,mad_trim_door_vert_obj); }
+                    else { room_instance_add(argument0,local.xtmp2,local.ytmp,mad_trim_down_vert_obj); }
+                    room_instance_add(argument0,local.xtmp2,local.ytmp,spawn_wall_high_vert_obj);
+                    room_instance_add(argument0,local.xtmp2,local.ytmp,mad_trim_up_high_vert_obj);
+                    break;
+                }
+            }
         }
         local.xtmp1 = 32*(1+local.halllength+local.edgewidth);
         local.xtmp2 = 32*(1+local.halllength+local.width+local.edgewidth);
@@ -206,6 +246,10 @@ room_set_view(argument0,0,true,0,0,1280,720,0,0,1280,720,32,32,-1,-1,noone);
     local.ytmp = 32*(1+local.edgewidth+(local.width*0.5));
     local.xtmp = local.ytmp+(local.halllength*32);
     room_instance_add(argument0,local.xtmp,local.ytmp,mad_clock_big_obj);
+    local.ytmp = 48+(local.middle*32);
+    local.xtmp = 32*local.halllength;
+    room_instance_add(argument0,local.xtmp,local.ytmp,mad_line_obj);
+    room_instance_add(argument0,local.xtmp,local.ytmp,mad_trig_obj);
     local.xtmp1 = 32*(1+local.halllength);
     local.ytmp1 = 32;
     local.xtmp2 = local.xtmp1+((local.width+(local.edgewidth*2))*32);

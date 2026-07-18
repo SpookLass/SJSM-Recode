@@ -213,6 +213,7 @@ object_event_add
         {
             other.close_spr_var = close_spr_var;
             other.open_spr_var = open_spr_var;
+            other.icon_spr_var = icon_spr_var;
             other.deer_idle_spr_var = deer_idle_spr_var;
             other.deer_spr_var = deer_spr_var;
             other.deer_dead_spr_var = deer_dead_spr_var;
@@ -237,6 +238,7 @@ object_event_add
     {
         close_spr_var = spr_add_scr(dl_spr_path,4,false,false,0,0);
         open_spr_var = spr_add_scr(dl_open_spr_path,4,false,false,0,0);
+        icon_spr_var = spr_add_scr(dl_icon_spr_path,4,false,false,0,0);
         snd_arr[0,0] = snd_add_scr(dl_01_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
         snd_arr[1,0] = snd_add_scr(dl_02_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
         snd_arr[2,0] = snd_add_scr(dl_03_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
@@ -278,6 +280,7 @@ object_event_add
     {
         sprite_delete(open_spr_var);
         sprite_delete(close_spr_var);
+        sprite_delete(icon_spr_var);
         sprite_delete(deer_idle_spr_var);
         sprite_delete(deer_spr_var);
         sprite_delete(deer_dead_spr_var);

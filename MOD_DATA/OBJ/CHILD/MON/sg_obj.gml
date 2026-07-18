@@ -124,6 +124,7 @@ object_event_add
     {
         if id != other.id && object_index == other.object_index
         {
+            other.icon_spr_var = icon_spr_var;
             other.bg_var = bg_var;
             other.overlay_bg_var = overlay_bg_var;
             for (local.i=0; local.i<snd_len_var; local.i+=1;)
@@ -139,6 +140,7 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
+        icon_spr_var = spr_add_scr(sg_icon_spr_path,3,false,false,0,0);
         bg_var = bg_add_scr(sg_bg_path,false,false);
         overlay_bg_var = bg_add_scr(vignette_bg_path,false,false);
         snd_arr[0,0] = snd_add_scr(sg_01_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
@@ -172,6 +174,7 @@ object_event_add
     with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
     if !local.bool
     {
+        sprite_delete(icon_spr_var);
         background_delete(bg_var);
         background_delete(overlay_bg_var);
         fmod_snd_free_scr(mus_snd_var);
