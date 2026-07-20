@@ -435,7 +435,7 @@ draw_load_scr("Loading config...");
     // Elevator Type
         // Main
             /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Has Descriptions*/
-            local.ele_type = custom_add_scr("ele_type","ele_type","ele_type",true,custom_enum_const,0,2,true,local.rm,true);
+            local.ele_type = custom_add_scr("ele_type","ele_type","ele_type",true,custom_enum_const,0,2,true,local.rm,false);
             custom_add_label_scr(local.ele_type,0,"1",false,""); /*Setting ID, Label ID, Label, Translate, Description*/
             custom_add_label_scr(local.ele_type,1,"2",false,"");
             custom_add_label_scr(local.ele_type,2,"3",false,"");

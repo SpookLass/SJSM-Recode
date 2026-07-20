@@ -137,6 +137,7 @@ object_event_add
     {
         if id != other.id && object_index == other.object_index
         {
+            other.icon_spr_var = icon_spr_var;
             other.main_spr_var = main_spr_var;
             other.rise_spr_var = rise_spr_var;
             other.atk_spr_var = atk_spr_var;
@@ -158,6 +159,7 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
+        icon_spr_var = spr_add_scr(wc_icon_spr_path,3,false,false,0,0);
         main_spr_var = spr_add_scr(wc_spr_path,15,false,false,0,0);
         rise_spr_var = spr_add_scr(wc_rise_spr_path,18,false,false,0,0);
         atk_spr_var = spr_add_scr(wc_atk_spr_path,10,false,false,0,0);
@@ -195,6 +197,7 @@ object_event_add
     with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
     if !local.bool
     {
+        sprite_delete(icon_spr_var);
         sprite_delete(main_spr_var);
         sprite_delete(rise_spr_var);
         sprite_delete(atk_spr_var);

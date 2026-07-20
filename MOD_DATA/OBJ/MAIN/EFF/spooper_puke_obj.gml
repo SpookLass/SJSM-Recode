@@ -56,7 +56,7 @@ object_event_add
     if local.success
     {
         if local.dead && !global.debug_var && !possess_var
-        { kill_scr(atk_target_var,par_var.object_index,dead_rm_var,kill_var); }
+        { kill_scr(player_var,par_var.object_index,dead_rm_var,kill_var); }
         else
         {
             fmod_snd_play_scr(snd_var);

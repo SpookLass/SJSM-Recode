@@ -275,10 +275,7 @@ object_event_add
                             local.xtmp = 54;
                             if icon_spr_var > 0
                             {
-                                local.sprid = 1;
-                                if dur_start_var-dur_var == 0 { local.sprid = 0; }
-                                else if dur_var == 1 { local.sprid = 2; }
-                                draw_spr_stretch_scr(icon_spr_var,local.sprid,local.xtmp,local.offset,36*local.hudscale,0,fa_left,fa_bottom);
+                                draw_spr_stretch_scr(icon_spr_var,icon_spr_id_var,local.xtmp,local.offset,36*local.hudscale,0,fa_left,fa_bottom);
                                 local.xtmp += 36*local.hudscale;
                             }
                             local.str = name_var;
@@ -320,7 +317,8 @@ object_event_add
                     else { local.per = hp_var/hp_max_var; }
                     local.per = median(0,1,local.per);
                     local.color = boss_color_var;
-                    local.icon = boss_icon_var;
+                    local.icon = icon_spr_var;
+                    local.sprid = icon_spr_id_var;
                 }
                 draw_spr_stretch_scr(bar_boss_spr,0,-47-(54*local.hudscale),34+(23*local.hudscale),308,0,fa_right,fa_top);
                 // Bar
@@ -329,7 +327,7 @@ object_event_add
                 draw_background_part_ext(bar_boss_hp_bg,0,0,local.width,27,local.xtmp,(34+(28*local.hudscale))*local.viewscale,local.viewscale*local.hudscale,local.viewscale*local.hudscale,local.color,1);
                 // Icon
                 draw_spr_stretch_scr(bar_boss_icon_spr,0,-37,34,69*local.hudscale,0,fa_right,fa_top);
-                if local.icon != noone { draw_spr_stretch_scr(local.icon,0,-37,34,69*local.hudscale,0,fa_right,fa_top); }
+                if local.icon != noone { draw_spr_stretch_scr(local.icon,local.sprid,-37,34,69*local.hudscale,0,fa_right,fa_top); }
             }
             // Debug text
             if global.debug_var && !global.hide_debug_var

@@ -118,7 +118,7 @@ object_event_add
     {
         title_01_scale_var = 240;
         title_spr_var = spr_add_scr(menu_title_spr_path,1,false,false,0,0);
-        rain_var = (current_hour <= 6 || current_hour >= 18);
+        rain_var = (global.clock_hour_var <= 6 || global.clock_hour_var >= 18);
         if rain_var // Night
         {
             bg_var = bg_add_scr(menu_bg_path,false,false);

@@ -2,11 +2,11 @@
 Argument 0: Room Variable (same for all rooms)
 */
 // Math!
-local.width = 11; // 7
+local.width = 9; // 7
 local.edgewidth = 2;
 local.halllength = 5;
 local.middle = round((local.width-1)/2)+local.edgewidth;
-local.dooroff = round(0.25*(local.width+1));
+local.dooroff = ceil(0.25*(local.width+1));
 local.xtmp = 48+((local.halllength+local.width+(local.edgewidth*2)-1)*32);
 local.ytmp = 48+((local.width+(local.edgewidth*2)-1)*32);
 // Doors
@@ -31,7 +31,8 @@ room_set_code
     argument0,'
     // Name
     ini_open("lang_"+global.lang_var+".ini");
-    global.rm_name_var = ini_read_string("ROOM","mad","ROOM_mad")+" 1"
+    global.rm_name_var = ini_read_string("ROOM","mad","ROOM_mad")+" 1";
+    local.broke = ini_read_string("UI","broke","UI_broke");
     ini_close();
     // Spawns
     global.spawn_len_var = 10;
@@ -39,36 +40,40 @@ room_set_code
     global.spawn_arr[0,1] = '+string(local.ytmp2)+';
     global.spawn_arr[0,2] = 0;
     global.spawn_arr[0,3] = 0;
-    global.spawn_arr[1,0] = '+string(local.xtmp1)+';
+    // Office
+    global.spawn_arr[1,0] = '+string(local.xtmp1)+'; 
     global.spawn_arr[1,1] = 48;
     global.spawn_arr[1,2] = 0;
     global.spawn_arr[1,3] = 270;
-    global.spawn_arr[2,0] = '+string(local.xtmp2)+';
+    // Daycare
+    global.spawn_arr[2,0] = '+string(local.xtmp3)+';
     global.spawn_arr[2,1] = 48;
     global.spawn_arr[2,2] = 0;
     global.spawn_arr[2,3] = 270;
+    // Space
     global.spawn_arr[3,0] = '+string(local.xtmp3)+';
-    global.spawn_arr[3,1] = 48;
+    global.spawn_arr[3,1] = '+string(local.ytmp)+';
     global.spawn_arr[3,2] = 0;
-    global.spawn_arr[3,3] = 270;
-    global.spawn_arr[4,0] = '+string(local.xtmp1)+';
-    global.spawn_arr[4,1] = '+string(local.ytmp)+';
+    global.spawn_arr[3,3] = 90;
+    // Exit
+    global.spawn_arr[4,0] = '+string(local.xtmp)+';
+    global.spawn_arr[4,1] = '+string(local.ytmp2)+';
     global.spawn_arr[4,2] = 0;
-    global.spawn_arr[4,3] = 90;
+    global.spawn_arr[4,3] = 180;
     global.spawn_arr[5,0] = '+string(local.xtmp2)+';
-    global.spawn_arr[5,1] = '+string(local.ytmp)+';
+    global.spawn_arr[5,1] = 48;
     global.spawn_arr[5,2] = 0;
-    global.spawn_arr[5,3] = 90;
-    global.spawn_arr[6,0] = '+string(local.xtmp3)+';
+    global.spawn_arr[5,3] = 270;
+    global.spawn_arr[6,0] = '+string(local.xtmp1)+';
     global.spawn_arr[6,1] = '+string(local.ytmp)+';
     global.spawn_arr[6,2] = 0;
     global.spawn_arr[6,3] = 90;
-    global.spawn_arr[7,0] = '+string(local.xtmp)+';
-    global.spawn_arr[7,1] = '+string(local.ytmp1)+';
+    global.spawn_arr[7,0] = '+string(local.xtmp2)+';
+    global.spawn_arr[7,1] = '+string(local.ytmp)+';
     global.spawn_arr[7,2] = 0;
-    global.spawn_arr[7,3] = 180;
+    global.spawn_arr[7,3] = 90;
     global.spawn_arr[8,0] = '+string(local.xtmp)+';
-    global.spawn_arr[8,1] = '+string(local.ytmp2)+';
+    global.spawn_arr[8,1] = '+string(local.ytmp1)+';
     global.spawn_arr[8,2] = 0;
     global.spawn_arr[8,3] = 180;
     global.spawn_arr[9,0] = '+string(local.xtmp)+';
@@ -85,6 +90,19 @@ room_set_code
     global.draw_3d_var = true;
     // Doors
     spawn_create_scr(true,false,false,mad_door_obj,spawn_door_trig_obj);
+    with spawn_arr[2,4] { rm_var = mad_03_rm; snd_len_var = 1; snd_arr[0] = door_m_02_snd; }
+    for (local.i=5; local.i<global.spawn_len_var; local.i+=1;)
+    {
+        with spawn_arr[local.i,4] { txt_lock_var = local.broke; lock_var = true; }
+        with spawn_arr[local.i,5]
+        {
+            if instance_exists(load_par_obj)
+            {
+                store_tex_var = background_get_texture(load_par_obj.bg_arr_var[17,0]);
+                tex_var = store_tex_var;
+            }
+        }
+    }
 ');
 // Room settings
 room_set_width(argument0,(2+local.halllength+local.width+(local.edgewidth*2))*32);

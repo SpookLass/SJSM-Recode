@@ -176,6 +176,7 @@ object_event_add
     {
         if id != other.id && object_index == other.object_index
         {
+            other.icon_spr_var = icon_spr_var;
             other.bg_var = bg_var;
             other.js_bg_01_var = js_bg_01_var;
             other.js_bg_02_var = js_bg_02_var;
@@ -193,6 +194,7 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
+        icon_spr_var = spr_add_scr(lisa_icon_spr_path,3,false,false,0,0);
         bg_var = bg_add_scr(lisa_bg_path,false,false);
         js_bg_01_var = bg_add_scr(js_lisa_slime_01_bg_path,false,false);
         js_bg_02_var = bg_add_scr(js_slime_02_bg_path,false,false);
@@ -247,6 +249,7 @@ object_event_add
     with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
     if !local.bool
     {
+        sprite_delete(icon_spr_var);
         background_delete(bg_var);
         fmod_snd_free_scr(amb_mus_snd_var);
         fmod_snd_free_scr(chase_mus_snd_var);
@@ -274,6 +277,7 @@ object_event_add
         if local.start == start_var
         {
             hide_var = false;
+            icon_spr_id_var = 0;
             if fmod_snd_is_3d_scr(wake_snd_var[1])
             {
                 inst_var = fmod_snd_3d_play_scr(wake_snd_var[1],x,y,z+snd_h_var);

@@ -17,6 +17,7 @@ object_event_add
     event_inherited();
     // Variables
     if !variable_local_exists("icon_spr_var") { icon_spr_var = noone; }
+    if !variable_local_exists("icon_spr_id_var") { icon_spr_id_var = 0; }
     if !variable_local_exists("dur_var") { dur_var = -1; }
     if !variable_local_exists("boss_var") { boss_var = false; }
     if !variable_local_exists("intro_var") { intro_var = false; }
@@ -42,6 +43,12 @@ object_event_add
         {
             instance_destroy();
             exit;
+        }
+        switch dur_var
+        {
+            case 1: { icon_spr_id_var = 2; break; }
+            case dur_start_var: { icon_spr_id_var = 0; break; }
+            default: { icon_spr_id_var = 1; break; }
         }
     }
     hurt_var = false;

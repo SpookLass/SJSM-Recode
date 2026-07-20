@@ -49,9 +49,10 @@ object_event_add
     coll_var[2] = mad_clock_coll[2];
     coll_var[3] = mad_clock_coll[3];
     // Tick Tock
-    time_var = 39840;
+    second_var = 39840;
+    time_var = second_var;
     last_time_var = current_time;
-    last_second_var = current_second;
+    last_second_var = global.clock_second_var; // current_second
     alarm_var = 48; // 48
     real_var = true;
     alarm_len_var = 1;
@@ -67,7 +68,7 @@ object_event_add
 // Alarm
 object_event_add
 (argument0,ev_alarm,0,'
-    time_var = mod_scr(time_var+1,43200);
+    second_var = mod_scr(second_var+1,43200);
     tock_var = !tock_var;
     if tock_var
     {
@@ -87,10 +88,26 @@ object_event_add
     event_inherited();
     if real_var
     {
-        if last_second_var != current_second
+        switch global.time_type_var
         {
-            last_second_var = current_second;
-            last_time_var = current_time;
+            case 0:
+            {
+                time_var = current_fulltime*0.001; // global.clock_time_var
+                local.per = current_millisecond*0.001; // (current_time-last_time_var), global.clock_millisecond_var
+                second_var = current_second; // global.clock_second_var
+                break;
+            }
+            default:
+            {
+                time_var = mod_scr(global.game_time_var*0.001,43200);
+                local.per = (time_var mod 1);
+                second_var = mod_scr(floor(time_var),60);
+                break;
+            }
+        }
+        if last_second_var != second_var
+        {
+            last_second_var = second_var;
             tock_var = (last_second_var mod 2);
             if !global.pause_var
             {
@@ -105,13 +122,14 @@ object_event_add
                     tex_var = sprite_get_texture(spr_var,0);
                 }
             }
+            // last_time_var = current_time;
         }
-        local.per = (current_time-last_time_var)*0.001;
     }
     else
     {
         if global.pause_var { exit; }
         local.per = 1-(alarm_arr[0,0]/alarm_arr[0,1]);
+        time_var = second_var+local.per;
     }
     if tock_var { local.per = 1-local.per; }
     spr_id_var = lerp_scr(0.5,sprite_get_number(spr_var)-0.5,local.per);
@@ -149,10 +167,8 @@ object_event_add
     d3d_draw_floor(local.width,local.length,0,-local.width,-local.length,0,tex_03_var,tex_w_var,tex_l_var);
     d3d_draw_floor(local.width,local.length,h_var,-local.width,-local.length,h_var,tex_03_var,tex_w_var,tex_l_var);
     // Hands
-    if real_var
-    { local.minute = (current_minute*6)+(current_second*0.1); }
-    else { local.minute = time_var*0.1; }
-    local.minute += (current_time-last_time_var)*0.0001
+    local.minute = time_var*0.1;
+    // local.minute += (current_time-last_time_var)*0.0001
     local.length = minute_hand_w_var*0.5;
     local.height = minute_hand_h_var*0.5;
     d3d_transform_set_identity();
@@ -160,10 +176,8 @@ object_event_add
     d3d_transform_add_rotation_z(direction);
     d3d_transform_add_translation(x,y,z+hand_h_var);
     d3d_draw_wall(local.width+dist_var,local.length,local.height,local.width+dist_var,-local.length,-local.height,tex_05_var,1,1);
-    if real_var
-    { local.hour = (current_hour*30)+(current_minute*0.5)+(current_second/120); }
-    else { local.hour = time_var/120; }
-    local.hour += (current_time-last_time_var)/120000;
+    local.hour = time_var/120;
+    // local.hour += (current_time-last_time_var)/120000;
     local.length = hour_hand_w_var*0.5;
     local.height = hour_hand_h_var*0.5;
     d3d_transform_set_identity();

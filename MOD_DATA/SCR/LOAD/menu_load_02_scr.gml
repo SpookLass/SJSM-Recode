@@ -555,6 +555,22 @@ draw_load_scr("Loading settings...");
         local.set = set_add_scr(local.input,"input","input",true,set_state_const,0,0,false,local.control,false,false);
         set_add_default_scr(local.set,0);
 // Fun
+    // Time Type
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("time_type","time_type","time_type",true,set_enum_const,0,2,true,local.fun,false,true);
+        // Labels
+            set_add_label_scr(local.set,0,"real",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            set_add_label_scr(local.set,1,"game",true,"");
+            set_add_label_scr(local.set,2,"rm",true,"");
+        // Defaults
+            set_add_default_scr(local.set,0); // Real
+    // Time Rate
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("time_rate","time_rate","time_rate",true,set_min_clamp_num_const,0,0,false,local.fun,false,false);
+        // Defaults
+            set_add_default_scr(local.set,100);
     // Pride
         // Main
             /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/

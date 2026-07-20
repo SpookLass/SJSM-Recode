@@ -261,6 +261,7 @@ object_event_add
     {
         if id != other.id && object_index == other.object_index
         {
+            other.icon_spr_var = icon_spr_var;
             other.bg_var = bg_var;
             other.mdl_var = mdl_var;
             other.wall_bg_var = wall_bg_var;
@@ -284,6 +285,7 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
+        icon_spr_var = spr_add_scr(gc_icon_spr_path,3,false,false,0,0);
         bg_var = bg_add_scr(gc_bg_path,false,false);
         mdl_var = mdl_add_scr(gc_mdl_path);
         wall_bg_var = bg_add_scr(gc_wall_bg_path,false,false);
@@ -330,6 +332,7 @@ object_event_add
         for (local.i=0; local.i<dmg_snd_len_var; local.i+=1;)
         { fmod_snd_free_scr(dmg_snd_arr[local.i,0]); }
         fmod_snd_free_scr(scare_snd_var);
+        sprite_delete(icon_spr_var);
         background_delete(bg_var);
         background_delete(wall_bg_var);
         background_delete(floor_bg_var);

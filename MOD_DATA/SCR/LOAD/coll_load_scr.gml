@@ -1,11 +1,19 @@
 draw_load_scr("Loading collisions...");
+// Grids
+global.rm_size_var = 1280;
+global.grid_snap_var = 4;
+local.cells = round(global.rm_size_var/global.grid_snap_var);
+global.phys_grid = mp_grid_create(0,0,local.cells,local.cells,global.grid_snap_var,global.grid_snap_var);
+global.float_grid = mp_grid_create(0,0,local.cells,local.cells,global.grid_snap_var,global.grid_snap_var);
 // Initialize 3D functions
 p3dc_ini_scr();
-// Room (load bearing???)
+// Room (load bearing)
+local.cells = round(global.rm_size_var/32);
+local.size = local.cells*32;
 globalvar room_coll;
 global.room_coll = p3dc_begin_mdl_scr();
 p3dc_end_mdl_scr();
-p3dc_split_mdl_scr(global.room_coll,1280,736,40,23,6);
+p3dc_split_mdl_scr(global.room_coll,local.size,local.size,local.cells,local.cells,6);
 global.room_player_coll = -1;
 global.room_mon_coll = -1;
 global.room_float_coll = -1;
@@ -108,11 +116,6 @@ local.radius = global.fake_wall_coll[3]/2;
 global.fake_wall_coll[0] = p3dc_begin_mdl_scr();
 p3dc_add_wall_scr(0,-local.radius,global.fake_wall_coll[1],0,local.radius,0)
 p3dc_end_mdl_scr();
-// Grids
-global.rm_size_var = 1280;
-global.grid_snap_var = 4;
-global.phys_grid = mp_grid_create(0,0,global.rm_size_var/global.grid_snap_var,global.rm_size_var/global.grid_snap_var,global.grid_snap_var,global.grid_snap_var);
-global.float_grid = mp_grid_create(0,0,global.rm_size_var/global.grid_snap_var,global.rm_size_var/global.grid_snap_var,global.grid_snap_var,global.grid_snap_var);
 // Reset
 p3dc_set_trimask_scr(mask_basic_const);
 // Draw

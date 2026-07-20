@@ -75,6 +75,7 @@ object_event_add
     {
         if id != other.id && object_index == other.object_index
         {
+            other.icon_spr_var = icon_spr_var;
             other.bg_var = bg_var;
             other.wall_bg_var = wall_bg_var;
             other.floor_bg_var = floor_bg_var;
@@ -93,6 +94,7 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
+        icon_spr_var = spr_add_scr(flesh_icon_spr_path,3,false,false,0,0);
         bg_var = bg_add_scr(flesh_bg_path,false,false);
         // Textures
         wall_bg_var = bg_add_scr(mad_trim_bg_path,false,false);
@@ -195,6 +197,7 @@ object_event_add
     with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
     if !local.bool
     {
+        sprite_delete(icon_spr_var);
         background_delete(bg_var);
         background_delete(wall_bg_var);
         background_delete(floor_bg_var);

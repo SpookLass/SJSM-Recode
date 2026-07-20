@@ -128,7 +128,7 @@ file_find_close();
 // Mods (oh god what a mess)
 for (local.j=0; local.j<ds_list_size(global.mod_list); local.j+=1;)
 {
-    local.dir = ds_list_find_value(global.mod_list,local.j);
+    local.dir = working_directory+"\MODS\"+ds_list_find_value(global.mod_list,local.j);
     // Parent
     local.i = 0;
     local.file = file_find_first(local.dir+"\OBJ\PAR\*.gml",-1);

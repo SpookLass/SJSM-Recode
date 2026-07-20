@@ -105,6 +105,7 @@ object_event_add
         if id != other.id && object_index == other.object_index
         {
             other.spr_var = spr_var;
+            other.icon_spr_var = icon_spr_var;
             other.bg_var = bg_var;
             other.charge_snd_var[0] = charge_snd_var[0];
             other.mus_snd_var = mus_snd_var;
@@ -118,6 +119,7 @@ object_event_add
     if !local.loaded
     {
         spr_var = spr_add_scr(frenzy_spr_path,8,false,false,0,0);
+        icon_spr_var = spr_add_scr(frenzy_icon_spr_path,3,false,false,0,0);
         bg_var = bg_add_scr(frenzy_bg_path,false,false);
         charge_snd_var[0] = snd_add_scr(frenzy_atk_short_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
         hurt_snd_var[1] = snd_add_scr(frenzy_hurt_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
@@ -138,6 +140,7 @@ object_event_add
     if !local.bool
     {
         sprite_delete(spr_var);
+        sprite_delete(icon_spr_var);
         background_delete(bg_var);
         fmod_snd_free_scr(mus_snd_var);
         fmod_snd_free_scr(charge_snd_var[0]);

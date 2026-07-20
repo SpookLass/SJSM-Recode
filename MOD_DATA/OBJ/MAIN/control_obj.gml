@@ -76,6 +76,13 @@ object_event_add
 (argument0,ev_step,ev_step_begin,'
     global.time_diff_var = current_time-global.last_time_var;
     global.last_time_var = current_time;
+    if last_second != current_second
+    {
+        last_second = current_second;
+        current_millisecond = 0;
+    }
+    current_millisecond += global.time_diff_var;
+    current_fulltime = (current_hour*3600000)+(current_minute*60000)+(current_second*1000)+current_millisecond;
     // Framerate
     global.draw_time_var += global.time_diff_var;
     if !global.autodraw_var
@@ -91,6 +98,20 @@ object_event_add
     }
     // Game Time
     if global.game_var && !global.pause_var { global.game_time_var += global.time_diff_var; }
+    switch global.time_type_var
+    {
+        case 0: // Real clock
+        { global.clock_time_var = current_fulltime; break; }
+        case 1: // Game Time
+        { global.clock_time_var = global.game_time_var; break; }
+        case 2: // Room Count (room = 1 minute)
+        { global.clock_time_var = global.rm_count_var*60000; break; }
+    }
+    global.clock_time_var = mod_scr(global.clock_time_var*global.time_rate_var*0.01,86400000);
+    global.clock_hour_var = floor((global.clock_time_var*0.00001)/36);
+    global.clock_minute_var = mod_scr(floor((global.clock_time_var*0.0001)/6),60);
+    global.clock_second_var = mod_scr(floor(global.clock_time_var*0.001),60);
+    global.clock_millisecond_var = mod_scr(global.clock_time_var,1000);
     // Speed!
     if global.pause_var { if global.game_spd_var != 0 { global.game_spd_var = 0; }}
     else if global.draw_3d_var

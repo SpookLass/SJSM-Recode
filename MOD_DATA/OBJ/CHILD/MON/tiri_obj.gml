@@ -139,6 +139,7 @@ object_event_add
         if id != other.id && object_index == other.object_index
         {
             other.spr_var = spr_var;
+            other.icon_spr_var = icon_spr_var;
             other.bg_overlay_var = bg_overlay_var;
             other.shadow_spr_var = shadow_spr_var;
             for (local.i=0; local.i<snd_len_var; local.i+=1;)
@@ -152,6 +153,7 @@ object_event_add
     if !local.loaded
     {
         spr_var = spr_add_scr(tiri_spr_path,8,false,false,0,0);
+        icon_spr_var = spr_add_scr(tiri_icon_spr_path,3,false,false,0,0);
         bg_overlay_var = bg_add_scr(tiri_snow_bg_path,false,false);
         shadow_spr_var = spr_add_scr(tiri_shadow_spr_path,9,false,false,0,0);
         snd_arr[0,0] = snd_add_scr(tiri_01_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
@@ -174,6 +176,7 @@ object_event_add
     if !local.bool
     {
         sprite_delete(spr_var);
+        sprite_delete(icon_spr_var);
         background_delete(bg_overlay_var);
         sprite_delete(shadow_spr_var);
         fmod_snd_free_scr(mus_snd_var);

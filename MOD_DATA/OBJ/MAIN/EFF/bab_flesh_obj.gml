@@ -51,7 +51,7 @@ object_event_add
     path_add_point(path_var,112,-208,100);
     if global.reduce_flash_var
     {
-        x_spd_var = 10*global.delta_time_var;
+        x_spd_var = 10;
         scale_rate_var = 0; // 250?
     }
     else { path_start(path_var,10*global.delta_time_var,1,true); }

@@ -14,7 +14,7 @@ local.i = 0;
 local.file = file_find_first(working_directory+"\MODS\*",fa_directory);
 while (local.file != "")
 {
-    if local.file != "." && local.file != ".." { ds_list_add(global.mod_load_list,working_directory+"\MODS\"+local.file); }
+    if local.file != "." && local.file != ".." { ds_list_add(global.mod_load_list,local.file); }
     local.file = file_find_next();
     local.i += 1;
     // Draw

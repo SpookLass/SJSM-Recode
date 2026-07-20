@@ -9,7 +9,7 @@ fmod_set_world_scale_scr(pixel_meter_rate_const);
     for (local.j=ds_list_size(global.mod_list)-1; local.j>=0; local.j-=1;)
     {
         // Get the first file in the main directory
-            local.dir = ds_list_find_value(global.mod_list,local.j);
+            local.dir = working_directory+"\MODS\"+ds_list_find_value(global.mod_list,local.j);
             local.i = 0;
             local.file = filename_change_ext(file_find_first(local.dir+"\SND\MAIN\*.gml",-1),"");
             while (local.file != "")

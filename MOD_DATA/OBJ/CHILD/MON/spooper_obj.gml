@@ -173,6 +173,7 @@ object_event_add
         if id != other.id && object_index == other.object_index
         {
             other.spr_var = spr_var;
+            other.icon_spr_var = icon_spr_var;
             other.door_spr_var = door_spr_var;
             other.tex_spr_var = tex_spr_var;
             other.light_wall_spr_var = light_wall_spr_var;
@@ -194,6 +195,7 @@ object_event_add
     if !local.loaded
     {
         spr_var = spr_add_scr(spooper_goo_spr_path,3,false,false,0,0);
+        icon_spr_var = spr_add_scr(spooper_icon_spr_path,3,false,false,0,0);
         door_spr_var = spr_add_scr(spooper_spr_path,6,false,false,0,0);
         tex_spr_var = spr_add_scr(spooper_tex_spr_path,3,false,false,0,0);
         light_wall_spr_var = spr_add_scr(spooper_light_wall_spr_path,2,false,false,0,0);
@@ -234,6 +236,7 @@ object_event_add
     if !local.bool
     {
         sprite_delete(spr_var);
+        sprite_delete(icon_spr_var);
         sprite_delete(door_spr_var);
         sprite_delete(tex_spr_var);
         sprite_delete(light_wall_spr_var);
@@ -268,6 +271,7 @@ object_event_add
     image_alpha = 1;
     if hp_var > 0
     {
+        icon_spr_id_var = 0;
         if !instance_exists(spooper_door_obj)
         {
             local.tex = sprite_get_texture(door_spr_var,hp_max_var-hp_var);

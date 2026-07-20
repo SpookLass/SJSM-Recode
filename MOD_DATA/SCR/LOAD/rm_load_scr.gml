@@ -18,7 +18,7 @@ file_find_close();
 // Mod stuff
 for (local.j=0; local.j<ds_list_size(global.mod_list); local.j+=1;)
 {
-    local.dir = ds_list_find_value(global.mod_list,local.j);
+    local.dir = working_directory+"\MODS\"+ds_list_find_value(global.mod_list,local.j);
     local.file = file_find_first(local.dir+"\RM\MAIN\*.gml",-1);
     while (local.file != "")
     {

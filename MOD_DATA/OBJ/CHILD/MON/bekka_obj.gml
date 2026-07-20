@@ -41,6 +41,7 @@ object_event_add
         if id != other.id && object_index == other.object_index
         {
             other.spr_var = spr_var;
+            other.icon_spr_var = icon_spr_var;
             other.bg_overlay_var = bg_overlay_var;
             other.mus_snd_var = mus_snd_var;
             local.loaded = true;
@@ -51,6 +52,7 @@ object_event_add
     if !local.loaded
     {
         spr_var = spr_add_scr(bekka_spr_path,1,false,false,0,0);
+        icon_spr_var = spr_add_scr(bekka_icon_spr_path,3,false,false,0,0);
         bg_overlay_var = bg_add_scr(fog_bg_path,false,false);
         switch theme_scr(global.bekka_theme_var,global.theme_var,1,0,0,1)
         {
@@ -133,6 +135,12 @@ object_event_add
             atk_range_var = global.mon_coll[2];
             exit_delay_var = 90;
             delay_var = 30;
+            // Silhouette
+            sil_var = true;
+            sil_type_var = 1; // Pure color
+            sil_color_var = c_black;
+            sil_alpha_var = 0.1;
+            sil_dist_var = 0.1;
             break;
         }
         case 2: // HD
@@ -188,6 +196,7 @@ object_event_add
     {
         fmod_snd_free_scr(mus_snd_var);
         sprite_delete(spr_var);
+        sprite_delete(icon_spr_var);
         background_delete(bg_overlay_var);
     }
     with fog_overlay_obj

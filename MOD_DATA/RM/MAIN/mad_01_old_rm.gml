@@ -297,7 +297,7 @@ room_instance_add(argument0,960,336,mad_blood_trim_02_side_obj);
 room_instance_add(argument0,960,368,mad_blood_trim_02_side_obj);
 room_instance_add(argument0,560,352,mad_line_obj);
 room_instance_add(argument0,560,352,mad_trig_obj);
-room_instance_add(argument0,688,352,mad_clock_obj);
+room_instance_add(argument0,688,352,mad_clock_big_obj);
 /*Door Stuff
 room_instance_add(argument0,704,176,mad_door1_obj);
 room_instance_add(argument0,960,352,mad_door1_obj);

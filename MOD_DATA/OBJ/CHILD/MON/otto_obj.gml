@@ -105,6 +105,8 @@ object_event_add
     {
         if id != other.id && object_index == other.object_index
         {
+            
+            other.icon_spr_var = icon_spr_var;
             other.spr_var = spr_var;
             other.eye_spr_var = eye_spr_var;
             other.wake_snd_var[1] = wake_snd_var[1];
@@ -119,6 +121,7 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
+        icon_spr_var = spr_add_scr(otto_icon_spr_path,3,false,false,0,0);
         spr_var = spr_add_scr(otto_spr_path,3,false,false,100,65);
         eye_spr_var = spr_add_scr(otto_eye_spr_path,3,false,false,0,0);
         wake_snd_var[1] = snd_add_scr(otto_01_snd_path,global.wake_3d_var,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
@@ -152,6 +155,7 @@ object_event_add
     with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
     if !local.bool
     {
+        sprite_delete(icon_spr_var);
         sprite_delete(spr_var);
         sprite_delete(eye_spr_var);
         fmod_snd_free_scr(mus_snd_var);

@@ -112,8 +112,8 @@ object_event_add
     {
         if id != other.id && object_index == other.object_index
         {
-            other.boss_icon_var = boss_icon_var;
             other.spr_var = spr_var;
+            other.icon_spr_var = icon_spr_var;
             other.bg_var = bg_var;
             other.tex_spr_var = tex_spr_var;
             other.door_bg_var = door_bg_var;
@@ -134,8 +134,8 @@ object_event_add
         // If no existing assets were found, load them
     if !local.loaded
     {
-        boss_icon_var = spr_add_scr(wf_icon_spr_path,1,false,false,0,0);
         spr_var = wf_spr;
+        icon_spr_var = spr_add_scr(wf_02_icon_spr_path,3,false,false,0,0);
         bg_var = bg_add_scr(wf_bg_path,false,false);
         tex_spr_var = spr_add_scr(wf_02_tex_spr_path,3,false,false,0,0);
         door_bg_var = bg_add_scr(wf_door_bg_path,false,false);
@@ -183,7 +183,7 @@ object_event_add
     with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
     if !local.bool
     {
-        sprite_delete(boss_icon_var);
+        sprite_delete(icon_spr_var);
         background_delete(bg_var);
         sprite_delete(tex_spr_var);
         sprite_delete(light_wall_spr_var);

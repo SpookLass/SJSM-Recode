@@ -121,49 +121,55 @@ object_event_add
     {
         // Mod
         local.index = local.i+local.mod_scroll-local.count;
-        local.str = filename_name(ds_list_find_value(global.mod_list,local.index));
-        if local.index == mod_var && !state_var
+        if local.index >= 0 && local.index < ds_list_size(global.mod_list)
         {
-            local.ytmp = margin_var+str_margin_var+(96*local.i);
-            draw_spr_stretch_scr(select_spr,0,margin_var+str_margin_var,local.ytmp,132,0,fa_left,fa_top);
-            draw_str_select_scr
-            (
-                local.str,
-                margin_var+str_margin_var,local.ytmp,str_scale_var,0.75,0.125,fa_left,fa_top,
-                -4,4,str_bg_select_color_var,c_white,2,0,0.75,fa_left
-            );
-        }
-        else
-        {
-            draw_str_shadow_scr
-            (
-                local.str,
-                margin_var+str_margin_var,margin_var+str_margin_var+(96*local.i),0.75,0.75,0.125,fa_left,fa_top,
-                -4,4,str_bg_color_var,c_yellow,2,0
-            );
+            local.str = ds_list_find_value(global.mod_list,local.index);
+            if local.index == mod_var && !state_var
+            {
+                local.ytmp = margin_var+str_margin_var+(96*local.i);
+                draw_spr_stretch_scr(select_spr,0,margin_var+str_margin_var,local.ytmp,132,0,fa_left,fa_top);
+                draw_str_select_scr
+                (
+                    local.str,
+                    margin_var+str_margin_var,local.ytmp,str_scale_var,0.75,0.125,fa_left,fa_top,
+                    -4,4,str_bg_select_color_var,c_white,2,0,0.75,fa_left
+                );
+            }
+            else
+            {
+                draw_str_shadow_scr
+                (
+                    local.str,
+                    margin_var+str_margin_var,margin_var+str_margin_var+(96*local.i),0.75,0.75,0.125,fa_left,fa_top,
+                    -4,4,str_bg_color_var,c_yellow,2,0
+                );
+            }
         }
         // Mod Load
         local.index = local.i+local.mod_load_scroll-local.count;
-        local.str = filename_name(ds_list_find_value(global.mod_load_list,local.index));
-        if local.index == mod_load_var && state_var
+        if local.index >= 0 && local.index < ds_list_size(global.mod_load_list)
         {
-            local.ytmp = margin_var+str_margin_var+(96*local.i);
-            draw_spr_stretch_scr(select_spr,0,margin_var+str_margin_var,local.ytmp,132,0,fa_center,fa_top);
-            draw_str_select_scr
-            (
-                local.str,
-                margin_var+str_margin_var,local.ytmp,str_scale_var,0.75,0.125,fa_center,fa_top,
-                -4,4,str_bg_select_color_var,c_white,2,0,0.75,fa_left
-            );
-        }
-        else
-        {
-            draw_str_shadow_scr
-            (
-                local.str,
-                margin_var+str_margin_var,margin_var+str_margin_var+(96*local.i),0.75,0.75,0.125,fa_center,fa_top,
-                -4,4,str_bg_color_var,c_yellow,2,0
-            );
+            local.str = ds_list_find_value(global.mod_load_list,local.index);
+            if local.index == mod_load_var && state_var
+            {
+                local.ytmp = margin_var+str_margin_var+(96*local.i);
+                draw_spr_stretch_scr(select_spr,0,margin_var+str_margin_var,local.ytmp,132,0,fa_center,fa_top);
+                draw_str_select_scr
+                (
+                    local.str,
+                    margin_var+str_margin_var,local.ytmp,str_scale_var,0.75,0.125,fa_center,fa_top,
+                    -4,4,str_bg_select_color_var,c_white,2,0,0.75,fa_left
+                );
+            }
+            else
+            {
+                draw_str_shadow_scr
+                (
+                    local.str,
+                    margin_var+str_margin_var,margin_var+str_margin_var+(96*local.i),0.75,0.75,0.125,fa_center,fa_top,
+                    -4,4,str_bg_color_var,c_yellow,2,0
+                );
+            }
         }
     }
 ');
