@@ -72,7 +72,7 @@ object_event_add
 object_event_add
 (argument0,ev_alarm,1,'
     with global.player_arr[global.menu_player_var] { revive_player_scr(id); }
-    instance_create(0,0,wf_02_obj);
+    with instance_create(0,0,wf_02_obj) { dur_var += 1; }
     rm_leave_menu_scr(wf_hall_10_rm);
 ');
 // Draw Event

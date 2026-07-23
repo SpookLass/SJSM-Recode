@@ -247,7 +247,7 @@ object_event_add
     event_inherited();
     if global.diff_var != 0
     {
-        instance_create(0,0,flesh_obj);
+        with instance_create(0,0,flesh_obj) { dur_var += 1; }
         if global.reset_spd_var > 0 && global.game_spd_var > 1
         { global.game_spd_var = 1; fmod_group_set_pitch_scr(0,global.game_spd_var); }
         if ds_list_find_index(global.mon_list,flesh_obj) < 0

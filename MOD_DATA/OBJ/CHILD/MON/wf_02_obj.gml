@@ -17,7 +17,7 @@ object_event_add
     type_var = 0;
     spd_base_var = 1;
     spr_spd_var = 1;
-    dur_var = 11;
+    dur_var = 10; // 1
     delay_var = 64;
     dmg_var = 99999;
     dmg_alarm_var = 0;
