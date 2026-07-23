@@ -19,4 +19,16 @@ object_event_add
     w_var = 14;
     h_var = 23;
     dist_var = 0.1;
+    spot_var = false;
+');
+// Draw event
+object_event_add
+(argument0,ev_draw,0,'
+    if spot_var && global.fog_dark_var
+    {
+        d3d_set_fog(false,c_black,0,0);
+        event_inherited();
+        d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var);
+    }
+    else { event_inherited(); }
 ');

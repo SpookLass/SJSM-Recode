@@ -20,13 +20,13 @@ object_event_add
     bg_arr_var[2,1] = mad_ceil_bg_path;
     bg_arr_var[2,2] = false;
     bg_arr_var[2,3] = false;
-    bg_arr_var[3,1] = mad_office_wall_bg_path;
+    bg_arr_var[3,1] = mad_persona_wall_bg_path;
     bg_arr_var[3,2] = false;
     bg_arr_var[3,3] = false;
-    bg_arr_var[4,1] = mad_office_floor_bg_path;
+    bg_arr_var[4,1] = mad_persona_floor_bg_path;
     bg_arr_var[4,2] = false;
     bg_arr_var[4,3] = false;
-    bg_arr_var[5,1] = mad_office_ceil_bg_path;
+    bg_arr_var[5,1] = mad_persona_ceil_bg_path;
     bg_arr_var[5,2] = false;
     bg_arr_var[5,3] = false;
     bg_arr_var[6,1] = mad_daycare_wall_01_bg_path;
@@ -44,7 +44,7 @@ object_event_add
     bg_arr_var[10,1] = mad_daycare_floor_02_bg_path;
     bg_arr_var[10,2] = false;
     bg_arr_var[10,3] = false;
-    bg_arr_var[11,1] = mad_office_window_bg_path;
+    bg_arr_var[11,1] = mad_persona_window_bg_path;
     bg_arr_var[11,2] = false;
     bg_arr_var[11,3] = false;
     bg_arr_var[12,1] = mad_blood_wall_01_bg_path;
@@ -138,7 +138,7 @@ object_event_add
     spr_arr_var[4,4] = false;
     spr_arr_var[4,5] = 0;
     spr_arr_var[4,6] = 0;
-    mdl_len_var = 7;
+    mdl_len_var = 8;
     mdl_arr_var[0,1] = mad_trim_down_mdl_path;
     mdl_arr_var[1,1] = mad_trim_up_mdl_path;
     mdl_arr_var[2,1] = mad_trim_side_mdl_path;
@@ -146,8 +146,9 @@ object_event_add
     mdl_arr_var[4,1] = mad_trim_door_left_mdl_path;
     mdl_arr_var[5,1] = mad_trim_door_right_mdl_path;
     mdl_arr_var[6,1] = mad_trim_doorframe_mdl_path;
+    mdl_arr_var[7,1] = mad_space_mdl_path;
     snd_len_var = 12;
-    snd_arr_var[0,1] = mad_office_mus_snd_path;
+    snd_arr_var[0,1] = mad_persona_mus_snd_path;
     snd_arr_var[0,2] = false;
     snd_arr_var[0,3] = snd_group_mus_const;
     snd_arr_var[0,4] = 1;
@@ -183,13 +184,17 @@ object_event_add
     snd_arr_var[5,4] = 1;
     snd_arr_var[5,5] = 0;
     snd_arr_var[5,6] = 300;
-    snd_arr_var[6,1] = mad_cat_01_snd_path;
+    if global.diff_var != 0
+    { snd_arr_var[6,1] = mad_cat_01_snd_path; }
+    else { snd_arr_var[6,1] = mad_cat_01_easiest_snd_path; }
     snd_arr_var[6,2] = true;
     snd_arr_var[6,3] = snd_group_sfx_const;
     snd_arr_var[6,4] = 1;
     snd_arr_var[6,5] = 0;
     snd_arr_var[6,6] = 300;
-    snd_arr_var[7,1] = mad_cat_02_snd_path;
+    if global.diff_var != 0
+    { snd_arr_var[7,1] = mad_cat_02_snd_path; }
+    else { snd_arr_var[7,1] = mad_cat_02_easiest_snd_path; }
     snd_arr_var[7,2] = true;
     snd_arr_var[7,3] = snd_group_sfx_const;
     snd_arr_var[7,4] = 1;
@@ -219,12 +224,33 @@ object_event_add
     snd_arr_var[11,4] = 1;
     snd_arr_var[11,5] = 0;
     snd_arr_var[11,6] = 300;
+    path_len_var = 1;
+    path_arr_var[0,1] = 1;
+    path_arr_var[0,2] = false;
+    path_arr_var[0,3] = 4;
+    surf_len_var = 1;
+    surf_arr_var[0,1] = 256;
+    surf_arr_var[0,2] = 256;
     rm_var = mad_01_rm;
     event_inherited();
+    path_add_point(path_arr_var[0,0],0,0,100);
+    path_add_point(path_arr_var[0,0],-32,-32,100);
+    path_add_point(path_arr_var[0,0],-80,-32,100);
+    path_add_point(path_arr_var[0,0],-112,0,70);
+    path_add_point(path_arr_var[0,0],-192,32,130);
+    path_add_point(path_arr_var[0,0],-256,0,100);
+    cat_var = false;
 ');
 // Destroy Event
 object_event_add
 (argument0,ev_destroy,0,'
     event_inherited();
-    with school_flash_obj { instance_destroy(); }
+    if global.diff_var != 0
+    {
+        instance_create(0,0,flesh_obj);
+        if global.reset_spd_var > 0 && global.game_spd_var > 1
+        { global.game_spd_var = 1; fmod_group_set_pitch_scr(0,global.game_spd_var); }
+        if ds_list_find_index(global.mon_list,flesh_obj) < 0
+        { ds_list_add(global.mon_list,flesh_obj); }
+    }
 ');

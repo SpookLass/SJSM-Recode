@@ -17,23 +17,26 @@ object_event_add
     if !variable_local_exists("snd_len_var") { snd_len_var = 0; }
     if !variable_local_exists("spr_len_var") { spr_len_var = 0; }
     if !variable_local_exists("mdl_len_var") { mdl_len_var = 0; }
+    if !variable_local_exists("path_len_var") { path_len_var = 0; }
+    if !variable_local_exists("surf_len_var") { surf_len_var = 0; }
     // Draw Text
     d3d_set_fog(false,c_black,0,0);
     d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
     d3d_set_hidden(false);
     set_automatic_draw(false);
     draw_set_halign(fa_center); draw_set_valign(fa_bottom);
-    // Load BGs
+    // Backgrounds
     if bg_len_var > 0
     {
         for (local.i=0; local.i<bg_len_var; local.i+=1;)
         {
             draw_load_scr("Loading backgrounds ("+string(local.i+1)+" / "+string(bg_len_var)+")...");
             bg_arr_var[local.i,0] = bg_add_scr(bg_arr_var[local.i,1],bg_arr_var[local.i,2],bg_arr_var[local.i,3]);
+            bg_arr_var[local.i,4] = background_get_texture(bg_arr_var[local.i,0]);
         }
         draw_load_scr("Loaded backgrounds!");
     }
-    // Load sprites
+    // Sprites
     if spr_len_var > 0
     {
         for (local.i=0; local.i<spr_len_var; local.i+=1;)
@@ -43,7 +46,7 @@ object_event_add
         }
         draw_load_scr("Loaded sprites!");
     }
-    // Load sounds
+    // Sounds
     if snd_len_var > 0
     {
         for (local.i=0; local.i<snd_len_var; local.i+=1;)
@@ -63,6 +66,33 @@ object_event_add
         }
         draw_load_scr("Loaded models!");
     }
+    // Path
+    if path_len_var > 0
+    {
+        for (local.i=0; local.i<path_len_var; local.i+=1;)
+        {
+            draw_load_scr("Loading paths ("+string(local.i+1)+" / "+string(path_len_var)+")...");
+            path_arr_var[0] = path_add();
+            path_set_kind(path_arr_var[local.i,0],path_arr_var[local.i,1]); // Smooth
+            path_set_closed(path_arr_var[local.i,0],path_arr_var[local.i,2]);
+            path_set_precision(path_arr_var[local.i,0],path_arr_var[local.i,3]);
+        }
+        draw_load_scr("Loaded paths!");
+    }
+    // Surface
+    if surf_len_var > 0
+    {
+        for (local.i=0; local.i<surf_len_var; local.i+=1;)
+        {
+            draw_load_scr("Loading surfaces ("+string(local.i+1)+" / "+string(surf_len_var)+")...");
+            surf_arr_var[local.i,0] = surface_create(surf_arr_var[local.i,1],surf_arr_var[local.i,2]);
+            surface_set_target(surf_arr_var[local.i,0]);
+            draw_clear_alpha(c_black,0);
+            surface_reset_target();
+            surf_arr_var[local.i,3] = surface_get_texture(surf_arr_var[local.i,0]);
+        }
+        draw_load_scr("Loaded surfaces!");
+    }
     // Stop drawing text
     draw_set_halign(fa_left); draw_set_valign(fa_top);
     set_automatic_draw(global.autodraw_var);
@@ -80,7 +110,7 @@ object_event_add
     d3d_set_hidden(false);
     set_automatic_draw(false);
     draw_set_halign(fa_center); draw_set_valign(fa_bottom);
-    // Load BGs
+    // Backgrounds
     if bg_len_var > 0
     {
         for (local.i=0; local.i<bg_len_var; local.i+=1;)
@@ -90,7 +120,7 @@ object_event_add
         }
         draw_load_scr("Unloaded backgrounds!");
     }
-    // Load sprites
+    // Sprites
     if spr_len_var > 0
     {
         for (local.i=0; local.i<spr_len_var; local.i+=1;)
@@ -100,7 +130,7 @@ object_event_add
         }
         draw_load_scr("Unloaded sprites!");
     }
-    // Load sounds
+    // Sounds
     if snd_len_var > 0
     {
         for (local.i=0; local.i<snd_len_var; local.i+=1;)
@@ -119,6 +149,26 @@ object_event_add
             d3d_model_destroy(mdl_arr_var[local.i,0]);
         }
         draw_load_scr("Unloaded models!");
+    }
+    // Paths
+    if path_len_var > 0
+    {
+        for (local.i=0; local.i<path_len_var; local.i+=1;)
+        {
+            draw_load_scr("Unloading paths ("+string(local.i+1)+" / "+string(path_len_var)+")...");
+            path_delete(path_arr_var[local.i,0]);
+        }
+        draw_load_scr("Unloaded paths!");
+    }
+    // Surface
+    if surf_len_var > 0
+    {
+        for (local.i=0; local.i<surf_len_var; local.i+=1;)
+        {
+            draw_load_scr("Unloading surfaces ("+string(local.i+1)+" / "+string(surf_len_var)+")...");
+            surface_free(surf_arr_var[local.i,0]);
+        }
+        draw_load_scr("Unloaded surfaces!");
     }
     // Stop drawing text
     draw_set_halign(fa_left); draw_set_valign(fa_top);

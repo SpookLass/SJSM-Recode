@@ -52,6 +52,8 @@ object_event_add
     talk_alarm_var = 120;
     smooth_var = false;
     // Sound
+    inst_01_var = noone;
+    inst_02_var = noone;
     snd_dist_min_var = 0;
     snd_dist_max_var = 300;
     with instance_create(x,y,interact_trig_obj)
@@ -64,6 +66,13 @@ object_event_add
     alarm_len_var = 4;
     alarm_ini_scr();
     set_alarm_scr(1,anim_alarm_var);
+');
+// Room End event
+object_event_add
+(argument0,ev_other,ev_room_end,'
+    event_inherited();
+    fmod_inst_stop_scr(inst_01_var);
+    fmod_inst_stop_scr(inst_02_var);
 ');
 // Alarm event
 object_event_add
@@ -115,7 +124,8 @@ object_event_add
 // Trigger Event
 object_event_add
 (argument0,ev_other,ev_user0,'
-    fmod_snd_3d_play_scr(snd_var,x,y,z+snd_h_var);
+    fmod_inst_stop_scr(inst_01_var);
+    inst_01_var = fmod_snd_3d_play_scr(snd_var,x,y,z+snd_h_var);
     local.len = fmod_snd_get_len_scr(snd_var)*milli_frame_rate_const;
     with instance_create(x,y,sub_par_obj)
     {
@@ -139,12 +149,13 @@ object_event_add
         snd_dist_max_var = load_par_obj.snd_arr_var[snd_id_var,6];
     }
     ini_open("lang_"+global.lang_var+".ini");
-    str_var = ini_read_string("SUB",translate_id_var,"SUB_"+translate_id_var);
+    if global.diff_var == 0 { str_var = ini_read_string("SUB",translate_id_var+"_easiest","SUB_"+translate_id_var+"_easiest"); }
+    else { str_var = ini_read_string("SUB",translate_id_var,"SUB_"+translate_id_var); }
     ini_close();
     // Appear
     if !on_var
     {
-        fmod_snd_3d_play_scr(pop_snd_var,x,y,z+snd_h_var);
+        inst_02_var = fmod_snd_3d_play_scr(pop_snd_var,x,y,z+snd_h_var);
         trig_var.on_var = false;
         tex_var = sprite_get_texture(spr_02_var,0);
         set_alarm_scr(2,appear_alarm_var);

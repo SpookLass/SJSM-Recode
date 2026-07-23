@@ -49,6 +49,8 @@ object_event_add
     coll_var[2] = mad_clock_coll[2];
     coll_var[3] = mad_clock_coll[3];
     // Tick Tock
+    inst_01_var = noone;
+    inst_02_var = noone;
     second_var = 39840;
     time_var = second_var;
     last_time_var = current_time;
@@ -63,7 +65,13 @@ object_event_add
         set_alarm_scr(0,60);
     }
     else { tock_var = (last_second_var mod 2); }
-    
+');
+// Room End event
+object_event_add
+(argument0,ev_other,ev_room_end,'
+    event_inherited();
+    fmod_inst_stop_scr(inst_01_var);
+    fmod_inst_stop_scr(inst_02_var);
 ');
 // Alarm
 object_event_add
@@ -72,12 +80,14 @@ object_event_add
     tock_var = !tock_var;
     if tock_var
     {
-        fmod_snd_3d_play_scr(tock_snd_var,x,y,z+(h_var*0.8));
+        fmod_inst_stop_scr(inst_02_var);
+        inst_02_var = fmod_snd_3d_play_scr(tock_snd_var,x,y,z+(h_var*0.8));
         tex_var = sprite_get_texture(spr_var,sprite_get_number(spr_var)-1);
     }
     else
     {
-        fmod_snd_3d_play_scr(tick_snd_var,x,y,z+(h_var*0.8));
+        fmod_inst_stop_scr(inst_01_var);
+        inst_01_var = fmod_snd_3d_play_scr(tick_snd_var,x,y,z+(h_var*0.8));
         tex_var = sprite_get_texture(spr_var,0);
     }
     if !real_var { set_alarm_scr(0,alarm_var); }
@@ -113,12 +123,14 @@ object_event_add
             {
                 if tock_var
                 {
-                    fmod_snd_3d_play_scr(tock_snd_var,x,y,z+(h_var*0.8));
+                    fmod_inst_stop_scr(inst_02_var);
+                    inst_02_var = fmod_snd_3d_play_scr(tock_snd_var,x,y,z+(h_var*0.8));
                     tex_var = sprite_get_texture(spr_var,sprite_get_number(spr_var)-1);
                 }
                 else
                 {
-                    fmod_snd_3d_play_scr(tick_snd_var,x,y,z+(h_var*0.8));
+                    fmod_inst_stop_scr(inst_01_var);
+                    inst_01_var = fmod_snd_3d_play_scr(tick_snd_var,x,y,z+(h_var*0.8));
                     tex_var = sprite_get_texture(spr_var,0);
                 }
             }
@@ -175,6 +187,16 @@ object_event_add
     d3d_transform_add_rotation_x(-local.minute);
     d3d_transform_add_rotation_z(direction);
     d3d_transform_add_translation(x,y,z+hand_h_var);
+    // Reflection handling
+    if global.reflect_var
+    {
+        switch (global.reflect_axis_var)
+        {
+            case 0: { d3d_transform_add_scaling(-1,1,1); d3d_transform_add_translation(global.reflect_pos_var*2,0,0); break; }
+            case 1: { d3d_transform_add_scaling(1,-1,1); d3d_transform_add_translation(0,global.reflect_pos_var*2,0); break; }
+            case 2: { d3d_transform_add_scaling(1,1,-1); d3d_transform_add_translation(0,0,global.reflect_pos_var*2); break; }
+        }
+    }
     d3d_draw_wall(local.width+dist_var,local.length,local.height,local.width+dist_var,-local.length,-local.height,tex_05_var,1,1);
     local.hour = time_var/120;
     // local.hour += (current_time-last_time_var)/120000;
@@ -184,6 +206,16 @@ object_event_add
     d3d_transform_add_rotation_x(-local.hour);
     d3d_transform_add_rotation_z(direction);
     d3d_transform_add_translation(x,y,z+hand_h_var);
+    // Reflection handling
+    if global.reflect_var
+    {
+        switch (global.reflect_axis_var)
+        {
+            case 0: { d3d_transform_add_scaling(-1,1,1); d3d_transform_add_translation(global.reflect_pos_var*2,0,0); break; }
+            case 1: { d3d_transform_add_scaling(1,-1,1); d3d_transform_add_translation(0,global.reflect_pos_var*2,0); break; }
+            case 2: { d3d_transform_add_scaling(1,1,-1); d3d_transform_add_translation(0,0,global.reflect_pos_var*2); break; }
+        }
+    }
     d3d_draw_wall(local.width+dist_var,local.length,local.height,local.width+dist_var,-local.length,-local.height,tex_04_var,1,1);
     // Reset
     d3d_transform_set_identity();

@@ -7,7 +7,7 @@ room_set_code
     argument0,'
     // Name
     ini_open("lang_"+global.lang_var+".ini");
-    global.rm_name_var = ini_read_string("ROOM","mad_daycare","ROOM_mad_daycare");
+    global.rm_name_var = ini_read_string("ROOM","mad","ROOM_mad")+" "+ini_read_string("ROOM","mad_daycare","ROOM_mad_daycare");
     ini_close();
     // Spawns
     global.spawn_len_var = 2;
@@ -25,14 +25,18 @@ room_set_code
     // Doors
     spawn_create_scr(false,false,false,mad_door_obj,spawn_door_trig_obj);
     with spawn_arr[1,4] { rm_var = mad_01_rm; spawn_var = 2; snd_len_var = 1; snd_arr[0] = door_m_02_snd; }
-    with instance_create(560,368,mad_cat_obj)
+    if global.diff_var != 0
     {
-        snd_id_var = 9;
-        translate_id_var = "cat_04";
-        event_user(1);
+        with instance_create(560,368,mad_cat_obj)
+        {
+            snd_id_var = 9;
+            translate_id_var = "cat_04";
+            event_user(1);
+        }
     }
 ');
 // Effects
+room_instance_add(argument0,0,0,spawn_mus_02_obj);
 room_instance_add(argument0,0,0,fog_01_obj);
 // Floors
 room_instance_add(argument0,464,320,spawn_floor_alt_02_obj);

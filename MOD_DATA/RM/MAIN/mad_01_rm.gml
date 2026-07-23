@@ -25,6 +25,8 @@ local.ytmp = 48+((local.width+(local.edgewidth*2)-1)*32);
 // Mark
     local.xtmp4 = 32*(1+local.halllength+(local.edgewidth*0.75));
     local.ytmp4 = 32*(1+local.edgewidth+(local.width*0.5));
+// Fake Wall
+    local.xtmp5 = 32*(1+local.halllength);
 // Load
 room_set_code
 (
@@ -90,7 +92,10 @@ room_set_code
     global.draw_3d_var = true;
     // Doors
     spawn_create_scr(true,false,false,mad_door_obj,spawn_door_trig_obj);
+    with spawn_arr[1,4] { rm_var = mad_02_rm; snd_len_var = 1; snd_arr[0] = door_m_02_snd; }
     with spawn_arr[2,4] { rm_var = mad_03_rm; snd_len_var = 1; snd_arr[0] = door_m_02_snd; }
+    with spawn_arr[3,4] { rm_var = mad_04_rm; snd_len_var = 1; snd_arr[0] = door_m_02_snd; }
+    with spawn_arr[4,4] { rm_var = mad_05_rm; snd_len_var = 1; snd_arr[0] = door_m_02_snd; }
     for (local.i=5; local.i<global.spawn_len_var; local.i+=1;)
     {
         with spawn_arr[local.i,4] { txt_lock_var = local.broke; lock_var = true; }
@@ -102,6 +107,21 @@ room_set_code
                 tex_var = store_tex_var;
             }
         }
+    }
+    // Cat
+    if instance_exists(load_par_obj)
+    {
+        if load_par_obj.cat_var
+        {
+            instance_create('+string(local.xtmp5)+','+string(local.ytmp2)+',mad_trim_doorframe_vert_obj);
+            with instance_create(global.mark_arr[0,0],global.mark_arr[0,1],mad_cat_obj)
+            {
+                snd_id_var = 7;
+                translate_id_var = "cat_02";
+                event_user(1);
+            }
+        }
+        else { instance_create('+string(local.xtmp5)+','+string(local.ytmp2)+',fake_wall_vert_obj); }
     }
 ');
 // Room settings
@@ -204,11 +224,7 @@ local.bloodytmp = local.ytmp2;
         for (local.i=0; local.i<local.width+(local.edgewidth*2); local.i+=1;)
         {
             local.ytmp = 48+(local.i*32);
-            if local.i == local.middle
-            {
-                room_instance_add(argument0,local.xtmp1,local.ytmp,spawn_wall_doorway_vert_obj);
-                room_instance_add(argument0,local.xtmp1,local.ytmp,fake_wall_vert_obj); // mad_trim_doorframe_vert_obj
-            }
+            if local.i == local.middle { room_instance_add(argument0,local.xtmp1,local.ytmp,spawn_wall_doorway_vert_obj); }
             else
             {
                 room_instance_add(argument0,local.xtmp1,local.ytmp,spawn_wall_high_vert_obj);

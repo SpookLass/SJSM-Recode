@@ -1,7 +1,7 @@
 // Builtin Variables
-object_set_depth(argument0,98);
+object_set_depth(argument0,-100);
 object_set_mask(argument0,noone);
-object_set_parent(argument0,par_3d_obj);
+object_set_parent(argument0,par_obj);
 object_set_persistent(argument0,false);
 object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
@@ -13,19 +13,13 @@ object_event_add
     // Assets
     if instance_exists(load_par_obj)
     {
-        bg_var = load_par_obj.bg_arr_var[22,0];
+        bg_var = load_par_obj.bg_arr_var[23,0];
         mdl_var = load_par_obj.mdl_arr_var[7,0];
         surf_var = load_par_obj.surf_arr_var[0,0];
         surf_w_var = load_par_obj.surf_arr_var[0,1];
         surf_h_var = load_par_obj.surf_arr_var[0,2];
-        tex_var = load_par_obj.surf_arr_var[0,3];
         path_var = load_par_obj.path_arr_var[0,0];
     }
-    // Position (jank)
-    x_var = x;
-    y_var = y;
-    x = 0;
-    y = 0;
     // Variables
     load_var = true;
     x_spd_var = 0;
@@ -42,6 +36,8 @@ object_event_add
 (argument0,ev_step,ev_step_normal,'
     event_inherited();
     path_speed = 0.5*global.delta_time_var;
+    if x_spd_var > 0 { x = mod_scr(x+(x_spd_var*global.delta_time_var),surf_w_var); }
+    if y_spd_var > 0 { y = mod_scr(y+(y_spd_var*global.delta_time_var),surf_h_var); }
     // Draw Surface
     surface_set_target(surf_var);
     draw_clear_alpha(c_black,0);
@@ -52,23 +48,4 @@ object_event_add
     d3d_set_hidden(true);
     d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var);
     surface_reset_target();
-');
-// Draw Event
-object_event_add
-(argument0,ev_draw,0,'
-    if !global.reflect_var
-    {
-        d3d_set_fog(false,c_black,0,0);
-        draw_set_alpha(image_alpha); draw_set_color(image_blend); d3d_set_hidden(false);
-        d3d_transform_set_identity();
-        //d3d_transform_add_rotation_z(direction);
-        if skybox_var
-        { d3d_transform_add_translation(global.cam_x_var[view_current],global.cam_y_var[view_current],global.cam_z_var[view_current]); }
-        else { d3d_transform_add_translation(x_var,y_var,z); }
-        if hd_var { d3d_model_draw(mdl_var,0,0,0,tex_var); }
-        else { d3d_draw_ellipsoid(radius_var,radius_var,radius_var,-radius_var,-radius_var,-radius_var,tex_var,4,4,8); }
-        d3d_transform_set_identity();
-        draw_set_color(c_white); draw_set_alpha(1); d3d_set_hidden(true);
-        d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var);
-    }
 ');
