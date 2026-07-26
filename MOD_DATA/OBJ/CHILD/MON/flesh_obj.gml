@@ -179,10 +179,7 @@ object_event_add
     }
     // Zone
     if zone_var && zone_start_var <= 0
-    {
-        global.zone_var = zone_list_var;
-        zone_reset_scr();
-    }
+    { zone_override_scr(zone_list_var,noone); }
 ');
 // Destroy Event
 object_event_add
@@ -257,7 +254,7 @@ object_event_add
             }
         }
     }
-    zone_from_num_scr(global.zone_num_var);
+    zone_reset_scr();
 ');
 // Room Start Event
 object_event_add
@@ -463,15 +460,9 @@ Difference: "+string(local.newdelay)+"
     // Zone
     if zone_var
     {
-        if dur_var == 1
-        {
-            zone_from_num_scr(global.zone_num_var);
-        }
+        if dur_var == 1 { zone_reset_scr(); }
         else if zone_start_var > 0 && dur_start_var-dur_var == zone_start_var-1
-        {
-            global.zone_var = zone_list_var;
-            zone_reset_scr();
-        }
+        { zone_override_scr(zone_list_var,noone); }
     }
     // Delay
     if local.delay <= 0 { event_perform(ev_alarm,0); }

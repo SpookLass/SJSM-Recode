@@ -74,12 +74,23 @@ object_event_add
             if global.save_name_var == "1235" && frac_chance_scr(1,235) { rm_var = dev_rm; local.set = true; }
             // Other
             if !local.set && global.rare_chance_var > 0 && frac_chance_scr(1,global.rare_chance_var)
-            { rm_var = ds_list_find_value(global.rare_zone_var,irandom(ds_list_size(global.rare_zone_var)-1)); local.set = true; }
+            {
+                if rare_zone_override_list >= 0
+                { local.rare = rare_zone_override_list; }
+                else { local.rare = rare_zone_list; }
+                if local.rare >= 0
+                {
+                    rm_var = ds_list_find_value(local.rare,irandom(ds_list_size(local.rare)-1));
+                    local.set = true;
+                }
+            }
         }
         // Default
         if !local.set
         {
-            zone_var = global.zone_var;
+            if zone_override_list > 0
+            { zone_var = zone_override_list; }
+            else { zone_var = zone_list; }
             event_user(0);
         }
     }
@@ -88,7 +99,11 @@ object_event_add
 object_event_add
 (argument0,ev_alarm,0,'
     global.rm_count_var += rm_count_var;
-    if ele_var { zone_scr(-1,true); tex_scr(-1); }
+    if ele_var
+    {
+        zone_scr(-3,-1,-1,-1,false);
+        tex_scr(-1);
+    }
     if room_exists(rm_var) && rm_var != 0 { rm_goto_scr(rm_var); }
     else { show_error("Room "+string(rm_var)+" does not exist!",false); rm_goto_scr(hall_01_rm); }
 ')
@@ -156,13 +171,13 @@ object_event_add
         }
         if !local.set
         {
-            if ds_list_size(global.rm_list_var) <= 0
+            if ds_list_size(rm_list) <= 0
             {
-                ds_list_copy(global.rm_list_var,global.zone_var);
-                ds_list_shuffle(global.rm_list_var);
+                ds_list_copy(rm_list,zone_var);
+                ds_list_shuffle(rm_list);
             }
-            rm_var = ds_list_find_value(global.rm_list_var,0);
-            ds_list_delete(global.rm_list_var,0);
+            rm_var = ds_list_find_value(rm_list,0);
+            ds_list_delete(rm_list,0);
         }
     }
 ');

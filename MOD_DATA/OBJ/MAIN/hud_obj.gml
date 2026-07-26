@@ -332,6 +332,17 @@ object_event_add
             // Debug text
             if global.debug_var && !global.hide_debug_var
             {
+                local.zonestr = "Zone: "
+                switch global.zone_key_var
+                {
+                    case -2: { local.zonestr += "Random"; break; }
+                    case -1: { local.zonestr += "Every"; break; }
+                    case 0: { local.zonestr += "Recode Story "+string(global.zone_var); break; }
+                    case 1: { local.zonestr += "Recode Endless "+string(global.zone_var); break; }
+                    case 2: { local.zonestr += "Original Story "+string(global.zone_var); break; }
+                    case 3: { local.zonestr += "Original Endless "+string(global.zone_var); break; }
+                    case 4: { local.zonestr += "Renovation Story "+string(global.zone_var); break; }
+                }
                 local.str = "
 Position
     X: "+string(par_var.x)+"
@@ -358,9 +369,9 @@ Clear Time
 Taker
     Taker: "+string(par_var.alarm_arr[3,0])+" / "+string(par_var.alarm_arr[3,1])+"
 Zone
-    Zone: "+cond_scr(global.zone_num_var < global.zone_len_var,"Endless "+string(global.zone_num_var),"Story "+string(global.zone_num_var-global.zone_len_var))+"
+    "+local.zonestr+"
     Tex: "+string(global.tex_var)+"
-    Rooms Left: "+string(ds_list_size(global.rm_list_var))+"
+    Rooms Left: "+string(ds_list_size(rm_list))+"
 Spawning
     Count: "+string(global.count_var)+"
     Fail: "+string(global.mon_fail_var)+"

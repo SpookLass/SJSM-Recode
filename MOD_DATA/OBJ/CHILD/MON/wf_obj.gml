@@ -383,7 +383,7 @@ object_event_add
         }
     }
     if zone_start_var > 0
-    { zone_from_num_scr(global.zone_num_var); }
+    { zone_reset_scr(); }
     with wf_eff_obj
     { if par_var == other.id { instance_destroy(); }}
     if loop_var == 2 && zone_start_var > 0
@@ -448,10 +448,7 @@ object_event_add
     if zone_start_var > 0 && local.start >= zone_start_var-1
     {
         if local.start == zone_start_var-1
-        {
-            global.zone_var = zone_list_var;
-            zone_reset_scr();
-        }
+        { zone_override_scr(zone_list_var,noone); }
         if loop_var
         {
             if loop_var != 2

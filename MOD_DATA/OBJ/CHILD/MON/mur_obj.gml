@@ -182,10 +182,7 @@ object_event_add
     part_tex_var = background_get_texture(part_bg_var);
     // Zone
     if zone_var
-    {
-        global.zone_var = zone_list_var;
-        zone_reset_scr();
-    }
+    { zone_override_scr(zone_list_var,noone); }
 ');
 // Destroy Event
 object_event_add
@@ -216,7 +213,7 @@ object_event_add
     }
     with amn_water_obj { if par_var == other.id { instance_destroy(); }}
     with amn_crate_obj { if par_var == other.id { instance_destroy(); }}
-    zone_from_num_scr(global.zone_num_var);
+    zone_reset_scr();
 ');
 // Room Start Event
 object_event_add

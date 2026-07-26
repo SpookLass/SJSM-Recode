@@ -28,6 +28,10 @@
     globalvar mon_curr_list;
     globalvar save_list;
     globalvar preset_list;
+    globalvar zone_list;
+    globalvar rare_zone_list;
+    globalvar zone_override_list;
+    globalvar rare_zone_override_list;
 // Timing
     globalvar last_second;
     globalvar current_millisecond;
@@ -49,6 +53,8 @@
 // Room
     global.rm_count_var = 0;
     global.rm_count_override_var = "";
+    zone_override_list = noone;
+    rare_zone_override_list = noone;
 // Reflections
     global.reflect_var = false;
     global.reflect_pos_var = 0;

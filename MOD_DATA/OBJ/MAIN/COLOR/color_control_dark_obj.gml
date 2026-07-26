@@ -20,10 +20,10 @@ object_event_add
         // Pride Month!
         else if current_month == 6 || global.pride_var == 1 { local.arr[local.len] = ds_list_find_value(pride_list,irandom(ds_list_size(pride_list)-1)); local.len += 1; }
         // Halloween, Saint Patricks Day, or Halloween
-        if current_month == 10 || global.halloween_var || (current_month == 3 && current_day == 17) || ds_list_find_index(global.zone_var,med_01_rm) != -1
+        if current_month == 10 || global.halloween_var || (current_month == 3 && current_day == 17) || ds_list_find_index(zone_list,med_01_rm) != -1
         { local.arr[local.len] = med_color_obj; local.len += 1; }
         // Halloween or Purple
-        if current_month == 10 || global.halloween_var || ds_list_find_index(global.zone_var,purp_01_rm) != -1 { local.arr[local.len] = purp_color_obj; local.len += 1; }
+        if current_month == 10 || global.halloween_var || ds_list_find_index(zone_list,purp_01_rm) != -1 { local.arr[local.len] = purp_color_obj; local.len += 1; }
         // Halloween
         if current_month == 10 || global.halloween_var { local.arr[local.len] = lass_color_obj; local.len += 1; }
         if local.len > 0 { instance_create(0,0,local.arr[irandom(local.len-1)]); }

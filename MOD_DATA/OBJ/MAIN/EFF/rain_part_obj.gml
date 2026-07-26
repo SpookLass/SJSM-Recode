@@ -11,6 +11,7 @@ object_event_add
 (argument0,ev_create,0,'
     event_inherited();
     image_alpha = 0.33;
+    on_var = true;
     // Bounding Box
     w_var = 256;
     l_var = 256;
@@ -35,7 +36,7 @@ object_event_add
     player_var = true;
     do_spawn_coll_var = false; // Horribly inefficient, do not recommmend!
     local.dir = part_yaw_var+180;
-    local.dist = tan(degtorad(90+part_pitch_var))*h_var;
+    local.dist = tan(degtorad(90+part_pitch_var))*(h_var-64);
     x_off_var = lengthdir_x(local.dist,local.dir);
     y_off_var = lengthdir_y(local.dist,local.dir);
     // Effects
@@ -44,59 +45,62 @@ object_event_add
 // Step
 object_event_add
 (argument0,ev_step,ev_step_normal,'
-    // Spawn 240 particles per second
-    local.spawn = part_spawn_var*global.delta_time_var;
-    if local.spawn > 0
+    if on_var
     {
-        if player_var
+        // Spawn 240 particles per second
+        local.spawn = part_spawn_var*global.delta_time_var;
+        if local.spawn > 0
         {
-            local.xtmp = 0; local.ytmp = 0; local.ztmp = 0;
-            for (local.i=0; local.i<global.player_len_var; local.i+=1;)
+            if player_var
             {
-                local.xtmp += global.player_arr[local.i].x;
-                local.ytmp += global.player_arr[local.i].y;
-                local.ztmp += global.player_arr[local.i].z;
-            }
-            local.xtmp /= global.player_len_var; 
-            local.ytmp /= global.player_len_var; 
-            local.ztmp /= global.player_len_var;
-        }
-        else
-        {
-            local.xtmp = x;
-            local.ytmp = y;
-            local.ztmp = z;
-        }
-        local.xtmp += x_off_var;
-        local.ytmp += y_off_var;
-        for (local.i=0; local.i<local.spawn; local.i+=1;)
-        {
-            local.xtmp2 = local.xtmp+random(w_var)-(w_var/2);
-            local.ytmp2 = local.ytmp+random(l_var)-(l_var/2);
-            local.ztmp2 = local.ztmp+h_var;
-            local.spd = random_range(part_spd_min_var,part_spd_max_var);
-            if do_spawn_coll_var
-            {
-                local.xvel = lengthdir_x(lengthdir_x(1,part_yaw_var),part_pitch_var);
-                local.yvel = lengthdir_x(lengthdir_y(1,part_yaw_var),part_pitch_var);
-                local.zvel = -lengthdir_y(1,part_pitch_var);
-                if check_ray_scr(local.xtmp2,local.ytmp2,local.ztmp2,local.xvel,local.yvel,local.zvel) < 10000000
+                local.xtmp = 0; local.ytmp = 0; local.ztmp = 0;
+                for (local.i=0; local.i<global.player_len_var; local.i+=1;)
                 {
-                    local.i -= 0.9; // Ten Attempts per drop
-                    continue;
+                    local.xtmp += global.player_arr[local.i].x;
+                    local.ytmp += global.player_arr[local.i].y;
+                    local.ztmp += global.player_arr[local.i].z;
                 }
+                local.xtmp /= global.player_len_var; 
+                local.ytmp /= global.player_len_var; 
+                local.ztmp /= global.player_len_var;
             }
-            local.part = part_add_scr
-            (
-                local.xtmp2,local.ytmp2,local.ztmp2,
-                local.spd,part_yaw_var,part_pitch_var,
-                droplet_w_var,droplet_h_var,0,
-                image_blend,image_alpha,
-                false,white_bg_tex,
-                0,0,
-                h_var*2/local.spd
-            );
-            if local.part != -1 { part_arr[local.part,18] = false; }
+            else
+            {
+                local.xtmp = x;
+                local.ytmp = y;
+                local.ztmp = z;
+            }
+            local.xtmp += x_off_var;
+            local.ytmp += y_off_var;
+            for (local.i=0; local.i<local.spawn; local.i+=1;)
+            {
+                local.xtmp2 = local.xtmp+random(w_var)-(w_var/2);
+                local.ytmp2 = local.ytmp+random(l_var)-(l_var/2);
+                local.ztmp2 = local.ztmp+h_var;
+                local.spd = random_range(part_spd_min_var,part_spd_max_var);
+                if do_spawn_coll_var
+                {
+                    local.xvel = lengthdir_x(lengthdir_x(1,part_yaw_var),part_pitch_var);
+                    local.yvel = lengthdir_x(lengthdir_y(1,part_yaw_var),part_pitch_var);
+                    local.zvel = -lengthdir_y(1,part_pitch_var);
+                    if check_ray_scr(local.xtmp2,local.ytmp2,local.ztmp2,local.xvel,local.yvel,local.zvel) < 10000000
+                    {
+                        local.i -= 0.9; // Ten Attempts per drop
+                        continue;
+                    }
+                }
+                local.part = part_add_scr
+                (
+                    local.xtmp2,local.ytmp2,local.ztmp2,
+                    local.spd,part_yaw_var,part_pitch_var,
+                    droplet_w_var,droplet_h_var,0,
+                    image_blend,image_alpha,
+                    false,white_bg_tex,
+                    0,0,
+                    h_var*2/local.spd
+                );
+                if local.part != -1 { part_arr[local.part,18] = false; }
+            }
         }
     }
     local.len = min(part_len_var,global.max_part_var/instance_number(part_par_obj));

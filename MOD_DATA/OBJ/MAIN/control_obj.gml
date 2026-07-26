@@ -231,8 +231,11 @@ object_event_add
             }
             case 9:
             {
-                local.zone = get_integer("Zone",global.zone_num_var);
-                zone_scr(local.zone,true);
+                local.key = get_integer("Key",-3);
+                local.type = get_integer("Behavior",-1);
+                local.mode = get_integer("Mode",-1);
+                local.zone = get_integer("Zone",-1);
+                zone_scr(local.key,local.type,local.mode,local.zone,true);
                 break;
             }
             case 10: { global.count_var = get_integer("Set Count", global.count_var); break; }

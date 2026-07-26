@@ -86,7 +86,7 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_game_end,'
     ini_open("mods.ini");
-    ini_write_string("MODS","mods",ds_list_write(global.mod_list));
+    ini_write_list_scr("MODS","mods",global.preset_list,2);
     ini_close();
 ');
 // Create Event

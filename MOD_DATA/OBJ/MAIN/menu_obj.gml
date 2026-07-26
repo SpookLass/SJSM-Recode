@@ -461,7 +461,7 @@ object_event_add
 	ds_list_clear(global.preset_list);
 	ini_open("saves.ini");
 	ds_list_read(global.save_list,ini_read_string("SAVES","SAVES","2F01000000000000"));
-	ds_list_read(global.preset_list,ini_read_string("SAVES","presets","2F01000000000000"));
+    ini_read_list_scr("SAVES","presets",global.preset_list,2);
 	ini_close();
     // Preset
     preset_var = 0;
@@ -907,7 +907,7 @@ object_event_add
                             {
                                 ds_list_add(global.preset_list,local.preset);
                                 ini_open("saves.ini");
-                                ini_write_string("SAVES","presets",ds_list_write(global.preset_list));
+                                ini_write_list_scr("SAVES","presets",global.preset_list,2);
                                 ini_close();
                                 preset_arr_var[preset_len_var] = local.preset;
                                 preset_len_var += 1;
@@ -974,7 +974,7 @@ object_event_add
                             file_delete("preset_"+ds_list_find_value(global.preset_list,preset_var)+".ini");
                             ds_list_delete(global.preset_list,preset_var);
                             ini_open("saves.ini");
-                            ini_write_string("SAVES","presets",ds_list_write(global.preset_list));
+                            ini_write_list_scr("SAVES","presets",global.preset_list,2);
                             ini_close();
                             preset_len_var = ds_list_size(global.preset_list);
                             for (local.i=0; local.i<preset_len_var; local.i+=1;)
@@ -1488,7 +1488,7 @@ object_event_add
                 if save_name_var == "1987" { instance_create(0,0,otter8_js_obj); }
                 // Random Zone and Tex
                 tex_scr(-1);
-                zone_scr(-1,true);
+                zone_scr(-3,-1,-1,-1,true);
 			}
 			break;
 		}

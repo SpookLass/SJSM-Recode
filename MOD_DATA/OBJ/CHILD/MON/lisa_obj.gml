@@ -233,10 +233,7 @@ object_event_add
     mus_snd_var = -1;
     head_mdl_var = head_mdl_arr[irandom(head_len_var-1)];
     if zone_end_var > 0
-    {
-        global.zone_var = zone_list_var;
-        zone_reset_scr();
-    }
+    { zone_override_scr(zone_list_var,noone); }
     global.js_override_var = true;
     global.js_override_num_var = 0;
     global.js_override_den_var = 1;
@@ -262,7 +259,7 @@ object_event_add
         global.note_override_var = false;
     }
     if zone_end_var > 0
-    { zone_from_num_scr(global.zone_num_var); }
+    { zone_reset_scr(); }
     if loop_fake_var && loop_start_var > 0
     { global.rm_count_override_var = ""; }
 ');
@@ -371,7 +368,7 @@ object_event_add
     }
     else  { with js_obj { instance_destroy(); }}
     if zone_end_var > 0 && local.start == zone_end_var
-    { zone_from_num_scr(global.zone_num_var); }
+    { zone_reset_scr(); }
 ');
 // Room End Event
 object_event_add

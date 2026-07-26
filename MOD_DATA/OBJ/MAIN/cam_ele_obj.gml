@@ -98,13 +98,13 @@ object_event_add
         if prog_var <= 0
         {
             global.rm_count_var += 1;
-            if ds_list_size(global.rm_list_var) <= 0
+            if ds_list_size(rm_list) <= 0
             {
-                ds_list_copy(global.rm_list_var,global.zone_var);
-                ds_list_shuffle(global.rm_list_var);
+                ds_list_copy(rm_list,zone_list);
+                ds_list_shuffle(rm_list);
             }
-            local.rm = ds_list_find_value(global.rm_list_var,0);
-            ds_list_delete(global.rm_list_var,0);
+            local.rm = ds_list_find_value(rm_list,0);
+            ds_list_delete(rm_list,0);
             rm_leave_menu_scr(local.rm);
             instance_destroy();
         }

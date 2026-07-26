@@ -18,13 +18,13 @@ object_event_add
     part_len_var = 100;
     part_ini_scr();
     part_spawn_var = 4;
-    do_coll_var = true;
+    do_coll_var = false;
     // Ring
     do_ring_var = false;
     // Spawning
     player_var = false;
     local.dir = part_yaw_var+180;
-    local.dist = tan(degtorad(90+part_pitch_var))*h_var;
+    local.dist = tan(degtorad(90+part_pitch_var))*(h_var-64);
     x_off_var = lengthdir_x(local.dist,local.dir);
     y_off_var = lengthdir_y(local.dist,local.dir);
     // Effects

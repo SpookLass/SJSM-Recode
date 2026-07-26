@@ -3,7 +3,7 @@ ini_open("mods.ini");
 globalvar mod_list;
 global.mod_list = ds_list_create();
 ds_list_clear(global.mod_list);
-ds_list_read(global.mod_list,ini_read_string("MODS","mods",ds_list_write(global.mod_list)));
+ini_read_list_scr("MODS","mods",global.mod_list,2);
 ini_close();
 // Mod load list
 globalvar mod_load_list;

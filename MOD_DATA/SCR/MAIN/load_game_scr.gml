@@ -13,8 +13,7 @@ global.mon_fail_var = ini_read_real("MAIN","mon_fail_var",0);
 global.tex_var = ini_read_real("MAIN","tex",-1);
 local.rm = ini_read_string("MAIN","room","ele_rm");
 global.note_var = ini_read_real("MAIN","note",0);
-global.zone_var = ini_read_real("MAIN","zone",global.zone_arr[0]);
-global.zone_num_var = ini_read_real("MAIN","zone_num",-1);
+zone_list = ini_read_real("MAIN","zone",every_zone_list);
 global.game_time_var = ini_read_real("MAIN","game_time",0);
     // Main settings
 global.mode_var = ini_read_real("MAIN","mode",1);
@@ -22,9 +21,9 @@ global.main_type_var = ini_read_real("MAIN","type",0);
 global.diff_var = ini_read_real("MAIN","diff",0);
 global.custom_var = ini_read_real("MAIN","custom",0);
     // Lists
-ini_read_list_scr("MAIN","rm_list",global.rm_list_var);
-ini_read_list_scr("MAIN","mon_curr_list",global.mon_curr_list);
-ini_read_list_scr("MAIN","mon_list",global.mon_list);
+ini_read_list_scr("MAIN","rm_list",rm_list,4);
+ini_read_list_scr("MAIN","mon_curr_list",mon_curr_list,3);
+ini_read_list_scr("MAIN","mon_list",mon_list,3);
 // Settings
 for (local.i=0; local.i<global.custom_len_var; local.i+=1)
 {
@@ -78,10 +77,6 @@ for (local.i=0; local.i<ds_list_size(global.mon_curr_list); local.i+=1;)
 // Other stuff
 tex_scr(global.tex_var);
 if argument0 == "1987" { instance_create(0,0,otter8_js_obj); }
-
-execute_string
-("
-    if variable_global_exists("+local.rm+")
-    { rm_goto_scr("+local.rm+"); }
-    else { rm_goto_scr(ele_rm); }
-");
+if variable_global_exists(local.rm)
+{ rm_goto_scr(variable_global_get(local.rm)); }
+else { rm_goto_scr(ele_rm); }

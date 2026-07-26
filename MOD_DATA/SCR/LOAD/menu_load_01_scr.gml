@@ -423,10 +423,9 @@ draw_load_scr("Loading config...");
     // Random Zones
         // Main
             /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Has Descriptions*/
-            local.set = custom_add_scr("zone_rand","zone_rand","zone_rand",true,custom_enum_const,0,2,true,local.toggle,false);
-            custom_add_label_scr(local.set,0,"off",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
-            custom_add_label_scr(local.set,1,"on",true,"");
-            custom_add_label_scr(local.set,2,"rand",true,"");
+            local.set = custom_add_scr("zone_rand","zone_rand","zone_rand",true,custom_enum_const,false,true,true,local.toggle,false);
+            custom_add_label_scr(local.set,false,"off",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            custom_add_label_scr(local.set,true,"on",true,"");
         // Defaults
             custom_arr_add_len_scr(0,1);
             custom_arr_set_scr(true,local.set,-1,-1,-1); // Default
@@ -435,39 +434,39 @@ draw_load_scr("Loading config...");
     // Elevator Type
         // Main
             /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Has Descriptions*/
-            local.ele_type = custom_add_scr("ele_type","ele_type","ele_type",true,custom_enum_const,0,2,true,local.rm,false);
-            custom_add_label_scr(local.ele_type,0,"1",false,""); /*Setting ID, Label ID, Label, Translate, Description*/
-            custom_add_label_scr(local.ele_type,1,"2",false,"");
-            custom_add_label_scr(local.ele_type,2,"3",false,"");
+            local.set = custom_add_scr("ele_type","ele_type","ele_type",true,custom_enum_const,0,2,true,local.rm,false);
+            custom_add_label_scr(local.set,0,"1",false,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            custom_add_label_scr(local.set,1,"2",false,"");
+            custom_add_label_scr(local.set,2,"3",false,"");
         // Defaults
             custom_arr_add_len_scr(0,1);
-            custom_arr_set_scr(ele_type_const,local.ele_type,-1,-1,-1); // Default
-            custom_arr_set_scr(2,local.ele_type,-1,-1,1); // OG
-            custom_arr_set_scr(1,local.ele_type,-1,0,2); // HD Story
-            custom_arr_set_scr(0,local.ele_type,-1,1,2); // HD Endless
+            custom_arr_set_scr(ele_type_const,local.set,-1,-1,-1); // Default
+            custom_arr_set_scr(2,local.set,-1,-1,1); // OG
+            custom_arr_set_scr(1,local.set,-1,0,2); // HD Story
+            custom_arr_set_scr(0,local.set,-1,1,2); // HD Endless
     // Elevator End 1
         // Main
             /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Has Descriptions*/
-            local.ele_end_01 = custom_add_scr("ele_end_01","ele_end_01","ele_end_01",true,custom_min_clamp_num_const,0,-1,false,local.rm,false);
+            local.set = custom_add_scr("ele_end_01","ele_end_01","ele_end_01",true,custom_min_clamp_num_const,0,-1,false,local.rm,false);
         // Defaults
             custom_arr_add_len_scr(0,1);
-            custom_arr_set_scr(ele_end_01_const,local.ele_end_01,-1,-1,-1); // Default
+            custom_arr_set_scr(ele_end_01_const,local.set,-1,-1,-1); // Default
     // Elevator End 2
         // Main
             /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Has Descriptions*/
-            local.ele_end_02 = custom_add_scr("ele_end_02","ele_end_02","ele_end_02",true,custom_min_clamp_num_const,0,-1,false,local.rm,false);
+            local.set = custom_add_scr("ele_end_02","ele_end_02","ele_end_02",true,custom_min_clamp_num_const,0,-1,false,local.rm,false);
         // Defaults
             custom_arr_add_len_scr(0,1);
-            custom_arr_set_scr(ele_end_02_const,local.ele_end_02,-1,-1,-1); // Default
+            custom_arr_set_scr(ele_end_02_const,local.set,-1,-1,-1); // Default
             custom_arr_set_scr(900,local.set,-1,0,-1); // Story Mode
     // Elevator Rate 1
         // Main
             /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Has Descriptions*/
-            local.ele_rate_01 = custom_add_scr("ele_rate_01","ele_rate_01","ele_rate_01",true,custom_min_clamp_num_const,0,-1,false,local.rm,false);
+            local.set = custom_add_scr("ele_rate_01","ele_rate_01","ele_rate_01",true,custom_min_clamp_num_const,0,-1,false,local.rm,false);
         // Defaults
             custom_arr_add_len_scr(0,1);
-            custom_arr_set_scr(ele_rate_01_const,local.ele_rate_01,-1,-1,-1); // Default
-            custom_arr_set_scr(100,local.ele_rate_01,-1,1,2); // HD Endless
+            custom_arr_set_scr(ele_rate_01_const,local.set,-1,-1,-1); // Default
+            custom_arr_set_scr(100,local.set,-1,1,2); // HD Endless
     // Elevator Rate 2
         // Main
             /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Has Descriptions*/
@@ -482,7 +481,7 @@ draw_load_scr("Loading config...");
         // Defaults
             custom_arr_add_len_scr(0,1);
             custom_arr_set_scr(ele_rate_03_const,local.ele_rate_03,-1,-1,-1); // Default
-            custom_arr_set_scr(95,local.set,-1,0,-1); // Story Mode
+            custom_arr_set_scr(95,local.ele_rate_03,-1,0,-1); // Story Mode
 // Behaviors
     // Player
         local.player = type_add_scr("player",true,false,0,player_obj,noone,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
@@ -562,7 +561,7 @@ draw_load_scr("Loading config...");
                 custom_arr_set_scr(2,local.js_set,-1,-1,2); // HD
                 custom_arr_set_scr(-1,local.js_set,5,-1,-1); // :) (Random)
         // Gel
-            local.gel = type_add_scr("gel",true,true,1,gel_obj,noone,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
+            local.gel = type_add_scr("gel",true,true,1,gel_obj,gel_load_rm,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
             local.gel_set = type_add_set_scr(local.gel,"gel","gel",local.spec,true); /*ID, Variable Name, Description, Category, Can Disable*/
             // Types
                 type_add_type_scr(local.gel,local.gel_set,"recode","",true); /*Type ID, Setting ID, Label, Description, Translate*/
@@ -575,7 +574,7 @@ draw_load_scr("Loading config...");
                 custom_arr_set_scr(2,local.gel_set,-1,-1,2); // HD
                 custom_arr_set_scr(-1,local.gel_set,5,-1,-1); // :) (Random)
         // Brain
-            local.brain = type_add_scr("brain",true,true,1,brain_chase_obj,noone,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
+            local.brain = type_add_scr("brain",true,true,1,brain_chase_obj,brain_load_rm,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
             local.brain_set = type_add_set_scr(local.brain,"brain","brain",local.spec,true); /*ID, Variable Name, Description, Category, Can Disable*/
             // Types
                 type_add_type_scr(local.brain,local.brain_set,"recode","",true); /*ID, Label, Description, Translate*/
@@ -585,10 +584,11 @@ draw_load_scr("Loading config...");
                 custom_arr_add_len_scr(0,1);
                 custom_arr_set_scr(-2,local.brain_set,-1,-1,-1); // Default (Off)
                 custom_arr_set_scr(-2,local.brain_set,-1,0,-1); // Story Mode (Off)
-                custom_arr_set_scr(0,local.brain_set,-1,-1,0); // Recode
+                custom_arr_set_scr(0,local.brain_set,-1,1,0); // Recode Endless
+                custom_arr_set_scr(0,local.brain_set,-1,2,0); // Recode Sandbox
                 custom_arr_set_scr(-1,local.brain_set,5,-1,-1); // :) (Random)
         // Bug
-            local.bug = type_add_scr("bug",true,true,1,bug_obj,noone,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
+            local.bug = type_add_scr("bug",true,true,1,bug_obj,lab_load_rm,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
             local.bug_set = type_add_set_scr(local.bug,"bug","bug",local.spec,true); /*ID, Variable Name, Description, Category, Can Disable*/
             // Types
                 type_add_type_scr(local.bug,local.bug_set,"recode","",true); /*ID, Label, Description, Translate*/
@@ -602,7 +602,7 @@ draw_load_scr("Loading config...");
                 custom_arr_set_scr(2,local.bug_set,-1,-1,2); // HD
                 custom_arr_set_scr(-1,local.bug_set,5,-1,-1); // :) (Random)
         // Ringu
-            local.ringu = type_add_scr("ringu",true,true,1,ringu_obj,noone,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
+            local.ringu = type_add_scr("ringu",true,true,1,ringu_obj,school_load_rm,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
             local.ringu_set = type_add_set_scr(local.ringu,"ringu","ringu",local.spec,true); /*ID, Variable Name, Description, Category, Can Disable*/
             // Types
                 type_add_type_scr(local.ringu,local.ringu_set,"recode","",true); /*ID, Label, Description, Translate*/
@@ -616,7 +616,7 @@ draw_load_scr("Loading config...");
                 custom_arr_set_scr(2,local.ringu_set,-1,-1,2); // HD
                 custom_arr_set_scr(-1,local.ringu_set,5,-1,-1); // :) (Random)
         // Bab
-            local.bab = type_add_scr("bab",true,true,1,bab_obj,noone,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
+            local.bab = type_add_scr("bab",true,true,1,bab_obj,asy_load_rm,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
             local.bab_set = type_add_set_scr(local.bab,"bab","bab",local.spec,true); /*ID, Variable Name, Description, Category, Can Disable*/
             // Types
                 type_add_type_scr(local.bab,local.bab_set,"recode","",true); /*ID, Label, Description, Translate*/
@@ -647,7 +647,7 @@ draw_load_scr("Loading config...");
                 custom_arr_set_scr(2,local.pup_set,-1,-1,2); // HD
                 custom_arr_set_scr(-1,local.pup_set,5,-1,-1); // :) (Random)
         // Flesh
-            local.flesh = type_add_scr("flesh",true,true,1,flesh_obj,noone,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
+            local.flesh = type_add_scr("flesh",true,true,1,flesh_obj,mad_load_rm,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
             local.flesh_set = type_add_set_scr(local.flesh,"flesh","flesh",local.spec,true); /*ID, Variable Name, Description, Category, Can Disable*/
             // Types
                 type_add_type_scr(local.flesh,local.flesh_set,"recode","",true); /*ID, Label, Description, Translate*/
