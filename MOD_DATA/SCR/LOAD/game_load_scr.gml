@@ -24,6 +24,7 @@
     globalvar rm_name_arr;
 // Lists
     globalvar mon_list;
+    globalvar locale_list;
     globalvar mon_spawn_list;
     globalvar mon_curr_list;
     globalvar save_list;
@@ -53,6 +54,7 @@
 // Room
     global.rm_count_var = 0;
     global.rm_count_override_var = "";
+    global.locale_rm_var = 0;
     zone_override_list = noone;
     rare_zone_override_list = noone;
 // Reflections
@@ -118,6 +120,8 @@
     ds_list_clear(mon_spawn_list);
     mon_curr_list = ds_list_create();
     ds_list_clear(mon_curr_list);
+    locale_list = ds_list_create();
+    ds_list_clear(locale_list);
     save_list = ds_list_create();
     ds_list_clear(save_list);
     preset_list = ds_list_create();

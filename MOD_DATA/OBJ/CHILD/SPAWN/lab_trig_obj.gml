@@ -15,8 +15,8 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user0,'
     fmod_update_take_over_when_lock_scr();
-    if ds_list_find_index(global.mon_list,bug_obj) < 0
-    { ds_list_add(global.mon_list,bug_obj); }
+    if ds_list_find_index(mon_list,bug_obj) < 0
+    { ds_list_add(mon_list,bug_obj); }
     with spawn_door_trig_obj { lock_var = true; }
     with instance_create(0,0,bug_obj)
     {

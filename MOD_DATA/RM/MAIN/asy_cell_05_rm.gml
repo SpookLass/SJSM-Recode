@@ -25,7 +25,7 @@ room_set_code
     global.draw_3d_var = true;
     // Doors
     spawn_create_scr(false,false,false,asy_door_obj,spawn_door_trig_obj);
-    with spawn_arr[1,4] { rm_var = asy_03_rm; spawn_var = 2; snd_len_var = 1; snd_arr[0] = door_m_02_snd; }
+    with spawn_arr[1,4] { rm_var = asy_03_rm; rm_spawn_var = 2; snd_len_var = 1; snd_arr[0] = door_m_02_snd; }
     with spawn_arr[1,5]
     {
         if instance_exists(load_par_obj)

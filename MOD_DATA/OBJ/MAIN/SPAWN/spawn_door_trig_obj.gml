@@ -11,12 +11,12 @@ object_event_add
 (argument0,ev_create,0,'
     rm_var = noone;
     rm_count_var = 0;
-    spawn_var = 0;
+    rm_spawn_var = 0;
     event_inherited();
 ');
 // Alarm 0 Event
 object_event_add
 (argument0,ev_alarm,0,'
-    global.spawn_var = spawn_var;
+    global.spawn_var = rm_spawn_var;
     event_inherited();
 ');

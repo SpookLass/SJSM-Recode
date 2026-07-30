@@ -33,14 +33,25 @@ object_event_add
     event_inherited();
     z += 9.5;
 ');
+// Leave without spawning
+object_event_add
+(argument0,ev_other,ev_room_end,'
+    event_inherited();
+    if !spawn_var
+    {
+        if ds_list_find_index(mon_list,gel_obj) < 0
+        { ds_list_add(mon_list,gel_obj); }
+        instance_create(0,0,gel_obj);
+    }
+');
 // Put down note
 object_event_add
 (argument0,ev_other,ev_user3,'
     event_inherited();
     if !spawn_var
     {
-        if ds_list_find_index(global.mon_list,gel_obj) < 0
-        { ds_list_add(global.mon_list,gel_obj); }
+        if ds_list_find_index(mon_list,gel_obj) < 0
+        { ds_list_add(mon_list,gel_obj); }
         local.note = id;
         with instance_create(0,0,gel_obj)
         {

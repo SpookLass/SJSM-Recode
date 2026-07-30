@@ -7,10 +7,11 @@ room_set_code
     argument0,'
     // Name
     ini_open("lang_"+global.lang_var+".ini");
-    global.rm_name_var = ini_read_string("ROOM","lab","ROOM_lab")+" 1"
+    global.rm_name_var = ini_read_string("ROOM","lab","ROOM_lab")+" 1";
+    local.lock = ini_read_string("UI","keycard_hint","UI_keycard_hint");
     ini_close();
     // Spawns
-    global.spawn_len_var = 1;
+    global.spawn_len_var = 4;
     global.spawn_arr[0,0] = 176;
     global.spawn_arr[0,1] = 240;
     global.spawn_arr[0,2] = 0;
@@ -23,7 +24,7 @@ room_set_code
     global.spawn_arr[2,1] = 336;
     global.spawn_arr[2,2] = 0;
     global.spawn_arr[2,3] = 90;
-    global.spawn_arr[3,0] = 520;
+    global.spawn_arr[3,0] = 528;
     global.spawn_arr[3,1] = 240;
     global.spawn_arr[3,2] = 0;
     global.spawn_arr[3,3] = 180;
@@ -31,31 +32,11 @@ room_set_code
     d3d_start();
     global.draw_3d_var = true;
     // Doors
-    spawn_create_scr(true,false);
-    global.spawn_len_var = 4;
+    spawn_create_scr(true,false,0,lab_door_obj,spawn_door_trig_obj);
     // Exit
-    with instance_create(400,136,spawn_door_trig_obj) { global.spawn_arr[1,4] = id; lock_var = true; }
-    with instance_create(400,128,lab_door_obj) { global.spawn_arr[1,5] = id; direction = 270; }
-    with instance_create(400,344,spawn_door_trig_obj)
-    {
-        global.spawn_arr[2,4] = id;
-        rm_var = lab_02_rm;
-        snd_len_var = 1;
-        snd_arr[0] = door_m_02_snd;
-    }
-    with instance_create(400,352,lab_door_obj) { global.spawn_arr[2,5] = id; direction = 90; }
-    with instance_create(536,240,spawn_door_trig_obj)
-    {
-        global.spawn_arr[3,4] = id; 
-        rm_var = lab_03_rm;
-        lock_var = !load_par_obj.key_var;
-        ini_open("lang_"+global.lang_var+".ini");
-        txt_lock_var = ini_read_string("UI","keycard_hint","UI_keycard_hint");
-        ini_close();
-        snd_len_var = 1;
-        snd_arr[0] = door_m_02_snd;
-    }
-    with instance_create(544,240,lab_door_obj) { global.spawn_arr[3,5] = id; direction = 180; }
+    with global.spawn_arr[1,4] { lock_var = true; }
+    with global.spawn_arr[2,4] { rm_var = lab_02_rm; snd_len_var = 1; snd_arr[0] = door_m_02_snd; }
+    with global.spawn_arr[3,4] { rm_var = lab_03_rm; rm_count_var = 1; lock_var = !load_par_obj.key_var; txt_lock_var = local.lock; snd_len_var = 1; snd_arr[0] = door_m_02_snd; }
 ');
 // Room settings
 room_set_width(argument0,1280);

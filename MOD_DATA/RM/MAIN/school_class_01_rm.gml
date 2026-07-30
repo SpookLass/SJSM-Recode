@@ -24,7 +24,7 @@ room_set_code
     global.draw_3d_var = true;
     // Doors
     spawn_create_scr(false,false,false,school_door_obj,spawn_door_trig_obj);
-    with spawn_arr[1,4] { rm_var = school_01_rm; spawn_var = 1; }
+    with spawn_arr[1,4] { rm_var = school_01_rm; rm_spawn_var = 1; }
     with instance_create(0,0,reflect_eff_obj) { reflect_pos_var = 176; reflect_axis_var = 1; }
 ');
 // Room settings

@@ -24,7 +24,7 @@ room_set_code
     global.draw_3d_var = true;
     // Doors
     spawn_create_scr(true,false,mad_flesh_door_obj,mad_flesh_door_obj,spawn_leave_door_trig_obj);
-    with spawn_arr[1,5] { snd_len_var = 0; }
+    with spawn_arr[1,4] { snd_len_var = 0; }
 ');
 // Effects
 room_instance_add(argument0,0,0,mad_fog_obj);

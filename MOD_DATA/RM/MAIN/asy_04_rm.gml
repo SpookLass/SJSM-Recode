@@ -8,7 +8,8 @@ room_set_code
     argument0,'
     // Name
     ini_open("lang_"+global.lang_var+".ini");
-    global.rm_name_var = ini_read_string("ROOM","asy","ROOM_asy")+" 4"
+    global.rm_name_var = ini_read_string("ROOM","asy","ROOM_asy")+" 4";
+    local.lock = ini_read_string("UI","run","UI_run");
     ini_close();
     // Spawns
     global.spawn_len_var = 2;
@@ -33,11 +34,10 @@ room_set_code
     with instance_create(216,352,spawn_door_trig_obj)
     {
         global.spawn_arr[0,4] = id;
-        ini_open("lang_"+global.lang_var+".ini");
-        txt_lock_var = ini_read_string("UI","run","UI_run");
-        ini_close();
+        txt_lock_var = local.lock;
         rm_var = asy_02_rm;
-        spawn_var = 1;
+        rm_count_var = -1;
+        rm_spawn_var = 1;
         snd_len_var = 1;
         snd_arr[0] = door_m_02_snd;
     }

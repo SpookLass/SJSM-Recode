@@ -43,6 +43,7 @@ object_event_add
     ring_rate_var = 12;
     water_spd_mult_var = 0.6;
     water_spd_mult_deep_var = 0.6;
+    water_alpha_var = 1;
     crateless_spd_mult_var = 1;
     zone_var = true;
     sink_var = false;
@@ -74,6 +75,7 @@ object_event_add
             atk_range_var = global.mon_coll[2];
             type_var = 2;
             water_spd_mult_var = 1;
+            water_alpha_var = 0.6;
             fog_end_var = 128;
             crateless_spd_mult_var = 0.64;
             sink_var = true;
@@ -253,6 +255,7 @@ object_event_add
             path_start(path_var,0.02*global.delta_time_var,1,true);
             spd_mult_var = other.water_spd_mult_var;
             spd_mult_deep_var = other.water_spd_mult_deep_var;
+            image_alpha = other.water_alpha_var;
         }
     }
     // Fog

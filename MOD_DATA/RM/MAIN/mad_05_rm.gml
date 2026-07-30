@@ -10,7 +10,7 @@ room_set_code
     global.rm_name_var = ini_read_string("ROOM","mad","ROOM_mad")+" 2";
     ini_close();
     // Spawns
-    global.spawn_len_var = 3;
+    global.spawn_len_var = 2;
     global.spawn_arr[0,0] = 464;
     global.spawn_arr[0,1] = 336;
     global.spawn_arr[0,2] = 0;
@@ -40,7 +40,7 @@ room_set_code
         with spawn_arr[1,4] { snd_len_var = 1; snd_arr[0] = door_m_02_snd; }
     }
     with instance_create(456,336,spawn_door_trig_obj)
-    { rm_var = mad_01_rm; spawn_var = 4; snd_len_var = 1; snd_arr[0] = door_m_02_snd; }
+    { rm_var = mad_01_rm; rm_spawn_var = 4; snd_len_var = 1; snd_arr[0] = door_m_02_snd; }
     with spawn_arr[1,5] { spot_var = true; }
 ');
 // Effects

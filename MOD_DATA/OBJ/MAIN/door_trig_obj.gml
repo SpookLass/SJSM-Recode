@@ -42,6 +42,7 @@ object_event_add
     interact_target_var = noone;
     delay_var = 20;
     zone_var = -1;
+    locale_var = false;
     ele_var = false;
     if !variable_local_exists("rm_count_var") { rm_count_var = 1; }
     if !variable_local_exists("lock_var") { lock_var = false; }
@@ -60,8 +61,16 @@ object_event_add
     {
         local.set = false;
         ele_var = false;
+        // Locale
+        if global.rm_count_var+1 == global.locale_rm_var && ds_list_size(locale_list) > 0
+        {
+            locale_var = true;
+            rm_var = ds_list_find_value(locale_list,0);
+            ds_list_delete(locale_list,0);
+            local.set = true;
+        }
         // Elevator
-        if ele_rm_scr(global.rm_count_var+1)
+        if ele_rm_scr(global.rm_count_var+1) && !local.set
         {
             rm_var = ele_rm;
             ele_var = true;
@@ -80,8 +89,12 @@ object_event_add
                 else { local.rare = rare_zone_list; }
                 if local.rare >= 0
                 {
-                    rm_var = ds_list_find_value(local.rare,irandom(ds_list_size(local.rare)-1));
-                    local.set = true;
+                    if ds_list_size(local.rare) > 0
+                    {
+                        rm_var = ds_list_find_value(local.rare,irandom(ds_list_size(local.rare)-1));
+                        local.set = true;
+                    }
+                    else { show_error("This rare list empty! Im not gonna say it.",false)}
                 }
             }
         }
@@ -103,8 +116,13 @@ object_event_add
     {
         zone_scr(-3,-1,-1,-1,false);
         tex_scr(-1);
+        global.locale_rm_var = locale_rm_scr(global.rm_count_var);
     }
-    if room_exists(rm_var) && rm_var != 0 { rm_goto_scr(rm_var); }
+    if room_exists(rm_var) && rm_var != 0
+    {
+        if locale_var { rm_goto_menu_scr(rm_var,2); }
+        else { rm_goto_scr(rm_var); }
+    }
     else { show_error("Room "+string(rm_var)+" does not exist!",false); rm_goto_scr(hall_01_rm); }
 ')
 // Step Event

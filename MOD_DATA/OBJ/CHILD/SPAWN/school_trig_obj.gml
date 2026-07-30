@@ -15,8 +15,8 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user0,'
     fmod_update_take_over_when_lock_scr();
-    if ds_list_find_index(global.mon_list,ringu_obj) < 0
-    { ds_list_add(global.mon_list,ringu_obj); }
+    if ds_list_find_index(mon_list,ringu_obj) < 0
+    { ds_list_add(mon_list,ringu_obj); }
     with spawn_door_trig_obj { lock_var = true; }
     instance_create(0,0,ringu_obj);
     global.last_time_var = current_time;

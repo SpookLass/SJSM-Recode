@@ -1400,8 +1400,8 @@ object_event_add
                 global.mode_var = save_mode_var;
                 global.main_type_var = save_type_var;
                 global.custom_var = save_custom_var;
-                ds_list_clear(global.mon_list);
-				
+                ds_list_clear(mon_list);
+				ds_list_clear(locale_list);
 				// Difficulty
                 if global.main_type_var == 1 || global.main_type_var == 2 { global.diff_var = -1; } // OG and HD
                 else if !global.custom_var && diff_arr[save_diff_var,3] { global.diff_var = diff_arr[save_diff_var,4]; }
@@ -1436,14 +1436,19 @@ object_event_add
                             if local.custom { local.value = custom_value_arr_var[local.i]; }
                             // Get default value from 4D array
                             else { local.value = custom_arr_get_scr(local.i,global.diff_var,global.mode_var,global.main_type_var); }
-                            // Disabled
+                            // Enabled
                             if local.value != -2
                             {
                                 local.monid = custom_arr[local.i,10];
-                                if object_exists(mon_arr[local.monid,4]) && mon_arr[local.monid,2]
-                                { ds_list_add(global.mon_list,mon_arr[local.monid,4]); }
+                                if mon_arr[local.monid,2]
+                                {
+                                    // Gotta make sure locale_var loads first, otherwise everything will break
+                                    if global.locale_var && room_exists(mon_arr[local.monid,5]) { ds_list_add(locale_list,mon_arr[local.monid,5])}
+                                    else if object_exists(mon_arr[local.monid,4]) { ds_list_add(mon_list,mon_arr[local.monid,4]); }
+                                }
+                                
                             }
-                            // Enabled
+                            // Disabled
                             else { local.value = global.main_type_var; }
                             execute_string("global."+custom_arr[local.i,0]+"_type_var = "+string(local.value));
                         }
@@ -1453,12 +1458,13 @@ object_event_add
                         else { execute_string("global."+custom_arr[local.i,0]+"_var = "+string(custom_arr_get_scr(local.i,global.diff_var,global.mode_var,global.main_type_var))); }
                     }
                 }
-
 				// Save Info
 				global.rm_count_var = 0;
 				global.note_var = 0;
                 global.mon_fail_var = 0;
                 global.count_var = get_count_scr();
+                global.locale_rm_var = locale_rm_scr(global.rm_count_var);
+                if global.locale_rand_var { ds_list_shuffle(locale_list); }
                 // Boot it up!
                 for (local.i=0; local.i<global.player_len_var; local.i+=1;)
                 {

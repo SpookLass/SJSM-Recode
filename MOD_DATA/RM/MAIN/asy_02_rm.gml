@@ -83,8 +83,8 @@ room_set_code
     // Doors
     spawn_create_scr(true,false,asy_door_obj,asy_door_obj,spawn_door_trig_obj);
     with instance_create(248,352,spawn_door_trig_obj)
-    { global.spawn_arr[0,4] = id; rm_var = asy_01_rm; spawn_var = 1; snd_len_var = 1; snd_arr[0] = door_m_02_snd; }
-    with spawn_arr[1,4] { rm_var = asy_03_rm; snd_len_var = 1; snd_arr[0] = door_m_02_snd; }
+    { global.spawn_arr[0,4] = id; rm_var = asy_01_rm; rm_count_var = -1; rm_spawn_var = 1; snd_len_var = 1; snd_arr[0] = door_m_02_snd; }
+    with spawn_arr[1,4] { rm_var = asy_03_rm; rm_count_var = 1; snd_len_var = 1; snd_arr[0] = door_m_02_snd; }
     with spawn_arr[2,4] { rm_var = asy_cell_01_rm; snd_len_var = 1; snd_arr[0] = door_m_02_snd; }
     with spawn_arr[3,4] { rm_var = asy_cell_02_rm; snd_len_var = 1; snd_arr[0] = door_m_02_snd; }
     with spawn_arr[4,4] { rm_var = asy_cell_03_rm; snd_len_var = 1; snd_arr[0] = door_m_02_snd; }

@@ -49,7 +49,7 @@ room_set_code
     with spawn_arr[3,4] { rm_var = school_class_02_rm; }
     with spawn_arr[4,4] { rm_var = school_class_04_rm; }
     with spawn_arr[5,4] { rm_var = school_class_03_rm; }
-    with spawn_arr[6,4] { rm_var = school_02_rm; }
+    with spawn_arr[6,4] { rm_var = school_02_rm; rm_count_var = 1; }
 ');
 // Effects
 room_instance_add(argument0,0,0,school_color_obj);

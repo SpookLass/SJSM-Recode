@@ -8,26 +8,29 @@ room_set_code
     argument0,'
     // Name
     ini_open("lang_"+global.lang_var+".ini");
-    global.rm_name_var = ini_read_string("ROOM","sm","ROOM_sm")+" 21?"
+    global.rm_name_var = ini_read_string("ROOM","sm","ROOM_sm")+" 21?";
+    local.lock = ini_read_string("UI","gel","UI_gel");
     ini_close();
     // Spawns
-    global.spawn_len_var = 1;
+    global.spawn_len_var = 2;
     global.spawn_arr[0,0] = 160;
     global.spawn_arr[0,1] = 256;
     global.spawn_arr[0,2] = 0;
     global.spawn_arr[0,3] = 0;
+    global.spawn_arr[1,0] = 320;
+    global.spawn_arr[1,1] = 160;
+    global.spawn_arr[1,2] = 0;
+    global.spawn_arr[1,3] = 270;
     // 3D Draw
     d3d_start();
     global.draw_3d_var = true;
     // Doors
-    spawn_create_scr(true,false);
+    spawn_create_scr(true,false,false,false,spawn_leave_door_trig_obj);
     // Exit
-    with instance_create(320,152,spawn_leave_door_trig_obj)
+    with spawn_arr[1,4]
     {
-        lock_var = (global.diff_var != 0);
-        ini_open("lang_"+global.lang_var+".ini");
-        txt_lock_var = ini_read_string("UI","gel","UI_gel");
-        ini_close();
+        lock_var = (global.diff_var != 0 && global.mode_var == 0);
+        txt_lock_var = local.lock;
     }
 ');
 // Room settings

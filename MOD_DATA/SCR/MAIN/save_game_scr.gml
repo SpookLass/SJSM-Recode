@@ -19,6 +19,7 @@ ini_write_real("MAIN","count",global.count_var);
 ini_write_real("MAIN","mon_fail_var",global.mon_fail_var);
 ini_write_real("MAIN","zone",zone_list);
 ini_write_real("MAIN","game_time",global.game_time_var);
+ini_write_real("MAIN","locale_rm",global.locale_rm_var);
     // Main settings
 ini_write_real("MAIN","mode",global.mode_var);
 ini_write_real("MAIN","type",global.main_type_var);
@@ -29,6 +30,7 @@ ini_write_real("MAIN","mod",ds_list_size(global.mod_list)>0);
 ini_write_list_scr("MAIN","rm_list",rm_list,4);
 ini_write_list_scr("MAIN","mon_curr_list",mon_curr_list,3);
 ini_write_list_scr("MAIN","mon_list",mon_list,3);
+ini_write_list_scr("MAIN","locale_list",locale_list,4);
 ini_write_list_scr("MAIN","mod_list",global.mod_list,2);
 // Settings
 for (local.i=0; local.i<global.custom_len_var; local.i+=1)

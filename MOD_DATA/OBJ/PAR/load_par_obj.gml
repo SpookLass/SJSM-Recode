@@ -99,7 +99,7 @@ object_event_add
     d3d_set_hidden(true);
     // Leave
     if menu_var { rm_goto_menu_scr(rm_var,false); }
-    else { rm_goto_scr(rm_var); }
+    else { rm_leave_menu_scr(rm_var); }
 ');
 // Destroy
 object_event_add

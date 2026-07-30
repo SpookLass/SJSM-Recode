@@ -8,6 +8,7 @@ room_set_code
     // Name
     ini_open("lang_"+global.lang_var+".ini");
     global.rm_name_var = ini_read_string("ROOM","school","ROOM_school")+" 2"
+    local.lock = ini_read_string("UI","run","UI_run");
     ini_close();
     // Spawns
     global.spawn_len_var = 3;
@@ -23,7 +24,6 @@ room_set_code
     global.spawn_arr[2,1] = 448;
     global.spawn_arr[2,2] = 0;
     global.spawn_arr[2,3] = 90;
-    
     // 3D Draw
     d3d_start();
     global.draw_3d_var = true;
@@ -32,11 +32,11 @@ room_set_code
     with instance_create(200,336,spawn_door_trig_obj)
     {
         global.spawn_arr[0,4] = id;
-        ini_open("lang_"+global.lang_var+".ini");
-        txt_lock_var = ini_read_string("UI","run","UI_run");
-        ini_close();
+        txt_lock_var = local.lock;
         rm_var = school_01_rm;
-        spawn_var = 6;
+        rm_count_var = -1;
+        rm_spawn_var = 6;
+        spawn_var = 0;
     }
     with spawn_arr[1,4] { lock_var = true; }
 ');

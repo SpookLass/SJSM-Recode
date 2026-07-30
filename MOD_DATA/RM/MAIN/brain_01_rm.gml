@@ -7,10 +7,13 @@ room_set_code
     argument0,'
     // Name
     ini_open("lang_"+global.lang_var+".ini");
-    global.rm_name_var = ini_read_string("ROOM","lab","ROOM_lab")+" 1?"
+    global.rm_name_var = ini_read_string("ROOM","lab","ROOM_lab")+" 1?";
+    local.rust = ini_read_string("UI","rust","UI_rust");
+    local.hole = ini_read_string("UI","hole","UI_hole");
+    local.lock = ini_read_string("UI","keycard_hint","UI_keycard_hint");
     ini_close();
     // Spawns
-    global.spawn_len_var = 1;
+    global.spawn_len_var = 4;
     global.spawn_arr[0,0] = 176;
     global.spawn_arr[0,1] = 240;
     global.spawn_arr[0,2] = 0;
@@ -23,7 +26,7 @@ room_set_code
     global.spawn_arr[2,1] = 336;
     global.spawn_arr[2,2] = 0;
     global.spawn_arr[2,3] = 90;
-    global.spawn_arr[3,0] = 520;
+    global.spawn_arr[3,0] = 528;
     global.spawn_arr[3,1] = 240;
     global.spawn_arr[3,2] = 0;
     global.spawn_arr[3,3] = 180;
@@ -31,40 +34,28 @@ room_set_code
     d3d_start();
     global.draw_3d_var = true;
     // Doors
-    spawn_create_scr(true,false);
+    spawn_create_scr(true,false,false,lab_door_obj,spawn_door_trig_obj);
     // Exit
-    with instance_create(400,136,spawn_door_trig_obj)
+    with spawn_arr[1,4]
     {
-        global.spawn_arr[1,4] = id;
-        spawn_var = 0;
         rm_var = brain_03_rm;
+        rm_count_var = 1;
         lock_var = !load_par_obj.door_var;
-        ini_open("lang_"+global.lang_var+".ini");
-        txt_lock_var = ini_read_string("UI","rust","UI_rust");
-        txt_var = ini_read_string("UI","hole","UI_hole");
-        ini_close();
+        txt_lock_var = local.rust;
+        txt_var = local.hole;
         snd_len_var = 0;
     }
-    with instance_create(400,128,brain_door_down_obj) { global.spawn_arr[1,5] = id; direction = 270; }
-    with instance_create(400,344,spawn_door_trig_obj)
+    with spawn_arr[1,5]
     {
-        global.spawn_arr[2,4] = id;
-        rm_var = brain_02_rm;
-        snd_len_var = 1;
-        snd_arr[0] = door_m_02_snd;
+        if load_par_obj.door_var
+        {
+            mdl_var = load_par_obj.mdl_arr_var[2,0];
+            mdl_02_var = load_par_obj.mdl_arr_var[3,0];
+            type_var = 0; // Model
+        }
     }
-    with instance_create(400,352,lab_door_obj) { global.spawn_arr[2,5] = id; direction = 90; }
-    with instance_create(536,240,spawn_door_trig_obj)
-    {
-        global.spawn_arr[3,4] = id; 
-        lock_var = true;
-        ini_open("lang_"+global.lang_var+".ini");
-        txt_lock_var = ini_read_string("UI","keycard_hint","UI_keycard_hint");
-        ini_close();
-        snd_len_var = 1;
-        snd_arr[0] = door_m_02_snd;
-    }
-    with instance_create(544,240,lab_door_obj) { global.spawn_arr[3,5] = id; direction = 180; }
+    with spawn_arr[2,4] { rm_var = brain_02_rm; snd_len_var = 1; snd_arr[0] = door_m_02_snd; }
+    with spawn_arr[3,4] { lock_var = true; txt_lock_var = local.lock; snd_len_var = 1; snd_arr[0] = door_m_02_snd; }
     // Lights
     with instance_create(176,240,bug_dead_light_obj) { light_var = 0.6; event_user(0); } // Entrance
     with instance_create(304,240,bug_dead_light_obj) { light_var = 0.4; event_user(0); }

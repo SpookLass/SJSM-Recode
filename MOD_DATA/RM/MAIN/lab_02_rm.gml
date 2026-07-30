@@ -19,15 +19,15 @@ room_set_code
     d3d_start();
     global.draw_3d_var = true;
     // Doors
+    spawn_create_scr(true,false,lab_door_obj,false,false);
     with instance_create(392,464,spawn_door_trig_obj)
     {
         global.spawn_arr[0,4] = id;
         rm_var = lab_01_rm;
-        spawn_var = 2;
+        rm_spawn_var = 2;
         snd_len_var = 1;
         snd_arr[0] = door_m_02_snd;
     }
-    with instance_create(384,464,lab_door_obj) { global.spawn_arr[0,5] = id; direction = 0; }
     // Easiest
     if global.diff_var != 0 { instance_create(641,496,blood_rand_obj); }
 ');

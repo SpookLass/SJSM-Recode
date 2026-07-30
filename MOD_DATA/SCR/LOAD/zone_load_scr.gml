@@ -28,6 +28,8 @@ draw_load_scr("Loading zones...");
     // Every
         globalvar every_zone_list;
         globalvar every_rare_zone_list;
+    // Locale
+        globalvar locale_arr;
 // Zone Key
     zone_key_arr[0,0] = 0; // Recode Story
     zone_key_arr[0,1] = 1; // Recode Endless
@@ -4683,6 +4685,35 @@ draw_load_scr("Loading zones...");
             rare_zone_arr[4,10] = rare_zone_arr[0,1];
             rare_zone_arr[4,11] = rare_zone_arr[0,1];
             rare_zone_arr[4,12] = noone;
+// Locales
+    // Recode Story
+        locale_arr[0,0] = ds_list_create();
+        ds_list_clear(locale_arr[0,0]);
+        ds_list_add(locale_arr[0,0],-1); // First elevator doesn't have one
+        ds_list_add(locale_arr[0,0],60);
+        ds_list_add(locale_arr[0,0],120);
+        ds_list_add(locale_arr[0,0],165);
+        ds_list_add(locale_arr[0,0],210);
+        ds_list_add(locale_arr[0,0],310);
+        ds_list_add(locale_arr[0,0],410);
+        ds_list_add(locale_arr[0,0],550);
+        ds_list_add(locale_arr[0,0],610);
+        ds_list_add(locale_arr[0,0],710);
+        ds_list_add(locale_arr[0,0],810);
+        ds_list_add(locale_arr[0,0],910);
+    // Recode Endless
+        locale_arr[0,1] = ds_list_create();
+        ds_list_clear(locale_arr[0,1]);
+        ds_list_copy(locale_arr[0,1],locale_arr[0,0]);
+        ds_list_replace(locale_arr[0,1],0,10);
+    // Copy That
+        locale_arr[0,2] = locale_arr[0,1];
+        locale_arr[1,0] = locale_arr[0,0];
+        locale_arr[1,1] = -1;
+        locale_arr[1,2] = -1;
+        locale_arr[2,0] = locale_arr[0,0];
+        locale_arr[2,1] = -1;
+        locale_arr[2,2] = -1;
 // Print
 if argument0
 {

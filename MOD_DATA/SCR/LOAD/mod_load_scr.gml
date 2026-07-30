@@ -24,6 +24,7 @@
     globalvar rm_name_arr;
 // Lists
     globalvar mon_list;
+    globalvar locale_list;
     globalvar mon_spawn_list;
     globalvar mon_curr_list;
     globalvar save_list;
@@ -49,6 +50,7 @@
 // Room
     global.rm_count_var = 0;
     global.rm_count_override_var = "";
+    global.locale_rm_var = 0;
 // Reflections
     global.reflect_var = false;
     global.reflect_pos_var = 0;

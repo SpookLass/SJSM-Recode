@@ -250,7 +250,7 @@ object_event_add
         with instance_create(0,0,flesh_obj) { dur_var += 1; }
         if global.reset_spd_var > 0 && global.game_spd_var > 1
         { global.game_spd_var = 1; fmod_group_set_pitch_scr(0,global.game_spd_var); }
-        if ds_list_find_index(global.mon_list,flesh_obj) < 0
-        { ds_list_add(global.mon_list,flesh_obj); }
+        if ds_list_find_index(mon_list,flesh_obj) < 0
+        { ds_list_add(mon_list,flesh_obj); }
     }
 ');
