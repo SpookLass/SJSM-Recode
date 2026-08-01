@@ -218,10 +218,12 @@ object_event_add
         if par_var == other.id
         {
             local.door = id;
+            if variable_local_exists("spawn_var") { local.spawn = spawn_var; }
+			else { local.spawn = -1; }
             with instance_create(x,y,door_obj)
             {
-                spawn_var = local.door.spawn_var;
-                spawn_arr[spawn_var,5] = id;
+                spawn_var = local.spawn;
+                if local.spawn >= 0 { spawn_arr[local.spawn,5] = id; }
                 z = local.door.z;
                 direction = local.door.direction;
                 image_blend = local.door.image_blend;
@@ -332,6 +334,10 @@ Difference: "+string(local.newdelay)+"
             local.door = id;
             with instance_create(x,y,mad_door_obj)
             {
+                if variable_local_exists("spawn_var") { local.spawn = spawn_var; }
+			    else { local.spawn = -1; }
+                spawn_var = local.spawn;
+                if local.spawn >= 0 { spawn_arr[local.spawn,5] = id; }
                 z = local.door.z;
                 direction = local.door.direction;
                 image_blend = local.door.image_blend;

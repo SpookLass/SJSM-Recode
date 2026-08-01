@@ -150,12 +150,15 @@ object_event_add
         local.mon = id;
         with door_trig_obj
         {
+            if variable_local_exists("spawn_var") { local.spawn = spawn_var; }
+			else { local.spawn = -1; }
             if object_index != clown_door_trig_obj
             {
                 event_perform(ev_other,ev_room_start);
                 instance_change(clown_door_trig_obj,true);
                 // Hope this works
-                spawn_arr[spawn_var,4] = id;
+                if !variable_local_exists("spawn_var") { spawn_var = -1; }
+                if spawn_var > 0 { spawn_arr[spawn_var,4] = id; }
             }
         }
     }

@@ -449,10 +449,12 @@ object_event_add
 		with door_obj
 		{
 			local.door = id;
+			if variable_local_exists("spawn_var") { local.spawn = spawn_var; }
+			else { local.spawn = -1; }
 			with instance_create(x,y,hk_door_obj)
 			{
-				spawn_var = local.door.spawn_var;
-                spawn_arr[spawn_var,5] = id;
+				spawn_var = local.spawn;
+                if local.spawn >= 0 { spawn_arr[local.spawn,5] = id; }
 				par_var = local.par;
 				z = local.door.z;
 				direction = local.door.direction;

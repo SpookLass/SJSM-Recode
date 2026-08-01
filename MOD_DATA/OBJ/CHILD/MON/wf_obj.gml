@@ -491,7 +491,8 @@ object_event_add
                 par_var = other.id;
                 instance_change(wf_door_trig_obj,false);
                 // Hope this works
-                spawn_arr[spawn_var,4] = id;
+                if !variable_local_exists("spawn_var") { spawn_var = -1; }
+                if spawn_var > 0 { spawn_arr[spawn_var,4] = id; }
             }
         }
     }
