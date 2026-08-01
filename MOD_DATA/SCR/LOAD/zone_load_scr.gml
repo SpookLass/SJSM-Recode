@@ -2425,7 +2425,7 @@ draw_load_scr("Loading zones...");
         // Non-Euclidean
             rare_zone_arr[0,9] = ds_list_create();
             ds_list_clear(rare_zone_arr[0,9]);
-            ds_list_copy(rare_zone_arr[0,9],rare_zone_arr[0,0]);
+            ds_list_copy(rare_zone_arr[0,9],rare_zone_arr[0,1]);
             //ds_list_add(rare_zone_arr[0,9],tt_hall_11_old_rm); // Non-Euclidean Room
         // Copy that
             rare_zone_arr[0,0] = noone;
