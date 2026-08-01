@@ -35,7 +35,7 @@ object_event_add(argument0,ev_step,ev_step_begin,'
                 // Keyboard
                 if global.input_key_arr[local.i,local.j] >= 1 
                 {
-                    if global.input_type_var[local.j] == 1 && !global.pause_var // Direct
+                    if global.input_type_var[local.j] == 1 && !global.pause_var && global.game_var // Direct
                     { global.input_arr[local.i,local.j] = keyboard_check_direct(global.input_key_arr[local.i,local.j]); }
                     else
                     {
@@ -388,7 +388,9 @@ object_event_add
     // Controls
     for (local.j=0; local.j<8; local.j+=1;)
     {
-        if global.input_type_var[local.j] == 2 // Room (reset)
+        // Reset if direct (in menu) or room
+        if global.input_type_var[local.j] == 2
+        || (global.input_type_var[local.j] == 1 && (!global.game_var || global.pause_var))
         {
             for (local.i=0; local.i<global.input_len_var; local.i+=1)
             {

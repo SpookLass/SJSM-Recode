@@ -154,6 +154,8 @@ object_event_add
             {
                 event_perform(ev_other,ev_room_start);
                 instance_change(clown_door_trig_obj,true);
+                // Hope this works
+                spawn_arr[spawn_var,4] = id;
             }
         }
     }

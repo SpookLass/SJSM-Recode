@@ -489,7 +489,9 @@ object_event_add
             {
                 event_perform(ev_other,ev_room_start);
                 par_var = other.id;
-                instance_change(wf_door_trig_obj,false)
+                instance_change(wf_door_trig_obj,false);
+                // Hope this works
+                spawn_arr[spawn_var,4] = id;
             }
         }
     }
