@@ -222,12 +222,11 @@ draw_load_scr("Loading settings...");
     // Killer Voice
         // Main
             /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
-            local.set = set_add_sp_scr("killer_voice","killer_voice","killer_voice",true,set_mon_enum_const,0,3,true,local.audio,false,true,"killer");
+            local.set = set_add_sp_scr("killer_voice","killer_voice","killer_voice",true,set_mon_enum_const,0,2,true,local.audio,false,true,"killer");
         // Labels
             set_add_label_scr(local.set,0,"og",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
             set_add_label_scr(local.set,1,"hd",true,"");
             set_add_label_scr(local.set,2,"mod",true,"");
-            set_add_label_scr(local.set,3,"ryan",true,"");
         // Defaults
             set_add_default_scr(local.set,killer_voice_const);
     // Random Theme

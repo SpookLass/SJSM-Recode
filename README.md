@@ -73,7 +73,6 @@ Recode also attempts to emulate the Original and HD Renovation experience as clo
 
 ### Sounds:
 
-- Ryan J.: Ryan Specimen 12
 - Spook Lass: Recode Specimen 12, various audio edits
 
 ### Translations:
