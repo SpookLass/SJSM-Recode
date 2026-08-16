@@ -113,8 +113,7 @@ object_event_add
     global.clock_second_var = mod_scr(floor(global.clock_time_var*0.001),60);
     global.clock_millisecond_var = mod_scr(global.clock_time_var,1000);
     // Speed!
-    if global.pause_var { if global.game_spd_var != 0 { global.game_spd_var = 0; }}
-    else if global.draw_3d_var
+    if global.draw_3d_var
     {
         if global.input_press_arr[ff_input_const,0] == 1 { global.game_spd_var = min(3,global.game_spd_var+0.25); fmod_group_set_pitch_scr(0,global.game_spd_var); }
         if global.input_press_arr[slow_input_const,0] == 1 { global.game_spd_var = max(1,global.game_spd_var-0.25); fmod_group_set_pitch_scr(0,global.game_spd_var); }
@@ -123,7 +122,8 @@ object_event_add
     // Delta Time
     // Goes by frames rather than seconds (at 60 fps)
     global.true_delta_time_var = global.time_diff_var*milli_frame_rate_const;
-    global.delta_time_var = global.true_delta_time_var*global.game_spd_var;
+    if global.pause_var { global.delta_time_var = 0; }
+    else { global.delta_time_var = global.true_delta_time_var*global.game_spd_var; }
     // Check for debug
     if global.input_press_arr[debug_input_const,0] == 1
     {

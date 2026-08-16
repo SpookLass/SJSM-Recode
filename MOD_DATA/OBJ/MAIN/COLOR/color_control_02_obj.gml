@@ -18,7 +18,8 @@ object_event_add
         if (current_month == 3 && current_day == 31) || global.pride_var == 2
         { local.arr[local.len] = ds_list_find_value(trans_list,irandom(ds_list_size(trans_list)-1)); local.len += 1; }
         // Pride Month!
-        else if current_month == 6 || global.pride_var == 1 { local.arr[local.len] = ds_list_find_value(pride_list,irandom(ds_list_size(pride_list)-1)); local.len += 1; }
+        else if current_month == 6 || global.pride_var == 1
+        { local.arr[local.len] = ds_list_find_value(pride_list,irandom(ds_list_size(pride_list)-1)); local.len += 1; }
         // Halloween, Saint Patricks Day, or Halloween
         if current_month == 10 || global.halloween_var || (current_month == 3 && current_day == 17) || ds_list_find_index(zone_list,med_01_rm) != -1
         { local.arr[local.len] = med_color_obj; local.len += 1; }

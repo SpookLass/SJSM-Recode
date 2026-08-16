@@ -11,8 +11,6 @@ object_event_add
 (argument0,ev_create,0,'
     event_inherited();
     delay_var = true;
-    store_spd_var = global.game_spd_var;
-    global.game_spd_var = 0;
     global.mouse_free_var = true;
     action_set_cursor(-1,global.mouse_free_var);
     fmod_group_set_pause_scr(snd_group_mon_const,true);
@@ -198,7 +196,6 @@ object_event_add
 // Stop Event
 object_event_add
 (argument0,ev_other,ev_user0,'
-    global.game_spd_var = store_spd_var;
     global.mouse_free_var = false;
     action_set_cursor(-1,global.mouse_free_var);
     display_mouse_set(display_get_width()/2,display_get_height()/2);
