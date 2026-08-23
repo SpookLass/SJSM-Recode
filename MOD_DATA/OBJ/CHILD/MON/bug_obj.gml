@@ -444,9 +444,6 @@ object_event_add
 (argument0,ev_other,ev_user15,'
     hole_var = true;
     enter_var = 2;
-    x = hole_x_var;
-    y = hole_y_var;
-    z = hole_z_var+spawn_dist_var;
     if hole_alarm_min_var > 0
     { set_alarm_scr(0,irandom_range(hole_alarm_min_var,hole_alarm_max_var)); }
     else { event_perform(ev_alarm,0); }

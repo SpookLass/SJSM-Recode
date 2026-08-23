@@ -77,7 +77,7 @@ object_event_add
         set_alarm_scr(0,60);
     }
     // No Escape
-    no_escape_var = (global.permadeath_var && instance_exists(mon_par_obj) && !global.debug_var);
+    no_escape_var = (global.permadeath_var && !global.debug_var && (instance_exists(mon_par_obj) || instance_exists(load_par_obj)));
     // Menu
     image_blend = make_color_rgb(59,59,119);
     button_len_var = 4;

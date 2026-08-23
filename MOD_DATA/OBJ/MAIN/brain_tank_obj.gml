@@ -85,18 +85,12 @@ object_event_add
 object_event_add
 (argument0,ev_alarm,0,'
     with brain_part_obj { on_var = false; }
-    fmod_update_take_over_when_lock_scr();
     local.tank = id;
     with brain_obj
     {
         local.brain = id;
-        with instance_create(x,y,brain_chase_obj)
+        with mon_spawn_scr(brain_chase_obj,x,y,local.tank.z,2)
         {
-            set_alarm_scr(0,-1);
-            on_var = true;
-            x = local.brain.x;
-            y = local.brain.y;
-            z = local.tank.z;
             z_off_time_var = local.brain.z_time_var;
             z_off_base_var = local.brain.z_base_var;
             z_off_rate_var = local.brain.z_rate_var;
@@ -105,19 +99,10 @@ object_event_add
             tex_var = local.brain.store_tex_var;
             w_var = local.brain.w_var;
             h_var = local.brain.h_var;
-            if loop_snd_var[0] == 1 { loop_inst_var = fmod_snd_3d_loop_scr(loop_snd_var[1]); }
         }
         instance_destroy();
     }
-    global.last_time_var = current_time;
-    fmod_update_take_over_done_scr();
-    if global.reset_spd_var > 0 && global.game_spd_var > 1
-    { global.game_spd_var = 1; fmod_group_set_pitch_scr(0,global.game_spd_var); }
     if instance_exists(load_par_obj)
-    {
-        if ds_list_find_index(mon_list,brain_chase_obj) < 0
-        { ds_list_add(mon_list,brain_chase_obj); }
-        with door_trig_obj { lock_var = !lock_var; }
-    }
+    { list_add_check_scr(mon_list,brain_chase_obj); }
     else { with door_trig_obj { save_var = false; event_user(0); }}
 ');

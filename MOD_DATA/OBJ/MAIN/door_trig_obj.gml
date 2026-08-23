@@ -61,8 +61,17 @@ object_event_add
     {
         local.set = false;
         ele_var = false;
+        // Double check
+        with door_trig_obj
+        {
+            if zone_var == other.zone_var && variable_local_exists("rm_var") && id != other.id
+            {
+                other.rm_var = rm_var;
+                local.set = true;
+            }
+        }
         // Locale
-        if global.rm_count_var+1 == global.locale_rm_var && ds_list_size(locale_list) > 0
+        if global.rm_count_var+1 == global.locale_rm_var && ds_list_size(locale_list) > 0 && !local.set
         {
             locale_var = true;
             rm_var = ds_list_find_value(locale_list,0);

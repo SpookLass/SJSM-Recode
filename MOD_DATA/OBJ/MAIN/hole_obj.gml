@@ -48,6 +48,9 @@ object_event_add
                         hole_x_var = other.x;
                         hole_y_var = other.y;
                         hole_z_var = other.z+16; // +h_var-16
+                        x = hole_x_var;
+                        y = hole_y_var;
+                        z = other.z+other.h_var-16+spawn_dist_var;
                         event_user(15);
                         break;
                     }

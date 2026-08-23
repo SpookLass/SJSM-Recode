@@ -185,6 +185,7 @@ object_event_add
 object_event_add
 (argument0,ev_destroy,0,'
     event_inherited();
+    zone_reset_scr();
     global.wall_bg_tex = background_get_texture(global.wall_bg);
     global.floor_bg_tex = background_get_texture(global.floor_bg);
     global.ceil_bg_tex = background_get_texture(global.ceil_bg);
@@ -258,7 +259,6 @@ object_event_add
             }
         }
     }
-    zone_reset_scr();
 ');
 // Room Start Event
 object_event_add
@@ -543,6 +543,7 @@ object_event_add
 (argument0,ev_draw,0,'
     if on_var
     {
+        d3d_set_culling(true);
         if fog_immune_var { d3d_set_fog(false,c_black,0,0); }
         draw_set_color(image_blend); draw_set_alpha(image_alpha);
         d3d_transform_set_identity();
@@ -553,5 +554,6 @@ object_event_add
         d3d_transform_set_identity();
         draw_set_color(c_white); draw_set_alpha(1);
         if fog_immune_var { d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var); }
+        d3d_set_culling(false);
     }
 ');

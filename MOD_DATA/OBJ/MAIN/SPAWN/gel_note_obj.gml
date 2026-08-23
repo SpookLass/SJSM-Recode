@@ -50,10 +50,8 @@ object_event_add
     event_inherited();
     if !spawn_var
     {
-        if ds_list_find_index(mon_list,gel_obj) < 0
-        { ds_list_add(mon_list,gel_obj); }
         local.note = id;
-        with instance_create(0,0,gel_obj)
+        with mon_spawn_locale_scr(gel_obj,0,0,0,false)
         {
             if do_slime_spawn_var
             {
