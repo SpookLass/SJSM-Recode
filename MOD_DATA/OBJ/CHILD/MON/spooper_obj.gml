@@ -84,6 +84,7 @@ object_event_add
     color_prio_var = 1;
     fog_prio_var = 1;
     // Timing
+    deficit_adjust_var = false;
     mark_start_var = 1;
     mark_chance_var = 3;
     door_chance_var = 0;
@@ -103,6 +104,7 @@ object_event_add
     {
         case 0: // Recode
         {
+            deficit_adjust_var = true;
             seen_pitch_var = 30;
             mark_seen_pitch_var = 30;
             seen_dist_var = 128; // 96
@@ -222,6 +224,11 @@ object_event_add
     }
     fetus_tex_var = background_get_texture(fetus_bg_var);
 ');
+object_event_add
+(argument0,ev_create,3,'
+    if deficit_adjust_var { hp_var -= dur_deficit_var; }
+    event_inherited();
+');
 // Destroy Event
 object_event_add
 (argument0,ev_destroy,0,'
@@ -314,6 +321,7 @@ object_event_add
     else
     {
         local.start = dur_start_var-dur_var;
+        if deficit_adjust_var { local.start += dur_deficit_var; }
         if local.start >= mark_start_var && frac_chance_scr(1,mark_chance_var)
         {
             local.door = false;

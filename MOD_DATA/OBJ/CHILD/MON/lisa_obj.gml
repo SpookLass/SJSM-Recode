@@ -88,6 +88,7 @@ object_event_add
     cyan_rand_max_var = 178.5;
     color_prio_var = 3;
     loop_fake_var = false;
+    deficit_adjust_var = false;
     // Behavior
     if global.lisa_type_var == -1 { local.type = irandom(3); }
     else { local.type = global.lisa_type_var; }
@@ -117,6 +118,7 @@ object_event_add
             atk_range_var = global.mon_coll[2];
             snd_dist_max_var = 300;
             // Timing
+            deficit_adjust_var = true;
             start_var = 15;
             js_start_var = 3;
             js_end_var = 15;
@@ -269,9 +271,10 @@ object_event_add
     event_inherited();
     image_alpha = 1;
     local.start = dur_start_var-dur_var;
+    if deficit_adjust_var { local.start += dur_deficit_var; }
     if start_var <= 0 || local.start >= start_var
     {
-        if local.start == start_var
+        if hide_var
         {
             hide_var = false;
             icon_spr_id_var = 0;

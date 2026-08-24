@@ -104,6 +104,7 @@ object_event_add
     fog_prio_var = 1;
     reflect_var= -1;
     mus_start_var = -1;
+    deficit_adjust_var = false;
     // Behavior
     if global.wf_type_var == -1 { local.type = irandom(7); }
     else { local.type = global.wf_type_var; }
@@ -115,6 +116,7 @@ object_event_add
         { move_type_var = 1; }
         case 6: // Old Recode
         {
+            deficit_adjust_var = true;
             seen_yaw_var = 5.856;
             seen_pitch_var = 5.856;
             dur_var = 30;
@@ -247,6 +249,7 @@ object_event_add
         case 7: // Imscared Recode
         {
             // Recode
+            deficit_adjust_var = true;
             dur_var = 30;
             start_var = -1;
             web_start_var = 15;
@@ -394,6 +397,7 @@ object_event_add
 (argument0,ev_other,ev_room_start,'
     event_inherited();
     local.start = dur_start_var-dur_var;
+    if deficit_adjust_var { local.start += dur_deficit_var; }
     // Reset
     spd_base_var = spd_base_real_var;
     if do_seen_agg_var { seen_agg_var = 0; }

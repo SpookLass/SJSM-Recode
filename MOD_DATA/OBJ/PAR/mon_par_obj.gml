@@ -25,9 +25,11 @@ object_event_add
     if !variable_local_exists("hide_var") { hide_var = false; }
     if boss_var { global.boss_var = object_index; }
     // Duration checking
+    local.dur = dur_var;
     if global.locale_rm_var > global.rm_count_var { dur_var = min(dur_var,global.locale_rm_var-global.rm_count_var); }
     local.nextele = ele_next_scr(global.rm_count_var);
     if local.nextele != noone { dur_var = min(dur_var,local.nextele-global.rm_count_var); }
+    dur_deficit_var = local.dur-dur_var;
     dur_start_var = dur_var;
     // Theme
     if !variable_local_exists("mus_prio_var") || (global.rand_theme_var && frac_chance_scr(1,2)) { mus_prio_var = -1; }
