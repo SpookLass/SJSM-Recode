@@ -12,7 +12,7 @@ object_event_add
     if instance_exists(load_par_obj)
     { store_tex_var = background_get_texture(load_par_obj.bg_arr_var[6,0]); }
     event_inherited();
-    solid_var = false;
+    solid_var = (global.diff_var == 0);
     type_var = 1;
     w_var = 32;
     h_var = 32;
