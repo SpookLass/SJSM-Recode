@@ -24,5 +24,6 @@ if !variable_global_exists(argument1)
     local.asset = execute_file(argument0+".gml",argument0,argument3,argument4,argument5,argument6,argument7);
     globalvar_scr(local.asset,argument1,false);
     if argument2 { show_message("Initialized asset "+argument0+" at variable "+argument1); }
+    return local.asset;
 }
 else if argument2 { show_message("Variable "+argument1+" already in use!"); }

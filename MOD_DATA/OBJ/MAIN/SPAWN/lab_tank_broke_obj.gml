@@ -12,12 +12,12 @@ object_event_add
     broke_var = false;
     if instance_exists(load_par_obj)
     {
-        if global.diff_var == 0 { local.bg = load_par_obj.bg_arr_var[7,0]; }
-        else { local.bg = load_par_obj.bg_arr_var[8,0]; }
+        broke_var = load_par_obj.broke_var;
+        if broke_var { local.bg = load_par_obj.bg_arr_var[8,0]; }
+        else { local.bg = load_par_obj.bg_arr_var[7,0]; }
         store_tex_var = background_get_texture(local.bg);
         event_inherited();
         tex_h_var = background_get_width(local.bg)/background_get_height(local.bg);
-        broke_var = load_par_obj.broke_var;
     }
     else { event_inherited(); }
     with instance_create(x,y,lab_tank_back_obj)

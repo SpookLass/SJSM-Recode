@@ -41,9 +41,9 @@ object_event_add
     // Function
     interact_target_var = noone;
     delay_var = 20;
-    zone_var = -1;
-    locale_var = false;
-    ele_var = false;
+    if !variable_local_exists("zone_var") { zone_var = -1; }
+    if !variable_local_exists("ele_var") { ele_var = false; }
+    if !variable_local_exists("locale_var") { locale_var = false; }
     if !variable_local_exists("rm_count_var") { rm_count_var = 1; }
     if !variable_local_exists("lock_var") { lock_var = false; }
     if !variable_local_exists("safe_var") { safe_var = true; }
@@ -67,6 +67,8 @@ object_event_add
             if zone_var == other.zone_var && variable_local_exists("rm_var") && id != other.id
             {
                 other.rm_var = rm_var;
+                other.ele_var = ele_var;
+                other.locale_var = locale_var;
                 local.set = true;
             }
         }

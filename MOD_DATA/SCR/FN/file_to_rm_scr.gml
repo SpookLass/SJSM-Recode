@@ -11,5 +11,6 @@ if !variable_global_exists(argument1)
     globalvar_scr(local.rm,argument1,false);
     rm_name_arr[local.rm] = argument1;
     if argument2 { show_message("Initialized room "+argument0+" at variable "+argument1); }
+    return local.rm;
 }
 else if argument2 { show_error("Variable "+argument1+" already in use!",false); }

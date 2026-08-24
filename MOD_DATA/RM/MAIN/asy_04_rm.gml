@@ -35,7 +35,7 @@ room_set_code
     {
         global.spawn_arr[0,4] = id;
         txt_lock_var = local.lock;
-        rm_var = asy_02_rm;
+        rm_var = asy_03_rm;
         rm_count_var = -1;
         rm_spawn_var = 1;
         snd_len_var = 1;

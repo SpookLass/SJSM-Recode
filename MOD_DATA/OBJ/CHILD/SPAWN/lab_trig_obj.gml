@@ -14,7 +14,7 @@ object_event_add
 // User 0
 object_event_add
 (argument0,ev_other,ev_user0,'
-    with mon_spawn_locale_scr(bug_obj,lab_hole_obj.x,lab_hole_obj.y,lab_hole_obj.z+lab_hole_obj.h_var-16,1);
+    with mon_spawn_locale_scr(bug_obj,lab_hole_obj.x,lab_hole_obj.y,lab_hole_obj.z+lab_hole_obj.h_var-16,1)
     {
         z += spawn_dist_var;
         hole_x_var = x;

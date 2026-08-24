@@ -11,9 +11,9 @@ object_event_add
 (argument0,ev_create,0,'
     if instance_exists(load_par_obj)
     {
-        store_tex_var = load_par_obj.surf_arr_var[0,3];
+        store_tex_var = load_par_obj.surf_arr_var[0,4];
         event_inherited();
-        tex_h_var = load_par_obj.surf_arr_var[0,1]/load_par_obj.surf_arr_var[0,2];
+        tex_h_var = load_par_obj.surf_arr_var[0,2]/load_par_obj.surf_arr_var[0,3];
     }
     else { event_inherited(); }
 ');

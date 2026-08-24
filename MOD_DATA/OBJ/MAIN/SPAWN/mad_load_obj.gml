@@ -225,12 +225,14 @@ object_event_add
     snd_arr_var[11,5] = 0;
     snd_arr_var[11,6] = 300;
     path_len_var = 1;
-    path_arr_var[0,1] = 1;
-    path_arr_var[0,2] = false;
-    path_arr_var[0,3] = 4;
+    path_arr_var[0,1] = "flesh_path";
+    path_arr_var[0,2] = 1;
+    path_arr_var[0,3] = false;
+    path_arr_var[0,4] = 4;
     surf_len_var = 1;
-    surf_arr_var[0,1] = 256;
+    surf_arr_var[0,1] = "mad_surf";
     surf_arr_var[0,2] = 256;
+    surf_arr_var[0,3] = 256;
     rm_var = mad_01_rm;
     event_inherited();
     path_add_point(path_arr_var[0,0],0,0,100);
@@ -240,17 +242,4 @@ object_event_add
     path_add_point(path_arr_var[0,0],-192,32,130);
     path_add_point(path_arr_var[0,0],-256,0,100);
     cat_var = false;
-');
-// Destroy Event
-object_event_add
-(argument0,ev_destroy,0,'
-    event_inherited();
-    if global.diff_var != 0
-    {
-        with instance_create(0,0,flesh_obj) { dur_var += 1; }
-        if global.reset_spd_var > 0 && global.game_spd_var > 1
-        { global.game_spd_var = 1; fmod_group_set_pitch_scr(0,global.game_spd_var); }
-        if ds_list_find_index(mon_list,flesh_obj) < 0
-        { ds_list_add(mon_list,flesh_obj); }
-    }
 ');

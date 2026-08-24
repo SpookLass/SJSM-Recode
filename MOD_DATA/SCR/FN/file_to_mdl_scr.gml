@@ -12,5 +12,6 @@ if !variable_global_exists(argument1)
     globalvar_scr(local.mdl,argument1,false);
     globalvar_scr(argument0,argument1+"_path",argument2);
     if argument2 { show_message("Initialized model "+argument0+" at variable "+argument1); }
+    return local.mdl;
 }
 else if argument2 { show_error("Variable "+argument1+" already in use!",false); }

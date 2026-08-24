@@ -23,7 +23,7 @@ room_set_code
     d3d_start();
     global.draw_3d_var = true;
     // Doors
-    spawn_create_scr(true,false,mad_flesh_door_obj,mad_flesh_door_obj,spawn_leave_door_trig_obj);
+    spawn_create_scr(true,false,mad_flesh_door_obj,mad_flesh_door_obj,mad_door_trig_obj);
     with spawn_arr[1,4] { snd_len_var = 0; }
 ');
 // Effects

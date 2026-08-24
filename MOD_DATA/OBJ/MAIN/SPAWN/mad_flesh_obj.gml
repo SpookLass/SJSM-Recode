@@ -16,8 +16,8 @@ object_event_add
         bg_var = load_par_obj.bg_arr_var[23,0];
         mdl_var = load_par_obj.mdl_arr_var[7,0];
         surf_var = load_par_obj.surf_arr_var[0,0];
-        surf_w_var = load_par_obj.surf_arr_var[0,1];
-        surf_h_var = load_par_obj.surf_arr_var[0,2];
+        surf_w_var = load_par_obj.surf_arr_var[0,2];
+        surf_h_var = load_par_obj.surf_arr_var[0,3];
         path_var = load_par_obj.path_arr_var[0,0];
     }
     // Variables

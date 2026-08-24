@@ -12,5 +12,6 @@ if !variable_global_exists(argument1)
     globalvar_scr(local.asset,argument1,false);
     globalvar_scr(background_get_texture(local.asset),argument1+"_tex",false);
     if argument2 { show_message("Initialized asset "+argument0+" at variable "+argument1); }
+    return local.asset;
 }
 else if argument2 { show_message("Variable "+argument1+" already in use!"); }

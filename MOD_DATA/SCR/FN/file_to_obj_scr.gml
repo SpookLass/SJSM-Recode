@@ -20,3 +20,4 @@ else
     if argument2 { show_message("Replaced variable "+argument1+" with object "+argument0); }
 }
 obj_name_arr[local.obj] = argument1;
+return local.obj;

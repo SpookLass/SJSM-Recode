@@ -103,6 +103,10 @@ object_event_add
         instance_destroy();
     }
     if instance_exists(load_par_obj)
-    { list_add_check_scr(mon_list,brain_chase_obj); }
-    else { with door_trig_obj { save_var = false; event_user(0); }}
+    {
+        list_add_check_scr(mon_list,brain_chase_obj);
+        with spawn_door_trig_obj { lock_var = true; }
+        with spawn_leave_door_trig_obj { lock_var = false; }
+    }
+    else { with door_trig_obj { event_user(0); }}
 ');
