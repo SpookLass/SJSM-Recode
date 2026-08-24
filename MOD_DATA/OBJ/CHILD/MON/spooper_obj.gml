@@ -226,7 +226,7 @@ object_event_add
 ');
 object_event_add
 (argument0,ev_create,3,'
-    if deficit_adjust_var { hp_var -= dur_deficit_var; }
+    if deficit_adjust_var { hp_var = max(1,hp_var-dur_deficit_var); }
     event_inherited();
 ');
 // Destroy Event
