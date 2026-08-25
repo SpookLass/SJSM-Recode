@@ -265,6 +265,12 @@ object_event_add
     if loop_fake_var && loop_start_var > 0
     { global.rm_count_override_var = ""; }
 ');
+object_event_add
+(argument0,ev_create,3,'
+    if deficit_adjust_var && dur_var != 1
+    { start_var = max(start_var,dur_deficit_var+1); }
+    event_inherited();
+');
 // Room Start
 object_event_add
 (argument0,ev_other,ev_room_start,'
