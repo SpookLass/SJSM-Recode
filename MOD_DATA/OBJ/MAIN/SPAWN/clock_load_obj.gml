@@ -12,7 +12,7 @@ object_event_add
     menu_var = false;
     mon_var = killer_obj;
     bg_len_var = 3;
-    bg_arr_var[0,1] = clcok_wall_01_bg_path;
+    bg_arr_var[0,1] = clock_wall_01_bg_path;
     bg_arr_var[0,2] = false;
     bg_arr_var[0,3] = false;
     bg_arr_var[1,1] = clock_floor_02_bg_path;
