@@ -21,6 +21,12 @@ object_event_add
     if !variable_local_exists("surf_len_var") { surf_len_var = 0; }
     if !variable_local_exists("obj_len_var") { obj_len_var = 0; }
     if !variable_local_exists("rm_len_var") { rm_len_var = 0; }
+    // Generic Spawn stuff
+    if !variable_local_exists("mon_var") { mon_var = noone; }
+    if !variable_local_exists("mon_x_var") { mon_x_var = 0; }
+    if !variable_local_exists("mon_y_var") { mon_y_var = 0; }
+    if !variable_local_exists("mon_z_var") { mon_z_var = 0; }
+    if !variable_local_exists("mon_pos_var") { mon_pos_var = 0; }
     // Draw Text
     d3d_set_fog(false,c_black,0,0);
     d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
@@ -131,8 +137,10 @@ object_event_add
     set_automatic_draw(global.autodraw_var);
     d3d_set_hidden(true);
     // Leave
-    if menu_var { rm_goto_menu_scr(rm_var,false); }
-    else { rm_leave_menu_scr(rm_var); }
+    if rm_var < rm_len_var { local.rm = rm_arr_var[rm_var,0]; }
+    else { local.rm = rm_var; }
+    if menu_var { rm_goto_menu_scr(local.rm,false); }
+    else { rm_leave_menu_scr(local.rm); }
 ');
 // Destroy
 object_event_add

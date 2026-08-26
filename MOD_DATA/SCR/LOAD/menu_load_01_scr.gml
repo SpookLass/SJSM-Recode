@@ -247,17 +247,6 @@ draw_load_scr("Loading config...");
             custom_arr_set_scr(false,local.permadeath,-1,-1,-1); // Default
             custom_arr_set_scr(true,local.permadeath,5,-1,-1); // :)
             custom_arr_set_scr(true,local.permadeath,-1,1,-1); // Endless
-    // Locales
-        // Main
-            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Has Descriptions*/
-            local.locale = custom_add_scr("locale","locale","locale",true,custom_enum_const,false,true,true,local.toggle,false);
-            custom_add_label_scr(local.locale,false,"off",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
-            custom_add_label_scr(local.locale,true,"on",true,"");
-        // Defaults
-            custom_arr_add_len_scr(0,1);
-            custom_arr_set_scr(true,local.locale,-1,-1,-1); // Default
-            custom_arr_set_scr(false,local.locale,5,-1,-1); // :)
-            custom_arr_set_scr(false,local.locale,-1,1,1); // OG Endless
     // One Shot
         // Main
             /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Has Descriptions*/
@@ -715,7 +704,7 @@ draw_load_scr("Loading config...");
                 custom_arr_set_scr(2,local.flesh_set,-1,-1,2); // HD
                 custom_arr_set_scr(-1,local.flesh_set,5,-1,-1); // :) (Random)
         // Deer Lord
-            local.dl = type_add_scr("dl",true,true,1,dl_obj,noone,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
+            local.dl = type_add_scr("dl",true,true,1,dl_obj,woods_load_rm,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
             local.dl_set = type_add_set_scr(local.dl,"dl","dl",local.spec,true); /*ID, Variable Name, Description, Category, Can Disable*/
             // Types
                 type_add_type_scr(local.dl,local.dl_set,"recode","",true); /*ID, Label, Description, Translate*/
@@ -748,7 +737,7 @@ draw_load_scr("Loading config...");
                 custom_arr_set_scr(2,local.taker_set,-1,-1,2); // HD
                 custom_arr_set_scr(-1,local.taker_set,5,-1,-1); // :) (Random)
         // Eel
-            local.eel = type_add_scr("eel",true,true,1,eel_obj,noone,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
+            local.eel = type_add_scr("eel",true,true,1,eel_obj,eel_load_rm,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
             local.eel_set = type_add_set_scr(local.eel,"eel","eel",local.spec,true); /*ID, Variable Name, Description, Category, Can Disable*/
             // Types
                 type_add_type_scr(local.eel,local.eel_set,"recode","",true); /*ID, Label, Description, Translate*/
@@ -763,7 +752,7 @@ draw_load_scr("Loading config...");
                 custom_arr_set_scr(-1,local.eel_set,5,-1,-1); // :) (Random)
 
         // Parasite
-            local.para = type_add_scr("para",true,true,1,para_obj,noone,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
+            local.para = type_add_scr("para",true,true,1,para_obj,ds_load_rm,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
             local.para_set = type_add_set_scr(local.para,"para","para",local.spec,true); /*ID, Variable Name, Description, Category, Can Disable*/
             // Types
                 type_add_type_scr(local.para,local.para_set,"recode","",true); /*ID, Label, Description, Translate*/
@@ -777,7 +766,7 @@ draw_load_scr("Loading config...");
                 custom_arr_set_scr(2,local.para_set,-1,-1,2); // HD
                 custom_arr_set_scr(-1,local.para_set,5,-1,-1); // :) (Random)
         // Food Demon
-            local.fd = type_add_scr("fd",true,true,1,fd_obj,noone,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
+            local.fd = type_add_scr("fd",true,true,1,fd_obj,food_load_rm,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
             local.fd_set = type_add_set_scr(local.fd,"fd","fd",local.spec,true); /*ID, Variable Name, Description, Category, Can Disable*/
             // Types
                 type_add_type_scr(local.fd,local.fd_set,"recode","",true); /*ID, Label, Description, Translate*/

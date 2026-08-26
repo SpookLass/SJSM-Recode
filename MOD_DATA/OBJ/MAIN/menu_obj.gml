@@ -1437,19 +1437,19 @@ object_event_add
                             // Get default value from 4D array
                             else { local.value = custom_arr_get_scr(local.i,global.diff_var,global.mode_var,global.main_type_var); }
                             // Enabled
+                            local.monid = custom_arr[local.i,10];
                             if local.value != -2
                             {
-                                local.monid = custom_arr[local.i,10];
+                                // Chases
                                 if mon_arr[local.monid,2]
                                 {
                                     // Gotta make sure locale_var loads first, otherwise everything will break
                                     if global.locale_var && room_exists(mon_arr[local.monid,5]) { ds_list_add(locale_list,mon_arr[local.monid,5])}
                                     else if object_exists(mon_arr[local.monid,4]) { ds_list_add(mon_list,mon_arr[local.monid,4]); }
                                 }
-                                
                             }
                             // Disabled
-                            else { local.value = global.main_type_var; }
+                            else if mon_arr[local.monid,2] { local.value = global.main_type_var; }
                             execute_string("global."+custom_arr[local.i,0]+"_type_var = "+string(local.value));
                         }
                         // Use value from button

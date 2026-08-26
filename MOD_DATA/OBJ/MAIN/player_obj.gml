@@ -178,14 +178,18 @@ object_event_add
     taker_var = false;
     taker_alarm_var = 7200; // 5940
     taker_mon_alarm_var = 731; // 540
-    switch global.taker_type_var
+    if global.taker_type_var == -1 { local.type = irandom(3); }
+    else { local.type = global.taker_type_var; }
+    switch local.type
     {
+        case -2: { do_taker_var = false; break; }
         case 0: { taker_alarm_var = 7310; break; } // Recode
         // Gotta take the wikis word, cant find it
         case 2: { taker_alarm_var = 4200; break; } // HD
         case 3: { taker_alarm_var = 2760; break; } // DH
     }
-    set_alarm_scr(3,taker_alarm_var);
+    if do_taker_var
+    { set_alarm_scr(3,taker_alarm_var); }
     // Stuff
     event_perform(ev_other,ev_room_start);
 ');
@@ -212,7 +216,7 @@ object_event_add
 // Taker Alarm
 object_event_add
 (argument0,ev_alarm,3,'
-    if on_var && !in_door_var && !active_var && !taker_spawn_var
+    if do_taker_var && on_var && !in_door_var && !active_var && !taker_spawn_var
     {
         if possess_var { local.bool = mon_var.on_var && !mon_var.enter_var; }
         else { local.bool = on_var && !dead_var; }

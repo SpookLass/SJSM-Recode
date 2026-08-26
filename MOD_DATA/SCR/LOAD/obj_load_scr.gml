@@ -161,6 +161,32 @@ for (local.j=0; local.j<ds_list_size(global.mod_list); local.j+=1;)
         // Draw
         draw_load_scr("Loading mod objects ("+string(local.i)+")...");
     }
+    // Locale stuff
+    local.file = filename_change_ext(file_find_first(local.dir+"\OBJ\RM\*.gml",-1),"");
+    while (local.file != "")
+    {
+        globalvar_scr(local.dir+"\OBJ\RM\"+local.file,local.file+"_path",argument0);
+        local.file = filename_change_ext(file_find_next(),"");
+        local.i += 1;
+        // Draw
+        draw_clear_alpha(c_black,0);
+        draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading mod spawn objects ("+string(local.i)+")...",1,1,0);
+        screen_refresh();
+    }
+    file_find_close();
 }
+// Locale stuff
+local.file = filename_change_ext(file_find_first(main_directory_const+"\OBJ\RM\*.gml",-1),"");
+while (local.file != "")
+{
+    globalvar_scr(main_directory_const+"\OBJ\RM\"+local.file,local.file+"_path",argument0);
+    local.file = filename_change_ext(file_find_next(),"");
+    local.i += 1;
+    // Draw
+    draw_clear_alpha(c_black,0);
+    draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading spawn objects ("+string(local.i)+")...",1,1,0);
+    screen_refresh();
+}
+file_find_close();
 // Draw
 draw_load_scr("Loaded objects!");

@@ -489,7 +489,7 @@ object_event_add
         local.mon = id;
         with door_trig_obj
         {
-            if object_index != wf_door_trig_obj
+            if object_index == door_trig_obj
             {
                 event_perform(ev_other,ev_room_start);
                 par_var = other.id;

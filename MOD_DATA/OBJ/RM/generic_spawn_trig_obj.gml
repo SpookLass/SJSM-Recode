@@ -14,6 +14,6 @@ object_event_add
 // User 0
 object_event_add
 (argument0,ev_other,ev_user0,'
-    mon_spawn_locale_scr(ringu_obj,0,0,0,false);
+    mon_spawn_locale_scr(load_par_obj.mon_var,load_par_obj.mon_x_var,load_par_obj.mon_y_var,load_par_obj.mon_z_var,load_par_obj.mon_pos_var);
     with spawn_door_trig_obj { lock_var = true; }
 ');

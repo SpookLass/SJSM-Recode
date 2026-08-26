@@ -63,6 +63,9 @@ object_event_add
         { taker_off_arr_var[local.i] = random(string_width(taker_str_var)*taker_xscale_var); }
         draw_set_font(main_font);
     }
+    // Dummy variables
+    dummy_len_var = 0;
+    dummy_var[0] = 0;
 ');
 // Room Start
 object_event_add
@@ -375,8 +378,15 @@ Zone
 Spawning
     Count: "+string(global.count_var)+"
     Fail: "+string(global.mon_fail_var)+"
-    Chance: 1/"+string(global.mon_chance_var+(global.mon_chance_mult_var*instance_number(mon_par_obj)-global.mon_fail_var))
+    Chance: 1/"+string(global.mon_chance_var+(global.mon_chance_mult_var*instance_number(mon_par_obj)-global.mon_fail_var))+"
+Dummy"
+                for (local.i=0; local.i<dummy_len_var; local.i+=1;)
+                {
+                    local.str += "
+    Dummy "+string(local.i)+": "+string(dummy_var[local.i]);
+                }
                 draw_str_shadow_scr(local.str,1,128,0.25*local.hudscale,0.25*local.hudscale,scale_min_var,fa_left,fa_top,-local.hudscale,local.hudscale,make_color_rgb(100,0,0),c_white,1,0);
+
             }
         }
         else if par_var.possess_var

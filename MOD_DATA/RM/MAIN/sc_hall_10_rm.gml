@@ -1,10 +1,10 @@
 /*
 Argument 0: Room Variable (same for all rooms)
 */
-// Spawn spots// Name
 room_set_code
 (
     argument0,'
+    // Name
     ini_open("lang_"+global.lang_var+".ini");
 	global.rm_name_var = ini_read_string("ROOM","sc","ROOM_sc")+" 10";
 	ini_close();
@@ -139,6 +139,5 @@ room_instance_add(argument0,352,320,wall_vert_obj);
 room_instance_add(argument0,352,352,wall_vert_obj);
 room_instance_add(argument0,352,384,wall_vert_obj);
 room_instance_add(argument0,448,416,wall_vert_obj);
-// Torches
 // Props
 room_instance_add(argument0,336,368,bar_hor_obj);

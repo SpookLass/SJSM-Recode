@@ -13,7 +13,7 @@ Argument 4: Collision Type
     0: Default
 Argument 5-7: Position
     0: Default
-
+Argument 8: Skip Props
 */
 if x_spd_var != 0 || y_spd_var != 0 || z_spd_var != 0
 {
@@ -62,110 +62,113 @@ if !fall_var && !fall_temp_var && on_floor_var && global.room_float_coll != -1
     if p3dc_check_still_scr(local.coll,local.xtmp,local.ytmp,local.ztmp+0.01,global.room_float_coll) { return true; }
 }
 // Check props
-local.coll_arr_len = 0;
-with prop_par_obj
+if !argument8
 {
-    if solid_var == 1
-    || (solid_var == float_solid_const && other.grav_var > 0 && !other.fall_var && other.on_floor_var)
-    || (local.colltype > 0 && local.colltype == solid_var)
+    local.coll_arr_len = 0;
+    with prop_par_obj
     {
-        if local.coll_prec
+        if solid_var == 1
+        || (solid_var == float_solid_const && other.grav_var > 0 && !other.fall_var && other.on_floor_var)
+        || (local.colltype > 0 && local.colltype == solid_var)
         {
-            local.bool = box_coll_scr
-            (
-                local.xtmp+(other.x_spd_var*0.5),
-                local.ytmp+(other.y_spd_var*0.5),
-                local.ztmp+(other.z_spd_var*0.5),
-                local.coll_width+4+abs(other.x_spd_var),
-                local.coll_width+4+abs(other.y_spd_var),
-                local.coll_height+4+abs(other.z_spd_var),
-                x,y,z,
-                abs(lengthdir_x(coll_var[2],direction))+abs(lengthdir_y(coll_var[3],direction)),
-                abs(lengthdir_x(coll_var[3],direction))+abs(lengthdir_y(coll_var[2],direction)),
-                coll_var[1]
-            )
+            if local.coll_prec
+            {
+                local.bool = box_coll_scr
+                (
+                    local.xtmp+(other.x_spd_var*0.5),
+                    local.ytmp+(other.y_spd_var*0.5),
+                    local.ztmp+(other.z_spd_var*0.5),
+                    local.coll_width+4+abs(other.x_spd_var),
+                    local.coll_width+4+abs(other.y_spd_var),
+                    local.coll_height+4+abs(other.z_spd_var),
+                    x,y,z,
+                    abs(lengthdir_x(coll_var[2],direction))+abs(lengthdir_y(coll_var[3],direction)),
+                    abs(lengthdir_x(coll_var[3],direction))+abs(lengthdir_y(coll_var[2],direction)),
+                    coll_var[1]
+                )
+            }
+            else
+            {
+                local.bool = box_coll_scr
+                (
+                    local.xtmp,local.ytmp,local.ztmp,local.coll_width,local.coll_width,local.coll_height,
+                    x,y,z,
+                    abs(lengthdir_x(coll_var[2],direction))+abs(lengthdir_y(coll_var[3],direction)),
+                    abs(lengthdir_x(coll_var[3],direction))+abs(lengthdir_y(coll_var[2],direction)),
+                    coll_var[1]
+                );
+            }
+            if local.bool
+            {
+                
+                if coll_var[0] == -5 { local.coll_arr[local.coll_arr_len,0] = amn_crate_coll[0]; }
+                else { local.coll_arr[local.coll_arr_len,0] = coll_var[0]; }
+                local.coll_arr[local.coll_arr_len,1] = x;
+                local.coll_arr[local.coll_arr_len,2] = y;
+                local.coll_arr[local.coll_arr_len,3] = z;
+                local.coll_arr[local.coll_arr_len,4] = degtorad(direction)
+                local.coll_arr_len += 1;
+            }
         }
+    }
+    // Loop
+    for (local.c=0; local.c<local.coll_arr_len; local.c+=1;)
+    {
+        // Check rotated prop collision
+        if local.coll_arr[local.c,4] != 0
+        {
+            // Seems to set variables for use in next function? So weird.
+            p3dc_set_modrot_scr(0,0,local.coll_arr[local.c,4]);
+            if local.coll_prec
+            {
+                // I kid you not, THE EXAMPLE CODE IS OUTDATED
+                local.dist = 
+                p3dc_ray_rot_scr
+                (
+                    local.coll_arr[local.c,0],
+                    local.coll_arr[local.c,1],
+                    local.coll_arr[local.c,2],
+                    local.coll_arr[local.c,3],
+                    local.xtmp,local.ytmp,local.ztmp+(local.coll_height/2),
+                    x_spd_var,y_spd_var,z_spd_var,
+                    0,0,local.coll_arr[local.c,4]
+                );
+                if local.dist < local.radius+spd_var || local.dist >= 10000000 { return true; }
+            }
+            // If collided, slide
+            if p3dc_check_rot_scr
+            (
+                local.coll,local.xtmp,local.ytmp,local.ztmp+0.01,
+                local.coll_arr[local.c,0],local.coll_arr[local.c,1],local.coll_arr[local.c,2],local.coll_arr[local.c,3],
+                0,0,0,0,0,local.coll_arr[local.c,4]
+            )
+            { return true; }
+        }
+        // Check static prop collision
         else
         {
-            local.bool = box_coll_scr
+            if local.coll_prec
+            {
+                local.dist =
+                p3dc_ray_scr
+                (
+                    local.coll_arr[local.c,0],
+                    local.coll_arr[local.c,1],
+                    local.coll_arr[local.c,2],
+                    local.coll_arr[local.c,3],
+                    local.xtmp,local.ytmp,local.ztmp+(local.coll_height/2),
+                    x_spd_var,y_spd_var,z_spd_var
+                );
+                if local.dist < local.radius+spd_var || local.dist >= 10000000 { return true; }
+            }
+            // If collided, slide
+            if p3dc_check_scr
             (
-                local.xtmp,local.ytmp,local.ztmp,local.coll_width,local.coll_width,local.coll_height,
-                x,y,z,
-                abs(lengthdir_x(coll_var[2],direction))+abs(lengthdir_y(coll_var[3],direction)),
-                abs(lengthdir_x(coll_var[3],direction))+abs(lengthdir_y(coll_var[2],direction)),
-                coll_var[1]
-            );
+                local.coll,local.xtmp,local.ytmp,local.ztmp+0.01,
+                local.coll_arr[local.c,0],local.coll_arr[local.c,1],local.coll_arr[local.c,2],local.coll_arr[local.c,3]
+            )
+            { return true; }
         }
-        if local.bool
-        {
-            
-            if coll_var[0] == -5 { local.coll_arr[local.coll_arr_len,0] = amn_crate_coll[0]; }
-            else { local.coll_arr[local.coll_arr_len,0] = coll_var[0]; }
-            local.coll_arr[local.coll_arr_len,1] = x;
-            local.coll_arr[local.coll_arr_len,2] = y;
-            local.coll_arr[local.coll_arr_len,3] = z;
-            local.coll_arr[local.coll_arr_len,4] = degtorad(direction)
-            local.coll_arr_len += 1;
-        }
-    }
-}
-// Loop
-for (local.c=0; local.c<local.coll_arr_len; local.c+=1;)
-{
-    // Check rotated prop collision
-    if local.coll_arr[local.c,4] != 0
-    {
-        // Seems to set variables for use in next function? So weird.
-        p3dc_set_modrot_scr(0,0,local.coll_arr[local.c,4]);
-        if local.coll_prec
-        {
-            // I kid you not, THE EXAMPLE CODE IS OUTDATED
-            local.dist = 
-            p3dc_ray_rot_scr
-            (
-                local.coll_arr[local.c,0],
-                local.coll_arr[local.c,1],
-                local.coll_arr[local.c,2],
-                local.coll_arr[local.c,3],
-                local.xtmp,local.ytmp,local.ztmp+(local.coll_height/2),
-                x_spd_var,y_spd_var,z_spd_var,
-                0,0,local.coll_arr[local.c,4]
-            );
-            if local.dist < local.radius+spd_var || local.dist >= 10000000 { return true; }
-        }
-        // If collided, slide
-        if p3dc_check_rot_scr
-        (
-            local.coll,local.xtmp,local.ytmp,local.ztmp+0.01,
-            local.coll_arr[local.c,0],local.coll_arr[local.c,1],local.coll_arr[local.c,2],local.coll_arr[local.c,3],
-            0,0,0,0,0,local.coll_arr[local.c,4]
-        )
-        { return true; }
-    }
-    // Check static prop collision
-    else
-    {
-        if local.coll_prec
-        {
-            local.dist =
-            p3dc_ray_scr
-            (
-                local.coll_arr[local.c,0],
-                local.coll_arr[local.c,1],
-                local.coll_arr[local.c,2],
-                local.coll_arr[local.c,3],
-                local.xtmp,local.ytmp,local.ztmp+(local.coll_height/2),
-                x_spd_var,y_spd_var,z_spd_var
-            );
-            if local.dist < local.radius+spd_var || local.dist >= 10000000 { return true; }
-        }
-        // If collided, slide
-        if p3dc_check_scr
-        (
-            local.coll,local.xtmp,local.ytmp,local.ztmp+0.01,
-            local.coll_arr[local.c,0],local.coll_arr[local.c,1],local.coll_arr[local.c,2],local.coll_arr[local.c,3]
-        )
-        { return true; }
     }
 }
 return false;
