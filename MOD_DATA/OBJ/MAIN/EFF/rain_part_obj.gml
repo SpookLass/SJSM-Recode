@@ -83,7 +83,7 @@ object_event_add
                     local.xvel = lengthdir_x(lengthdir_x(1,part_yaw_var),part_pitch_var);
                     local.yvel = lengthdir_x(lengthdir_y(1,part_yaw_var),part_pitch_var);
                     local.zvel = -lengthdir_y(1,part_pitch_var);
-                    if check_ray_scr(local.xtmp2,local.ytmp2,local.ztmp2,local.xvel,local.yvel,local.zvel) < 10000000
+                    if check_ray_scr(local.xtmp2,local.ytmp2,local.ztmp2,local.xvel,local.yvel,local.zvel,false) < 10000000
                     {
                         local.i -= 0.9; // Ten Attempts per drop
                         continue;
@@ -125,12 +125,12 @@ object_event_add
                 local.xvel = lengthdir_x(lengthdir_x(1,part_arr[local.i,5]),part_arr[local.i,6]);
                 local.yvel = lengthdir_x(lengthdir_y(1,part_arr[local.i,5]),part_arr[local.i,6]);
                 local.zvel = -lengthdir_y(1,part_arr[local.i,6]);
-                if check_ray_scr(part_arr[local.i,1],part_arr[local.i,2],part_arr[local.i,3],local.xvel,local.yvel,local.zvel) < local.spd+(part_arr[local.i,7]*0.5)
+                if check_ray_scr(part_arr[local.i,1],part_arr[local.i,2],part_arr[local.i,3],local.xvel,local.yvel,local.zvel,false) < local.spd+(part_arr[local.i,7]*0.5)
                 { local.coll = true; }
                 // If collided, check if collision is with floor
                 if local.coll && do_ring_var && part_arr[local.i,6] < 0
                 {
-                    local.dist = check_ray_scr(part_arr[local.i,1],part_arr[local.i,2],part_arr[local.i,3],0,0,-1);
+                    local.dist = check_ray_scr(part_arr[local.i,1],part_arr[local.i,2],part_arr[local.i,3],0,0,-1,false);
                     if local.dist < local.spd+(part_arr[local.i,7]*0.5)
                     {
                         local.coll = false;

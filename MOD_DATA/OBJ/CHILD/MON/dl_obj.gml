@@ -57,6 +57,7 @@ object_event_add
     warp_update_var = true;
     warp_alarm_var = 60;
     warp_dist_var = 128;
+    warp_prop_var = true;
     alarm_len_var = 9;
     alarm_ini_scr();
     // Deer
@@ -109,6 +110,7 @@ object_event_add
             deer_den_var = 3;
             snd_dist_max_var = 300; // Reduced
             deer_snd_dist_max_var = 300;
+            warp_prop_var = false;
             // Effect
             eff_min_var = 15;
             eff_max_var = 30;
@@ -435,7 +437,7 @@ object_event_add
                 event_user(15);
                 if temp_var == -1
                 {
-                    if !check_coll_scr(-1,0,0,0,0,x,y,z)
+                    if !check_coll_scr(-1,0,0,0,0,x,y,z,true)
                     {
                         warp_var = false;
                         do_coll_var = mon_solid_const;
@@ -488,14 +490,14 @@ object_event_add
         local.yvec = (start_y_var-target_y_var)/local.dist_2d;
         local.zvec = 0;
         // Calculate warp
-        local.dist = check_ray_scr(target_x_var,target_y_var,target_z_var+(target_var.coll_var[1]*0.5),local.xvec,local.yvec,local.zvec);
+        local.dist = check_ray_scr(target_x_var,target_y_var,target_z_var+(target_var.coll_var[1]*0.5),local.xvec,local.yvec,local.zvec,warp_prop_var);
         local.dir = point_direction(target_x_var,target_y_var,start_x_var,start_y_var);
         local.xtmp = target_x_var+lengthdir_x(local.dist-coll_var[2],local.dir);
         local.ytmp = target_y_var+lengthdir_y(local.dist-coll_var[2],local.dir);
         local.ztmp = target_z_var;
         if target_dist_var > local.dist
         {
-            if !check_coll_scr(-1,0,0,0,0,local.xtmp,local.ytmp,local.ztmp)
+            if !check_coll_scr(-1,0,0,0,0,local.xtmp,local.ytmp,local.ztmp,true)
             {
                 warp_x_var = local.xtmp;
                 warp_y_var = local.ytmp;

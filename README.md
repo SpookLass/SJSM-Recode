@@ -45,6 +45,7 @@ Recode also attempts to emulate the Original and HD Renovation experience as clo
 - Yoshicraft64: Sprite adding system
 - Birdbonanza: Menu, Save System, Hooked Doll, and Silhouettes
 - Everlasting Maya: Room porting
+- Ninja JayBird: Temporary locale help
 
 ### Art:
 

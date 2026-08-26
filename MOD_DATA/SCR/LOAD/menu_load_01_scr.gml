@@ -671,7 +671,7 @@ draw_load_scr("Loading config...");
                 custom_arr_set_scr(2,local.bab_set,-1,-1,2); // HD
                 custom_arr_set_scr(-1,local.bab_set,5,-1,-1); // :) (Random)
         // Puppet
-            local.pup = type_add_scr("pup",true,true,1,pup_obj,noone,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
+            local.pup = type_add_scr("pup",true,true,1,pup_obj,ben_load_rm,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
             local.pup_set = type_add_set_scr(local.pup,"pup","pup",local.spec,true); /*ID, Variable Name, Description, Category, Can Disable*/
             // Types
                 type_add_type_scr(local.pup,local.pup_set,"recode","",true); /*ID, Label, Description, Translate*/
@@ -782,7 +782,7 @@ draw_load_scr("Loading config...");
                 custom_arr_set_scr(2,local.fd_set,-1,-1,2); // HD
                 custom_arr_set_scr(-1,local.fd_set,5,-1,-1); // :) (Random)
         // Killer
-            local.killer = type_add_scr("killer",true,true,1,killer_obj,noone,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
+            local.killer = type_add_scr("killer",true,true,1,killer_obj,clock_load_rm,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
             local.killer_set = type_add_set_scr(local.killer,"killer","killer",local.spec,true); /*ID, Variable Name, Description, Category, Can Disable*/
             // Types
                 type_add_type_scr(local.killer,local.killer_set,"recode","",true); /*ID, Label, Description, Translate*/
@@ -800,7 +800,7 @@ draw_load_scr("Loading config...");
                 custom_arr_set_scr(2,local.killer_set,-1,-1,2); // HD
                 custom_arr_set_scr(-1,local.killer_set,5,-1,-1); // :) (Random)
         // Mermaid
-            local.mur = type_add_scr("mur",true,true,1,mur_obj,noone,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
+            local.mur = type_add_scr("mur",true,true,1,mur_obj,amn_load_rm,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
             local.mur_set = type_add_set_scr(local.mur,"mur","mur",local.spec,true); /*ID, Variable Name, Description, Category, Can Disable*/
             // Types
                 type_add_type_scr(local.mur,local.mur_set,"recode","",true); /*ID, Label, Description, Translate*/
@@ -816,7 +816,7 @@ draw_load_scr("Loading config...");
         if global.kh_var
         {
             // Security Guard
-                local.sg = type_add_scr("sg",true,true,2,sg_obj,noone,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
+                local.sg = type_add_scr("sg",true,true,2,sg_obj,sg_load_rm,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
                 local.sg_set = type_add_set_scr(local.sg,"sg","sg",local.mon,true); /*ID, Variable Name, Description, Category, Can Disable*/
                 // Types
                     type_add_type_scr(local.sg,local.sg_set,"recode","",true); /*ID, Label, Description, Translate*/
@@ -830,7 +830,7 @@ draw_load_scr("Loading config...");
                     custom_arr_set_scr(0,local.sg_set,-1,-1,0); // Recode
                     custom_arr_set_scr(-1,local.sg_set,5,-1,-1); // :) (Random)
             // Bodybag
-                local.body = type_add_scr("body",true,true,2,bodybag_obj,noone,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
+                local.body = type_add_scr("body",true,true,2,bodybag_obj,morgue_load_rm,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
                 local.body_set = type_add_set_scr(local.body,"body","body",local.mon,true); /*ID, Variable Name, Description, Category, Can Disable*/
                 // Types
                     type_add_type_scr(local.body,local.body_set,"recode","",true); /*ID, Label, Description, Translate*/
@@ -848,7 +848,7 @@ draw_load_scr("Loading config...");
                     custom_arr_set_scr(-1,local.body_set,5,-1,-1); // :) (Random)
         }
         // Stem
-            local.stem = type_add_scr("stem",true,true,2,stem_obj,noone,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
+            local.stem = type_add_scr("stem",true,true,2,stem_obj,stem_load_rm,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
             local.stem_set = type_add_set_scr(local.stem,"stem","stem",local.mon,true); /*ID, Variable Name, Description, Category, Can Disable*/
             // Types
                 type_add_type_scr(local.stem,local.stem_set,"recode","",true); /*ID, Label, Description, Translate*/
@@ -866,7 +866,7 @@ draw_load_scr("Loading config...");
                 custom_arr_set_scr(2,local.stem_set,-1,-1,2); // HD
                 custom_arr_set_scr(-1,local.stem_set,5,-1,-1); // :) (Random)
         // Patient
-            local.patient = type_add_scr("patient",true,true,2,patient_obj,noone,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
+            local.patient = type_add_scr("patient",true,true,2,patient_obj,patient_load_rm,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
             local.patient_set = type_add_set_scr(local.patient,"patient","patient",local.mon,true); /*ID, Variable Name, Description, Category, Can Disable*/
             // Types
                 type_add_type_scr(local.patient,local.patient_set,"recode","",true); /*ID, Label, Description, Translate*/
@@ -882,7 +882,7 @@ draw_load_scr("Loading config...");
                 custom_arr_set_scr(2,local.patient_set,-1,-1,2); // HD
                 custom_arr_set_scr(-1,local.patient_set,5,-1,-1); // :) (Random)
         // Ghost Cow
-            local.gc = type_add_scr("gc",true,true,2,gc_obj,noone,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
+            local.gc = type_add_scr("gc",true,true,2,gc_obj,gc_load_rm,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
             local.gc_set = type_add_set_scr(local.gc,"gc","gc",local.mon,true); /*ID, Variable Name, Description, Category, Can Disable*/
             // Types
                 type_add_type_scr(local.gc,local.gc_set,"recode","",true); /*ID, Label, Description, Translate*/
@@ -900,7 +900,7 @@ draw_load_scr("Loading config...");
                 custom_arr_set_scr(2,local.gc_set,-1,-1,2); // HD
                 custom_arr_set_scr(-1,local.gc_set,5,-1,-1); // :) (Random)
         // Bekka
-            local.bekka = type_add_scr("bekka",true,true,2,bekka_obj,noone,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
+            local.bekka = type_add_scr("bekka",true,true,2,bekka_obj,bekka_load_rm,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
             local.bekka_set = type_add_set_scr(local.bekka,"bekka","bekka",local.mon,true); /*ID, Variable Name, Description, Category, Can Disable*/
             // Types
                 type_add_type_scr(local.bekka,local.bekka_set,"recode","",true); /*ID, Label, Description, Translate*/
@@ -920,7 +920,7 @@ draw_load_scr("Loading config...");
         if global.dh_var
         {
             // Husk Swarm
-                local.husk = type_add_scr("husk_swarm",true,true,3,husk_swarm_obj,noone,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
+                local.husk = type_add_scr("husk_swarm",true,true,3,husk_swarm_obj,husk_load_rm,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
                 local.husk_set = type_add_set_scr(local.husk,"husk","husk",local.doll,true); /*ID, Variable Name, Description, Category, Can Disable*/
                 // Types
                     type_add_type_scr(local.husk,local.husk_set,"recode","",true); /*ID, Label, Description, Translate*/
@@ -934,7 +934,7 @@ draw_load_scr("Loading config...");
                     custom_arr_set_scr(2,local.husk_set,-1,-1,2); // HD
                     custom_arr_set_scr(-1,local.husk_set,5,-1,-1); // :) (Random)
             // Woormy Charles
-                local.wc = type_add_scr("wc",true,true,3,wc_obj,noone,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
+                local.wc = type_add_scr("wc",true,true,3,wc_obj,wc_load_rm,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
                 local.wc_set = type_add_set_scr(local.wc,"wc","wc",local.doll,true); /*ID, Variable Name, Description, Category, Can Disable*/
                 // Types
                     type_add_type_scr(local.wc,local.wc_set,"recode","",true); /*ID, Label, Description, Translate*/
@@ -949,7 +949,7 @@ draw_load_scr("Loading config...");
                     custom_arr_set_scr(2,local.wc_set,-1,-1,2); // HD
                     custom_arr_set_scr(-1,local.wc_set,5,-1,-1); // :) (Random)
             // Clown
-                local.clown = type_add_scr("clown",true,true,3,clown_obj,noone,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
+                local.clown = type_add_scr("clown",true,true,3,clown_obj,clown_load_rm,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
                 local.clown_set = type_add_set_scr(local.clown,"clown","clown",local.doll,true); /*ID, Variable Name, Description, Category, Can Disable*/
                 // Types
                     type_add_type_scr(local.clown,local.clown_set,"recode","",true); /*ID, Label, Description, Translate*/
@@ -964,7 +964,7 @@ draw_load_scr("Loading config...");
                     custom_arr_set_scr(2,local.clown_set,-1,-1,2); // HD
                     custom_arr_set_scr(-1,local.clown_set,5,-1,-1); // :) (Random)
             // Hooked Doll
-                local.hk = type_add_scr("hk",true,true,3,hk_obj,noone,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
+                local.hk = type_add_scr("hk",true,true,3,hk_obj,hk_load_rm,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
                 local.hk_set = type_add_set_scr(local.hk,"hk","hk",local.doll,true); /*ID, Variable Name, Description, Category, Can Disable*/
                 // Types
                     type_add_type_scr(local.hk,local.hk_set,"recode","",true); /*ID, Label, Description, Translate*/
@@ -979,7 +979,7 @@ draw_load_scr("Loading config...");
                     custom_arr_set_scr(2,local.hk_set,-1,-1,2); // HD
                     custom_arr_set_scr(-1,local.hk_set,5,-1,-1); // :) (Random)
             // Frenzy
-                local.frenzy = type_add_scr("frenzy",true,true,3,frenzy_obj,noone,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
+                local.frenzy = type_add_scr("frenzy",true,true,3,frenzy_obj,frenzy_load_rm,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
                 local.frenzy_set = type_add_set_scr(local.frenzy,"frenzy","frenzy",local.doll,true); /*ID, Variable Name, Description, Category, Can Disable*/
                 // Types
                     type_add_type_scr(local.frenzy,local.frenzy_set,"recode","",true); /*ID, Label, Description, Translate*/
@@ -994,7 +994,7 @@ draw_load_scr("Loading config...");
         }
     // Endless
         // Real Ringu
-            local.real_ringu = type_add_scr("real_ringu",true,true,4,real_ringu_obj,noone,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
+            local.real_ringu = type_add_scr("real_ringu",true,true,4,real_ringu_obj,real_ringu_load_rm,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
             local.real_ringu_set = type_add_set_scr(local.real_ringu,"real_ringu","real_ringu",local.endless,true); /*ID, Variable Name, Description, Category, Can Disable*/
             // Types
                 type_add_type_scr(local.real_ringu,local.real_ringu_set,"recode","",true); /*ID, Label, Description, Translate*/
@@ -1009,7 +1009,7 @@ draw_load_scr("Loading config...");
                 custom_arr_set_scr(2,local.real_ringu_set,-1,-1,2); // HD
                 custom_arr_set_scr(-1,local.real_ringu_set,5,-1,-1); // :) (Random)
         // Tirsiak
-            local.tiri = type_add_scr("tiri",true,true,5,tiri_obj,noone,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
+            local.tiri = type_add_scr("tiri",true,true,5,tiri_obj,tiri_load_rm,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
             local.tiri_set = type_add_set_scr(local.tiri,"tiri","tiri",local.unknown,true); /*ID, Variable Name, Description, Category, Can Disable*/
             // Types
                 type_add_type_scr(local.tiri,local.tiri_set,"recode","",true); /*ID, Label, Description, Translate*/
@@ -1024,7 +1024,7 @@ draw_load_scr("Loading config...");
                 custom_arr_set_scr(2,local.tiri_set,-1,-1,2); // HD
                 custom_arr_set_scr(-1,local.tiri_set,5,-1,-1); // :) (Random)
         // Lisa
-            local.lisa = type_add_scr("lisa",true,true,5,lisa_obj,noone,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
+            local.lisa = type_add_scr("lisa",true,true,5,lisa_obj,lisa_load_rm,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
             local.lisa_set = type_add_set_scr(local.lisa,"lisa","lisa",local.unknown,true); /*ID, Variable Name, Description, Category, Can Disable*/
             // Types
                 type_add_type_scr(local.lisa,local.lisa_set,"recode","",true); /*ID, Label, Description, Translate*/
@@ -1039,7 +1039,7 @@ draw_load_scr("Loading config...");
                 custom_arr_set_scr(2,local.lisa_set,-1,-1,2); // HD
                 custom_arr_set_scr(-1,local.lisa_set,5,-1,-1); // :) (Random)
         // Otto
-            local.otto = type_add_scr("otto",true,true,5,otto_obj,noone,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
+            local.otto = type_add_scr("otto",true,true,5,otto_obj,otto_load_rm,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
             local.otto_set = type_add_set_scr(local.otto,"otto","otto",local.unknown,true); /*ID, Variable Name, Description, Category, Can Disable*/
             // Types
                 type_add_type_scr(local.otto,local.otto_set,"recode","",true); /*ID, Label, Description, Translate*/
@@ -1054,7 +1054,7 @@ draw_load_scr("Loading config...");
                 custom_arr_set_scr(2,local.otto_set,-1,-1,2); // HD
                 custom_arr_set_scr(-1,local.otto_set,5,-1,-1); // :) (Random)
         // Spooper
-            local.spooper = type_add_scr("spooper",true,true,5,spooper_obj,noone,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
+            local.spooper = type_add_scr("spooper",true,true,5,spooper_obj,spooper_load_rm,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
             local.spooper_set = type_add_set_scr(local.spooper,"spooper","spooper",local.unknown,true); /*ID, Variable Name, Description, Category, Can Disable*/
             // Types
                 type_add_type_scr(local.spooper,local.spooper_set,"recode","",true); /*ID, Label, Description, Translate*/
@@ -1068,7 +1068,7 @@ draw_load_scr("Loading config...");
                 custom_arr_set_scr(2,local.spooper_set,-1,-1,2); // HD
                 custom_arr_set_scr(-1,local.spooper_set,5,-1,-1); // :) (Random)
         // White Face
-            local.wf = type_add_scr("wf",true,true,5,wf_obj,noone,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
+            local.wf = type_add_scr("wf",true,true,5,wf_obj,wf_load_rm,noone,noone); /*Name, Translate, Chase, Group, Object, Room, CAT-DOS Object, Wiki Object*/
             local.wf_set = type_add_set_scr(local.wf,"wf","wf",local.unknown,true); /*ID, Variable Name, Description, Category, Can Disable*/
             // Types
                 type_add_type_scr(local.wf,local.wf_set,"recode","",true); /*ID, Label, Description, Translate*/

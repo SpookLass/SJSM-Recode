@@ -317,7 +317,7 @@ object_event_add
                         local.yvec = (y-other.y)/local.dist;
                         local.zvec = (z-other.z)/local.dist;
                         local.ztmp = other.z+(other.coll_var[1]/2);
-                        if local.dist < check_ray_scr(other.x,other.y,local.ztmp,local.xvec,local.yvec,local.zvec)
+                        if local.dist < check_ray_scr(other.x,other.y,local.ztmp,local.xvec,local.yvec,local.zvec,false)
                         { other.wander_var = false; break; }
                     }
                 }

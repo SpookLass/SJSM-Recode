@@ -93,7 +93,7 @@ object_event_add
         local.dist = random_range(-hurt_rand_dist_var,hurt_rand_dist_var)
         local.xtmp = x+lengthdir_x(local.dist,local.dir);
         local.ytmp = y+lengthdir_y(local.dist,local.dir);
-        if do_coll_var { local.bool = !check_coll_scr(0,0,0,0,0,local.xtmp,local.ytmp,z); }
+        if do_coll_var { local.bool = !check_coll_scr(0,0,0,0,0,local.xtmp,local.ytmp,z,true); }
         else { local.bool = true; }
         if local.bool
         {

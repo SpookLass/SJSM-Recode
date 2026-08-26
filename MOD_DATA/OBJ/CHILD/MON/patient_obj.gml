@@ -411,7 +411,7 @@ object_event_add
     {
         local.xvel = -lengthdir_x(1,target_var.eye_yaw_var);
         local.yvel = -lengthdir_y(1,target_var.eye_yaw_var);
-        if check_ray_scr(target_x_var,target_y_var,target_z_var+(target_var.coll_var[1]/2),local.xvel,local.yvel,0) > 32+(coll_var[2]/2)
+        if check_ray_scr(target_x_var,target_y_var,target_z_var+(target_var.coll_var[1]/2),local.xvel,local.yvel,0,true) > 32+(coll_var[2]/2)
         {
             x = target_x_var+(local.xvel*32);
             y = target_y_var+(local.yvel*32);

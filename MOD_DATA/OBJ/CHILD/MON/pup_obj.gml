@@ -377,7 +377,7 @@ object_event_add
                         {
                             local.xvel = -lengthdir_x(1,target_var.yaw_var);
                             local.yvel = -lengthdir_y(1,target_var.yaw_var);
-                            local.dist = median(check_ray_scr(target_x_var,target_y_var,target_z_var+(target_var.coll_var[1]/2),local.xvel,local.yvel,0)-(coll_var[2]/2),tp_dist_min_var,tp_dist_max_var);
+                            local.dist = median(check_ray_scr(target_x_var,target_y_var,target_z_var+(target_var.coll_var[1]/2),local.xvel,local.yvel,0,true)-(coll_var[2]/2),tp_dist_min_var,tp_dist_max_var);
                             x = target_x_var+(local.xvel*local.dist);
                             y = target_y_var+(local.yvel*local.dist);
                             z = target_z_var;                         
@@ -600,7 +600,7 @@ object_event_add
         {
             local.xvel = -lengthdir_x(1,target_var.yaw_var);
             local.yvel = -lengthdir_y(1,target_var.yaw_var);
-            local.dist = median(check_ray_scr(target_x_var,target_y_var,target_z_var+(target_var.coll_var[1]/2),local.xvel,local.yvel,0)-(coll_var[2]/2),tp_dist_min_var,tp_dist_max_var);
+            local.dist = median(check_ray_scr(target_x_var,target_y_var,target_z_var+(target_var.coll_var[1]/2),local.xvel,local.yvel,0,true)-(coll_var[2]/2),tp_dist_min_var,tp_dist_max_var);
             x = target_x_var+(local.xvel*local.dist);
             y = target_y_var+(local.yvel*local.dist);
             z = target_z_var;

@@ -10,6 +10,7 @@ object_set_visible(argument0,false);
 object_event_add
 (argument0,ev_create,0,'
     menu_var = false;
+    mon_var = pup_obj;
     bg_len_var = 14;
     bg_arr_var[0,1] = ben_wall_bg_path;
     bg_arr_var[0,2] = false;
@@ -91,6 +92,12 @@ object_event_add
     snd_arr_var[0,4] = 1;
     snd_arr_var[0,5] = 0;
     snd_arr_var[0,6] = 0;
-    rm_var = ben_01_rm;
+    // Temp (w/ help from Ninja Jaybird!)
+    rm_len_var = 1;
+    rm_arr_var[0,1] = generic_spawn_rm_path;
+    obj_len_var = 1;
+    obj_arr_var[0,1] = generic_spawn_trig_obj_path;
+    rm_var = 0;
+    // rm_var = ben_01_rm;
     event_inherited();
 ');

@@ -13,7 +13,7 @@ Argument 4: Collision Type
     0: Default
 Argument 5-7: Position
     0: Default
-Argument 8: Skip Props
+Argument 9: Check Props
 */
 if x_spd_var != 0 || y_spd_var != 0 || z_spd_var != 0
 {
@@ -62,7 +62,7 @@ if !fall_var && !fall_temp_var && on_floor_var && global.room_float_coll != -1
     if p3dc_check_still_scr(local.coll,local.xtmp,local.ytmp,local.ztmp+0.01,global.room_float_coll) { return true; }
 }
 // Check props
-if !argument8
+if argument8
 {
     local.coll_arr_len = 0;
     with prop_par_obj

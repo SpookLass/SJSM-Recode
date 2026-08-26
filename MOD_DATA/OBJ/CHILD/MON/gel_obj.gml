@@ -373,7 +373,7 @@ object_event_add
                 }
             }
             set_motion_3d_scr(0,true);
-            local.dist = check_ray_scr(x,y,z+(coll_var[2]/2),0,0,-1);
+            local.dist = check_ray_scr(x,y,z+(coll_var[2]/2),0,0,-1,true);
             if local.dist < 10000000
             {
                 slime_spawn_var = 3;

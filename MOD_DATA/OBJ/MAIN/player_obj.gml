@@ -449,7 +449,7 @@ object_event_add
                             z = local.znext;
                             target_eye_h_var = crouch_eye_h_var;
                         }
-                        else if !check_coll_scr(-1,global.player_coll[0],global.player_coll[1],global.player_coll[2],do_coll_var,x,y,local.znext+0.01)
+                        else if !check_coll_scr(-1,global.player_coll[0],global.player_coll[1],global.player_coll[2],do_coll_var,x,y,local.znext+0.01,true)
                         {
                             crouch_var = false;
                             coll_var[0] = global.player_coll[0];
@@ -477,13 +477,13 @@ object_event_add
                                     check_ray_scr
                                     (
                                         local.xtmp,local.ytmp,z+coll_var[1],
-                                        0,0,-1
+                                        0,0,-1,true
                                     )
                                 );
                             }
                             local.zdist -= coll_var[1];
                             local.znext = z-local.zdist;
-                            if !check_coll_scr(-1,global.player_coll[0],global.player_coll[1],global.player_coll[2],do_coll_var,x,y,local.znext+0.01)
+                            if !check_coll_scr(-1,global.player_coll[0],global.player_coll[1],global.player_coll[2],do_coll_var,x,y,local.znext+0.01,true)
                             {
                                 crouch_var = false;
                                 coll_var[0] = global.player_coll[0];

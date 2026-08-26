@@ -53,7 +53,7 @@ for (local.i=0; local.i<argument0; local.i+=1;)
         }
         if !local.bool { continue; }
     }
-    if do_coll_var { if check_coll_scr(0,0,0,0,0,local.xtmp,local.ytmp,local.ztmp) { continue; }}
+    if do_coll_var { if check_coll_scr(0,0,0,0,0,local.xtmp,local.ytmp,local.ztmp,true) { continue; }}
     x = local.xtmp;
     y = local.ytmp;
     z = local.ztmp;

@@ -9,6 +9,7 @@ if room_exists(argument0) && argument0 != 0
         case 1:
         {
             global.game_var = false;
+            global.spawn_var = 0;
             fmod_listen_set_num_scr(1);
             // Remove persistent objects
             with all

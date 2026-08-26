@@ -1,7 +1,7 @@
 /*
 Argument 0-2: Ray position
 Argument 3-5: Ray direction
-Argument 6: Skip props
+Argument 6: Check props
 */
 local.raydist = 10000000;
 // Always check split
@@ -14,7 +14,7 @@ if !fall_var && !fall_temp_var && on_floor_var && global.room_float_coll != -1
     local.raydist = min(local.raydist,local.dist);
 }
 // Check props
-if !argument6
+if argument6
 {
     with prop_par_obj
     {
