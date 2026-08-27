@@ -12,6 +12,7 @@ object_event_add(argument0,ev_create,0,"
     w_var = 1;
     h_var = 1;
     image_alpha = 0.5;
+    z = 0;
 ");
 // Draw
 object_event_add(argument0,ev_draw,0,"

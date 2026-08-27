@@ -11,20 +11,19 @@ object_event_add
 (argument0,ev_create,0,'
     menu_var = false;
     mon_var = gc_obj;
-    bg_len_var = 3;
+    bg_len_var = 2;
     bg_arr_var[0,1] = gc_wall_bg_path;
     bg_arr_var[0,2] = false;
     bg_arr_var[0,3] = false;
     bg_arr_var[1,1] = gc_floor_bg_path;
     bg_arr_var[1,2] = false;
     bg_arr_var[1,3] = false;
-    bg_arr_var[2,1] = lab_ceil_bg_path;
-    bg_arr_var[2,2] = false;
-    bg_arr_var[2,3] = false;
     rm_len_var = 1;
-    rm_arr_var[0,1] = generic_spawn_rm_path;
-    obj_len_var = 1;
+    rm_arr_var[0,1] = gc_01_rm_path;
+    obj_len_var = 3;
     obj_arr_var[0,1] = generic_spawn_trig_obj_path;
+    obj_arr_var[1,1] = isolation_wall_hor_obj_path;
+    obj_arr_var[2,1] = isolation_wall_vert_obj_path;
     rm_var = 0;
     event_inherited();
 ');

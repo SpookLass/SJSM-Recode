@@ -10,6 +10,7 @@ object_set_visible(argument0,true);
 object_event_add(argument0,ev_create,0,"
     type_var = 2;
     h_var = 1;
+    z = 0;
 ");
 // Draw
 object_event_add(argument0,ev_draw,0,"

@@ -68,7 +68,11 @@ object_event_add
     with floor_par_obj { tex_var = store_tex_var; }
     with ceil_par_obj { tex_var = store_tex_var; }
     with wall_par_obj { tex_var = store_tex_var; }
-    with prop_par_obj { tex_var = store_tex_var; }
+    with prop_par_obj
+    {
+        if flesh_var && (other.door_var || flesh_var == 1)
+        { tex_var = store_tex_var; }
+    }
 ');
 // Room Start
 object_event_add

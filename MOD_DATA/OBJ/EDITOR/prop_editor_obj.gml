@@ -9,4 +9,5 @@ object_set_visible(argument0,true);
 // Create
 object_event_add(argument0,ev_create,0,"
     type_var = 4;
+    z = 0;
 ");
