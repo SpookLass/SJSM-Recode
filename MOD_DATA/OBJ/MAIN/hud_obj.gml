@@ -345,6 +345,7 @@ object_event_add
                     case 2: { local.zonestr += "Original Story "+string(global.zone_var); break; }
                     case 3: { local.zonestr += "Original Endless "+string(global.zone_var); break; }
                     case 4: { local.zonestr += "Renovation Story "+string(global.zone_var); break; }
+                    case 1: { local.zonestr += "NEW Recode Endless "+string(global.zone_var); break; }
                 }
                 local.str = "
 Position

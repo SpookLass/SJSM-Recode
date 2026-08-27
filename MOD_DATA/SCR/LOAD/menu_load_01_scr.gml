@@ -431,6 +431,7 @@ draw_load_scr("Loading config...");
             custom_arr_set_scr(true,local.set,-1,-1,-1); // Default
             custom_arr_set_scr(false,local.set,-1,1,1); // OG Endless
             custom_arr_set_scr(false,local.set,-1,2,1); // OG Sandbox
+            custom_arr_set_scr(false,local.set,4,-1,-1); // Hardest
             custom_arr_set_scr(false,local.set,5,-1,-1); // :)
     // Locale Random
         // Main

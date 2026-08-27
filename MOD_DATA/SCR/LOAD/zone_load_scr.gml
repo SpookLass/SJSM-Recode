@@ -32,7 +32,7 @@ draw_load_scr("Loading zones...");
         globalvar locale_arr;
 // Zone Key
     zone_key_arr[0,0] = 0; // Recode Story
-    zone_key_arr[0,1] = 1; // Recode Endless
+    zone_key_arr[0,1] = 5; // NEW Recode Endless
     zone_key_arr[0,2] = -1; // Recode Sandbox (Every)
     zone_key_arr[1,0] = 2; // OG Story
     zone_key_arr[1,1] = 3; // OG Endless
@@ -1615,6 +1615,439 @@ draw_load_scr("Loading zones...");
             ds_list_add(zone_arr[1,8],sc_hall_12_rm);
         // Zone 9: Every
             zone_arr[1,9] = every_zone_list;
+    // NEW Recode Endless Zones
+        zone_len_arr[5] = 6;
+        // New Endless Zone 0: Hotel Spooky
+            zone_arr[5,0] = ds_list_create();
+            ds_list_clear(zone_arr[5,0]);
+            // Basic Halls
+                ds_list_add(zone_arr[5,0],hall_01_rm);
+                ds_list_add(zone_arr[5,0],hall_02_a_rm);
+                ds_list_add(zone_arr[5,0],hall_03_rm);
+                ds_list_add(zone_arr[5,0],hall_05_a_rm);
+                ds_list_add(zone_arr[5,0],hall_05_b_rm);
+                ds_list_add(zone_arr[5,0],hall_05_c_rm);
+                ds_list_add(zone_arr[5,0],hall_08_rm);
+                ds_list_add(zone_arr[5,0],hall_09_a_rm);
+                ds_list_add(zone_arr[5,0],hall_10_b_rm);
+                ds_list_add(zone_arr[5,0],hall_12_a_rm);
+                ds_list_add(zone_arr[5,0],hall_19_rm);
+                ds_list_add(zone_arr[5,0],hall_20_rm);
+            // Lengthy Halls
+                ds_list_add(zone_arr[5,0],hall_15_b_rm);
+                ds_list_add(zone_arr[5,0],hall_16_b_rm);
+                ds_list_add(zone_arr[5,0],hall_17_a_rm);
+                ds_list_add(zone_arr[5,0],hall_17_b_rm);
+                ds_list_add(zone_arr[5,0],hall_32_rm);
+                ds_list_add(zone_arr[5,0],hall_33_rm);
+                ds_list_add(zone_arr[5,0],hall_34_rm);
+            // Bedroom
+                ds_list_add(zone_arr[5,0],bed_01_rm);
+                ds_list_add(zone_arr[5,0],bed_02_rm);
+                ds_list_add(zone_arr[5,0],bed_03_rm);
+                ds_list_add(zone_arr[5,0],bed_04_rm);
+                ds_list_add(zone_arr[5,0],bed_05_rm);
+                ds_list_add(zone_arr[5,0],bed_06_rm);
+                ds_list_add(zone_arr[5,0],bed_07_rm);
+                ds_list_add(zone_arr[5,0],bed_08_rm);
+            // Hotel
+                ds_list_add(zone_arr[5,0],hotel_01_rm);
+                ds_list_add(zone_arr[5,0],hotel_02_rm);
+                ds_list_add(zone_arr[5,0],hotel_03_rm);
+                ds_list_add(zone_arr[5,0],hotel_04_rm);
+                ds_list_add(zone_arr[5,0],hotel_05_rm);
+                ds_list_add(zone_arr[5,0],hotel_06_rm);
+                ds_list_add(zone_arr[5,0],hotel_07_rm);
+                ds_list_add(zone_arr[5,0],hotel_08_ungold_rm); // Maybe
+                ds_list_add(zone_arr[5,0],hotel_09_rm);
+                ds_list_add(zone_arr[5,0],hotel_10_rm);
+                ds_list_add(zone_arr[5,0],hotel_11_rm);
+                ds_list_add(zone_arr[5,0],hotel_12_rm);
+                ds_list_add(zone_arr[5,0],hotel_13_rm);
+                ds_list_add(zone_arr[5,0],hotel_14_rm);
+                ds_list_add(zone_arr[5,0],hotel_15_rm);
+                ds_list_add(zone_arr[5,0],hotel_16_rm);
+                ds_list_add(zone_arr[5,0],hotel_04_lass_rm);
+                ds_list_add(zone_arr[5,0],hotel_15_gold_rm);
+                ds_list_add(zone_arr[5,0],hotel_16_lass_rm);
+            // Small
+                ds_list_add(zone_arr[5,0],sm_01_rm);
+                ds_list_add(zone_arr[5,0],sm_02_rm);
+                ds_list_add(zone_arr[5,0],sm_03_rm);
+                ds_list_add(zone_arr[5,0],sm_04_rm);
+                ds_list_add(zone_arr[5,0],sm_05_rm);
+                ds_list_add(zone_arr[5,0],sm_06_rm);
+                ds_list_add(zone_arr[5,0],sm_07_rm);
+                ds_list_add(zone_arr[5,0],sm_08_rm);
+                ds_list_add(zone_arr[5,0],sm_15_rm);
+                ds_list_add(zone_arr[5,0],sm_16_rm);
+                ds_list_add(zone_arr[5,0],sm_17_rm);
+                ds_list_add(zone_arr[5,0],sm_18_rm);
+                ds_list_add(zone_arr[5,0],sm_19_rm);
+                ds_list_add(zone_arr[5,0],sm_20_rm);
+            // Long
+                ds_list_add(zone_arr[5,0],long_hall_01_rm);
+                ds_list_add(zone_arr[5,0],long_hall_02_rm);
+                ds_list_add(zone_arr[5,0],long_hall_03_rm);
+                ds_list_add(zone_arr[5,0],long_hall_04_rm);
+                ds_list_add(zone_arr[5,0],long_hall_05_rm);
+                ds_list_add(zone_arr[5,0],long_hall_07_rm);
+                ds_list_add(zone_arr[5,0],long_hall_08_rm);
+                ds_list_add(zone_arr[5,0],long_hall_09_rm);
+                ds_list_add(zone_arr[5,0],long_hall_10_rm);
+                ds_list_add(zone_arr[5,0],long_hall_11_rm);
+                ds_list_add(zone_arr[5,0],long_hall_12_rm);
+                ds_list_add(zone_arr[5,0],long_hall_05_ungold_rm);
+        // New Endless Zone 1: Labyrinth
+            zone_arr[5,1] = ds_list_create();
+            ds_list_clear(zone_arr[5,1]);
+            // Basic Halls
+                ds_list_add(zone_arr[5,1],hall_01_rm);
+                ds_list_add(zone_arr[5,1],hall_02_a_rm);
+                ds_list_add(zone_arr[5,1],hall_03_rm);
+                ds_list_add(zone_arr[5,1],hall_05_a_rm);
+                ds_list_add(zone_arr[5,1],hall_05_b_rm);
+                ds_list_add(zone_arr[5,1],hall_05_c_rm);
+                ds_list_add(zone_arr[5,1],hall_08_rm);
+                ds_list_add(zone_arr[5,1],hall_09_a_rm);
+                ds_list_add(zone_arr[5,1],hall_10_b_rm);
+                ds_list_add(zone_arr[5,1],hall_12_a_rm);
+                ds_list_add(zone_arr[5,1],hall_19_rm);
+                ds_list_add(zone_arr[5,1],hall_20_rm);
+            // Gold Halls
+                ds_list_add(zone_arr[5,1],hall_02_a_gold_rm);
+                ds_list_add(zone_arr[5,1],hall_10_a_gold_rm);
+                ds_list_add(zone_arr[5,1],hall_13_rm);
+                ds_list_add(zone_arr[5,1],hall_23_gold_rm);
+                ds_list_add(zone_arr[5,1],hall_31_gold_rm);
+            // Two Tone
+                ds_list_add(zone_arr[5,1],tt_hall_01_rm);
+                ds_list_add(zone_arr[5,1],tt_hall_02_rm);
+                ds_list_add(zone_arr[5,1],tt_hall_03_rm);
+                ds_list_add(zone_arr[5,1],tt_hall_04_rm);
+                ds_list_add(zone_arr[5,1],tt_hall_05_rm);
+                ds_list_add(zone_arr[5,1],tt_hall_06_rm);
+                ds_list_add(zone_arr[5,1],tt_hall_07_rm);
+                ds_list_add(zone_arr[5,1],tt_hall_08_rm);
+                ds_list_add(zone_arr[5,1],tt_hall_09_rm);
+                ds_list_add(zone_arr[5,1],tt_hall_10_rm);
+                ds_list_add(zone_arr[5,1],tt_hall_11_rm);
+                ds_list_add(zone_arr[5,1],tt_hall_12_rm);
+            // Winding
+                ds_list_add(zone_arr[5,1],w_hall_01_rm);
+                ds_list_add(zone_arr[5,1],w_hall_02_rm);
+                ds_list_add(zone_arr[5,1],w_hall_03_rm);
+                ds_list_add(zone_arr[5,1],w_hall_04_rm);
+                ds_list_add(zone_arr[5,1],w_hall_05_rm);
+                ds_list_add(zone_arr[5,1],w_hall_06_rm);
+                ds_list_add(zone_arr[5,1],w_hall_07_rm);
+                ds_list_add(zone_arr[5,1],w_hall_08_rm);
+                ds_list_add(zone_arr[5,1],w_hall_09_rm);
+                ds_list_add(zone_arr[5,1],w_hall_10_rm);
+                ds_list_add(zone_arr[5,1],w_hall_11_a_rm);
+                ds_list_add(zone_arr[5,1],w_hall_11_b_rm);
+                ds_list_add(zone_arr[5,1],w_hall_12_rm);
+                ds_list_add(zone_arr[5,1],w_hall_13_rm);
+                ds_list_add(zone_arr[5,1],w_hall_14_rm);
+                ds_list_add(zone_arr[5,1],w_hall_15_rm);
+                ds_list_add(zone_arr[5,1],w_hall_09_lass_rm);
+            // Jail
+                ds_list_add(zone_arr[5,1],jail_01_rm);
+                ds_list_add(zone_arr[5,1],jail_02_rm);
+                ds_list_add(zone_arr[5,1],jail_03_rm);
+                ds_list_add(zone_arr[5,1],jail_04_rm);
+                ds_list_add(zone_arr[5,1],jail_05_rm);
+                ds_list_add(zone_arr[5,1],jail_06_a_rm);
+                ds_list_add(zone_arr[5,1],jail_06_b_rm);
+                ds_list_add(zone_arr[5,1],jail_07_rm);
+                ds_list_add(zone_arr[5,1],jail_08_rm);
+                ds_list_add(zone_arr[5,1],jail_09_rm);
+                ds_list_add(zone_arr[5,1],jail_10_a_rm);
+                ds_list_add(zone_arr[5,1],jail_10_b_rm);
+                ds_list_add(zone_arr[5,1],jail_11_rm);
+                ds_list_add(zone_arr[5,1],jail_12_rm);
+                ds_list_add(zone_arr[5,1],jail_13_rm);
+                ds_list_add(zone_arr[5,1],jail_14_rm);
+                ds_list_add(zone_arr[5,1],jail_15_rm);
+                ds_list_add(zone_arr[5,1],jail_16_rm);
+                ds_list_add(zone_arr[5,1],jail_15_gold_rm);
+            // Dungeon
+                ds_list_add(zone_arr[5,1],dun_01_rm);
+                ds_list_add(zone_arr[5,1],dun_02_rm);
+                ds_list_add(zone_arr[5,1],dun_03_rm);
+                ds_list_add(zone_arr[5,1],dun_04_rm);
+                ds_list_add(zone_arr[5,1],dun_05_rm);
+                ds_list_add(zone_arr[5,1],dun_06_rm);
+                ds_list_add(zone_arr[5,1],dun_07_rm);
+                ds_list_add(zone_arr[5,1],dun_08_rm);
+                ds_list_add(zone_arr[5,1],dun_09_rm);
+                ds_list_add(zone_arr[5,1],dun_10_rm);
+                ds_list_add(zone_arr[5,1],dun_11_rm);
+                ds_list_add(zone_arr[5,1],dun_12_rm);
+                ds_list_add(zone_arr[5,1],dun_13_rm);
+                ds_list_add(zone_arr[5,1],dun_15_rm);
+                ds_list_add(zone_arr[5,1],dun_16_rm);
+                ds_list_add(zone_arr[5,1],dun_13_ungold_rm);
+        // New Endless Zone 2: Claustrophobia
+            zone_arr[5,2] = ds_list_create();
+            ds_list_clear(zone_arr[5,2]);
+            // Basic Halls
+                ds_list_add(zone_arr[5,2],hall_01_rm);
+                ds_list_add(zone_arr[5,2],hall_02_a_rm);
+                ds_list_add(zone_arr[5,2],hall_03_rm);
+                ds_list_add(zone_arr[5,2],hall_05_a_rm);
+                ds_list_add(zone_arr[5,2],hall_05_b_rm);
+                ds_list_add(zone_arr[5,2],hall_05_c_rm);
+                ds_list_add(zone_arr[5,2],hall_08_rm);
+                ds_list_add(zone_arr[5,2],hall_09_a_rm);
+                ds_list_add(zone_arr[5,2],hall_10_b_rm);
+                ds_list_add(zone_arr[5,2],hall_12_a_rm);
+                ds_list_add(zone_arr[5,2],hall_19_rm);
+                ds_list_add(zone_arr[5,2],hall_20_rm);
+            // Complex Halls
+                ds_list_add(zone_arr[5,2],hall_02_b_rm);
+                ds_list_add(zone_arr[5,2],hall_21_a_rm);
+                ds_list_add(zone_arr[5,2],hall_21_b_rm);
+                ds_list_add(zone_arr[5,2],hall_22_rm);
+                ds_list_add(zone_arr[5,2],hall_23_rm);
+                ds_list_add(zone_arr[5,2],hall_24_rm);
+                ds_list_add(zone_arr[5,2],hall_26_rm);
+                ds_list_add(zone_arr[5,2],hall_27_rm);
+            // Thin
+                ds_list_add(zone_arr[5,2],thin_hall_01_rm);
+                ds_list_add(zone_arr[5,2],thin_hall_02_rm);
+                ds_list_add(zone_arr[5,2],thin_hall_03_rm);
+                ds_list_add(zone_arr[5,2],thin_hall_04_rm);
+                ds_list_add(zone_arr[5,2],thin_hall_05_rm);
+                ds_list_add(zone_arr[5,2],thin_hall_06_rm);
+                ds_list_add(zone_arr[5,2],thin_hall_07_rm);
+                ds_list_add(zone_arr[5,2],thin_hall_08_rm);
+                ds_list_add(zone_arr[5,2],thin_hall_09_rm);
+                ds_list_add(zone_arr[5,2],thin_hall_10_rm);
+                ds_list_add(zone_arr[5,2],thin_hall_11_rm);
+                ds_list_add(zone_arr[5,2],thin_hall_12_rm);
+                ds_list_add(zone_arr[5,2],thin_hall_13_rm);
+                ds_list_add(zone_arr[5,2],thin_hall_14_rm);
+                ds_list_add(zone_arr[5,2],thin_hall_15_rm);
+                ds_list_add(zone_arr[5,2],thin_hall_16_rm);
+            // SC
+                ds_list_add(zone_arr[5,2],sc_hall_01_rm);
+                ds_list_add(zone_arr[5,2],sc_hall_02_rm);
+                ds_list_add(zone_arr[5,2],sc_hall_03_rm);
+                ds_list_add(zone_arr[5,2],sc_hall_04_rm);
+                ds_list_add(zone_arr[5,2],sc_hall_05_rm);
+                ds_list_add(zone_arr[5,2],sc_hall_06_rm);
+                ds_list_add(zone_arr[5,2],sc_hall_07_rm);
+                ds_list_add(zone_arr[5,2],sc_hall_08_rm);
+                ds_list_add(zone_arr[5,2],sc_hall_09_rm);
+                ds_list_add(zone_arr[5,2],sc_hall_10_rm);
+                ds_list_add(zone_arr[5,2],sc_hall_11_rm);
+                ds_list_add(zone_arr[5,2],sc_hall_12_rm);
+            // Storage
+                ds_list_add(zone_arr[5,2],stor_01_rm);
+                ds_list_add(zone_arr[5,2],stor_02_rm);
+                ds_list_add(zone_arr[5,2],stor_03_rm);
+                ds_list_add(zone_arr[5,2],stor_04_rm);
+                ds_list_add(zone_arr[5,2],stor_05_rm);
+                ds_list_add(zone_arr[5,2],stor_06_rm);
+                ds_list_add(zone_arr[5,2],stor_07_rm);
+                ds_list_add(zone_arr[5,2],stor_08_rm);
+            // Small Labs
+                ds_list_add(zone_arr[5,2],sm_lab_01_a_rm);
+                ds_list_add(zone_arr[5,2],sm_lab_01_b_rm);
+                ds_list_add(zone_arr[5,2],sm_lab_02_a_rm);
+                ds_list_add(zone_arr[5,2],sm_lab_02_b_rm);
+                ds_list_add(zone_arr[5,2],sm_lab_03_a_rm);
+                ds_list_add(zone_arr[5,2],sm_lab_03_b_rm);
+                ds_list_add(zone_arr[5,2],sm_lab_04_a_rm);
+                ds_list_add(zone_arr[5,2],sm_lab_04_b_rm);
+                ds_list_add(zone_arr[5,2],sm_lab_05_rm);
+                ds_list_add(zone_arr[5,2],sm_lab_06_rm);
+                ds_list_add(zone_arr[5,2],sm_lab_07_rm);
+                ds_list_add(zone_arr[5,2],sm_lab_08_rm);
+                ds_list_add(zone_arr[5,2],sm_lab_09_rm);
+                ds_list_add(zone_arr[5,2],sm_lab_10_rm);
+                ds_list_add(zone_arr[5,2],sm_lab_11_rm);
+                ds_list_add(zone_arr[5,2],sm_lab_12_rm);
+                ds_list_add(zone_arr[5,2],sm_lab_13_rm);
+                ds_list_add(zone_arr[5,2],sm_lab_14_rm);
+                ds_list_add(zone_arr[5,2],sm_lab_15_rm);
+                ds_list_add(zone_arr[5,2],sm_lab_16_rm);
+        // New Endless Zone 3: Caverns
+            zone_arr[5,3] = ds_list_create();
+            ds_list_clear(zone_arr[5,3]);
+            // Basic Halls
+                ds_list_add(zone_arr[5,3],hall_01_rm);
+                ds_list_add(zone_arr[5,3],hall_02_a_rm);
+                ds_list_add(zone_arr[5,3],hall_03_rm);
+                ds_list_add(zone_arr[5,3],hall_05_a_rm);
+                ds_list_add(zone_arr[5,3],hall_05_b_rm);
+                ds_list_add(zone_arr[5,3],hall_05_c_rm);
+                ds_list_add(zone_arr[5,3],hall_08_rm);
+                ds_list_add(zone_arr[5,3],hall_09_a_rm);
+                ds_list_add(zone_arr[5,3],hall_10_b_rm);
+                ds_list_add(zone_arr[5,3],hall_12_a_rm);
+                ds_list_add(zone_arr[5,3],hall_19_rm);
+                ds_list_add(zone_arr[5,3],hall_20_rm);
+            // Dual Halls
+                ds_list_add(zone_arr[5,3],hall_06_a_rm);
+                ds_list_add(zone_arr[5,3],hall_06_b_rm);
+                ds_list_add(zone_arr[5,3],hall_07_a_rm);
+                ds_list_add(zone_arr[5,3],hall_07_b_rm);
+                ds_list_add(zone_arr[5,3],hall_09_b_rm);
+                ds_list_add(zone_arr[5,3],hall_10_a_rm);
+                ds_list_add(zone_arr[5,3],hall_11_a_rm);
+                ds_list_add(zone_arr[5,3],hall_11_b_rm);
+                ds_list_add(zone_arr[5,3],hall_12_b_rm);
+                ds_list_add(zone_arr[5,3],hall_13_ungold_rm);
+                ds_list_add(zone_arr[5,3],hall_14_a_rm);
+                ds_list_add(zone_arr[5,3],hall_14_b_rm);
+                ds_list_add(zone_arr[5,3],hall_15_a_rm);
+                ds_list_add(zone_arr[5,3],hall_16_a_rm);
+            // Big
+                ds_list_add(zone_arr[5,3],big_01_rm);
+                ds_list_add(zone_arr[5,3],big_02_rm);
+                ds_list_add(zone_arr[5,3],big_03_rm);
+                ds_list_add(zone_arr[5,3],big_04_rm);
+                ds_list_add(zone_arr[5,3],big_05_rm);
+                ds_list_add(zone_arr[5,3],big_06_a_rm);
+                ds_list_add(zone_arr[5,3],big_06_b_rm);
+                ds_list_add(zone_arr[5,3],big_07_rm);
+                ds_list_add(zone_arr[5,3],big_08_rm);
+            // Pit
+                ds_list_add(zone_arr[5,3],med_s_01_rm);
+                ds_list_add(zone_arr[5,3],med_s_02_rm);
+                ds_list_add(zone_arr[5,3],med_s_03_rm);
+                ds_list_add(zone_arr[5,3],med_s_04_rm);
+                ds_list_add(zone_arr[5,3],med_s_05_rm);
+                ds_list_add(zone_arr[5,3],med_s_06_rm);
+                ds_list_add(zone_arr[5,3],med_s_07_a_rm);
+                ds_list_add(zone_arr[5,3],med_s_07_b_rm);
+                ds_list_add(zone_arr[5,3],med_s_08_rm);
+                ds_list_add(zone_arr[5,3],med_s_09_rm);
+                ds_list_add(zone_arr[5,3],med_s_10_rm);
+                ds_list_add(zone_arr[5,3],med_s_11_rm);
+                ds_list_add(zone_arr[5,3],med_s_12_rm);
+            // Chasm
+                ds_list_add(zone_arr[5,3],chasm_01_a_rm);
+                ds_list_add(zone_arr[5,3],chasm_01_b_rm);
+                ds_list_add(zone_arr[5,3],chasm_01_c_rm);
+                ds_list_add(zone_arr[5,3],chasm_02_a_rm);
+                ds_list_add(zone_arr[5,3],chasm_02_b_rm);
+                ds_list_add(zone_arr[5,3],chasm_02_c_rm);
+                ds_list_add(zone_arr[5,3],chasm_03_rm);
+                ds_list_add(zone_arr[5,3],chasm_04_a_rm);
+                ds_list_add(zone_arr[5,3],chasm_04_b_rm);
+                ds_list_add(zone_arr[5,3],chasm_04_c_rm);
+                ds_list_add(zone_arr[5,3],chasm_05_a_rm);
+                ds_list_add(zone_arr[5,3],chasm_05_b_rm);
+                ds_list_add(zone_arr[5,3],chasm_05_c_rm);
+                ds_list_add(zone_arr[5,3],chasm_06_rm);
+                ds_list_add(zone_arr[5,3],chasm_07_a_rm);
+                ds_list_add(zone_arr[5,3],chasm_07_b_rm);
+                ds_list_add(zone_arr[5,3],chasm_08_a_rm);
+                ds_list_add(zone_arr[5,3],chasm_08_b_rm);
+                ds_list_add(zone_arr[5,3],chasm_09_rm);
+                ds_list_add(zone_arr[5,3],chasm_10_a_rm);
+                ds_list_add(zone_arr[5,3],chasm_10_b_rm);
+                ds_list_add(zone_arr[5,3],chasm_10_c_rm);
+                ds_list_add(zone_arr[5,3],chasm_11_a_rm);
+                ds_list_add(zone_arr[5,3],chasm_11_b_rm);
+                ds_list_add(zone_arr[5,3],chasm_11_c_rm);
+                ds_list_add(zone_arr[5,3],chasm_12_rm);
+                ds_list_add(zone_arr[5,3],chasm_13_a_rm);
+                ds_list_add(zone_arr[5,3],chasm_13_b_rm);
+                ds_list_add(zone_arr[5,3],chasm_14_rm);
+                ds_list_add(zone_arr[5,3],chasm_15_rm);
+                ds_list_add(zone_arr[5,3],chasm_16_a_rm);
+                ds_list_add(zone_arr[5,3],chasm_16_b_rm);
+                ds_list_add(zone_arr[5,3],chasm_16_c_rm);
+        // New Endless Zone 4: Water Treatment
+            zone_arr[5,4] = ds_list_create();
+            ds_list_clear(zone_arr[5,4]);
+            // Basic Halls
+                ds_list_add(zone_arr[5,4],hall_01_rm);
+                ds_list_add(zone_arr[5,4],hall_02_a_rm);
+                ds_list_add(zone_arr[5,4],hall_03_rm);
+                ds_list_add(zone_arr[5,4],hall_05_a_rm);
+                ds_list_add(zone_arr[5,4],hall_05_b_rm);
+                ds_list_add(zone_arr[5,4],hall_05_c_rm);
+                ds_list_add(zone_arr[5,4],hall_08_rm);
+                ds_list_add(zone_arr[5,4],hall_09_a_rm);
+                ds_list_add(zone_arr[5,4],hall_10_b_rm);
+                ds_list_add(zone_arr[5,4],hall_12_a_rm);
+                ds_list_add(zone_arr[5,4],hall_19_rm);
+                ds_list_add(zone_arr[5,4],hall_20_rm);
+            // Dual Halls
+                ds_list_add(zone_arr[5,4],hall_06_a_rm);
+                ds_list_add(zone_arr[5,4],hall_06_b_rm);
+                ds_list_add(zone_arr[5,4],hall_07_a_rm);
+                ds_list_add(zone_arr[5,4],hall_07_b_rm);
+                ds_list_add(zone_arr[5,4],hall_09_b_rm);
+                ds_list_add(zone_arr[5,4],hall_10_a_rm);
+                ds_list_add(zone_arr[5,4],hall_11_a_rm);
+                ds_list_add(zone_arr[5,4],hall_11_b_rm);
+                ds_list_add(zone_arr[5,4],hall_12_b_rm);
+                ds_list_add(zone_arr[5,4],hall_13_ungold_rm);
+                ds_list_add(zone_arr[5,4],hall_14_a_rm);
+                ds_list_add(zone_arr[5,4],hall_14_b_rm);
+                ds_list_add(zone_arr[5,4],hall_15_a_rm);
+                ds_list_add(zone_arr[5,4],hall_16_a_rm);
+            // Med
+                ds_list_add(zone_arr[5,4],med_01_rm);
+                ds_list_add(zone_arr[5,4],med_02_rm);
+                ds_list_add(zone_arr[5,4],med_03_rm);
+                ds_list_add(zone_arr[5,4],med_04_rm);
+                ds_list_add(zone_arr[5,4],med_05_rm);
+                ds_list_add(zone_arr[5,4],med_06_rm);
+                ds_list_add(zone_arr[5,4],med_07_rm);
+                ds_list_add(zone_arr[5,4],med_08_rm);
+                ds_list_add(zone_arr[5,4],med_09_rm);
+                ds_list_add(zone_arr[5,4],med_10_rm);
+                ds_list_add(zone_arr[5,4],med_11_rm);
+            // Fish
+                ds_list_add(zone_arr[5,4],fish_01_rm);
+                ds_list_add(zone_arr[5,4],fish_02_rm);
+                ds_list_add(zone_arr[5,4],fish_03_rm);
+                ds_list_add(zone_arr[5,4],fish_04_rm);
+                ds_list_add(zone_arr[5,4],fish_05_rm);
+                ds_list_add(zone_arr[5,4],fish_06_rm);
+                ds_list_add(zone_arr[5,4],fish_07_rm);
+                ds_list_add(zone_arr[5,4],fish_08_rm);
+                ds_list_add(zone_arr[5,4],fish_09_rm);
+                ds_list_add(zone_arr[5,4],fish_10_rm);
+                ds_list_add(zone_arr[5,4],fish_11_rm);
+                ds_list_add(zone_arr[5,4],fish_12_rm);
+                ds_list_add(zone_arr[5,4],fish_13_rm);
+                ds_list_add(zone_arr[5,4],fish_14_rm);
+                ds_list_add(zone_arr[5,4],fish_15_rm);
+                ds_list_add(zone_arr[5,4],fish_16_rm);
+            // Engine
+                ds_list_add(zone_arr[5,4],engine_01_rm);
+                ds_list_add(zone_arr[5,4],engine_02_rm);
+                ds_list_add(zone_arr[5,4],engine_03_rm);
+                ds_list_add(zone_arr[5,4],engine_04_rm);
+                ds_list_add(zone_arr[5,4],engine_05_rm);
+                ds_list_add(zone_arr[5,4],engine_06_rm);
+                ds_list_add(zone_arr[5,4],engine_07_rm);
+                ds_list_add(zone_arr[5,4],engine_08_rm);
+                ds_list_add(zone_arr[5,4],engine_09_rm);
+                ds_list_add(zone_arr[5,4],engine_10_rm);
+                ds_list_add(zone_arr[5,4],engine_11_rm);
+                ds_list_add(zone_arr[5,4],engine_12_rm);
+                ds_list_add(zone_arr[5,4],engine_13_rm);
+                ds_list_add(zone_arr[5,4],engine_14_rm);
+                ds_list_add(zone_arr[5,4],engine_15_rm);
+                ds_list_add(zone_arr[5,4],engine_16_rm);
+            // Purple
+                ds_list_add(zone_arr[5,4],purp_01_rm);
+                ds_list_add(zone_arr[5,4],purp_02_rm);
+                ds_list_add(zone_arr[5,4],purp_03_rm);
+                ds_list_add(zone_arr[5,4],purp_04_rm);
+                ds_list_add(zone_arr[5,4],purp_05_rm);
+                ds_list_add(zone_arr[5,4],purp_06_rm);
+        // New Endless Zone 5: Every
+            zone_arr[5,5] = every_zone_list;
     // Recode Story Zones
         zone_len_arr[0] = 14;
         // Story Zone 0: 0-50
@@ -2450,6 +2883,12 @@ draw_load_scr("Loading zones...");
             rare_zone_arr[1,6] = rare_zone_arr[0,9];
             rare_zone_arr[1,7] = rare_zone_arr[0,9];
             rare_zone_arr[1,9] = every_rare_zone_list;
+            rare_zone_arr[5,0] = rare_zone_arr[0,1];
+            rare_zone_arr[5,2] = rare_zone_arr[0,1];
+            rare_zone_arr[5,3] = rare_zone_arr[0,1];
+            rare_zone_arr[5,4] = rare_zone_arr[0,1];
+            rare_zone_arr[5,1] = rare_zone_arr[0,9];
+            rare_zone_arr[5,5] = every_rare_zone_list;
 // OG Zones
     // OG Endless Zones
         // Draw
