@@ -226,7 +226,8 @@ object_event_add
 ');
 object_event_add
 (argument0,ev_create,3,'
-    if deficit_adjust_var
+    if !instance_exists(axe_obj) { hp_var = 0; }
+    else if deficit_adjust_var
     {
         if dur_var == 1 { hp_var = 0; }
         else { hp_var = max(1,hp_var-dur_deficit_var); }
@@ -437,7 +438,9 @@ object_event_add
             }
         }
     }
-    if hp_var <= 0 && dur_start_var-dur_var >= drain_start_var
+    local.start = dur_start_var-dur_var;
+    if deficit_adjust_var { local.start += dur_deficit_var; }
+    if hp_var <= 0 && local.start >= drain_start_var
     {
         local.drain = true;
         with spooper_obj { if id < other.id { local.drain = false; }}

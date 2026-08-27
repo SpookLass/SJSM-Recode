@@ -208,6 +208,7 @@ object_event_add
         sprite_delete(wall_spr_var);
         background_delete(overlay_bg_var);
         fmod_snd_free_scr(mus_snd_var);
+        fmod_snd_free_scr(arrow_snd_var);
         ds_list_destroy(zone_list_var);
     }
     with flesh_tex_obj { if par_var == other.id { instance_destroy(); }}

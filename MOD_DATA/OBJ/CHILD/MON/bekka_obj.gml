@@ -212,7 +212,7 @@ object_event_add
     // Effects
     if !instance_exists(fog_overlay_obj)
     {
-        with instance_create(0,0,fog_overlay_obj) do
+        with instance_create(0,0,fog_overlay_obj)
         {
             par_var = other.id;
             image_blend = other.overlay_color_var;

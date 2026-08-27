@@ -153,11 +153,11 @@ room_instance_add(argument0,480,384,spawn_wall_up_vert_obj);
 room_instance_add(argument0,480,416,spawn_wall_up_vert_obj);
 room_instance_add(argument0,480,448,spawn_wall_up_vert_obj);
 // Props
-room_instance_add(argument0,352,336,ben_torch_obj); // BEN_torch
-room_instance_add(argument0,448,336,ben_torch_obj);
-room_instance_add(argument0,352,432,ben_torch_obj);
-room_instance_add(argument0,448,432,ben_torch_obj);
-room_instance_add(argument0,400,384,ben_circle_obj); // BEN_circle
+room_instance_add(argument0,352,336,load_par_obj.ben_torch_obj); // BEN_torch
+room_instance_add(argument0,448,336,load_par_obj.ben_torch_obj);
+room_instance_add(argument0,352,432,load_par_obj.ben_torch_obj);
+room_instance_add(argument0,448,432,load_par_obj.ben_torch_obj);
+room_instance_add(argument0,400,384,load_par_obj.ben_circle_obj); // BEN_circle
 // room_instance_add(argument0,400,304,ben_door_2);
 // room_instance_add(argument0,400,464,ben_door_1);
 // room_instance_add(argument0,480,384,ben_door_3);
