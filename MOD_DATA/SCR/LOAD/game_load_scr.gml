@@ -129,30 +129,73 @@
 // Draw Text
     draw_set_halign(fa_center); draw_set_valign(fa_bottom);
     set_automatic_draw(false);
-// Initialize mods and dlls
+// Plugins
     joy_ini_scr();
     if gamemaker_version == 800 { sf_ini_scr(); }
+// Mods
     execute_file(main_directory_const+"\SCR\LOAD\mod_load_01_scr.gml");
-// Assets
-    execute_file(main_directory_const+"\SCR\LOAD\spr_load_scr.gml");
-    execute_file(main_directory_const+"\SCR\LOAD\bg_load_scr.gml");
-    execute_file(main_directory_const+"\SCR\LOAD\snd_load_scr.gml");
-    execute_file(main_directory_const+"\SCR\LOAD\mdl_load_scr.gml");
-    execute_file(main_directory_const+"\SCR\LOAD\coll_load_scr.gml");
-    execute_file(main_directory_const+"\SCR\LOAD\part_load_scr.gml");
-    execute_file(main_directory_const+"\SCR\LOAD\obj_load_scr.gml");
-    execute_file(main_directory_const+"\SCR\LOAD\rm_load_scr.gml");
+// Versions
+    switch load_const
+    {
+        case 0: // Normal
+        {
+            // Assets
+                execute_file(main_directory_const+"\SCR\LOAD\spr_load_scr.gml");
+                execute_file(main_directory_const+"\SCR\LOAD\bg_load_scr.gml");
+                execute_file(main_directory_const+"\SCR\LOAD\snd_load_scr.gml");
+                execute_file(main_directory_const+"\SCR\LOAD\mdl_load_scr.gml");
+                execute_file(main_directory_const+"\SCR\LOAD\coll_load_scr.gml");
+                execute_file(main_directory_const+"\SCR\LOAD\part_load_scr.gml");
+                execute_file(main_directory_const+"\SCR\LOAD\obj_load_scr.gml");
+                execute_file(main_directory_const+"\SCR\LOAD\rm_load_scr.gml");
+            // Settings
+                execute_file(main_directory_const+"\SCR\LOAD\menu_load_01_scr.gml");
+                execute_file(main_directory_const+"\SCR\LOAD\menu_load_02_scr.gml");
+            // Lists
+                execute_file(main_directory_const+"\SCR\LOAD\zone_load_scr.gml",true);
+                execute_file(main_directory_const+"\SCR\LOAD\tex_load_scr.gml");
+            // Load Mods
+                execute_file(main_directory_const+"\SCR\LOAD\mod_load_02_scr.gml");
+            // Load Settings
+                execute_file(main_directory_const+"\SCR\LOAD\set_load_scr.gml");
+            // Room
+                local.rm = splash_rm;
+            break;
+        }
+        
+        case 1: // Initialize mod loader
+        {
+            // FMOD
+                fmod_load_scr();
+                fmod_ini_scr(100,false); // 100 is max sounds, second argument is web sounds
+                fmod_listen_set_num_scr(1);
+                fmod_set_world_scale_scr(pixel_meter_rate_const);
+            // Assets
+                file_to_asset_scr(main_directory_const+"\SPR\MAIN\select_spr","select_spr",false,1,false,false,0,0);
+                file_to_asset_scr(main_directory_const+"\BG\MAIN\settings_bg","settings_bg",false,false,false);
+                file_to_asset_scr(main_directory_const+"\SND\MAIN\confirm_snd","confirm_snd",false,false,snd_group_sfx_const,1,0,0);
+                file_to_asset_scr(main_directory_const+"\SND\MAIN\deny_snd","deny_snd",false,false,snd_group_sfx_const,1,0,0);
+                file_to_asset_scr(main_directory_const+"\SND\MAIN\select_snd","select_snd",false,false,snd_group_sfx_const,1,0,0);
+                file_to_asset_scr(main_directory_const+"\SND\MAIN\result_mus_snd","result_mus_snd",false,false,snd_group_mus_const,1,0,0);
+                file_to_obj_scr(main_directory_const+"\OBJ\par_obj.gml","par_obj",false);
+                file_to_obj_scr(main_directory_const+"\OBJ\par_3d_obj.gml","par_3d_obj",false);
+                file_to_obj_scr(main_directory_const+"\OBJ\enemy_par_obj.gml","enemy_par_obj",false);
+                file_to_obj_scr(main_directory_const+"\OBJ\PAR\fog_par_obj.gml","fog_par_obj",false);
+                file_to_obj_scr(main_directory_const+"\OBJ\PAR\mon_par_obj.gml","mon_par_obj",false);
+                file_to_obj_scr(main_directory_const+"\OBJ\MAIN\control_obj.gml","control_obj",false);
+                file_to_obj_scr(main_directory_const+"\OBJ\MAIN\pause_menu_obj.gml","pause_menu_obj",false);
+                file_to_obj_scr(main_directory_const+"\OBJ\MOD\mod_obj.gml","mod_obj",false);
+                file_to_rm_scr(main_directory_const+"\RM\MOD\mod_rm.gml","mod_rm",false);
+            // Settings
+                execute_file(main_directory_const+"\SCR\LOAD\menu_load_02_scr.gml");
+                execute_file(main_directory_const+"\SCR\LOAD\set_load_scr.gml");
+            // Room
+                local.rm = mod_rm;
+            break;
+        }
+    }
+// Plugins 2
     if gamemaker_version == 800 { shader_load_scr(); }
-// Settings
-    execute_file(main_directory_const+"\SCR\LOAD\menu_load_01_scr.gml");
-    execute_file(main_directory_const+"\SCR\LOAD\menu_load_02_scr.gml");
-// Lists
-    execute_file(main_directory_const+"\SCR\LOAD\zone_load_scr.gml",true);
-    execute_file(main_directory_const+"\SCR\LOAD\tex_load_scr.gml");
-// Load Mods
-    execute_file(main_directory_const+"\SCR\LOAD\mod_load_02_scr.gml");
-// Load Settings
-    execute_file(main_directory_const+"\SCR\LOAD\set_load_scr.gml");
 // In case mods load more controls
     for (local.i=0; local.i<global.input_len_var; local.i+=1)
     {
@@ -168,4 +211,4 @@
 // Load
     global.player_len_var = 1;
     instance_create(0,0,control_obj);
-    rm_goto_menu_scr(splash_rm);
+    rm_goto_menu_scr(local.rm);

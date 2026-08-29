@@ -340,13 +340,15 @@ object_event_add
                 {
                     case -2: { local.zonestr += "Random"; break; }
                     case -1: { local.zonestr += "Every"; break; }
-                    case 0: { local.zonestr += "Recode Story "+string(global.zone_var); break; }
-                    case 1: { local.zonestr += "Recode Endless "+string(global.zone_var); break; }
-                    case 2: { local.zonestr += "Original Story "+string(global.zone_var); break; }
-                    case 3: { local.zonestr += "Original Endless "+string(global.zone_var); break; }
-                    case 4: { local.zonestr += "Renovation Story "+string(global.zone_var); break; }
-                    case 1: { local.zonestr += "NEW Recode Endless "+string(global.zone_var); break; }
+                    case 0: { local.zonestr += "Recode Story "; break; }
+                    case 1: { local.zonestr += "Recode Endless "; break; }
+                    case 2: { local.zonestr += "Original Story "; break; }
+                    case 3: { local.zonestr += "Original Endless "; break; }
+                    case 4: { local.zonestr += "Renovation Story "; break; }
+                    case 5: { local.zonestr += "NEW Recode Endless "; break; }
+                    default: { local.zonestr += "Unknown "}
                 }
+                if global.zone_key_var >= 0 { local.zonestr += string(global.zone_var); }
                 local.str = "
 Position
     X: "+string(par_var.x)+"

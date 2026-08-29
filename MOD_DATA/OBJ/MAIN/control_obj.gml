@@ -419,6 +419,6 @@ object_event_add
 ');
 // Close
 object_event_add(argument0,ev_other,ev_close_button,'
-    if !global.permadeath_var || !instance_exists(mon_par_obj) || global.debug_var
+    if !global.game_var || !global.permadeath_var || !instance_exists(mon_par_obj) || global.debug_var
     { game_end(); }
 ');

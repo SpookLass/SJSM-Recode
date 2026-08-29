@@ -25,12 +25,14 @@ object_event_add
     snd_dist_min_var = 0;
     snd_dist_max_var = 600;
     // Text
-    name_var = "Gurgle";
-    local.sub = "("+name_var+" buzzes)";
+    ini_open("lang_"+global.lang_var+"_example.ini");
+    name_var = translate_mon_str_scr("gurgle",global.name_var);
+    local.sub = string_replace(ini_read_string("SUB","gurgle","SUB_gurgle"),"@n",name_var);
     for (local.i=0; local.i<snd_len_var; local.i+=1)
     { snd_arr[local.i,1] = local.sub; snd_arr[local.i,2] = false; }
     wake_snd_var[2] = local.sub; wake_snd_var[3] = false;
-    charge_snd_var[1] = "("+name_var+" charges)"; charge_snd_var[2] = false;
+    charge_snd_var[1] = string_replace(ini_read_string("SUB","gurgle_charge","SUB_gurgle_charge"),"@n",name_var); charge_snd_var[2] = false;
+    ini_close();
     // Variables
     type_var = 0;
     spd_base_var = 0.8;
@@ -47,7 +49,7 @@ object_event_add
     dmg_min_var = 0;
     atk_alarm_var = 0;
     w_var = 16;
-    h_var = 23;
+    h_var = 24;
     eye_h_var = 11;
     mus_prio_var = theme_mus_prio_const;
     dead_rm_var = gurgle_dead_01_rm;
@@ -112,6 +114,7 @@ object_event_add
         if id != other.id && object_index == other.object_index
         {
             other.spr_var = spr_var;
+            other.icon_spr_var = icon_spr_var;
             for (local.i=0; local.i<snd_len_var; local.i+=1;)
             { other.snd_arr[local.i,0] = snd_arr[local.i,0]; }
             other.wake_snd_var[1] = wake_snd_var[1];
@@ -125,6 +128,7 @@ object_event_add
     if !local.loaded
     {
         spr_var = spr_add_scr(gurgle_spr_path,5,false,false,0,0);
+        icon_spr_var = spr_add_scr(gurgle_icon_spr_path,4,false,false,0,0);
         snd_arr[0,0] = snd_add_scr(gurgle_01_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
         snd_arr[1,0] = snd_add_scr(gurgle_02_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
         snd_arr[2,0] = snd_add_scr(gurgle_03_snd_path,true,snd_group_mon_const,1,snd_dist_min_var,snd_dist_max_var);
@@ -145,6 +149,7 @@ object_event_add
     if !local.bool
     {
         sprite_delete(spr_var);
+        sprite_delete(icon_spr_var);
         for (local.i=0; local.i<snd_len_var; local.i+=1;)
         { fmod_snd_free_scr(snd_arr[local.i,0]); }
         fmod_snd_free_scr(wake_snd_var[1]);

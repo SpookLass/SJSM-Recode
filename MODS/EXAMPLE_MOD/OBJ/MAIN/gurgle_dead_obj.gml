@@ -12,11 +12,10 @@ object_event_add
     event_inherited();
     true_time_var = true;
     // Translation
-    str_var = "Once a world of dreams and excitement,
-a land of journey and enlightenment.
-
-Now a forgotten soul tattered and stretched thin,
-still living yet buried under the scorched skin.";
+    ini_open("lang_"+global.lang_var+"_example.ini");
+    str_var = string_replace_all(ini_read_string("DEAD","gurgle","DEAD_gurgle"),"@l","
+");
+    ini_close();
     // Load assets
     snd_var = snd_add_scr(gurgle_dead_snd_path,false,snd_group_mus_const,1,0,0);
     load_var = true;

@@ -112,6 +112,7 @@
     globalvar pause_menu_obj;
     fog_par_obj = noone;
     pause_menu_obj = noone;
+    global.permadeath_var = false;
 // Draw Text
 draw_set_halign(fa_center); draw_set_valign(fa_bottom);
 set_automatic_draw(false);
