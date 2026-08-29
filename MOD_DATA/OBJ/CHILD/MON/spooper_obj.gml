@@ -107,7 +107,7 @@ object_event_add
             deficit_adjust_var = true;
             seen_pitch_var = 30;
             mark_seen_pitch_var = 30;
-            seen_dist_var = 128; // 96
+            seen_dist_var = 96; // 128
             seen_fade_var = true;
             dmg_min_var = 10;
             door_type_var = 0;

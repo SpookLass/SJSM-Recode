@@ -171,6 +171,7 @@ object_event_add
 object_event_add
 (argument0,ev_destroy,0,'
     event_inherited();
+    if zone_var { zone_override_reset_scr(zone_list_var,noone); }
     global.wall_bg_tex = background_get_texture(global.wall_bg);
     global.floor_bg_tex = background_get_texture(global.floor_bg);
     global.ceil_bg_tex = background_get_texture(global.ceil_bg);
@@ -202,7 +203,6 @@ object_event_add
             global.res_override_h_var = global.res_h_var;
         }
     }
-    if zone_var { zone_reset_scr(); }
     with wf_eff_obj { if par_var == other.id { instance_destroy(); }}
     with player_obj { unheal_var = 0; hp_var = hp_max_var; }
     global.hide_rm_var = false;

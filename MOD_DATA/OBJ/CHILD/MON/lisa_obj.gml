@@ -244,6 +244,8 @@ object_event_add
 object_event_add
 (argument0,ev_destroy,0,'
     event_inherited();
+    if zone_end_var > 0 && ds_list_size(zone_list_var) > 0
+    { zone_override_reset_scr(zone_list_var,noone); }
     local.bool = false;
     with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
     if !local.bool
@@ -260,8 +262,6 @@ object_event_add
         global.js_override_var = false;
         global.note_override_var = false;
     }
-    if zone_end_var > 0
-    { zone_reset_scr(); }
     if loop_fake_var && loop_start_var > 0
     { global.rm_count_override_var = ""; }
 ');
@@ -376,8 +376,8 @@ object_event_add
         }
     }
     else  { with js_obj { instance_destroy(); }}
-    if zone_end_var > 0 && local.start == zone_end_var
-    { zone_reset_scr(); }
+    if zone_end_var > 0 && (local.start == zone_end_var-1 || (local.start >= zone_end_var && ds_list_size(zone_list_var) > 0))
+    { zone_override_reset_scr(zone_list_var,noone); ds_list_clear(zone_list_var); }
 ');
 // Room End Event
 object_event_add

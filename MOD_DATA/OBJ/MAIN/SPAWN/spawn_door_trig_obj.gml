@@ -14,6 +14,7 @@ object_event_add
     rm_spawn_var = 0;
     zone_var = -2; // To make sure others dont copy
     event_inherited();
+    auto_var = false;
 ');
 // Alarm 0 Event
 object_event_add

@@ -526,7 +526,12 @@ object_event_add
                 }
             }
             // Sprint
-            sprint_var = do_sprint_var && global.input_arr[sprint_input_const,player_id_var] && (stam_var > 0 || !do_stam_var);
+            if do_sprint_var && (stam_var > 0 || !do_stam_var)
+            {
+                if !global.sprint_toggle_var[player_id_var] { sprint_var = global.input_arr[sprint_input_const,player_id_var]; }
+                else if global.input_press_arr[sprint_input_const,player_id_var] == 1 { sprint_var = !sprint_var; }
+            }
+            else { sprint_var = false; }
             // Calculate speed
             local.spd = 0;
             if local.input_dir_x != 0 || local.input_dir_y != 0 || local.input_dir_z != 0
@@ -696,7 +701,7 @@ object_event_add
                     start_stam_var = max(0,start_stam_var-(start_stam_rate_var*global.delta_time_var));
                     local.stam_rate = (-(stam_rate_var+start_stam_var)*local.real_spd)/(spd_base_var*sprint_spd_mult_var);
                 }
-                else if !global.input_arr[sprint_input_const,player_id_var]
+                else if !global.input_arr[sprint_input_const,player_id_var] || global.sprint_toggle_var[player_id_var]
                 {
                     start_stam_var = start_stam_base_var;
                     local.stam_rate = stam_rate_var*global.delta_time_var;

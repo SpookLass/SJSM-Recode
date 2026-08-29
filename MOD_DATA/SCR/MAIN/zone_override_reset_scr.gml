@@ -7,13 +7,13 @@ if argument0 > 0
 {
     local.size = ds_list_size(argument0);
     for (local.i=0; local.i<local.size; local.i+=1;)
-    { ds_list_add(zone_override_list,ds_list_find_value(argument0,local.i)); }
+    { list_remove_value_scr(zone_override_list,ds_list_find_value(argument0,local.i),false); }
 }
 if argument1 > 0
 {
     local.size = ds_list_size(argument1);
     for (local.i=0; local.i<local.size; local.i+=1;)
-    { ds_list_add(rare_zone_override_list,ds_list_find_value(argument1,local.i)); }
+    { list_remove_value_scr(rare_zone_override_list,ds_list_find_value(argument1,local.i),false); }
 }
 if ds_list_size(zone_override_list) > 0
 {

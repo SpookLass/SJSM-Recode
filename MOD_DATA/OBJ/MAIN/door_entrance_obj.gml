@@ -13,6 +13,9 @@ object_event_add
     event_inherited();
     mdl_var = door_mdl;
     mdl_path_var = door_mdl_path;
+    broke_mdl_var = door_broke_mdl;
+    broke_mdl_path_var = door_broke_mdl_path;
+    break_snd_var = break_snd;
     open_var = false;
     flesh_var = 2;
 ');
@@ -21,9 +24,10 @@ object_event_add
 (argument0,ev_other,ev_user0,'
     if !open_var
     {
-        mdl_var = door_broke_mdl;
-        mdl_path_var = door_broke_mdl_path;
-        fmod_snd_3d_play_scr(break_snd,x,y,z);
+        mdl_var = broke_mdl_var;
+        mdl_path_var = broke_mdl_path_var;
+        if fmod_snd_is_3d_scr(break_snd_var) { fmod_snd_3d_play_scr(break_snd,x,y,z); }
+        else { fmod_snd_play_scr(break_snd_var); }
         open_var = true;
         local.door = id;
         with player_obj

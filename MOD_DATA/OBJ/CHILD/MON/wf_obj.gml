@@ -13,6 +13,8 @@ object_event_add
     name_var = translate_mon_str_scr("wf",global.name_var);
     loop_snd_var[2] = string_replace(ini_read_string("SUB","wf","SUB_wf"),"@n",name_var); loop_snd_var[3] = false;
     wake_snd_var[2] = ""; wake_snd_var[3] = false;
+    rm_str_var = ini_read_string("ROOM","wf_hall","ROOM_wf_hall");
+    rm_replace_str_var = ini_read_string("ROOM","long","ROOM_long");
     ini_close();
     // Variables
     type_var = 0;
@@ -95,6 +97,7 @@ object_event_add
     // other
     do_fog_var = true;
     start_var = 6;
+    invert_zone_start_var = false;
     zone_start_var = 25;
     web_start_var = 22;
     loop_var = true;
@@ -120,6 +123,8 @@ object_event_add
             seen_yaw_var = 5.856;
             seen_pitch_var = 5.856;
             dur_var = 30;
+            invert_zone_start_var = true;
+            zone_start_var = 5;
             web_start_var = 15;
             atk_range_var = global.mon_coll[2];
             exit_spawn_var = false;
@@ -353,6 +358,8 @@ object_event_add
 object_event_add
 (argument0,ev_destroy,0,'
     event_inherited();
+    if zone_start_var > 0
+    { zone_override_reset_scr(zone_list_var,noone); }
     global.wall_bg_tex = background_get_texture(global.wall_bg);
     global.floor_bg_tex = background_get_texture(global.floor_bg);
     global.ceil_bg_tex = background_get_texture(global.ceil_bg);
@@ -385,8 +392,6 @@ object_event_add
             global.res_override_h_var = global.res_h_var;
         }
     }
-    if zone_start_var > 0
-    { zone_reset_scr(); }
     with wf_eff_obj
     { if par_var == other.id { instance_destroy(); }}
     if loop_var == 2 && zone_start_var > 0
@@ -449,18 +454,25 @@ object_event_add
         fmod_inst_stop_scr(loop_inst_var);
     }
     // Zone
-    if zone_start_var > 0 && local.start >= zone_start_var-1
+    if zone_start_var > 0
     {
-        if local.start == zone_start_var-1
-        { zone_override_scr(zone_list_var,noone); }
-        if loop_var
+        if invert_zone_start_var { local.bool = (dur_var <= zone_start_var+1); }
+        else { local.bool = (local.start >= zone_start_var-1); }
+        if local.bool
         {
-            if loop_var != 2
-            { with door_trig_obj { rm_count_var = 0; }}
-            else if global.rm_count_override_var == ""
-            { global.rm_count_override_var = string(global.rm_count_var); }
+            if invert_zone_start_var { local.bool = (dur_var == zone_start_var+1); }
+            else { local.bool = (local.start == zone_start_var-1); }
+            if local.bool || !list_has_list_scr(zone_override_list,zone_list_var,false)
+            { zone_override_scr(zone_list_var,noone); }
+            if loop_var
+            {
+                if loop_var != 2
+                { with door_trig_obj { rm_count_var = 0; }}
+                else if global.rm_count_override_var == ""
+                { global.rm_count_override_var = string(global.rm_count_var); }
+            }
+            global.rm_name_var = string_replace(global.rm_name_var,rm_replace_str_var,rm_str_var);
         }
-        global.rm_name_var = string_replace(global.rm_name_var,"Long","My");
     }
     // Webs
     if web_start_var > 0 && local.start >= web_start_var

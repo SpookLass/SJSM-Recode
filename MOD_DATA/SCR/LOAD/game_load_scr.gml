@@ -55,8 +55,10 @@
     global.rm_count_var = 0;
     global.rm_count_override_var = "";
     global.locale_rm_var = 0;
-    zone_override_list = noone;
-    rare_zone_override_list = noone;
+    zone_override_list = ds_list_create();
+    ds_list_clear(zone_override_list);
+    rare_zone_override_list = ds_list_create();
+    ds_list_clear(rare_zone_override_list);
 // Reflections
     global.reflect_var = false;
     global.reflect_pos_var = 0;

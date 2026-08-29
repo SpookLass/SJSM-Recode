@@ -190,6 +190,8 @@ object_event_add
 object_event_add
 (argument0,ev_destroy,0,'
     event_inherited();
+    if zone_var
+    { zone_override_reset_scr(zone_list_var,noone); }
     global.wall_bg_tex = background_get_texture(global.wall_bg);
     global.floor_bg_tex = background_get_texture(global.floor_bg);
     global.ceil_bg_tex = background_get_texture(global.ceil_bg);
@@ -215,7 +217,6 @@ object_event_add
     }
     with amn_water_obj { if par_var == other.id { instance_destroy(); }}
     with amn_crate_obj { if par_var == other.id { instance_destroy(); }}
-    zone_reset_scr();
 ');
 // Room Start Event
 object_event_add

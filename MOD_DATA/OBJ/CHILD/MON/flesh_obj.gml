@@ -48,6 +48,7 @@ object_event_add
     // Zone
     zone_var = true;
     zone_start_var = 0;
+    deficit_adjust_var = false;
     // Fog
     fog_color_var = make_color_rgb(135,10,24);
     fog_prio_var = 2;
@@ -83,7 +84,10 @@ object_event_add
             other.light_wall_spr_var = light_wall_spr_var;
             other.light_floor_spr_var = light_floor_spr_var;
             other.door_bg_var = door_bg_var;
+            other.wall_spr_var = wall_spr_var;
             other.overlay_bg_var = overlay_bg_var;
+            other.arrow_bg_var = arrow_bg_var;
+            other.arrow_base_bg_var = arrow_base_bg_var;
             other.arrow_snd_var = arrow_snd_var;
             other.mus_snd_var = mus_snd_var;
             other.zone_list_var = zone_list_var;
@@ -141,6 +145,7 @@ object_event_add
         case 3: { zone_var = false; }
         case 0:
         {
+            deficit_adjust_var = true;
             // do_hurt_var = true;
             angle_var = 5;
             smart_var = true;
@@ -185,7 +190,8 @@ object_event_add
 object_event_add
 (argument0,ev_destroy,0,'
     event_inherited();
-    zone_reset_scr();
+    if zone_var && ds_list_size(zone_list_var) > 0
+    { zone_override_reset_scr(zone_list_var,noone); }
     global.wall_bg_tex = background_get_texture(global.wall_bg);
     global.floor_bg_tex = background_get_texture(global.floor_bg);
     global.ceil_bg_tex = background_get_texture(global.ceil_bg);
@@ -333,12 +339,12 @@ Difference: "+string(local.newdelay)+"
         with door_obj
         {
             local.door = id;
+            if variable_local_exists("spawn_var") { local.spawn = spawn_var; }
+			else { local.spawn = -1; }
             with instance_create(x,y,mad_door_obj)
             {
-                if variable_local_exists("spawn_var") { local.spawn = spawn_var; }
-			    else { local.spawn = -1; }
                 spawn_var = local.spawn;
-                if local.spawn >= 0 { spawn_arr[local.spawn,5] = id; }
+                if spawn_var >= 0 { spawn_arr[spawn_var,5] = id; }
                 z = local.door.z;
                 direction = local.door.direction;
                 image_blend = local.door.image_blend;
@@ -469,9 +475,17 @@ Difference: "+string(local.newdelay)+"
     // Zone
     if zone_var
     {
-        if dur_var == 1 { zone_reset_scr(); }
-        else if zone_start_var > 0 && dur_start_var-dur_var == zone_start_var-1
-        { zone_override_scr(zone_list_var,noone); }
+        if dur_var == 1 && ds_list_size(zone_override_list) > 0
+        { zone_override_reset_scr(zone_list_var,noone); ds_list_clear(zone_list_var); }
+        else if zone_start_var > 0
+        {
+            local.start = dur_start_var-dur_var;
+            if deficit_adjust_var { local.start += dur_deficit_var; }
+            if local.start == zone_start_var-1
+            || (local.start >= zone_start_var && !list_has_list_scr(zone_override_list,zone_list_var))
+            { zone_override_scr(zone_list_var,noone); }
+        }
+        
     }
     // Delay
     if local.delay <= 0 { event_perform(ev_alarm,0); }

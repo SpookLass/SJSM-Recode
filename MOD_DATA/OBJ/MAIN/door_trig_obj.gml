@@ -27,6 +27,7 @@ object_event_add
     valign_var = fa_bottom;
     sep_var = -1;
     margin_var = 108;
+    auto_var = true;
     // Shadow
     shadow_x_var = -4;
     shadow_y_var = 4;
@@ -95,14 +96,14 @@ object_event_add
             // Other
             if !local.set && global.rare_chance_var > 0 && frac_chance_scr(1,global.rare_chance_var)
             {
-                if rare_zone_override_list >= 0
-                { local.rare = rare_zone_override_list; }
-                else { local.rare = rare_zone_list; }
-                if local.rare >= 0
+                if ds_list_size(rare_zone_override_list) > 0
+                { zone_var = rare_zone_override_list; }
+                else { zone_var = rare_zone_list; }
+                if zone_var >= 0
                 {
-                    if ds_list_size(local.rare) > 0
+                    if ds_list_size(zone_var) > 0
                     {
-                        rm_var = ds_list_find_value(local.rare,irandom(ds_list_size(local.rare)-1));
+                        rm_var = ds_list_find_value(zone_var,irandom(ds_list_size(zone_var)-1));
                         local.set = true;
                     }
                     else { show_error("This rare list empty! Im not gonna say it.",false)}
@@ -112,7 +113,7 @@ object_event_add
         // Default
         if !local.set
         {
-            if zone_override_list > 0
+            if ds_list_size(zone_override_list) > 0
             { zone_var = zone_override_list; }
             else { zone_var = zone_list; }
             event_user(0);
@@ -155,9 +156,8 @@ object_event_add
                 // p3dc_check_scr(coll_var[0],x,y,z,other.coll_var[0],other.x,other.y,other.z)
                 if box_coll_scr(x,y,z,coll_var[2],coll_var[2],coll_var[1],other.x,other.y,other.z,other.coll_var[2],other.coll_var[2],other.coll_var[1])
                 {
-                    other.visible = other.do_txt_var && !instance_exists(txt_obj);
-                    other.cam_id_var = cam_id_var;
                     if global.input_press_arr[interact_input_const,player_id_var] == 1
+                    || (other.auto_var && !other.lock_var && global.auto_door_var[player_id_var])
                     {
                         local.player = id;
                         local.active = true;
@@ -167,6 +167,11 @@ object_event_add
                             local.remaining -= 1;
                             other.player_var += 1;
                         }
+                    }
+                    else
+                    {
+                        other.visible = other.do_txt_var && !instance_exists(txt_obj);
+                        other.cam_id_var = cam_id_var;
                     }
                 }
             }

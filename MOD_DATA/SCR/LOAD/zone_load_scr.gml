@@ -1763,7 +1763,6 @@ draw_load_scr("Loading zones...");
                 ds_list_add(zone_arr[5,1],jail_08_rm);
                 ds_list_add(zone_arr[5,1],jail_09_rm);
                 ds_list_add(zone_arr[5,1],jail_10_a_rm);
-                ds_list_add(zone_arr[5,1],jail_10_b_rm);
                 ds_list_add(zone_arr[5,1],jail_11_rm);
                 ds_list_add(zone_arr[5,1],jail_12_rm);
                 ds_list_add(zone_arr[5,1],jail_13_rm);

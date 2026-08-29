@@ -444,6 +444,15 @@ draw_load_scr("Loading settings...");
             set_add_label_scr(local.set,true,"on",true,"");
         // Defaults
             set_add_default_scr(local.set,crouch_toggle_const,true);
+    // Sprint Toggle
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("sprint_toggle","sprint_toggle","sprint_toggle",true,set_enum_const,false,true,true,local.control_sub,true,false);
+        // Labels
+            set_add_label_scr(local.set,false,"off",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            set_add_label_scr(local.set,true,"on",true,"");
+        // Defaults
+            set_add_default_scr(local.set,false,true);
     // Joystick ID
         // Main
             /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
@@ -480,6 +489,15 @@ draw_load_scr("Loading settings...");
             set_add_label_scr(local.set,true,"on",true,"");
         // Defaults
             set_add_default_scr(local.set,invert_pitch_const,true);
+    // Auto Door Opener
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
+            local.set = set_add_scr("auto_door","auto_door","auto_door",true,set_enum_const,false,true,true,local.control_sub,true,false);
+        // Labels
+            set_add_label_scr(local.set,false,"off",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            set_add_label_scr(local.set,true,"on",true,"");
+        // Defaults
+            set_add_default_scr(local.set,false,true);
     // Camera Controls
         // Main
             /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Player Specific, Has Descriptions*/
