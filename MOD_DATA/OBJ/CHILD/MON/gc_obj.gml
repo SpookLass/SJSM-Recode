@@ -80,6 +80,10 @@ object_event_add
     seen_yaw_var = 30;
     seen_flash_var = true;
     seen_spd_var = true;
+    spd_num_var = 1;
+    spd_den_var = 3;
+    pain_num_var = 1;
+    pain_den_var = 4;
     // Effects
     cam_end_var = 128;
     fov_var = 40;
@@ -124,6 +128,10 @@ object_event_add
             atk_range_var = global.mon_coll[2];
             snd_dist_max_var = 300;
             spawn_dist_02_var = 128;
+            spd_per_min_var = 1.5;
+            spd_per_max_var = 2.5;
+            spd_per_pain_var = 5;
+            pain_den_var = 5;
             // mus_prio_var = mb_mus_prio_const; // Miniboss?
             stun_var = true;
             hurt_alarm_var = 30;
@@ -377,6 +385,8 @@ object_event_add
     global.light_floor_obj_spr = light_floor_spr_var;
     with ceil_par_obj
     { visible = false; }
+    with prop_par_obj
+    { if snap_var == 2 { visible = false; }}
     with wall_par_obj
     { h_var = max(h_var,ceil(global.fog_end_var/32)*32); }
     if fov_var > 0
@@ -385,7 +395,7 @@ object_event_add
         { if !dead_var && fov_var > other.fov_var { fov_var = other.fov_var; }}
     }
     if cam_end_var > 0 { global.cam_end_var = cam_end_var; }
-    if !instance_exists(gc_eff_obj)
+    if eff_var && !instance_exists(gc_eff_obj)
     {
         with instance_create(0,0,gc_eff_obj)
         {
@@ -626,7 +636,7 @@ object_event_add
         seen_var = false;
         if seen_spd_var
         {
-            if !irandom(3)
+            if frac_chance_scr(pain_num_var,pain_den_var)
             {
                 spd_mult_per_var = spd_per_pain_var;
                 local.yaw = point_direction(x,y,target_x_var,target_y_var);
@@ -635,7 +645,7 @@ object_event_add
             }
             else
             {
-                if !irandom(2) { spd_mult_per_var = random_range(spd_per_min_var,spd_per_max_var); }
+                if frac_chance_scr(spd_num_var,spd_den_var) { spd_mult_per_var = random_range(spd_per_min_var,spd_per_max_var); }
                 set_motion_3d_scr(spd_base_var*spd_mult_var*spd_mult_per_var,true);
             }
             set_alarm_scr(9,irandom_range(seen_delay_min_var,seen_delay_max_var));

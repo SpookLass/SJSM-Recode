@@ -38,6 +38,7 @@ if instance_exists(local.mon)
     if global.reset_spd_var > 0 && global.game_spd_var > 1
     { global.game_spd_var = 1; fmod_group_set_pitch_scr(0,global.game_spd_var); }
     global.last_time_var = current_time;
+    io_handle();
 }
 fmod_update_take_over_done_scr();
 return local.mon;

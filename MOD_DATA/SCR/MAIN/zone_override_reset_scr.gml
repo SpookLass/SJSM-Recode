@@ -3,18 +3,8 @@ Argument 0: Zone
 Argument 1: Rare Zone
 Sets zone override.
 */
-if argument0 > 0
-{
-    local.size = ds_list_size(argument0);
-    for (local.i=0; local.i<local.size; local.i+=1;)
-    { list_remove_value_scr(zone_override_list,ds_list_find_value(argument0,local.i),false); }
-}
-if argument1 > 0
-{
-    local.size = ds_list_size(argument1);
-    for (local.i=0; local.i<local.size; local.i+=1;)
-    { list_remove_value_scr(rare_zone_override_list,ds_list_find_value(argument1,local.i),false); }
-}
+if argument0 > 0 { list_remove_list_scr(zone_override_list,argument0,false); }
+if argument1 > 0 { list_remove_list_scr(rare_zone_override_list,argument1,false); }
 if ds_list_size(zone_override_list) > 0
 {
     ds_list_clear(rm_list);

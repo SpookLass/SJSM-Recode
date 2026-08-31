@@ -269,24 +269,37 @@ object_event_add
             if global.mon_hud_var && ds_list_size(global.mon_curr_list) > 0
             {
                 local.offset = -54;
+                local.icononly = (ds_list_size(mon_curr_list) > 10);
+                local.iconnum = 4;
                 for (local.i=ds_list_size(global.mon_curr_list)-1; local.i>=0; local.i-=1;)
                 {
                     with ds_list_find_value(global.mon_curr_list,local.i)
                     {
                         if !hide_var
                         {
-                            local.xtmp = 54;
-                            if icon_spr_var > 0
+                            if local.icononly
                             {
-                                draw_spr_stretch_scr(icon_spr_var,icon_spr_id_var,local.xtmp,local.offset,36*local.hudscale,0,fa_left,fa_bottom);
-                                local.xtmp += 36*local.hudscale;
+                                local.xtmp = 54+(local.iconnum*36*local.hudscale);
+                                if icon_spr_var > 0 { draw_spr_stretch_scr(icon_spr_var,icon_spr_id_var,local.xtmp,local.offset,36*local.hudscale,0,fa_left,fa_bottom); }
+                                else { draw_str_shadow_scr(string_copy(local.str,0,3),local.xtmp,local.offset,0.5*local.hudscale,0.5*local.hudscale,other.scale_min_var,fa_left,fa_bottom,-2*local.hudscale,2*local.hudscale,make_color_rgb(30,0,50),c_yellow,1,0); }
+                                local.iconnum = mod_scr(local.iconnum-1,5);
+                                if local.iconnum >= 4 { local.offset -= 36*local.hudscale; }
                             }
-                            local.str = name_var;
-                            if global.mon_hud_var == 2 { local.str += ": "+string(dur_var); }
-                            draw_set_valign(fa_middle);
-                            draw_str_shadow_scr(local.str,local.xtmp,local.offset,0.5*local.hudscale,0.5*local.hudscale,other.scale_min_var,fa_left,fa_bottom,-2*local.hudscale,2*local.hudscale,make_color_rgb(30,0,50),c_yellow,1,0);
-                            draw_set_valign(fa_top);
-                            local.offset -= 36*local.hudscale;
+                            else
+                            {
+                                local.xtmp = 54;
+                                if icon_spr_var > 0
+                                {
+                                    draw_spr_stretch_scr(icon_spr_var,icon_spr_id_var,local.xtmp,local.offset,36*local.hudscale,0,fa_left,fa_bottom);
+                                    local.xtmp += 36*local.hudscale;
+                                }
+                                local.str = name_var;
+                                if global.mon_hud_var == 2 { local.str += ": "+string(dur_var); }
+                                draw_set_valign(fa_middle);
+                                draw_str_shadow_scr(local.str,local.xtmp,local.offset,0.5*local.hudscale,0.5*local.hudscale,other.scale_min_var,fa_left,fa_bottom,-2*local.hudscale,2*local.hudscale,make_color_rgb(30,0,50),c_yellow,1,0);
+                                draw_set_valign(fa_top);
+                                local.offset -= 36*local.hudscale;
+                            }
                         }
                     }
                 }

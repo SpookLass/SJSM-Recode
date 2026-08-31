@@ -60,6 +60,7 @@ object_event_add
     if global.wf_type_var == -1 { local.type = irandom(7); }
     else { local.type = global.wf_type_var; }
     local.set = false;
+    local.hdblacklist = false;
     switch local.type
     {
         case 7: // Imscared Recode
@@ -74,8 +75,11 @@ object_event_add
             res_h_var = 480;
             break;
         }
-        case 4: // Old HD
         case 2: // HD
+        {
+            local.hdblacklist = true;
+        }
+        case 4: // Old HD
         {
             delay_min_var = 90;
             delay_max_var = 180;
@@ -123,6 +127,7 @@ object_event_add
             other.web_bg_var = web_bg_var;
             other.web_mdl_var = web_mdl_var;
             other.zone_list_var = zone_list_var;
+            other.blacklist_hd_var = blacklist_hd_var;
             other.loop_snd_var[1] = loop_snd_var[1];
             for (local.i=0; local.i<glitch_snd_len_var; local.i+=1;)
             { other.glitch_snd_arr[local.i] = glitch_snd_arr[local.i]; }
@@ -154,6 +159,10 @@ object_event_add
         ds_list_add(zone_list_var,long_hall_08_rm);
         ds_list_add(zone_list_var,long_hall_10_rm);
         ds_list_add(zone_list_var,long_hall_11_rm);
+        blacklist_hd_var = ds_list_create();
+        ds_list_clear(blacklist_hd_var);
+        ds_list_add(blacklist_hd_var,spooper_obj);
+        ds_list_add(blacklist_hd_var,hk_obj);
         loop_snd_var[1] = snd_add_scr(wf_snd_path,true,snd_group_mon_const,1,loop_snd_dist_min_var,loop_snd_dist_max_var);
         glitch_snd_arr[0] = snd_add_scr(glitch_01_snd_path,false,snd_group_mon_const,1,0,0);
         glitch_snd_arr[1] = snd_add_scr(glitch_02_snd_path,false,snd_group_mon_const,1,0,0);
@@ -165,6 +174,7 @@ object_event_add
     web_tex_var = background_get_texture(web_bg_var);
     if zone_var
     { zone_override_scr(zone_list_var,noone); }
+    if local.hdblacklist { blacklist_var = blacklist_hd_var; }
     global.hide_rm_var = true;
 ');
 // Destroy Event
@@ -191,6 +201,7 @@ object_event_add
         background_delete(web_bg_var);
         d3d_model_destroy(web_mdl_var);
         ds_list_destroy(zone_list_var);
+        ds_list_destroy(blacklist_hd_var);
         for (local.i=0; local.i<glitch_snd_len_var; local.i+=1;)
         { fmod_snd_free_scr(glitch_snd_arr[local.i]); }
         fmod_snd_free_scr(loop_snd_var[1]);

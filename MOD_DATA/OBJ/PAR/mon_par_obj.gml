@@ -23,6 +23,8 @@ object_event_add
     if !variable_local_exists("intro_var") { intro_var = false; }
     if !variable_local_exists("dupe_var") { dupe_var = 0; }
     if !variable_local_exists("hide_var") { hide_var = false; }
+    if !variable_local_exists("blacklist_var") { blacklist_var = noone; }
+    if !variable_local_exists("whitelist_var") { whitelist_var = noone; }
     if boss_var { global.boss_var = object_index; }
     // Duration checking
     local.dur = dur_var;

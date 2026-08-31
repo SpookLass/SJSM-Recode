@@ -158,6 +158,7 @@ object_event_add
             other.wake_snd_var[1] = wake_snd_var[1];
             other.mus_snd_var = mus_snd_var;
             other.cam_snd_var = cam_snd_var;
+            other.blacklist_canon_var = blacklist_canon_var;
             local.loaded = true;
             break;
         }
@@ -180,13 +181,47 @@ object_event_add
             case 1: { mus_snd_var = snd_add_scr(ringu_real_rom_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
             default: { mus_snd_var = snd_add_scr(ringu_real_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
         }
+        blacklist_canon_var = ds_list_create();
+        ds_list_clear(blacklist_canon_var);
+        ds_list_add(blacklist_canon_var,ringu_obj);
     }
+    if global.dupe_var == dupe_canon_const || global.dupe_var == dupe_never_const
+    { blacklist_var = blacklist_canon_var; }
     // Alarms
     alarm_len_var = 9;
     alarm_ini_scr();
     // Stuff
     is_seen_var = -1;
     event_user(14);
+');
+// Destroy Event
+object_event_add
+(argument0,ev_destroy,0,'
+    event_inherited();
+    local.bool = false;
+    with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
+    if !local.bool
+    {
+        sprite_delete(icon_spr_var);
+        sprite_delete(state_spr_var[0]);
+        sprite_delete(state_spr_var[1]);
+        fmod_snd_free_scr(cam_snd_var);
+        fmod_snd_free_scr(mus_snd_var);
+        for (local.i=0; local.i<snd_len_var; local.i+=1;)
+        { fmod_snd_free_scr(snd_arr[local.i,0]); }
+        if wake_snd_var[0] { fmod_snd_free_scr(wake_snd_var[1]); }
+        ds_list_destroy(blacklist_canon_var);
+    }
+    if eff_fog_var
+    {
+        with ringu_fog_eff_obj
+        { if par_var == other.id { instance_destroy(); }}
+    }
+    else
+    {
+        with ringu_static_eff_obj
+        { if par_var == other.id { instance_destroy(); }}
+    }
 ');
 // Room Start Event
 object_event_add
@@ -229,35 +264,6 @@ object_event_add
     }
     state_var = 0;
     event_user(14);
-');
-// Destroy Event
-object_event_add
-(argument0,ev_destroy,0,'
-    event_inherited();
-    local.bool = false;
-    with object_index { if id != other.id && object_index == other.object_index { local.bool = true; break; }}
-    if !local.bool
-    {
-        sprite_delete(icon_spr_var);
-        sprite_delete(state_spr_var[0]);
-        sprite_delete(state_spr_var[1]);
-        fmod_snd_free_scr(cam_snd_var);
-        fmod_snd_free_scr(mus_snd_var);
-        for (local.i=0; local.i<snd_len_var; local.i+=1;)
-        { fmod_snd_free_scr(snd_arr[local.i,0]); }
-        if wake_snd_var[0] { fmod_snd_free_scr(wake_snd_var[1]); }
-    }
-    if eff_fog_var
-    {
-        with ringu_fog_eff_obj
-        { if par_var == other.id { instance_destroy(); }}
-    }
-    else
-    {
-        with ringu_static_eff_obj
-        { if par_var == other.id { instance_destroy(); }}
-    }
-
 ');
 // Hurt Event
 object_event_add

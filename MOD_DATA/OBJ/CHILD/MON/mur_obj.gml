@@ -62,6 +62,7 @@ object_event_add
     // Theme
     mus_prio_var = theme_mus_prio_const;
     // Behavior
+    local.hdwhitelist = false;
     if global.mur_type_var == -1 { local.type = irandom(3); }
     else { local.type = global.mur_type_var; }
     switch local.type
@@ -95,6 +96,7 @@ object_event_add
             atk_range_var = 32;
             splash_rate_var = 15/spd_base_var;
             ring_rate_var = 7.5/(spd_base_var*wander_spd_var);
+            local.hdwhitelist = true;
             break;
         }
     }
@@ -120,6 +122,7 @@ object_event_add
             other.water_bg_var = water_bg_var;
             other.water_path_var = water_path_var;
             other.zone_list_var = zone_list_var;
+            other.whitelist_hd_var = whitelist_hd_var;
             local.loaded = true;
             break;
         }
@@ -177,11 +180,19 @@ object_event_add
         ds_list_add(zone_list_var,amn_hall_14_rm);
         ds_list_add(zone_list_var,amn_hall_15_rm);
         ds_list_add(zone_list_var,amn_hall_16_rm);
+        // Whitelist
+        whitelist_hd_var = ds_list_create();
+        ds_list_clear(whitelist_hd_var);
+        ds_list_add(whitelist_hd_var,gel_obj);
+        ds_list_add(whitelist_hd_var,bab_obj);
+        ds_list_add(whitelist_hd_var,killer_obj);
+        ds_list_add(whitelist_hd_var,mur_obj);
     }
     water_tex_var = background_get_texture(water_bg_var);
     crate_tex_var = background_get_texture(crate_bg_var);
     ring_tex_var = background_get_texture(ring_bg_var);
     part_tex_var = background_get_texture(part_bg_var);
+    if local.hdwhitelist { whitelist_var = whitelist_hd_var; }
     // Zone
     if zone_var
     { zone_override_scr(zone_list_var,noone); }
@@ -214,6 +225,7 @@ object_event_add
         background_delete(water_bg_var);
         path_delete(water_path_var);
         ds_list_destroy(zone_list_var);
+        ds_list_destroy(whitelist_hd_var);
     }
     with amn_water_obj { if par_var == other.id { instance_destroy(); }}
     with amn_crate_obj { if par_var == other.id { instance_destroy(); }}
