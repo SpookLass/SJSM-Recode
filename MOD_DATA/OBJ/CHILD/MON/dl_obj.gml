@@ -86,7 +86,7 @@ object_event_add
     xray_rate_var = 0.05;
     acc_var = 0.02;
     // Behavior
-    if global.dl_type_var == -1 { local.type = irandom(5); }
+    if global.dl_type_var == -1 { local.type = irandom(8); }
     else { local.type = global.dl_type_var; }
     local.set = 0;
     switch local.type

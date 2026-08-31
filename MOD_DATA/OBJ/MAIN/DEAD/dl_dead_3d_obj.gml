@@ -35,10 +35,11 @@ object_event_add
     seen_rate_var = 1;
     seen_rate_min_var = 4;
     // Behavior
-    if global.dl_type_var == -1 { local.type = irandom(4); }
+    if global.dl_type_var == -1 { local.type = irandom(8); }
     else { local.type = global.dl_type_var; }
     switch local.type
     {
+        case 4:
         case 0:
         {
             // Make bigger
@@ -46,6 +47,7 @@ object_event_add
             h_var = 48.56;
             break;
         }
+        case 6:
         case 2:
         {
             pull_var = false;
@@ -86,7 +88,7 @@ object_event_add
     tex_var = sprite_get_texture(spr_var,floor(spr_id_var));
     // Die
     local.active = false;
-    with player_obj
+    with player_dead_obj
     {
         if point_distance_3d_scr(x,y,z,other.x,other.y,other.z) < other.dist_var { local.active = true; }
         else

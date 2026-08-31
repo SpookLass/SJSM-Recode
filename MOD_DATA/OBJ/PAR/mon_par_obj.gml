@@ -26,6 +26,20 @@ object_event_add
     if !variable_local_exists("blacklist_var") { blacklist_var = noone; }
     if !variable_local_exists("whitelist_var") { whitelist_var = noone; }
     if boss_var { global.boss_var = object_index; }
+    // Name stuff
+    if !variable_local_exists("name_font_var") { name_font_var = main_font; }
+    if !variable_local_exists("name_color_var") { name_color_var = c_yellow; }
+    if !variable_local_exists("name_xscale_var") { name_xscale_var = 0.5; }
+    if !variable_local_exists("name_yscale_var") { name_yscale_var = 0.5; }
+    if !variable_local_exists("name_angle_var") { name_angle_var = 0; }
+    if !variable_local_exists("name_shadow_var") { name_shadow_var = true; }
+    if name_shadow_var
+    {
+        if !variable_local_exists("name_shadow_num_var") { name_shadow_num_var = 1; }
+        if !variable_local_exists("name_shadow_color_var") { name_shadow_color_var = make_color_rgb(30,0,50); }
+        if !variable_local_exists("name_shadow_xdist_var") { name_shadow_xdist_var = -2; }
+        if !variable_local_exists("name_shadow_ydist_var") { name_shadow_ydist_var = 2; }
+    }
     // Duration checking
     local.dur = dur_var;
     if global.locale_rm_var > global.rm_count_var { dur_var = min(dur_var,global.locale_rm_var-global.rm_count_var); }

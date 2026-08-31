@@ -39,6 +39,7 @@
     globalvar current_fulltime;
 // Game
     global.version_var = "Spooky's Jump Scare Mansion - Project Recode: v26.7.7";
+    global.app_id_var = "1544095725091037277";
     global.game_var = false;
     global.game_spd_var = 1;
     global.draw_3d_var = false;
@@ -133,6 +134,9 @@
     set_automatic_draw(false);
 // Plugins
     joy_ini_scr();
+    discord_ini_scr(global.app_id_var); // Here's to hoping this works
+    discord_set_activity_scr("Recode?","I'm up testing my activity rn","what the hell is this stuff");
+    discord_set_activity_type_scr(activity_play_const); // I think?
     if gamemaker_version == 800 { sf_ini_scr(); }
 // Mods
     execute_file(main_directory_const+"\SCR\LOAD\mod_load_01_scr.gml");

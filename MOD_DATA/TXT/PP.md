@@ -1,0 +1,1 @@
+We don't process any user data. User and save file names may be sent peer to peer if online support is added, but otherwise will remain on the user's device.

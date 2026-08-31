@@ -315,6 +315,7 @@ object_event_add(argument0,ev_step,ev_step_end,'
     // Update FMOD!
     if global.doppler_var { fmod_set_doppler_fps_scr(fps); }
     fmod_update_scr();
+    discord_callback_scr();
 ');
 // Draw
 object_event_add
@@ -348,7 +349,7 @@ object_event_add
     room_caption = global.version_var+local.rm_str+local.time_str+" | TPS: "+string(fps)+local.fps_str;
     global.draw_time_var = 0;
 ')
-// Room End Eventt
+// Room End Event
 object_event_add
 (argument0,ev_other,ev_room_end,'
     event_inherited();

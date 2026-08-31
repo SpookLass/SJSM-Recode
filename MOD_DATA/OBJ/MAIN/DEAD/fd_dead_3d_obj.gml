@@ -63,7 +63,7 @@ object_event_add
     }
     // Die
     local.active = false;
-    with player_obj { if point_distance_3d_scr(x,y,z,other.x,other.y,other.z) < other.dist_var { local.active = true; }}
+    with player_dead_obj { if point_distance_3d_scr(x,y,z,other.x,other.y,other.z) < other.dist_var { local.active = true; }}
     if local.active || global.input_press_arr[confirm_input_const,global.menu_player_var] == 1
     || global.input_press_arr[back_input_const,global.menu_player_var] == 1
     || global.input_press_arr[pause_input_const,global.menu_player_var] == 1
