@@ -40,6 +40,7 @@
 // Game
     global.version_var = "Spooky's Jump Scare Mansion - Project Recode: v26.7.7";
     global.app_id_var = "1544095725091037277";
+    global.discord_var = false;
     global.game_var = false;
     global.game_spd_var = 1;
     global.draw_3d_var = false;
@@ -133,7 +134,8 @@
     draw_set_halign(fa_center); draw_set_valign(fa_bottom);
     set_automatic_draw(false);
 // Plugins
-    discord_ini_scr(global.app_id_var);
+    if global.discord_var
+    { global.discord_var = discord_ini_scr(global.app_id_var); }
     // discord_set_activity_type_scr(activity_play_const); // I think?
     discord_set_activity_scr("Recode?","Im up testing my activity rn","what the hell is this stuff");
     joy_ini_scr();
