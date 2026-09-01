@@ -317,7 +317,6 @@ object_event_add(argument0,ev_step,ev_step_end,'
     fmod_update_scr();
     discord_callback_scr();
     discord_set_activity_scr("Recode?","Im up testing my activity rn","what the hell is this stuff");
-    discord_set_activity_type_scr(activity_play_const); // I think?
 ');
 // Draw
 object_event_add
@@ -422,6 +421,7 @@ object_event_add
 ');
 // Close
 object_event_add(argument0,ev_other,ev_close_button,'
-    if !global.game_var || !global.permadeath_var || !instance_exists(mon_par_obj) || global.debug_var
-    { game_end(); }
+    local.bool = true;
+    if global.game_var { local.bool = !global.permadeath_var || !instance_exists(mon_par_obj) || global.debug_var; }
+    if local.bool { game_end(); }
 ');

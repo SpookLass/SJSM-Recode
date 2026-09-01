@@ -133,8 +133,10 @@
     draw_set_halign(fa_center); draw_set_valign(fa_bottom);
     set_automatic_draw(false);
 // Plugins
+    discord_ini_scr(global.app_id_var);
+    // discord_set_activity_type_scr(activity_play_const); // I think?
+    discord_set_activity_scr("Recode?","Im up testing my activity rn","what the hell is this stuff");
     joy_ini_scr();
-    discord_ini_scr(main_directory_const+"\TXT\APPID");
     if gamemaker_version == 800 { sf_ini_scr(); }
 // Mods
     execute_file(main_directory_const+"\SCR\LOAD\mod_load_01_scr.gml");

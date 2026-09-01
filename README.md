@@ -46,6 +46,7 @@ Recode also attempts to emulate the Original and HD Renovation experience as clo
 - Birdbonanza: Menu, Save System, Hooked Doll, and Silhouettes
 - Everlasting Maya: Room porting
 - Ninja JayBird: Temporary locale help
+- eloep: Help with Discord integration
 
 ### Art:
 
@@ -94,6 +95,7 @@ Recode also attempts to emulate the Original and HD Renovation experience as clo
 - Adamcake: GM8 Decompiler
 - Viri: GM8 Decompiler
 - Apis035: GM8x Lua Fix
+- elpoep: Discord GM8
 
 ### QA Testers:
 
