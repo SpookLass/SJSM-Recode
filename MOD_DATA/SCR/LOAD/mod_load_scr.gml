@@ -118,6 +118,7 @@ draw_set_halign(fa_center); draw_set_valign(fa_bottom);
 set_automatic_draw(false);
 // Initialize dlls
 joy_ini_scr();
+discord_ini_scr(main_directory_const+"\TXT\APPID");
 if gamemaker_version == 800 { sf_ini_scr(); }
 fmod_load_scr();
 fmod_ini_scr(100,false); // 100 is max sounds, second argument is web sounds
