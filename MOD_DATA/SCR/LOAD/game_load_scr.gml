@@ -134,9 +134,7 @@
     set_automatic_draw(false);
 // Plugins
     joy_ini_scr();
-    discord_ini_scr(global.app_id_var); // Here's to hoping this works
-    discord_set_activity_scr("Recode?","I'm up testing my activity rn","what the hell is this stuff");
-    discord_set_activity_type_scr(activity_play_const); // I think?
+    if !discord_ini_scr(main_directory_const+"\TXT\APPID") { show_error("HALP!",true); }
     if gamemaker_version == 800 { sf_ini_scr(); }
 // Mods
     execute_file(main_directory_const+"\SCR\LOAD\mod_load_01_scr.gml");

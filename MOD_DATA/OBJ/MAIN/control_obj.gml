@@ -316,6 +316,8 @@ object_event_add(argument0,ev_step,ev_step_end,'
     if global.doppler_var { fmod_set_doppler_fps_scr(fps); }
     fmod_update_scr();
     discord_callback_scr();
+    discord_set_activity_scr("Recode?","Im up testing my activity rn","what the hell is this stuff");
+    discord_set_activity_type_scr(activity_play_const); // I think?
 ');
 // Draw
 object_event_add
