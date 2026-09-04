@@ -19,19 +19,15 @@ object_event_add
     /*for (local.i=0; local.i<alarm_len_var; local.i+=1;)
     { event_perform(ev_alarm,local.i); }*/
 ');
-// Step
-object_event_add
-(argument0,ev_step,ev_step_normal,'
-    event_inherited();
-    part_system_update(film_part_sys);
-');
-
 // Alarm 0
 object_event_add
 (argument0,ev_alarm,0,'
 	part_type_alpha1(film_part_type[0],random_range(0.2,0.7));
 	part_type_alpha1(film_part_type[1],random_range(0.2,0.7));
 	part_type_alpha1(film_part_type[2],random_range(0.03,0.1));
+    local.time = max(1,round(global.delta_time_var))
+    for (local.i=0; local.i<local.time; local.i+=1;)
+    { part_system_update(film_part_sys); }
 	set_alarm_scr(0,1);
 ');
 // Alarm 1
@@ -50,9 +46,5 @@ object_event_add
 // Draw Event
 object_event_add
 (argument0,ev_draw,0,'
-    d3d_set_fog(false,c_black,0,0);
-    d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
-    d3d_set_hidden(false);
-    part_system_drawit(film_part_sys);
-    d3d_set_hidden(true);
+    draw_part_2d_scr(film_part_sys,1280,720);
 ');

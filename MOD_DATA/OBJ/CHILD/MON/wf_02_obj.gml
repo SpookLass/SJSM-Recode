@@ -12,6 +12,8 @@ object_event_add
     ini_open("lang_"+global.lang_var+".ini");
     name_var = translate_mon_str_scr("wf",global.name_var);
     loop_snd_var[2] = string_replace(ini_read_string("SUB","wf","SUB_wf"),"@n",name_var); loop_snd_var[3] = false;
+    rm_str_var = ini_read_string("ROOM","wf_hall","ROOM_wf_hall");
+    rm_replace_str_var = ini_read_string("ROOM","long","ROOM_long");
     ini_close();
     // Variables
     type_var = 0;
@@ -67,8 +69,9 @@ object_event_add
         case 6: // Mayas Idea
         case 0: // Recode
         {
+            spd_base_var = 1.3;
             atk_range_var = global.mon_coll[2];
-            delay_var = 30;
+            delay_var = 60;
             loop_snd_dist_max_var = 300;
             // Smaller Resolution
             res_w_var = 640;
@@ -225,7 +228,7 @@ object_event_add
     // Loop
     with door_trig_obj { rm_count_var = 0; }
     // Zone
-    if zone_var { global.rm_name_var = string_replace(global.rm_name_var,"Long","My"); }
+    if zone_var { global.rm_name_var = string_replace(global.rm_name_var,rm_replace_str_var,rm_str_var); }
     // Webs
     if web_var
     {

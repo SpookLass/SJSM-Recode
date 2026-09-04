@@ -37,7 +37,7 @@ object_event_add
     dead_rm_var = ringu_dead_rm;
     do_anim_var = false;
     wander_spd_var = 0.25;
-    wander_time_var = 250;
+    wander_time_var = 15; // 250
     splash_time_var = 0;
     splash_rate_var = 12;
     ring_rate_var = 12;
@@ -81,7 +81,7 @@ object_event_add
             crateless_spd_mult_var = 0.64;
             sink_var = true;
             do_ring_var = true;
-            wander_time_var = 800; // 1000
+            wander_time_var = 45; // 800 or 1000
             break;
         }
         case 2:
@@ -401,19 +401,19 @@ object_event_add
                 move_arr_var[local.i+1,0] =  move_arr_var[local.i,0];
                 move_arr_var[local.i+1,1] =  move_arr_var[local.i,1];
                 move_arr_var[local.i+1,2] =  move_arr_var[local.i,2];
-                move_arr_var[local.i+1,3] =  move_arr_var[local.i,3];
+                move_arr_var[local.i+1,3] =  move_arr_var[local.i,3]+global.delta_time_var; // Originally not delta time
             }
             move_arr_var[0,0] = x;
             move_arr_var[0,1] = y;
             move_arr_var[0,2] = z;
-            move_arr_var[0,3] = current_time;
+            move_arr_var[0,3] = 0; // current_time_var
             if move_len_var == 0 { move_len_var = 1; }
             else
             {
                 local.len = 0;
                 for (local.i=0; local.i<=move_len_var; local.i+=1;)
                 {
-                    if current_time-move_arr_var[local.i,3] <= wander_time_var
+                    if move_arr_var[local.i,3] <= wander_time_var // current_time_var-move_arr_var[local.i,3]
                     || local.len == 0
                     { local.len = local.i+1; }
                 }

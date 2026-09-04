@@ -11,10 +11,12 @@ object_event_add
 (argument0,ev_other,ev_room_start,'
     with echidna_obj
     {
-        on_var = true;
-        enter_var = false;
         x = other.x;
         y = other.y;
+        event_perform(ev_alarm,0);
+        set_alarm_scr(0,-1);
+        enter_var = false;
+        if type_var > 0 { do_coll_var = mon_solid_const; }
     }
     instance_destroy();
 ');

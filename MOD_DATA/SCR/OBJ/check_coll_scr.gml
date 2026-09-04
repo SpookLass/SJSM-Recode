@@ -13,7 +13,7 @@ Argument 4: Collision Type
     0: Default
 Argument 5-7: Position
     0: Default
-Argument 9: Check Props
+Argument 8: Check Props
 */
 if x_spd_var != 0 || y_spd_var != 0 || z_spd_var != 0
 {

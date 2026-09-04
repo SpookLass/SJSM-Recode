@@ -203,7 +203,7 @@ if local.xspd != 0 || local.yspd != 0 || local.zspd != 0
                 if global.coll_prec_var
                 {
                     local.dist = p3dc_ray_still_scr(global.room_coll,x,y,z+(coll_var[1]/2),local.xspd,local.yspd,local.zspd);
-                    local.ray_coll = local.dist < local.radius+(spd_var*2) || local.dist >= 10000000;
+                    local.ray_coll = local.dist < local.radius+local.spd || local.dist >= 10000000;
                 }
                 // If collided, slide
                 if p3dc_check_split_scr(coll_var[0],x+local.xspd,y+local.yspd,z+local.zspd+0.01) || local.ray_coll
@@ -259,7 +259,7 @@ if local.xspd != 0 || local.yspd != 0 || local.zspd != 0
                 if global.coll_prec_var
                 {
                     local.dist = p3dc_ray_still_scr(global.room_float_coll,x,y,z+(coll_var[1]/2),local.xspd,local.yspd,local.zspd);
-                    local.ray_coll = local.dist < local.radius+(spd_var*2) || local.dist >= 10000000;
+                    local.ray_coll = local.dist < local.radius+local.spd || local.dist >= 10000000;
                 }
                 // If not collided, turn off float temp
                 if !p3dc_check_still_scr(coll_var[0],x+local.xspd,y+local.yspd,z+local.zspd+0.01,global.room_float_coll) && !local.ray_coll
@@ -331,7 +331,7 @@ if local.xspd != 0 || local.yspd != 0 || local.zspd != 0
                         local.xspd,local.yspd,local.zspd,
                         0,0,local.coll_arr[local.c,4]
                     );
-                    local.ray_coll = local.dist < local.radius+(spd_var*2) || local.dist >= 10000000;
+                    local.ray_coll = local.dist < local.radius+local.spd || local.dist >= 10000000;
                 }
                 // If collided, slide
                 if local.ray_coll || p3dc_check_rot_scr
@@ -443,7 +443,7 @@ if local.xspd != 0 || local.yspd != 0 || local.zspd != 0
                         x,y,z+(coll_var[1]/2),
                         local.xspd,local.yspd,local.zspd
                     );
-                    local.ray_coll = local.dist < local.radius+(spd_var*2) || local.dist >= 10000000;
+                    local.ray_coll = local.dist < local.radius+local.spd || local.dist >= 10000000;
                 }
                 // If collided, slide
                 if local.ray_coll || p3dc_check_scr

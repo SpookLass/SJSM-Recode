@@ -66,6 +66,7 @@
     global.reflect_pos_var = 0;
     global.reflect_axis_var = 0;
 // HUD
+    global.view_scale_var = 1;
     global.debug_var = false;
     global.hide_rm_var = false;
     global.hide_hud_var = false;

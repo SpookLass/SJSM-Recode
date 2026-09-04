@@ -333,6 +333,7 @@ object_event_add
     if global.draw_3d_var
     { d3d_set_hidden(true); }
     else { d3d_set_hidden(false); }
+    global.view_scale_var = min(view_wview[view_current]/1280,view_hview[view_current]/720);
     // Caption
     if update_fps_var
     {

@@ -450,7 +450,7 @@ object_event_add
         else 
         {
             if possess_var
-            { local.bool = (global.input_press_arr[confirm_input_const,player_id_var] && target_dist_var > 0); }
+            { local.bool = (global.input_press_arr[interact_input_const,player_id_var] && target_dist_var > 0); }
             else
             {
                 if type_var > 0 { local.dist = max(target_dist_var,path_get_length(path_var)); }

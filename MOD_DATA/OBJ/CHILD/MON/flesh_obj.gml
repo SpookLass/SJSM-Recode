@@ -295,7 +295,7 @@ object_event_add
         local.nerf = (instance_number(mon_par_obj) > 1);
         with player_obj
         {
-            if !dead_var
+            if on_var && !dead_var
             {
                 local.dist = path_get_length(path_var);
                 if local.dist > 0
@@ -321,6 +321,7 @@ Player Time: "+string(local.time)+"
 Difference: "+string(local.newdelay)+"
 ");*/
                     }
+                    break;
                 }
             }
         }

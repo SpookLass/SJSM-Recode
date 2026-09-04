@@ -244,7 +244,7 @@ object_event_add
             inst_var = fmod_snd_3d_play_scr(charge_snd_var[0],x,y,z+snd_h_var);
             sub_var[0] = charge_snd_var[1];
             sub_var[1] = charge_snd_var[2];
-            set_alarm_scr(6,irandom_range(snd_alarm_min_var,snd_alarm_max_var))
+            set_alarm_scr(6,irandom_range(snd_alarm_min_var,snd_alarm_max_var));
         }
     }
     // Music
