@@ -301,6 +301,7 @@ object_event_add
         screen_save(working_directory+"\SCREENSHOTS\screenshot"+string(local.screenshot)+".png");
         global.last_time_var = current_time;
         fmod_update_take_over_done_scr();
+        io_handle();
     }
     // Fullscreen
     if global.input_press_arr[fullscreen_input_const,0] == 1

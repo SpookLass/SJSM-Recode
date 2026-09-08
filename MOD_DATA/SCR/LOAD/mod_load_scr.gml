@@ -34,7 +34,7 @@
     globalvar current_millisecond;
     globalvar current_fulltime;
 // Game
-    global.version_var = "Spooky's Jump Scare Mansion - Project Recode: v26.7.7";
+    global.version_var = "Spooky's Jump Scare Mansion - Project Recode: v26.9.7";
     global.app_id_var = "1544095725091037277";
     global.discord_var = false;
     global.game_var = false;

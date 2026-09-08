@@ -106,6 +106,7 @@ Recode also attempts to emulate the Original and HD Renovation experience as clo
 - Cottoncandycat: Multiplayer
 - demonAndrew495 Two: Multiplayer
 - Spook Lass: Various
+- Ninja JayBird: Build testing
 
 ### Special Thanks
 

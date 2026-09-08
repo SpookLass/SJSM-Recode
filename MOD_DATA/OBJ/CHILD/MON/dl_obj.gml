@@ -298,8 +298,9 @@ object_event_add
         for (local.i=0; local.i<eff_snd_len_var; local.i+=1;)
         { fmod_snd_free_scr(eff_snd_arr[local.i]); }
     }
-    with spr_flash_eff_obj { if par_var = other.id { instance_destroy(); }}
-    with dl_eff_obj { if par_var = other.id { instance_destroy(); }}
+    with spr_flash_eff_obj { if par_var == other.id { instance_destroy(); }}
+    with dl_eff_obj { if par_var == other.id { instance_destroy(); }}
+    with deer_obj { if par_var == other.id { instance_destroy(); }}
 ');
 // Room Start Event
 object_event_add
