@@ -31,6 +31,7 @@ object_event_add
     dupe_var = dupe_canon_const;
     dead_rm_var = frenzy_dead_rm;
     woke_var = false;
+    shader_gm8_var = grayscale_unbias_ps; // orthographic_ps
     // Sounds
     do_snd_var = true;
     snd_dist_min_var = -1;
@@ -166,7 +167,7 @@ object_event_add
             { par_var = other.id; }
         }
         if gamemaker_version == 800
-        { shader_set_ps_scr(orthographic_ps); }
+        { shader_set_ps_scr(shader_gm8_var); }
         with fog_par_obj { if prio_var < other.fog_prio_var { instance_destroy(); }}
         if !instance_exists(fog_par_obj)
         {

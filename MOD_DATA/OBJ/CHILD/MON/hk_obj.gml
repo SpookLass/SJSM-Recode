@@ -463,6 +463,15 @@ object_event_add
 				tex_02_var = store_tex_02_var;
 				if global.color_var < 1
     			{ image_blend = color_par_obj.light_color_var; }
+				// Inherit rendering
+				store_tex_var = local.door.store_tex_var;
+				tex_var = store_tex_var;
+				type_var = local.door.type_var; // Single Plane
+				mdl_var = local.door.mdl_var;
+				mdl_path_var = local.door.mdl_path_var;
+				w_var = local.door.w_var;
+				h_var = local.door.h_var;
+				dist_var = local.door.dist_var;
 			}
 			local.flr = instance_nearest(x,y,floor_par_obj);
 			if local.flr.tex_var == -1 && !instance_position(local.flr.x,local.flr.y,light_floor_par_obj)

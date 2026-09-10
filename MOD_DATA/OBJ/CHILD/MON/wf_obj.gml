@@ -346,6 +346,7 @@ object_event_add
     }
     tex_02_var = background_get_texture(bg_var);
     web_tex_var = background_get_texture(web_bg_var);
+    door_tex_var = background_get_texture(door_bg_var);
     // Defaults
     spd_base_var = spd_base_real_var;
     // Alarms
@@ -524,8 +525,24 @@ object_event_add
     global.ceil_bg_tex = sprite_get_texture(tex_spr_var,2);
     global.light_wall_obj_spr = light_wall_spr_var;
     global.light_floor_obj_spr = light_floor_spr_var;
-    with door_obj { tex_var = background_get_texture(other.door_bg_var); }
-    with door_entrance_obj { tex_var = background_get_texture(other.door_bg_var); }
+    with door_obj
+    {
+        type_var = 0; // Model
+        store_tex_var = other.door_tex_var;
+        tex_var = store_tex_var;
+        mdl_var = door_mdl;
+        mdl_path_var = door_mdl_path;
+    }
+    with door_entrance_obj
+    {
+        type_var = 0; // Model
+        store_tex_var = other.door_tex_var;
+        tex_var = store_tex_var;
+        mdl_var = door_mdl;
+        mdl_path_var = door_mdl_path;
+        broke_mdl_var = door_broke_mdl;
+        broke_mdl_path_var = door_broke_mdl_path;
+    }
     if !instance_exists(wf_eff_obj)
     {
         with instance_create(0,0,wf_eff_obj)

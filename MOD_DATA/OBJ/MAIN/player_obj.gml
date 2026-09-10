@@ -240,12 +240,45 @@ object_event_add
     cam_pitch_var = eye_pitch_var;
     display_mouse_set(display_get_width()/2,display_get_height()/2);
 ');
+// Room End Event
+object_event_add
+(argument0,ev_other,ev_room_end,'
+    event_inherited();
+    if on_var
+    {
+        // Clear time
+        clear_time_var = -1;
+        walk_clear_time_var = -1;
+        // Reset variables
+        shake_var = 0;
+        jump_var = false;
+        on_floor_var = true;
+        jump_hold_var = false;
+        grav_mult_var = 1;
+        grav_var = grav_base_var*grav_mult_var*grav_mult_per_var;
+        fall_temp_var = false;
+        in_door_var = false;
+        hurt_var = false;
+        turn_var = false;
+        water_var = false;
+        fov_var = global.fov_var;
+        bob_mult_var = global.move_bob_var/100; // 12/7
+        breath_mult_var = global.idle_bob_var/100;
+        if global.dynamic_fov_var <= 0
+        { current_fov_var = fov_var; }
+        // Bob
+        bob_time_var = bob_rate_var*0.25;
+        breath_time_var = 0;
+    }
+');
 // Room Start Event
 object_event_add
 (argument0,ev_other,ev_room_start,'
     if on_var
     {
         // Position
+        eye_pitch_var = 0;
+        eye_roll_var = 0;
         eye_yaw_var = 0;
         if global.spawn_len_var
         {
@@ -283,33 +316,11 @@ object_event_add
             }
             
         }
-        eye_pitch_var = 0;
-        eye_roll_var = 0;
         set_motion_3d_scr(0,false,eye_yaw_var,true,eye_pitch_var,true);
         display_mouse_set(display_get_width()/2,display_get_height()/2);
-        // Reset variables
-        shake_var = 0;
-        jump_var = false;
-        on_floor_var = true;
-        jump_hold_var = false;
-        grav_mult_var = 1;
-        grav_var = grav_base_var*grav_mult_var*grav_mult_per_var;
-        fall_temp_var = false;
-        in_door_var = false;
-        hurt_var = false;
-        turn_var = false;
-        water_var = false;
-        fov_var = global.fov_var;
-        bob_mult_var = global.move_bob_var/100; // 12/7
-        breath_mult_var = global.idle_bob_var/100;
-        if global.dynamic_fov_var <= 0
-        { current_fov_var = fov_var; }
         // Healing
         if heal_delay_var <= 0 || alarm_arr[1,1] <= 0
         { heal_var = true; }
-        // Bob
-        bob_time_var = bob_rate_var*0.25;
-        breath_time_var = 0;
         // Camera
         cam_x_var = x;
         cam_y_var = y;
@@ -322,8 +333,6 @@ object_event_add
         view_visible[cam_id_var] = true;
         view_enabled = true;
         // Clear time
-        clear_time_var = -1;
-        walk_clear_time_var = -1;
         if global.spawn_len_var > 0
         {
             if global.unlock_var > 0 { local.spawn = global.unlock_var; }

@@ -102,7 +102,7 @@ object_event_add
         case 4: // Hellgate
         {
             hurt_tp_den_var = 2;
-            ascend_alarm_var = 15;
+            ascend_alarm_var = 30;
             descend_alarm_var = 15;
             hurt_up_var = true;
         }

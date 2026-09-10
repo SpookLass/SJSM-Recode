@@ -292,7 +292,7 @@ object_event_add
     if smart_var
     {
         //show_message("Testing!");
-        local.nerf = (instance_number(mon_par_obj) > 1);
+        local.nerf = (instance_number(mon_par_obj) > 1 || global.mult_type_var == 3);
         with player_obj
         {
             if on_var && !dead_var
@@ -335,10 +335,30 @@ Difference: "+string(local.newdelay)+"
     global.light_floor_obj_spr = light_floor_spr_var;
     // Door
     local.par = id;
+    if dur_var < 0 || dur_var < dur_start_var
+    {
+        with door_entrance_obj
+        {
+            store_tex_var = other.door_tex_var;
+            tex_var = store_tex_var;
+            type_var = 10; // Single Plane
+            w_var = 14;
+            h_var = 23;
+            dist_var = 0.1;
+        }
+    }
     if dur_var < 0 || dur_var > 1
     {
         with door_obj
         {
+            // Change render style
+            store_tex_var = other.door_tex_var;
+            tex_var = store_tex_var;
+            type_var = 10; // Single Plane
+            w_var = 14;
+            h_var = 23;
+            dist_var = 0.1;
+            /*Replace door, funky
             local.door = id;
             if variable_local_exists("spawn_var") { local.spawn = spawn_var; }
 			else { local.spawn = -1; }
@@ -350,10 +370,10 @@ Difference: "+string(local.newdelay)+"
                 direction = local.door.direction;
                 image_blend = local.door.image_blend;
                 par_var = local.par;
-                store_tex_var = local.par.door_tex_var;
-                tex_var = store_tex_var;
+                
             }
             instance_destroy();
+            */
         }
         with door_trig_obj
         {

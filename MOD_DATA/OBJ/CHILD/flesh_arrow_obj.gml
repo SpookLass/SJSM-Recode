@@ -13,6 +13,7 @@ object_event_add
     on_var = false;
     player_var = false;
     inst_var = noone;
+    double_check_var = false;
 ');
 // Room end event
 object_event_add
@@ -29,7 +30,11 @@ object_event_add
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,'
-    if on_var { event_inherited(); }
+    if on_var
+    {
+        event_inherited();
+        if double_check_var { event_user(0); }
+    }
 ');
 // Calculate Path
 object_event_add
@@ -40,7 +45,8 @@ object_event_add
     {
         if on_var && !dead_var
         {
-            if path_exists(path_var) && clear_time_var > 0
+            double_check_var = (clear_time_var <= 0)
+            if path_exists(path_var) && !double_check_var
             {
                 local.bestdist = -1;
                 for (local.i=0; local.i<path_get_number(path_var); local.i+=1;)

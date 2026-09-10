@@ -74,6 +74,7 @@ object_event_add
     deer_acc_var = false;
     deer_snd_alarm_min_var = 80;
     deer_dist_var = 0;
+    deer_obj_var = deer_obj;
     // Remodeled
     slender_var = false;
     slender_rate_var = 0.02;
@@ -339,7 +340,7 @@ object_event_add
                 }
                 if local.bool
                 {
-                    with instance_create(global.mark_arr[local.i,0],global.mark_arr[local.i,1],deer_obj)
+                    with instance_create(global.mark_arr[local.i,0],global.mark_arr[local.i,1],deer_obj_var)
                     {
                         par_var = other.id;
                         atk_range_var = other.deer_atk_range_var;
