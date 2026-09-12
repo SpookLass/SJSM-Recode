@@ -12,13 +12,22 @@ object_event_add
     menu_var = false;
     mon_var = bekka_obj;
     bg_len_var = 3;
-    bg_arr_var[0,1] = kh_basement_wall_bg_path;
+    if global.kh_var
+    {
+        bg_arr_var[0,1] = kh_basement_wall_bg_path;
+        bg_arr_var[1,1] = kh_basement_floor_bg_path;
+        bg_arr_var[2,1] = kh_basement_ceil_bg_path;
+    }
+    else
+    {
+        bg_arr_var[0,1] = asy_wall_bg_path;
+        bg_arr_var[1,1] = asy_floor_bg_path;
+        bg_arr_var[2,1] = asy_ceil_bg_path;
+    }
     bg_arr_var[0,2] = false;
     bg_arr_var[0,3] = false;
-    bg_arr_var[1,1] = kh_basement_floor_bg_path;
     bg_arr_var[1,2] = false;
     bg_arr_var[1,3] = false;
-    bg_arr_var[2,1] = kh_basement_ceil_bg_path;
     bg_arr_var[2,2] = false;
     bg_arr_var[2,3] = false;
     rm_len_var = 1;

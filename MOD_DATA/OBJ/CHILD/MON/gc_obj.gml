@@ -386,7 +386,7 @@ object_event_add
     with ceil_par_obj
     { visible = false; }
     with prop_par_obj
-    { if snap_var == 2 { visible = false; }}
+    { if snap_var == 2 && !solid_var { visible = false; }}
     with wall_par_obj
     { h_var = max(h_var,ceil(global.fog_end_var/32)*32); }
     if fov_var > 0
