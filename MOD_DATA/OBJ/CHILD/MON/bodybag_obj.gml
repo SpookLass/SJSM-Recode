@@ -60,6 +60,7 @@ object_event_add
         { spin_var = true; }
         case 0: // Mod
         {
+            dur_var = irandom_range(10,20);
             spd_base_var = 1.875; // 1.25*2.5/1.66
             do_acc_var = true;
             acc_var = 0.1;

@@ -132,6 +132,7 @@ object_event_add
 			// Teleport
 			tp_type_var = 2;
 			tp_dist_min_var = 96;
+			tp_dist_max_var = 224;
 			tp_alarm_min_var = 300;
 			tp_alarm_max_var = 600;
 			break;
@@ -176,7 +177,7 @@ object_event_add
 			wall_end_var = 72;
 			door_var = true;
 			fog_cyl_var = true;
-			atk_range_var = global.mon_coll[2];
+			atk_range_var = 16;
 			// Render
 			base_w_var = 29;
 			base_h_var = 29;

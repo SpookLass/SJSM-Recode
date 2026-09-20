@@ -213,6 +213,7 @@ object_event_add
             spd_base_var = 0.5;
             sprint_acc_var = -1;
             stam_spawn_max_var = 0;
+            atk_range_var = 16;
             // Acceleration
             do_acc_var = 2; // OG Style
             acc_var = 0.1;

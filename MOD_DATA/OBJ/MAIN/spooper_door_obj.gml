@@ -40,33 +40,30 @@ object_event_add
             cam_id_var = other.hurt_target_var.cam_id_var;
         }
     }
-    with player_obj
+    with hurt_target_var
     {
-        if on_var && !dead_var && !in_door_var
+        local.player = id;
+        switch (global.shake_type_var)
         {
-            local.player = id;
-            switch (global.shake_type_var)
+            case shake_classic_const:
             {
-                case shake_classic_const:
+                with instance_create(0,0,shake_eff_obj)
                 {
-                    with instance_create(0,0,shake_eff_obj)
-                    {
-                        player_var = local.player;
-                        mult_var = local.player.shake_pos_base_var;
-                        type_var = 0; // Constant
-                    }
-                    break;
+                    player_var = local.player;
+                    mult_var = local.player.shake_pos_base_var;
+                    type_var = 0; // Constant
                 }
-                case shake_modern_const:
+                break;
+            }
+            case shake_modern_const:
+            {
+                with instance_create(0,0,shake_eff_obj)
                 {
-                    with instance_create(0,0,shake_eff_obj)
-                    {
-                        player_var = local.player;
-                        mult_var = local.player.shake_angle_base_var;
-                        type_var = 1; // Fade out
-                    }
-                    break;
+                    player_var = local.player;
+                    mult_var = local.player.shake_angle_base_var;
+                    type_var = 1; // Fade out
                 }
+                break;
             }
         }
     }

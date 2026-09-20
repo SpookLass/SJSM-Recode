@@ -49,11 +49,7 @@ object_event_add
     dur_start_var = dur_var;
     // Theme
     if !variable_local_exists("mus_prio_var") || (global.rand_theme_var && frac_chance_scr(1,2)) { mus_prio_var = -1; }
-    if mus_prio_var > amb_mus_prio_const
-    {
-        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
-        with mus_control_obj { event_user(0); }
-    }
+    if mus_prio_var > amb_mus_prio_const { with mus_control_obj { event_user(0); }}
 ');
 // Room End Event
 object_event_add

@@ -150,9 +150,6 @@ object_event_add
             case 1: { mus_snd_var = snd_add_scr(east_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
             default: { mus_snd_var = snd_add_scr(husk_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
         }
-        
-        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
-        fmod_snd_set_minmax_dist_scr(hurt_snd_var,snd_dist_min_var,snd_dist_max_var);
     }
     doll_blood_tex_var = background_get_texture(doll_blood_bg_var);
     shadow_tex_var = background_get_texture(shadow_bg_var);

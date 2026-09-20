@@ -232,10 +232,11 @@ object_event_add
         tex_var = sprite_get_texture(spr_var,spr_id_var);
         spawn_var = -1;
         event_inherited();
-        move_var = false;
-        atk_var = false;
         set_alarm_scr(0,-1);
         event_perform(ev_alarm,0);
+        set_motion_scr(0,true);
+        move_var = false;
+        atk_var = false;
         if do_rise_var == 2
         {
             anim_type_var = 1;

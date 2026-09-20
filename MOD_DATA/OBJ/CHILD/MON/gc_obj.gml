@@ -321,6 +321,8 @@ object_event_add
         }
     }
     tex_var = background_get_texture(bg_var);
+    wall_tex_var = background_get_texture(wall_bg_var);
+    floor_tex_var = background_get_texture(floor_bg_var);
 ');
 // Destroy Event
 object_event_add
@@ -379,8 +381,8 @@ object_event_add
     spd_mult_per_var = 1;
     visible = true;
     // Effects
-    global.wall_bg_tex = background_get_texture(wall_bg_var);
-    global.floor_bg_tex = background_get_texture(floor_bg_var);
+    global.wall_bg_tex = wall_tex_var;
+    global.floor_bg_tex = floor_tex_var;
     global.light_wall_obj_spr = light_wall_spr_var;
     global.light_floor_obj_spr = light_floor_spr_var;
     with ceil_par_obj

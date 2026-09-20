@@ -136,9 +136,11 @@
     set_automatic_draw(false);
 // Plugins
     if global.discord_var
-    { global.discord_var = discord_ini_scr(global.app_id_var); }
-    // discord_set_activity_type_scr(activity_play_const); // I think?
-    discord_set_activity_scr("Recode?","Im up testing my activity rn","what the hell is this stuff");
+    {
+        global.discord_var = discord_ini_scr(global.app_id_var);
+        // discord_set_activity_type_scr(activity_play_const); // I think?
+        discord_set_activity_scr("Recode?","Im up testing my activity rn","what the hell is this stuff");
+    }
     joy_ini_scr();
     if gamemaker_version == 800 { sf_ini_scr(); }
 // Mods

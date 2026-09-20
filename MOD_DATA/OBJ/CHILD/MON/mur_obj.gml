@@ -144,7 +144,6 @@ object_event_add
             case 1: { mus_snd_var = snd_add_scr(mur_rom_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
             default: { mus_snd_var = snd_add_scr(mur_mus_snd_path,false,snd_group_mus_const,1,0,0); break; }
         }
-        fmod_snd_set_group_scr(mus_snd_var,snd_group_mus_const);
         // Textures
         wall_bg_var = bg_add_scr(amn_wall_bg_path,false,false);
         floor_bg_var = bg_add_scr(amn_floor_02_bg_path,false,false);

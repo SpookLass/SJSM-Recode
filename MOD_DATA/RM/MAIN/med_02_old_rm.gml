@@ -25,7 +25,7 @@ room_set_code
     // Mark
     global.mark_len_var = 3;
     global.mark_arr[0,0] = 432;
-    global.mark_arr[0,1] = 608;
+    global.mark_arr[0,1] = 368;
     global.mark_arr[0,2] = 0;
     global.mark_arr[1,0] = 496;
     global.mark_arr[1,1] = 304;

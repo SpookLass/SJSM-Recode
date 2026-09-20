@@ -106,6 +106,8 @@ object_event_add
     scare_var = false;
     scare_dist_var = 48;
     scare_alarm_var = 480;
+    scare_pitch_var = false;
+    scare_rand_var = 5;
     // Behavior
     if global.bekka_type_var == -1
     {
@@ -176,6 +178,7 @@ object_event_add
             bright_var = true;
             exit_fade_alarm_var = 20;
             dark_color_var = make_color_rgb(127,127,127);
+            atk_range_var = 16;
             break;
         }
     }
@@ -462,9 +465,12 @@ object_event_add
     event_user(6);
     if instance_exists(target_var)
     {
-        x = target_x_var+lengthdir_x(lengthdir_x(scare_dist_var,target_var.eye_yaw_var),target_var.eye_pitch_var);
-        y = target_y_var+lengthdir_x(lengthdir_y(scare_dist_var,target_var.eye_yaw_var),target_var.eye_pitch_var);
-        z = target_z_var-lengthdir_y(scare_dist_var,target_var.eye_pitch_var);
+        local.yaw = target_var.eye_yaw_var+irandom_range(-scare_rand_var,scare_rand_var);
+        if scare_pitch_var { local.pitch = target_var.eye_pitch_var+irandom_range(-scare_rand_var,scare_rand_var); }
+        else { local.pitch = 0; }
+        x = target_x_var+lengthdir_x(lengthdir_x(scare_dist_var,local.yaw),local.pitch);
+        y = target_y_var+lengthdir_x(lengthdir_y(scare_dist_var,local.yaw),local.pitch);
+        z = target_z_var-lengthdir_y(scare_dist_var,local.pitch);
     }
     with instance_create(0,0,fade_eff_obj)
     {

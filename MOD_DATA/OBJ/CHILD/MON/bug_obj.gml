@@ -220,6 +220,7 @@ object_event_add
             hole_alarm_min_var = 5;
             hole_alarm_max_var = 5;
             hole_dur_var = false;
+            atk_range_var = 16;
             break;
         }
     }

@@ -3218,7 +3218,7 @@ draw_load_scr("Loading zones...");
             ds_list_add(zone_arr[3,4],hall_11_b_rm);
             ds_list_add(zone_arr[3,4],hall_12_a_rm);
             ds_list_add(zone_arr[3,4],hall_12_b_rm);
-            ds_list_add(zone_arr[3,4],hall_13_rm); ds_list_add(zone_arr[3,4],hall_13_rm);
+            ds_list_add(zone_arr[3,4],hall_13_story_rm); ds_list_add(zone_arr[3,4],hall_13_story_rm);
             ds_list_add(zone_arr[3,4],hall_14_a_rm);
             ds_list_add(zone_arr[3,4],hall_14_b_rm);
             ds_list_add(zone_arr[3,4],hall_15_a_rm);

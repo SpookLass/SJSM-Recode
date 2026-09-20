@@ -6,7 +6,7 @@ room_set_code
 (
     argument0,'
     ini_open("lang_"+global.lang_var+".ini");
-	global.rm_name_var = ini_read_string("ROOM","med","ROOM_med")+" 8 "+ini_read_string("ROOM","old","ROOM_old");
+	global.rm_name_var = ini_read_string("ROOM","med","ROOM_med")+" 9 "+ini_read_string("ROOM","old","ROOM_old");
 	ini_close();
     // Spawn
     global.spawn_len_var = 2;

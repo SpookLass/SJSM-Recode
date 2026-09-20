@@ -7,7 +7,7 @@ room_set_code
     '
     // Name
     ini_open("lang_"+global.lang_var+".ini");
-    global.rm_name_var = ini_read_string("ROOM","hall","ROOM_hall")+" 1 "+ini_read_string("MENU","hd","MENU_hd");
+    global.rm_name_var = ini_read_string("ROOM","hall","ROOM_hall")+" 1 "+ini_read_string("LABEL","hd","LABEL_hd");
     ini_close();
     // Spawns
     global.spawn_len_var = 2;

@@ -182,6 +182,7 @@ object_event_add
         }
         case 7: // Gone Rogue
         {
+            atk_range_var = 16;
             // Rubberband
             spd_min_var = 0.1;
             rb_var = true;

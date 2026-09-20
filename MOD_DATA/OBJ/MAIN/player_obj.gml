@@ -13,6 +13,7 @@ object_event_add
     player_id_var = 0;
     violence_var = 0;
     on_var = true;
+    in_door_var = false;
     // Collision
     do_coll_var = player_solid_const;
     coll_var[0] = global.player_coll[0];
@@ -22,10 +23,10 @@ object_event_add
     if global.one_shot_var { hp_max_var = 0; }
     else { hp_max_var = 100; }
     hp_var = hp_max_var;
-    heal_rate_var = 0.02;
+    heal_rate_var = 1/60;
     heal_var = true;
     heal_delay_var = 0;
-    heal_safe_var = 10;
+    heal_safe_var = 1;
     heal_mult_var = 1;
     dead_var = false;
     alarm_arr[1,2] = true; // Persists between rooms
@@ -36,9 +37,10 @@ object_event_add
     spd_base_var = 1;
     spd_mult_var = 1;
     back_spd_mult_var = 0.6; // Normally 0.5, but I use 0.6 so the run speed is accurate
-    back_var = false; // Whether to reduce speed when walking backwards
+    back_var = true; // Whether to reduce speed when walking backwards
     normal_var = true;
     invert_var = false;
+    err_per_var = 0.8;
     // Stamina
     do_stam_var = true;
     do_sprint_var = true; // Uhh yeah I sure hope it does
@@ -49,8 +51,11 @@ object_event_add
     sprint_spd_mult_var = 2.5;
     // Faster stamina drain when pressing sprint
     start_stam_var = 0;
-    start_stam_base_var = 1;
-    start_stam_rate_var = 1/19; // 19 frames
+    start_stam_calc_var = false;
+    start_stam_max_var = 10;
+    start_stam_time_var = 20;
+    start_stam_base_var = 10; // 1
+    start_stam_rate_var = 10; // 1/19, 19 frames
     // Acceleration
     do_acc_var = true;
     frick_var = 0.5;
@@ -107,7 +112,7 @@ object_event_add
     breath_var = 0;
     breath_time_var = 0;
     breath_asthma_rate_var = 2;
-    breath_do_var = true;
+    breath_do_var = false;
     // FOV
     fov_var = global.fov_var;
     current_fov_var = fov_var;
@@ -116,11 +121,11 @@ object_event_add
     // Flare
     flare_var = 0;
     flare_yaw_var = 5.856;
-    flare_pitch_var = 5.856;
+    flare_pitch_var = 0;
     flare_rate_01_var = 0.01;
     flare_rate_02_var = 0.02;
     flare_dist_var = 120;
-    do_flare_per_var = true;
+    do_flare_per_var = false;
     // Water
     water_var = false;
     water_frick_mult_var = 0.25;
@@ -147,28 +152,30 @@ object_event_add
     else { local.type = global.player_type_var; }
     switch local.type
     {
-        case 1:
+        case 3: // Strafe!
+        { normal_var = false; }
+        case 0:
         {
-            heal_rate_var = 1/60;
-            back_var = true;
-            breath_do_var = false;
-            flare_pitch_var = 0;
-            do_flare_per_var = false;
-            heal_safe_var = 1;
-            // normal_var = false;
+            start_stam_calc_var = true;
+            heal_rate_var = 0.02;
+            back_var = false;
+            breath_do_var = true;
+            flare_pitch_var = 5.856;
+            do_flare_per_var = true;
+            heal_safe_var = 10;
             break;
         }
         case 2:
         {
             do_acc_var = false;
-            breath_do_var = false;
+            back_var = false;
             spd_base_var = 5/pf_ms_rate_const;
             sprint_spd_mult_var = 1.8;
             do_flare_per_var = false;
+            flare_pitch_var = 5.856;
             start_stam_base_var = 0;
             heal_delay_var = 480; // 60?
             heal_rate_var = 1/6;
-            heal_safe_var = 1;
             stam_rate_var = 5/12;
             break;
         }
@@ -190,6 +197,12 @@ object_event_add
     }
     if do_taker_var
     { set_alarm_scr(3,taker_alarm_var); }
+    // Calculate Stamina
+    if start_stam_calc_var
+    {
+        start_stam_base_var = 2*start_stam_max_var/start_stam_time_var;
+        start_stam_rate_var = 2*start_stam_max_var/(start_stam_time_var*(start_stam_time_var-1));
+    }
     // Stuff
     event_perform(ev_other,ev_room_start);
 ');
@@ -339,14 +352,25 @@ object_event_add
             else { local.spawn = irandom_range(1,global.spawn_len_var-1); }
             if mp_grid_path(grid_var,path_var,x,y,global.spawn_arr[local.spawn,0],global.spawn_arr[local.spawn,1],true)
             {
+                local.spd = spd_base_var*err_per_var
+                walk_clear_time_var = path_get_length(path_var)/local.spd;
                 if do_sprint_var
                 {
-                    if do_stam_var { local.spd = spd_base_var*(1+sprint_spd_mult_var)*9/19; }
-                    else { local.spd = spd_base_var*sprint_spd_mult_var; }
+                    if do_stam_var
+                    {
+                        // Calculate Stamina
+                        local.stamloss = 0;
+                        if start_stam_base_var > 0 { local.stamloss = 0.5*start_stam_base_var*((start_stam_base_var/start_stam_rate_var)+1); }
+                        local.spd *= (1+sprint_spd_mult_var)*(stam_max_var-local.stamloss)/((stam_max_var*2)-local.stamloss);
+                    }
+                    else { local.spd *= sprint_spd_mult_var; }
+                    clear_time_var = path_get_length(path_var)/local.spd;
                 }
-                else { local.spd = spd_base_var; }
-                clear_time_var = path_get_length(path_var)/local.spd;
-                walk_clear_time_var = path_get_length(path_var)/spd_base_var;
+                else
+                {
+                    clear_time_var = walk_clear_time_var;
+                    local.spd = spd_base_var;
+                }
             } 
         }
         // Start room
