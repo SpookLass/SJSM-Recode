@@ -643,7 +643,16 @@ object_event_add
                         break;
                     }
                     // Exit
-                    case 3: { game_end(); break; }
+                    case 3:
+                    {
+                        fmod_update_take_over_when_lock_scr();
+                        if show_question(button_str_arr_var[state_var,button_state_var]+"?")
+                        { game_end(); }
+                        global.last_time_var = current_time;
+                        fmod_update_take_over_done_scr();
+                        global.input_press_arr[confirm_input_const,player_id_var] = 0;
+                        break;
+                    }
                     // Settings
                     case 4: 
                     {

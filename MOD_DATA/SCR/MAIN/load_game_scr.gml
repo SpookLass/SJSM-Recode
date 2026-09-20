@@ -3,7 +3,7 @@ Argument 0: Save to load
 Loads a save with the specified name
 This is NOT the same as game_load_scr, the script that initializes the game
 */
-ini_open("save_"+argument0+".ini");
+ini_open("save_"+str_to_file_scr(argument0)+".ini");
 // Main
     // Saved variables
 global.save_name_var = argument0;

@@ -1,4 +1,4 @@
-if ds_list_find_index(global.save_list,global.save_name_var) == -1
+if ds_list_find_index(global.save_list,global.save_name_var) < 0
 {
     ds_list_add(global.save_list,string(global.save_name_var));
     
@@ -8,7 +8,7 @@ if ds_list_find_index(global.save_list,global.save_name_var) == -1
     
     ini_close();
 }
-ini_open("save_"+string(global.save_name_var)+".ini");
+ini_open("save_"+str_to_file_scr(global.save_name_var)+".ini");
 // Main
     // Saved variables
 ini_write_real("MAIN","rm_count",global.rm_count_var);
