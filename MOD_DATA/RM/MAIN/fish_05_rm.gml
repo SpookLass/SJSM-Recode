@@ -24,7 +24,7 @@ room_set_code
     global.mark_arr[0,0] = 290;
     global.mark_arr[0,1] = 261;
     global.mark_arr[0,2] = 0;
-    global.mark_arr[1,0] = 268;
+    global.mark_arr[1,0] = 368;
     global.mark_arr[1,1] = 257;
     global.mark_arr[1,2] = 0;
     global.mark_arr[2,0] = 437;

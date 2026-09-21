@@ -6,7 +6,7 @@ room_set_code
     argument0,'
     // Name
     ini_open("lang_"+global.lang_var+".ini");
-	global.rm_name_var = ini_read_string("ROOM","sc","ROOM_sc")+" 7";
+	global.rm_name_var = ini_read_string("ROOM","sc","ROOM_sc")+" 7"; //Manekis Favorite Room :D
 	ini_close();
     // Spawn
     global.spawn_len_var = 2;
@@ -18,6 +18,18 @@ room_set_code
     global.spawn_arr[1,1] = 112;
     global.spawn_arr[1,2] = 0;
     global.spawn_arr[1,3] = 180;
+    // Mark
+    global.mark_len_var = 3;
+    global.mark_arr[0,0] = 151;
+    global.mark_arr[0,1] = 284;
+    global.mark_arr[0,2] = 0;
+    global.mark_arr[1,0] = 206;
+    global.mark_arr[1,1] = 138;
+    global.mark_arr[1,2] = 0;
+    global.mark_arr[2,0] = 361;
+    global.mark_arr[2,1] = 170;
+    global.mark_arr[2,2] = 0;
+    mark_create_scr();
     // 3D Draw
     d3d_start();
     global.draw_3d_var = true;

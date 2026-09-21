@@ -204,6 +204,7 @@ object_event_add
                 with instance_create(global.mark_arr[local.i,0],global.mark_arr[local.i,1],tiri_shadow_obj)
                 {
                     par_var = other.id;
+                    z = mark_arr[local.i,2];
                     store_tex_var = sprite_get_texture(other.shadow_spr_var,local.spr_id);
                     store_tex_02_var = sprite_get_texture(other.shadow_spr_var,local.spr_id+1);
                     store_tex_03_var = sprite_get_texture(other.shadow_spr_var,local.spr_id+2);

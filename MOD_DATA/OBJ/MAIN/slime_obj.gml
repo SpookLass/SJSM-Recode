@@ -22,8 +22,7 @@ object_event_add
     spd_mult_var = 0.6;
     tp_var = true;
     touch_var = false;
-    if instance_exists(color_par_obj) && global.color_var == 0
-    { image_blend = color_par_obj.image_blend; }
+    color_var = 2;
 ');
 // Step Event
 object_event_add

@@ -20,7 +20,7 @@ room_set_code
     global.spawn_arr[1,2] = 0;
     global.spawn_arr[1,3] = 270;
     // Mark
-    global.mark_len_var = 4;
+    global.mark_len_var = 2;
     global.mark_arr[0,0] = 240;
     global.mark_arr[0,1] = 480;
     global.mark_arr[0,2] = 0;

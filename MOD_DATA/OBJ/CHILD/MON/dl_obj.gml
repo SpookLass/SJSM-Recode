@@ -344,6 +344,7 @@ object_event_add
                     with instance_create(global.mark_arr[local.i,0],global.mark_arr[local.i,1],deer_obj_var)
                     {
                         par_var = other.id;
+                        z = mark_arr[local.i,2]
                         atk_range_var = other.deer_atk_range_var;
                         wake_sight_var = other.deer_wake_sight_var;
                         spd_base_var = other.deer_spd_var;

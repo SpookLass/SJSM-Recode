@@ -18,6 +18,18 @@ room_set_code
     global.spawn_arr[1,1] = 256;
     global.spawn_arr[1,2] = 0;
     global.spawn_arr[1,3] = 180;
+    // Mark
+    global.mark_len_var = 3;
+    global.mark_arr[0,0] = 457;
+    global.mark_arr[0,1] = 251;
+    global.mark_arr[0,2] = 0;
+    global.mark_arr[1,0] = 631;
+    global.mark_arr[1,1] = 258;
+    global.mark_arr[1,2] = 0;
+    global.mark_arr[2,0] = 730;
+    global.mark_arr[2,1] = 254;
+    global.mark_arr[2,2] = 0;
+    mark_create_scr();
     // 3D Draw
     d3d_start();
     global.draw_3d_var = true;
@@ -130,8 +142,5 @@ room_instance_add(argument0,736,240,torch_north_obj);
 room_instance_add(argument0,480,272,torch_south_obj);
 room_instance_add(argument0,608,272,torch_south_obj);
 room_instance_add(argument0,736,272,torch_south_obj);
-// Props
-room_instance_add(argument0,448,368,chain_hor_rand_obj);
-room_instance_add(argument0,416,368,chain_hor_rand_obj);
 // Jumpscare
 room_instance_add(argument0,336,272,js_obj);

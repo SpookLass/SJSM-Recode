@@ -27,7 +27,12 @@ room_set_code
     global.spawn_arr[3,1] = 272;
     global.spawn_arr[3,2] = 0;
     global.spawn_arr[3,3] = 0;
-    
+    // Mark
+    global.mark_len_var = 1;
+    global.mark_arr[0,0] = 212;
+    global.mark_arr[0,1] = 333;
+    global.mark_arr[0,2] = 32;
+    mark_create_scr();
     // 3D Draw
     d3d_start();
     global.draw_3d_var = true;

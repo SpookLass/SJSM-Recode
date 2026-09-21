@@ -28,10 +28,10 @@ room_set_code
     global.mark_arr[1,1] = 520;
     global.mark_arr[1,2] = 0;
     global.mark_arr[2,0] = 361;
-    global.mark_arr[2,1] = 590;
+    global.mark_arr[2,1] = 390;
     global.mark_arr[2,2] = 0;
-    global.mark_arr[3,0] = 513;
-    global.mark_arr[3,1] = 591;
+    global.mark_arr[3,0] = 423;
+    global.mark_arr[3,1] = 460;
     global.mark_arr[3,2] = 0;
     mark_create_scr();
     // 3D Draw

@@ -19,6 +19,24 @@ room_set_code
     global.spawn_arr[1,1] = 272;
     global.spawn_arr[1,2] = 0;
     global.spawn_arr[1,3] = 180;
+    // Mark
+    global.mark_len_var = 5;
+    global.mark_arr[0,0] = 258;
+    global.mark_arr[0,1] = 301;
+    global.mark_arr[0,2] = 0;
+    global.mark_arr[1,0] = 495;
+    global.mark_arr[1,1] = 199;
+    global.mark_arr[1,2] = 0;
+    global.mark_arr[2,0] = 583;
+    global.mark_arr[2,1] = 271;
+    global.mark_arr[2,2] = 0;
+    global.mark_arr[3,0] = 806;
+    global.mark_arr[3,1] = 78;
+    global.mark_arr[3,2] = 0;
+    global.mark_arr[4,0] = 947;
+    global.mark_arr[4,1] = 187;
+    global.mark_arr[4,2] = 0;
+    mark_create_scr();
     // 3D Draw
     d3d_start();
     global.draw_3d_var = true;
