@@ -204,6 +204,82 @@
                 local.rm = mod_rm;
             break;
         }
+        case 3: // Initialize Pac
+        {
+            // FMOD
+                fmod_load_scr();
+                fmod_ini_scr(100,false); // 100 is max sounds, second argument is web sounds
+                fmod_listen_set_num_scr(1);
+                fmod_set_world_scale_scr(pixel_meter_rate_const);
+            // Assets
+                // Backgrounds
+                    local.i = 0;
+                    local.file = filename_change_ext(file_find_first(main_directory_const+"\BG\MINI\*.gml",-1),"");
+                    while (local.file != "")
+                    {
+                        // Not sure why, but it doesn't include the path.
+                        globalvar_scr(main_directory_const+"\BG\MINI\"+local.file,local.file+"_path",argument0);
+                        local.file = filename_change_ext(file_find_next(),"");
+                        local.i += 1;
+                        // Draw
+                        draw_load_scr("Loading minigame textures ("+string(local.i)+")...");
+                    }
+                    file_find_close();
+                // Sprites
+                    local.i = 0;
+                    local.file = filename_change_ext(file_find_first(main_directory_const+"\SPR\MINI\*.gml",-1),"");
+                    while (local.file != "")
+                    {
+                        // Not sure why, but it doesn't include the path.
+                        globalvar_scr(main_directory_const+"\SPR\MINI\"+local.file,local.file+"_path",argument0);
+                        local.file = filename_change_ext(file_find_next(),"");
+                        local.i += 1;
+                        // Draw
+                        draw_load_scr("Loading mod minigame sprites ("+string(local.i)+")...");
+                    }
+                    file_find_close();
+                // Sounds
+                    local.i = 0;
+                    local.file = filename_change_ext(file_find_first(main_directory_const+"\SND\MINI\*.gml",-1),"");
+                    while (local.file != "")
+                    {
+                        // Not sure why, but it doesn't include the path.
+                        globalvar_scr(main_directory_const+"\SND\MINI\"+local.file,local.file+"_path",argument0);
+                        local.file = filename_change_ext(file_find_next(),"");
+                        local.i += 1;
+                        // Draw
+                        draw_load_scr("Loading minigame sounds ("+string(local.i)+")...");
+                    }
+                    file_find_close();
+                    file_to_asset_scr(main_directory_const+"\SND\MAIN\claw_snd","claw_snd",false,snd_group_sfx_const,1,0,0);
+                // Objects
+                    // Prevent Crashing
+                        file_to_obj_scr(main_directory_const+"\OBJ\par_obj.gml","par_obj",false);
+                        file_to_obj_scr(main_directory_const+"\OBJ\par_3d_obj.gml","par_3d_obj",false);
+                        file_to_obj_scr(main_directory_const+"\OBJ\enemy_par_obj.gml","enemy_par_obj",false);
+                        file_to_obj_scr(main_directory_const+"\OBJ\PAR\fog_par_obj.gml","fog_par_obj",false);
+                        file_to_obj_scr(main_directory_const+"\OBJ\PAR\mon_par_obj.gml","mon_par_obj",false);
+                        file_to_obj_scr(main_directory_const+"\OBJ\MAIN\control_obj.gml","control_obj",false);
+                        file_to_obj_scr(main_directory_const+"\OBJ\MAIN\pause_menu_obj.gml","pause_menu_obj",false);
+                    // Pac Stuff
+                        file_to_obj_scr(main_directory_const+"\OBJ\MAIN\pac_control_obj.gml","pac_control_obj",false);
+                        file_to_obj_scr(main_directory_const+"\OBJ\MAIN\pac_obj.gml","pac_obj",false);
+                        file_to_obj_scr(main_directory_const+"\OBJ\MAIN\pac_ghost_obj.gml","pac_ghost_obj",false);
+                        file_to_obj_scr(main_directory_const+"\OBJ\CHILD\pac_edgar_obj.gml","pac_edgar_obj",false);
+                        file_to_obj_scr(main_directory_const+"\OBJ\CHILD\pac_mary_obj.gml","pac_mary_obj",false);
+                        file_to_obj_scr(main_directory_const+"\OBJ\CHILD\pac_bram_obj.gml","pac_bram_obj",false);
+                        file_to_obj_scr(main_directory_const+"\OBJ\CHILD\pac_spooky_obj.gml","pac_spooky_obj",false);
+                        file_to_obj_scr(main_directory_const+"\OBJ\CHILD\pac_inky_obj.gml","pac_inky_obj",false);
+                        file_to_obj_scr(main_directory_const+"\OBJ\CHILD\pac_blinky_obj.gml","pac_blinky_obj",false);
+                        file_to_obj_scr(main_directory_const+"\OBJ\CHILD\pac_pinky_obj.gml","pac_pinky_obj",false);
+                        file_to_obj_scr(main_directory_const+"\OBJ\CHILD\pac_clyde_obj.gml","pac_clyde_obj",false);
+                        file_to_rm_scr(main_directory_const+"\RM\MINI\pac_rm.gml","pac_rm",false);
+                // Settings
+                    execute_file(main_directory_const+"\SCR\LOAD\menu_load_02_scr.gml");
+                    execute_file(main_directory_const+"\SCR\LOAD\set_load_scr.gml");
+                // Room
+                    local.rm = pac_rm;
+        }
     }
 // Plugins 2
     if gamemaker_version == 800 { shader_load_scr(); }

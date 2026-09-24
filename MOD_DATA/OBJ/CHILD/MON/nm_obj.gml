@@ -43,6 +43,10 @@ object_event_add
     z_off_var = 5;
     acc_var = 16/675; // 0.02r370
     frick_var = acc_var;
+    // Autobrake (close enough)
+    autobrake_var = true;
+    autobrake_spd_var = 0;
+    autobrake_dir_var = 60;
     // Animation
     anim_off_var = false;
     scale_min_var = 0.95;
