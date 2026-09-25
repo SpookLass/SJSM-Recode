@@ -253,6 +253,19 @@
                     file_find_close();
                     file_to_asset_scr(main_directory_const+"\SND\MAIN\claw_snd","claw_snd",false,snd_group_sfx_const,1,0,0);
                 // Objects
+                    // Paths
+                        local.file = filename_change_ext(file_find_first(main_directory_const+"\OBJ\MINI\*.gml",-1),"");
+                        while (local.file != "")
+                        {
+                            globalvar_scr(main_directory_const+"\OBJ\MINI\"+local.file,local.file+"_path",argument0);
+                            local.file = filename_change_ext(file_find_next(),"");
+                            local.i += 1;
+                            // Draw
+                            draw_clear_alpha(c_black,0);
+                            draw_text_transformed(view_wview[view_current]/2,view_hview[view_current]*0.9,"Loading minigame objects ("+string(local.i)+")...",1,1,0);
+                            screen_refresh();
+                        }
+                        file_find_close();
                     // Prevent Crashing
                         file_to_obj_scr(main_directory_const+"\OBJ\par_obj.gml","par_obj",false);
                         file_to_obj_scr(main_directory_const+"\OBJ\par_3d_obj.gml","par_3d_obj",false);
@@ -263,16 +276,6 @@
                         file_to_obj_scr(main_directory_const+"\OBJ\MAIN\pause_menu_obj.gml","pause_menu_obj",false);
                     // Pac Stuff
                         file_to_obj_scr(main_directory_const+"\OBJ\MAIN\pac_control_obj.gml","pac_control_obj",false);
-                        file_to_obj_scr(main_directory_const+"\OBJ\MAIN\pac_obj.gml","pac_obj",false);
-                        file_to_obj_scr(main_directory_const+"\OBJ\MAIN\pac_ghost_obj.gml","pac_ghost_obj",false);
-                        file_to_obj_scr(main_directory_const+"\OBJ\CHILD\pac_edgar_obj.gml","pac_edgar_obj",false);
-                        file_to_obj_scr(main_directory_const+"\OBJ\CHILD\pac_mary_obj.gml","pac_mary_obj",false);
-                        file_to_obj_scr(main_directory_const+"\OBJ\CHILD\pac_bram_obj.gml","pac_bram_obj",false);
-                        file_to_obj_scr(main_directory_const+"\OBJ\CHILD\pac_spooky_obj.gml","pac_spooky_obj",false);
-                        file_to_obj_scr(main_directory_const+"\OBJ\CHILD\pac_inky_obj.gml","pac_inky_obj",false);
-                        file_to_obj_scr(main_directory_const+"\OBJ\CHILD\pac_blinky_obj.gml","pac_blinky_obj",false);
-                        file_to_obj_scr(main_directory_const+"\OBJ\CHILD\pac_pinky_obj.gml","pac_pinky_obj",false);
-                        file_to_obj_scr(main_directory_const+"\OBJ\CHILD\pac_clyde_obj.gml","pac_clyde_obj",false);
                         file_to_rm_scr(main_directory_const+"\RM\MINI\pac_rm.gml","pac_rm",false);
                 // Settings
                     execute_file(main_directory_const+"\SCR\LOAD\menu_load_02_scr.gml");

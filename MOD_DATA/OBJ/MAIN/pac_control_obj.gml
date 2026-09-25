@@ -32,6 +32,13 @@ object_event_add
             pellet_spr_var = spr_add_scr(pac_pellet_spr_path,1,false,false,0,0);
             power_pellet_spr_var = spr_add_scr(pac_power_pellet_spr_path,1,false,false,0,0);
             nail_spr_var = spr_add_scr(pac_nail_spr_path,1,false,false,0,0);
+            // Custom Ghosts
+                raddy_spr_var = spr_add_scr(pac_raddy_spr_path,2,false,false,0,0);
+                gladdy_spr_var = spr_add_scr(pac_gladdy_spr_path,2,false,false,0,0);
+                maddy_spr_var = spr_add_scr(pac_maddy_spr_path,2,false,false,0,0);
+                maddy_angry_spr_var = spr_add_scr(pac_maddy_angry_spr_path,2,false,false,0,0);
+                brave_spr_var = spr_add_scr(pac_brave_spr_path,2,false,false,0,0);
+                brave_scare_spr_var = spr_add_scr(pac_brave_scare_spr_path,2,false,false,0,0);
         // Sounds
             eat_snd_var = snd_add_scr(pac_eat_snd_path,false,snd_group_sfx_const,1,0,300);
             start_snd_var = snd_add_scr(pac_start_snd_path,false,snd_group_sfx_const,1,0,300);
@@ -41,13 +48,28 @@ object_event_add
             path_var = path_add();
             path_set_kind(path_var,0); // Not smooth
             path_set_precision(path_var,1);
+        // Objects
+            pac_obj_var = obj_add_scr(pac_obj_path);
+            pac_ghost_obj_var = obj_add_scr(pac_ghost_obj_path);
+            pac_inky_obj_var = obj_add_scr(pac_inky_obj_path);
+            pac_blinky_obj_var = obj_add_scr(pac_blinky_obj_path);
+            pac_pinky_obj_var = obj_add_scr(pac_pinky_obj_path);
+            pac_clyde_obj_var = obj_add_scr(pac_clyde_obj_path);
+            pac_edgar_obj_var = obj_add_scr(pac_edgar_obj_path);
+            pac_mary_obj_var = obj_add_scr(pac_mary_obj_path);
+            pac_bram_obj_var = obj_add_scr(pac_bram_obj_path);
+            pac_spooky_obj_var = obj_add_scr(pac_spooky_obj_path);
+            pac_raddy_obj_var = obj_add_scr(pac_raddy_obj_path);
+            pac_gladdy_obj_var = obj_add_scr(pac_gladdy_obj_path);
+            pac_maddy_obj_var = obj_add_scr(pac_maddy_obj_path);
+            pac_brave_obj_var = obj_add_scr(pac_brave_obj_path);
     // Minigame variables
+        classic_var = false;
         highscore_var = 0;
         score_var = 0;
-        live_var = 3;
         lvl_var = 0;
         state_var = 0;
-        debug_var = false;
+        debug_var = true;
         pellet_max_var = 0;
         pellet_var = 0;
         start_alarm_var = 240;
@@ -58,33 +80,53 @@ object_event_add
         ghost_score_var = 20;
         dead_alarm_01_var = 8;
         dead_alarm_02_var = 360;
+        if classic_var { live_max_var = 1; }
+        else { live_max_var = 3; }
+        live_var = live_max_var;
     // Ghost Stuff
         move_alarm_var = 8;
-        scatter_alarm_max_var = 420;
+        scatter_alarm_max_var = 420; // 390?
+        scatter_alarm_min_var = 300;
         scatter_alarm_var = scatter_alarm_max_var;
         scatter_rate_var = 60;
+        scatter_lvl_rate_var = 60;
         chase_alarm_var = 1200;
         scare_alarm_max_var = 360;
         scare_alarm_var = 360;
         scare_rate_var = 20;
         scare_color_var = make_color_rgb(102,102,255);
-        ghost_len_var = 2;
+        ghost_len_var = 3;
         ghost_len_arr_var[0] = 4;
-        ghost_arr_var[0,0] = pac_edgar_obj;
-        ghost_arr_var[0,1] = pac_mary_obj;
-        ghost_arr_var[0,2] = pac_bram_obj;
-        ghost_arr_var[0,3] = pac_spooky_obj;
+        ghost_arr_var[0,0] = pac_edgar_obj_var;
+        ghost_arr_var[0,2] = pac_bram_obj_var;
+        if classic_var
+        {
+            ghost_arr_var[0,1] = pac_mary_obj_var;
+            ghost_arr_var[0,3] = pac_spooky_obj_var;
+        }
+        else
+        {
+            ghost_arr_var[0,1] = pac_spooky_obj_var;
+            ghost_arr_var[0,3] = pac_mary_obj_var;
+        }
         ghost_len_arr_var[1] = 4;
-        ghost_arr_var[1,0] = pac_inky_obj;
-        ghost_arr_var[1,1] = pac_blinky_obj;
-        ghost_arr_var[1,2] = pac_pinky_obj;
-        ghost_arr_var[1,3] = pac_clyde_obj;
-        ghost_var = irandom(ghost_len_var-1);
+        ghost_arr_var[1,0] = pac_blinky_obj_var;
+        ghost_arr_var[1,1] = pac_inky_obj_var;
+        ghost_arr_var[1,2] = pac_pinky_obj_var;
+        ghost_arr_var[1,3] = pac_clyde_obj_var;
+        ghost_len_arr_var[2] = 4;
+        ghost_arr_var[2,0] = pac_raddy_obj_var;
+        ghost_arr_var[2,1] = pac_gladdy_obj_var;
+        ghost_arr_var[2,2] = pac_maddy_obj_var;
+        ghost_arr_var[2,3] = pac_brave_obj_var;
+        if classic_var { ghost_var = 0; }
+        else { ghost_var = irandom_range(-1,ghost_len_var-1); }
     // Maps
         map_color_var = make_color_rgb(180,0,255);
-        map_var = 1;
         map_len_var = 2;
         scale_var = 16;
+        if classic_var { map_var = 0; }
+        else { map_var = irandom(map_len_var-1); }
         // Ms. Spook
             map_arr_var[0] = ds_grid_create(24,24);
             map_surf_var[0] = surface_create(24*scale_var,24*scale_var);
@@ -106,9 +148,9 @@ object_event_add
                 map_ghost_var[0,7] = 12;
             // Ghost Scatter
                 map_scatter_var[0,0] = 22; // 1
-                map_scatter_var[0,1] = 21; // 3
+                map_scatter_var[0,1] = 3; // 3
                 map_scatter_var[0,2] = 22;
-                map_scatter_var[0,3] = 3;
+                map_scatter_var[0,3] = 21;
                 map_scatter_var[0,4] = 1;
                 map_scatter_var[0,5] = 3;
                 map_scatter_var[0,6] = 1;
@@ -186,13 +228,13 @@ object_event_add
                 map_ghost_var[1,6] = 15;
                 map_ghost_var[1,7] = 17;
             // Ghost Scatter
-                map_scatter_var[1,0] = 1;
+                map_scatter_var[1,0] = 26;
                 map_scatter_var[1,1] = 4;
                 map_scatter_var[1,2] = 26;
-                map_scatter_var[1,3] = 4;
+                map_scatter_var[1,3] = 32;
                 map_scatter_var[1,4] = 1;
-                map_scatter_var[1,5] = 32;
-                map_scatter_var[1,6] = 26;
+                map_scatter_var[1,5] = 4;
+                map_scatter_var[1,6] = 1;
                 map_scatter_var[1,7] = 32;
             // Ghost Exit
                 map_exit_var[1,0] = 13;
@@ -300,16 +342,25 @@ object_event_add
             for (local.i=0; local.i<map_ghost_len_var[map_var]; local.i+=1;)
             {
                 local.index = local.i*2;
-                with instance_create(map_ghost_var[map_var,local.index],map_ghost_var[map_var,local.index+1],ghost_arr_var[ghost_var,mod_scr(local.i,ghost_len_arr_var[ghost_var])])
+                if ghost_var < 0 { local.ghost = irandom(ghost_len_var-1); }
+                else { local.ghost = ghost_var; }
+                with instance_create(map_ghost_var[map_var,local.index],map_ghost_var[map_var,local.index+1],ghost_arr_var[local.ghost,mod_scr(local.i,ghost_len_arr_var[local.ghost])])
                 {
                     par_var = other.id;
                     id_var = local.i;
                     state_var = 0;
+                    on_var = false;
+                    if other.classic_var
+                    {
+                        // if local.i+1 < global.player_len_var { player_id_var = local.i+1; }
+                        if local.i==other.map_ghost_len_var[other.map_var]-1 { player_id_var = 0; }
+                        if player_id_var == -1 { scare_state_var = 1; }
+                    }
                 }
             }
         // Pac
             fmod_snd_play_scr(start_snd_var);
-            with instance_create(map_spawn_var[map_var,0],map_spawn_var[map_var,1],pac_obj)
+            with instance_create(map_spawn_var[map_var,0],map_spawn_var[map_var,1],pac_obj_var)
             {
                 par_var = other.id;
                 on_var = false;
@@ -345,7 +396,7 @@ object_event_add
             }
         }
     }
-    with pac_obj
+    with pac_obj_var
     {
         local.xtmp = x;
         local.ytmp = y;
@@ -376,7 +427,7 @@ object_event_add
             }
         }
     }
-    with pac_ghost_obj
+    with pac_ghost_obj_var
     {
         local.turn = 1;
         local.xtmp = x;
@@ -405,7 +456,7 @@ object_event_add
         }
         if other.debug_var
         {
-            draw_text(local.xtmp,local.ytmp,string(state_var));
+            draw_text_transformed(local.xtmp,local.ytmp,string(state_var),0.25,0.25,0);
             draw_sprite_ext(other.pellet_spr_var,0,(target_x_var+0.5)*other.scale_var,(target_y_var+0.5)*other.scale_var,1,1,0,image_blend,1);
             if smart_var
             {
@@ -423,16 +474,22 @@ object_event_add
 // State Alarm
 object_event_add
 (argument0,ev_alarm,0,'
-    state_var = mod_scr(state_var,2)+1;
+    if scatter_alarm_var <= 0 { state_var = 2; }
+    else { state_var = mod_scr(state_var,2)+1; }
     switch state_var
     {
         case 1:
         {
-            with pac_ghost_obj
+            with pac_ghost_obj_var
             {
                 switch state_var
                 {
-                    case 0: { state_var = 3; break; }
+                    case 0:
+                    {
+                        on_var = true;
+                        state_var = 3;
+                        break;
+                    }
                     case 2:
                     {
                         dir_var = mod_scr(dir_var+2,4);
@@ -447,11 +504,16 @@ object_event_add
         }
         case 2:
         {
-            with pac_ghost_obj
+            with pac_ghost_obj_var
             {
                 switch state_var
                 {
-                    case 0: { state_var = 3; break; }
+                    case 0:
+                    {
+                        on_var = false;
+                        state_var = 3;
+                        break;
+                    }
                     case 1:
                     {
                         dir_var = mod_scr(dir_var+2,4);
@@ -475,7 +537,7 @@ object_event_add
             set_alarm_scr(0,restart_alarm_var);
             state_var = 0;
         // Ghosts
-            with pac_ghost_obj
+            with pac_ghost_obj_var
             {
                 local.index = id_var*2;
                 x = other.map_ghost_var[other.map_var,local.index];
@@ -485,11 +547,12 @@ object_event_add
                 reset_alarm_scr();
                 move_var = false;
                 state_var = 0;
+                on_var = false;
             }
         // Pac
             local.inst = fmod_snd_play_scr(start_snd_var);
             fmod_inst_set_pos_scr(local.inst,restart_pos_var);
-            with pac_obj
+            with pac_obj_var
             {
                 x = other.map_spawn_var[other.map_var,0];
                 y = other.map_spawn_var[other.map_var,1];
@@ -507,7 +570,7 @@ object_event_add
 // Dead Alarm 2
 object_event_add
 (argument0,ev_alarm,2,'
-    live_var = 3;
+    live_var = live_max_var;
     lvl_var = 0;
     highscore_var = max(highscore_var,score_var);
     score_var = 0;
@@ -520,29 +583,47 @@ object_event_add
         set_alarm_scr(0,start_alarm_var);
         state_var = 0;
         scare_alarm_var = scare_alarm_max_var-(scare_rate_var*lvl_var);
-        scatter_alarm_var = scatter_alarm_max_var;
+        scatter_alarm_var = max(scatter_alarm_min_var,scatter_alarm_max_var-(lvl_var*scatter_lvl_rate_var));
     // Map
-        map_var = irandom(map_len_var-1);
+        if classic_var
+        {
+            map_var = 0;
+            ghost_var = 0;
+        }
+        else
+        {
+            map_var = irandom(map_len_var-1);
+            ghost_var = irandom_range(-1,ghost_len_var-1);
+        }
         ds_grid_copy(map_grid_var,map_arr_var[map_var]);
         map_mp_grid_var = map_mp_arr_var[map_var];
         surf_var = map_surf_var[map_var];
         pellet_var = map_pellet_var[map_var];
-        ghost_var = irandom(ghost_len_var-1);
+        
     // Ghosts
-        with pac_ghost_obj { instance_destroy(); }
+        with pac_ghost_obj_var { instance_destroy(); }
         for (local.i=0; local.i<map_ghost_len_var[map_var]; local.i+=1;)
         {
             local.index = local.i*2;
-            with instance_create(map_ghost_var[map_var,local.index],map_ghost_var[map_var,local.index+1],ghost_arr_var[ghost_var,mod_scr(local.i,ghost_len_arr_var[ghost_var])])
+            if ghost_var < 0 { local.ghost = irandom(ghost_len_var-1); }
+            else { local.ghost = ghost_var; }
+            with instance_create(map_ghost_var[map_var,local.index],map_ghost_var[map_var,local.index+1],ghost_arr_var[local.ghost,mod_scr(local.i,ghost_len_arr_var[local.ghost])])
             {
                 par_var = other.id;
                 id_var = local.i;
                 state_var = 0;
+                on_var = false;
+                if other.classic_var
+                {
+                    // if local.i+1 < global.player_len_var { player_id_var = local.i+1; }
+                    if local.i==other.map_ghost_len_var[other.map_var]-1 { player_id_var = 0; }
+                    if player_id_var == -1 { scare_state_var = 1; }
+                }
             }
         }
     // Pac
         fmod_snd_play_scr(start_snd_var);
-        with pac_obj
+        with pac_obj_var
         {
             x = other.map_spawn_var[other.map_var,0];
             y = other.map_spawn_var[other.map_var,1];
@@ -560,7 +641,8 @@ object_event_add
 (argument0,ev_other,ev_user1,'
     live_var -= 1;
     // Not in multiplayer
-    with pac_ghost_obj
+    scatter_alarm_var = max(scatter_alarm_min_var,scatter_alarm_max_var-(lvl_var*scatter_lvl_rate_var));
+    with pac_ghost_obj_var
     {
         reset_alarm_scr();
         state_var = 0;

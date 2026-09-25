@@ -1,7 +1,7 @@
 // Builtin Variables
 object_set_depth(argument0,0);
 object_set_mask(argument0,noone);
-object_set_parent(argument0,pac_ghost_obj);
+object_set_parent(argument0,pac_control_obj.pac_ghost_obj_var);
 object_set_persistent(argument0,false);
 object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
@@ -28,5 +28,4 @@ object_event_add
             target_y_var = local.ytmp;
         }
     }
-    
 ');

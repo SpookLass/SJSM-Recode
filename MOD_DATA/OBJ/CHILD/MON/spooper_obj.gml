@@ -536,6 +536,7 @@ object_event_add
             par_var = other.id;
             player_var = local.player;
             cam_id_var = local.player.cam_id_var;
+            dead_rm_var = other.dead_rm_var;
             dmg_var = other.puke_dmg_var;
             bg_var = other.puke_bg_var;
             fetus_tex_var = other.fetus_tex_var;
@@ -583,6 +584,7 @@ object_event_add
                     par_var = local.spooper;
                     player_var = local.player;
                     cam_id_var = local.player.cam_id_var;
+                    dead_rm_var = other.dead_rm_var;
                     dmg_var = local.spooper.puke_dmg_var;
                     bg_var = local.spooper.puke_bg_var;
                     fetus_tex_var = local.spooper.fetus_tex_var;

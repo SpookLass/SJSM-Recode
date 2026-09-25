@@ -14,6 +14,10 @@ state_var
     3 - Leave House
     4 - Scared
     5 - Eaten
+scare_state_var
+    0 - Normal
+    1 - Always edible
+    2 - Immune to scare
 */
 // Create event
 object_event_add
@@ -31,7 +35,10 @@ object_event_add
     inst_var = fmod_snd_loop_scr(snd_var);
     path_var = par_var.path_var;
     move_var = false;
+    on_var = false;
     player_id_var = -1;
+    scare_immune_var = false;
+    scare_state_var = 0;
     spr_id_var = 0;
     id_var = 0;
     dir_var = 1;
@@ -41,6 +48,7 @@ object_event_add
     target_x_var = x;
     target_y_var = y;
     target_rand_var = false;
+    target_run_var = false;
     smart_var = false;
     smart_point_var = 2;
     smart_180_var = false;
@@ -74,6 +82,7 @@ object_event_add
 object_event_add
 (argument0,ev_step,ev_step_normal,'
     event_inherited();
+    if !on_var { exit; }
     if !move_var
     {
         local.move = 1;
@@ -82,8 +91,10 @@ object_event_add
         if player_id_var > -1
         {
             local.leftright = ceil(input_y_scr(player_id_var));
-            local.updown = ceil(input_x_scr(player_id_var));
+            local.updown = ceil(-input_x_scr(player_id_var));
+            if local.leftright == 0 && local.updown == 0 { local.move = 0; }
         }
+        // Mostly for state handling
         event_user(0);
         for (local.i=0; local.i<local.move; local.i+=1;)
         {
@@ -91,43 +102,33 @@ object_event_add
             if player_id_var >= 0
             {
                 // Check Side
-                if local.leftright != 0
-                {
-                    local.xtmp = mod_scr(x+local.leftright,ds_grid_width(par_var.map_grid_var));
-                    local.coll = ds_grid_get(par_var.map_grid_var,local.xtmp,y);
-                    if local.coll == 0 || local.coll > 2
+                    if local.leftright != 0
                     {
-                        dir_var = round(2*arctan2(0,local.leftright)/pi);
-                        x_prev_var = local.xtmp-local.leftright;
-                        x = local.xtmp;
-                        // Delay
-                            if local.move == 1
-                            {
-                                move_var = false;
-                                set_alarm_scr(0,move_alarm_var);
-                            }
+                        local.xtmp = mod_scr(x+local.leftright,ds_grid_width(par_var.map_grid_var));
+                        local.coll = ds_grid_get(par_var.map_grid_var,local.xtmp,y);
+                        if local.coll != 1 && (local.coll != 2 || state_var == 3 || state_var == 5)
+                        {
+                            dir_var = round(2*arctan2(0,local.leftright)/pi);
+                            x_prev_var = local.xtmp-local.leftright; // x
+                            y_prev_var = y;
+                            x = local.xtmp;
+                        }
                     }
-                }
                 // Check top and bottom
-                if local.updown != 0 && (local.coll == noone || local.coll == 1 || local.coll == 2)
-                {
-                    local.ytmp = mod_scr(y+local.updown,ds_grid_height(par_var.map_grid_var));
-                    local.coll = ds_grid_get(par_var.map_grid_var,x,local.ytmp);
-                    if local.coll == 0 || local.coll > 2
+                    if local.updown != 0 && (local.coll == noone || local.coll == 1 || local.coll == 2)
                     {
-                        dir_var = round(2*arctan2(local.updown,0)/pi);
-                        y_prev_var = local.ytmp-local.updown;
-                        y = local.ytmp;
-                        // Delay
-                            if local.move == 1
-                            {
-                                move_var = false;
-                                set_alarm_scr(0,move_alarm_var);
-                            }
+                        local.ytmp = mod_scr(y+local.updown,ds_grid_height(par_var.map_grid_var));
+                        local.coll = ds_grid_get(par_var.map_grid_var,x,local.ytmp);
+                        if local.coll != 1 && (local.coll != 2 || state_var == 3 || state_var == 5)
+                        {
+                            dir_var = round(2*arctan2(-local.updown,0)/pi);
+                            x_prev_var = x;
+                            y_prev_var = local.ytmp-local.updown; // y
+                            y = local.ytmp;
+                        }
                     }
-                }
             }
-            else if state_var != 0
+            else
             {
                 // Smart
                 local.targetfound = false;
@@ -137,13 +138,15 @@ object_event_add
                 {
                     if smart_180_var { local.maxturn = 2; }
                     mp_grid_path(par_var.map_mp_grid_var,path_var,x,y,round(target_x_var),round(target_y_var),false);
-                    local.targetdir = mod_scr(round(point_direction
+                    local.targetdir = round(point_direction
                     (
                         path_get_point_x(path_var,0),
                         path_get_point_y(path_var,0),
                         path_get_point_x(path_var,smart_point_var),
                         path_get_point_y(path_var,smart_point_var)
-                    )/90),4);
+                    )/90);
+                    if target_run_var { local.targetdir += 2; }
+                    local.targetdir = mod_scr(local.targetdir,4);
                 }
                 local.turn = 0; local.bestturn = noone; local.bestdist = 0;
                 for (local.j=-1; local.j<=local.maxturn; local.j+=1;)
@@ -157,7 +160,9 @@ object_event_add
                         local.dist = point_distance(target_x_var,target_y_var,local.xtmp,local.ytmp);
                         if !target_rand_var && !local.targetfound
                         {
-                            local.bool = (local.bestturn == noone || local.dist < local.bestdist);
+                            local.bool = (local.bestturn == noone);
+                            if target_run_var { local.bool = (local.bool || local.dist > local.bestdist); }
+                            else { local.bool = (local.bool || local.dist < local.bestdist); }
                             if local.targetdir != noone
                             {
                                 local.targetfound = (local.dir == local.targetdir);
@@ -203,19 +208,21 @@ object_event_add
                         y_prev_var = local.turn_arr[local.bestturn,2]-lengthdir_y(1,dir_var*90);
                         x = local.turn_arr[local.bestturn,1];
                         y = local.turn_arr[local.bestturn,2];
-                    // Delay
-                        if local.move == 1
-                        {
-                            move_var = true;
-                            set_alarm_scr(0,move_alarm_var);
-                        }
+                        local.coll = local.turn_arr[local.bestturn,4];
                 }
             }
+            // Delay
+                if (local.coll != 1 && (local.coll != 2 || state_var == 3 || state_var == 5))
+                && local.move == 1
+                {
+                    move_var = true;
+                    set_alarm_scr(0,move_alarm_var);
+                }
         }
     }
     // Sound
     local.bestpac = noone; local.bestdist = 0;
-    with pac_obj
+    with par_var.pac_obj_var
     {
         if on_var && !dead_var
         {
@@ -266,7 +273,7 @@ object_event_add
 object_event_add
 (argument0,ev_other,ev_user1,'
     target_var = noone; target_dist_var = 0;
-    with pac_obj
+    with par_var.pac_obj_var
     {
         if on_var && !dead_var
         {
