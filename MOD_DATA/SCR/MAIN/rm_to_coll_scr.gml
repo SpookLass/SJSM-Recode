@@ -15,7 +15,7 @@ with (floor_par_obj)
             x+(w_var/2),
             y+(h_var/2)
         );
-        if solid_var != float_solid_const
+        if solid_var == float_solid_const
         {
             mp_grid_clear_rectangle
             (

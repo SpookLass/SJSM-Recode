@@ -3,8 +3,10 @@ draw_load_scr("Loading collisions...");
 global.rm_size_var = 1280;
 global.grid_snap_var = 4;
 local.cells = round(global.rm_size_var/global.grid_snap_var);
-global.phys_grid = mp_grid_create(0,0,local.cells,local.cells,global.grid_snap_var,global.grid_snap_var);
-global.float_grid = mp_grid_create(0,0,local.cells,local.cells,global.grid_snap_var,global.grid_snap_var);
+globalvar phys_grid;
+globalvar float_grid;
+phys_grid = mp_grid_create(0,0,local.cells,local.cells,global.grid_snap_var,global.grid_snap_var);
+float_grid = mp_grid_create(0,0,local.cells,local.cells,global.grid_snap_var,global.grid_snap_var);
 // Initialize 3D functions
 p3dc_ini_scr();
 // Room (load bearing)

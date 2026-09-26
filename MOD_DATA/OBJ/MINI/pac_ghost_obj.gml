@@ -34,6 +34,7 @@ object_event_add
     snd_var = par_var.ghost_snd_var;
     inst_var = fmod_snd_loop_scr(snd_var);
     path_var = par_var.path_var;
+    scared_move_alarm_var = move_alarm_var*2;
     move_var = false;
     on_var = false;
     player_id_var = -1;
@@ -216,7 +217,8 @@ object_event_add
                 && local.move == 1
                 {
                     move_var = true;
-                    set_alarm_scr(0,move_alarm_var);
+                    if state_var == 4 { set_alarm_scr(0,scared_move_alarm_var); }
+                    else { set_alarm_scr(0,move_alarm_var); }
                 }
         }
     }
