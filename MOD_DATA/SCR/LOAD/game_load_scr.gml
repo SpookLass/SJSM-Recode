@@ -146,7 +146,7 @@
 // Mods
     execute_file(main_directory_const+"\SCR\LOAD\mod_load_01_scr.gml");
 // Versions
-    switch 3//load_const
+    switch load_const // 3
     {
         case 0: // Normal
         {

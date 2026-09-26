@@ -28,13 +28,13 @@ object_event_add
     eye_spr_var = par_var.eye_spr_var;
     scare_base_spr_var = par_var.ghost_spr_var;
     scare_eye_spr_var = par_var.scare_spr_var;
-    move_alarm_var = par_var.move_alarm_var;
+    move_alarm_var = par_var.ghost_move_alarm_var;
     scare_color_var = par_var.scare_color_var;
     scare_alarm_var = par_var.scare_alarm_var;
     snd_var = par_var.ghost_snd_var;
+    scare_move_alarm_var = par_var.scare_move_alarm_var;
     inst_var = fmod_snd_loop_scr(snd_var);
     path_var = par_var.path_var;
-    scared_move_alarm_var = move_alarm_var*2;
     move_var = false;
     on_var = false;
     player_id_var = -1;
@@ -217,7 +217,7 @@ object_event_add
                 && local.move == 1
                 {
                     move_var = true;
-                    if state_var == 4 { set_alarm_scr(0,scared_move_alarm_var); }
+                    if state_var == 4 { set_alarm_scr(0,scare_move_alarm_var); }
                     else { set_alarm_scr(0,move_alarm_var); }
                 }
         }

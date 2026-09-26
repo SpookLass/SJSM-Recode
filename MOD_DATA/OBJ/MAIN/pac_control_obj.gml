@@ -85,6 +85,8 @@ object_event_add
         live_var = live_max_var;
     // Ghost Stuff
         move_alarm_var = 8;
+        ghost_move_alarm_var = 10; // 8
+        scare_move_alarm_var = 16;
         scatter_alarm_max_var = 420; // 390?
         scatter_alarm_min_var = 300;
         scatter_alarm_var = scatter_alarm_max_var;
@@ -371,6 +373,7 @@ object_event_add
 object_event_add
 (argument0,ev_step,ev_step_normal,'
     event_inherited();
+    if input_press_arr[pause_input_const,0] { game_end(); }
     surface_set_target(surf_var);
     draw_clear_alpha(c_black,0);
     d3d_set_hidden(false);
