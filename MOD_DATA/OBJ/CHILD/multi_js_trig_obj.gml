@@ -32,16 +32,20 @@ object_event_add
 (argument0,ev_other,ev_room_start,'
     for (local.i=0; local.i<global.js_mark_len_var; local.i+=1;)
     {
-        if !global.js_mark_arr[local.i,4]
+        if !global.js_mark_arr[local.i,5]
         {
+            local.left = global.js_mark_arr[local.i,4];
+            if local.left < 0 { local.left = irandom(1); }
             with instance_create(global.js_mark_arr[local.i,0],global.js_mark_arr[local.i,1],multi_js_obj)
             {
                 z += global.js_mark_arr[local.i,2];
                 base_dir_var += global.js_mark_arr[local.i,3];
                 direction += global.js_mark_arr[local.i,3];
+                left_var = local.left;
+                if left_var { event_user(2); }
                 trig_var = other.id;
             }
-            global.js_mark_arr[local.i,4] = true;
+            global.js_mark_arr[local.i,5] = true;
         }
     }
 ');

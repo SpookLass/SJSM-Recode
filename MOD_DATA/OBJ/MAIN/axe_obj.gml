@@ -16,6 +16,7 @@ object_event_add
     stam_end_var = 20;
     check_stam_var = false;
     spam_var = 2;
+    fake_spam_var = false;
     state_var = false;
     image_xscale = 960;
     image_yscale = 680;
@@ -38,6 +39,7 @@ object_event_add
         case 0:
         {
             spam_var = true;
+            fake_spam_var = 2;
             stam_start_var = 10;
             stam_end_var = 10;
             break;
@@ -59,6 +61,8 @@ object_event_add
 (argument0,ev_step,ev_step_normal,'
     if par_var.on_var && !par_var.dead_var && !global.pause_var
     {
+        local.spam = spam_var;
+        if fake_spam_var && !par_var.do_sprint_var { local.spam = fake_spam_var; }
         spr_id_var += spr_spd_var*global.delta_time_var;
         switch state_var
         {
@@ -71,7 +75,7 @@ object_event_add
                     visible = false;
                     state_var = 0;
                 }
-                if spam_var != 2 { break; }
+                if local.spam != 2 { break; }
             }
             case 0:
             {
@@ -96,7 +100,7 @@ object_event_add
                     spr_spd_var = 0;
                     state_var = 2;
                 }
-                if !spam_var { break; }
+                if !local.spam { break; }
             }
             case 2:
             {

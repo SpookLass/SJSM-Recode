@@ -96,10 +96,20 @@ object_event_add
     switch local.type
     {
         case 3: // Alternate (Normal Loop)
-        { local.set = true; }
+        {
+            dur_var = 20;
+            start_var = -1;
+            js_start_var = 3;
+            js_end_var = 15;
+            vis_phase_end_var = 4;
+            red_start_var = -1;
+            red_end_var = -1;
+            loop_start_var = 0;
+            amb_start_var = -1;
+            local.set = true;
+        }
         case 0: // Recode
         {
-            dur_var = 35;
             delay_var = 90;
             dmg_alarm_var = 120;
             type_var = 2;
@@ -118,16 +128,20 @@ object_event_add
             atk_range_var = global.mon_coll[2];
             snd_dist_max_var = 300;
             // Timing
+            if !local.set
+            {
+                dur_var = 35;
+                start_var = 15;
+                js_start_var = 3;
+                js_end_var = 15;
+                vis_phase_end_var = 19;
+                red_start_var = 1;
+                red_end_var = 15;
+                loop_start_var = 15; // Gotta be 1 early because pain
+                amb_start_var = 5;
+            }
             deficit_adjust_var = true;
-            start_var = 15;
-            js_start_var = 3;
-            js_end_var = 15;
-            red_start_var = 1;
-            red_end_var = 15;
-            vis_phase_end_var = 19;
-            amb_start_var = 5;
-            loop_start_var = 19; // Gotta be 1 early because pain
-            if !local.set { loop_fake_var = true; }
+            loop_fake_var = true;
             // Axe!
             do_hurt_var = true;
             hurt_snd_var = 3;
@@ -318,7 +332,7 @@ object_event_add
         mus_prio_var = mon_mus_prio_const;
         with mus_control_obj { event_user(0); }
     }
-    if loop_start_var > 0 && local.start >= loop_start_var
+    if loop_start_var >= 0 && local.start >= loop_start_var
     {
         if !loop_fake_var
         { with door_trig_obj { rm_count_var = 0; }}
@@ -382,8 +396,8 @@ object_event_add
 // Room End Event
 object_event_add
 (argument0,ev_other,ev_room_end,'
-    event_inherited();
     local.start = dur_start_var-dur_var;
+    if deficit_adjust_var { local.start += dur_deficit_var; }
     if js_start_var > 0 && local.start >= js_start_var && local.start < js_end_var
     {
         if instance_exists(note_obj)
@@ -406,6 +420,7 @@ object_event_add
         global.js_override_num_var = 0;
         global.js_override_den_var = 1;
     }
+    event_inherited();
 ');
 // Delay Alarm
 object_event_add

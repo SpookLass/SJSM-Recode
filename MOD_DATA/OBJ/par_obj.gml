@@ -10,8 +10,8 @@ object_set_visible(argument0,true);
 object_event_add
 (argument0,ev_create,0,'
     var alarm_arr;
-    alarm_len_var = 0;
-    true_time_var = false;
+    if !variable_local_exists("alarm_len_var") { alarm_len_var = 0; }
+    if !variable_local_exists("true_time_var") { true_time_var = false; }
 ');
 // Begin Step
 object_event_add

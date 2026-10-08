@@ -137,6 +137,7 @@ object_event_add
             atk_range_var = global.mon_coll[2];
             exit_delay_var = 90;
             delay_var = 30;
+            dur_var = irandom_range(15,25);
             // Silhouette
             sil_var = true;
             sil_type_var = 1; // Pure color

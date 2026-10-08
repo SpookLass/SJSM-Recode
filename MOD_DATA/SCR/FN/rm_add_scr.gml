@@ -1,5 +1,6 @@
 /*
 Argument 0: Path (no file extension)
+Argument 1-14: Room Argument 2-15
 */
 if file_exists(argument0+".gml")
 {
@@ -15,7 +16,7 @@ if file_exists(argument0+".gml")
         globalvar_scr(local.rm,local.name,false);
         rm_name_arr[local.rm] = local.name;
     }
-    execute_file(argument0+".gml",local.rm,false);
+    execute_file(argument0+".gml",local.rm,argument1,argument2,argument3,argument4,argument5,argument6,argument7,argument8,argument9,argument10,argument11,argument12,argument13,argument14);
     return local.rm;
 }
 fmod_update_take_over_when_lock_scr();

@@ -1,9 +1,15 @@
+local.width = 5;
+local.length = 5;
 local.hall_entrance_width = 1;
 local.hall_entrance_len = 5;
 local.hall_exit_width = 1;
 local.hall_exit_len = 3;
-local.width = 5;
-local.length = 5;
+if argument2 != 0 { local.width = argument2; }
+if argument3 != 0 { local.length = argument3; }
+if argument4 != 0 { local.hall_entrance_width = argument4; }
+if argument5 != 0 { local.hall_entrance_len = argument5; }
+if argument6 != 0 { local.hall_exit_width = argument6; }
+if argument7 != 0 { local.hall_exit_len = argument7; }
 local.xmiddle = round((local.width-local.hall_exit_width)/2);
 local.ymiddle_entrance = round((local.length-local.hall_entrance_width)/2);
 local.ymiddle_exit = round((local.length-local.hall_exit_width)/2);
@@ -56,7 +62,7 @@ room_set_code
 // Trigger
     local.xoff = local.hall_entrance_len;
     local.yoff = local.hall_exit_len+local.ymiddle_entrance;
-    room_instance_add(argument0,(local.xoff*32)+48,(local.yoff*32)+48,generic_spawn_trig_obj);
+    room_instance_add(argument0,(local.xoff*32)+48,(local.yoff*32)+48,argument1.mon_spawn_trig_obj);
 // Floors and ceilings
     // Main
         local.xoff = local.hall_entrance_len;
@@ -65,8 +71,8 @@ room_set_code
         {
             for (local.j=local.yoff; local.j<local.yoff+local.length; local.j+=1;)
             {
-                room_instance_add(argument0,(local.i*32)+48,(local.j*32)+48,spawn_floor_obj);
-                room_instance_add(argument0,(local.i*32)+48,(local.j*32)+48,spawn_ceil_obj);
+                room_instance_add(argument0,(local.i*32)+48,(local.j*32)+48,argument1.spawn_floor_obj);
+                room_instance_add(argument0,(local.i*32)+48,(local.j*32)+48,argument1.spawn_ceil_obj);
             }
         }
     // Entrance Hall
@@ -76,8 +82,8 @@ room_set_code
         {
             for (local.j=local.yoff; local.j<local.yoff+local.hall_entrance_width; local.j+=1;)
             {
-                room_instance_add(argument0,(local.i*32)+48,(local.j*32)+48,spawn_floor_obj);
-                room_instance_add(argument0,(local.i*32)+48,(local.j*32)+48,spawn_ceil_obj);
+                room_instance_add(argument0,(local.i*32)+48,(local.j*32)+48,argument1.spawn_floor_obj);
+                room_instance_add(argument0,(local.i*32)+48,(local.j*32)+48,argument1.spawn_ceil_obj);
             }
         }
     // Exit Halls
@@ -87,8 +93,8 @@ room_set_code
         {
             for (local.j=local.yoff; local.j<local.yoff+local.hall_exit_width; local.j+=1;)
             {
-                room_instance_add(argument0,(local.i*32)+48,(local.j*32)+48,spawn_floor_obj);
-                room_instance_add(argument0,(local.i*32)+48,(local.j*32)+48,spawn_ceil_obj);
+                room_instance_add(argument0,(local.i*32)+48,(local.j*32)+48,argument1.spawn_floor_obj);
+                room_instance_add(argument0,(local.i*32)+48,(local.j*32)+48,argument1.spawn_ceil_obj);
             }
         }
         local.xoff = local.hall_entrance_len+local.xmiddle;
@@ -97,8 +103,8 @@ room_set_code
         {
             for (local.j=local.yoff; local.j<local.yoff+local.hall_exit_len; local.j+=1;)
             {
-                room_instance_add(argument0,(local.i*32)+48,(local.j*32)+48,spawn_floor_obj);
-                room_instance_add(argument0,(local.i*32)+48,(local.j*32)+48,spawn_ceil_obj);
+                room_instance_add(argument0,(local.i*32)+48,(local.j*32)+48,argument1.spawn_floor_obj);
+                room_instance_add(argument0,(local.i*32)+48,(local.j*32)+48,argument1.spawn_ceil_obj);
             }
         }
         local.xoff = local.hall_entrance_len+local.xmiddle;
@@ -107,8 +113,8 @@ room_set_code
         {
             for (local.j=local.yoff; local.j<local.yoff+local.hall_exit_len; local.j+=1;)
             {
-                room_instance_add(argument0,(local.i*32)+48,(local.j*32)+48,spawn_floor_obj);
-                room_instance_add(argument0,(local.i*32)+48,(local.j*32)+48,spawn_ceil_obj);
+                room_instance_add(argument0,(local.i*32)+48,(local.j*32)+48,argument1.spawn_floor_obj);
+                room_instance_add(argument0,(local.i*32)+48,(local.j*32)+48,argument1.spawn_ceil_obj);
             }
         }
 // Walls (Horizontal)
@@ -119,8 +125,8 @@ room_set_code
         {
             if local.i < local.xmiddle+local.xoff || local.i >= local.xmiddle+local.hall_exit_width+local.xoff || local.hall_entrance_len <= 0
             {
-                room_instance_add(argument0,(local.i*32)+48,(local.yoff+1)*32,spawn_wall_hor_obj);
-                room_instance_add(argument0,(local.i*32)+48,(local.yoff+local.length+1)*32,spawn_wall_hor_obj);
+                room_instance_add(argument0,(local.i*32)+48,(local.yoff+1)*32,argument1.spawn_wall_hor_obj);
+                room_instance_add(argument0,(local.i*32)+48,(local.yoff+local.length+1)*32,argument1.spawn_wall_hor_obj);
             }
         }
     // Entrance Hall
@@ -128,24 +134,24 @@ room_set_code
         local.yoff = local.hall_exit_len+local.ymiddle_entrance;
         for (local.i=local.xoff; local.i<local.xoff+local.hall_entrance_len; local.i+=1;)
         {
-            room_instance_add(argument0,(local.i*32)+48,(local.yoff+1)*32,spawn_wall_hor_obj);
-            room_instance_add(argument0,(local.i*32)+48,(local.yoff+local.hall_entrance_width+1)*32,spawn_wall_hor_obj);
+            room_instance_add(argument0,(local.i*32)+48,(local.yoff+1)*32,argument1.spawn_wall_hor_obj);
+            room_instance_add(argument0,(local.i*32)+48,(local.yoff+local.hall_entrance_width+1)*32,argument1.spawn_wall_hor_obj);
         }
     // Exit Halls
         local.xoff = local.hall_entrance_len+local.xmiddle;
         local.yoff = 0;
         for (local.i=local.xoff; local.i<local.xoff+local.hall_entrance_width; local.i+=1;)
-        { room_instance_add(argument0,(local.i*32)+48,(local.yoff+1)*32,spawn_wall_hor_obj); }
+        { room_instance_add(argument0,(local.i*32)+48,(local.yoff+1)*32,argument1.spawn_wall_hor_obj); }
         local.xoff = local.hall_entrance_len+local.xmiddle;
         local.yoff = (local.hall_exit_len*2)+local.length;
         for (local.i=local.xoff; local.i<local.xoff+local.hall_exit_width; local.i+=1;)
-        { room_instance_add(argument0,(local.i*32)+48,(local.yoff+1)*32,spawn_wall_hor_obj); }
+        { room_instance_add(argument0,(local.i*32)+48,(local.yoff+1)*32,argument1.spawn_wall_hor_obj); }
         local.xoff = local.hall_entrance_len+local.width;
         local.yoff = local.hall_exit_len+local.ymiddle_exit;
         for (local.i=local.xoff; local.i<local.xoff+local.hall_exit_len; local.i+=1;)
         {
-            room_instance_add(argument0,(local.i*32)+48,(local.yoff+1)*32,spawn_wall_hor_obj);
-            room_instance_add(argument0,(local.i*32)+48,(local.yoff+local.hall_exit_width+1)*32,spawn_wall_hor_obj);
+            room_instance_add(argument0,(local.i*32)+48,(local.yoff+1)*32,argument1.spawn_wall_hor_obj);
+            room_instance_add(argument0,(local.i*32)+48,(local.yoff+local.hall_exit_width+1)*32,argument1.spawn_wall_hor_obj);
         }
 // Walls (Vertical)
     // Main
@@ -154,31 +160,31 @@ room_set_code
         for (local.i=local.yoff; local.i<local.yoff+local.length; local.i+=1;)
         {
             if local.i < local.ymiddle_entrance+local.yoff || local.i >= local.ymiddle_entrance+local.hall_entrance_width+local.yoff || local.hall_entrance_len <= 0
-            { room_instance_add(argument0,(local.xoff+1)*32,(local.i*32)+48,spawn_wall_vert_obj); }
+            { room_instance_add(argument0,(local.xoff+1)*32,(local.i*32)+48,argument1.spawn_wall_vert_obj); }
             if local.i < local.ymiddle_exit+local.yoff || local.i >= local.ymiddle_exit+local.hall_exit_width+local.yoff|| local.hall_exit_len <= 0
-            { room_instance_add(argument0,(local.xoff+local.width+1)*32,(local.i*32)+48,spawn_wall_vert_obj); }
+            { room_instance_add(argument0,(local.xoff+local.width+1)*32,(local.i*32)+48,argument1.spawn_wall_vert_obj); }
         }
     // Entrance Hall
         local.xoff = 0;
         local.yoff = local.hall_exit_len+local.ymiddle_entrance;
         for (local.i=local.yoff; local.i<local.yoff+local.hall_entrance_width; local.i+=1;)
-        { room_instance_add(argument0,(local.xoff+1)*32,(local.i*32)+48,spawn_wall_vert_obj); }
+        { room_instance_add(argument0,(local.xoff+1)*32,(local.i*32)+48,argument1.spawn_wall_vert_obj); }
     // Exit Halls
         local.xoff = local.hall_entrance_len+local.hall_exit_len+local.width;
         local.yoff = local.hall_exit_len+local.ymiddle_exit;
         for (local.i=local.yoff; local.i<local.yoff+local.hall_exit_width; local.i+=1;)
-        { room_instance_add(argument0,(local.xoff+1)*32,(local.i*32)+48,spawn_wall_vert_obj); }
+        { room_instance_add(argument0,(local.xoff+1)*32,(local.i*32)+48,argument1.spawn_wall_vert_obj); }
         local.xoff = local.hall_entrance_len+local.xmiddle;
         local.yoff = 0;
         for (local.i=local.yoff; local.i<local.yoff+local.hall_exit_len; local.i+=1;)
         {
-            room_instance_add(argument0,(local.xoff+1)*32,(local.i*32)+48,spawn_wall_vert_obj);
-            room_instance_add(argument0,(local.xoff+local.hall_exit_width+1)*32,(local.i*32)+48,spawn_wall_vert_obj);
+            room_instance_add(argument0,(local.xoff+1)*32,(local.i*32)+48,argument1.spawn_wall_vert_obj);
+            room_instance_add(argument0,(local.xoff+local.hall_exit_width+1)*32,(local.i*32)+48,argument1.spawn_wall_vert_obj);
         }
         local.xoff = local.hall_entrance_len+local.xmiddle;
         local.yoff = local.hall_exit_len+local.length;
         for (local.i=local.yoff; local.i<local.yoff+local.hall_exit_len; local.i+=1;)
         {
-            room_instance_add(argument0,(local.xoff+1)*32,(local.i*32)+48,spawn_wall_vert_obj);
-            room_instance_add(argument0,(local.xoff+local.hall_exit_width+1)*32,(local.i*32)+48,spawn_wall_vert_obj);
+            room_instance_add(argument0,(local.xoff+1)*32,(local.i*32)+48,argument1.spawn_wall_vert_obj);
+            room_instance_add(argument0,(local.xoff+local.hall_exit_width+1)*32,(local.i*32)+48,argument1.spawn_wall_vert_obj);
         }

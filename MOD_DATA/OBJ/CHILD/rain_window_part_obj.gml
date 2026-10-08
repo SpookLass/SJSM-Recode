@@ -18,7 +18,8 @@ object_event_add
     part_len_var = 100;
     part_ini_scr();
     part_spawn_var = 4;
-    do_coll_var = true;
+    do_coll_var = false;
+    do_spawn_coll_var = true;
     // Ring
     do_ring_var = false;
     // Spawning

@@ -140,7 +140,10 @@ object_event_add
             {
                 stam_spawn_max_var = 50;
                 delay_var = 0;
+                spd_base_var = 0.5;
+                sprint_mult_var = 3;
             }
+            dur_var = irandom_range(15,25);
             do_sprint_var = true;
             do_stam_var = true;
             dmg_var = 30;

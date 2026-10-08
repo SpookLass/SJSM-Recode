@@ -35,14 +35,17 @@ room_set_code
     global.js_mark_arr[0,1] = 272;
     global.js_mark_arr[0,2] = 0;
     global.js_mark_arr[0,3] = 0;
+    global.js_mark_arr[0,4] = -1;
     global.js_mark_arr[1,0] = 608;
     global.js_mark_arr[1,1] = 272;
     global.js_mark_arr[1,2] = 0;
     global.js_mark_arr[1,3] = 0;
+    global.js_mark_arr[1,4] = -1;
     global.js_mark_arr[2,0] = 672;
     global.js_mark_arr[2,1] = 272;
     global.js_mark_arr[2,2] = 0;
     global.js_mark_arr[2,3] = 0;
+    global.js_mark_arr[2,4] = -1;
     mark_create_scr();
     // 3D Draw
     d3d_start();

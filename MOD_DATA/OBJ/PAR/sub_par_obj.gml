@@ -17,6 +17,7 @@ object_event_add
     ini_close();
     str_x_var = 0;
     str_y_var = -128; // I think?
+    str_3d_var = true;
     scale_var = 0.5;
     min_scale_var = 0.125;
     offset_var = 380;
@@ -48,7 +49,7 @@ object_event_add
     d3d_set_hidden(false); draw_set_alpha(image_alpha);
     draw_set_halign(fa_center); draw_set_valign(fa_bottom);
     // Spin!
-    if global.sub_var > 0
+    if global.sub_var > 0 && str_3d_var
     {
         // Calculations
         local.viewscale = min(view_wview[view_current]/1280,view_hview[view_current]/720);

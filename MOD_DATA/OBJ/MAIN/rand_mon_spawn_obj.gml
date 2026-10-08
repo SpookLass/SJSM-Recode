@@ -90,6 +90,7 @@ object_event_add // ev_create,0
                             ds_list_add(mon_curr_list,id);
                             if global.dupe_var == dupe_never_const || dupe_var == dupe_never_const
                             || (global.dupe_var == dupe_canon_const && dupe_var != dupe_canon_const)
+                            // || global.mon
                             { list_remove_value_scr(mon_spawn_list,object_index,true); }
                             if blacklist_var != noone { list_remove_list_scr(mon_spawn_list,blacklist_var,true); }
                             if whitelist_var != noone { list_whitelist_scr(mon_spawn_list,whitelist_var); }

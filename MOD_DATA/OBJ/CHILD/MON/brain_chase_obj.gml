@@ -62,7 +62,7 @@ object_event_add
                 loop_snd_var[0] = true;
                 wake_snd_var[0] = false;
                 mus_prio_var = theme_mus_prio_const;
-                dur_var = irandom_range(10,15);
+                dur_var = irandom_range(10,20);
                 spd_var = 0.5; // Old HD: 0.5r3
                 target_spd_mult_var = 0.6;
                 smart_var = true;

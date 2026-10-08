@@ -96,12 +96,14 @@ object_event_add
     puke_start_var = 9;
     puke_chance_var = 5;
     // Behavior
-    if global.spooper_type_var == -1 { local.type = irandom(2); }
+    if global.spooper_type_var == -1 { local.type = irandom(4); }
     else { local.type = global.spooper_type_var; }
     local.set = false;
     // Behavior
     switch local.type
     {
+        case 4: //Alternate (no buildup)
+        { hp_var = 0; }
         case 0: // Recode
         {
             deficit_adjust_var = true;
@@ -129,6 +131,7 @@ object_event_add
             loop_snd_dist_min_var = 32;
             loop_snd_dist_max_var = 200;
             // Balance adjustments
+            dmg_var = 0.01; // 0.008?
             respawn_alarm_var = 90;
             respawn_alone_var = true;
             tp_off_var = 288; // 384
@@ -218,8 +221,10 @@ object_event_add
         dur_var = irandom_range(24,31);
         switch local.type
         {
-            // Recode, HD, Old HD
-            case 0: case 2: case 3: { dur_var = irandom_range(24,30); break; }
+            // Recode
+            case 0: { dur_var = irandom_range(20,30); break; }
+            // HD, Old HD
+            case 2: case 3: { dur_var = irandom_range(24,30); break; }
         }
     }
     fetus_tex_var = background_get_texture(fetus_bg_var);

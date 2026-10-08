@@ -25,6 +25,7 @@ object_event_add
     part_yaw_var = 45;
     part_pitch_var = -78.75;
     do_coll_var = true;
+    coll_rate_var = 10;
     // Ring
     ring_time_var = 30;
     ring_base_w_var = 3;
@@ -34,7 +35,8 @@ object_event_add
     droplet_h_var = 0.25;
     // Spawning
     player_var = true;
-    do_spawn_coll_var = false; // Horribly inefficient, do not recommmend!
+    do_spawn_coll_var = false;
+    spawn_coll_attempt_var = 0; // More than 1 is horribly innefficient
     local.dir = part_yaw_var+180;
     local.dist = tan(degtorad(90+part_pitch_var))*(h_var-64);
     x_off_var = lengthdir_x(local.dist,local.dir);
@@ -85,7 +87,9 @@ object_event_add
                     local.zvel = -lengthdir_y(1,part_pitch_var);
                     if check_ray_scr(local.xtmp2,local.ytmp2,local.ztmp2,local.xvel,local.yvel,local.zvel,false) < 10000000
                     {
-                        local.i -= 0.9; // Ten Attempts per drop
+                        // Ten Attempts per drop
+                        if spawn_coll_attempt_var > 1
+                        { local.i -= (spawn_coll_attempt_var-1)/spawn_coll_attempt_var; }
                         continue;
                     }
                 }

@@ -69,7 +69,6 @@ object_event_add
         score_var = 0;
         lvl_var = 0;
         state_var = 0;
-        debug_var = true;
         pellet_max_var = 0;
         pellet_var = 0;
         start_alarm_var = 240;
@@ -457,7 +456,7 @@ object_event_add
             { draw_sprite_ext(base_spr_var,local.sprid,local.xtmp,local.ytmp,local.turn,1,0,image_blend,1); }
             draw_sprite_ext(eye_spr_var,local.sprid,local.xtmp,local.ytmp,local.turn,1,0,c_white,1);
         }
-        if other.debug_var
+        if global.debug_var
         {
             draw_text_transformed(local.xtmp,local.ytmp,string(state_var),0.25,0.25,0);
             draw_sprite_ext(other.pellet_spr_var,0,(target_x_var+0.5)*other.scale_var,(target_y_var+0.5)*other.scale_var,1,1,0,image_blend,1);

@@ -50,7 +50,7 @@ object_event_add
     ini_close();
     // Variables
     type_var = 1;
-    dur_var = irandom_range(10,20);
+    dur_var = irandom_range(20,30);
     do_hurt_var = 2;
     hurt_dur_var = 1;
     delay_calc_var = true;
@@ -149,6 +149,7 @@ object_event_add
             check_path_var = true;
             atk_range_var = global.mon_coll[2];
             snd_dist_max_var = 300;
+            dur_var = irandom_range(15,25);
             // Autobrake
             autobrake_var = true;
             autobrake_spd_var = 0.8;
@@ -159,7 +160,7 @@ object_event_add
         case 2: // HD
         {
             do_hurt_var = false;
-            dur_var = irandom_range(10,15);
+            dur_var = irandom_range(10,20);
             do_warn_var = true;
             atk_range_var = 128/3; // 42.r6
             atk_alarm_var = 180;

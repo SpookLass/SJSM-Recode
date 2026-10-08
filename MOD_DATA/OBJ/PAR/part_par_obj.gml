@@ -59,8 +59,21 @@ object_event_add
     local.len = min(part_len_var,global.max_part_var/instance_number(part_par_obj));
     for (local.i=0; local.i<local.len; local.i+=1;)
     {
+        // Draw
         if part_arr[local.i,0]
         {
+            // Frustum Culling (hopefully)
+            /*local.hfov = convert_fov_scr(global.cam_fov_var[view_current],view_wview[view_current],view_hview[view_current],1);
+            if seen_scr
+            (
+                local.hfov*0.5,global.cam_fov_var[view_current]*0.5,-1,
+                global.cam_yaw_var[view_current],global.cam_pitch_var[view_current],
+                global.cam_x_var[view_current],global.cam_y_var[view_current],global.cam_y_var[view_current],
+                false,false,
+                part_arr[local.i,7],part_arr[local.i,8],
+                part_arr[local.i,1],part_arr[local.i,2],part_arr[local.i,3],
+            ) <= 0 { continue; }*/
+            // Actually draw
             d3d_transform_set_identity();
             d3d_transform_add_rotation_x(part_arr[local.i,9]);
             d3d_transform_add_rotation_y(point_direction_3d_scr(part_arr[local.i,1],part_arr[local.i,2],part_arr[local.i,3],global.cam_x_var[view_current],global.cam_y_var[view_current],global.cam_z_var[view_current]));

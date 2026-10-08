@@ -21,12 +21,6 @@ object_event_add
     if !variable_local_exists("surf_len_var") { surf_len_var = 0; }
     if !variable_local_exists("obj_len_var") { obj_len_var = 0; }
     if !variable_local_exists("rm_len_var") { rm_len_var = 0; }
-    // Generic Spawn stuff
-    if !variable_local_exists("mon_var") { mon_var = noone; }
-    if !variable_local_exists("mon_x_var") { mon_x_var = 0; }
-    if !variable_local_exists("mon_y_var") { mon_y_var = 0; }
-    if !variable_local_exists("mon_z_var") { mon_z_var = 0; }
-    if !variable_local_exists("mon_pos_var") { mon_pos_var = 0; }
     // Draw Text
     d3d_set_fog(false,c_black,0,0);
     d3d_set_projection_ortho(0,0,view_wview[view_current],view_hview[view_current],0);
@@ -116,8 +110,34 @@ object_event_add
         for (local.i=0; local.i<obj_len_var; local.i+=1;)
         {
             draw_load_scr("Loading objects ("+string(local.i+1)+" / "+string(obj_len_var)+")...");
-            obj_arr_var[local.i,0] = obj_add_scr(obj_arr_var[local.i,1]);
-            variable_local_set(filename_name(obj_arr_var[local.i,1]),obj_arr_var[local.i,0]);
+            for (local.j=0; local.j<13; local.j+=1;)
+            {
+                if local.j < obj_arr_var[local.i,3]
+                { local.args[local.j] = obj_arr_var[local.i,local.j+4]; }
+                else { local.args[local.j] = 0; }
+            }
+            obj_arr_var[local.i,0] = obj_add_scr
+            (
+                obj_arr_var[local.i,1],
+                obj_arr_var[local.i,2],
+                id,
+                local.args[0],
+                local.args[1],
+                local.args[2],
+                local.args[3],
+                local.args[4],
+                local.args[5],
+                local.args[6],
+                local.args[7],
+                local.args[8],
+                local.args[9],
+                local.args[10],
+                local.args[11],
+                local.args[12]
+            );
+            if !is_string(obj_arr_var[local.i,2]) { local.name = filename_name(obj_arr_var[local.i,1]); }
+            else { local.name = obj_arr_var[local.i,2]; }
+            variable_local_set(local.name,obj_arr_var[local.i,0]);
         }
         draw_load_scr("Loaded objects!");
     }
@@ -127,8 +147,34 @@ object_event_add
         for (local.i=0; local.i<rm_len_var; local.i+=1;)
         {
             draw_load_scr("Loading rooms ("+string(local.i+1)+" / "+string(rm_len_var)+")...");
-            rm_arr_var[local.i,0] = rm_add_scr(rm_arr_var[local.i,1]);
-            variable_local_set(filename_name(rm_arr_var[local.i,1]),rm_arr_var[local.i,0]);
+            for (local.j=0; local.j<14; local.j+=1;)
+            {
+                if local.j < rm_arr_var[local.i,3]
+                { local.args[local.j] = rm_arr_var[local.i,local.j+4]; }
+                else { local.args[local.j] = 0; }
+            }
+            rm_arr_var[local.i,0] = rm_add_scr
+            (
+                rm_arr_var[local.i,1],
+                id,
+                local.args[0],
+                local.args[1],
+                local.args[2],
+                local.args[3],
+                local.args[4],
+                local.args[5],
+                local.args[6],
+                local.args[7],
+                local.args[8],
+                local.args[9],
+                local.args[10],
+                local.args[11],
+                local.args[12],
+                local.args[13]
+            );
+            if !is_string(rm_arr_var[local.i,2]) { local.name = filename_name(rm_arr_var[local.i,1]); }
+            else { local.name = rm_arr_var[local.i,2]; }
+            variable_local_set(local.name,rm_arr_var[local.i,0]);
         }
         draw_load_scr("Loaded rooms!");
     }

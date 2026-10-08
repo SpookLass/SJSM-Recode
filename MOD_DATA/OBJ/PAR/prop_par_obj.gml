@@ -41,6 +41,7 @@ object_event_add
     if !variable_local_exists("l_var") { l_var = 1; }
     if !variable_local_exists("h_var") { h_var = 1; }
     if !variable_local_exists("dist_var") { dist_var = 0; }
+    if !variable_local_exists("off_var") { off_var = 0; }
     if !variable_local_exists("close_var") { close_var = true; }
     if !variable_local_exists("step_var") { step_var = 8; }
     if !variable_local_exists("snap_var") { snap_var = false; }
@@ -115,25 +116,25 @@ object_event_add
     { draw_set_color(color_mult_scr(image_blend,tone_var)); }
     else { draw_set_color(image_blend); }
     // Prop types
+    local.width = w_var*0.5;
+    local.length = l_var*0.5;
     switch type_var
     {
         case 0: { d3d_model_draw(mdl_var,0,0,0,local.tex); break; }
-        case 1: { d3d_draw_wall(0,w_var*0.5,h_var,0,-w_var*0.5,0,local.tex,tex_w_var,tex_h_var*sign(h_var)); break; }
-        case 2: { d3d_draw_block(w_var*0.5,l_var*0.5,h_var,-w_var*0.5,-l_var*0.5,0,local.tex,tex_w_var,tex_h_var*sign(h_var)); break; }
-        case 3: { d3d_draw_cylinder(w_var*0.5,l_var*0.5,h_var,-w_var*0.5,-l_var*0.5,0,local.tex,tex_w_var,tex_h_var*sign(h_var),close_var,step_var); break; }
-        case 4: { d3d_draw_floor(-w_var*0.5,-l_var*0.5,dist_var,w_var*0.5,l_var*0.5,dist_var,local.tex,tex_w_var,tex_h_var); break; }
-        case 5: { d3d_draw_wall(0,w_var*0.5,h_var,0,-w_var*0.5,0,local.tex,tex_w_var,tex_h_var*sign(h_var)); break; }
+        case 1: { d3d_draw_wall(0,local.width,h_var,0,-local.width,0,local.tex,tex_w_var,tex_h_var*sign(h_var)); break; }
+        case 2: { d3d_draw_block(local.width,local.length,h_var,-local.width,-local.length,0,local.tex,tex_w_var,tex_h_var*sign(h_var)); break; }
+        case 3: { d3d_draw_cylinder(local.width,local.length,h_var,-local.width,-local.length,0,local.tex,tex_w_var,tex_h_var*sign(h_var),close_var,step_var); break; }
+        case 4: { d3d_draw_floor(-local.width,-local.length,dist_var,local.width,local.length,dist_var,local.tex,tex_w_var,tex_h_var); break; }
+        case 5: { d3d_draw_wall(0,local.width+off_var,h_var,0,-local.width+off_var,0,local.tex,tex_w_var,tex_h_var*sign(h_var)); break; }
         case 6:
         {
 
-            d3d_draw_wall(dist_var,w_var*0.5,h_var,dist_var,-w_var*0.5,0,local.tex,tex_w_var,tex_h_var*sign(h_var));
-            d3d_draw_wall(-dist_var,-w_var*0.5,h_var,-dist_var,w_var*0.5,0,local.tex,tex_w_var,tex_h_var*sign(h_var));
+            d3d_draw_wall(dist_var,local.width,h_var,dist_var,-local.width,0,local.tex,tex_w_var,tex_h_var*sign(h_var));
+            d3d_draw_wall(-dist_var,-local.width,h_var,-dist_var,local.width,0,local.tex,tex_w_var,tex_h_var*sign(h_var));
             break;
         }
         case 7:
         {
-            local.width = w_var*0.5;
-            local.length = l_var*0.5;
             local.tex_height = tex_h_var*sign(h_var);
             d3d_draw_wall(local.width,-local.length,h_var,-local.width,-local.length,0,local.tex,tex_w_var,local.tex_height);
             d3d_draw_wall(local.width,local.length,h_var,-local.width,local.length,0,local.tex,tex_w_var,local.tex_height);
@@ -152,19 +153,17 @@ object_event_add
         }
         case 10:
         {
-            d3d_draw_wall(dist_var,w_var*0.5,h_var,dist_var,-w_var*0.5,0,local.tex,tex_w_var,tex_h_var*sign(h_var));
+            d3d_draw_wall(dist_var,local.width,h_var,dist_var,-local.width,0,local.tex,tex_w_var,tex_h_var*sign(h_var));
             break;
         }
         case 11:
         {
-            d3d_draw_wall(0,w_var*0.5,h_var,0,-w_var*0.5,0,local.tex,tex_w_var,tex_h_var*sign(h_var));
-            d3d_draw_wall(w_var*0.5,0,h_var,-w_var*0.5,0,0,local.tex,tex_w_var,tex_h_var*sign(h_var));
+            d3d_draw_wall(0,local.width,h_var,0,-local.width,0,local.tex,tex_w_var,tex_h_var*sign(h_var));
+            d3d_draw_wall(local.width,0,h_var,-local.width,0,0,local.tex,tex_w_var,tex_h_var*sign(h_var));
             break;
         }
         case 12:
         {
-            local.width = w_var*0.5;
-            local.length = l_var*0.5;
             local.tex_height = tex_h_var*sign(h_var);
             d3d_draw_wall(local.width,-local.length,h_var,-local.width,-local.length,0,local.tex,tex_w_var,local.tex_height);
             d3d_draw_wall(local.width,local.length,h_var,-local.width,local.length,0,local.tex,tex_w_var,local.tex_height);

@@ -88,6 +88,7 @@ object_event_add
     {
         case 0: // Recode
         {
+            dur_var = irandom_range(15,25);
             dmg_var = 30;
             dmg_alarm_var = 120;
             spd_base_var = 1.1;

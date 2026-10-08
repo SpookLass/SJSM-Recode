@@ -65,6 +65,8 @@ object_event_add
     hurt_die_var = 2;
     stun_var = true;
     hurt_down_var = true;
+    down_hp_min_var = 2;
+    down_hp_max_var = 5;
     // Blob
     blob_var = false;
     blob_hurt_var = true;
@@ -253,7 +255,7 @@ object_event_add
         set_motion_scr(0,true);
         reset_alarm_scr();
         // Hit em while theyre down
-        hp_max_var = irandom_range(2,5);
+        hp_max_var = irandom_range(down_hp_min_var,down_hp_max_var);
         hp_var = hp_max_var;
         hurt_snd_var = 2;
         hurt_var = false;

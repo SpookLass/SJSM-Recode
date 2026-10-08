@@ -38,7 +38,7 @@
     globalvar current_millisecond;
     globalvar current_fulltime;
 // Game
-    global.version_var = "Spooky's Jump Scare Mansion - Project Recode: v26.9.7";
+    global.version_var = "Spooky's Jump Scare Mansion - Project Recode: v26.9.27";
     global.app_id_var = "1544095725091037277";
     global.discord_var = false;
     global.game_var = false;
@@ -150,6 +150,7 @@
     {
         case 0: // Normal
         {
+            execute_program(working_directory+"\PACTHING.exe",0,false);
             // Assets
                 execute_file(main_directory_const+"\SCR\LOAD\spr_load_scr.gml");
                 execute_file(main_directory_const+"\SCR\LOAD\bg_load_scr.gml");

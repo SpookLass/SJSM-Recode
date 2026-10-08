@@ -6,9 +6,9 @@ object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
 object_set_visible(argument0,false);
 // Collision
-global.js_coll[1] = 14;
+global.js_coll[1] = 10; // 14
 global.js_coll[2] = 2;
-global.js_coll[3] = 28;
+global.js_coll[3] = 20; // 28
 global.jsr_coll[0] = prop_to_coll_scr(9,'',global.js_coll[3]*0.5,0,global.js_coll[1],false,0,global.js_coll[2]*0.5);
 global.jsl_coll[0] = prop_to_coll_scr(9,'',-global.js_coll[3]*0.5,0,global.js_coll[1],false,0,global.js_coll[2]*0.5);
 // Create event
@@ -17,9 +17,10 @@ object_event_add
     note_var = noone;
     load_var = false;
     inst_var = noone;
-    silent_var = false;
+    if !variable_local_exists("silent_var") { silent_var = false; }
+    if !variable_local_exists("otter8_var") { otter8_var = false; }
+    
     hit_var = false;
-    otter8_var = false;
     if global.js_override_var
     {
         chance_num_var = global.js_override_num_var;
@@ -30,7 +31,9 @@ object_event_add
         chance_num_var = 1;
         chance_den_var = global.js_chance_var;
     }
-    if frac_chance_scr(chance_num_var,chance_den_var)
+    local.exist = frac_chance_scr(chance_num_var,chance_den_var)
+    if !variable_local_exists("do_note_var") { do_note_var = local.exist; }
+    if local.exist
     {
         snd_dist_min_var = 0;
         snd_dist_max_var = 0;
@@ -56,7 +59,7 @@ object_event_add
         tex_w_var = -1;
         // Special
         delay_var = 6;
-        alarm_len_var = 1;
+        alarm_len_var = 2;
         alarm_ini_scr();
         weapon_var = true;
         // Collisions
@@ -69,7 +72,7 @@ object_event_add
         else { local.type = global.js_type_var; }
         switch local.type
         {
-            case global.type_len_var:
+            case 3:
             {
                 look_var = true;
             }
@@ -196,15 +199,17 @@ object_event_add
             }
         }
         // Left
-        if !irandom(1)
-        {
-            w_var *= -1;
-            jump_dir_var *= -1;
-            coll_var[0] = global.jsl_coll[0];
-            x += lengthdir_x(32,base_dir_var-90);
-            y += lengthdir_y(32,base_dir_var-90);
-        }
-        // Note
+        if !variable_local_exists("left_var") { left_var = !irandom(1); }
+        if left_var { event_user(2); }
+    }
+    else { instance_destroy(); }
+');
+// Room Start event
+object_event_add
+(argument0,ev_other,ev_room_start,'
+    // Note
+    if do_note_var
+    {
         if global.note_override_var
         {
             local.num = global.note_override_num_var;
@@ -229,7 +234,6 @@ object_event_add
             }
         }
     }
-    else { instance_destroy(); }
 ');
 // Destroy
 object_event_add
@@ -332,6 +336,38 @@ object_event_add
         }
     }
 ');
+// Leftify
+object_event_add
+(argument0,ev_other,ev_user2,'
+    w_var *= -1;
+    jump_dir_var *= -1;
+    coll_var[0] = global.jsl_coll[0];
+    x += lengthdir_x(32,base_dir_var-90);
+    y += lengthdir_y(32,base_dir_var-90);
+');
+// Die
+object_event_add
+(argument0,ev_other,ev_user4,'
+    if !hit_var
+    {
+        hit_var = true;
+        solid_var = false;
+        w_var *= 0.25;
+        tex_w_var *= 0.25;
+        if stop_snd_var { fmod_inst_stop_scr(inst_var); }
+        fmod_snd_play_scr(choose(card_01_snd,card_02_snd,card_03_snd,card_04_snd));
+        hurt_target_var.violence_var += 1;
+        if instance_exists(note_var)
+        {
+            with note_var
+            {
+                visible = false;
+                if read_var { event_user(3); }
+                trig_var.on_var = false;
+            }
+        }
+    }
+');
 // Step Event
 object_event_add
 (argument0,ev_step,ev_step_normal,'
@@ -365,26 +401,8 @@ object_event_add
         }
     }
 ');
-// Die
+// Delayed Jump
 object_event_add
-(argument0,ev_other,ev_user4,'
-    if !hit_var
-    {
-        hit_var = true;
-        solid_var = false;
-        w_var *= 0.25;
-        tex_w_var *= 0.25;
-        if stop_snd_var { fmod_inst_stop_scr(inst_var); }
-        fmod_snd_play_scr(choose(card_01_snd,card_02_snd,card_03_snd,card_04_snd));
-        hurt_target_var.violence_var += 1;
-        if instance_exists(note_var)
-        {
-            with note_var
-            {
-                visible = false;
-                if read_var { event_user(3); }
-                trig_var.on_var = false;
-            }
-        }
-    }
+(argument0,ev_alarm,1,'
+    event_user(1);
 ');

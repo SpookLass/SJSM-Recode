@@ -58,6 +58,7 @@ object_event_add
     {
         case 0:
         {
+            dur_var = irandom_range(10,20);
             griddy_var = frac_chance_scr(1,1987);
             mus_prio_var = mon_mus_prio_const;
             eye_var = true;

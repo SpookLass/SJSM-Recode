@@ -67,8 +67,10 @@ object_event_add
     else { local.type = global.mur_type_var; }
     switch local.type
     {
+        case 3: { zone_var = false; }
         case 0:
         {
+            dur_var = irandom_range(20,30);
             delay_var = 90;
             spd_base_var = 1.25; // 1.r3;
             splash_rate_var = 18.75;

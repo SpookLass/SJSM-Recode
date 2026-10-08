@@ -73,6 +73,7 @@ object_event_add
             seen_pitch_var = 60;
             mus_prio_var = mon_mus_prio_const;
             snd_dist_max_var = 300;
+            dur_var = irandom_range(10,20);
             break;
         }
         case 2: // HD

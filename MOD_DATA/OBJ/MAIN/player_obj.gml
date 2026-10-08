@@ -299,6 +299,9 @@ object_event_add
             y = global.spawn_arr[global.spawn_var,1];
             z = global.spawn_arr[global.spawn_var,2];
             eye_yaw_var = global.spawn_arr[global.spawn_var,3];
+            floor_x_var = x;
+            floor_y_var = y;
+            floor_z_var = z;
         }
         if global.player_len_var > 1
         {

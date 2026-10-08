@@ -23,8 +23,12 @@ object_event_add
     bg_arr_var[2,3] = false;
     rm_len_var = 1;
     rm_arr_var[0,1] = generic_spawn_rm_path;
+    rm_arr_var[0,2] = -1;
+    rm_arr_var[0,3] = 0;
     obj_len_var = 1;
     obj_arr_var[0,1] = generic_spawn_trig_obj_path;
+    obj_arr_var[0,2] = -1;
+    obj_arr_var[0,3] = 0;
     rm_var = 0;
     event_inherited();
 ');

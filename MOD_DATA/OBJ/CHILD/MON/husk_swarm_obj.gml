@@ -35,6 +35,8 @@ object_event_add
     atk_delay_var = 12;
     hp_min_var = 2;
     hp_max_var = 7;
+    down_hp_min_var = 2;
+    down_hp_max_var = 5;
     spd_min_var = 0.15;
     spd_max_var = 0.2;
     hurt_dist_var = 5;
@@ -65,6 +67,10 @@ object_event_add
             husk_dist_var = 16; // 32
             revive_var = true;
             //atk_delay_var = 15;
+            hp_min_var = 3;
+            hp_max_var = 5;
+            down_hp_min_var = 1;
+            down_hp_max_var = 3;
             // Sounds
             snd_alarm_min_var = 60;
             snd_alarm_max_var = 120;
@@ -177,6 +183,8 @@ object_event_add
                 atk_delay_var = other.atk_delay_var;
                 atk_dist_var = other.atk_dist_var;
                 atk_range_var = other.atk_range_var;
+                down_hp_min_var = other.down_hp_min_var;
+                down_hp_max_var = other.down_hp_max_var;
                 // Random
                 hp_var = irandom_range(other.hp_min_var,other.hp_max_var);
                 hp_max_var = hp_var;
@@ -266,6 +274,8 @@ object_event_add
                     atk_delay_var = other.atk_delay_var;
                     atk_dist_var = other.atk_dist_var;
                     atk_range_var = other.atk_range_var;
+                    down_hp_min_var = other.down_hp_min_var;
+                    down_hp_max_var = other.down_hp_max_var;
                     // Sound
                     snd_alarm_min_var = other.snd_alarm_min_var;
                     snd_alarm_max_var = other.snd_alarm_max_var;

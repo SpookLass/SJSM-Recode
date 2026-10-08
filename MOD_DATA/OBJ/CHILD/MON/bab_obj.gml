@@ -143,6 +143,7 @@ object_event_add
     {
         case 0:
         {
+            dur_var = irandom_range(15,25);
             spd_base_var = 0.6;
             spr_spd_var = 1/3;
             delay_var = 30; // 128

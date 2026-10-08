@@ -122,6 +122,7 @@ object_event_add
             atk_range_var = coll_var[2];
             autobrake_var = true;
             snd_dist_max_var = 300;
+            dur_var = irandom_range(15,25);
             break;
         }
         case 4: // Karamari HD
@@ -169,6 +170,7 @@ object_event_add
             dupe_var = 0;
             atk_range_var = 544/15; // 36.2r6
             mus_prio_var = -1;
+            dur_var = irandom_range(10,15);
             break;
         }
         case 3: // Karamari

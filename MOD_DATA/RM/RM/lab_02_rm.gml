@@ -1,0 +1,139 @@
+/*
+Argument 0: Room Variable (same for all rooms)
+*/
+// Spawn spots
+room_set_code
+(
+    argument0,'
+    // Name
+    ini_open("lang_"+global.lang_var+".ini");
+    global.rm_name_var = ini_read_string("ROOM","lab","ROOM_lab")+" 2"
+    ini_close();
+    // Spawns
+    global.spawn_len_var = 1;
+    global.spawn_arr[0,0] = 400;
+    global.spawn_arr[0,1] = 464;
+    global.spawn_arr[0,2] = 0;
+    global.spawn_arr[0,3] = 0;
+    // 3D Draw
+    d3d_start();
+    global.draw_3d_var = true;
+    // Doors
+    spawn_create_scr(true,false,load_par_obj.lab_door_obj,false,false);
+    with instance_create(392,464,spawn_door_trig_obj)
+    {
+        global.spawn_arr[0,4] = id;
+        rm_var = load_par_obj.lab_01_rm;
+        rm_spawn_var = 2;
+        snd_len_var = 1;
+        snd_arr[0] = door_m_02_snd;
+    }
+    // Easiest
+    if global.diff_var != 0 { instance_create(641,496,blood_rand_obj); }
+');
+// Room settings
+room_set_width(argument0,1280);
+room_set_height(argument0,720);
+room_set_background_color(argument0,c_black,true);
+room_set_view_enabled(argument0,true);
+for (local.i=0; local.i<8; local.i+=1;)
+{ room_set_view(argument0,local.i,false,0,0,1280,720,0,0,1280,720,32,32,-1,-1,noone); }
+room_set_view(argument0,0,true,0,0,1280,720,0,0,1280,720,32,32,-1,-1,noone);
+// Effects
+room_instance_add(argument0,0,0,fog_01_obj);
+room_instance_add(argument0,0,0,reflect_eff_obj);
+// Floors
+room_instance_add(argument0,400,464,argument1.lab_floor_obj);
+room_instance_add(argument0,432,464,argument1.lab_floor_obj);
+room_instance_add(argument0,464,464,argument1.lab_floor_obj);
+room_instance_add(argument0,496,464,argument1.lab_floor_obj);
+room_instance_add(argument0,528,464,argument1.lab_floor_obj);
+room_instance_add(argument0,560,464,argument1.lab_floor_obj);
+room_instance_add(argument0,592,464,argument1.lab_floor_obj);
+room_instance_add(argument0,624,496,argument1.lab_floor_obj);
+room_instance_add(argument0,624,464,argument1.lab_floor_obj);
+room_instance_add(argument0,624,432,argument1.lab_floor_obj);
+room_instance_add(argument0,624,400,argument1.lab_floor_obj);
+room_instance_add(argument0,656,400,argument1.lab_floor_obj);
+room_instance_add(argument0,656,432,argument1.lab_floor_obj);
+room_instance_add(argument0,656,464,argument1.lab_floor_obj);
+room_instance_add(argument0,656,496,argument1.lab_floor_obj);
+room_instance_add(argument0,656,528,argument1.lab_floor_obj);
+room_instance_add(argument0,624,528,argument1.lab_floor_obj);
+room_instance_add(argument0,688,528,argument1.lab_floor_obj);
+room_instance_add(argument0,688,496,argument1.lab_floor_obj);
+room_instance_add(argument0,688,464,argument1.lab_floor_obj);
+room_instance_add(argument0,688,432,argument1.lab_floor_obj);
+room_instance_add(argument0,688,400,argument1.lab_floor_obj);
+// Ceilings
+room_instance_add(argument0,400,464,argument1.lab_ceil_obj);
+room_instance_add(argument0,432,464,argument1.lab_ceil_obj);
+room_instance_add(argument0,464,464,argument1.lab_ceil_obj);
+room_instance_add(argument0,496,464,argument1.lab_ceil_obj);
+room_instance_add(argument0,528,464,argument1.lab_ceil_obj);
+room_instance_add(argument0,560,464,argument1.lab_ceil_obj);
+room_instance_add(argument0,592,464,argument1.lab_ceil_obj);
+room_instance_add(argument0,624,496,argument1.lab_ceil_obj);
+room_instance_add(argument0,624,464,argument1.lab_ceil_obj);
+room_instance_add(argument0,624,432,argument1.lab_ceil_obj);
+room_instance_add(argument0,624,400,argument1.lab_ceil_obj);
+room_instance_add(argument0,656,400,argument1.lab_ceil_obj);
+room_instance_add(argument0,656,432,argument1.lab_ceil_obj);
+room_instance_add(argument0,656,464,argument1.lab_ceil_obj);
+room_instance_add(argument0,656,496,argument1.lab_ceil_obj);
+room_instance_add(argument0,656,528,argument1.lab_ceil_obj);
+room_instance_add(argument0,624,528,argument1.lab_ceil_obj);
+room_instance_add(argument0,688,528,argument1.lab_ceil_obj);
+room_instance_add(argument0,688,496,argument1.lab_ceil_obj);
+room_instance_add(argument0,688,464,argument1.lab_ceil_obj);
+room_instance_add(argument0,688,432,argument1.lab_ceil_obj);
+room_instance_add(argument0,688,400,argument1.lab_ceil_obj);
+// Walls (Horizontal)
+room_instance_add(argument0,400,452,argument1.lab_wall_hor_obj);
+room_instance_add(argument0,400,476,argument1.lab_wall_hor_obj);
+room_instance_add(argument0,464,476,argument1.lab_wall_hor_obj);
+room_instance_add(argument0,528,476,argument1.lab_wall_hor_obj);
+room_instance_add(argument0,592,476,argument1.lab_wall_hor_obj);
+room_instance_add(argument0,592,452,argument1.lab_wall_hor_obj);
+room_instance_add(argument0,528,452,argument1.lab_wall_hor_obj);
+room_instance_add(argument0,464,452,argument1.lab_wall_hor_obj);
+room_instance_add(argument0,624,388,argument1.lab_wall_hor_obj);
+room_instance_add(argument0,688,388,argument1.lab_wall_hor_obj);
+room_instance_add(argument0,624,540,argument1.lab_wall_hor_obj);
+room_instance_add(argument0,688,540,argument1.lab_wall_hor_obj);
+// Walls (Vertical)
+room_instance_add(argument0,608,436,argument1.lab_wall_vert_obj);
+room_instance_add(argument0,608,404,argument1.lab_wall_vert_obj);
+room_instance_add(argument0,608,492,argument1.lab_wall_vert_obj);
+room_instance_add(argument0,608,524,argument1.lab_wall_vert_obj);
+room_instance_add(argument0,704,464,argument1.lab_wall_vert_obj);
+room_instance_add(argument0,704,496,argument1.lab_wall_vert_obj);
+room_instance_add(argument0,704,528,argument1.lab_wall_vert_obj);
+room_instance_add(argument0,704,432,argument1.lab_wall_vert_obj);
+room_instance_add(argument0,704,400,argument1.lab_wall_vert_obj);
+room_instance_add(argument0,384,464,argument1.lab_wall_vert_obj);
+// Tanks
+room_instance_add(argument0,432,476,argument1.lab_tank_south_obj);
+room_instance_add(argument0,496,476,argument1.lab_tank_south_obj);
+room_instance_add(argument0,656,540,argument1.lab_tank_south_obj);
+room_instance_add(argument0,432,452,argument1.lab_tank_north_obj);
+room_instance_add(argument0,496,452,argument1.lab_tank_north_obj);
+room_instance_add(argument0,560,452,argument1.lab_tank_north_obj);
+room_instance_add(argument0,560,476,argument1.lab_tank_broke_south_obj);
+room_instance_add(argument0,656,388,argument1.lab_tank_north_obj);
+// Props
+room_instance_add(argument0,432,464,argument1.lab_light_obj);
+room_instance_add(argument0,496,464,argument1.lab_light_obj);
+room_instance_add(argument0,560,464,argument1.lab_light_obj);
+room_instance_add(argument0,656,400,argument1.lab_light_obj);
+room_instance_add(argument0,656,464,argument1.lab_light_obj);
+room_instance_add(argument0,656,528,argument1.lab_light_obj);
+room_instance_add(argument0,624,404,table_metal_obj);
+room_instance_add(argument0,624,524,table_metal_obj);
+room_instance_add(argument0,688,464,table_metal_obj);
+room_instance_add(argument0,688,404,pc_big_obj);
+room_instance_add(argument0,688,524,pc_big_obj);
+room_instance_add(argument0,688,508,pc_small_obj);
+room_instance_add(argument0,688,420,pc_small_obj);
+room_instance_add(argument0,690,468,argument1.lab_key_obj);
+room_instance_add(argument0,688,464,argument1.lab_note_01_obj);

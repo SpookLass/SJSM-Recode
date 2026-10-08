@@ -71,6 +71,7 @@ object_event_add
     {
         case 0: // Recode
         {
+            dur_var = irandom_range(15,25);
             eff_color_var = make_color_rgb(145,167,255); // 162, 185, 283
             overlay_color_var = c_white; // eff_color_var
             fog_color_01_var = eff_color_var;
