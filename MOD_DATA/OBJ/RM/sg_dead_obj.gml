@@ -16,6 +16,7 @@ object_event_add
 (argument0,ev_create,0,'
     event_inherited();
     true_time_var = true;
+    par_var = '+string(argument2)+'
     // Translate
     str_len_var = 12;
     ini_open("lang_"+global.lang_var+".ini");
@@ -33,7 +34,7 @@ object_event_add
     scale_var = 1;
     scale_min_var = 0.125;
     image_blend = c_black;
-    with instance_create(54,54,sg_dead_str_obj)
+    with instance_create(54,54,par_var.sg_dead_str_obj)
     {
         str_var = other.str_var[0];
         char_alarm_var = other.char_alarm_var;
@@ -46,7 +47,8 @@ object_event_add
         set_alarm_scr(0,char_alarm_var);
     }
     // Sound
-    fmod_snd_play_scr(load_par_obj.snd_arr_var[0,0]);
+    snd_var = '+string(argument2.snd_arr_var[argument3,0])+'
+    fmod_snd_play_scr(snd_var);
     // Effect variables
     fog_end_var = 96;
     fog_color_var = c_black;
@@ -94,7 +96,7 @@ object_event_add
     with instance_create(0,0,kh_overlay_obj)
     {
         par_var = other.id;
-        overlay_bg_var = load_par_obj.bg_arr_var[3,0];
+        overlay_bg_var = '+string(argument2.bg_arr_var[argument4,0])+'
         overlay_var = true;
         overlay_alpha_var = 0.5;
         spr_spd_var = 0.1;
@@ -127,7 +129,7 @@ object_event_add
 // Delete background
 object_event_add
 (argument0,ev_other,ev_user0,'
-    with load_par_obj { instance_destroy(); }
+    with par_var { instance_destroy(); }
 ');
 // Step Event
 object_event_add

@@ -153,9 +153,9 @@ local.bloodytmp = local.ytmp2;
         {
             local.xtmp = 48+((local.j+local.halllength)*32);
             room_instance_add(argument0,local.xtmp,local.ytmp1,argument1.mad_floor_obj);
-            room_instance_add(argument0,local.xtmp,local.ytmp1,argument1.mad_ceil_2high_obj);
+            room_instance_add(argument0,local.xtmp,local.ytmp1,argument1.mad_ceil_high_obj);
             room_instance_add(argument0,local.xtmp,local.ytmp2,argument1.mad_floor_obj);
-            room_instance_add(argument0,local.xtmp,local.ytmp2,argument1.mad_ceil_2high_obj);
+            room_instance_add(argument0,local.xtmp,local.ytmp2,argument1.mad_ceil_high_obj);
         }
     }
     for (local.i=0; local.i<local.edgewidth; local.i+=1;)
@@ -166,8 +166,8 @@ local.bloodytmp = local.ytmp2;
         {
             local.ytmp = 48+((local.j+local.edgewidth)*32);
             room_instance_add(argument0,local.xtmp1,local.ytmp,argument1.mad_floor_obj);
-            room_instance_add(argument0,local.xtmp1,local.ytmp,argument1.mad_ceil_2high_obj);
-            room_instance_add(argument0,local.xtmp2,local.ytmp,argument1.mad_ceil_2high_obj);
+            room_instance_add(argument0,local.xtmp1,local.ytmp,argument1.mad_ceil_high_obj);
+            room_instance_add(argument0,local.xtmp2,local.ytmp,argument1.mad_ceil_high_obj);
             local.dist = point_distance(local.xtmp2,local.ytmp,local.bloodxtmp,local.bloodytmp)+random_range(-32,32);
             local.blood = median(0,1,1-floor(local.dist/96));
             if local.blood

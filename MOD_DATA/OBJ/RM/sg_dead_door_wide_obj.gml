@@ -9,20 +9,18 @@ object_set_visible(argument0,true);
 // Create event
 object_event_add
 (argument0,ev_create,0,'
-    if instance_exists(load_par_obj)
-    {
-        store_tex_var = background_get_texture(load_par_obj.bg_arr_var[5,0]);
-        store_tex_02_var = background_get_texture(load_par_obj.bg_arr_var[7,0]);
-        mdl_var = load_par_obj.mdl_arr_var[1,0];
-        mdl_path_var = load_par_obj.mdl_arr_var[1,1];
-    }
+    par_var = '+string(argument2)+'
+    store_tex_var = '+string(argument2.bg_arr_var[argument3,4])+'
+    store_tex_02_var = '+string(argument2.bg_arr_var[argument4,4])+'
+    mdl_var = '+string(argument2.bg_arr_var[argument5,0])+'
     event_inherited();
     solid_var = false;
     // For grid (I dont really know how wide it is)
-    w_var = 16;
+    w_var = 32;
     l_var = 0;
     h_var = 24;
     dist_var = 0.5;
+    mdl_path_var = par_var.bg_arr_var['+string(argument5)+',1];
 ');
 // Draw Event
 object_event_add

@@ -24,16 +24,8 @@ room_set_code
     d3d_start();
     global.draw_3d_var = true;
     // Doors
-    spawn_create_scr(false,false,false,load_par_obj.asy_door_obj,spawn_door_trig_obj);
+    spawn_create_scr(false,false,false,load_par_obj.asy_cell_door_obj,spawn_door_trig_obj);
     with spawn_arr[1,4] { rm_var = asy_02_rm; rm_spawn_var = 4; snd_len_var = 1; snd_arr[0] = door_m_02_snd; }
-    with spawn_arr[1,5]
-    {
-        if instance_exists(load_par_obj)
-        {
-            store_tex_var = background_get_texture(load_par_obj.bg_arr_var[10,0]);
-            tex_var = store_tex_var;
-        }
-    }
 ');
 // Effects
 room_instance_add(argument0,0,0,fog_01_obj);

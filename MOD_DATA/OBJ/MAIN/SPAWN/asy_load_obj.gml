@@ -6,6 +6,34 @@ object_set_persistent(argument0,true);
 object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
 object_set_visible(argument0,false);
+// Table Collisions
+globalvar asy_table_coll;
+asy_table_coll[1] = 9.5;
+asy_table_coll[2] = 12;
+asy_table_coll[3] = 12;
+asy_table_coll[0] = p3dc_begin_mdl_scr();
+p3dc_set_trimask_scr(mask_metal_const);
+p3dc_add_block_scr(-4,-4,8,-5,-5,0);
+p3dc_add_block_scr(-4,5,8,-5,4,0);
+p3dc_add_block_scr(5,-4,8,4,-5,0);
+p3dc_add_block_scr(5,5,8,4,4,0);
+p3dc_set_trimask_scr(mask_basic_const);
+p3dc_add_block_scr(-6,-6,9.5,6,6,8);
+p3dc_end_mdl_scr();
+// Bed Collisions
+globalvar asy_bed_coll;
+asy_bed_coll[1] = 9.5;
+asy_bed_coll[2] = 12;
+asy_bed_coll[3] = 20;
+asy_bed_coll[0] = p3dc_begin_mdl_scr();
+p3dc_set_trimask_scr(mask_metal_const);
+p3dc_add_block_scr(-4,-8,4,-5,-9,0);
+p3dc_add_block_scr(-4,9,4,-5,8,0);
+p3dc_add_block_scr(5,-8,4,4,-9,0);
+p3dc_add_block_scr(5,9,4,4,8,0);
+p3dc_set_trimask_scr(mask_basic_const);
+p3dc_add_block_scr(6,10,5,-6,-10,4);
+p3dc_end_mdl_scr();
 // Create Event
 object_event_add
 (argument0,ev_create,0,'
@@ -109,34 +137,34 @@ object_event_add
             obj_arr_var[0,1] = spawn_wall_obj_path;
             obj_arr_var[0,2] = "asy_wall_obj";
             obj_arr_var[0,3] = 8;
-            obj_arr_var[0,4] = 1; // Background (Index)
+            obj_arr_var[0,4] = 2; // Background (Index)
             obj_arr_var[0,5] = true; // Horizontal and vertical
             obj_arr_var[0,6] = 0; // Width (Default)
             obj_arr_var[0,7] = 0; // Height (Default)
             obj_arr_var[0,8] = 0; // Z (Default)
             obj_arr_var[0,9] = 0; // Texture Width (Default)
             obj_arr_var[0,10] = 0; // Texture Height (Default)
-            obj_arr_var[0,11] = mask_metal_const; // Mask
+            obj_arr_var[0,11] = mask_metal_const+1; // Mask
             obj_arr_var[1,1] = spawn_wall_obj_path;
             obj_arr_var[1,2] = "asy_wall_flip_obj";
             obj_arr_var[1,3] = 8;
-            obj_arr_var[1,4] = 1; // Background (Index)
+            obj_arr_var[1,4] = 2; // Background (Index)
             obj_arr_var[1,5] = true; // Horizontal and vertical
             obj_arr_var[1,6] = 0; // Width (Default)
             obj_arr_var[1,7] = 0; // Height (Default)
             obj_arr_var[1,8] = 0; // Z (Default)
             obj_arr_var[1,9] = -1; // Texture Width (Default)
             obj_arr_var[1,10] = 0; // Texture Height (Default)
-            obj_arr_var[1,11] = mask_metal_const; // Mask
+            obj_arr_var[1,11] = mask_metal_const+1; // Mask
             obj_arr_var[2,1] = spawn_wall_obj_path;
             obj_arr_var[2,2] = "asy_cell_wall_obj";
             obj_arr_var[2,3] = 2;
-            obj_arr_var[2,4] = 1; // Background (Index)
+            obj_arr_var[2,4] = 5; // Background (Index)
             obj_arr_var[2,5] = true; // Horizontal and vertical
             obj_arr_var[3,1] = spawn_wall_obj_path;
             obj_arr_var[3,2] = "asy_wood_wall_obj";
             obj_arr_var[3,3] = 2;
-            obj_arr_var[3,4] = 1; // Background (Index)
+            obj_arr_var[3,4] = 17; // Background (Index)
             obj_arr_var[3,5] = true; // Horizontal and vertical
             obj_arr_var[4,1] = spawn_wall_obj_path;
             obj_arr_var[4,2] = "asy_womb_wall_obj";
@@ -146,7 +174,7 @@ object_event_add
             obj_arr_var[5,1] = spawn_wall_obj_path;
             obj_arr_var[5,2] = "asy_cage_obj";
             obj_arr_var[5,3] = 2;
-            obj_arr_var[5,4] = 1; // Background (Index)
+            obj_arr_var[5,4] = 16; // Background (Index)
             obj_arr_var[5,5] = true; // Horizontal and vertical
         // Floors and Ceilings
             obj_arr_var[6,1] = spawn_floor_obj_path;
@@ -158,7 +186,7 @@ object_event_add
             obj_arr_var[6,7] = 0; // Z (Default)
             obj_arr_var[6,8] = 0; // Texture Width (Default)
             obj_arr_var[6,9] = 0; // Texture Height (Default)
-            obj_arr_var[6,10] = mask_metal_const; // Mask
+            obj_arr_var[6,10] = mask_metal_const+1; // Mask
             obj_arr_var[7,1] = spawn_floor_obj_path;
             obj_arr_var[7,2] = "asy_grate_obj";
             obj_arr_var[7,3] = 7;
@@ -168,7 +196,7 @@ object_event_add
             obj_arr_var[7,7] = 0; // Z (Default)
             obj_arr_var[7,8] = 0; // Texture Width (Default)
             obj_arr_var[7,9] = 0; // Texture Height (Default)
-            obj_arr_var[7,10] = mask_metal_const; // Mask
+            obj_arr_var[7,10] = mask_metal_const+1; // Mask
             obj_arr_var[8,1] = spawn_ceil_obj_path;
             obj_arr_var[8,2] = "asy_ceil_obj";
             obj_arr_var[8,3] = 1;
@@ -198,7 +226,7 @@ object_event_add
             obj_arr_var[13,1] = asy_body_obj_path;
             obj_arr_var[13,2] = -1;
             obj_arr_var[13,3] = 1;
-            obj_arr_var[13,4] = 1; // Sprite (Index)
+            obj_arr_var[13,4] = 0; // Sprite (Index)
             obj_arr_var[14,1] = asy_cage_fake_obj_path;
             obj_arr_var[14,2] = -1;
             obj_arr_var[14,3] = 1;
@@ -207,12 +235,12 @@ object_event_add
             obj_arr_var[15,2] = -1;
             obj_arr_var[15,3] = 1;
             obj_arr_var[15,4] = 4; // Background (Index)
-            obj_arr_var[16,1] = asy_door_broke_obj_path;
-            obj_arr_var[16,2] = -1;
+            obj_arr_var[16,1] = asy_door_obj_path;
+            obj_arr_var[16,2] = "asy_door_broke_obj";
             obj_arr_var[16,3] = 1;
             obj_arr_var[16,4] = 8; // Background (Index)
-            obj_arr_var[17,1] = asy_cell_door_obj_path;
-            obj_arr_var[17,2] = -1;
+            obj_arr_var[17,1] = asy_door_obj_path;
+            obj_arr_var[17,2] = "asy_cell_door_obj";
             obj_arr_var[17,3] = 1;
             obj_arr_var[17,4] = 7; // Background (Index)
             obj_arr_var[18,1] = asy_matt_man_01_obj_path;
@@ -269,6 +297,35 @@ object_event_add
             obj_arr_var[30,3] = 2;
             obj_arr_var[30,4] = 0; // Sound (Index)
             obj_arr_var[30,5] = mon_mus_prio_const; // Priority
+    // Rooms
+        rm_len_var = 9;
+        rm_arr_var[0,1] = asy_01_rm_path;
+        rm_arr_var[0,2] = -1;
+        rm_arr_var[0,3] = 0;
+        rm_arr_var[1,1] = asy_02_rm_path;
+        rm_arr_var[1,2] = -1;
+        rm_arr_var[1,3] = 0;
+        rm_arr_var[2,1] = asy_03_rm_path;
+        rm_arr_var[2,2] = -1;
+        rm_arr_var[2,3] = 0;
+        rm_arr_var[3,1] = asy_04_rm_path;
+        rm_arr_var[3,2] = -1;
+        rm_arr_var[3,3] = 0;
+        rm_arr_var[4,1] = asy_cell_01_rm_path;
+        rm_arr_var[4,2] = -1;
+        rm_arr_var[4,3] = 0;
+        rm_arr_var[5,1] = asy_cell_02_rm_path;
+        rm_arr_var[5,2] = -1;
+        rm_arr_var[5,3] = 0;
+        rm_arr_var[6,1] = asy_cell_03_rm_path;
+        rm_arr_var[6,2] = -1;
+        rm_arr_var[6,3] = 0;
+        rm_arr_var[7,1] = asy_cell_04_rm_path;
+        rm_arr_var[7,2] = -1;
+        rm_arr_var[7,3] = 0;
+        rm_arr_var[8,1] = asy_cell_05_rm_path;
+        rm_arr_var[8,2] = -1;
+        rm_arr_var[8,3] = 0;
     rm_var = 0;
     event_inherited();
 ');

@@ -48,7 +48,7 @@ room_set_view(argument0,0,true,0,0,1280,720,0,0,1280,720,32,32,-1,-1,noone);
 room_instance_add(argument0,0,0,fog_close_obj);
 room_instance_add(argument0,0,0,web_spawn_obj);
 room_instance_add(argument0,0,0,dark_color_obj);
-room_instance_add(argument0,0,0,spawn_mus_obj);
+room_instance_add(argument0,0,0,argument1.brain_mus_obj);
 // Floors
 room_instance_add(argument0,400,464,argument1.lab_floor_obj);
 room_instance_add(argument0,432,464,argument1.lab_floor_obj);

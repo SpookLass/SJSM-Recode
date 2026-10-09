@@ -61,10 +61,10 @@ if argument8 != 0
     tex_w_var = '+string(argument8)+';';
 }
 // Mask
-if argument10 != 0
+if argument10 > 0
 {
     local.create += '
-    mask_var = '+string(argument10)+';';
+    mask_var = '+string(argument10-1)+';';
 }
 // Alpha
 if argument13 != 0

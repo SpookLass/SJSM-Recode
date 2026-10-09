@@ -37,7 +37,7 @@ room_set_code
     {
         if instance_exists(load_par_obj)
         {
-            store_tex_var = background_get_texture(load_par_obj.bg_arr_var[10,0]);
+            store_tex_var = background_get_texture(load_par_obj.bg_arr_var[7,0]);
             tex_var = store_tex_var;
         }
     }

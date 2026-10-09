@@ -12,7 +12,6 @@ object_event_add
     par_var = '+string(argument2)+'
     store_tex_var = '+string(argument2.bg_arr_var[argument3,4])+'
     mdl_var = '+string(argument2.mdl_arr_var[argument4,0])+'
-    mdl_path_var = '+string(argument2.mdl_arr_var[argument4,1])+'
     event_inherited();
     solid_var = false;
     // For grid
@@ -20,6 +19,7 @@ object_event_add
     l_var = '+string(argument7)+'
     h_var = '+string(argument8)+'
     z = '+string(argument9)+'
+    mdl_path_var = par_var.bg_arr_var['+string(argument4)+',1];
 ');
 // Loop across the world
 if argument10

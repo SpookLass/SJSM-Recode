@@ -252,7 +252,7 @@ object_event_add
         surf_arr_var[0,2] = 256;
         surf_arr_var[0,3] = 256;
     // Objects
-        obj_len_var = 82;
+        obj_len_var = 79;
         // Walls
             // Regular
                 obj_arr_var[0,1] = spawn_wall_obj_path;
@@ -777,7 +777,7 @@ object_event_add
 
             obj_arr_var[49,1] = spawn_ceil_obj_path;
             obj_arr_var[49,2] = "mad_ceil_high_obj";
-            obj_arr_var[49,3] = 1;
+            obj_arr_var[49,3] = 4;
             obj_arr_var[49,4] = 5; // Background (Index)
             obj_arr_var[49,5] = 0; // Width (Default)
             obj_arr_var[49,6] = 0; // Height (Default)
@@ -827,18 +827,18 @@ object_event_add
             obj_arr_var[57,4] = 0; // Sprite (Index)
             obj_arr_var[57,5] = 7; // Background (Index)
             obj_arr_var[57,6] = 29; // Background (Index)
-            obj_arr_var[57,6] = 30; // Background (Index)
-            obj_arr_var[57,6] = 31; // Background (Index)
-            obj_arr_var[57,6] = 3; // Sound (Index)
-            obj_arr_var[57,6] = 4; // Sound (Index)
+            obj_arr_var[57,7] = 30; // Background (Index)
+            obj_arr_var[57,8] = 31; // Background (Index)
+            obj_arr_var[57,9] = 3; // Sound (Index)
+            obj_arr_var[57,10] = 4; // Sound (Index)
 
             obj_arr_var[58,1] = mad_clock_big_obj_path;
             obj_arr_var[58,2] = -1;
             obj_arr_var[58,3] = 2;
             obj_arr_var[58,4] = 57; // Parent (Index)
-            obj_arr_var[58,4] = 15; // Scale
+            obj_arr_var[58,5] = 15; // Scale
 
-            obj_arr_var[59,1] = school_desk_teacher_obj;
+            obj_arr_var[59,1] = school_desk_teacher_obj_path;
             obj_arr_var[59,2] = "mad_desk_obj";
             obj_arr_var[59,3] = 3;
             obj_arr_var[59,4] = 27;
@@ -861,86 +861,99 @@ object_event_add
             obj_arr_var[62,2] = -1;
             obj_arr_var[62,3] = 0;
 
-            obj_arr_var[63,1] = mad_flesh_ceil_obj;
+            obj_arr_var[63,1] = mad_flesh_ceil_obj_path;
             obj_arr_var[63,2] = -1;
             obj_arr_var[63,3] = 1;
             obj_arr_var[63,4] = 0; // Surface (Index)
 
-            obj_arr_var[64,1] = mad_flesh_door_obj;
+            obj_arr_var[64,1] = mad_flesh_door_obj_path;
             obj_arr_var[64,2] = -1;
             obj_arr_var[64,3] = 1;
             obj_arr_var[64,4] = 0; // Surface (Index)
 
-            obj_arr_var[65,1] = mad_flesh_floor_obj;
+            obj_arr_var[65,1] = mad_flesh_floor_obj_path;
             obj_arr_var[65,2] = -1;
             obj_arr_var[65,3] = 1;
             obj_arr_var[65,4] = 0; // Surface (Index)
 
-            obj_arr_var[66,1] = mad_flesh_wall_obj;
+            obj_arr_var[66,1] = mad_flesh_wall_obj_path;
             obj_arr_var[66,2] = -1;
             obj_arr_var[66,3] = 2;
             obj_arr_var[66,4] = 0; // Surface (Index)
             obj_arr_var[66,5] = true; // Directional
 
-            obj_arr_var[67,1] = mad_flesh_obj;
+            obj_arr_var[67,1] = mad_flesh_obj_path;
             obj_arr_var[67,2] = -1;
             obj_arr_var[67,3] = 3;
             obj_arr_var[67,4] = 0; // Surface (Index)
             obj_arr_var[67,5] = 0; // Path (Index)
             obj_arr_var[67,6] = 23; // Background (Index)
 
-            obj_arr_var[68,1] = mad_fog_obj;
+            obj_arr_var[68,1] = mad_fog_obj_path;
             obj_arr_var[68,2] = -1;
             obj_arr_var[68,3] = 0;
 
-            obj_arr_var[69,1] = mad_line_obj;
+            obj_arr_var[69,1] = mad_line_obj_path;
             obj_arr_var[69,2] = -1;
             obj_arr_var[69,3] = 1;
             obj_arr_var[69,4] = 6; // Background (index)
 
-            obj_arr_var[70,1] = mad_pc_obj;
+            obj_arr_var[70,1] = mad_pc_obj_path;
             obj_arr_var[70,2] = -1;
             obj_arr_var[70,3] = 1;
             obj_arr_var[70,4] = 1; // Sprite (index)
 
-            obj_arr_var[75,1] = mad_slug_obj;
-            obj_arr_var[75,2] = -1;
+            obj_arr_var[71,1] = mad_slug_obj_path;
+            obj_arr_var[71,2] = -1;
+            obj_arr_var[71,3] = 1;
+            obj_arr_var[71,4] = 2; // Sprite (index)
+
+            obj_arr_var[72,1] = mad_space_obj_path;
+            obj_arr_var[72,2] = -1;
+            obj_arr_var[72,3] = 4;
+            obj_arr_var[72,4] = 0; // Surface (Index)
+            obj_arr_var[72,5] = 0; // Path (Index)
+            obj_arr_var[72,6] = 23; // Background (Index)
+            obj_arr_var[72,7] = 7; // Model (Index)
+
+            obj_arr_var[73,1] = mad_spot_obj_path;
+            obj_arr_var[73,2] = -1;
+            obj_arr_var[73,3] = 1;
+            obj_arr_var[73,4] = 19; // Background (Index)
+
+            obj_arr_var[74,1] = mad_trig_obj_path;
+            obj_arr_var[74,2] = -1;
+            obj_arr_var[74,3] = 0;
+
+            obj_arr_var[75,1] = spawn_mus_obj_path;
+            obj_arr_var[75,2] = "mad_persona_mus_obj";
             obj_arr_var[75,3] = 1;
-            obj_arr_var[75,4] = 2; // Sprite (index)
+            obj_arr_var[75,4] = 0;
 
-            obj_arr_var[76,1] = mad_space_obj;
-            obj_arr_var[76,2] = -1;
-            obj_arr_var[76,3] = 4;
-            obj_arr_var[76,4] = 0; // Surface (Index)
-            obj_arr_var[76,5] = 0; // Path (Index)
-            obj_arr_var[76,6] = 23; // Background (Index)
-            obj_arr_var[76,7] = 7; // Model (Index)
+            obj_arr_var[76,1] = spawn_mus_obj_path;
+            obj_arr_var[76,2] = "mad_daycare_mus_obj";
+            obj_arr_var[76,3] = 1;
+            obj_arr_var[76,4] = 1;
 
-            obj_arr_var[77,1] = mad_spot_obj_path;
-            obj_arr_var[77,2] = -1;
+            obj_arr_var[77,1] = spawn_mus_obj_path;
+            obj_arr_var[77,2] = "mad_space_mus_obj";
             obj_arr_var[77,3] = 1;
-            obj_arr_var[77,4] = 19; // Background (Index)
-
-            obj_arr_var[78,1] = mad_trig_obj_path;
-            obj_arr_var[78,2] = -1;
-            obj_arr_var[78,3] = 0;
-
-            obj_arr_var[79,1] = spawn_mus_obj_path;
-            obj_arr_var[79,2] = "mad_persona_mus_obj";
-            obj_arr_var[79,3] = 1;
-            obj_arr_var[79,4] = 0;
-
-            obj_arr_var[80,1] = spawn_mus_obj_path;
-            obj_arr_var[80,2] = "mad_daycare_mus_obj";
-            obj_arr_var[80,3] = 1;
-            obj_arr_var[80,4] = 1;
-
-            obj_arr_var[81,1] = spawn_mus_obj_path;
-            obj_arr_var[81,2] = "mad_space_mus_obj";
-            obj_arr_var[81,3] = 1;
-            obj_arr_var[81,4] = 2;
+            obj_arr_var[77,4] = 2;
+        // Forgor
+            obj_arr_var[78,1] = spawn_wall_obj_path;
+            obj_arr_var[78,2] = "mad_wall_doorway_obj";
+            obj_arr_var[78,3] = 9;
+            obj_arr_var[78,4] = 0; // Background (Index)
+            obj_arr_var[78,5] = true; // Horizontal and vertical
+            obj_arr_var[78,6] = 0; // Width (Default)
+            obj_arr_var[78,7] = 0; // Height (Default)
+            obj_arr_var[78,8] = 32; // Z
+            obj_arr_var[78,9] = 0; // Texture Width (Default)
+            obj_arr_var[78,10] = 0; // Texture Height (Default)
+            obj_arr_var[78,11] = 0; // Mask (Default)
+            obj_arr_var[78,12] = true; // No Grid
     // Rooms
-        rm_len_var = 3;
+        rm_len_var = 6;
         rm_arr_var[0,1] = mad_01_rm_path;
         rm_arr_var[0,2] = -1;
         rm_arr_var[0,3] = 3;

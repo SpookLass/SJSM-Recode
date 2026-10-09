@@ -24,7 +24,7 @@ room_set_code
     d3d_start();
     global.draw_3d_var = true;
     // Doors
-    spawn_create_scr(true,false,false,load_par_obj.asy_door_obj,spawn_door_trig_obj);
+    spawn_create_scr(true,false,false,asy_door_obj,spawn_door_trig_obj);
     with spawn_arr[1,4] { rm_var = asy_02_rm; rm_count_var = 1; snd_len_var = 1; snd_arr[0] = door_m_02_snd; }
 ');
 // Effects

@@ -79,7 +79,7 @@ object_event_add
             obj_arr_var[0,8] = 0; // Z (Default)
             obj_arr_var[0,9] = 0; // Texture Width (Default)
             obj_arr_var[0,10] = 0; // Texture Height (Default)
-            obj_arr_var[0,11] = mask_metal_const; // Mask
+            obj_arr_var[0,11] = mask_metal_const+1; // Mask
             obj_arr_var[1,1] = spawn_wall_obj_path;
             obj_arr_var[1,2] = "lab_wall_up_obj";
             obj_arr_var[1,3] = 8;
@@ -90,7 +90,7 @@ object_event_add
             obj_arr_var[1,8] = 32; // Z
             obj_arr_var[1,9] = 0; // Texture Width (Default)
             obj_arr_var[1,10] = 0; // Texture Height (Default)
-            obj_arr_var[1,12] = mask_metal_const; // Mask
+            obj_arr_var[1,12] = mask_metal_const+1; // Mask
             obj_arr_var[2,1] = spawn_wall_obj_path;
             obj_arr_var[2,2] = "lab_wall_obj";
             obj_arr_var[2,3] = 8;
@@ -101,7 +101,7 @@ object_event_add
             obj_arr_var[2,8] = 0; // Z (Default)
             obj_arr_var[2,9] = 0; // Texture Width (Default)
             obj_arr_var[2,10] = 0; // Texture Height (Default)
-            obj_arr_var[2,11] = mask_metal_const; // Mask
+            obj_arr_var[2,11] = mask_metal_const+1; // Mask
         // Floors & Ceilings
             obj_arr_var[3,1] = spawn_floor_obj_path;
             obj_arr_var[3,2] = "lab_floor_obj";
@@ -112,7 +112,7 @@ object_event_add
             obj_arr_var[3,7] = 0; // Z (Default)
             obj_arr_var[3,8] = 0; // Texture Width (Default)
             obj_arr_var[3,9] = 0; // Texture Height (Default)
-            obj_arr_var[3,10] = mask_metal_const; // Mask
+            obj_arr_var[3,10] = mask_metal_const+1; // Mask
             obj_arr_var[3,11] = false; // No Grid
             obj_arr_var[3,12] = 0; // Depth (Default)
             obj_arr_var[3,13] = 0.6; // Alpha
@@ -123,18 +123,20 @@ object_event_add
             obj_arr_var[5,1] = spawn_ceil_obj_path;
             obj_arr_var[5,2] = "lab_ceil_high_obj";
             obj_arr_var[5,3] = 7;
-            obj_arr_var[5,4] = 1; // Background (Index)
+            obj_arr_var[5,4] = 0; // Background (Index)
             obj_arr_var[5,5] = 0; // Width (Default)
             obj_arr_var[5,6] = 0; // Height (Default)
             obj_arr_var[5,7] = 64; // Z
             obj_arr_var[5,8] = 0; // Texture Width (Default)
             obj_arr_var[5,9] = 0; // Texture Height (Default)
-            obj_arr_var[5,10] = mask_metal_const; // Mask
+            obj_arr_var[5,10] = mask_metal_const+1; // Mask
         // Props
             obj_arr_var[6,1] = lab_door_obj_path;
             obj_arr_var[6,2] = -1;
-            obj_arr_var[6,3] = 1;
+            obj_arr_var[6,3] = 3;
             obj_arr_var[6,4] = 3;
+            obj_arr_var[6,5] = 0;
+            obj_arr_var[6,6] = 1;
             obj_arr_var[7,1] = lab_hole_obj_path;
             obj_arr_var[7,2] = -1;
             obj_arr_var[7,3] = 1;
@@ -169,12 +171,13 @@ object_event_add
             obj_arr_var[14,4] = 6;
             obj_arr_var[15,1] = lab_tank_obj_path;
             obj_arr_var[15,2] = -1;
-            obj_arr_var[15,3] = 2;
+            obj_arr_var[15,3] = 3;
             obj_arr_var[15,4] = 5;
             obj_arr_var[15,5] = false;
+            obj_arr_var[15,6] = true;
             obj_arr_var[16,1] = lab_tank_obj_path;
             obj_arr_var[16,2] = "lab_tank_broke_obj";
-            obj_arr_var[16,3] = 2;
+            obj_arr_var[16,3] = 3;
             if global.diff_var == 0
             {
                 obj_arr_var[16,4] = 5;
@@ -185,6 +188,7 @@ object_event_add
                 obj_arr_var[16,4] = 7;
                 obj_arr_var[16,5] = true;
             }
+            obj_arr_var[16,6] = true;
             obj_arr_var[17,1] = lab_trig_obj_path;
             obj_arr_var[17,2] = -1;
             obj_arr_var[17,3] = 0;

@@ -44,7 +44,7 @@ object_event_add
             {
                 local.xtmp = x+lengthdir_x(-4,direction)+lengthdir_x(8,direction+90);
                 local.ytmp = y+lengthdir_y(-4,direction)+lengthdir_y(8,direction+90);
-                with instance_create(local.xtmp,local.ytmp,lab_subject_obj)
+                with instance_create(local.xtmp,local.ytmp,par_var.lab_subject_obj)
                 {
                     par_var = other.id;
                     z_base_var += other.z;
@@ -63,7 +63,7 @@ object_event_add
             else { local.dir = direction-90; }
             local.xtmp += lengthdir_x(8,local.dir);
             local.ytmp += lengthdir_y(8,local.dir);
-            with instance_create(local.xtmp,local.ytmp,lab_subject_obj)
+            with instance_create(local.xtmp,local.ytmp,par_var.lab_subject_obj)
             {
                 par_var = other.id;
                 z_base_var += other.z;

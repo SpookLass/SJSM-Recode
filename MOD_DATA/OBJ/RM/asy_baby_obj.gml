@@ -13,7 +13,7 @@ object_event_add
     snap_var = 1; // Snap to floor
     par_var = '+string(argument2)+'
     store_tex_var = '+string(argument2.bg_arr_var[argument3,4])+'
-    inst_var = fmod_snd_3d_loop_scr('+string(argument2.snd_arr_var[argument3,0])+',x,y,0);
+    inst_var = fmod_snd_3d_loop_scr('+string(argument2.snd_arr_var[argument4,0])+',x,y,0);
     event_inherited();
     solid_var = false;
     type_var = 4; // Floor

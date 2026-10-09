@@ -26,7 +26,7 @@ object_event_add
     with fake_wall_obj
     {
         local.wall = id;
-        with instance_create(x,y,par_var.mad_trim_doorframe_vert_obj)
+        with instance_create(x,y,other.par_var.mad_trim_doorframe_vert_obj)
         {
             z = local.wall.z;
             direction = local.wall.direction;

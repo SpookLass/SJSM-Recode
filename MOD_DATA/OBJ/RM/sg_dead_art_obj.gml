@@ -9,14 +9,17 @@ object_set_visible(argument0,true);
 // Create event
 object_event_add
 (argument0,ev_create,0,'
-    if instance_exists(load_par_obj)
-    { store_tex_var = sprite_get_texture(load_par_obj.spr_arr_var[0,0],0); }
+    par_var = '+string(argument2)+'
+    spr_var = '+string(argument2.spr_arr_var[argument3,0])+'
     event_inherited();
     solid_var = false;
     // Draw
-    type_var = 4; // Floor
-    w_var = 32;
-    l_var = 32;
-    h_var = 32;
+    type_var = 10; // Single Plane
+    z = 10;
+    w_var = 14;
+    l_var = 0;
+    h_var = 14;
     dist_var = 0.15;
+    direction = 270;
+    store_tex_var = sprite_get_texture(spr_var,'+string(argument4)+'); // 5
 ');

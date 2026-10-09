@@ -9,7 +9,15 @@ object_set_visible(argument0,true);
 // Create event
 object_event_add
 (argument0,ev_create,0,'
+    snap_var = 2; // Snap to ceiling
+    par_var = '+string(argument2)+'
+    store_tex_var = '+string(argument2.bg_arr_var[argument3,4])+'
     event_inherited();
+    type_var = 4; // Floor
+    w_var = 24;
+    l_var = 24;
+    dist_var = -0.2;
+    color_var = 3;
     light_per_var = sqr(random(1));
     event_user(0);
     /*alarm_len_var = 3;
@@ -84,6 +92,17 @@ object_event_add
         }
     }
     if inst_var != noone { fmod_inst_set_vol_scr(inst_var,image_alpha); }
+');
+// Draw
+object_event_add
+(argument0,ev_draw,0,'
+    if global.fog_dark_var
+    {
+        d3d_set_fog(false,c_black,0,0);
+        event_inherited();
+        d3d_set_fog(global.fog_var,global.fog_color_var,global.fog_start_var,global.fog_end_var);
+    }
+    else { event_inherited(); }
 ');
 /*
 // Alarm

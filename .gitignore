@@ -28,5 +28,7 @@ SCREENSHOTS/**
 # New mod support!
 !MODS/EXAMPLE_MOD/
 !MODS/EXAMPLE_MOD/**
+# Executables
 !RECODE_EDITOR.exe
 !MOD_LOADER.exe
+!PACTHING.exe

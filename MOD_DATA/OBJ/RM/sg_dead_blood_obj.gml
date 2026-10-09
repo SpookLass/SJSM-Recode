@@ -9,17 +9,15 @@ object_set_visible(argument0,true);
 // Create event
 object_event_add
 (argument0,ev_create,0,'
-    if instance_exists(load_par_obj)
-    {
-        store_tex_var = background_get_texture(load_par_obj.bg_arr_var[4,0]);
-        mdl_var = load_par_obj.mdl_arr_var[0,0];
-        mdl_path_var = load_par_obj.mdl_arr_var[0,1];
-    }
+    par_var = '+string(argument2)+'
+    spr_var = '+string(argument2.spr_arr_var[argument3,0])+'
     event_inherited();
     solid_var = false;
-    // For grid (I dont really know how wide it is)
-    w_var = 8;
-    l_var = 8;
-    h_var = 20;
-    direction = 180;
+    // Draw
+    type_var = 4; // Floor
+    w_var = 32;
+    l_var = 32;
+    h_var = 32;
+    dist_var = 0.15;
+    store_tex_var = sprite_get_texture(spr_var,'+string(argument4)+'); // 0
 ');

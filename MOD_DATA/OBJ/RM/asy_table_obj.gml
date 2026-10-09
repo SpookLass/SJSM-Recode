@@ -6,20 +6,7 @@ object_set_persistent(argument0,false);
 object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
-// Collisions
-globalvar asy_table_coll;
-asy_table_coll[1] = 9.5;
-asy_table_coll[2] = 12;
-asy_table_coll[3] = 12;
-asy_table_coll[0] = p3dc_begin_mdl_scr();
-p3dc_set_trimask_scr(mask_metal_const);
-p3dc_add_block_scr(-4,-4,8,-5,-5,0);
-p3dc_add_block_scr(-4,5,8,-5,4,0);
-p3dc_add_block_scr(5,-4,8,4,-5,0);
-p3dc_add_block_scr(5,5,8,4,4,0);
-p3dc_set_trimask_scr(mask_basic_const);
-p3dc_add_block_scr(-6,-6,9.5,6,6,8);
-p3dc_end_mdl_scr();
+
 // Create event
 object_event_add
 (argument0,ev_create,0,'

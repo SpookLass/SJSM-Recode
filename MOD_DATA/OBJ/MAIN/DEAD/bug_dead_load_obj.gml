@@ -96,7 +96,7 @@ object_event_add
             obj_arr_var[0,8] = 0; // Z (Default)
             obj_arr_var[0,9] = 0; // Texture Width (Default)
             obj_arr_var[0,10] = 0; // Texture Height (Default)
-            obj_arr_var[0,11] = mask_metal_const; // Mask
+            obj_arr_var[0,11] = mask_metal_const+1; // Mask
             obj_arr_var[1,1] = spawn_wall_obj_path;
             obj_arr_var[1,2] = "lab_wall_up_obj";
             obj_arr_var[1,3] = 8;
@@ -107,7 +107,7 @@ object_event_add
             obj_arr_var[1,8] = 32; // Z
             obj_arr_var[1,9] = 0; // Texture Width (Default)
             obj_arr_var[1,10] = 0; // Texture Height (Default)
-            obj_arr_var[1,12] = mask_metal_const; // Mask
+            obj_arr_var[1,12] = mask_metal_const+1; // Mask
         // Floors & Ceilings
             obj_arr_var[2,1] = spawn_floor_obj_path;
             obj_arr_var[2,2] = "lab_floor_obj";
@@ -118,25 +118,27 @@ object_event_add
             obj_arr_var[2,7] = 0; // Z (Default)
             obj_arr_var[2,8] = 0; // Texture Width (Default)
             obj_arr_var[2,9] = 0; // Texture Height (Default)
-            obj_arr_var[2,10] = mask_metal_const; // Mask
+            obj_arr_var[2,10] = mask_metal_const+1; // Mask
             obj_arr_var[2,11] = false; // No Grid
             obj_arr_var[2,12] = 0; // Depth (Default)
             obj_arr_var[2,13] = 0.6; // Alpha
             obj_arr_var[3,1] = spawn_ceil_obj_path;
             obj_arr_var[3,2] = "lab_ceil_high_obj";
             obj_arr_var[3,3] = 7;
-            obj_arr_var[3,4] = 1; // Background (Index)
+            obj_arr_var[3,4] = 0; // Background (Index)
             obj_arr_var[3,5] = 0; // Width (Default)
             obj_arr_var[3,6] = 0; // Height (Default)
             obj_arr_var[3,7] = 64; // Z
             obj_arr_var[3,8] = 0; // Texture Width (Default)
             obj_arr_var[3,9] = 0; // Texture Height (Default)
-            obj_arr_var[3,10] = mask_metal_const; // Mask
+            obj_arr_var[3,10] = mask_metal_const+1; // Mask
         // Props
             obj_arr_var[4,1] = lab_door_obj_path;
             obj_arr_var[4,2] = -1;
-            obj_arr_var[4,3] = 1;
+            obj_arr_var[4,3] = 3;
             obj_arr_var[4,4] = 3;
+            obj_arr_var[4,5] = 0;
+            obj_arr_var[4,6] = 1;
             obj_arr_var[5,1] = lab_hole_obj_path;
             obj_arr_var[5,2] = -1;
             obj_arr_var[5,3] = 1;

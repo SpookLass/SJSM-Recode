@@ -9,8 +9,8 @@ object_set_visible(argument0,true);
 // Create event
 object_event_add
 (argument0,ev_create,0,'
-    if instance_exists(load_par_obj)
-    { store_tex_var = sprite_get_texture(load_par_obj.spr_arr_var[1,0],2); }
+    par_var = '+string(argument2)+'
+    spr_var = '+string(argument2.spr_arr_var[argument3,0])+'
     event_inherited();
     solid_var = false;
     // Draw
@@ -21,4 +21,5 @@ object_event_add
     h_var = 6;
     dist_var = 0.6;
     direction = 180;
+    store_tex_var = sprite_get_texture(spr_var,'+string(argument4)+'); // 2
 ');

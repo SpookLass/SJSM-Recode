@@ -32,10 +32,10 @@ object_event_add
     {
         for (local.i=0; local.i<bg_len_var; local.i+=1;)
         {
-            draw_load_scr("Loading backgrounds ("+string(local.i+1)+" / "+string(bg_len_var)+")...");
+            local.name = filename_name(bg_arr_var[local.i,1]);
+            draw_load_scr("Loading "+local.name+" ("+string(local.i+1)+"/"+string(bg_len_var)+")");
             bg_arr_var[local.i,0] = bg_add_scr(bg_arr_var[local.i,1],bg_arr_var[local.i,2],bg_arr_var[local.i,3]);
             bg_arr_var[local.i,4] = background_get_texture(bg_arr_var[local.i,0]);
-            local.name = filename_name(bg_arr_var[local.i,1]);
             variable_local_set(local.name,bg_arr_var[local.i,0]);
             variable_local_set(local.name+"_tex",bg_arr_var[local.i,4]);
         }
@@ -46,9 +46,10 @@ object_event_add
     {
         for (local.i=0; local.i<spr_len_var; local.i+=1;)
         {
-            draw_load_scr("Loading sprites ("+string(local.i+1)+" / "+string(spr_len_var)+")...");
+            local.name = filename_name(spr_arr_var[local.i,1]);
+            draw_load_scr("Loading "+local.name+" ("+string(local.i+1)+"/"+string(spr_len_var)+")");
             spr_arr_var[local.i,0] = spr_add_scr(spr_arr_var[local.i,1],spr_arr_var[local.i,2],spr_arr_var[local.i,3],spr_arr_var[local.i,4],spr_arr_var[local.i,5],spr_arr_var[local.i,6]);
-            variable_local_set(filename_name(spr_arr_var[local.i,1]),spr_arr_var[local.i,0]);
+            variable_local_set(local.name,spr_arr_var[local.i,0]);
         }
         draw_load_scr("Loaded sprites!");
     }
@@ -57,9 +58,10 @@ object_event_add
     {
         for (local.i=0; local.i<snd_len_var; local.i+=1;)
         {
-            draw_load_scr("Loading sounds ("+string(local.i+1)+" / "+string(snd_len_var)+")...");
+            local.name = filename_name(snd_arr_var[local.i,1]);
+            draw_load_scr("Loading "+local.name+" ("+string(local.i+1)+"/"+string(snd_len_var)+")");
             snd_arr_var[local.i,0] = snd_add_scr(snd_arr_var[local.i,1],snd_arr_var[local.i,2],snd_arr_var[local.i,3],snd_arr_var[local.i,4],snd_arr_var[local.i,5],snd_arr_var[local.i,6]);
-            variable_local_set(filename_name(snd_arr_var[local.i,1]),snd_arr_var[local.i,0]);
+            variable_local_set(local.name,snd_arr_var[local.i,0]);
         }
         draw_load_scr("Loaded sounds!");
     }
@@ -68,9 +70,10 @@ object_event_add
     {
         for (local.i=0; local.i<mdl_len_var; local.i+=1;)
         {
-            draw_load_scr("Loading models ("+string(local.i+1)+" / "+string(mdl_len_var)+")...");
+            local.name = filename_name(mdl_arr_var[local.i,1]);
+            draw_load_scr("Loading "+local.name+" ("+string(local.i+1)+"/"+string(mdl_len_var)+")");
             mdl_arr_var[local.i,0] = mdl_add_scr(mdl_arr_var[local.i,1]);
-            variable_local_set(filename_name(mdl_arr_var[local.i,1]),mdl_arr_var[local.i,0]);
+            variable_local_set(local.name,mdl_arr_var[local.i,0]);
         }
         draw_load_scr("Loaded models!");
     }
@@ -79,7 +82,7 @@ object_event_add
     {
         for (local.i=0; local.i<path_len_var; local.i+=1;)
         {
-            draw_load_scr("Loading paths ("+string(local.i+1)+" / "+string(path_len_var)+")...");
+            draw_load_scr("Loading "+path_arr_var[local.i,1]+" ("+string(local.i+1)+"/"+string(path_len_var)+")");
             path_arr_var[0] = path_add();
             path_set_kind(path_arr_var[local.i,0],path_arr_var[local.i,2]); // Smooth
             path_set_closed(path_arr_var[local.i,0],path_arr_var[local.i,3]);
@@ -93,7 +96,7 @@ object_event_add
     {
         for (local.i=0; local.i<surf_len_var; local.i+=1;)
         {
-            draw_load_scr("Loading surfaces ("+string(local.i+1)+" / "+string(surf_len_var)+")...");
+            draw_load_scr("Loading "+surf_arr_var[local.i,1]+" ("+string(local.i+1)+"/"+string(surf_len_var)+")");
             surf_arr_var[local.i,0] = surface_create(surf_arr_var[local.i,2],surf_arr_var[local.i,3]);
             surface_set_target(surf_arr_var[local.i,0]);
             draw_clear_alpha(c_black,0);
@@ -109,7 +112,9 @@ object_event_add
     {
         for (local.i=0; local.i<obj_len_var; local.i+=1;)
         {
-            draw_load_scr("Loading objects ("+string(local.i+1)+" / "+string(obj_len_var)+")...");
+            if !is_string(obj_arr_var[local.i,2]) { local.name = filename_name(obj_arr_var[local.i,1]); }
+            else { local.name = obj_arr_var[local.i,2]; }
+            draw_load_scr("Loading "+local.name+" ("+string(local.i+1)+"/"+string(obj_len_var)+")");
             for (local.j=0; local.j<13; local.j+=1;)
             {
                 if local.j < obj_arr_var[local.i,3]
@@ -135,9 +140,10 @@ object_event_add
                 local.args[11],
                 local.args[12]
             );
-            if !is_string(obj_arr_var[local.i,2]) { local.name = filename_name(obj_arr_var[local.i,1]); }
-            else { local.name = obj_arr_var[local.i,2]; }
             variable_local_set(local.name,obj_arr_var[local.i,0]);
+            // Set global
+            if !variable_global_exists(local.name) { execute_string("globalvar "+local.name); }
+            variable_global_set(local.name,obj_arr_var[local.i,0]);
         }
         draw_load_scr("Loaded objects!");
     }
@@ -146,7 +152,9 @@ object_event_add
     {
         for (local.i=0; local.i<rm_len_var; local.i+=1;)
         {
-            draw_load_scr("Loading rooms ("+string(local.i+1)+" / "+string(rm_len_var)+")...");
+            if !is_string(rm_arr_var[local.i,2]) { local.name = filename_name(rm_arr_var[local.i,1]); }
+            else { local.name = rm_arr_var[local.i,2]; }
+            draw_load_scr("Loading "+local.name+" ("+string(local.i+1)+"/"+string(rm_len_var)+")");
             for (local.j=0; local.j<14; local.j+=1;)
             {
                 if local.j < rm_arr_var[local.i,3]
@@ -172,8 +180,6 @@ object_event_add
                 local.args[12],
                 local.args[13]
             );
-            if !is_string(rm_arr_var[local.i,2]) { local.name = filename_name(rm_arr_var[local.i,1]); }
-            else { local.name = rm_arr_var[local.i,2]; }
             variable_local_set(local.name,rm_arr_var[local.i,0]);
         }
         draw_load_scr("Loaded rooms!");

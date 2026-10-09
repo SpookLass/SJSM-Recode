@@ -6,20 +6,6 @@ object_set_persistent(argument0,false);
 object_set_solid(argument0,false);
 object_set_sprite(argument0,noone);
 object_set_visible(argument0,true);
-// Collisions
-globalvar asy_bed_coll;
-asy_bed_coll[1] = 9.5;
-asy_bed_coll[2] = 12;
-asy_bed_coll[3] = 20;
-asy_bed_coll[0] = p3dc_begin_mdl_scr();
-p3dc_set_trimask_scr(mask_metal_const);
-p3dc_add_block_scr(-4,-8,4,-5,-9,0);
-p3dc_add_block_scr(-4,9,4,-5,8,0);
-p3dc_add_block_scr(5,-8,4,4,-9,0);
-p3dc_add_block_scr(5,9,4,4,8,0);
-p3dc_set_trimask_scr(mask_basic_const);
-p3dc_add_block_scr(6,10,5,-6,-10,4);
-p3dc_end_mdl_scr();
 // Create event
 object_event_add
 (argument0,ev_create,0,'

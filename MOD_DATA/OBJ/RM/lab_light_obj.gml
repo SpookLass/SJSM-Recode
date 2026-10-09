@@ -11,7 +11,7 @@ object_event_add
 (argument0,ev_create,0,'
     snap_var = 2; // Snap to ceiling
     par_var = '+string(argument2)+'
-    store_tex_var = '+string(argument2.bg_arr_var[argument3,0]+)'
+    store_tex_var = '+string(argument2.bg_arr_var[argument3,4])+'
     event_inherited();
     type_var = 4; // Floor
     w_var = 24;
