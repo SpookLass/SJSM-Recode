@@ -12,7 +12,6 @@ object_event_add
     // Variables
     snap_var = 1; // Snap to floor
     event_inherited();
-    tex_02_var = store_tex_02_var;
     flesh_var = false;
     solid_var = false;
     type_var = 4; // Floor
