@@ -221,24 +221,6 @@ object_event_add
     with flesh_eff_obj { if par_var == other.id { instance_destroy(); }}
     with fog_flesh_obj { if par_var == other.id { instance_destroy(); }}
     with skybox_par_obj { if par_var == other.id { instance_destroy(); }}
-    with mad_door_obj
-    {
-        if par_var == other.id
-        {
-            local.door = id;
-            if variable_local_exists("spawn_var") { local.spawn = spawn_var; }
-			else { local.spawn = -1; }
-            with instance_create(x,y,door_obj)
-            {
-                spawn_var = local.spawn;
-                if local.spawn >= 0 { spawn_arr[local.spawn,5] = id; }
-                z = local.door.z;
-                direction = local.door.direction;
-                image_blend = local.door.image_blend;
-            }
-            instance_destroy();
-        }
-    }
     with flesh_wall_obj
     {
         if par_var == other.id

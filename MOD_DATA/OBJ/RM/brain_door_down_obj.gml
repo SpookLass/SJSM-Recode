@@ -13,8 +13,8 @@ object_event_add
     par_var = '+string(argument2)+'
     if par_var.door_var
     {
-        mdl_var = '+string(argument2.mdl_arr_var[argument4,0]+)'
-        mdl_02_var = '+string(argument2.mdl_arr_var[argument5,0]+)'
+        mdl_var = '+string(argument2.mdl_arr_var[argument4,0])+'
+        mdl_02_var = '+string(argument2.mdl_arr_var[argument5,0])+'
         type_var = 0;
     }
 ');

@@ -272,6 +272,16 @@ draw_load_scr("Loading config...");
         // Defaults
             custom_arr_add_len_scr(0,1);
             custom_arr_set_scr(mon_chance_mult_const,local.mon_chance_mult,-1,-1,-1); // Default
+    // Random Monster
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Has Descriptions*/
+            local.set = custom_add_scr("mon_rand","mon_rand","mon_rand",true,custom_enum_const,false,true,true,local.rm,false);
+            custom_add_label_scr(local.set,false,"off",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            custom_add_label_scr(local.set,true,"on",true,"");
+        // Defaults
+            custom_arr_add_len_scr(0,1);
+            custom_arr_set_scr(false,local.set,-1,-1,-1); // Default
+            custom_arr_set_scr(true,local.set,5,-1,-1); // :)
     // Dupe
         // Main
             /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Has Descriptions*/
@@ -398,28 +408,44 @@ draw_load_scr("Loading config...");
             custom_arr_set_scr(rare_chance_const,local.rare_chance,-1,0,-1); // Story Mode
             custom_arr_set_scr(0,local.rare_chance,-1,-1,1); // OG
             custom_arr_set_scr(rare_chance_const,local.rare_chance,-1,-1,2); // HD
+    // Random Rooms
+        // Main
+            /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Has Descriptions*/
+            local.set = custom_add_scr("rm_rand","rm_rand","rm_rand",true,custom_enum_const,false,true,true,local.rm,false);
+            custom_add_label_scr(local.set,false,"off",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            custom_add_label_scr(local.set,true,"on",true,"");
+        // Defaults
+            custom_arr_add_len_scr(0,1);
+            custom_arr_set_scr(false,local.set,-1,-1,-1); // Default
+            custom_arr_set_scr(true,local.set,-1,-1,1); // OG
+            custom_arr_set_scr(true,local.set,-1,-1,2); // HD
+            custom_arr_set_scr(true,local.set,5,-1,-1); // :)
     // Random Textures
         // Main
             /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Has Descriptions*/
-            local.set = custom_add_scr("tex_rand","tex_rand","tex_rand",true,custom_enum_const,false,true,true,local.rm,false);
-            custom_add_label_scr(local.set,false,"off",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
-            custom_add_label_scr(local.set,true,"on",true,"");
+            local.set = custom_add_scr("tex_rand","tex_rand","tex_rand",true,custom_enum_const,0,2,true,local.rm,true);
+            custom_add_label_scr(local.set,0,"off",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            custom_add_label_scr(local.set,1,"on",true,"");
+            custom_add_label_scr(local.set,2,"shuffle",true,"");
         // Defaults
             custom_arr_add_len_scr(0,1);
-            custom_arr_set_scr(true,local.set,-1,-1,-1); // Default
-            custom_arr_set_scr(false,local.set,-1,0,-1); // Story Mode
-            custom_arr_set_scr(true,local.set,5,-1,-1); // :)
+            custom_arr_set_scr(2,local.set,-1,-1,-1); // Default
+            custom_arr_set_scr(0,local.set,-1,0,-1); // Story Mode
+            custom_arr_set_scr(1,local.set,-1,1,1); // OG Endless
+            custom_arr_set_scr(1,local.set,-1,1,2); // HD Endless
     // Random Zones
         // Main
             /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Has Descriptions*/
-            local.set = custom_add_scr("zone_rand","zone_rand","zone_rand",true,custom_enum_const,false,true,true,local.rm,false);
-            custom_add_label_scr(local.set,false,"off",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
-            custom_add_label_scr(local.set,true,"on",true,"");
+            local.set = custom_add_scr("zone_rand","zone_rand","zone_rand",true,custom_enum_const,0,2,true,local.rm,true);
+            custom_add_label_scr(local.set,0,"off",true,""); /*Setting ID, Label ID, Label, Translate, Description*/
+            custom_add_label_scr(local.set,1,"on",true,"");
+            custom_add_label_scr(local.set,2,"shuffle",true,"");
         // Defaults
             custom_arr_add_len_scr(0,1);
-            custom_arr_set_scr(true,local.set,-1,-1,-1); // Default
-            custom_arr_set_scr(false,local.set,-1,0,-1); // Story Mode
-            custom_arr_set_scr(true,local.set,5,-1,-1); // :)
+            custom_arr_set_scr(2,local.set,-1,-1,-1); // Default
+            custom_arr_set_scr(0,local.set,-1,0,-1); // Story Mode
+            custom_arr_set_scr(1,local.set,-1,1,1); // OG Endless
+            custom_arr_set_scr(2,local.set,5,-1,-1); // :)
     // Locales
         // Main
             /*Variable Name, Name, Description, Translate, Type, Min Clamp, Max Clamp, Wrap, Category, Has Descriptions*/

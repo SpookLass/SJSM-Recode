@@ -38,8 +38,26 @@ switch global.zone_key_var
     {
         if argument3 < zone_len_arr[global.zone_key_var] && argument3 >= 0
         { global.zone_var = argument3; }
-        else if global.zone_rand_var { global.zone_var = irandom(zone_len_arr[global.zone_key_var]-1); }
-        else { global.zone_var = mod_scr(ele_prog_scr(global.rm_count_var),zone_len_arr[global.zone_key_var]); }
+        else
+        {
+            switch global.zone_rand_var
+            {
+                case 0: { global.zone_var = mod_scr(ele_prog_scr(global.rm_count_var),zone_len_arr[global.zone_key_var]); break; }
+                case 1: { global.zone_var = irandom(zone_len_arr[global.zone_key_var]-1); break; }
+                case 2:
+                {
+                    if ds_list_size(zone_list_list) <= 0
+                    {
+                        for (local.i=0; local.i<zone_len_arr[global.zone_key_var]; local.i+=1;)
+                        { ds_list_add(zone_list_list,local.i); }
+                        ds_list_shuffle(zone_list_list);
+                    }
+                    global.zone_var = ds_list_find_value(zone_list_list,0);
+                    ds_list_delete(zone_list_list,0);
+                    break;
+                }
+            }
+        }
         local.newzone = zone_arr[global.zone_key_var,global.zone_var];
         rare_zone_list = rare_zone_arr[global.zone_key_var,global.zone_var];
         break;

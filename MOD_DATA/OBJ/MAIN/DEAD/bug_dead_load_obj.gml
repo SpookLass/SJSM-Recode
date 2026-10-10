@@ -172,11 +172,11 @@ object_event_add
             obj_arr_var[11,2] = -1;
             obj_arr_var[11,3] = 0;
     // Rooms
-        rm_len_var = 3;
+        rm_len_var = 1;
         rm_arr_var[0,1] = bug_dead_rm_path;
         rm_arr_var[0,2] = -1;
         rm_arr_var[0,3] = 0;
-    rm_var = bug_dead_rm;
+    rm_var = 0;
     global.can_pause_var = false;
     event_inherited();
     key_var = false;

@@ -32,8 +32,8 @@ object_event_add // ev_create,0
             if local.bool
             {
                 // Create spawn list
-                ds_list_clear(mon_spawn_list);
-                ds_list_copy(mon_spawn_list,mon_list);
+                if !global.mon_rand_var { ds_list_clear(mon_spawn_list); }
+                if ds_list_size(mon_spawn_list) <= 0 { ds_list_copy(mon_spawn_list,mon_list); }
                 // Check dupes, blacklists, and whitelists
                 for (local.i=0; local.i<ds_list_size(mon_curr_list); local.i+=1;)
                 {
@@ -90,7 +90,7 @@ object_event_add // ev_create,0
                             ds_list_add(mon_curr_list,id);
                             if global.dupe_var == dupe_never_const || dupe_var == dupe_never_const
                             || (global.dupe_var == dupe_canon_const && dupe_var != dupe_canon_const)
-                            // || global.mon
+                            || global.mon_rand_var
                             { list_remove_value_scr(mon_spawn_list,object_index,true); }
                             if blacklist_var != noone { list_remove_list_scr(mon_spawn_list,blacklist_var,true); }
                             if whitelist_var != noone { list_whitelist_scr(mon_spawn_list,whitelist_var); }

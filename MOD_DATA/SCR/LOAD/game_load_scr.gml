@@ -205,6 +205,10 @@
                 local.rm = mod_rm;
             break;
         }
+        case 2:
+        {
+            
+        }
         case 3: // Initialize Pac
         {
             // FMOD

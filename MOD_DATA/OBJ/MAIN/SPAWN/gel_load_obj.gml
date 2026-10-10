@@ -42,13 +42,13 @@ object_event_add
     rm_arr_var[0,1] = gel_rm_path;
     rm_arr_var[0,2] = -1;
     rm_arr_var[0,3] = 0;
-    obj_len_var = 1;
+    obj_len_var = 2;
     obj_arr_var[0,1] = gel_note_obj_path;
     obj_arr_var[0,2] = -1;
     obj_arr_var[0,3] = 3;
-    obj_arr_var[0,4] = local.spawn;
-    obj_arr_var[0,5] = local.notestr;
-    obj_arr_var[0,6] = local.notecolor;
+    obj_arr_var[0,4] = spawn_var;
+    obj_arr_var[0,5] = note_str_var;
+    obj_arr_var[0,6] = note_color_var;
     obj_arr_var[1,1] = spawn_slime_obj_path;
     obj_arr_var[1,2] = -1;
     obj_arr_var[1,3] = 1;

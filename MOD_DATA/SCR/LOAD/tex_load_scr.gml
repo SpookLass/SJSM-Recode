@@ -7,6 +7,9 @@ globalvar tex_ceil_arr;
 globalvar tex_light_floor_arr;
 globalvar tex_light_wall_arr;
 globalvar tex_len_arr;
+globalvar tex_list;
+tex_list = ds_list_create();
+ds_list_clear(tex_list);
 global.tex_var = 0;
 for (local.i=0; local.i<global.mode_len_var; local.i+=1;)
 { tex_len_arr[local.i] = 0; }

@@ -199,8 +199,8 @@ object_event_add
             obj_arr_var[10,1] = school_locker_obj_path;
             obj_arr_var[10,2] = -1;
             obj_arr_var[10,3] = 3;
-            obj_arr_var[10,4] = 7; // Background (Index)
-            obj_arr_var[10,5] = 12;
+            obj_arr_var[10,4] = 12; // Background (Index)
+            obj_arr_var[10,5] = 7;
             obj_arr_var[10,6] = true; // Directions
             obj_arr_var[11,1] = school_note_01_obj_path;
             obj_arr_var[11,2] = -1;
@@ -294,9 +294,10 @@ object_event_add
             obj_arr_var[21,1] = school_color_obj_path;
             obj_arr_var[21,2] = -1;
             obj_arr_var[21,3] = 0;
-            obj_arr_var[22,1] = school_flash_obj_path;
-            obj_arr_var[22,2] = -1;
-            obj_arr_var[22,3] = 0;
+            obj_arr_var[22,1] = mon_spawn_trig_obj_path;
+            obj_arr_var[22,2] = "school_trig_obj";
+            obj_arr_var[22,3] = 1;
+            obj_arr_var[22,4] = ringu_obj;
     // Rooms
         rm_len_var = 6;
         rm_arr_var[0,1] = school_01_rm_path;
@@ -305,25 +306,25 @@ object_event_add
         rm_arr_var[1,1] = school_02_rm_path;
         rm_arr_var[1,2] = -1;
         rm_arr_var[1,3] = 0;
-        rm_arr_var[2,1] = school_class_01_rm;
+        rm_arr_var[2,1] = school_class_01_rm_path;
         rm_arr_var[2,2] = -1;
         rm_arr_var[2,3] = 0;
-        rm_arr_var[3,1] = school_class_02_rm;
+        rm_arr_var[3,1] = school_class_02_rm_path;
         rm_arr_var[3,2] = -1;
         rm_arr_var[3,3] = 0;
-        rm_arr_var[4,1] = school_class_03_rm;
+        rm_arr_var[4,1] = school_class_03_rm_path;
         rm_arr_var[4,2] = -1;
         rm_arr_var[4,3] = 0;
-        rm_arr_var[5,1] = school_class_04_rm;
+        rm_arr_var[5,1] = school_class_04_rm_path;
         rm_arr_var[5,2] = -1;
         rm_arr_var[5,3] = 0;
     rm_var = 0;
-    instance_create(0,0,school_flash_obj);
+    instance_create(0,0,flashlight_obj);
     event_inherited();
 ');
 // Destroy Event
 object_event_add
 (argument0,ev_destroy,0,'
     event_inherited();
-    with school_flash_obj { instance_destroy(); }
+    with flashlight_obj { instance_destroy(); }
 ');

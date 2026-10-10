@@ -28,10 +28,12 @@ ini_write_real("MAIN","custom",global.custom_var);
 ini_write_real("MAIN","mod",ds_list_size(global.mod_list)>0);
     // Lists
 ini_write_list_scr("MAIN","rm_list",rm_list,4);
+ini_write_list_scr("MAIN","locale_list",locale_list,4);
 ini_write_list_scr("MAIN","mon_curr_list",mon_curr_list,3);
 ini_write_list_scr("MAIN","mon_list",mon_list,3);
-ini_write_list_scr("MAIN","locale_list",locale_list,4);
 ini_write_list_scr("MAIN","mod_list",global.mod_list,2);
+ini_write_list_scr("MAIN","zone_list_list",zone_list_list,1);
+ini_write_list_scr("MAIN","tex_list",tex_list,1);
 // Settings
 for (local.i=0; local.i<global.custom_len_var; local.i+=1)
 {

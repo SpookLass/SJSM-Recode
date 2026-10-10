@@ -205,13 +205,18 @@ object_event_add
         }
         if !local.set
         {
-            if ds_list_size(rm_list) <= 0
+            if global.rm_rand_var
+            { rm_var = ds_list_find_value(rm_list,irandom(ds_list_size(rm_list)-1)); }
+            else
             {
-                ds_list_copy(rm_list,zone_var);
-                ds_list_shuffle(rm_list);
+                if ds_list_size(rm_list) <= 0
+                {
+                    ds_list_copy(rm_list,zone_var);
+                    ds_list_shuffle(rm_list);
+                }
+                rm_var = ds_list_find_value(rm_list,0);
+                ds_list_delete(rm_list,0);
             }
-            rm_var = ds_list_find_value(rm_list,0);
-            ds_list_delete(rm_list,0);
         }
     }
 ');
